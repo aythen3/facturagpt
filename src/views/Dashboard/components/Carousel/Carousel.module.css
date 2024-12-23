@@ -166,3 +166,15 @@
     font-size: 32px;
   }
 }
+
+
+
+@media (max-width: 768px) {
+  .card {
+    padding: 10px; /* Elimina el padding en pantallas de teléfono */
+    /* Otros ajustes que puedas necesitar */
+  }
+  .text{
+    font-size: 15px;
+  }
+}

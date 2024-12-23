@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .navbar {
   background-color: #11a380;
@@ -6,19 +6,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 100px;
-  font-family: "Inter", sans-serif;
-  position: absolute;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif;
+  position: fixed; /* Fijar el menú en la parte superior */
   height: 70px;
-  min-height: 70px;
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1000; /* Asegura que el menú esté encima de otros elementos */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega una ligera sombra para destacarlo */
+
+  img {
+    cursor: pointer;
+  }
 }
 
-.logo {
-  font-size: 36px;
-  font-weight: bold;
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none; /* Ocultar en pantallas grandes */
+}
+
+.hamburger img {
+  width: 24px;
+  height: 24px;
 }
 
 .navLinks {
@@ -27,30 +39,18 @@
   gap: 30px;
   margin: 0;
   padding: 0;
+  align-items: center;
 }
 
 .navLinks li {
   cursor: pointer;
   font-size: 16px;
   font-weight: 400;
-  display: flex;
-  user-select: none;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
   transition: color 0.3s ease;
-  img {
-    margin-top: 3px;
-    margin-left: 5px;
-  }
-}
-.navLinks li:hover {
-  color: #ececec;
 }
 
-.dropdownArrow {
-  font-size: 0.8rem;
-  margin-left: 0.3rem;
+.navLinks li:hover {
+  color: #ececec;
 }
 
 .button {
@@ -68,4 +68,34 @@
 
 .button:hover {
   background-color: #ececec;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block; /* Mostrar el botón hamburguesa */
+  }
+
+  .navLinks {
+    position: fixed; /* Fija el menú en la pantalla */
+    bottom: 0;
+    right: -100%; /* Comienza fuera de la pantalla */
+    width: 100%;
+    height: calc(100vh - 68px);
+    background-color: #11a380;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: right 0.3s ease-in-out; /* Animación suave */
+    z-index: 999; /* Asegura que el menú esté encima de otros elementos */
+  }
+
+  .navLinksOpen {
+    right: 0; /* Mueve el menú al centro */
+  }
+
+  .navLinksClosed {
+    right: -100%; /* Oculta el menú fuera de la pantalla */
+  }
 }

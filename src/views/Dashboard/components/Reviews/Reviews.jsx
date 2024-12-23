@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./Reviews.module.css";
-import Carousel from "../Carousel/Carousel";
-import ContactForm from "../ContactForm/ContactForm";
+import React from 'react';
+import styles from './Reviews.module.css';
+import Carousel from '../Carousel/Carousel';
+import ContactForm from '../ContactForm/ContactForm';
 
 const Reviews = () => {
   return (
@@ -32,7 +32,9 @@ const Reviews = () => {
       <span className={styles.reviewsDescriptionLast}>
         Estás un paso más cerca de obtener el mejor servicio...
       </span>
-      <button className={styles.startButton}>Comience ahora</button>
+      <a href='/login' className={styles.startButton}>
+        Comience ahora
+      </a>
     </div>
   );
 };

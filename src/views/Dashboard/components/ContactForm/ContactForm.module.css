@@ -4,9 +4,15 @@
   font-family: "Inter", sans-serif;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
   gap: 2rem;
   width: 100%;
   margin-bottom: 150px;
+  
+}
+.content{
+  display: flex;
+  width: 85%;
 }
 
 /* Left Section */
@@ -15,8 +21,8 @@
 }
 
 .title {
-  font-size: 56px;
-  font-weight: bold;
+  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */  
+    font-weight: bold;
   color: #18181b;
   margin-bottom: 0.5rem;
 }
@@ -85,10 +91,40 @@ label {
 /* Right Section */
 .rightSection {
   flex: 1;
+  display: flex;
 }
 
 .handIcon {
   max-width: 100%;
   height: auto;
   opacity: 0.9;
+}
+
+
+
+@media (max-width: 768px) {
+
+  .content{
+    width: 99%;
+  }
+
+
+  .leftSection{  
+    width: 100%;
+
+    form{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .inputGroup{
+        width: 100%;
+      }
+    }
+
+  }
+
+  .rightSection{
+    display: none;
+  }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Packs.module.css";
 import PricingCards from "../../components/PricingCard/PricingCard";
 import BillingSlider from "../../components/BillingSlider/BillingSlider";
@@ -17,8 +17,31 @@ import stripe from "../../assets/stripe.svg";
 import Reviews from "../../components/Reviews/Reviews";
 
 const Packs = () => {
+  const [sliderValue, setSliderValue] = useState(1000000); // Inicializado en 1M
+
+  // Calcular el número de facturas según el valor del slider
+  const facturasPorMillon = 2000; // 1 millón = 2000 facturas
+  const facturasTotales = sliderValue * facturasPorMillon / 1000000; // Dividir por 1 millón para que la multiplicación sea correcta
+
+  // Calcular las horas (cada factura toma 5 minutos)
+  const horasTotales = (facturasTotales * 5) / 60; // Convertir minutos a horas
+
+  // Calcular el valor ganado en dólares (10$ por hora)
+  const valorEnDolares = horasTotales * 10;
+
+  // Formatear los números con separadores de miles
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat("es-ES").format(number); // Esto formatea con comas como separadores de miles
+  };
+
+  // Formatear el valor en dólares con el signo €
+  const formatCurrency = (value) => {
+    return `${new Intl.NumberFormat("es-ES").format(value)}€`;
+  };
+
   const cardsData = [pdf, jpg, txt, png];
   const compatiblePrograms = [outlook, gmail, xslx, odoo, logoImage, stripe];
+
   const steps = [
     {
       step: "Paso 1",
@@ -50,11 +73,11 @@ const Packs = () => {
         ))}
       </div>
 
-      <BillingSlider />
+      <BillingSlider setSliderValue={setSliderValue} sliderValue={sliderValue} />
       <span className={styles.packsDescription}>
         Las empresas tardan entre 5 - 10 minutos en gestionar una factura. Una
-        empresa de 5M tiene alrededor de 5.000 facturas, con facturaGPT ahorra
-        560 horas y gana más de 50.000€ en facturación.
+        empresa de <strong>{sliderValue / 1000000} M</strong> tiene alrededor de <strong>{formatNumber(facturasTotales)}</strong> facturas, con facturaGPT ahorra{" "}
+        <strong>{horasTotales.toFixed(2)}</strong> horas y gana más de <strong>{formatCurrency(valorEnDolares)}</strong> en facturación.
       </span>
       <PricingCards />
 
@@ -72,7 +95,7 @@ const Packs = () => {
 
       <div className={styles.extensionsTitle}>
         <img className={styles.flag} src={flag} alt="flag" />
-        Extensions
+        Extensiones
       </div>
       <span className={styles.regular08}>
         Reconoce los archivos de los siguientes formatos de manera que puedas
@@ -94,12 +117,14 @@ const Packs = () => {
         Programas Compatibles
       </div>
       <span className={styles.regular08}>
-        Sube, recibe o emite facturas y automatiza tu poroceso de facturación
+        Sube, recibe o emite facturas y automatiza tu proceso de facturación
       </span>
       <div className={styles.compatibleProgramsContainer}>
         {compatiblePrograms.map((card, index) => (
           <div
-            className={`${styles.innerCard} ${index === 3 && styles.innedOdoo}  ${index === 5 && styles.innerStripe}`}
+            className={`${styles.innerCard} ${
+              index === 3 && styles.innedOdoo
+            } ${index === 5 && styles.innerStripe}`}
             key={index}
           >
             <img src={card} alt="card" />

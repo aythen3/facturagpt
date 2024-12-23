@@ -1,129 +1,98 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 .container {
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
   text-align: center;
-  margin: 4rem 0;
-  font-family: "Inter", sans-serif;
-  width: 700px;
-  font-family: Arial, sans-serif;
 }
 
-/* Title */
 .title {
-  font-size: 50px;
-  font-weight: bold;
-  color: #000;
-  gap: 10px;
+  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
+  color: #333;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 1rem;
-  justify-self: center;
-  img {
-    width: 40px;
-    height: 40px;
-  }
+  justify-content: center;
+}
+
+.star {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
 
 .subtitle {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: clamp(10px, 3vw, 30px) !important; /* Ajuste dinámico con clamp */
   color: #256355 !important;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
-/* Slider Wrapper */
-/* Wrapper */
+
 .sliderWrapper {
   position: relative;
-  width: 700px;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
+  width: 100%;
 }
-
-/* Background Bar */
-.backgroundBar {
-  position: relative;
-  height: 12px;
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
   border-radius: 5px;
-  background: rgba(91, 124, 253, 0.2); /* Blue semi-transparent bar */
-  margin-top: 29px;
+  outline: none;
+  cursor: pointer;
+  position: relative; /* Agregar esta propiedad */
+  z-index: 2; /* Aseguramos que el slider esté encima de otros elementos */
 }
 
-/* Filled Section */
-.filledBar {
-  position: absolute;
-  left: 0;
-  width: 40%; /* Adjust for the progress position (e.g., 5M out of 50M) */
-  height: 100%;
-  background: #16c098; /* Green filled section */
-  border-radius: 5px 0 0 5px;
-}
 
-/* Thumb (Green Circle) */
-.thumb {
-  position: absolute;
-  left: calc(40% + 9px); /* Same as the width of the filled section */
-  top: -7px;
-  width: 26px;
-  height: 26px;
-  background: #16c098; /* Green thumb */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #16c098;
   border-radius: 50%;
-  transform: translateX(-50%);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Labels */
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #16c098;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .labels {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #555454;
   position: relative;
+  margin-top: 10px;
+  height: 40px;
 }
 
-.labels span {
-  flex: 1;
-  text-align: flex-start;
-  font-size: 18px;
-  font-weight: 600;
+.mark {
+  position: absolute;
   display: flex;
-  color: #555454;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  position: relative;
-}
-.labels span::after {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: 10px;
+  bottom: 15px;
   transform: translateX(-50%);
-  height: 13px;
-  width: 2px;
-  background-color: #16c098;
 }
-.lastSpan {
-  flex: 1;
-  text-align: flex-start;
-  font-size: 18px;
-  font-weight: 600;
-  display: flex;
-  color: #555454;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  position: absolute;
-  right: -25px;
-  top: 25px;
-  width: 50px;
-}
-.lastSpan::after {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: 21px;
-  transform: translateX(-50%);
-  height: 13px;
+
+.connector {
   width: 2px;
+  height: 20px;
   background-color: #16c098;
+  margin-bottom: 5px;
+}
+
+.label {
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap;
+}
+
+.output {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
 }

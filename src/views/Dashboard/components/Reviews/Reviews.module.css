@@ -4,11 +4,11 @@
   flex-direction: column;
   font-family: "Inter", sans-serif;
   align-items: center;
-  padding: 50px 0px;
-  width: 100%;
+  padding: 50px 20px;
+  width: 100vw;
 }
 .reviewsTitle {
-  font-size: 56px;
+  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */  
   font-weight: 700;
   color: #18181b;
   text-align: center;
@@ -45,7 +45,7 @@
 }
 
 .price {
-  font-size: 108px;
+  font-size: clamp(30px, 12vw, 140px) !important; /* Ajuste dinámico con clamp */  
   color: #18181b;
   font-weight: 700;
   span {
@@ -71,7 +71,8 @@
   font-size: 18px;
   font-weight: 400;
   background: #16c098;
-  width: 360px;
+  width: 50%;
+  max-width: 360px;
   height: 57px;
   min-height: 57px;
 }

@@ -1,20 +1,62 @@
-import React from "react";
-import styles from "./Navbar.module.css";
-import chevDown from "../../assets/chevDown.svg";
-import facturaLogo from "../../assets/facturaLogo.svg";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import styles from './Navbar.module.css';
+import chevDown from '../../assets/chevDown.svg';
+import facturaLogo from '../../assets/facturaLogo.svg';
+import menuIcon from '../../assets/burguer-menu.svg'; // Ícono de menú
+import closeIcon from '../../assets/close-menu.svg'; // Ícono de cerrar
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false); // Estado para el menú
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const scrollToContact = () => {
+    if (location.pathname === '/landing') {
+      // Si ya está en la página de destino, simplemente hace scroll
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Redirige y hace scroll después de cargar la página
+      navigate('/landing');
+      setTimeout(() => {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300); // Tiempo para asegurarse de que la página haya cargado
+    }
+  };
+
   return (
     <nav className={styles.navbar}>
-      <img src={facturaLogo} alt="FacturaGPT" />
-      <ul className={styles.navLinks}>
-        <li onClick={() => navigate("/dashboard/landing")}>Inicio</li>
-        <li>Contacto</li>
-        <li onClick={() => navigate("/dashboard/pricing")}>Precios</li>
-        <li>
-          Idioma <img src={chevDown} alt="chevDown" />
+      <img
+        onClick={() => navigate('/landing')}
+        src={facturaLogo}
+        alt='FacturaGPT'
+      />
+      <button className={styles.hamburger} onClick={toggleMenu}>
+        <img src={menuOpen ? closeIcon : menuIcon} alt='Menu Icon' />
+      </button>
+      <ul
+        className={`${styles.navLinks} ${
+          menuOpen ? styles.navLinksOpen : styles.navLinksClosed
+        }`}
+      >
+        <li onClick={() => navigate('/landing')}>Inicio</li>
+        <li onClick={scrollToContact}>Contacto </li>
+        <li onClick={() => navigate('/pricing')}>Precios</li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          Idioma{' '}
+          <span>
+            <img src={chevDown} alt='chevDown' />
+          </span>
         </li>
         <button className={styles.button}>Probar Gratis</button>
       </ul>

@@ -1,14 +1,27 @@
 .container {
-    display: flex;
-    padding: 24px 70px;
-    font-family: 'Poppins', sans-serif;
-    background-color: #ffffff;
-    gap: 80px;
-  }
-  
+  display: flex;
+  padding: 24px 70px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  height: 93vh;
+  width: 94%;
+  justify-content: space-between;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: scroll;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Opcional para un efecto más atractivo */
+  border-radius: 8px; /* Opcional para esquinas redondeadas */
+  z-index: 999;
+  gap: 20px;
+}
+
   /* Left Section */
   .leftSection {
     flex: 2;
+    width: 50%;
+    height: fit-content;
   }
   
   .breadcrumb {
@@ -119,16 +132,16 @@ span {
   
   /* Right Section */
   .rightSection {
-    flex: 1;
+    flex: 2;
     width: 100%;
-    max-width: 363px;
+    /* max-width: 363px; */
     /* padding: 50px 0px; */
   }
   
   .faqContainer {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
     padding: 0px 33px;
     border: 1px solid #ddd;
@@ -298,6 +311,13 @@ span {
     gap: 16px;
   }
   
+  .inputGroup,.portGroup{
+    input{
+      width: 100%;
+    }
+    
+  }
+  
   .inputWrapper {
     display: flex;
     flex-direction: column;
@@ -407,3 +427,12 @@ span {
   
   
   
+  .bgModal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.47);
+  z-index: 99;
+  }

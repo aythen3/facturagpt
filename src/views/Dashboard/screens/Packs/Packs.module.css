@@ -10,19 +10,26 @@
   padding: 44px 0px;
   max-width: 1440px;
   align-self: center;
+  overflow: hidden;
 }
 
 .packsDescription {
   color: #aeb9ca;
-  font-size: 21px;
+  font-size: clamp(18px, 5vw, 24px); /* Ajuste dinámico del tamaño de título */
   font-weight: 500;
-  height: 133px;
-  display: flex;
+  /* height: 133px; */
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   max-width: 1006px;
   margin: 33px 0px;
   text-align: center;
+  padding: 0 20px;
+
+  strong{
+    color: #71717A;
+  }
+  
   span {
     font-weight: 700;
   }
@@ -83,9 +90,11 @@
 
 .bannerTitle {
   color: #406f64 !important;
-  font-size: 22px !important;
+  font-size: clamp(10px, 2vw, 30px) !important; /* Ajuste dinámico con clamp */
   font-weight: bold;
+  padding: 0 5px;
 }
+
 
 .subtitle {
   color: #71717a;
@@ -96,15 +105,16 @@
 
 .regular08 {
   color: #080808;
-  font-size: 24px;
+  font-size: clamp(20px, 5vw, 32px) !important; /* Ajuste dinámico con clamp */  
   font-weight: 400;
   margin-top: 33px;
   max-width: 1194px;
   text-align: center;
+  padding: 0 20px;
 }
 
 .extensionsTitle {
-  font-size: 44px;
+  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
   font-weight: 700;
   gap: 10px;
   display: flex;
@@ -116,23 +126,30 @@
 
 .flag {
   margin-top: 2px;
+  width: clamp(30px, 12vw, 90px); /* Ajuste dinámico con clamp para el tamaño de la bandera */
+  height: auto; /* Mantiene la proporción de la imagen */
 }
-
 .dashedContainer {
   display: flex;
+  flex-direction: row; /* Por defecto, las cards están en fila */
   border: 2px dashed #bdbdbd;
+  flex-wrap: wrap;
   border-radius: 9px;
-  height: 223px;
-  flex-direction: row;
+  /* height: clamp(180px, 20vw, 223px); Ajuste dinámico de la altura */
   margin-top: 22px;
-  width: 1194px;
+  width: 90%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  max-width: 1194px; /* Límite máximo para evitar que se expanda demasiado */
   align-items: center;
   justify-content: space-around;
+  overflow-x: auto; /* Permite desplazamiento horizontal si las cards no caben */
+  padding: 10px; /* Añade algo de espacio en los bordes */
+  gap: 10px; /* Espacio entre las cards */
 }
 
+
 .innerCard {
-  width: 147px;
-  height: 147px;
+  width: clamp(120px, 20vw, 147px); /* Ajuste dinámico de la anchura de las cards */
+  height: clamp(120px, 20vw, 147px); /* Ajuste dinámico de la altura de las cards */
   border-radius: 16px;
   cursor: pointer;
   user-select: none;
@@ -141,16 +158,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 10px; /* Espaciado entre las cards */
 }
 
+
+
 .pdfIcon {
-  margin-left: 25px;
-  margin-bottom: 25px;
+  margin-left: clamp(10px, 2vw, 25px); /* Ajuste dinámico de los márgenes */
+  margin-bottom: clamp(10px, 2vw, 25px); /* Ajuste dinámico de los márgenes */
 }
 
 .normalIcon {
-  margin-bottom: 3px;
+  margin-bottom: clamp(3px, 1vw, 10px); /* Ajuste dinámico del margen */
 }
+
 
 .compatibleProgramsContainer {
   margin: 50px 0px;
@@ -158,6 +179,9 @@
   align-items: center;
   justify-content: space-around;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+
 }
 
 .innedOdoo {
@@ -167,41 +191,39 @@
 .innerStripe {
   background: #5d62f3;
 }
-
 /* Wrapper with space around and flex alignment */
 .wrapper {
   display: flex;
   justify-content: space-around;
   gap: 8px;
-  padding: 3.5rem;
+  padding: clamp(1rem, 3vw, 3.5rem); /* Ajuste dinámico del padding */
   text-align: center;
   width: 100%;
+  flex-wrap: wrap; /* Permite que las cards se ajusten en varias filas si es necesario */
 }
 
 /* Individual Card */
 .card {
-  max-width: 280px;
+  max-width: clamp(200px, 30%, 280px); /* Tamaño dinámico con clamp */
   min-width: 280px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 20px; /* Añadir espacio entre las cards */
 }
+
 .card:nth-child(3) {
-  max-width: 300px;
+  max-width: clamp(210px, 32%, 300px); /* Ajuste para la tercera card */
 }
 
 /* Step text (Green) */
 .step {
   color: #16c098 !important;
-  font-size: 22px;
+  font-size: clamp(16px, 4vw, 22px); /* Ajuste dinámico del tamaño de texto */
   font-weight: 400;
-  margin: 0;
-}
-
 /* Title text */
-.title {
   color: #18181b;
-  font-size: 24px;
+  font-size: clamp(18px, 5vw, 24px); /* Ajuste dinámico del tamaño de título */
   font-weight: bold;
   margin: 0;
 }
@@ -209,7 +231,7 @@
 /* Subtitle text */
 .subtitle {
   color: #71717a;
-  font-size: 20px;
+  font-size: clamp(16px, 4vw, 20px); /* Ajuste dinámico del tamaño de subtítulo */
   font-weight: 400;
   line-height: 1.5;
   margin: 0;

@@ -4,6 +4,19 @@ import ayFolder from "../../assets/folderAy.svg";
 import rightGreenArrow from "../../assets/rightGreenArrow.svg";
 
 const NavHeader = () => {
+
+  const handleScrollToFacturation = () => {
+    const facturationElement = document.getElementById("facturation");
+    if (facturationElement) {
+      const rect = facturationElement.getBoundingClientRect();
+      const offsetTop = rect.top + window.pageYOffset - (window.innerHeight / 2 - rect.height / 2);
+
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
   return (
     <div className={styles.navHeaderContainer}>
       <div className={styles.navHeaderTitle}>Ahorra tiempo con</div>
@@ -15,7 +28,9 @@ const NavHeader = () => {
         Escanea la facturación de tu empresa de forma automatica y automatiza
         tus procesos de venta.
       </span>
-      <div className={styles.nextSteps}>¡Empieza ahora!</div>
+      <div className={styles.nextSteps}
+       onClick={handleScrollToFacturation}
+       style={{ cursor: "pointer" }} >¡Empieza ahora!</div>
     </div>
   );
 };

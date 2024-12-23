@@ -3,9 +3,10 @@ import styles from "./ContactForm.module.css";
 import { ReactComponent as HandIcon } from "../../assets/HandIcon.svg";
 const ContactForm = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.leftSection}>
+    <div className={styles.container} id="contact">
         <h1 className={styles.title}>Contáctenos</h1>
+    <div className={styles.content}>
+    <div className={styles.leftSection}>
         <p className={styles.subtitle}>
           Estamos aquí para ayudar, solicite asistencia personalizada.
         </p>
@@ -47,6 +48,7 @@ const ContactForm = () => {
         {/* <img src={require("../../assets/HandIcon.svg")} alt="Hand Icon" /> */}
         <HandIcon className={styles.handIcon} />
       </div>
+    </div>
     </div>
   );
 };

@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./UsersPermissions.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom"
-import {
-  getAllUsers,
-  updateUser,
-} from "../../../../actions/emailManager";
-import { FaChevronDown } from "react-icons/fa";
-import { setUser } from "../../../../slices/emailManagerSlices";
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './UsersPermissions.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getAllUsers, updateUser } from '../../../../actions/emailManager';
+import { FaChevronDown } from 'react-icons/fa';
+import { setUser } from '../../../../slices/emailManagerSlices';
 
 const UsersPermissions = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { allUsers, user: userData } = useSelector(
     (state) => state.emailManager
@@ -21,7 +18,7 @@ const UsersPermissions = () => {
   const [openDropdown, setOpenDropdown] = useState(null); // Track open dropdown by user ID
   const dropdownRef = useRef(null);
 
-  const options = ["user", "admin", "superadmin"];
+  const options = ['user', 'admin', 'superadmin'];
 
   // Fetch all users on mount
   useEffect(() => {
@@ -32,7 +29,7 @@ const UsersPermissions = () => {
   useEffect(() => {
     const initialOptions = {};
     allUsers.forEach((user) => {
-      initialOptions[user.id] = user.role || "user"; // Default to 'user' if role is not defined
+      initialOptions[user.id] = user.role || 'user'; // Default to 'user' if role is not defined
     });
     setUserOptions(initialOptions);
   }, [allUsers]);
@@ -44,9 +41,9 @@ const UsersPermissions = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
 
@@ -68,22 +65,22 @@ const UsersPermissions = () => {
   };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("emailManagerAccount");
+    const storedUser = localStorage.getItem('emailManagerAccount');
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
         if (parsedUser?.email && parsedUser?.id && parsedUser?.role) {
           dispatch(setUser(parsedUser));
           console.log(
-            "Logged-in account restored from localStorage:",
+            'Logged-in account restored from localStorage:',
             parsedUser
           );
         }
       } catch (error) {
-        console.error("Error parsing stored user data:", error);
+        console.error('Error parsing stored user data:', error);
       }
     } else {
-      navigate("/dashboard/login");
+      navigate('/login');
     }
   }, []);
 
@@ -104,13 +101,13 @@ const UsersPermissions = () => {
           </div>
           {allUsers.map((user) => (
             <div key={user.id} className={styles.tableRow}>
-              <span className={styles.columnName}>{user.email || "-"}</span>
-              <span className={styles.columnContact}>{user.email || "-"}</span>
+              <span className={styles.columnName}>{user.email || '-'}</span>
+              <span className={styles.columnContact}>{user.email || '-'}</span>
               <span className={styles.columnPassword}>-</span>
               <span className={styles.columnEmail}>{user.email}</span>
               {user.email === userData.email ? (
                 <span className={styles.columnRole}>{user.role}</span>
-              ) : userData.role !== "user" ? (
+              ) : userData.role !== 'user' ? (
                 <div
                   className={styles.filterSort}
                   onClick={() => handleDropdownToggle(user.id)}
@@ -126,7 +123,7 @@ const UsersPermissions = () => {
                           onClick={() => handleOptionClick(user.id, option)}
                           style={{
                             borderBottom:
-                              index === options.length - 1 && "none",
+                              index === options.length - 1 && 'none',
                           }}
                         >
                           {option}
