@@ -1,0 +1,119 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #000;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #000;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #16c098;
+  margin-bottom: 8px;
+}
+
+.cardInput {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.input,
+.selectInput {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.input {
+  background-color: #f9f9f9;
+}
+
+.cardInput input,
+.cardInput select {
+  border: none;
+  font-size: 16px;
+}
+
+.submitButton {
+  padding: 14px;
+  background: #16c098;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.2s;
+}
+
+.submitButton:hover {
+  background: #13a583;
+}
+
+.submitButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.selectInput {
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,79 @@
+
+.containerReseller{
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    .container{
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+
+.componentHeader{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    .number{
+        display: inline-flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+    .graph{
+        width: 50px;
+        height: 50px;
+        background: red;
+    }
+}
+
+
+
+.componentLeft{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    .box{
+        background: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        .header{
+            display: inline-flex;
+            .title{
+                font-size: 22px;
+                font-weight: 700;
+            }
+            span{
+                font-size: 12px;
+                background: #f0f0f0;
+            }
+        }
+        .filter{
+            display: inline-flex;
+        }
+        .item{
+            display: inline-flex;
+            flex-direction: column;
+            gap: 6px;
+            li{
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                .image{
+                    display: inline-flex;
+                    flex-direction: column;
+                }
+                .content{
+                    display: inline-flex;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}
+
+
+.componentRight{
+
+}
+
+

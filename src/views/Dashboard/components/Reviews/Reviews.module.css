@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+.reviewsContainer {
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
+  align-items: center;
+  padding: 50px 0px;
+  width: 100%;
+}
+.reviewsTitle {
+  font-size: 56px;
+  font-weight: 700;
+  color: #18181b;
+  text-align: center;
+}
+.reviewsDescription {
+  font-size: 22px;
+  font-weight: 400;
+  max-width: 574px;
+  color: #71717a;
+  text-align: center;
+}
+
+.reviewsDescriptionSecondary {
+  font-size: 22px;
+  font-weight: 400;
+  max-width: 720px;
+  color: #71717a;
+  text-align: center;
+}
+
+.reviewsDescriptionLast {
+  font-size: 22px;
+  font-weight: 400;
+  max-width: 720px;
+  margin-top: 5px;
+  color: #71717a;
+  text-align: center;
+}
+.startsFrom {
+  margin-top: 30px;
+  font-weight: 700;
+  font-size: 36px;
+  color: #71717a;
+}
+
+.price {
+  font-size: 108px;
+  color: #18181b;
+  font-weight: 700;
+  span {
+    margin-left: -10px;
+    font-size: 46px;
+  }
+}
+
+.thinSubtitle {
+  margin-top: 5px;
+  font-weight: 300;
+  color: #86868b;
+  font-size: 16px;
+}
+
+.startButton {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  background: #16c098;
+  width: 360px;
+  height: 57px;
+  min-height: 57px;
+}

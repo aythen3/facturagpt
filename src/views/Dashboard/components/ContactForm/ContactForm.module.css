@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+.container {
+  display: flex;
+  font-family: "Inter", sans-serif;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 150px;
+}
+
+/* Left Section */
+.leftSection {
+  width: 50%;
+}
+
+.title {
+  font-size: 56px;
+  font-weight: bold;
+  color: #18181b;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 22px;
+  font-weight: 400;
+  color: #18181b;
+  margin-bottom: 2rem;
+}
+
+/* Form Inputs */
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  color: #71717a;
+  margin-bottom: 0.5rem;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  outline: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 1rem;
+  color: #71717a;
+  &:focus {
+    border: 2px solid #dadbdd;
+  }
+}
+
+.input {
+  height: 56px;
+}
+
+.textarea {
+  height: 120px;
+  resize: none;
+}
+
+/* Button */
+.button {
+  background-color: #16c098;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 205px;
+  min-height: 53px;
+  height: 53px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #13a583;
+}
+
+/* Right Section */
+.rightSection {
+  flex: 1;
+}
+
+.handIcon {
+  max-width: 100%;
+  height: auto;
+  opacity: 0.9;
+}

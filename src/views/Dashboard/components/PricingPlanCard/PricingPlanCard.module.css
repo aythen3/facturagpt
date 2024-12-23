@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+.pricingCardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 522px;
+  font-family: "Inter", sans-serif;
+  margin: 20px 0;
+}
+
+/* Pricing Box */
+.pricingBox {
+  width: 319px;
+  border: 1px solid rgba(11, 6, 255, 0.14);
+  border-radius: 32px 32px 0px 0px;
+  text-align: center;
+  padding: 32px;
+  padding-bottom: 15px;
+  border-bottom: none;
+  margin-bottom: -1px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #18181b;
+}
+
+.perMonth {
+  font-size: 16px;
+  font-weight: 400;
+  color: #555454;
+}
+
+.docPrice {
+  font-size: 22px;
+  font-weight: 400;
+  color: #71717a;
+  margin: 4px 0;
+}
+
+.priceTag {
+  font-weight: 400;
+  font-size: 22px;
+  color: #71717a;
+}
+.planDetails {
+  width: 522px;
+  background-color: #f0f2f5;
+  border-radius: 32px;
+  padding: 32px;
+  text-align: left;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.planTitle {
+  font-size: 36px;
+  font-weight: 600;
+  color: #18181b;
+  margin-bottom: 24px;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.featureItem {
+  font-size: 14px;
+  display: flex;
+  font-weight: 400;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  color: #555454;
+  margin-bottom: 9px;
+}
+
+/* Button */
+.button {
+  width: 100%;
+  background-color: #22463d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 54px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #163328;
+}

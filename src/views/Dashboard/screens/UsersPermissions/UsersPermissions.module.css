@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.container {
+  padding: 24px 48px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+}
+.contentContainer {
+    width: 100%;
+    max-width: 1300px;
+}
+.headerTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.headerSubtitle {
+  font-size: 14px;
+  color: #16c098 !important;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.tableContainer {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.tableHeader {
+  display: flex;
+  padding: 12px 16px;
+  color: #b5b7c0;
+  font-weight: 500;
+  font-size: 14px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.tableRow {
+  display: flex;
+  padding: 12px 16px;
+  color: #292d32;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableHeader span,
+.tableRow span {
+  display: flex;
+  height: 49px;
+  align-items: center;
+}
+
+.columnName {
+  flex: 0.25;
+}
+
+.columnContact {
+  flex: 0.2;
+}
+
+.columnPassword {
+  flex: 0.2;
+}
+
+.columnEmail {
+  flex: 0.25;
+}
+
+.columnRole {
+  flex: 0.1;
+}
+
+.filterSort {
+  font-weight: 300;
+  color: #000;
+  padding: 0px 16px;
+  flex:0.1;
+  height: 30px;
+  min-height: 30px;
+  border-radius: 4px;
+  border: 1px solid #BDBDBD;
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  justify-content: flex-start;
+  cursor: pointer;
+  position:relative;
+}
+
+.filterSort b {
+  font-weight: 400;
+  font-size: 15px;
+  margin-right: 6px;
+}
+
+.chevronIcon {
+  margin-left:auto;
+  color: #09121F;
+}
+
+.dropdownOptions {
+  position: absolute;
+  top: calc(100% - 2px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #BDBDBD;
+  margin-top: 4px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.dropdownOption {
+  margin: 0px 12px;
+  padding: 14px 0px;
+  font-size: 12px;
+  border-bottom: 1px solid #BDBDBD;
+  font-weight: 500;
+  color: #131313;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}

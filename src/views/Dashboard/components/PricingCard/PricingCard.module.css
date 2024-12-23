@@ -1,0 +1,91 @@
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+.card {
+  background-color: #f7f7f7;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 160px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 11px;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  overflow: hidden;
+}
+.selectedCard {
+  background-color: #fff;
+}
+
+.cardHeader {
+  background-color: rgba(19, 167, 132, 0.26);
+  height: 23px;
+  width: 100%;
+  font-weight: 700;
+  color: #000;
+  font-size: 16px;
+  border-radius: 4px;
+}
+.cardHeaderPricing {
+  background-color: #d8d8d8;
+  height: 23px;
+  width: 100%;
+  font-weight: 700;
+  color: #000;
+  font-size: 16px;
+  border-radius: 4px;
+}
+.selectedCardHeader {
+  background-color: #16c098;
+  color: #fff;
+}
+
+.price {
+  font-size: 34px;
+  font-weight: bold;
+  color: #000000;
+}
+.selectedPrice {
+  color: #16c098 !important;
+}
+.subText {
+  font-size: 12px;
+  font-weight: 400;
+  color: #000000;
+}
+.selectedSubText {
+  color: #16c098;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 103px;
+  height: 30px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #233f39;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.selectedButton {
+  background-color: #16c098;
+}
+
+.button:hover {
+  background-color: #13a583;
+}

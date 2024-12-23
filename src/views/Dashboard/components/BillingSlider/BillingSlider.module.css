@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+.container {
+  text-align: center;
+  margin: 4rem 0;
+  font-family: "Inter", sans-serif;
+  width: 700px;
+  font-family: Arial, sans-serif;
+}
+
+/* Title */
+.title {
+  font-size: 50px;
+  font-weight: bold;
+  color: #000;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  justify-self: center;
+  img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.subtitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #256355 !important;
+}
+/* Slider Wrapper */
+/* Wrapper */
+.sliderWrapper {
+  position: relative;
+  width: 700px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Background Bar */
+.backgroundBar {
+  position: relative;
+  height: 12px;
+  border-radius: 5px;
+  background: rgba(91, 124, 253, 0.2); /* Blue semi-transparent bar */
+  margin-top: 29px;
+}
+
+/* Filled Section */
+.filledBar {
+  position: absolute;
+  left: 0;
+  width: 40%; /* Adjust for the progress position (e.g., 5M out of 50M) */
+  height: 100%;
+  background: #16c098; /* Green filled section */
+  border-radius: 5px 0 0 5px;
+}
+
+/* Thumb (Green Circle) */
+.thumb {
+  position: absolute;
+  left: calc(40% + 9px); /* Same as the width of the filled section */
+  top: -7px;
+  width: 26px;
+  height: 26px;
+  background: #16c098; /* Green thumb */
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels */
+.labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #555454;
+  position: relative;
+}
+
+.labels span {
+  flex: 1;
+  text-align: flex-start;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  color: #555454;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+.labels span::after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 10px;
+  transform: translateX(-50%);
+  height: 13px;
+  width: 2px;
+  background-color: #16c098;
+}
+.lastSpan {
+  flex: 1;
+  text-align: flex-start;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  color: #555454;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  position: absolute;
+  right: -25px;
+  top: 25px;
+  width: 50px;
+}
+.lastSpan::after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 21px;
+  transform: translateX(-50%);
+  height: 13px;
+  width: 2px;
+  background-color: #16c098;
+}
