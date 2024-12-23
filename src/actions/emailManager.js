@@ -1,4 +1,4 @@
-import apiBackend from "../apiBackend.js";
+import apiBackend from "@src/apiBackend.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const createAccount = createAsyncThunk(
@@ -220,6 +220,43 @@ export const createSetupIntent = createAsyncThunk(
       return rejectWithValue(
         error.response?.data || "Failed to create setup intent"
       );
+    }
+  }
+);
+
+export const sendOTP = createAsyncThunk(
+  "emailManager/send-otp",
+  async ({ email }, { rejectWithValue }) => {
+    console.log("Sending OTP to:", email);
+    try {
+      const res = await apiBackend.post(`/emailManager/send-otp`, { email });
+      return res.data;
+    } catch (error) {
+      console.error(
+        "Error sending OTP:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(error.response?.data || "Failed to send OTP");
+    }
+  }
+);
+
+export const verifyOTP = createAsyncThunk(
+  "emailManager/verify-otp",
+  async ({ email, otp }, { rejectWithValue }) => {
+    console.log("Verifying OTP for:", email);
+    try {
+      const res = await apiBackend.post(`/emailManager/verify-otp`, {
+        email,
+        otp,
+      });
+      return res.data;
+    } catch (error) {
+      console.error(
+        "Error verifying OTP:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(error.response?.data || "Failed to verify OTP");
     }
   }
 );
