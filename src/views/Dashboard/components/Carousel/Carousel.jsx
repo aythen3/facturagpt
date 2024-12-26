@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
-import styles from "./Carousel.module.css";
-import { FaStar } from "react-icons/fa";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { reviews } from "./reviews";
-import rightTicks from "../../assets/rightTicks.svg";
+import React, { useState, useRef, useEffect } from 'react';
+import styles from './Carousel.module.css';
+import { FaStar } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { reviews } from './reviews';
+import rightTicks from '../../assets/rightTicks.svg';
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -15,8 +15,8 @@ const Carousel = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", updateIsMobile);
-    return () => window.removeEventListener("resize", updateIsMobile);
+    window.addEventListener('resize', updateIsMobile);
+    return () => window.removeEventListener('resize', updateIsMobile);
   }, []);
 
   const handlePrev = () => {
@@ -48,21 +48,21 @@ const Carousel = () => {
     : -(currentIndex - 1) * (100 / 3);
 
   return (
-    <div className={styles.reviewContainer} initial="hidden" animate="visible">
+    <div className={styles.reviewContainer} initial='hidden' animate='visible'>
       <div className={styles.carousel}>
         <div
           className={styles.cardsContainer}
           ref={cardsRef}
           style={{
             transform: `translateX(${translateX}%)`,
-            transition: isAnimating ? "transform 0.5s ease-in-out" : "none",
+            transition: isAnimating ? 'transform 0.5s ease-in-out' : 'none',
           }}
         >
           {reviews.map((review, index) => (
             <div
               key={index}
               className={`${styles.card} ${
-                index === currentIndex ? styles.activeCard : ""
+                index === currentIndex ? styles.activeCard : ''
               }`}
             >
               <p className={styles.text}>{review.text}</p>
@@ -78,7 +78,7 @@ const Carousel = () => {
                       ))}
                   </div>
                 </div>
-                <img src={rightTicks} alt="rightTicks" />
+                <img src={rightTicks} alt='rightTicks' />
               </div>
             </div>
           ))}
@@ -86,10 +86,10 @@ const Carousel = () => {
       </div>
       <div className={styles.controls}>
         <button className={styles.controlButton} onClick={handlePrev}>
-          <BiChevronLeft />
+          <FaArrowLeft />
         </button>
         <button className={styles.controlButton} onClick={handleNext}>
-          <BiChevronRight />
+          <FaArrowRight />
         </button>
       </div>
     </div>

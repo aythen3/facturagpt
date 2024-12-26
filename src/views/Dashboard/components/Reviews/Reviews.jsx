@@ -7,7 +7,7 @@ const Reviews = () => {
   return (
     <div className={styles.reviewsContainer}>
       <h1 className={styles.reviewsTitle}>
-        Resultados que marcan la diferéncia
+        Resultados que marcan la diferencia
       </h1>
       <span className={styles.reviewsDescription}>
         Ve cómo FacturaGPT ayuda a automatizar y simplificar la facturación de
@@ -15,10 +15,10 @@ const Reviews = () => {
       </span>
       <Carousel />
       <h1 className={styles.reviewsTitle}>Precios para escalar</h1>
-      <span className={styles.reviewsDescriptionSecondary}>
+      {/* <span className={styles.reviewsDescriptionSecondary}>
         Nuestros precios están diseño para brindar un valor excepcional para el
         mejor servicio de impuestos.
-      </span>
+      </span> */}
       <span className={styles.startsFrom}>A partir de</span>
       <div className={styles.price}>
         €3’99 <span>/mes</span>

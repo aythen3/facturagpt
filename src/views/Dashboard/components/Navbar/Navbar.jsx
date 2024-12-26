@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import styles from './Navbar.module.css';
 import chevDown from '../../assets/chevDown.svg';
 import facturaLogo from '../../assets/facturaLogo.svg';
-import menuIcon from '../../assets/burguer-menu.svg'; // Ícono de menú
-import closeIcon from '../../assets/close-menu.svg'; // Ícono de cerrar
+import menuIcon from '../../assets/Barchart.svg'; // Ícono de menú
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
@@ -42,7 +41,7 @@ const Navbar = () => {
         alt='FacturaGPT'
       />
       <button className={styles.hamburger} onClick={toggleMenu}>
-        <img src={menuOpen ? closeIcon : menuIcon} alt='Menu Icon' />
+        <img src={menuIcon} alt='Menu Icon' />
       </button>
       <ul
         className={`${styles.navLinks} ${
@@ -54,7 +53,11 @@ const Navbar = () => {
         <li onClick={() => navigate('/pricing')}>Precios</li>
         <li style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           Idioma{' '}
-          <span>
+          <span
+            className={`${styles.chevDownIcon} ${
+              menuOpen ? styles.chevDownOpen : ''
+            }`}
+          >
             <img src={chevDown} alt='chevDown' />
           </span>
         </li>

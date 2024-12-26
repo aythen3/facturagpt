@@ -39,7 +39,7 @@
 .card {
   flex: 0 0 33.33%;
   max-width: 33.33%;
-  padding: 32px;
+  padding: 22px;
   border-radius: 32px;
   text-align: left;
   background: #f0f2f5;
@@ -132,10 +132,15 @@
   border: 1px solid #9ca3af;
   background: #fff;
   color: #fff;
-  font-size: 20px;
+  font-size: 15px;
   cursor: pointer;
   transition: background 0.3s ease;
   svg {
+    -webkit-transition: background 0.3s ease;
+    -moz-transition: background 0.3s ease;
+    -ms-transition: background 0.3s ease;
+    -o-transition: background 0.3s ease;
+
     color: #16c098;
   }
 }
@@ -167,14 +172,12 @@
   }
 }
 
-
-
 @media (max-width: 768px) {
   .card {
     padding: 10px; /* Elimina el padding en pantallas de teléfono */
     /* Otros ajustes que puedas necesitar */
   }
-  .text{
+  .text {
     font-size: 15px;
   }
 }

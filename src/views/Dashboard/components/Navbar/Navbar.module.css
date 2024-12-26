@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .navbar {
-  background-color: #11a380;
+  background: linear-gradient(to right, #12a380 0%, #073d30 100%);
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  box-sizing: border-box;
   font-family: 'Inter', sans-serif;
   position: fixed; /* Fijar el menú en la parte superior */
   height: 70px;
@@ -29,8 +30,8 @@
 }
 
 .hamburger img {
-  width: 24px;
-  height: 24px;
+  width: 33px;
+  height: 33px;
 }
 
 .navLinks {
@@ -77,25 +78,45 @@
   }
 
   .navLinks {
-    position: fixed; /* Fija el menú en la pantalla */
-    bottom: 0;
-    right: -100%; /* Comienza fuera de la pantalla */
-    width: 100%;
-    height: calc(100vh - 68px);
-    background-color: #11a380;
+    position: fixed;
+    /*Fijaelmenúenlapantalla*/
+    top: 0;
+    left: -100%;
+    /*Comienzafueradelapantalla*/
+    width: 70%;
+    height: 100vh;
+    background-color: white;
+    color: black;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    transition: right 0.3s ease-in-out; /* Animación suave */
-    z-index: 999; /* Asegura que el menú esté encima de otros elementos */
+    transition: left 0.3s ease-in-out;
+    /*Animaciónsuave*/
+    z-index: 999;
+    /* Asegura que el menú esté encima de otros elementos */
+    -webkit-transition: left 0.3s ease-in-out;
+    -moz-transition: left 0.3s ease-in-out;
+    -ms-transition: left 0.3s ease-in-out;
+    -o-transition: left 0.3s ease-in-out;
   }
 
+  .chevDownIcon {
+    filter: brightness(0); /* Negro */
+  }
   .navLinksOpen {
-    right: 0; /* Mueve el menú al centro */
+    left: 0; /* Mueve el menú al centro */
+    top: 0;
+    height: 100vh;
+    z-index: 9999;
   }
 
   .navLinksClosed {
-    right: -100%; /* Oculta el menú fuera de la pantalla */
+    left: -100%; /* Oculta el menú fuera de la pantalla */
+  }
+
+  .button {
+    background-color: #11a380;
+    color: white;
   }
 }
