@@ -16,10 +16,10 @@ const FreeTrial = () => {
           <img src={facturaLogo} alt='FacturaGPT' />
         </a>
         <div className={styles.btnContainer}>
-          <a href='/login'>
+          <button href='/login'>
             <img src={mail} alt='Mail Icon' />
             Registrarse con correo electrónico
-          </a>
+          </button>
           <button>
             <img src={google} alt='Google Logo' />
             Empezar con Google

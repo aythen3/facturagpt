@@ -1,14 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 .reviewsContainer {
   display: flex;
   flex-direction: column;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   align-items: center;
   padding: 50px 20px;
   width: 100vw;
 }
 .reviewsTitle {
-  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */  
+  font-size: clamp(30px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
   font-weight: 700;
   color: #18181b;
   text-align: center;
@@ -30,7 +30,7 @@
 }
 
 .reviewsDescriptionLast {
-  font-size: 22px;
+  font-size: clamp(15px, 4vw, 60px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   max-width: 720px;
   margin-top: 5px;
@@ -45,7 +45,11 @@
 }
 
 .price {
-  font-size: clamp(30px, 12vw, 140px) !important; /* Ajuste dinámico con clamp */  
+  font-size: clamp(
+    30px,
+    12vw,
+    140px
+  ) !important; /* Ajuste dinámico con clamp */
   color: #18181b;
   font-weight: 700;
   span {
@@ -59,6 +63,7 @@
   font-weight: 300;
   color: #86868b;
   font-size: 16px;
+  text-align: center;
 }
 
 .startButton {
@@ -75,4 +80,5 @@
   max-width: 360px;
   height: 57px;
   min-height: 57px;
+  text-decoration: none;
 }

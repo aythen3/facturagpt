@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import styles from "./CookiePopup.module.css";
-import cookiesAlert from '../../assets/cookiesAlert.svg'
+import React, { useState } from 'react';
+import styles from './CookiePopup.module.css';
+import cookiesAlert from '../../assets/cookiesAlert.svg';
 const CookiePopup = () => {
   const [visible, setVisible] = useState(true);
 
@@ -18,16 +18,20 @@ const CookiePopup = () => {
 
   return (
     <div className={styles.cookiePopup}>
-        <div className={styles.about}>
-            <span><img src={cookiesAlert} alt="" /></span>
-            <p>About our cookies</p>
-        </div>
+      <div className={styles.about}>
+        <span>
+          <img src={cookiesAlert} alt='' />
+        </span>
+        <p>Acerca de nuestras cookies</p>
+      </div>
       <p>
-      WinPaying.com uses cookies to give you the best browsing experience. If you continue browsing we understand that you accept our cookies policy.
+        FacturaGPT.com utiliza cookies para ofrecerte la mejor experiencia de
+        navegación. Si continúas navegando entendemos que aceptas nuestra
+        política de cookies.
       </p>
       <div className={styles.buttons}>
-        <button onClick={handleReject}>More information</button>
-        <button onClick={handleAccept}>Got it</button>
+        <button onClick={handleReject}>Más información</button>
+        <button onClick={handleAccept}>Entiendo</button>
       </div>
     </div>
   );

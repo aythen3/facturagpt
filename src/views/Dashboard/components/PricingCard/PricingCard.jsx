@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import styles from "./PricingCard.module.css";
+
+import React, { useRef, useState } from 'react';
+import styles from './PricingCard.module.css';
 
 export const PricingCard = ({
   title,
@@ -12,28 +13,27 @@ export const PricingCard = ({
   return (
     <div
       onClick={() => setSelectedCard(index)}
-      className={`${styles.card} ${selectedCard ? styles.selectedCard : ""}`}
+      className={`${styles.card} ${selectedCard ? styles.selectedCard : ''}`}
     >
       <div
+
         className={`${
           fromPricing ? styles.cardHeaderPricing : styles.cardHeader
         } ${selectedCard ? styles.selectedCardHeader : ""}`}
+
       >
         {title}
       </div>
       <div className={styles.cardBody}>
         <p
-          className={`${styles.price} ${
-            selectedCard ? styles.selectedPrice : ""
-          }`}
+          className={`${styles.price} ${selectedCard ? styles.selectedPrice : ''}`}
         >
           {price}€
         </p>
-        <span className={`${styles.subText}`}>POR DOCUMENTO</span>
+        <span className={styles.subText}>POR DOCUMENTO</span>
         <button
-          className={`${styles.button} ${
-            selectedCard ? styles.selectedButton : ""
-          }`}
+          className={`${styles.button} ${selectedCard ? styles.selectedButton : ''}`}
+
         >
           Buy Now
         </button>
@@ -45,16 +45,26 @@ export const PricingCard = ({
 const PricingCards = () => {
   const [selectedCard, setSelectedCard] = useState(2);
   const cardsData = [
-    { title: "200 Documentos", price: "0,19" },
-    { title: "+500 Documentos", price: "0,18" },
-    { title: "+1000 Documentos", price: "0,16" },
-    { title: "+2.000 Documentos", price: "0,15" },
-    { title: "+5.000 Documentos", price: "0,13" },
-    { title: "+20.000 Documentos", price: "0,11" },
+    { title: '200 Documentos', price: '0,19' },
+    { title: '+500 Documentos', price: '0,18' },
+    { title: '+1000 Documentos', price: '0,16' },
+    { title: '+2.000 Documentos', price: '0,15' },
+    { title: '+5.000 Documentos', price: '0,13' },
+    { title: '+10.000 Documentos', price: '0,12' },
+    { title: '+20.000 Documentos', price: '0,11' },
   ];
 
   return (
-    <div className={styles.cardContainer}>
+    <div
+      className={styles.cardContainer}
+      ref={containerRef}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      style={{ overflowX: 'auto', cursor: isDragging ? 'grabbing' : 'grab' }}
+    >
+
       {cardsData.map((card, index) => (
         <PricingCard
           key={index}
