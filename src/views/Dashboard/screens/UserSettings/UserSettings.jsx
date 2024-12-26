@@ -7,7 +7,7 @@ import connection from '../../assets/connection.svg';
 import passwordIcon from '../../assets/password.svg';
 import paperSearch from '../../assets/paperSearch.svg';
 import shield from '../../assets/shield.svg';
-import lock from '../../assets/Lock.svg';
+// import lock from '../../assets/Lock.svg';
 import eye from '../../assets/eye.svg';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -425,7 +425,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                 </span>
               </div>
               <div className={styles.faqItem}>
-                <img src={lock} alt='Lock' />
+                {/* <img src={lock} alt='Lock' /> */}
                 <p>Datos en entornos seguros.</p>
                 <span>
                   Cumplimos con toda la normativa y compliance en base a la

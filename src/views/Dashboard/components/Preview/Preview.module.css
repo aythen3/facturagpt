@@ -1,0 +1,249 @@
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  max-height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.previewSection {
+  border: 2px dashed #e5e7eb;
+  border-radius: 12px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.documentWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.documentImage {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.menuButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.menuIcon {
+  width: 20px;
+  height: 20px;
+  color: #6b7280;
+}
+
+.emptyPreview {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.labelsContainer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.labelDark,
+.labelBlue,
+.labelRed,
+.labelGreen,
+.labelPurple {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.labelDark {
+  background-color: #111827;
+  color: white;
+}
+
+.labelBlue {
+  background-color: #2563eb;
+  color: white;
+}
+
+.labelRed {
+  background-color: #dc2626;
+  color: white;
+}
+
+.labelGreen {
+  background-color: #059669;
+  color: white;
+}
+
+.labelPurple {
+  background-color: #7c3aed;
+  color: white;
+}
+
+.companyInfo {
+  background-color: white;
+  border-radius: 12px;
+  margin-top: 20px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.companyInfo::-webkit-scrollbar {
+  display: none;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 32px;
+  color: #111827;
+}
+
+.infoIcon {
+  width: 24px;
+  height: 24px;
+  background-color: #26a688;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.staticInfo {
+  width: 100%;
+  padding: 4px 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 1rem;
+  color: #111827;
+  text-align: right;
+  word-break: break-word;
+}
+
+.addressInfo {
+  text-align: left;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 640px) {
+  .container {
+    padding: 15px;
+  }
+
+  .previewSection {
+    min-height: 200px;
+  }
+
+  .labelDark,
+  .labelBlue,
+  .labelRed,
+  .labelGreen,
+  .labelPurple {
+    font-size: 1rem;
+    padding: 4px 8px;
+  }
+
+  .sectionTitle {
+    font-size: 1rem;
+    margin-bottom: 24px;
+  }
+
+  .formGroup label {
+    font-size: 0.875rem;
+  }
+
+  .staticInfo {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .previewSection {
+    min-height: 150px;
+  }
+
+  .menuButton {
+    width: 28px;
+    height: 28px;
+  }
+
+  .menuIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .labelDark,
+  .labelBlue,
+  .labelRed,
+  .labelGreen,
+  .labelPurple {
+    font-size: 0.875rem;
+    padding: 3px 6px;
+  }
+
+  .infoIcon {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+}

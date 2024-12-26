@@ -4,7 +4,8 @@ import facturaLogo from '../../assets/FacturaLogoGreen.svg';
 import styles from './FreeTrial.module.css';
 import google from '../../assets/Google.svg';
 import mail from '../../assets/mail.svg';
-import lock from '../../assets/Lock.svg';
+//import lock from '../../assets/Lock.svg';
+
 
 const FreeTrial = () => {
   return (
@@ -33,7 +34,7 @@ const FreeTrial = () => {
           <a href='#'>Términos y Política de Privacidad</a>
         </p>
         <p className={styles.safety}>
-          <img src={lock} alt='Lock Icon' />
+          {/* <img src={lock} alt='Lock Icon' /> */}
           Tu seguridad nos importa
         </p>
       </div>

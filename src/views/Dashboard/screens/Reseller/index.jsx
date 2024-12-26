@@ -1,4 +1,4 @@
-
+import { useState } from 'react'
 
 
 
@@ -148,6 +148,42 @@ export default Reseller
 
 
 const ComponentHeader = () => {
+
+
+    // Datos para el gráfico
+    const data = {
+        labels: ['Barra 1', 'Barra 2'],
+        series: [[30], [70]]
+    };
+
+    // Opciones del gráfico
+    const options = {
+        high: 100, // Valor máximo del eje Y (para mostrar porcentajes)
+        low: 0,    // Valor mínimo del eje Y
+        axisY: {
+            onlyInteger: true
+        }
+    };
+
+    // CSS personalizado para los colores de las barras
+    const customStyles = `
+    .ct-series-a .ct-bar {
+      stroke: #2196F3; /* Color azul para la primera barra */
+    }
+    .ct-series-b .ct-bar {
+      stroke: #FF5722; /* Color naranja para la segunda barra */
+    }
+  `;
+
+    // Agregar los estilos al documento
+    const styleSheet = document.createElement('style');
+    styleSheet.innerText = customStyles;
+    document.head.appendChild(styleSheet);
+
+    // Crear el gráfico
+    new Chartist.Bar('.ct-chart', data, options);
+
+
     return (
         <div className={styles.componentHeader}>
             <div className={styles.number}>
@@ -163,6 +199,8 @@ const ComponentHeader = () => {
             </div>
             <div className={styles.graph}>
                 graph
+                <div class="ct-chart ct-perfect-fourth"></div>
+                ----
             </div>
             <div className={styles.number}>
                 <div>
@@ -185,7 +223,7 @@ const ComponentLeft = () => {
         <div className={styles.componentLeft}>
             <div className={styles.box}>
                 <div className={styles.header}>
-                    <div>
+                    <div className={styles.title}>
                         <div>
                             <IconCall />
                             Pendientes
@@ -195,22 +233,47 @@ const ComponentLeft = () => {
                             256
                         </span>
                     </div>
-                    <div>
+                    <div className={styles.search}>
                         <IconSearch />
-                        Search
-                        <IconSearch />
+                        <input
+                            value="Search"
+                        />
+                        <button>
+                            <IconSearch />
+                        </button>
                     </div>
                 </div>
                 <div className={styles.filter}>
                     <div>
                         <LabelSelect
                             text={"Status"}
+                            items={[{
+                                text: "hello",
+                                value: "01"
+                            }, {
+                                text: "hello",
+                                value: "01"
+                            }]}
                         />
                         <LabelSelect
                             text={"Product"}
+                            items={[{
+                                text: "hello",
+                                value: "01"
+                            }, {
+                                text: "hello",
+                                value: "01"
+                            }]}
                         />
                         <LabelSelect
                             text={"Priority"}
+                            items={[{
+                                text: "hello",
+                                value: "01"
+                            }, {
+                                text: "hello",
+                                value: "01"
+                            }]}
                         />
                     </div>
                     <div>
@@ -218,14 +281,16 @@ const ComponentLeft = () => {
                         default
                     </div>
                 </div>
-                <ul className={styles.item}>
+                <ul className={styles.items}>
                     {[""].map((item, index) => (
                         <li key={index}>
-                            <div>
+                            <div className={styles.title}>
                                 Emprsesa0
-                                <IconArrow />
                             </div>
-                            High
+                            <div className={styles.status}>
+                                <IconArrow />
+                                High
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -240,29 +305,33 @@ const ComponentLeft = () => {
                     </div>
                     256
                 </div>
-                <ul className={styles.item}>
+                <ul className={styles.itemsCall}>
                     {[""].map((item, index) => (
                         <li key={index}>
-                            <div>
-                                Empresa 0
-                                <div>
+                            <div className={styles.top}>
+                                <b>
+                                    Empresa 0
+                                </b>
+                                <div className={`${styles.status} 
+                                ${true ? styles.hight : styles.medium}
+                                `}>
                                     <IconArrow />
                                     High
                                 </div>
-                                <div>
+                                <div className={styles.state}>
                                     No alcanzado
                                 </div>
                             </div>
-                            <div>
-                                <div>
+                            <div className={styles.bottom}>
+                                <div className={styles.date}>
                                     <IconDate />
                                     21.02.2023
                                 </div>
-                                <div>
+                                <div className={styles.clock}>
                                     <IconClock />
                                     11:30 AM
                                 </div>
-                                <div>
+                                <div className={styles.time}>
                                     +0,00€
                                     <IconArrow />
                                     00:31
@@ -286,7 +355,7 @@ const ComponentLeft = () => {
                     </span>
                 </div>
 
-                <ul className={styles.item}>
+                <ul className={styles.items}>
                     {[""].map((item, index) => (
                         <li key={index}>
                             <IconDot />
@@ -321,16 +390,16 @@ const ComponentLeft = () => {
 
 const ComponentRight = () => {
     return (
-        <div>
+        <div className={styles.componentRight}>
             <div className={styles.twilio}>
-                <div>
-                    <button>
+                <div className={styles.buttons}>
+                    <button className={styles.pause}>
                         <IconPause />
                     </button>
-                    <button>
+                    <button className={styles.play}>
                         <IconPlay />
                     </button>
-                    <button>
+                    <button className={styles.renaud}>
                         <IconRenaud />
                     </button>
                 </div>
@@ -339,24 +408,28 @@ const ComponentRight = () => {
                 </span>
             </div>
 
-            <div>
+            <div className={styles.containerRight}>
 
                 <div className={styles.business}>
-                    <div>
-                        Empresa1
+                    <div className={styles.title}>
+                        <label>
+                            Empresa1
+                        </label>
+                    </div>
+                    <div className={styles.status}>
                         <div>
                             <IconDot />
                             No se logro alcanzar
                         </div>
-                    </div>
-                    <div>
-                        <IconArrow />
-                        High priority
+                        <div className={4}>
+                            <IconArrow />
+                            High priority
+                        </div>
                     </div>
                 </div>
 
                 <div className={styles.buttons}>
-                    <div>
+                    <div className={styles.call}>
                         <IconCall />
                         Call
                     </div>
@@ -367,37 +440,43 @@ const ComponentRight = () => {
                 </div>
 
 
-                <div className={styles.box}>
+                <div className={styles.boxBusiness}>
                     <label>
                         Cuenta
                     </label>
-                    <div className={styles.grid}>
+                    <div className={styles.items}>
                         <div>
                             <label>
                                 Cuenta
                             </label>
                             <ul>
                                 <li>
-                                    Método de Pago
-                                </li>
-                                <li>
+                                    <IconCall />
                                     Not found
                                     Alta nuevo cliente
                                 </li>
+                                <li>
+                                    <IconCall />
+                                    Registrado coolmain@gmail.com
+                                </li>
                             </ul>
                         </div>
-                        <div>
+                        <div className={styles.methodPayment}>
                             <label>
                                 Método de Pago
                             </label>
                             <ul>
                                 <li>
-                                    Not found
-                                    Registrado
+                                    <IconCall />
+                                    <b>
+                                        Not found
+                                    </b>
                                 </li>
                                 <li>
-                                    coolmail@mail.com
-                                    ***0000
+                                    <IconCall />
+                                    <b>
+                                        ***0000
+                                    </b>
                                 </li>
                             </ul>
                         </div>
@@ -405,11 +484,11 @@ const ComponentRight = () => {
                 </div>
 
 
-                <div className={styles.box}>
+                <div className={styles.boxBusiness}>
                     <label>
                         Next Meeting
                     </label>
-                    <ul className={styles.item}>
+                    <ul className={styles.items}>
                         <li>
                             <IconGroup />
                             <div>
@@ -433,11 +512,11 @@ const ComponentRight = () => {
                         </li>
                     </ul>
                 </div>
-                <div className={styles.box}>
+                <div className={styles.boxInfo}>
                     <label>
                         Información de la empresa
                     </label>
-                    <ul className={styles.item}>
+                    <ul className={styles.items}>
                         <li className={styles.grid}>
                             <b>
                                 Email
@@ -545,18 +624,28 @@ const ComponentRight = () => {
 
 
 
-const LabelSelect = ({ text }) => {
-    // product
-    // piority
-    // default
+const LabelSelect = ({ text, items }) => {
+    const [isActive, setIsActive] = useState(false)
+
+
+    const onActive = () => {
+        setIsActive(!isActive)
+    }
+
     return (
-        <div>
-            status
+        <div
+            className={`${styles.select} ${isActive ? styles.active : ''}`}
+            onClick={onActive}
+        >
+            <span>
+                {text}
+            </span>
             <IconArrow />
             <ul>
-                {[""].map((item, index) => (
-                    <li>
-                        -----
+                {items.map((item, index) => (
+                    <li key={index}>
+                        {item.text}
+                        {item.value}
                     </li>
                 ))}
             </ul>
