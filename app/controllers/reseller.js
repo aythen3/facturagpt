@@ -239,8 +239,8 @@ const testTwilio = (req, res) => {
     const client = twilio(accountSid, authToken);
 
     // Número de Twilio, número del receptor y la URL del webhook para registrar la llamada
-    const twilioPhoneNumber = '+1234567890'; // Número de Twilio
-    const toPhoneNumber = '+0987654321'; // Número al que quieres llamar
+    const twilioPhoneNumber = '+34900759890'; // Número de Twilio
+    const toPhoneNumber = '+34667283537'; // Número al que quieres llamar
     const recordingUrl = 'https://your-domain.com/twilio/recording'; // Tu webhook
 
     // Realiza la llamada

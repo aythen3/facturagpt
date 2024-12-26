@@ -3,7 +3,7 @@ import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Mail } from "lucide-react";
+// import { Mail } from "lucide-react";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 // import {
 //   createAccount,
@@ -176,7 +176,8 @@ const DashboardLogin = () => {
         <div className={styles.content}>
           <div className={styles.leftContainer}>
             <div className={styles.mailIconContainer}>
-              <Mail size={32} className={styles.mailIcon} />
+              {/* <Mail size={32} className={styles.mailIcon} /> */}
+              icon
             </div>
             <h1 className={styles.titleOtp}>{renderTitle()}</h1>
             <p className={styles.subtitleOtp}>

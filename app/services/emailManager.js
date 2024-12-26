@@ -1,4 +1,4 @@
-import apiBackend from "@src/apiBackend.js";
+import apiBackend from "../../src/apiBackend.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const createAccount = createAsyncThunk(
