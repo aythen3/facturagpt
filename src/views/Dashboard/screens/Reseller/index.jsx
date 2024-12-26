@@ -148,6 +148,42 @@ export default Reseller
 
 
 const ComponentHeader = () => {
+
+
+    // Datos para el gráfico
+    const data = {
+        labels: ['Barra 1', 'Barra 2'],
+        series: [[30], [70]]
+    };
+
+    // Opciones del gráfico
+    const options = {
+        high: 100, // Valor máximo del eje Y (para mostrar porcentajes)
+        low: 0,    // Valor mínimo del eje Y
+        axisY: {
+            onlyInteger: true
+        }
+    };
+
+    // CSS personalizado para los colores de las barras
+    const customStyles = `
+    .ct-series-a .ct-bar {
+      stroke: #2196F3; /* Color azul para la primera barra */
+    }
+    .ct-series-b .ct-bar {
+      stroke: #FF5722; /* Color naranja para la segunda barra */
+    }
+  `;
+
+    // Agregar los estilos al documento
+    const styleSheet = document.createElement('style');
+    styleSheet.innerText = customStyles;
+    document.head.appendChild(styleSheet);
+
+    // Crear el gráfico
+    new Chartist.Bar('.ct-chart', data, options);
+
+
     return (
         <div className={styles.componentHeader}>
             <div className={styles.number}>
@@ -163,6 +199,8 @@ const ComponentHeader = () => {
             </div>
             <div className={styles.graph}>
                 graph
+                <div class="ct-chart ct-perfect-fourth"></div>
+                ----
             </div>
             <div className={styles.number}>
                 <div>
