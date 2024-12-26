@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import styles from "./FileExplorer.module.css";
 import { ReactComponent as FolderIcon } from "../../assets/folder.svg";
 import { ReactComponent as ImageIcon } from "../../assets/image-icon.svg";
@@ -7,7 +8,10 @@ import { ReactComponent as CsvIcon } from "../../assets/csv-icon.svg";
 import { ReactComponent as PngIcon } from "../../assets/png-icon.svg";
 import { Search, AlignRight } from "lucide-react";
 
+import Filter from "./Filters";
+
 export default function FileExplorer() {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.searchContainer}>
@@ -20,10 +24,15 @@ export default function FileExplorer() {
             placeholder="Buscar"
             className={styles.searchInput}
           />
-          <button className={styles.menuIcon}>
+          <button
+            className={styles.menuIcon}
+            onClick={() => setIsFilterOpen(true)}
+          >
             <AlignRight size={20} />
           </button>
         </div>
+
+        <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
       </div>
 
       <div className={styles.folderSection}>

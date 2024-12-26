@@ -1,0 +1,187 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  width: 742px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a202c;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.content {
+  padding: 24px;
+}
+
+.accountSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  justify-content: space-between;
+}
+
+.accountContent {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.gmailIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.selectContainer {
+  flex-grow: 1;
+  max-width: 320px;
+}
+
+.addConnection {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.section {
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.sectionIcon {
+  width: 24px;
+  height: 24px;
+  color: #4a5568;
+}
+
+.sectionContent {
+  flex: 1;
+}
+
+.label {
+  font-weight: 500;
+  color: #1a202c;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  background-color: #f8fafc;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.input::placeholder {
+  color: #a0aec0;
+}
+
+.recipientsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.recipientTag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #edf2f7;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.infoBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  margin-top: 8px;
+  border-left: 4px solid #6b46c1;
+}
+
+.infoIcon {
+  color: #6b46c1;
+}
+
+.infoText {
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primaryButton {
+  padding: 8px 16px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primaryButton:hover {
+  background: #059669;
+}
