@@ -43,6 +43,7 @@ export const PricingCard = ({
 };
 
 const PricingCards = () => {
+  const containerRef = useRef()
   const [selectedCard, setSelectedCard] = useState(2);
   const cardsData = [
     { title: '200 Documentos', price: '0,19' },
@@ -58,11 +59,14 @@ const PricingCards = () => {
     <div
       className={styles.cardContainer}
       ref={containerRef}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      style={{ overflowX: 'auto', cursor: isDragging ? 'grabbing' : 'grab' }}
+      // onMouseDown={handleMouseDown}
+      // onMouseMove={handleMouseMove}
+      // onMouseUp={handleMouseUp}
+      // onMouseLeave={handleMouseUp}
+      style={{
+         overflowX: 'auto', 
+        // cursor: isDragging ? 'grabbing' : 'grab' 
+      }}
     >
 
       {cardsData.map((card, index) => (
