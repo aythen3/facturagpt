@@ -1,0 +1,148 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #666;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.filterSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.filterSection label {
+  font-size: 14px;
+  color: #666;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #eaeaea;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #eaeaea;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+}
+
+.amountContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.amountInput {
+  display: flex;
+  align-items: center;
+  border: 1px solid #eaeaea;
+  border-radius: 6px;
+  padding: 8px 12px;
+  flex: 1;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.amountInput span {
+  color: #666;
+  margin-right: 4px;
+}
+
+.amountInput input {
+  border: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.amountInput input:focus {
+  outline: none;
+}
+
+.currencySelect {
+  padding: 8px 12px;
+  border: 1px solid #eaeaea;
+  border-radius: 6px;
+  background: white;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+}

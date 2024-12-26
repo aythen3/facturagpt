@@ -1,49 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 .container {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
-  font-family: 'Poppins', sans-serif;
-  height: 100vh;
-  width: 100vw;
-  align-items: center;
-  justify-content: center;
-  gap: 80px;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 24px;
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .leftContainer {
-  padding: 48px;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;    
-  max-width: 535px;
+  justify-content: center;
+  max-width: 400px;
 }
 
 .rightContainer {
   display: flex;
-    background-image: url('../../assets/LoginArt.png');
-    background-size: cover;
-    background-position: center;
-    border-radius: 8px;
-    width: calc(100% - 48px);
-    max-width: 816px;
-    height: calc(100vh - 60px);
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  max-width: 600px;
+}
 
-  }
-  
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.logoText {
+  font-size: 48px;
+  font-weight: 500;
+  color: #162d3a;
+}
 
 .title {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 600;
   color: #000000;
   margin-bottom: 16px;
 }
 
-.subtitle {
+.titleOtp {
   font-size: 20px;
-  color: #292D32;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #292d32;
   font-weight: 400;
   line-height: 1.5;
   margin-bottom: 20px;
+}
+
+.subtitleOtp {
+  font-size: 18px;
+  color: #292d32;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .form {
@@ -52,121 +96,231 @@
 }
 
 .label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  color: #292D32;
+  color: #292d32;
   margin-bottom: 8px;
 }
 
 .input {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #E0E0E0;
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 14px;
-  color: #292D32;
-  margin-bottom: 24px;
-  background-color: #F8F9FA;
+  color: #292d32;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+}
+
+.passwordRequirements {
+  color: #8897ad;
+  font-size: 11px;
+  margin-top: -12px;
+}
+
+.forgotPasswordContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.rememberMe {
+  font-size: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .forgotPassword {
-  font-size: 16px;
-  color: #1E4AE9;
+  font-size: 12px;
+  color: #8951dc;
   text-align: right;
   font-weight: 400;
-  margin-bottom: 24px;
   text-decoration: none;
 }
 
 .signInButton {
   width: 100%;
-  padding:  0px 12px;
-  background-color: #162D3A;
-  color: #FFFFFF;
-  font-size: 20px;
-  height: 52px;
+  padding: 0px 12px;
+  background-color: #162d3a;
+  color: #ffffff;
+  font-size: 18px;
+  height: 48px;
   font-weight: 400;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 32px;
-}
-
-.line {
-  flex: 1;
-  height: 1px;
-  background-color: #CFDFE2;
-}
-
-.or {
-  margin: 0 16px;
-  font-size: 14px;
-  color: #294957;
-}
-
-.socialLogin {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.socialButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 52px;
-  border-radius: 12px;
-  background-color: #F3F9FA;
-  font-size: 16px;
-  color: #292D32;
-  font-weight: 400;
-  cursor: pointer;
-}
-.innerButton {
-    display: flex;
-    flex-direction: row; 
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    width: 220px;
-}
-.icon {
-  height: 28px;
-  width: 28px;
 }
 
 .footerText {
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   font-weight: 400;
   color: #313957;
-  a {
-    cursor: pointer;
-    user-select: none;
-  }
+}
+
+.footerText a {
+  cursor: pointer;
+  user-select: none;
 }
 
 .signUp {
-  color: #1E4AE9;
+  color: #1e4ae9;
   text-decoration: none;
   font-weight: 500;
 }
 
 .footer {
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
-  color: #959CB6;
+  color: #959cb6;
   font-weight: 400;
-  margin-top: 24px;
+  margin-top: 20px;
+}
+
+.mailIconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.mailIcon {
+  color: #162d3a;
+}
+
+.emailDisplay {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.resendContainer {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.resendButton {
+  color: #162d3a;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.timer {
+  color: #162d3a;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.securityNote {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 32px;
+}
+
+.lockIcon {
+  font-size: 14px;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: normal;
+    gap: 20px;
+  }
+
+  .leftContainer,
+  .rightContainer {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .leftContainer {
+    max-height: 500px;
+  }
+
+  .rightContainer {
+    order: -1;
+    background-image: none;
+    height: 100px;
+    margin-top: 40px;
+  }
+
+  .logoContainer {
+    background-color: transparent;
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logoText {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: 16px;
+  }
+
+  .forgotPasswordContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .logoText {
+    font-size: 18px;
+  }
 }

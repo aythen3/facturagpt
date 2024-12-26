@@ -1,13 +1,28 @@
 import React from "react";
 import styles from "./PricingPlanCard.module.css";
 import tick from "../../assets/pricingCardTick.svg";
+
 const PricingPlanCard = ({
   title,
   price,
   documentPrices,
   features,
   priceTag,
+  sliderValue,
 }) => {
+  const getDocumentPrice = () => {
+    if (sliderValue <= 10) return ""; // Hasta 20 documentos
+    if (sliderValue <= 20) return "0,20"; // +20 documentos
+    if (sliderValue <= 30) return "0,19"; // +200 documentos
+    if (sliderValue <= 40) return "0,18"; // +500 documentos
+    if (sliderValue <= 50) return "0,16"; // +1000 documentos
+    if (sliderValue <= 60) return "0,15"; // +2.000 documentos
+    if (sliderValue <= 70) return "0,13"; // +5.000 documentos
+    if (sliderValue <= 80) return "0,11"; // +20.000 documentos
+    if (sliderValue <= 90) return "0,09"; // +50.000 documentos
+    return "0,05"; // +100.000 documentos
+  };
+
   return (
     <div className={styles.pricingCardContainer}>
       <div className={styles.pricingBox}>
@@ -16,11 +31,9 @@ const PricingPlanCard = ({
           <span className={styles.perMonth}>/mes</span>
         </p>
         {priceTag && <span className={styles.priceTag}>{priceTag}</span>}
-        {documentPrices.map((docPrice, index) => (
-          <p key={index} className={styles.docPrice}>
-            {docPrice}
-          </p>
-        ))}
+        {sliderValue > 10 && (
+          <p className={styles.docPrice}>{getDocumentPrice()}€ por documento</p>
+        )}
       </div>
       <div className={styles.planDetails}>
         <h2 className={styles.planTitle}>

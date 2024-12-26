@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Pricing.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { plansData } from "./plans";
@@ -11,7 +11,13 @@ import googleLogo from "../../assets/googleLogo.svg";
 import googleStar from "../../assets/googleStar.svg";
 
 const Pricing = () => {
-  const [selectedCard, setSelectedCard] = useState(3);
+  const [sliderValue, setSliderValue] = useState(100);
+  const [selectedCard, setSelectedCard] = useState(9);
+  const [currentPlan, setCurrentPlan] = useState({
+    documents: "+100.000 Documentos",
+    price: "0,05",
+  });
+
   const cardsData = [
     { title: "Hasta 20 Documentos", price: "FREE" },
     { title: "+20 Documentos", price: "0,20" },
@@ -25,6 +31,33 @@ const Pricing = () => {
     { title: "+100.000 Documentos", price: "0,05" },
   ];
 
+  useEffect(() => {
+    const index = Math.min(Math.floor(sliderValue / 10), cardsData.length - 1);
+    const card = cardsData[index];
+    if (card) {
+      setCurrentPlan({
+        documents: card.title,
+        price: card.price,
+      });
+      setSelectedCard(index);
+    }
+  }, [sliderValue]);
+
+  const handleSliderChange = (event) => {
+    setSliderValue(Number(event.target.value));
+  };
+
+  const getSelectedPlanIndex = () => {
+    if (sliderValue <= 10) return 0;
+    if (sliderValue <= 60) return 1;
+    if (sliderValue <= 80) return 2;
+    if (sliderValue <= 90) return 3;
+    return 4;
+  };
+
+  const selectedPlanIndex = getSelectedPlanIndex();
+  const selectedPlan = plansData[selectedPlanIndex];
+
   return (
     <div className={styles.pricingContainer}>
       <Navbar />
@@ -34,22 +67,41 @@ const Pricing = () => {
           Elige el mejor plan que se adapte a tus necesidades.
         </p>
         <div className={styles.backgroundBar}>
-          <div className={styles.filledBar}></div>
-          <div className={styles.thumb}></div>
-          <div className={styles.absoluteText}>+100.000 Documentos/mes</div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={sliderValue}
+            onChange={handleSliderChange}
+            className={styles.slider}
+          />
+          <div
+            className={styles.filledBar}
+            style={{ width: `${sliderValue}%` }}
+          ></div>
+          <div
+            className={styles.thumb}
+            style={{ left: `calc(${sliderValue}% + 9px)` }}
+          ></div>
+          <div
+            className={styles.absoluteText}
+            style={{ left: `calc(${sliderValue}% + 12.5px)` }}
+          >
+            {currentPlan.documents}/mes
+          </div>
         </div>
       </div>
       <div className={styles.plansCardsContainer}>
-        {plansData.map((plan, index) => (
-          <PricingPlanCard
-            key={index}
-            title={plan.title}
-            price={plan.price}
-            priceTag={plan.priceTag}
-            documentPrices={plan.documentPrices}
-            features={plan.features}
-          />
-        ))}
+        <PricingPlanCard
+          key={selectedPlanIndex}
+          title={selectedPlan.title}
+          price={selectedPlan.price}
+          priceTag={selectedPlan.priceTag}
+          documentPrices={selectedPlan.documentPrices}
+          features={selectedPlan.features}
+          isSelected={true}
+          sliderValue={sliderValue}
+        />
       </div>
       <span className={styles.microText}>
         Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en
@@ -82,7 +134,6 @@ const Pricing = () => {
         donar para ayudar a crear más funcionalidades.
       </span>
 
-      {/* aca google y trust */}
       <div className={styles.trustContainer}>
         <div className={styles.googleCard}>
           <div className={styles.starsContainer}>
@@ -151,7 +202,6 @@ const Pricing = () => {
       <span className={styles.greenLightText}>
         No te olvides, si ha sido útil, escribe una reseña.
       </span>
-      {/* aca google y trust */}
 
       <h1 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h1>
       <span className={styles.reviewsDescriptionLast}>

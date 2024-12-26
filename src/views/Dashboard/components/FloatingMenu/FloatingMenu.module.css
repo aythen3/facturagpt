@@ -1,0 +1,105 @@
+.fabContainer {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 1000;
+}
+
+.fab {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.fab::after {
+  content: "";
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #223f39;
+}
+
+.fab:hover {
+  transform: scale(1.05);
+}
+
+.fabIcon {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  width: 28px;
+  height: 28px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.menuContainer {
+  position: absolute;
+  bottom: 70px;
+  left: 85px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 12px 0;
+  min-width: 300px;
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+  transform-origin: bottom left;
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.menuOpen {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: all;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #374151;
+  cursor: pointer;
+  text-align: left;
+}
+
+.menuItem:hover {
+  background-color: #f3f4f6;
+}
+
+.menuIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuText {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
