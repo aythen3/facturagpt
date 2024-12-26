@@ -3,15 +3,15 @@ import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Mail } from "lucide-react";
+// import { Mail } from "lucide-react";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import {
   createAccount,
   loginToManager,
   sendOTP,
   verifyOTP,
-} from "../../../views/app/v1-1/actions/emailManager";
-import { setUser } from "../../../views/app/v1-1/slices/emailManagerSlices";
+} from "../../../../actions/emailManager";
+import { setUser } from "../../../../slices/emailManagerSlices";
 
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
@@ -176,7 +176,8 @@ const DashboardLogin = () => {
         <div className={styles.content}>
           <div className={styles.leftContainer}>
             <div className={styles.mailIconContainer}>
-              <Mail size={32} className={styles.mailIcon} />
+              {/* <Mail size={32} className={styles.mailIcon} /> */}
+              icon
             </div>
             <h1 className={styles.titleOtp}>{renderTitle()}</h1>
             <p className={styles.subtitleOtp}>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: 'https://facturagpt.com/service/v1',
+  baseURL: 'https://facturagpt.com/api',
   // baseURL: "http://localhost:3001/service/v1",
   maxContentLength: Infinity,
   maxBodyLength: Infinity,
