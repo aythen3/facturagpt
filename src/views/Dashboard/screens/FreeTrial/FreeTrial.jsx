@@ -4,7 +4,8 @@ import facturaLogo from '../../assets/FacturaLogoGreen.svg';
 import styles from './FreeTrial.module.css';
 import google from '../../assets/Google.svg';
 import mail from '../../assets/mail.svg';
-// import lock from '../../assets/Lock.svg';
+//import lock from '../../assets/Lock.svg';
+
 
 const FreeTrial = () => {
   return (
