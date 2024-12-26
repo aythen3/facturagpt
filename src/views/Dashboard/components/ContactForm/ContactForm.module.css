@@ -39,7 +39,7 @@ form {
 }
 
 .subtitle {
-  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(6px, 4vw, 30px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   color: #18181b;
   margin-bottom: 2rem;

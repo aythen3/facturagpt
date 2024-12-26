@@ -20,7 +20,7 @@ import drive from '../../assets/drive.svg';
 import onedrive from '../../assets/onedrive.svg';
 import droopbox from '../../assets/droopbox.svg';
 import Reviews from '../../components/Reviews/Reviews';
-
+import CompatibleProgramsSection from '../../components/CompatibleProgramsSection/CompatibleProgramsSection';
 const Packs = () => {
   const [sliderValue, setSliderValue] = useState(1000000); // Inicializado en 1M
 
@@ -163,7 +163,8 @@ const Packs = () => {
       <span className={styles.regular08}>
         Sube, recibe o emite facturas y automatiza tu proceso de facturación
       </span>
-      <div className={styles.compatibleProgramsContainer}>
+      <CompatibleProgramsSection />
+      {/* <div className={styles.compatibleProgramsContainer}>
         {compatiblePrograms.map((card, index) => (
           <div
             className={`${styles.innerCard} ${
@@ -174,7 +175,7 @@ const Packs = () => {
             <img src={card} alt='card' />
           </div>
         ))}
-      </div>
+      </div> */}
       <Reviews />
     </div>
   );
