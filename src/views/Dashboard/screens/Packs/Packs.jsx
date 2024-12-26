@@ -1,27 +1,32 @@
-import React, { useState } from "react";
-import styles from "./Packs.module.css";
-import PricingCards from "../../components/PricingCard/PricingCard";
-import BillingSlider from "../../components/BillingSlider/BillingSlider";
-import flag from "../../assets/flag.svg";
-import heart from "../../assets/heart.svg";
-import pdf from "../../assets/pdf.svg";
-import jpg from "../../assets/jpg.svg";
-import txt from "../../assets/txt.svg";
-import png from "../../assets/png.svg";
-import outlook from "../../assets/outlook.svg";
-import gmail from "../../assets/gmail.svg";
-import xslx from "../../assets/xlsx.svg";
-import odoo from "../../assets/odoo.svg";
-import logoImage from "../../assets/logoImage.svg";
-import stripe from "../../assets/stripe.svg";
-import Reviews from "../../components/Reviews/Reviews";
-
+import React, { useState } from 'react';
+import styles from './Packs.module.css';
+import PricingCards from '../../components/PricingCard/PricingCard';
+import BillingSlider from '../../components/BillingSlider/BillingSlider';
+import flag from '../../assets/flag.svg';
+import heart from '../../assets/heart.svg';
+import pdf from '../../assets/pdf.svg';
+import jpg from '../../assets/jpg.svg';
+import txt from '../../assets/txt.svg';
+import png from '../../assets/png.svg';
+import outlook from '../../assets/outlook.svg';
+import gmail from '../../assets/gmail.svg';
+import xslx from '../../assets/xlsx.svg';
+import odoo from '../../assets/odoo.svg';
+import logoImage from '../../assets/logoImage.svg';
+import stripe from '../../assets/stripe.svg';
+import excel from '../../assets/excel.svg';
+import mail from '../../assets/gmail.svg';
+import drive from '../../assets/drive.svg';
+import onedrive from '../../assets/onedrive.svg';
+import droopbox from '../../assets/droopbox.svg';
+import Reviews from '../../components/Reviews/Reviews';
+import CompatibleProgramsSection from '../../components/CompatibleProgramsSection/CompatibleProgramsSection';
 const Packs = () => {
   const [sliderValue, setSliderValue] = useState(1000000); // Inicializado en 1M
 
   // Calcular el número de facturas según el valor del slider
   const facturasPorMillon = 2000; // 1 millón = 2000 facturas
-  const facturasTotales = sliderValue * facturasPorMillon / 1000000; // Dividir por 1 millón para que la multiplicación sea correcta
+  const facturasTotales = (sliderValue * facturasPorMillon) / 1000000; // Dividir por 1 millón para que la multiplicación sea correcta
 
   // Calcular las horas (cada factura toma 5 minutos)
   const horasTotales = (facturasTotales * 5) / 60; // Convertir minutos a horas
@@ -30,13 +35,11 @@ const Packs = () => {
   const valorEnDolares = horasTotales * 10;
 
   // Formatear los números con separadores de miles
-  const formatNumber = (number) => {
-    return new Intl.NumberFormat("es-ES").format(number); // Esto formatea con comas como separadores de miles
-  };
+  const formatNumber = (value) => value.toLocaleString('en-US');
 
   // Formatear el valor en dólares con el signo €
   const formatCurrency = (value) => {
-    return `${new Intl.NumberFormat("es-ES").format(value)}€`;
+    return `${new Intl.NumberFormat('en-US').format(value)}€`;
   };
 
   const cardsData = [pdf, jpg, txt, png];
@@ -44,25 +47,61 @@ const Packs = () => {
 
   const steps = [
     {
-      step: "Paso 1",
-      title: "Conecta tu Inbox",
+      step: 'Paso 1',
+      title: 'Inicia sesión',
       description:
-        "En un solo paso dejarás conectada y sincronizada tu bandeja de entrada a la IA",
+        'Conecta en un solo paso, gmail, drive, dropbox, etc.. y sincroniza tu bandeja de entrada',
     },
     {
-      step: "Paso 2",
-      title: "Facturación con GPT",
-      description: "Reconoce con GPT todas tus facturas y conecta con terceros",
+      step: 'Paso 2',
+      title: 'Factura con GPT',
+      description:
+        'Reconoce todas tus facturas, recibos, etc.. y conecta con terceros',
     },
     {
-      step: "Paso 3",
-      title: "Ahorra un 88% de tiempo",
+      step: 'Paso 3',
+      title: 'Ahorra un 88% de tiempo',
       description:
-        "Tu proceso 100% automatizado, 24h y 7 días a la semana disponible",
+        'Tu proceso 100% automatizado, 24h y 7 días a la semana disponible',
     },
   ];
+
+  const LogoIcons = [
+    {
+      title: 'excel',
+      image: excel,
+    },
+    {
+      title: 'gmail',
+      image: mail,
+    },
+    {
+      title: 'outlook',
+      image: outlook,
+    },
+    {
+      title: 'drive',
+      image: drive,
+    },
+    {
+      title: 'onedrive',
+      image: onedrive,
+    },
+    {
+      title: 'droopbox',
+      image: droopbox,
+    },
+  ];
+
   return (
     <div className={styles.packsContainer}>
+      <div className={styles.logoContainer}>
+        {LogoIcons.map((icon, index) => (
+          <div key={index}>
+            <img src={icon.image} alt={icon.title} />
+          </div>
+        ))}
+      </div>
       <div className={styles.wrapper}>
         {steps.map((step, index) => (
           <div key={index} className={styles.card}>
@@ -72,15 +111,21 @@ const Packs = () => {
           </div>
         ))}
       </div>
-
-      <BillingSlider setSliderValue={setSliderValue} sliderValue={sliderValue} />
+      <BillingSlider
+        setSliderValue={setSliderValue}
+        sliderValue={sliderValue}
+      />
       <span className={styles.packsDescription}>
-        Las empresas tardan entre 5 - 10 minutos en gestionar una factura. Una
-        empresa de <strong>{sliderValue / 1000000} M</strong> tiene alrededor de <strong>{formatNumber(facturasTotales)}</strong> facturas, con facturaGPT ahorra{" "}
-        <strong>{horasTotales.toFixed(2)}</strong> horas y gana más de <strong>{formatCurrency(valorEnDolares)}</strong> en facturación.
+        Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
+        empresa con una facturación de{' '}
+        <strong>{sliderValue / 1000000} M</strong> genera aproximadamente{' '}
+        <strong>{formatNumber(facturasTotales).replace(/,/g, '.')}</strong>{' '}
+        facturas al año. Con FacturaGPT, puedes ahorrar más de{' '}
+        <strong>{horasTotales.toFixed(2)}</strong> horas en tareas repetitivas y
+        obtener un beneficio de más de{' '}
+        <strong>{formatCurrency(valorEnDolares)}</strong> anuales.
       </span>
       <PricingCards />
-
       <div className={styles.banner}>
         <h3 className={styles.bannerTitle}>
           Reduce la entrada manual en un 88%
@@ -92,34 +137,34 @@ const Packs = () => {
           Reduce el tiempo de respuesta en un 57 %
         </h3>
       </div>
-
       <div className={styles.extensionsTitle}>
-        <img className={styles.flag} src={flag} alt="flag" />
-        Extensiones
+        <img className={styles.flag} src={flag} alt='flag' />
+        Formatos y Extensiones
       </div>
       <span className={styles.regular08}>
-        Reconoce los archivos de los siguientes formatos de manera que puedas
-        ahorrar tiempo y esfuerzos en gestionar tus facturas.
+        Puedes conectar cualquier tipo de formato digital, escaneado, foto..
+        Disponible en más de +10 formatos disponibles
       </span>
       <div className={styles.dashedContainer}>
         {cardsData.map((card, index) => (
           <div className={styles.innerCard} key={index}>
             <img
-              className={index === 0 ? styles.pdfIcon : styles.normalIcon}
+              className={index === 0 ? styles.pdfIcon : styles.pdfIcon}
               src={card}
-              alt="card"
+              alt='card'
             />
           </div>
         ))}
       </div>
       <div className={styles.extensionsTitle}>
-        <img className={styles.heart} src={heart} alt="heart" />
+        <img className={styles.heart} src={heart} alt='heart' />
         Programas Compatibles
       </div>
       <span className={styles.regular08}>
         Sube, recibe o emite facturas y automatiza tu proceso de facturación
       </span>
-      <div className={styles.compatibleProgramsContainer}>
+      <CompatibleProgramsSection />
+      {/* <div className={styles.compatibleProgramsContainer}>
         {compatiblePrograms.map((card, index) => (
           <div
             className={`${styles.innerCard} ${
@@ -127,10 +172,10 @@ const Packs = () => {
             } ${index === 5 && styles.innerStripe}`}
             key={index}
           >
-            <img src={card} alt="card" />
+            <img src={card} alt='card' />
           </div>
         ))}
-      </div>
+      </div> */}
       <Reviews />
     </div>
   );

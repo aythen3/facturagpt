@@ -56,6 +56,7 @@ const Layout = () => {
         <Provider store={store}>
           <BrowserRouter>
             <Routes>
+
               <Route path="/login" element={<DashboardLogin />} />
               <Route path="/landing" element={<LandingPage />} />
               <Route path="/pricing" element={<Pricing />} />
@@ -66,6 +67,7 @@ const Layout = () => {
               <Route path="/userSettings" element={<UserSettings />} />
               <Route path="*" element={<LandingPage />} />
               <Route path="/Panel" element={<InvoicePanel />} />
+
             </Routes>
           </BrowserRouter>
         </Provider>

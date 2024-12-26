@@ -1,34 +1,45 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 .container {
-  display: flex;
-  font-family: "Inter", sans-serif;
+  display: flex !important;
+  font-family: 'Inter', sans-serif;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  margin-bottom: 150px;
-  
+  margin-bottom: 100px;
+  margin-top: 15px;
 }
-.content{
+.content {
   display: flex;
-  width: 85%;
+  width: 75%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  input,
+  textarea {
+    width: 100%;
+  }
 }
 
 /* Left Section */
 .leftSection {
-  width: 50%;
+  width: 100%;
 }
 
 .title {
-  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */  
-    font-weight: bold;
+  font-size: clamp(35px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
+  font-weight: bold;
   color: #18181b;
   margin-bottom: 0.5rem;
 }
 
 .subtitle {
-  font-size: 22px;
+  font-size: clamp(6px, 4vw, 30px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   color: #18181b;
   margin-bottom: 2rem;
@@ -37,6 +48,7 @@
 /* Form Inputs */
 .inputGroup {
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 label {
@@ -50,10 +62,11 @@ label {
 .textarea {
   width: 100%;
   outline: none;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #f4f4f4;
   border-radius: 8px;
   font-size: 14px;
   padding: 1rem;
+  background-color: #f4f4f4;
   color: #71717a;
   &:focus {
     border: 2px solid #dadbdd;
@@ -71,7 +84,7 @@ label {
 
 /* Button */
 .button {
-  background-color: #16c098;
+  background-color: #233f39;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -100,31 +113,54 @@ label {
   opacity: 0.9;
 }
 
-
-
 @media (max-width: 768px) {
-
-  .content{
+  .content {
     width: 99%;
   }
 
-
-  .leftSection{  
+  .leftSection {
     width: 100%;
 
-    form{
+    form {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 0 20px;
 
-      .inputGroup{
+      .inputGroup {
         width: 100%;
       }
     }
-
   }
 
-  .rightSection{
+  .rightSection {
     display: none;
   }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85%;
+}
+
+.leftImage,
+.rightImage {
+  width: 50px; /* Adjust size as needed */
+  height: auto;
+}
+.rightImage {
+  transform: scaleX(-1);
+}
+.textContainer {
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
 }

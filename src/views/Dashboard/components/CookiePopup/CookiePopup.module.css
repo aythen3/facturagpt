@@ -1,62 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+}
 .cookiePopup {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #191919;
-    padding: 16px;
-    border-radius: 8px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 450px;
-  }
-  
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #191919;
+  padding: 16px;
+  border-radius: 8px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 450px;
+}
 
+.cookiePopup p {
+  font-size: 12px;
+  color: #9b9b9b;
+}
 
-  .cookiePopup p {
-    font-size: 12px;
-    color: #9B9B9B;
-  }
-  
-  .cookiePopup .buttons {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .cookiePopup button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .cookiePopup button:first-of-type {
-    background-color: #9B9B9B;
-    color: #fff;
-  }
-  
-  .cookiePopup button:last-of-type {
-    background-color: #A01626;
-    color: #fff;
-  }
-  .about{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    p{
-      color: white;
-      margin: 0;
+.cookiePopup .buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.cookiePopup button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cookiePopup button:first-of-type {
+  background-color: #f5f5f5;
+  color: #71717a;
+}
+
+.cookiePopup button:last-of-type {
+  background-color: #338874;
+  color: #fff;
+}
+.about {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  p {
+    color: white;
+    margin: 0;
   }
 }
 
 @media (max-width: 500px) {
-    .cookiePopup {
-        width: 100vw;
-        bottom: 0px;
-        right: 0px;
-        border-radius: 0px;
-      }
-      
+  .cookiePopup {
+    width: 80vw;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    border-radius: 20px;
+    -webkit-transform: translateX(50%);
+    -moz-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    -o-transform: translateX(50%);
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+  }
 }

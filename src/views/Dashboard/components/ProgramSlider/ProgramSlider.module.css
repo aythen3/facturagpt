@@ -1,0 +1,175 @@
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  position: relative;
+}
+
+.arrowLeft {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+}
+
+.button {
+  background-color: #16c098;
+  color: #fff;
+  border: none;
+  min-height: 56px;
+  min-width: 56px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 100%;
+  position: relative;
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: #aaa;
+}
+
+.hidden {
+  visibility: hidden; /* Oculta el botón visualmente */
+  opacity: 0; /* Opcional para suavizar la desaparición */
+}
+
+.button:first-of-type {
+  left: 10px;
+}
+
+.button:last-of-type {
+  right: 10px;
+}
+
+.programsContainer {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.program {
+  position: absolute;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  opacity: 0;
+  transform: translateX(0);
+  transition:
+    transform 0.5s ease-in-out,
+    opacity 0.5s ease-in-out;
+}
+
+.program img {
+  width: 100px;
+  height: auto;
+}
+
+.program h3 {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #0c745b;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.program .description {
+  font-size: 14px;
+  color: #2d8772;
+  background-color: #88e3cec3;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 5px 10px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.program .description img {
+  width: 10px;
+  height: auto;
+  margin-right: 5px;
+}
+
+/* Animaciones de entrada y salida */
+.enterRight {
+  opacity: 1;
+  transform: translateX(100%);
+  animation: slideInRight 0.5s forwards;
+}
+
+.enterLeft {
+  opacity: 1;
+  transform: translateX(-100%);
+  animation: slideInLeft 0.5s forwards;
+}
+
+.exitRight {
+  opacity: 0;
+  transform: translateX(0);
+  animation: slideOutRight 0.5s forwards;
+}
+
+.exitLeft {
+  opacity: 0;
+  transform: translateX(0);
+  animation: slideOutLeft 0.5s forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
