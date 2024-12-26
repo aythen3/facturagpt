@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { Mail } from "lucide-react";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
-// import {
-//   createAccount,
-//   loginToManager,
-//   sendOTP,
-//   verifyOTP,
-// } from "../../../views/app/v1-1/actions/emailManager";
+import {
+  createAccount,
+  loginToManager,
+  sendOTP,
+  verifyOTP,
+} from "../../../../actions/emailManager";
 // import { setUser } from "../../../views/app/v1-1/slices/emailManagerSlices";
 
 const DashboardLogin = () => {
@@ -31,7 +31,7 @@ const DashboardLogin = () => {
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
       localStorage.setItem("emailManagerAccount", JSON.stringify(user));
-      navigate("/dashboard/home");
+      navigate("/home");
     }
   }, [user, navigate]);
 

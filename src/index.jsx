@@ -62,7 +62,7 @@ const Layout = () => {
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/home" element={<Dashboard />} />
               <Route path="/reseller" element={<Reseller />} />
-              <Route path="/dashboard/freetrial" element={<FreeTrial />} />
+              <Route path="/freetrial" element={<FreeTrial />} />
               <Route path="/usersPermissions" element={<UsersPermissions />} />
               <Route path="/userSettings" element={<UserSettings />} />
               <Route path="*" element={<LandingPage />} />
