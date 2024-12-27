@@ -78,9 +78,10 @@
 .sidebar {
   position: fixed;
   top: 0;
-  right: -300px; /* Cambiado a -300px para que coincida con el ancho de la barra lateral */
-  width: 300px;
-  height: 100%;
+  right: -800px; /* Cambiado a -300px para que coincida con el ancho de la barra lateral */
+  width: 400px;
+  height: 100vh;
+  overflow-y: scroll;
   background-color: white;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   z-index: 1000;
@@ -88,6 +89,12 @@
     right 0.3s ease-in-out,
     opacity 0.3s ease-in-out; /* Agregado efecto de opacidad */
   color: black;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 .show {

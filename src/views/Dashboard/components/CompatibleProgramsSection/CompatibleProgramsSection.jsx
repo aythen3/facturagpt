@@ -36,8 +36,7 @@ const CompatibleProgramsSection = () => {
           'Chatea con FacturaGPT para crear facturas',
         ],
       },
-    ],
-    [
+
       {
         logo: odoo,
         name: 'Odoo',

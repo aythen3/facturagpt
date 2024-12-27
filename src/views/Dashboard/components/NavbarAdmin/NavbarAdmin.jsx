@@ -7,9 +7,7 @@ import peopleIcon from '../../assets/peopleIcon.svg';
 import headphonesIcon from '../../assets/headphonesIcon.svg';
 import AccountSettings from '../AccountSettings/AccountSettings';
 
-const NavbarAdmin = () => {
-  const [showSidebar, setShowSidebar] = useState(false);
-
+const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
   const handleProfileClick = () => {
     setShowSidebar(!showSidebar);
   };
@@ -17,7 +15,7 @@ const NavbarAdmin = () => {
   return (
     <div className={styles.navbarAdmin}>
       <div className={styles.navbarAdminIcons}>
-        <a href='#'>
+        <a href='/'>
           <img src={facturaGPT} alt='' />
         </a>
         <a href='#'>

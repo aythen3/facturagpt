@@ -311,11 +311,12 @@ const Dashboard = () => {
   useEffect(() => {
     console.log('showPaymentModal changed to', showPaymentModal);
   }, [showPaymentModal]);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   return (
     <Elements stripe={stripePromise}>
-      <NavbarAdmin />
-      <div className={styles.container}>
+      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <div className={styles.container} onClick={() => setShowSidebar(false)}>
         {showPaymentModal && amountToPay && (
           <Payment
             onClose={() => setShowPaymentModal(false)}

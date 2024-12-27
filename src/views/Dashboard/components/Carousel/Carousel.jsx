@@ -44,7 +44,7 @@ const Carousel = () => {
   }, [currentIndex]);
 
   const translateX = isMobile
-    ? -currentIndex * 100
+    ? -currentIndex * 85
     : -(currentIndex - 1) * (100 / 3);
 
   return (
