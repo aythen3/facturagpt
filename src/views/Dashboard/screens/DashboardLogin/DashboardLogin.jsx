@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
+import facturaLogo from "../../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 // import { Mail } from "lucide-react";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
+import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
+import { LockIcon } from "lucide-react";
 // import {
 //   createAccount,
 //   loginToManager,
@@ -18,6 +21,7 @@ const DashboardLogin = () => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState("signin");
   const [email, setEmail] = useState("");
+  const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [otp, setOtp] = useState("");
@@ -60,6 +64,7 @@ const DashboardLogin = () => {
   }, [mode, resendTimer]);
 
   const clearStates = () => {
+    setNombre("");
     setEmail("");
     setPassword("");
     setRepeatPassword("");
@@ -209,29 +214,19 @@ const DashboardLogin = () => {
             </div>
             {error && <p className={styles.error}>{error}</p>}
             <p className={styles.securityNote}>
-              <span className={styles.lockIcon}>🔒</span> Tu seguridad nos
-              importa
+              <span className={styles.lockIcon}>
+                <LockIcon />
+              </span>{" "}
+              Tu seguridad nos importa
             </p>
           </div>
           <div className={styles.rightContainer}>
             <div className={styles.logoContainer}>
-              <svg
-                className={styles.logo}
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="40" height="40" rx="8" fill="#162D3A" />
-                <path
-                  d="M12 20H28M20 12V28"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <img
+                onClick={() => navigate("/landing")}
+                src={facturaLogo}
+                alt="FacturaGPT"
+              />
               <span className={styles.logoText}>FacturaGPT</span>
             </div>
           </div>
@@ -250,6 +245,18 @@ const DashboardLogin = () => {
             Controla tu facturación, controla tu negocio.
           </p>
           <form className={styles.form}>
+            {mode === "signup" && (
+              <label className={styles.label}>
+                Nombre Completo*
+                <input
+                  value={email}
+                  onChange={(e) => setNombre(e.target.value)}
+                  type="text"
+                  placeholder="Name"
+                  className={styles.input}
+                />
+              </label>
+            )}
             <label className={styles.label}>
               Email
               <input
@@ -274,18 +281,6 @@ const DashboardLogin = () => {
                 number
               </span>
             </label>
-            {mode === "signup" && (
-              <label className={styles.label}>
-                Confirm password
-                <input
-                  value={repeatPassword}
-                  onChange={(e) => setRepeatPassword(e.target.value)}
-                  type="password"
-                  placeholder="Repeat password"
-                  className={styles.input}
-                />
-              </label>
-            )}
             {mode === "signin" && (
               <div className={styles.forgotPasswordContainer}>
                 <div className={styles.rememberMe}>
@@ -313,6 +308,12 @@ const DashboardLogin = () => {
                   ? "Sign in"
                   : "Sign up"}
             </div>
+            {mode === "signin" && (
+              <button className={styles.buttonOpenAi}>
+                <OpenAiLogo />
+                <span>Empezar con OpenAI</span>
+              </button>
+            )}
           </form>
           {error && <p className={styles.error}>{error}</p>}
           <p className={styles.footerText}>
@@ -328,23 +329,11 @@ const DashboardLogin = () => {
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.logoContainer}>
-            <svg
-              className={styles.logo}
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="40" height="40" rx="8" fill="#162D3A" />
-              <path
-                d="M12 20H28M20 12V28"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <img
+              onClick={() => navigate("/landing")}
+              src={facturaLogo}
+              alt="FacturaGPT"
+            />
             <span className={styles.logoText}>FacturaGPT</span>
           </div>
         </div>
