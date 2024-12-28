@@ -25,10 +25,17 @@ body {
     }
 
     ul {
-        display: none;
         flex-direction: column;
         gap: 10px;
         display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0px 0px 10px 0px black;
+        border-radius: 10px;
+        padding: 10px;
 
         li {
             display: inline-flex;
@@ -57,7 +64,7 @@ body {
     .container {
         display: inline-flex;
         align-items: flex-start;
-        gap: 40px;
+        gap: 30px;
         max-width: 900px;
         margin: 0 auto;
     }
@@ -84,10 +91,14 @@ body {
             gap: 4px;
 
             svg {
-                height: 16px;
-                width: 16px;
-                min-height: 16px;
-                min-width: 16px;
+                height: 12px;
+                width: 12px;
+                min-height: 12px;
+                min-width: 12px;
+
+                path {
+                    fill: #16C098
+                }
             }
 
             span {
@@ -97,8 +108,8 @@ body {
         }
 
         b {
-            font-size: 30px;
-            font-weight: 500;
+            font-size: 24px;
+            font-weight: 400;
         }
     }
 
@@ -114,9 +125,11 @@ body {
 .componentLeft {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 16px;
     flex-direction: column;
     width: 100%;
+    height: 100%;
+
 
     .box {
         width: 100%;
@@ -126,6 +139,11 @@ body {
         display: inline-flex;
         flex-direction: column;
         gap: 10px;
+        box-shadow: 0px 0px 10px -6px black;
+
+        &.active {
+            border: 5px solid #16c098;
+        }
 
         .header {
             display: inline-flex;
@@ -134,6 +152,9 @@ body {
             span {
                 font-size: 12px;
                 background: #f0f0f0;
+                padding: 6px 10px;
+                border-radius: 10px;
+                font-weight: 500;
             }
 
             .title {
@@ -148,7 +169,7 @@ body {
                     width: 100%;
                     display: inline-flex;
                     align-items: center;
-                    gap: 4px;
+                    gap: 10px;
                 }
             }
 
@@ -160,6 +181,7 @@ body {
                 gap: 12px;
                 overflow: hidden;
                 min-width: 200px;
+                padding: 0px 0px 0px 10px;
 
                 svg {
                     min-width: 12px;
@@ -199,6 +221,7 @@ body {
         .filter {
             display: inline-flex;
             justify-content: space-between;
+
             >div {
                 display: inline-flex;
                 align-items: center;
@@ -206,19 +229,84 @@ body {
             }
         }
 
-        .items {
+        .itemsLeads {
             display: inline-flex;
-            gap: 6px;
+            flex-direction: column;
             padding: 0px;
+            gap: 10px;
 
             li {
                 display: inline-flex;
                 align-items: center;
-                gap: 4px;
-                border: 2px solid transparent;
-                padding: 4px 10px;
+                gap: 10px;
+                border-radius: 8px;
+                padding: 10px;
                 cursor: pointer;
-                width: 100%;
+
+                &.active {
+                    border: 2px solid green;
+                }
+
+                &:hover {
+                    border: 2px solid green;
+                }
+
+                .title {
+                    font-size: 12px;
+                }
+
+                .status {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                        min-width: 20px;
+                        min-height: 20px;
+                    }
+                }
+            }
+        }
+
+        .itemsObjective {
+            display: inline-flex;
+            gap: 6px;
+            padding: 0px;
+            flex-direction: column;
+            width: 100%;
+
+            li {
+                display: inline-flex;
+                align-items: center;
+                gap: 20px;
+                border: 2px solid transparent;
+                cursor: pointer;
+                padding: 4px 10px;
+                border-radius: 10px;
+
+                svg {
+                    min-width: 16px;
+                    min-height: 16px;
+                    width: 16px;
+                    height: 16px;
+
+                    path {
+                        fill: #c8c8c8;
+                    }
+                }
+
+                &.active {
+                    border: 2px solid #16c098;
+
+                    svg {
+                        path {
+                            fill: #16c098;
+                        }
+                    }
+                }
+
                 .image {
                     display: inline-flex;
                     flex-direction: column;
@@ -227,60 +315,129 @@ body {
                 .content {
                     display: inline-flex;
                     flex-direction: column;
+                    width: 100%;
+
+                    >div {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        margin-bottom: 6px;
+                    }
+
+                    p {
+                        margin: 0px;
+                    }
                 }
 
                 &:hover {
-                    border: 2px solid red;
+                    border: 2px solid #16c098;
+                }
+
+                label {
+                    margin-left: auto;
+                    padding: 6px 11px;
+                    border-radius: 10px;
+                    background: #16c098;
+                    font-size: 16px;
+                    color: #fff;
                 }
             }
         }
 
 
-        .itemsCall{
-            background: red;
-            li{
-                .top{
+        .itemsCall {
+            background: transparent;
+            list-style: none;
+            padding: 0px;
+
+            li {
+                width: 100%;
+                display: inline-flex;
+                flex-direction: column;
+                gap: 6px;
+
+                .top {
                     display: inline-flex;
                     align-items: center;
                     gap: 10px;
-                    .status{
+                    width: 100%;
+
+                    b {
+                        font-size: 22px;
+                    }
+
+                    .status {
                         display: inline-flex;
                         align-items: center;
                         gap: 10px;
-                        &.hight{
+
+                        &.hight {
                             color: green;
                         }
-                        &.medium{
+
+                        &.medium {
                             color: orange;
                         }
-                        &.low{
+
+                        &.low {
                             color: red;
                         }
                     }
-                    .state{
+
+                    .state {
                         color: red;
+                        margin-left: auto;
                     }
                 }
-                .bottom{
+
+                .bottom {
                     display: inline-flex;
                     align-items: center;
-                    .date{
+                    width: 100%;
+                    justify-content: space-between;
+
+                    .status {
                         display: inline-flex;
                         align-items: center;
+                        gap: 10px;
 
-                    }
-                    .clock{
+                        .date {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 12px;
 
+
+                        }
+
+                        .clock {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 12px;
+
+                        }
+
+                        .time {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 12px;
+                        }
+
+                        svg {
+                            min-width: 14px;
+                            min-height: 14px;
+                            width: 14px;
+                            height: 14px;
+                        }
                     }
-                    .time{
-                        display: inline-flex;
-                        align-items: center;
-                    }
-                    svg{
-                        width: 14px;
-                        height: 14px;
-                        min-width: 14px;
-                        min-height: 14px;
+
+                    .currency {
+
+                        svg {
+                            width: 14px;
+                            height: 14px;
+                            min-width: 14px;
+                            min-height: 14px;
+                        }
                     }
                 }
             }
@@ -293,7 +450,18 @@ body {
     display: inline-flex;
     flex-direction: column;
     max-width: 300px;
+    min-width: 300px;
     gap: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: sticky;
+    top: 40px;
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     .twilio {
         display: inline-flex;
@@ -307,15 +475,17 @@ body {
             gap: 12px;
 
             button {
-                width: 40px;
-                height: 40px;
+                width: 60px;
+                height: 60px;
                 border-radius: 50%;
+                border: none;
+                cursor: pointer;
 
                 svg {
-                    width: 12px;
-                    height: 12px;
-                    min-height: 12px;
-                    min-width: 12px;
+                    width: 22px;
+                    height: 22px;
+                    min-height: 22px;
+                    min-width: 22px;
                 }
 
                 &.pause {
@@ -348,6 +518,19 @@ body {
         border-radius: 6px;
         box-shadow: 0px 0px 6px -6px #000;
 
+        .titleHeader {
+            label {
+                font-size: 26px;
+                font-weight: 500;
+            }
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         .bussines {
             display: inline-flex;
             flex-direction: column;
@@ -376,18 +559,20 @@ body {
                     min-height: 22px;
                 }
 
-                >div{
+                >div {
                     font-size: 12px;
 
-                    &.hight{
+                    &.hight {
                         color: green;
-    
+
                     }
-                    &.medium{
+
+                    &.medium {
                         color: orange;
-    
+
                     }
-                    &.low{
+
+                    &.low {
                         color: red;
                     }
                 }
@@ -402,12 +587,12 @@ body {
             >div {
                 display: inline-flex;
                 align-items: center;
-                font-size: 12px;
+                font-size: 16px;
                 font-weight: 500;
                 width: 100%;
                 justify-content: center;
                 gap: 10px;
-                padding: 6px 12px;
+                padding: 8px 12px;
                 border-radius: 8px;
                 background: red;
 
@@ -436,6 +621,7 @@ body {
             display: inline-flex;
             align-items: center;
             gap: 12px;
+
         }
 
         .methodPayment {
@@ -474,12 +660,19 @@ body {
 
             li {
                 display: inline-flex;
-                align-items: center;
-                flex-direction: column;
+                align-items: flex-start;
                 width: 100%;
+                gap: 10px;
+
+                svg {
+                    min-width: 22px;
+                    max-width: 22px;
+                }
+
                 b {
-                    font-size: 12px;
+                    font-size: 16px;
                     font-weight: 500;
+                    color: #6d6d6d;
                 }
 
                 textarea {
@@ -506,33 +699,42 @@ body {
             .items {
                 display: inline-flex;
                 justify-content: space-between;
-                flex-direction: row;
-                li {
+                flex-direction: column;
+
+                ul {
+                    padding-left: 10px;
                     display: inline-flex;
                     flex-direction: column;
-                    gap: 6px;
+                    gap: 10px;
 
-                    svg {
-                        width: 12px;
-                        height: 12px;
-                        min-width: 12px;
-                        min-height: 12px;
-                    }
-
-                    >div {
+                    li {
                         display: inline-flex;
-                        align-items: center;
-                        gap: 10px;
+                        flex-direction: row;
+                        gap: 6px;
+                        flex-wrap: nowrap;
 
-                        strong {
-                            font-size: 14px;
-                            font-weight: 500;
+                        svg {
+                            width: 12px;
+                            height: 12px;
+                            min-width: 12px;
+                            min-height: 12px;
                         }
 
-                        b {
-                            font-size: 14px;
-                            font-weight: 500;
-                            color: green;
+                        >div {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            strong {
+                                font-size: 14px;
+                                font-weight: 500;
+                            }
+
+                            b {
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: green;
+                            }
                         }
                     }
                 }
@@ -543,21 +745,25 @@ body {
             display: inline-flex;
             flex-direction: column;
             gap: 10px;
+            background: transparent;
 
             label {
                 font-size: 20px;
                 font-weight: 600;
             }
 
-            .items {
+            .itemsInfo {
                 display: inline-flex;
                 flex-direction: column;
                 gap: 10px;
+                padding: 0px;
+                list-style: none;
 
                 .grid {
                     width: 100%;
                     display: inline-flex;
                     align-items: center;
+                    align-items: flex-start;
                 }
 
                 b {
@@ -566,8 +772,11 @@ body {
                 }
 
                 textarea {
+                    border: transparent;
+                    background: transparent;
+                    resize: none;
+                    width: 100%;
                     font-size: 12px;
-                    background: red;
                 }
             }
         }

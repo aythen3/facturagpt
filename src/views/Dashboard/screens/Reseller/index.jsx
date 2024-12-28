@@ -1,7 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-
-
+import {
+    fetchLeads,
+    saveLeads
+} from '../../../../actions/reseller'
 // SVG Icons
 
 import { ReactComponent as IconAlign } from './assets/icon-align.svg'
@@ -40,68 +43,96 @@ import Img1000 from './assets/img-1000.png'
 import styles from './index.module.css'
 
 
-const rewardsList = [
+const rewards = [
     {
         text: "Primera llamada 2 min",
-        value: 0.1
+        value: 0.1,
+        img: Img01,
+        active: true
     },
     {
         text: "Agengar nueva cita con responsable",
-        value: 0.2
+        value: 0.2,
+        img: Img02,
+        active: true
     },
     {
         text: "Explicar producto 5m demo",
-        value: 0.3
+        value: 0.3,
+        img: Img030,
+        active: false
     },
     {
         text: "Respuesta email",
-        value: 0.3
+        value: 0.3,
+        img: Img031,
+        active: false
     },
     {
         text: "Registro en la plataforma",
-        value: 0.3
+        value: 0.3,
+        img: Img032,
+        active: false
     },
     {
         text: "+20 documentos",
-        value: 1
+        value: 1,
+        img: Img01,
+        active: false
     },
     {
         text: "+200 documentos",
-        value: 5
+        value: 5,
+        img: Img5,
+        active: false
     },
     {
         text: "+500 documentos",
-        value: 10
+        value: 10,
+        img: Img10,
+        active: false
     },
     {
         text: "+1.000 documentos",
-        value: 25
+        value: 25,
+        img: Img25,
+        active: false
     },
     {
         text: "+2.000 documentos",
-        value: 50
+        value: 50,
+        img: Img50,
+        active: false
     },
     {
         text: "+5.000 documentos",
-        value: 100
+        value: 100,
+        img: Img100,
+        active: false
     },
     {
         text: "+20.000 documentos",
-        value: 250
+        value: 250,
+        img: Img250,
+        active: false
     },
     {
         text: "+50.000 documentos",
-        value: 500
+        value: 500,
+        img: Img500,
+        active: false
     },
     {
         text: "+100.000 documentos",
-        value: 1000
+        value: 1000,
+        img: Img1000,
+        active: false
     }
 ];
 
 
 
-const business = {
+let business = {
     email: 'info@aythen.com',
     phone: '341-59-15',
     web: 'www.domain.com',
@@ -116,13 +147,137 @@ const business = {
     partner: 'John Doe (Administrador), John Doe (-),'
 }
 
+
+const leads = [
+    business,
+    business,
+    business
+]
+
+
 const Reseller = () => {
+    const dispatch = useDispatch()
+    const [isCalling, setIsCalling] = useState(false)
+
+
+    const fetchItems = async() => {
+        const resp = await dispatch(fetchLeads({
+            query: '',
+            category: ''
+        }))
+        console.log('resp!!!', resp)
+    }
+
+    useEffect(() => {
+        fetchItems()
+    }, [])
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+
+        if (file.type !== 'text/csv') {
+            alert('Por favor, sube solo archivos CSV');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            const csvData = event.target.result;
+            const lines = csvData.split('\n');
+
+
+            // Get only first 26 rows (header + 25 data rows)
+            const limitedLines = lines.slice(0, 26);
+
+
+
+            const headerMapping = {
+                'email': ['email', 'correo', 'e-mail'],
+                'phone': ['phone', 'telefono', 'teléfono', 'tel'],
+                'web': ['web', 'website', 'sitio web', 'página web'],
+                'city': ['city', 'ciudad', 'localidad'],
+                'address': ['address', 'direccion', 'dirección', 'domicilio'],
+                'cnae': ['cnae', 'actividad cnae'],
+                'social': ['social', 'objeto social'],
+                'facture': ['facture', 'facturación', 'facturacion'],
+                'cif': ['cif', 'nif', 'identificación fiscal'],
+                'date': ['date', 'fecha', 'fecha constitución'],
+                'society': ['society', 'forma jurídica', 'tipo sociedad'],
+                'partner': ['partner', 'socios', 'fundadores']
+            };
+
+            // Function to normalize header text
+            const normalizeHeader = (header) => {
+                header = header.toLowerCase().trim();
+                for (const [key, variants] of Object.entries(headerMapping)) {
+                    if (variants.includes(header)) {
+                        return key;
+                    }
+                }
+                return header;
+            };
+
+
+
+            // Get headers from first row
+            const headers = limitedLines[0].split(',').map(header => {
+                const cleanHeader = header.replace(/['"]/g, '').trim();
+                // return cleanHeader;
+                return normalizeHeader(cleanHeader);
+            });
+
+            // Process remaining rows
+            const jsonData = limitedLines.slice(1).map(line => {
+                // Handle quoted values
+                // const withoutEscapedQuotes = line.replace(/\\"/g, '@QUOTE@');
+                // const withoutQuotes = withoutEscapedQuotes.replace(/^"|"$/g, '');
+                // const restoredQuotes = withoutQuotes.replace(/@QUOTE@/g, '"');
+                // const columns = restoredQuotes.split(',').map(col => col.trim());
+
+                const columns = line.split(',').map(col => col.replace(/['"\\]/g, '').trim());
+
+                // Create object using headers as keys
+                return headers.reduce((obj, header, index) => {
+                    obj[header] = columns[index] || '';
+                    return obj;
+                }, {});
+            });
+
+            console.log('Processed data:', jsonData);
+
+
+            const resp = await dispatch(saveLeads({
+                leads: jsonData
+            }))
+
+            console.log('save', resp)
+        };
+
+        reader.readAsText(file);
+    };
+
     return (
         <div className={styles.containerReseller}>
             <ComponentHeader />
-            <div className={styles.container}>
-                <ComponentLeft />
-                <ComponentRight />
+            <div
+                className={styles.container}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+            >
+                <ComponentLeft
+                    isCalling={isCalling}
+                />
+                <ComponentRight
+                    isCalling={isCalling}
+                    setIsCalling={setIsCalling}
+                />
             </div>
         </div>
     )
@@ -218,169 +373,205 @@ const ComponentHeader = () => {
 }
 
 
-const ComponentLeft = () => {
+const ComponentLeft = ({ isCalling }) => {
+    const [isComponent, setIsComponent] = useState('pendent')
+
     return (
         <div className={styles.componentLeft}>
-            <div className={styles.box}>
-                <div className={styles.header}>
-                    <div className={styles.title}>
-                        <div>
+
+            {isCalling ? (
+                <>
+                    {isComponent == 'pendent' ? (
+                        <div className={styles.box}>
+                            <div className={styles.header}>
+                                <div
+                                    onClick={() => setIsComponent('calling')}
+                                    className={styles.title}
+                                >
+                                    <div>
+                                        <IconCall />
+                                        Pendientes
+                                        <IconArrow />
+                                    </div>
+                                    <span>
+                                        256
+                                    </span>
+                                </div>
+                                <div className={styles.search}>
+                                    <IconSearch />
+                                    <input
+                                        value="Search"
+                                    />
+                                    <button>
+                                        <IconSearch />
+                                    </button>
+                                </div>
+                            </div>
+                            <div className={styles.filter}>
+                                <div>
+                                    <LabelSelect
+                                        text={"Status"}
+                                        items={[{
+                                            text: "hello",
+                                            value: "01"
+                                        }, {
+                                            text: "hello",
+                                            value: "01"
+                                        }]}
+                                    />
+                                    <LabelSelect
+                                        text={"Product"}
+                                        items={[{
+                                            text: "hello",
+                                            value: "01"
+                                        }, {
+                                            text: "hello",
+                                            value: "01"
+                                        }]}
+                                    />
+                                    <LabelSelect
+                                        text={"Priority"}
+                                        items={[{
+                                            text: "hello",
+                                            value: "01"
+                                        }, {
+                                            text: "hello",
+                                            value: "01"
+                                        }]}
+                                    />
+                                </div>
+                                <div>
+                                    <IconAlign />
+                                    default
+                                </div>
+                            </div>
+                            <ul className={styles.itemsLeads}>
+                                {leads.map((item, index) => (
+                                    <li key={index} className={`${index == 0 ? styles.active : ''}`}>
+                                        <div className={styles.title}>
+                                            Emprsesa0
+                                        </div>
+                                        <div className={styles.status}>
+                                            <IconArrow />
+                                            High
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                    ) : isComponent == 'calling' ? (
+
+                        <div className={styles.box}>
+                            <div
+                                className={styles.header}
+                                onClick={() => setIsComponent('pendent')}
+                            >
+                                <div className={styles.title}>
+                                    <IconCall />
+                                    LLamadas
+                                    <IconArrow />
+                                </div>
+                                256
+                            </div>
+                            <ul className={styles.itemsCall}>
+                                {[""].map((item, index) => (
+                                    <li key={index}>
+                                        <div className={styles.top}>
+                                            <b>
+                                                Empresa 0
+                                            </b>
+                                            <div className={`${styles.status} 
+                                    ${true ? styles.hight : styles.medium}
+                                    `}>
+                                                <IconArrow />
+                                                High
+                                            </div>
+                                            <div className={styles.state}>
+                                                No alcanzado
+                                            </div>
+                                        </div>
+                                        <div className={styles.bottom}>
+                                            <div className={styles.status}>
+                                                <div className={styles.date}>
+                                                    <IconDate />
+                                                    21.02.2023
+                                                </div>
+                                                <div className={styles.clock}>
+                                                    <IconClock />
+                                                    11:30 AM
+                                                </div>
+                                                <div className={styles.time}>
+                                                    00:31
+                                                </div>
+                                            </div>
+                                            <div className={styles.ticket}>
+                                                +0,00€
+                                                <IconArrow />
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : null}
+                </>
+            ) : (
+                <div
+                    className={`
+                ${styles.box}
+                ${!isCalling ? styles.active : ''}
+            `}
+                >
+                    <div className={styles.header}>
+                        <div className={styles.title}>
                             <IconCall />
-                            Pendientes
+                            Actividad Reciente
                             <IconArrow />
                         </div>
                         <span>
                             256
                         </span>
                     </div>
-                    <div className={styles.search}>
-                        <IconSearch />
-                        <input
-                            value="Search"
-                        />
-                        <button>
-                            <IconSearch />
-                        </button>
-                    </div>
-                </div>
-                <div className={styles.filter}>
-                    <div>
-                        <LabelSelect
-                            text={"Status"}
-                            items={[{
-                                text: "hello",
-                                value: "01"
-                            }, {
-                                text: "hello",
-                                value: "01"
-                            }]}
-                        />
-                        <LabelSelect
-                            text={"Product"}
-                            items={[{
-                                text: "hello",
-                                value: "01"
-                            }, {
-                                text: "hello",
-                                value: "01"
-                            }]}
-                        />
-                        <LabelSelect
-                            text={"Priority"}
-                            items={[{
-                                text: "hello",
-                                value: "01"
-                            }, {
-                                text: "hello",
-                                value: "01"
-                            }]}
-                        />
-                    </div>
-                    <div>
-                        <IconAlign />
-                        default
-                    </div>
-                </div>
-                <ul className={styles.items}>
-                    {[""].map((item, index) => (
-                        <li key={index}>
-                            <div className={styles.title}>
-                                Emprsesa0
-                            </div>
-                            <div className={styles.status}>
-                                <IconArrow />
-                                High
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
 
-            <div className={styles.box}>
-                <div className={styles.header}>
-                    <div className={styles.title}>
-                        <IconCall />
-                        LLamadas
-                        <IconArrow />
-                    </div>
-                    256
+                    <ul className={styles.itemsObjective}>
+                        {rewards.map((item, index) => (
+                            <li
+                                key={index}
+                                className={`${item.active ? styles.active : ''}`}
+                            >
+                                <IconDot />
+                                <div className={styles.image}>
+                                    <img
+                                        // src={Img01} 
+                                        src={item.img}
+                                    />
+                                </div>
+                                <div className={styles.content}>
+                                    <div>
+                                        <strong>
+                                            Feb 21
+                                        </strong>
+                                        2023
+                                        19.02.2023
+                                    </div>
+                                    <p>
+                                        {item.text}
+                                    </p>
+                                </div>
+                                <label>
+                                    {item.value}
+                                    €
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-                <ul className={styles.itemsCall}>
-                    {[""].map((item, index) => (
-                        <li key={index}>
-                            <div className={styles.top}>
-                                <b>
-                                    Empresa 0
-                                </b>
-                                <div className={`${styles.status} 
-                                ${true ? styles.hight : styles.medium}
-                                `}>
-                                    <IconArrow />
-                                    High
-                                </div>
-                                <div className={styles.state}>
-                                    No alcanzado
-                                </div>
-                            </div>
-                            <div className={styles.bottom}>
-                                <div className={styles.date}>
-                                    <IconDate />
-                                    21.02.2023
-                                </div>
-                                <div className={styles.clock}>
-                                    <IconClock />
-                                    11:30 AM
-                                </div>
-                                <div className={styles.time}>
-                                    +0,00€
-                                    <IconArrow />
-                                    00:31
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            )}
 
 
-            <div className={styles.box}>
-                <div className={styles.header}>
-                    <div className={styles.title}>
-                        <IconCall />
-                        Actividad Reciente
-                        <IconArrow />
-                    </div>
-                    <span>
-                        256
-                    </span>
-                </div>
 
-                <ul className={styles.items}>
-                    {[""].map((item, index) => (
-                        <li key={index}>
-                            <IconDot />
-                            <div className={styles.image}>
-                                <img src={Img01} />
-                            </div>
-                            <div className={styles.content}>
-                                <div>
-                                    <strong>
-                                        Feb 21
-                                    </strong>
-                                    2023
-                                    19.02.2023
-                                </div>
-                                <p>
-                                    Primera llamada 2min
-                                </p>
-                            </div>
-                            <label>
-                                0.1€
-                            </label>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+
         </div>
     )
 }
@@ -388,30 +579,50 @@ const ComponentLeft = () => {
 
 
 
-const ComponentRight = () => {
+const ComponentRight = ({ isCalling, setIsCalling }) => {
     return (
         <div className={styles.componentRight}>
-            <div className={styles.twilio}>
-                <div className={styles.buttons}>
-                    <button className={styles.pause}>
-                        <IconPause />
-                    </button>
-                    <button className={styles.play}>
-                        <IconPlay />
-                    </button>
-                    <button className={styles.renaud}>
-                        <IconRenaud />
+            {isCalling ? (
+                <div className={styles.twilio}>
+
+                    icon call
+                    Empresa 1
+                    00:20:30
+
+                    icon call delete
+                    icon call
+                    <button
+                        onClick={() => setIsCalling(false)}
+                    >
+                        icon silence
                     </button>
                 </div>
-                <span>
-                    02:02:02
-                </span>
-            </div>
+            ) : (
+                <div className={styles.twilio}>
+                    <div className={styles.buttons}>
+                        <button className={styles.pause}>
+                            <IconPause />
+                        </button>
+                        <button
+                            className={styles.play}
+                            onClick={() => setIsCalling(true)}
+                        >
+                            <IconPlay />
+                        </button>
+                        <button className={styles.renaud}>
+                            <IconRenaud />
+                        </button>
+                    </div>
+                    <span>
+                        02:02:02
+                    </span>
+                </div>
+            )}
 
             <div className={styles.containerRight}>
 
                 <div className={styles.business}>
-                    <div className={styles.title}>
+                    <div className={styles.titleHeader}>
                         <label>
                             Empresa1
                         </label>
@@ -441,9 +652,6 @@ const ComponentRight = () => {
 
 
                 <div className={styles.boxBusiness}>
-                    <label>
-                        Cuenta
-                    </label>
                     <div className={styles.items}>
                         <div>
                             <label>
@@ -516,7 +724,7 @@ const ComponentRight = () => {
                     <label>
                         Información de la empresa
                     </label>
-                    <ul className={styles.items}>
+                    <ul className={styles.itemsInfo}>
                         <li className={styles.grid}>
                             <b>
                                 Email
