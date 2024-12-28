@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import styles from "./FileExplorer.module.css";
-import { ReactComponent as FolderIcon } from "../../assets/folder.svg";
-import { ReactComponent as ImageIcon } from "../../assets/image-icon.svg";
-import { ReactComponent as PdfIcon } from "../../assets/pdf-ico.svg";
-import { ReactComponent as TxtIcon } from "../../assets/txt-icon.svg";
-import { ReactComponent as CsvIcon } from "../../assets/csv-icon.svg";
-import { ReactComponent as PngIcon } from "../../assets/png-icon.svg";
-import { Search, AlignRight } from "lucide-react";
+import React, { useState } from 'react';
+import styles from './FileExplorer.module.css';
+import { ReactComponent as FolderIcon } from '../../assets/folder.svg';
+import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
+import { ReactComponent as PdfIcon } from '../../assets/pdf-ico.svg';
+import { ReactComponent as TxtIcon } from '../../assets/txt-icon.svg';
+import { ReactComponent as CsvIcon } from '../../assets/csv-icon.svg';
+import { ReactComponent as PngIcon } from '../../assets/png-icon.svg';
+import { Search, AlignRight } from 'lucide-react';
 
-import Filter from "./Filters";
+import Filter from './Filters';
 
 export default function FileExplorer() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -20,8 +20,8 @@ export default function FileExplorer() {
             <Search size={20} />
           </div>
           <input
-            type="text"
-            placeholder="Buscar"
+            type='text'
+            placeholder='Buscar'
             className={styles.searchInput}
           />
           <button
@@ -36,7 +36,7 @@ export default function FileExplorer() {
       </div>
 
       <div className={styles.folderSection}>
-        <div className={styles.folderHeader}>2025{">"}Q1</div>
+        <div className={styles.folderHeader}>2025{'>'}Q1</div>
         <div className={styles.folderItem}>
           <div className={styles.itemContent}>
             <FolderIcon />

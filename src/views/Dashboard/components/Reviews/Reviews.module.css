@@ -30,7 +30,11 @@
 }
 
 .reviewsDescriptionLast {
-  font-size: clamp(15px, 4vw, 60px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(
+    12px,
+    1.5vw,
+    27px
+  ) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   max-width: 720px;
   margin-top: 5px;

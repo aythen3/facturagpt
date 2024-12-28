@@ -107,11 +107,12 @@
 }
 
 .text {
-  font-size: 18.5px;
+  font-size: clamp(16px, 1vw, 20px);
   user-select: none;
   font-weight: 400;
   color: #18181b;
   line-height: 1.5;
+  padding: 0 5px;
 }
 
 .controls {
@@ -162,7 +163,14 @@
 @media (max-width: 900px) {
   .card {
     flex: 0 0 100%;
-    max-width: 100%;
+    max-width: 85%;
+  }
+  .text {
+    font-size: 20px;
+  }
+
+  .carousel {
+    margin-left: 50px;
   }
 }
 
@@ -178,6 +186,15 @@
     /* Otros ajustes que puedas necesitar */
   }
   .text {
-    font-size: 15px;
+    /* font-size: 18px; */
+  }
+}
+
+@media (max-width: 500px) {
+  .carousel {
+    margin-left: clamp(10px, 7vw, 35px);
+  }
+  .text {
+    font-size: clamp(15px, 1vw, 18px);
   }
 }

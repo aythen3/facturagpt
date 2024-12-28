@@ -45,7 +45,7 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
           onChange={handleSliderChange}
           className={styles.slider}
           style={{
-            background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, #d3d3d3 ${calculateProgress()}%)`,
+            background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
           }}
         />
 

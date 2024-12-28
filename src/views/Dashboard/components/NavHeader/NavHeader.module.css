@@ -21,7 +21,7 @@
 
 .navHeaderTitle {
   /* font-size: 66px; */
-  font-size: clamp(1rem, 3vw, 11vw); /* Tamaño escalable */
+  font-size: clamp(1rem, 2.5vw, 11vw); /* Tamaño escalable */
   text-align: center;
   font-weight: 700;
   color: #211f54;
@@ -31,7 +31,7 @@
   margin-top: -10px;
   color: #16c098;
   font-weight: 700;
-  font-size: clamp(3rem, 7vw, 11vw); /* Tamaño escalable */
+  font-size: clamp(3rem, 9vw, 11vw); /* Tamaño escalable */
 
   span {
     color: #222222;
@@ -41,7 +41,7 @@
 .ayFolderImage {
   margin-top: 5px;
   width: clamp(
-    245px,
+    200px,
     23vw,
     180px
   ); /* Escala entre 100px y 200px basado en el ancho del viewport */
@@ -51,7 +51,7 @@
 
 .navHeaderDescription {
   font-weight: 500;
-  font-size: clamp(20px, 2vw, 18px);
+  font-size: clamp(15px, 2vw, 18px);
   color: #aeb9ca;
   max-width: 728px;
   /* height: 205px; */

@@ -12,7 +12,7 @@
 }
 .content {
   display: flex;
-  width: 75%;
+  width: 63%;
 }
 
 .form {
@@ -74,7 +74,7 @@ label {
 }
 
 .input {
-  height: 56px;
+  height: fit-content;
 }
 
 .textarea {
