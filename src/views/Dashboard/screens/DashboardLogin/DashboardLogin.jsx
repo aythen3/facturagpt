@@ -6,6 +6,12 @@ import facturaLogo from "../../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 // import { Mail } from "lucide-react";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
+import {
+  createAccount,
+  loginToManager,
+  sendOTP,
+  verifyOTP,
+} from "../../../../actions/emailManager";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
 import { LockIcon } from "lucide-react";
 // import {
@@ -35,7 +41,7 @@ const DashboardLogin = () => {
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
       localStorage.setItem("emailManagerAccount", JSON.stringify(user));
-      navigate("/dashboard/home");
+      navigate("/home");
     }
   }, [user, navigate]);
 
