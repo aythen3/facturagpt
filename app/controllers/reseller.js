@@ -1,6 +1,8 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 
+const { connectDB } = require('./utils')
+
 const twilio = require('twilio');
 // => Excel de scraping de empresas (1000 empresas), pasarlas por el GPT
 // y crear un excel que vaya al dashboard de winpay
@@ -231,7 +233,7 @@ Guardar en una base de datos
 
 const testTwilio = (req, res) => {
 
-    
+
 
     // Configura las credenciales de Twilio
     const accountSid = 'TU_ACCOUNT_SID';
@@ -268,10 +270,70 @@ const testReseller = (req, res) => {
     return res.status(200).send('Hello Reseller GPT')
 }
 
+
+
+const fetchLeads = async (req, res) => {
+    try {
+        const { query, category } = req.query;
+        const db = await connectDB('db_leads');
+
+        console.log('··')
+        let selector = {};
+
+        // Build selector for search query
+        if (query) {
+            selector.$or = [
+                { phone: { $regex: `(?i).*${query}.*` } },
+                { web: { $regex: `(?i).*${query}.*` } },
+                { location: { $regex: `(?i).*${query}.*` } },
+                { keyword: { $regex: `(?i).*${query}.*` } },
+                { address: { $regex: `(?i).*${query}.*` } },
+                { state: { $regex: `(?i).*${query}.*` } },
+                { city: { $regex: `(?i).*${query}.*` } }
+            ];
+        }
+
+        // Add category filter if provided
+        if (category) {
+            selector.category = { $regex: `(?i)^${category}$` };
+        }
+
+        // Perform the query
+        const leads = await db.find({
+            selector: selector
+        });
+
+        console.log('··', leads)
+
+        return res.status(200).json(leads);
+    } catch (error) {
+        console.error('Error fetching leads:', error);
+        return res.status(500).json({ error: 'Error fetching leads' });
+    }
+}
+
+const saveLeads = async (req, res) => {
+    console.log('!!!!!')
+    const { leads } = req.body
+
+    const db = await connectDB(`db_leads`)
+
+    console.log('db', leads)
+    for (const lead of leads) {
+        await db.insert(lead);
+    }
+
+}
+
+
+
 module.exports = {
     testReseller: testReseller,
     mainReseller: mainReseller,
-    testTwilio: testTwilio
+    testTwilio: testTwilio,
+
+    fetchLeads: fetchLeads,
+    saveLeads: saveLeads
 }
 
 

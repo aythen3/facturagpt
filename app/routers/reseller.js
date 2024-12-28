@@ -15,7 +15,10 @@ const upload = multer({
 const {
     testReseller,
     mainReseller,
-    testTwilio
+    testTwilio,
+
+    fetchLeads,
+    saveLeads
 } = require("../controllers/reseller.js");
 
 
@@ -26,5 +29,8 @@ routesRouter
     .get("/", mainReseller)
     .get("/twilio", testTwilio)
     .get("/test", testReseller)
+
+    .get("/leads", fetchLeads)
+    .post("/leads", saveLeads)
 
 module.exports = routesRouter;

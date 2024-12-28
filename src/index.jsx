@@ -71,6 +71,7 @@ const Layout = () => {
               />
               <Route path='*' element={<LandingPage />} />
               <Route path='/Panel' element={<InvoicePanel />} />
+
             </Routes>
           </BrowserRouter>
         </Provider>
