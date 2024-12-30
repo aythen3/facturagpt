@@ -5,6 +5,12 @@ import { useNavigate } from "react-router-dom";
 import facturaLogo from "../../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
+import {
+  createAccount,
+  loginToManager,
+  sendOTP,
+  verifyOTP,
+} from "../../../../actions/emailManager";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
 import { Key, LockIcon } from "lucide-react";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
@@ -29,7 +35,7 @@ const DashboardLogin = () => {
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
       localStorage.setItem("emailManagerAccount", JSON.stringify(user));
-      navigate("/dashboard/home");
+      navigate("/home");
     }
   }, [user, navigate]);
 

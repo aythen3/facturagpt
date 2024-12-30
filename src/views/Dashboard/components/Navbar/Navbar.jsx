@@ -61,7 +61,12 @@ const Navbar = () => {
             <img src={chevDown} alt='chevDown' />
           </span>
         </li>
-        <button className={styles.button}>Probar Gratis</button>
+        <button
+          className={styles.button}
+          onClick={() => navigate('/freetrial')}
+        >
+          Probar Gratis
+        </button>
       </ul>
     </nav>
   );

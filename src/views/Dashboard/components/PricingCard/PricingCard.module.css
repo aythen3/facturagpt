@@ -9,7 +9,8 @@
   -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en dispositivos táctiles */
   width: 100%; /* Asegurar que ocupe el ancho de la pantalla */
   box-sizing: border-box; /* Incluir padding en el ancho total */
-  margin: 20px 0;
+  margin:20px 0;
+
 }
 
 .cardContainer:active {
@@ -31,6 +32,7 @@
   text-align: center;
 }
 
+
 .cardHeader {
   font-size: 18px;
   font-weight: bold;
@@ -43,12 +45,14 @@
   padding: 0 10px;
   display: flex;
   flex-direction: column;
-  p {
+  p{
     font-weight: bold;
+
   }
-  p,
-  span {
+  p,span{
     color: #000000 !important;
+
+
   }
 }
 
@@ -64,7 +68,7 @@
 .button {
   margin-top: 16px;
   padding: 8px 16px;
-  background-color: #233f39;
+  background-color: #233F39;
   color: #fff;
   border: none;
   border-radius: 999px;
@@ -82,18 +86,20 @@
 }
 
 .selectedCard {
-  .cardHeader {
-    background-color: #16c098;
+  .cardHeader{
+    background-color: #16C098;
     color: white;
   }
 
-  .cardBody {
-    p {
-      color: #16c098 !important;
+  .cardBody{
+    p{
+      color: #16C098 !important;
     }
   }
 
-  .button {
-    background-color: #16c098;
+  .button{
+    background-color: #16C098;
   }
+
+
 }

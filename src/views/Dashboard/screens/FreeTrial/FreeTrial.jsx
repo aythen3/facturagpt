@@ -2,10 +2,9 @@ import React from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import facturaLogo from '../../assets/FacturaLogoGreen.svg';
 import styles from './FreeTrial.module.css';
-import google from '../../assets/Google.svg';
-import mail from '../../assets/mail.svg';
-//import lock from '../../assets/Lock.svg';
-
+import openai from '../../assets/openaiIcon.svg';
+import mail from '../../assets/emailIcon.svg';
+import lock from '../../assets/Lock.svg';
 
 const FreeTrial = () => {
   return (
@@ -21,8 +20,8 @@ const FreeTrial = () => {
             Registrarse con correo electrónico
           </button>
           <button>
-            <img src={google} alt='Google Logo' />
-            Empezar con Google
+            <img src={openai} alt='OpenAI Logo' className={styles.openaiLogo} />
+            Empezar con OpenAI
           </button>
         </div>
         <p>
@@ -34,7 +33,7 @@ const FreeTrial = () => {
           <a href='#'>Términos y Política de Privacidad</a>
         </p>
         <p className={styles.safety}>
-          {/* <img src={lock} alt='Lock Icon' /> */}
+          <img src={lock} alt='Lock Icon' />
           Tu seguridad nos importa
         </p>
       </div>

@@ -9,7 +9,7 @@ import { ReactComponent as CsvIcon } from "../../assets/csv-icon.svg";
 import { ReactComponent as PngIcon } from "../../assets/png-icon.svg";
 import { Search, AlignRight, MoreVertical } from "lucide-react";
 
-import Filter from "./Filters";
+import Filter from './Filters';
 
 const FileOptionsPopup = ({ onClose, style }) => {
   const popupRef = useRef(null);
@@ -58,8 +58,8 @@ export default function FileExplorer() {
             <Search size={20} />
           </div>
           <input
-            type="text"
-            placeholder="Buscar"
+            type='text'
+            placeholder='Buscar'
             className={styles.searchInput}
           />
           <button
@@ -74,7 +74,7 @@ export default function FileExplorer() {
       </div>
 
       <div className={styles.folderSection}>
-        <div className={styles.folderHeader}>2025{">"}Q1</div>
+        <div className={styles.folderHeader}>2025{'>'}Q1</div>
         <div className={styles.folderItem}>
           <div className={styles.itemInner}>
             <FolderIcon />
