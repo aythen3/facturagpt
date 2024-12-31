@@ -108,7 +108,7 @@
 .input {
   width: 100%;
   padding: 10px 14px;
-  border: none;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 14px;
   color: #292d32;
@@ -147,6 +147,7 @@
 
 .signInButton {
   width: 100%;
+  padding: 0px 12px;
   background-color: #162d3a;
   color: #ffffff;
   font-size: 18px;
@@ -366,4 +367,5 @@
     align-items: flex-start;
     gap: 10px;
   }
+
 }

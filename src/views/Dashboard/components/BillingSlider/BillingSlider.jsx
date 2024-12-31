@@ -29,10 +29,10 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
 
   return (
     <div className={styles.container} id='facturation'>
-      <h1 className={styles.title}>
+      <h2 className={styles.title}>
         <img className={styles.star} src={star} alt='star' />
         ¿Cuál es tu facturación anual?
-      </h1>
+      </h2>
 
       <div className={styles.sliderWrapper}>
         {/* Slider Input */}

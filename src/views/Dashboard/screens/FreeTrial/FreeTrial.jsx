@@ -30,7 +30,7 @@ const FreeTrial = () => {
 
         <p className={styles.policy}>
           Creando una cuenta afirmas estar de acuerdo con nuestros{' '}
-          <a href='#'>Términos y Política de Privacidad</a>
+          <a href='termsandconditions'>Términos y Política de Privacidad</a>
         </p>
         <p className={styles.safety}>
           <img src={lock} alt='Lock Icon' />
