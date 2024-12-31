@@ -13,7 +13,7 @@ import {
   loginToManager,
   verifyOTP,
   sendOTP,
-} from "../../../../actions/emailManager";
+} from "../../../../actions/user";
 
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
@@ -35,7 +35,7 @@ const DashboardLogin = () => {
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
       localStorage.setItem("emailManagerAccount", JSON.stringify(user));
-      navigate("/dashboard/home");
+      navigate("/home");
     }
   }, [user, navigate]);
 
@@ -88,6 +88,7 @@ const DashboardLogin = () => {
         .unwrap()
         .then(() => {
           clearStates();
+          navigate("/home");
         })
         .catch((error) => {
           setError(error.message || "Failed to sign in");
@@ -166,11 +167,9 @@ const DashboardLogin = () => {
   const handleForgotPassword = () => {
     if (email.length > 1 && recaptchaValue) {
       setIsLoading(true);
-      // Here you would implement your forgot password logic
-      // For now, we'll just simulate it with a timeout
+      // Implement Logic
       setTimeout(() => {
         setIsLoading(false);
-        // You might want to show a success message or navigate to a different mode
       }, 2000);
     }
   };
