@@ -105,7 +105,7 @@
 .input {
   width: 100%;
   padding: 10px 14px;
-  border: none;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 14px;
   color: #292d32;
@@ -143,6 +143,7 @@
 
 .signInButton {
   width: 100%;
+  padding: 0px 12px;
   background-color: #162d3a;
   color: #ffffff;
   font-size: 18px;
@@ -322,21 +323,4 @@
   .logoText {
     font-size: 18px;
   }
-}
-
-.buttonOpenAi {
-  background-color: transparent;
-  color: #000;
-  font-size: 16px;
-  height: 48px;
-  font-weight: 400;
-  border: 1px solid #d9d9d9;
-  border-radius: 12px;
-  cursor: pointer;
-  margin-bottom: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 8px;
 }

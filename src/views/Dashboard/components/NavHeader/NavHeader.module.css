@@ -7,16 +7,62 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background-image: url('../../assets/landingBg.svg');
+  background-image: url('../../assets/bgHero.png');
   /* background-color: red; */
   background-repeat: no-repeat;
   background-position: center;
   font-family: 'Inter', sans-serif;
-  background-size: contain;
+  background-size: cover;
   max-width: 1440px;
   align-self: center;
   margin-top: calc(59px + 10px);
   padding: 20px 0;
+  position: relative;
+}
+
+.iconfloat {
+  background-color: white;
+  position: absolute;
+  height: 30px; /* Responsive height */
+  width: 30px; /* Responsive width */
+}
+
+.bombillaL {
+  top: 10%;
+  /*Responsivetopposition*/
+  left: 10%;
+  /*Responsiveleftposition*/
+  background-color: #f2f1ff;
+  padding: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.plusIconL {
+  top: 30%;
+  left: 15%;
+  border: #dcddeb 1px solid;
+  padding: 10px;
+  border-radius: 999px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+}
+.starIconL {
+  bottom: 10%; /* Responsive bottom position */
+  left: 15%; /* Responsive left position */
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  border-radius: 999px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.209);
 }
 
 .navHeaderTitle {
@@ -28,7 +74,7 @@
 }
 
 .navHeaderSubtitle {
-  margin-top: -10px;
+  margin-top: -11px;
   color: #16c098;
   font-weight: 700;
   font-size: clamp(3rem, 9vw, 11vw); /* Tamaño escalable */

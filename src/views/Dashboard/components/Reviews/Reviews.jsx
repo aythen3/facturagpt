@@ -6,15 +6,15 @@ import ContactForm from '../ContactForm/ContactForm';
 const Reviews = () => {
   return (
     <div className={styles.reviewsContainer}>
-      <h1 className={styles.reviewsTitle}>
+      <h2 className={styles.reviewsTitle}>
         Resultados que marcan la diferencia
-      </h1>
+      </h2>
       <span className={styles.reviewsDescription}>
         Ve cómo FacturaGPT ayuda a automatizar y simplificar la facturación de
         negocios como el tuyo
       </span>
       <Carousel />
-      <h1 className={styles.reviewsTitle}>Precios para escalar</h1>
+      <h2 className={styles.reviewsTitle}>Precios para escalar</h2>
       {/* <span className={styles.reviewsDescriptionSecondary}>
         Nuestros precios están diseño para brindar un valor excepcional para el
         mejor servicio de impuestos.
