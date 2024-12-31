@@ -9,6 +9,9 @@ import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
 import { Key, LockIcon } from "lucide-react";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
 
+import facturaLogo  from "../../assets/FacturaLogoGreen.svg"
+
+
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
   const dispatch = useDispatch();
@@ -194,7 +197,9 @@ const DashboardLogin = () => {
     </div>
   );
 
-  const renderForm = () => (
+  const renderForm = () => {
+    const [nombre, setNombre] = useState("")
+    return(
     <form className={styles.form}>
       {mode === "signup" && (
         <label className={styles.label}>
@@ -268,7 +273,8 @@ const DashboardLogin = () => {
         </button>
       )}
     </form>
-  );
+    )
+  };
 
   const renderForgotPasswordForm = () => (
     <div className={styles.rightContainer}>

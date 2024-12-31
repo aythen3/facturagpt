@@ -1,3 +1,12 @@
+/*
+Este es el primer archivo que se hizo y hay algunas funciones que se deben repartir por:
+-User.js
+-Reseller.js
+-Stripe.js
+-Call.js
+-Docs.js
+*/
+
 const {
   createAccount,
   loginToManagerService,

@@ -1,0 +1,7 @@
+/*
+Este archivo controlara la API de twilio para realizar llamadas
+
+Debe de poder enviar llamadas
+Debe de poder recibir y vincular la llamada a los resellers segun el numero del lead
+Debe de poder guardar la llamada marcando los objetivos
+*/
