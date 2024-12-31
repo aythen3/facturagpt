@@ -2,25 +2,22 @@ import React, { useEffect, useState } from "react";
 import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
+import facturaLogo from "../../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
-
-import {
-  createAccount,
-  loginToManager,
-  sendOTP,
-  verifyOTP,
-} from "../../../../actions/emailManager";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
 import { Key, LockIcon } from "lucide-react";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
+
 import facturaLogo  from "../../assets/FacturaLogoGreen.svg"
+
 
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
   const dispatch = useDispatch();
   const [mode, setMode] = useState("signin");
   const [email, setEmail] = useState("");
+  const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [otp, setOtp] = useState("");
@@ -64,6 +61,7 @@ const DashboardLogin = () => {
   }, [mode, resendTimer]);
 
   const clearStates = () => {
+    setNombre("");
     setEmail("");
     setPassword("");
     setRepeatPassword("");
@@ -362,8 +360,10 @@ const DashboardLogin = () => {
             </div>
             {error && <p className={styles.error}>{error}</p>}
             <p className={styles.securityNote}>
-              <span className={styles.lockIcon}>🔒</span> Tu seguridad nos
-              importa
+              <span className={styles.lockIcon}>
+                <LockIcon />
+              </span>{" "}
+              Tu seguridad nos importa
             </p>
           </div>
         </div>
@@ -394,7 +394,6 @@ const DashboardLogin = () => {
             Controla tu facturación, controla tu negocio.
           </p>
           {renderForm()}
-
           {error && <p className={styles.error}>{error}</p>}
           <p className={styles.footerText}>
             {mode === "signin" ? "Don't you" : "Already"} have an account?{" "}
