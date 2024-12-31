@@ -1,3 +1,8 @@
+/*
+Este archivo será para subir leads de un csv, poder scrapear usando GPT y
+obtener una relación de lead vs reseller.
+*/
+
 const cheerio = require('cheerio');
 const axios = require('axios');
 

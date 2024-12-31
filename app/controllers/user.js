@@ -168,3 +168,4 @@ module.exports = {
   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
   verifyOTPController: catchedAsync(verifyOTPController),
 };
+

@@ -262,3 +262,4 @@
 //   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
 //   verifyOTPController: catchedAsync(verifyOTPController),
 // };
+

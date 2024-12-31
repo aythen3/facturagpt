@@ -104,3 +104,4 @@ module.exports = {
   createPaymentIntentController: catchedAsync(createPaymentIntentController),
   createSetupIntentController: catchedAsync(createSetupIntentController),
 };
+
