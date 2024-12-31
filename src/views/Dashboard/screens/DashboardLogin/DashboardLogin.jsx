@@ -15,9 +15,6 @@ import {
   sendOTP,
 } from "../../../../actions/user";
 
-import facturaLogo  from "../../assets/FacturaLogoGreen.svg"
-
-
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
   const dispatch = useDispatch();
@@ -202,9 +199,7 @@ const DashboardLogin = () => {
     </div>
   );
 
-  const renderForm = () => {
-    const [nombre, setNombre] = useState("")
-    return(
+  const renderForm = () => (
     <form className={styles.form}>
       {mode === "signup" && (
         <label className={styles.label}>
@@ -278,8 +273,7 @@ const DashboardLogin = () => {
         </button>
       )}
     </form>
-    )
-  };
+  );
 
   const renderForgotPasswordForm = () => (
     <div className={styles.rightContainer}>
