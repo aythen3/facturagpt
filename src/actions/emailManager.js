@@ -3,13 +3,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const createAccount = createAsyncThunk(
   "emailManager/createAccount",
-  async ({ email, password }) => {
-    console.log("data from createAccount", { email, password });
+  async ({ nombre, email, password }) => {
+    console.log("data from createAccount", { nombre, email, password });
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
         `/emailManager/createAccount`,
-        { email, password },
+        { nombre, email, password },
         {
           headers: {
             Authorization: `Bearer ${token}`,

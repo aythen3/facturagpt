@@ -6,8 +6,14 @@ import facturaLogo from "../../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
-import { Key, LockIcon } from "lucide-react";
+import { LockIcon } from "lucide-react";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
+import {
+  createAccount,
+  loginToManager,
+  verifyOTP,
+  sendOTP,
+} from "../../../../actions/emailManager";
 
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
@@ -93,11 +99,7 @@ const DashboardLogin = () => {
   };
 
   const handleSignup = () => {
-    if (
-      storedEmail.length > 1 &&
-      storedPassword.length > 1 &&
-      storedPassword === repeatPassword
-    ) {
+    if (storedEmail.length > 1 && storedPassword.length > 1) {
       setIsLoading(true);
       dispatch(sendOTP({ email: storedEmail }))
         .unwrap()
@@ -122,7 +124,11 @@ const DashboardLogin = () => {
         .unwrap()
         .then(() => {
           dispatch(
-            createAccount({ email: storedEmail, password: storedPassword })
+            createAccount({
+              nombre,
+              email: storedEmail,
+              password: storedPassword,
+            })
           )
             .unwrap()
             .then(() => {

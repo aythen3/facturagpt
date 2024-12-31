@@ -18,10 +18,10 @@ const stripe = require("stripe")(
 
 const createAccountController = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    console.log("data from createAccountController", { email, password });
+    const { nombre, email, password } = req.body;
+    console.log("data from createAccountController", { nombre, email, password });
 
-    const resp = await createAccount({ email, password });
+    const resp = await createAccount({ nombre, email, password });
 
     return res.status(200).send(resp);
   } catch (err) {
