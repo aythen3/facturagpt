@@ -10,6 +10,7 @@
   width: 100%; /* Asegurar que ocupe el ancho de la pantalla */
   box-sizing: border-box; /* Incluir padding en el ancho total */
   margin:20px 0;
+
 }
 
 .cardContainer:active {
@@ -50,6 +51,7 @@
   }
   p,span{
     color: #000000 !important;
+
 
   }
 }
@@ -98,5 +100,6 @@
   .button{
     background-color: #16C098;
   }
+
 
 }
