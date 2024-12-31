@@ -6,11 +6,14 @@ import facturaLogo from "../../assets/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
-import { Key, LockIcon } from "lucide-react";
+import { LockIcon } from "lucide-react";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
-
-import facturaLogo  from "../../assets/FacturaLogoGreen.svg"
-
+import {
+  createAccount,
+  loginToManager,
+  verifyOTP,
+  sendOTP,
+} from "../../../../actions/user";
 
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
@@ -32,7 +35,7 @@ const DashboardLogin = () => {
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
       localStorage.setItem("emailManagerAccount", JSON.stringify(user));
-      navigate("/dashboard/home");
+      navigate("/home");
     }
   }, [user, navigate]);
 
@@ -85,6 +88,7 @@ const DashboardLogin = () => {
         .unwrap()
         .then(() => {
           clearStates();
+          navigate("/home");
         })
         .catch((error) => {
           setError(error.message || "Failed to sign in");
@@ -96,11 +100,7 @@ const DashboardLogin = () => {
   };
 
   const handleSignup = () => {
-    if (
-      storedEmail.length > 1 &&
-      storedPassword.length > 1 &&
-      storedPassword === repeatPassword
-    ) {
+    if (storedEmail.length > 1 && storedPassword.length > 1) {
       setIsLoading(true);
       dispatch(sendOTP({ email: storedEmail }))
         .unwrap()
@@ -125,7 +125,11 @@ const DashboardLogin = () => {
         .unwrap()
         .then(() => {
           dispatch(
-            createAccount({ email: storedEmail, password: storedPassword })
+            createAccount({
+              nombre,
+              email: storedEmail,
+              password: storedPassword,
+            })
           )
             .unwrap()
             .then(() => {
@@ -163,11 +167,9 @@ const DashboardLogin = () => {
   const handleForgotPassword = () => {
     if (email.length > 1 && recaptchaValue) {
       setIsLoading(true);
-      // Here you would implement your forgot password logic
-      // For now, we'll just simulate it with a timeout
+      // Implement Logic
       setTimeout(() => {
         setIsLoading(false);
-        // You might want to show a success message or navigate to a different mode
       }, 2000);
     }
   };
@@ -197,9 +199,7 @@ const DashboardLogin = () => {
     </div>
   );
 
-  const renderForm = () => {
-    const [nombre, setNombre] = useState("")
-    return(
+  const renderForm = () => (
     <form className={styles.form}>
       {mode === "signup" && (
         <label className={styles.label}>
@@ -273,8 +273,7 @@ const DashboardLogin = () => {
         </button>
       )}
     </form>
-    )
-  };
+  );
 
   const renderForgotPasswordForm = () => (
     <div className={styles.rightContainer}>
