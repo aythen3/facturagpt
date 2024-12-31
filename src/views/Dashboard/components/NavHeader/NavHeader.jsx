@@ -6,6 +6,8 @@ import flagIcon from '../../assets/flagIcon.svg';
 import bombilla from '../../assets/bombilla.svg';
 import plusIcon from '../../assets/plusIcon.svg';
 import starIcon from '../../assets/starIcon.svg';
+import frame99 from '../../assets/Frame10099.png';
+import frame100 from '../../assets/Frame10100.png';
 const NavHeader = () => {
   const handleScrollToFacturation = () => {
     const facturationElement = document.getElementById('facturation');
@@ -26,20 +28,36 @@ const NavHeader = () => {
     <div className={styles.navHeaderContainer}>
       <img
         src={bombilla}
-        className={`${styles.iconfloat} ${styles.bombillaL}`}
+        className={`${styles.iconfloat} ${styles.bombillaL} ${styles.bgBlue}`}
       />
       <img
         src={plusIcon}
         className={`${styles.iconfloat} ${styles.plusIconL}`}
       />
+      <div className={`${styles.iconfloat} ${styles.starIconL}`}>
+        <img src={starIcon} />
+      </div>
       <img
-        src={starIcon}
-        className={`${styles.iconfloat} ${styles.starIconL}`}
+        src={bombilla}
+        className={`${styles.iconfloat} ${styles.bombillaL2} `}
       />
       <div className={styles.navHeaderTitle}>+3M de facturas automatizadas</div>
       <div className={styles.navHeaderSubtitle}>
         Factura<span>GPT</span>
       </div>
+      <img
+        src={bombilla}
+        className={`${styles.iconfloat} ${styles.bombillaR}`}
+      />
+
+      <img
+        src={starIcon}
+        className={`${styles.iconfloat} ${styles.starIconR} ${styles.bgBlue}`}
+      />
+      <img
+        src={flagIcon}
+        className={`${styles.iconfloat} ${styles.flagIconR} ${styles.bgBlue}`}
+      />
       <img
         className={`${styles.ayFolderImage} ${styles.ayFolder}`}
         src={ayFolder}

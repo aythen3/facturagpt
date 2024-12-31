@@ -7,8 +7,25 @@
   padding: 50px 20px;
   width: 100vw;
 }
+.reviewsSection {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  padding: 0 10px;
+}
+.startNowSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  padding: 0 10px;
+}
 .reviewsTitle {
-  font-size: clamp(30px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(30px, 5vw, 32px) !important; /* Ajuste dinámico con clamp */
   font-weight: 700;
   color: #18181b;
   text-align: center;

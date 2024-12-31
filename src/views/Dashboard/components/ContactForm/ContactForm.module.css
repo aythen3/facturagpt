@@ -32,7 +32,7 @@
 }
 
 .title {
-  font-size: clamp(35px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(35px, 5vw, 32px) !important; /* Ajuste dinámico con clamp */
   font-weight: bold;
   color: #18181b;
   margin-bottom: 0.5rem;
@@ -68,6 +68,7 @@ label {
   padding: 1rem;
   background-color: #f4f4f4;
   color: #71717a;
+  box-sizing: border-box;
   &:focus {
     border: 2px solid #dadbdd;
   }
@@ -120,13 +121,13 @@ label {
 
   .leftSection {
     width: 100%;
-
+    display: flex;
+    justify-content: center;
     form {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 20px;
-
+      width: 93%;
       .inputGroup {
         width: 100%;
       }

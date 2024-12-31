@@ -13,21 +13,39 @@
   overflow: hidden;
 }
 
+.stepsContainer {
+  height: 100vh;
+  /* background-color: red; */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.extensionsContainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .packsDescription {
-  color: #aeb9ca;
+  color: #71717a;
   font-size: clamp(18px, 5vw, 24px); /* Ajuste dinámico del tamaño de título */
-  font-weight: 500;
+  font-weight: 400;
   /* height: 133px; */
   /* display: flex; */
   align-items: center;
   justify-content: center;
   max-width: 1006px;
-  margin: 33px 0px;
+  /* margin: 33px 0px; */
   text-align: center;
   padding: 0 20px;
 
   strong {
     color: #71717a;
+    font-weight: bolder;
   }
 
   span {
@@ -95,7 +113,7 @@
 
 .bannerTitle {
   color: #406f64 !important;
-  font-size: clamp(15px, 2vw, 20px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(8px, 1.5vw, 18px) !important; /* Ajuste dinámico con clamp */
   font-weight: bold;
   padding: 0 5px;
 }
@@ -156,7 +174,7 @@
     font-size: clamp(
       20px,
       5vw,
-      60px
+      32px
     ) !important; /* Ajuste dinámico con clamp */
   }
 }
@@ -166,7 +184,7 @@
   width: clamp(
     30px,
     12vw,
-    90px
+    70px
   ); /* Ajuste dinámico con clamp para el tamaño de la bandera */
   height: auto; /* Mantiene la proporción de la imagen */
 }
@@ -239,7 +257,6 @@
   text-align: center;
   width: 100%;
   flex-wrap: wrap; /* Permite que las cards se ajusten en varias filas si es necesario */
-  height: 100vh;
   align-items: center;
 }
 

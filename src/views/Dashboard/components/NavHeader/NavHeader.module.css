@@ -3,7 +3,7 @@
 .navHeaderContainer {
   display: flex;
   width: 100%;
-  height: 80vh; /* Restar la barra superior (ajusta según sea necesario) */
+  height: 86vh; /* Restar la barra superior (ajusta según sea necesario) */
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
@@ -15,7 +15,7 @@
   background-size: cover;
   max-width: 1440px;
   align-self: center;
-  margin-top: calc(59px + 10px);
+  margin-top: 50px;
   padding: 20px 0;
   position: relative;
 }
@@ -27,11 +27,7 @@
   width: 30px; /* Responsive width */
 }
 
-.bombillaL {
-  top: 10%;
-  /*Responsivetopposition*/
-  left: 10%;
-  /*Responsiveleftposition*/
+.bgBlue {
   background-color: #f2f1ff;
   padding: 10px;
   border-radius: 10px;
@@ -40,6 +36,37 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
+
+.bombillaL {
+  top: 10%;
+  left: 10%;
+}
+
+.bombillaR {
+  top: 3%;
+  right: 11%;
+  height: 100px;
+  width: 100px;
+  opacity: 0.7;
+}
+
+.bombillaL2 {
+  bottom: 7%; /* Responsive bottom position */
+  left: 10%; /* Responsive left position */
+  height: 20px;
+  width: 20px;
+  padding: 5px;
+  border-radius: 999px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.209);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .plusIconL {
   top: 30%;
   left: 15%;
@@ -52,7 +79,7 @@
   -o-border-radius: 999px;
 }
 .starIconL {
-  bottom: 10%; /* Responsive bottom position */
+  bottom: 20%; /* Responsive bottom position */
   left: 15%; /* Responsive left position */
   height: 50px;
   width: 50px;
@@ -63,6 +90,21 @@
   -ms-border-radius: 999px;
   -o-border-radius: 999px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.209);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.starIconR {
+  top: 45%;
+  right: 6%;
+  height: 40px;
+  width: 40px;
+}
+
+.flagIconR {
+  bottom: 32%;
+  right: 25%;
 }
 
 .navHeaderTitle {
@@ -73,8 +115,45 @@
   color: #211f54;
 }
 
+@media (max-width: 1270px) {
+  .starIconL {
+    bottom: 35%;
+    left: 8%;
+  }
+}
+@media (max-width: 780px) {
+  .bombillaR {
+    right: 3%;
+  }
+  .plusIconL {
+    left: 11%;
+  }
+  .starIconR {
+    top: 40%;
+  }
+  .flagIconR {
+    bottom: 36%;
+  }
+  .starIconL {
+    bottom: 37%;
+  }
+}
+@media (max-width: 510px) {
+  .bombillaR {
+    right: 0%;
+  }
+  .bombillaL {
+    left: 5%;
+  }
+}
+@media (max-width: 450px) {
+  .iconfloat {
+    display: none;
+  }
+}
+
 .navHeaderSubtitle {
-  margin-top: -11px;
+  margin-top: -23px;
   color: #16c098;
   font-weight: 700;
   font-size: clamp(3rem, 9vw, 11vw); /* Tamaño escalable */
@@ -87,7 +166,7 @@
 .ayFolderImage {
   margin-top: 5px;
   width: clamp(
-    200px,
+    240px,
     23vw,
     180px
   ); /* Escala entre 100px y 200px basado en el ancho del viewport */

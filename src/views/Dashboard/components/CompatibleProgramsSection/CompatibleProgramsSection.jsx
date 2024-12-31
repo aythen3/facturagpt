@@ -5,7 +5,7 @@ import stripe from '../../assets/stripeprogram.svg';
 import a3 from '../../assets/a3.svg';
 import whatsapp from '../../assets/whatsapp.svg';
 import odoo from '../../assets/odoo.svg';
-import holded from '../../assets/holded.svg';
+import holded from '../../assets/holded.png';
 const CompatibleProgramsSection = () => {
   // Datos de ejemplo para los sliders
   const slidersData = [
