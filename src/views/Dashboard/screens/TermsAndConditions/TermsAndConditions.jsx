@@ -220,7 +220,6 @@ const TermsAndConditions = () => {
         <section>
           <h3>Pago y Facturación</h3>
           <p>
-            {' '}
             <ul>
               <li>
                 Debe proporcionar información de facturación precisa y un método
