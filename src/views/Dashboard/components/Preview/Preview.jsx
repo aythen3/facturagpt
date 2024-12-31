@@ -25,12 +25,14 @@ export default function DocumentPreview({ document, companyInfo }) {
         )}
       </div>
 
-      <div className={styles.labelsContainer}>
-        <span className={styles.labelDark}>Etiqueta</span>
-        <span className={styles.labelBlue}>Etiqueta</span>
-        <span className={styles.labelRed}>Etiqueta</span>
-        <span className={styles.labelGreen}>Etiqueta</span>
-        <span className={styles.labelPurple}>Etiqueta</span>
+      <div className={styles.labelsWrapper}>
+        <div className={styles.labelsContainer}>
+          <span className={styles.labelDark}>Etiqueta</span>
+          <span className={styles.labelBlue}>Etiqueta</span>
+          <span className={styles.labelRed}>Etiqueta</span>
+          <span className={styles.labelGreen}>Etiqueta</span>
+          <span className={styles.labelPurple}>Etiqueta</span>
+        </div>
       </div>
 
       <div className={styles.companyInfo}>

@@ -3,15 +3,18 @@ import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { Mail } from "lucide-react";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
-// import {
-//   createAccount,
-//   loginToManager,
-//   sendOTP,
-//   verifyOTP,
-// } from "../../../views/app/v1-1/actions/emailManager";
-// import { setUser } from "../../../views/app/v1-1/slices/emailManagerSlices";
+
+import {
+  createAccount,
+  loginToManager,
+  sendOTP,
+  verifyOTP,
+} from "../../../../actions/emailManager";
+import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
+import { Key, LockIcon } from "lucide-react";
+import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
+
 
 const DashboardLogin = () => {
   const { user } = useSelector((state) => state.emailManager);
@@ -26,6 +29,7 @@ const DashboardLogin = () => {
   const [error, setError] = useState("");
   const [storedEmail, setStoredEmail] = useState("");
   const [storedPassword, setStoredPassword] = useState("");
+  const [recaptchaValue, setRecaptchaValue] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -158,23 +162,169 @@ const DashboardLogin = () => {
       });
   };
 
+  const handleForgotPassword = () => {
+    if (email.length > 1 && recaptchaValue) {
+      setIsLoading(true);
+      // Here you would implement your forgot password logic
+      // For now, we'll just simulate it with a timeout
+      setTimeout(() => {
+        setIsLoading(false);
+        // You might want to show a success message or navigate to a different mode
+      }, 2000);
+    }
+  };
+
   const renderTitle = () => {
     switch (mode) {
       case "signup":
         return "¡Bienvenido!";
       case "otp":
         return "Por favor, revisa tu correo";
+      case "forgot-password":
+        return "¡Ups! ¿Te olvidaste de la contraseña?";
       default:
         return "¡Estás de vuelta!";
     }
   };
+
+  const renderLogo = () => (
+    <div className={styles.logoContainer}>
+      <img
+        onClick={() => navigate("/landing")}
+        src={facturaLogo}
+        alt="FacturaGPT"
+        className={styles.logo}
+      />
+      <span className={styles.logoText}>FacturaGPT</span>
+    </div>
+  );
+
+  const renderForm = () => (
+    <form className={styles.form}>
+      {mode === "signup" && (
+        <label className={styles.label}>
+          Nombre Completo*
+          <input
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            type="text"
+            placeholder="Name"
+            className={styles.input}
+          />
+        </label>
+      )}
+      <label className={styles.label}>
+        Email
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          placeholder="Example@email.com"
+          className={styles.input}
+        />
+      </label>
+      <label className={styles.label}>
+        Password
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          placeholder="at least 8 characters"
+          className={styles.input}
+        />
+        <span className={styles.passwordRequirements}>
+          8 characters minimum, and at least 1 uppercase letter and 1 number
+        </span>
+      </label>
+      {mode === "signin" && (
+        <div className={styles.forgotPasswordContainer}>
+          <div className={styles.rememberMe}>
+            <input type="checkbox" />
+            <span>Recuérdame</span>
+          </div>
+          <a
+            href="#"
+            className={styles.forgotPassword}
+            onClick={(e) => {
+              e.preventDefault();
+              setMode("forgot-password");
+            }}
+          >
+            ¿Olvidaste la contraseña?
+          </a>
+        </div>
+      )}
+      <div
+        onClick={() => (mode === "signin" ? handleSignin() : handleSignup())}
+        className={`${styles.signInButton} ${isLoading ? styles.loading : ""}`}
+      >
+        {isLoading
+          ? mode === "signin"
+            ? "Signing in..."
+            : "Signing up..."
+          : mode === "signin"
+            ? "Sign in"
+            : "Sign up"}
+      </div>
+      {mode === "signin" && (
+        <button className={styles.buttonOpenAi}>
+          <OpenAiLogo />
+          <span>Empezar con OpenAI</span>
+        </button>
+      )}
+    </form>
+  );
+
+  const renderForgotPasswordForm = () => (
+    <div className={styles.rightContainer}>
+      <div className={styles.forgotPasswordIcon}>
+        <KeyIcon />
+      </div>
+      <h1 className={styles.forgotPasswordTitle}>
+        ¡Ups! ¿Te olvidaste de la contraseña?
+      </h1>
+      <p className={styles.forgotPasswordSubtitle}>
+        No te preocupes, esto pasa. Ingresa tu email registrado a tu cuenta de
+        Usuario para resetear tu contraseña
+      </p>
+      <form className={styles.form}>
+        <label className={styles.label}>
+          Email
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Example@email.com"
+            className={styles.input}
+          />
+        </label>
+        {/* <div className={styles.recaptchaContainer}>
+          <div className="g-recaptcha" data-sitekey="your-site-key"></div>
+        </div> */}
+        <button
+          type="button"
+          onClick={handleForgotPassword}
+          className={styles.continueButton}
+          disabled={isLoading}
+        >
+          {isLoading ? "Procesando..." : "Continuar"}
+        </button>
+      </form>
+      <p className={styles.securityNote}>
+        <span className={styles.lockIcon}>
+          <LockIcon size={14} />
+        </span>
+        Tu seguridad nos importa
+      </p>
+    </div>
+  );
 
   if (mode === "otp") {
     return (
       <div className={styles.container}>
         <Navbar />
         <div className={styles.content}>
-          <div className={styles.leftContainer}>
+          <div className={styles.rightContainer}>
             <div className={styles.mailIconContainer}>
               {/* <Mail size={32} className={styles.mailIcon} /> */}
               icon
@@ -213,28 +363,18 @@ const DashboardLogin = () => {
               importa
             </p>
           </div>
-          <div className={styles.rightContainer}>
-            <div className={styles.logoContainer}>
-              <svg
-                className={styles.logo}
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="40" height="40" rx="8" fill="#162D3A" />
-                <path
-                  d="M12 20H28M20 12V28"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span className={styles.logoText}>FacturaGPT</span>
-            </div>
-          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === "forgot-password") {
+    return (
+      <div className={styles.container}>
+        <Navbar />
+        <div className={styles.content}>
+          <div className={styles.leftContainer}>{renderLogo()}</div>
+          {renderForgotPasswordForm()}
         </div>
       </div>
     );
@@ -244,76 +384,14 @@ const DashboardLogin = () => {
     <div className={styles.container}>
       <Navbar />
       <div className={styles.content}>
-        <div className={styles.leftContainer}>
+        <div className={styles.leftContainer}>{renderLogo()}</div>
+        <div className={styles.rightContainer}>
           <h1 className={styles.title}>{renderTitle()}</h1>
           <p className={styles.subtitle}>
             Controla tu facturación, controla tu negocio.
           </p>
-          <form className={styles.form}>
-            <label className={styles.label}>
-              Email
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="Example@email.com"
-                className={styles.input}
-              />
-            </label>
-            <label className={styles.label}>
-              Password
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="at least 8 characters"
-                className={styles.input}
-              />
-              <span className={styles.passwordRequirements}>
-                8 characters minimum, and at least 1 uppercase letter and 1
-                number
-              </span>
-            </label>
-            {mode === "signup" && (
-              <label className={styles.label}>
-                Confirm password
-                <input
-                  value={repeatPassword}
-                  onChange={(e) => setRepeatPassword(e.target.value)}
-                  type="password"
-                  placeholder="Repeat password"
-                  className={styles.input}
-                />
-              </label>
-            )}
-            {mode === "signin" && (
-              <div className={styles.forgotPasswordContainer}>
-                <div className={styles.rememberMe}>
-                  <input type="checkbox" />
-                  <span>Recuérdame</span>
-                </div>
-                <a href="#" className={styles.forgotPassword}>
-                  ¿Olvidaste la contraseña?
-                </a>
-              </div>
-            )}
-            <div
-              onClick={() =>
-                mode === "signin" ? handleSignin() : handleSignup()
-              }
-              className={`${styles.signInButton} ${
-                isLoading ? styles.loading : ""
-              }`}
-            >
-              {isLoading
-                ? mode === "signin"
-                  ? "Signing in..."
-                  : "Signing up..."
-                : mode === "signin"
-                  ? "Sign in"
-                  : "Sign up"}
-            </div>
-          </form>
+          {renderForm()}
+
           {error && <p className={styles.error}>{error}</p>}
           <p className={styles.footerText}>
             {mode === "signin" ? "Don't you" : "Already"} have an account?{" "}
@@ -325,28 +403,6 @@ const DashboardLogin = () => {
             </a>
           </p>
           <p className={styles.footer}>© 2024 ALL RIGHTS RESERVED</p>
-        </div>
-        <div className={styles.rightContainer}>
-          <div className={styles.logoContainer}>
-            <svg
-              className={styles.logo}
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="40" height="40" rx="8" fill="#162D3A" />
-              <path
-                d="M12 20H28M20 12V28"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className={styles.logoText}>FacturaGPT</span>
-          </div>
         </div>
       </div>
     </div>
