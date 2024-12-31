@@ -48,3 +48,62 @@ export const saveLeads = createAsyncThunk(
   }
 );
 
+export const gptLeads = createAsyncThunk(
+  "reseller/gptLeads",
+  async ({ leads }) => {
+    console.log('!!!!!!!!', leads)
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        `/reseller/gpt-leads`,
+        { leads },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error adding new client:", error);
+      throw new Error("Failed to add new client");
+    }
+  }
+);
+
+export const deleteLeads = createAsyncThunk(
+  "reseller/deleteLeads",
+  async () => {
+    console.log('!!!!!!!! delete')
+    try {
+      const token = localStorage.getItem("token");
+      // const res = await apiBackend.delete(
+      //   `/reseller/leads`,
+      //   { leads },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+
+      const res = await apiBackend.delete(
+        '/reseller/leads', {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				data: {
+					// users,
+				},
+			})
+
+
+
+      return res.data;
+    } catch (error) {
+      console.log("Error adding new client:", error);
+      throw new Error("Failed to add new client");
+    }
+  }
+);
+

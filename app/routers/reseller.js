@@ -13,10 +13,10 @@ const upload = multer({
 
 
 const {
-    testReseller,
-    mainReseller,
     testTwilio,
 
+    gptLeads,
+    deleteLeads,
     fetchLeads,
     saveLeads
 } = require("../controllers/reseller.js");
@@ -26,10 +26,11 @@ const {
 
 routesRouter
 
-    .get("/", mainReseller)
     .get("/twilio", testTwilio)
-    .get("/test", testReseller)
 
+
+    .post("/gpt-leads", gptLeads)
+    .delete("/leads", deleteLeads)
     .get("/leads", fetchLeads)
     .post("/leads", saveLeads)
 

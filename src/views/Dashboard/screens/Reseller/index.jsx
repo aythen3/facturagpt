@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux'
 
 import {
     fetchLeads,
-    saveLeads
+    saveLeads,
+    deleteLeads,
+    gptLeads
 } from '../../../../actions/reseller'
 // SVG Icons
 
@@ -41,6 +43,7 @@ import Img1000 from './assets/img-1000.png'
 
 
 import styles from './index.module.css'
+import { dispatch } from 'd3'
 
 
 const rewards = [
@@ -148,24 +151,30 @@ let business = {
 }
 
 
-const leads = [
-    business,
-    business,
-    business
-]
+// const leads = [
+//     business,
+//     business,
+//     business
+// ]
 
 
 const Reseller = () => {
     const dispatch = useDispatch()
     const [isCalling, setIsCalling] = useState(false)
 
+    const [leads, setLeads] = useState([])
 
-    const fetchItems = async() => {
+
+    const fetchItems = async () => {
         const resp = await dispatch(fetchLeads({
             query: '',
             category: ''
         }))
         console.log('resp!!!', resp)
+
+        if (resp && resp.payload && resp.payload.docs) {
+            setLeads(resp.payload.docs)
+        }
     }
 
     useEffect(() => {
@@ -192,16 +201,12 @@ const Reseller = () => {
             const csvData = event.target.result;
             const lines = csvData.split('\n');
 
-
-            // Get only first 26 rows (header + 25 data rows)
             const limitedLines = lines.slice(0, 26);
-
-
-
             const headerMapping = {
-                'email': ['email', 'correo', 'e-mail'],
+                'email': ['email 1', 'email 2', 'email 3'],
                 'phone': ['phone', 'telefono', 'teléfono', 'tel'],
                 'web': ['web', 'website', 'sitio web', 'página web'],
+                'zip': ['pin code'],
                 'city': ['city', 'ciudad', 'localidad'],
                 'address': ['address', 'direccion', 'dirección', 'domicilio'],
                 'cnae': ['cnae', 'actividad cnae'],
@@ -210,10 +215,10 @@ const Reseller = () => {
                 'cif': ['cif', 'nif', 'identificación fiscal'],
                 'date': ['date', 'fecha', 'fecha constitución'],
                 'society': ['society', 'forma jurídica', 'tipo sociedad'],
-                'partner': ['partner', 'socios', 'fundadores']
+                'partner': ['partner', 'socios', 'fundadores'],
+                'name': ['company name']
             };
 
-            // Function to normalize header text
             const normalizeHeader = (header) => {
                 header = header.toLowerCase().trim();
                 for (const [key, variants] of Object.entries(headerMapping)) {
@@ -224,33 +229,22 @@ const Reseller = () => {
                 return header;
             };
 
-
-
-            // Get headers from first row
             const headers = limitedLines[0].split(',').map(header => {
                 const cleanHeader = header.replace(/['"]/g, '').trim();
-                // return cleanHeader;
                 return normalizeHeader(cleanHeader);
             });
 
             // Process remaining rows
             const jsonData = limitedLines.slice(1).map(line => {
-                // Handle quoted values
-                // const withoutEscapedQuotes = line.replace(/\\"/g, '@QUOTE@');
-                // const withoutQuotes = withoutEscapedQuotes.replace(/^"|"$/g, '');
-                // const restoredQuotes = withoutQuotes.replace(/@QUOTE@/g, '"');
-                // const columns = restoredQuotes.split(',').map(col => col.trim());
-
                 const columns = line.split(',').map(col => col.replace(/['"\\]/g, '').trim());
 
-                // Create object using headers as keys
                 return headers.reduce((obj, header, index) => {
                     obj[header] = columns[index] || '';
                     return obj;
                 }, {});
             });
 
-            console.log('Processed data:', jsonData);
+            // console.log('Processed data:', jsonData);
 
 
             const resp = await dispatch(saveLeads({
@@ -258,13 +252,26 @@ const Reseller = () => {
             }))
 
             console.log('save', resp)
+
+            if (resp && resp.payload) {
+                setLeads(resp.payload)
+            }
         };
 
         reader.readAsText(file);
     };
 
+
+    const handleDelete = async () => {
+        const resp = await dispatch(deleteLeads())
+        setLeads([])
+    }
+
     return (
         <div className={styles.containerReseller}>
+            <button onClick={() => handleDelete()}>
+                Borrar base de datos
+            </button>
             <ComponentHeader />
             <div
                 className={styles.container}
@@ -273,6 +280,7 @@ const Reseller = () => {
             >
                 <ComponentLeft
                     isCalling={isCalling}
+                    leads={leads}
                 />
                 <ComponentRight
                     isCalling={isCalling}
@@ -373,8 +381,40 @@ const ComponentHeader = () => {
 }
 
 
-const ComponentLeft = ({ isCalling }) => {
+const ComponentLeft = ({ isCalling, leads }) => {
+    const dispatch = useDispatch()
+
     const [isComponent, setIsComponent] = useState('pendent')
+    const [selectedLeads, setSelectedLeads] = useState([])
+
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            setSelectedLeads(leads.map(lead => lead._id))
+        } else {
+            setSelectedLeads([])
+        }
+    }
+
+    const handleSelectLead = (leadId) => {
+        setSelectedLeads(prev => {
+            if (prev.includes(leadId)) {
+                return prev.filter(id => id !== leadId)
+            } else {
+                return [...prev, leadId]
+            }
+        })
+    }
+    
+    const handleGPT = async () => {
+        console.log('selected', selectedLeads)
+
+
+        const resp = await dispatch(gptLeads({
+            leads: selectedLeads
+        }))
+
+        console.log('rrrrr', resp)
+    }
 
     return (
         <div className={styles.componentLeft}>
@@ -445,11 +485,28 @@ const ComponentLeft = ({ isCalling }) => {
                                     default
                                 </div>
                             </div>
+                            <div className={styles.selectAll}>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedLeads.length === leads.length}
+                                    onChange={handleSelectAll}
+                                />
+                                <span>Select All</span>
+                            </div>
+                            <button onClick={() => handleGPT()}>
+                                Procesar gpt
+                            </button>
                             <ul className={styles.itemsLeads}>
                                 {leads.map((item, index) => (
                                     <li key={index} className={`${index == 0 ? styles.active : ''}`}>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedLeads.includes(item._id)}
+                                            onChange={() => handleSelectLead(item._id)}
+                                        />
                                         <div className={styles.title}>
-                                            Emprsesa0
+                                            {item.name || 'Empresa 0'}
+                                            {item.facturacion_total || 'no existe todavia'}
                                         </div>
                                         <div className={styles.status}>
                                             <IconArrow />
@@ -479,7 +536,7 @@ const ComponentLeft = ({ isCalling }) => {
                                     <li key={index}>
                                         <div className={styles.top}>
                                             <b>
-                                                Empresa 0
+                                                {item.name || 'Empresa 0'}
                                             </b>
                                             <div className={`${styles.status} 
                                     ${true ? styles.hight : styles.medium}
