@@ -2,13 +2,13 @@ import apiBackend from "@src/apiBackend.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const createAccount = createAsyncThunk(
-  "emailManager/createAccount",
+  "user/createAccount",
   async ({ nombre, email, password }) => {
     console.log("data from createAccount", { nombre, email, password });
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
-        `/emailManager/createAccount`,
+        `/user/createAccount`,
         { nombre, email, password },
         {
           headers: {
@@ -24,13 +24,13 @@ export const createAccount = createAsyncThunk(
 );
 
 export const loginToManager = createAsyncThunk(
-  "emailManager/loginToManager",
+  "user/loginToManager",
   async ({ email, password }) => {
     console.log("Data from loginToManager action:", { email, password });
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
-        `/emailManager/loginToManager`,
+        `/user/loginToManager`,
         { email, password },
         {
           headers: {
@@ -47,11 +47,11 @@ export const loginToManager = createAsyncThunk(
 );
 
 export const getAllClients = createAsyncThunk(
-  "emailManager/getAllClients",
+  "user/getAllClients",
   async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await apiBackend.get(`/emailManager/getAllClients`, {
+      const res = await apiBackend.get(`/user/getAllClients`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,31 +64,28 @@ export const getAllClients = createAsyncThunk(
   }
 );
 
-export const getAllUsers = createAsyncThunk(
-  "emailManager/getAllUsers",
-  async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await apiBackend.get(`/emailManager/getAllUsers`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return res.data;
-    } catch (error) {
-      console.log("Error fetching users:", error);
-      throw new Error("Failed to fetch users");
-    }
+export const getAllUsers = createAsyncThunk("user/getAllUsers", async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await apiBackend.get(`/user/getAllUsers`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log("Error fetching users:", error);
+    throw new Error("Failed to fetch users");
   }
-);
+});
 
 export const addNewClient = createAsyncThunk(
-  "emailManager/addNewClient",
+  "user/addNewClient",
   async ({ clientData }) => {
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
-        `/emailManager/addNewClient`,
+        `/user/addNewClient`,
         { clientData },
         {
           headers: {
@@ -105,11 +102,11 @@ export const addNewClient = createAsyncThunk(
 );
 
 export const deleteClient = createAsyncThunk(
-  "emailManager/deleteClient",
+  "user/deleteClient",
   async ({ clientId }) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await apiBackend.delete(`/emailManager/deleteClient`, {
+      const res = await apiBackend.delete(`/user/deleteClient`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -124,12 +121,12 @@ export const deleteClient = createAsyncThunk(
 );
 
 export const updateClient = createAsyncThunk(
-  "emailManager/updateClient",
+  "user/updateClient",
   async ({ clientId, toUpdate }) => {
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.put(
-        `/emailManager/updateClient`,
+        `/user/updateClient`,
         { clientId, toUpdate },
         {
           headers: {
@@ -146,12 +143,12 @@ export const updateClient = createAsyncThunk(
 );
 
 export const updateUser = createAsyncThunk(
-  "emailManager/updateUser",
+  "user/updateUser",
   async ({ userId, toUpdate }) => {
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.put(
-        `/emailManager/updateUser`,
+        `/user/updateUser`,
         { userId, toUpdate },
         {
           headers: {
@@ -167,69 +164,12 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-// ==================================== STRIPE ===========================================
-
-export const createPaymentIntent = createAsyncThunk(
-  "emailManager/createPaymentIntent",
-  async ({ amount, currency, clientId }) => {
-    console.log("=== ON CREATE PAYMENT INTENT ===", {
-      amount,
-      currency,
-      clientId,
-    });
-    try {
-      const token = localStorage.getItem("token");
-      const res = await apiBackend.post(
-        `/emailManager/create-payment-intent`,
-        { amount, currency, clientId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return res.data;
-    } catch (error) {
-      console.log("Error adding new payment intent:", error);
-      throw new Error("Failed to add new payment intent");
-    }
-  }
-);
-
-export const createSetupIntent = createAsyncThunk(
-  "emailManager/createSetupIntent",
-  async (_, { rejectWithValue }) => {
-    console.log("=== ON CREATE SETUP INTENT ===");
-    try {
-      const token = localStorage.getItem("token");
-      const res = await apiBackend.post(
-        `/emailManager/create-setup-intent`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return res.data;
-    } catch (error) {
-      console.error(
-        "Error creating setup intent:",
-        error.response?.data || error.message
-      );
-      return rejectWithValue(
-        error.response?.data || "Failed to create setup intent"
-      );
-    }
-  }
-);
-
 export const sendOTP = createAsyncThunk(
-  "emailManager/send-otp",
+  "user/send-otp",
   async ({ email }, { rejectWithValue }) => {
     console.log("Sending OTP to:", email);
     try {
-      const res = await apiBackend.post(`/emailManager/send-otp`, { email });
+      const res = await apiBackend.post(`/user/send-otp`, { email });
       return res.data;
     } catch (error) {
       console.error(
@@ -242,11 +182,11 @@ export const sendOTP = createAsyncThunk(
 );
 
 export const verifyOTP = createAsyncThunk(
-  "emailManager/verify-otp",
+  "user/verify-otp",
   async ({ email, otp }, { rejectWithValue }) => {
     console.log("Verifying OTP for:", email);
     try {
-      const res = await apiBackend.post(`/emailManager/verify-otp`, {
+      const res = await apiBackend.post(`/user/verify-otp`, {
         email,
         otp,
       });

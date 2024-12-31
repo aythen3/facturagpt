@@ -1,6 +1,5 @@
 .container {
-  width: 100%;
-  max-width: 600px;
+  width: 365px;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
@@ -68,11 +67,22 @@
   text-align: center;
 }
 
+.labelsWrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 24px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.labelsWrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 .labelsContainer {
   display: flex;
   gap: 8px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
+  padding-bottom: 8px;
 }
 
 .labelDark,
@@ -80,12 +90,16 @@
 .labelRed,
 .labelGreen,
 .labelPurple {
-  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: 14px;
   font-weight: 500;
-  display: inline-block;
   margin-bottom: 4px;
+  width: 81px;
+  height: 31px;
+  text-align: center;
 }
 
 .labelDark {
@@ -116,11 +130,10 @@
 .companyInfo {
   background-color: white;
   border-radius: 12px;
-  margin-top: 20px;
   padding: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   flex-grow: 1;
-  overflow-y: auto;
+  overflow-y: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -177,7 +190,7 @@
 }
 
 .addressInfo {
-  text-align: left;
+  text-align: right;
 }
 
 /* Media Queries for Responsiveness */
