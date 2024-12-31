@@ -39,6 +39,7 @@ const Navbar = () => {
         onClick={() => navigate('/landing')}
         src={facturaLogo}
         alt='FacturaGPT'
+        className={styles.logo}
       />
       <button className={styles.hamburger} onClick={toggleMenu}>
         <img src={menuIcon} alt='Menu Icon' />

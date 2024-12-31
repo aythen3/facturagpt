@@ -7,6 +7,7 @@
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  position: relative;
 }
 
 .container::-webkit-scrollbar {
@@ -75,27 +76,28 @@
   color: #333;
 }
 
-.folderItem {
-  padding: 8px 16px;
+.folderItem,
+.fileItem {
+  padding: 4px 16px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  position: relative;
 }
 
-.folderItem:hover {
-  background: #f5f5f5;
-}
-
-.itemContent {
+.itemInner {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.itemContent:hover {
-  background: #fff;
-  border-radius: 12px;
+.folderItem:hover .itemInner,
+.fileItem:hover .itemInner {
+  background-color: #fff;
 }
 
 .itemText {
@@ -108,27 +110,52 @@
   padding: 8px 0;
 }
 
-.fileItem {
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
 .moreButton {
   border: none;
   background: none;
   padding: 4px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity 0.2s ease-in-out;
+  margin-left: auto;
+}
+
+.fileItem:hover .moreButton {
+  opacity: 0.7;
 }
 
 .moreButton:hover {
-  opacity: 1;
+  opacity: 1 !important;
   background: #eaeaea;
   border-radius: 4px;
+}
+
+.optionsPopup {
+  position: fixed;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 115px;
+  z-index: 9999;
+  padding: 4px;
+}
+
+.optionItem {
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.optionItem:hover {
+  background-color: #f5f5f5;
 }

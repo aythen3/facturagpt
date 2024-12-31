@@ -29,21 +29,31 @@ export default function TagModal({
     <div className={styles.overlay}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <input
-            type="text"
-            placeholder="Nombre de la Etiqueta"
-            className={styles.titleInput}
-          />
+          <h2>Nueva Etiqueta</h2>
           <button onClick={onClose} className={styles.closeButton}>
             <X size={20} />
           </button>
+        </div>
+
+        <div className={styles.inputWrapper}>
+          <label htmlFor="tagName" className={styles.inputLabel}>
+            Nombre de la Etiqueta
+          </label>
+          <input
+            id="tagName"
+            type="text"
+            defaultValue="Pagado"
+            className={styles.titleInput}
+          />
         </div>
 
         <div className={styles.colorGrid}>
           {colors.map((color) => (
             <button
               key={color}
-              className={`${styles.colorButton} ${selectedColor === color ? styles.selected : ""}`}
+              className={`${styles.colorButton} ${
+                selectedColor === color ? styles.selected : ""
+              }`}
               style={{ backgroundColor: color }}
               onClick={() => setSelectedColor(color)}
               aria-label={`Select ${color} color`}
@@ -57,9 +67,15 @@ export default function TagModal({
           </button>
           <button
             onClick={() => onSave(selectedColor)}
+            className={styles.createButton}
+          >
+            Create
+          </button>
+          <button
+            onClick={() => onSave(selectedColor)}
             className={styles.saveButton}
           >
-            {isEditing ? "Save" : "Create"}
+            Save
           </button>
         </div>
       </div>

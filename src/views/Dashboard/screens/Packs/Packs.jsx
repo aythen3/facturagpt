@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Packs.module.css';
 import PricingCards from '../../components/PricingCard/PricingCard';
 import BillingSlider from '../../components/BillingSlider/BillingSlider';
@@ -23,11 +23,15 @@ import Reviews from '../../components/Reviews/Reviews';
 import CompatibleProgramsSection from '../../components/CompatibleProgramsSection/CompatibleProgramsSection';
 const Packs = () => {
   const [sliderValue, setSliderValue] = useState(1000000); // Inicializado en 1M
+  const [facturasTotales, setFacturasTotales] = useState(0);
+
+  useEffect(() => {
+    setFacturasTotales((sliderValue * facturasPorMillon) / 1000000);
+  }, [sliderValue]);
 
   // Calcular el número de facturas según el valor del slider
   const facturasPorMillon = 2000; // 1 millón = 2000 facturas
-  const facturasTotales = (sliderValue * facturasPorMillon) / 1000000; // Dividir por 1 millón para que la multiplicación sea correcta
-
+  //const facturasTotales = (sliderValue * facturasPorMillon) / 1000000; // Dividir por 1 millón para que la multiplicación sea correcta
   // Calcular las horas (cada factura toma 5 minutos)
   const horasTotales = (facturasTotales * 5) / 60; // Convertir minutos a horas
 
@@ -125,7 +129,12 @@ const Packs = () => {
         obtener un beneficio de más de{' '}
         <strong>{formatCurrency(valorEnDolares)}</strong> anuales.
       </span>
-      <PricingCards />
+      <PricingCards
+        facturasTotales={facturasTotales}
+        setSliderValue={setSliderValue}
+        sliderValue={sliderValue}
+        setFacturasTotales={setFacturasTotales}
+      />
       <div className={styles.banner}>
         <h3 className={styles.bannerTitle}>
           Reduce la entrada manual en un 88%
@@ -139,7 +148,7 @@ const Packs = () => {
       </div>
       <div className={styles.extensionsTitle}>
         <img className={styles.flag} src={flag} alt='flag' />
-        Formatos y Extensiones
+        <h2>Formatos y Extensiones</h2>
       </div>
       <span className={styles.regular08}>
         Puedes conectar cualquier tipo de formato digital, escaneado, foto..
@@ -158,7 +167,7 @@ const Packs = () => {
       </div>
       <div className={styles.extensionsTitle}>
         <img className={styles.heart} src={heart} alt='heart' />
-        Programas Compatibles
+        <h2>Programas Compatibles</h2>
       </div>
       <span className={styles.regular08}>
         Sube, recibe o emite facturas y automatiza tu proceso de facturación
