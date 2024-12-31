@@ -74,7 +74,7 @@
 }
 
 .navHeaderSubtitle {
-  margin-top: -10px;
+  margin-top: -11px;
   color: #16c098;
   font-weight: 700;
   font-size: clamp(3rem, 9vw, 11vw); /* Tamaño escalable */
