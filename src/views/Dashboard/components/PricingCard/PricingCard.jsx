@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styles from './PricingCard.module.css';
 
 export const PricingCard = ({
@@ -7,10 +7,18 @@ export const PricingCard = ({
   selectedCard,
   setSelectedCard,
   index,
+  min,
+  sliderValue,
+  setFacturasTotales,
 }) => {
+  const handleClick = () => {
+    setSelectedCard(index); // Actualiza la card seleccionada
+    setFacturasTotales(min); // Actualiza las facturas directamente al hacer clic
+    console.log('Card clicked:', index, 'Min value set:', min);
+  };
   return (
     <div
-      onClick={() => setSelectedCard(index)}
+      onClick={handleClick}
       className={`${styles.card} ${selectedCard ? styles.selectedCard : ''}`}
     >
       <div
@@ -35,22 +43,40 @@ export const PricingCard = ({
   );
 };
 
-const PricingCards = () => {
-  const [selectedCard, setSelectedCard] = useState(2);
+const PricingCards = ({
+  facturasTotales,
+  setSliderValue,
+  sliderValue,
+  setFacturasTotales,
+}) => {
+  const [selectedCard, setSelectedCard] = useState(null);
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
   const cardsData = [
-    { title: '200 Documentos', price: '0,19' },
-    { title: '+500 Documentos', price: '0,18' },
-    { title: '+1000 Documentos', price: '0,16' },
-    { title: '+2.000 Documentos', price: '0,15' },
-    { title: '+5.000 Documentos', price: '0,13' },
-    { title: '+10.000 Documentos', price: '0,12' },
-    { title: '+20.000 Documentos', price: '0,11' },
+    { title: '200 Documentos', price: '0,19', min: 200, max: 499 },
+    { title: '+500 Documentos', price: '0,18', min: 500, max: 999 },
+    { title: '+1000 Documentos', price: '0,16', min: 1000, max: 1999 },
+    { title: '+2.000 Documentos', price: '0,15', min: 2000, max: 4999 },
+    { title: '+5.000 Documentos', price: '0,13', min: 5000, max: 9999 },
+    { title: '+10.000 Documentos', price: '0,12', min: 10000, max: 19999 },
+    { title: '+20.000 Documentos', price: '0,11', min: 20000, max: 100000 },
   ];
+
+  useEffect(() => {
+    const matchingIndex = cardsData.findIndex(
+      (card) => facturasTotales >= card.min && facturasTotales <= card.max
+    );
+    if (matchingIndex !== -1) {
+      setSelectedCard(matchingIndex);
+    }
+  }, [facturasTotales]);
+
+  useEffect(() => {
+    console.log('Selected card updated:', selectedCard);
+  }, [selectedCard]);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -88,6 +114,9 @@ const PricingCards = () => {
           setSelectedCard={setSelectedCard}
           title={card.title}
           price={card.price}
+          min={card.min}
+          sliderValue={sliderValue}
+          setFacturasTotales={setFacturasTotales}
         />
       ))}
     </div>

@@ -9,7 +9,7 @@ const ContactForm = () => {
       <div className={styles.header}>
         <img src={handPointer} alt='' className={styles.leftImage} />
         <div className={styles.textContainer}>
-          <h1 className={styles.title}>Contáctenos</h1>
+          <h2 className={styles.title}>Contáctenos</h2>
           <p className={styles.subtitle}>
             Estamos aquí para ayudar, solicite asistencia personalizada.
           </p>

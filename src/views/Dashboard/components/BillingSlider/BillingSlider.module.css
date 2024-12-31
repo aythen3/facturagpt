@@ -6,7 +6,7 @@
 }
 
 .title {
-  font-size: clamp(15px, 5vw, 35px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(20px, 5vw, 60px) !important; /* Ajuste dinámico con clamp */
   color: #333;
   margin-bottom: 10px;
   display: flex;
