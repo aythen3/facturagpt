@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './CookiePopup.module.css';
 import cookiesAlert from '../../assets/cookiesAlert.svg';
+
 const CookiePopup = () => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Comprobar si la cookie de aceptación ya existe
+    const cookiesAccepted = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('cookiesAccepted='));
+    if (!cookiesAccepted) {
+      setVisible(true);
+    }
+  }, []);
 
   const handleAccept = () => {
-    // Aquí puedes agregar lógica para almacenar la preferencia del usuario
+    // Crear una cookie que almacene la preferencia del usuario
+    document.cookie = 'cookiesAccepted=true; path=/; max-age=31536000'; // Expira en 1 año
     setVisible(false);
   };
 
   const handleReject = () => {
-    // Aquí puedes manejar el rechazo, si es necesario
+    // Manejar rechazo (opcional)
     setVisible(false);
+    navigate('/termsandconditions'); // Redirigir a la página de información de cookies
   };
 
   if (!visible) return null;

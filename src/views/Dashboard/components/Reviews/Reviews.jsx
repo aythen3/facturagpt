@@ -14,27 +14,31 @@ const Reviews = () => {
         negocios como el tuyo
       </span>
       <Carousel />
-      <h2 className={styles.reviewsTitle}>Precios para escalar</h2>
-      {/* <span className={styles.reviewsDescriptionSecondary}>
+      <section className={styles.reviewsSection}>
+        <h2 className={styles.reviewsTitle}>Precios para escalar</h2>
+        {/* <span className={styles.reviewsDescriptionSecondary}>
         Nuestros precios están diseño para brindar un valor excepcional para el
         mejor servicio de impuestos.
       </span> */}
-      <span className={styles.startsFrom}>A partir de</span>
-      <div className={styles.price}>
-        €3’99 <span>/mes</span>
-      </div>
-      <span className={styles.thinSubtitle}>
-        Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en
-        cualquier momento.
-      </span>
+        <span className={styles.startsFrom}>A partir de</span>
+        <div className={styles.price}>
+          €3’99 <span>/mes</span>
+        </div>
+        <span className={styles.thinSubtitle}>
+          Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela
+          en cualquier momento.
+        </span>
+      </section>
       <ContactForm />
-      <h1 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h1>
-      <span className={styles.reviewsDescriptionLast}>
-        Estás un paso más cerca de obtener el mejor servicio...
-      </span>
-      <a href='/login' className={styles.startButton}>
-        Comience ahora
-      </a>
+      <section className={styles.startNowSection}>
+        <h2 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h2>
+        <span className={styles.reviewsDescriptionLast}>
+          Estás un paso más cerca de obtener el mejor servicio...
+        </span>
+        <a href='/login' className={styles.startButton}>
+          Comience ahora
+        </a>
+      </section>
     </div>
   );
 };

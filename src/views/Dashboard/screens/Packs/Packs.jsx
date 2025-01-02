@@ -99,21 +99,23 @@ const Packs = () => {
 
   return (
     <div className={styles.packsContainer}>
-      <div className={styles.logoContainer}>
-        {LogoIcons.map((icon, index) => (
-          <div key={index}>
-            <img src={icon.image} alt={icon.title} />
-          </div>
-        ))}
-      </div>
-      <div className={styles.wrapper}>
-        {steps.map((step, index) => (
-          <div key={index} className={styles.card}>
-            <p className={styles.step}>{step.step}</p>
-            <h3 className={styles.title}>{step.title}</h3>
-            <p className={styles.subtitle}>{step.description}</p>
-          </div>
-        ))}
+      <div className={styles.stepsContainer} id='facturation'>
+        <div className={styles.logoContainer}>
+          {LogoIcons.map((icon, index) => (
+            <div key={index}>
+              <img src={icon.image} alt={icon.title} />
+            </div>
+          ))}
+        </div>
+        <div className={styles.wrapper}>
+          {steps.map((step, index) => (
+            <div key={index} className={styles.card}>
+              <p className={styles.step}>{step.step}</p>
+              <h3 className={styles.title}>{step.title}</h3>
+              <p className={styles.subtitle}>{step.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
       <BillingSlider
         setSliderValue={setSliderValue}
@@ -146,25 +148,28 @@ const Packs = () => {
           Reduce el tiempo de respuesta en un 57 %
         </h3>
       </div>
-      <div className={styles.extensionsTitle}>
-        <img className={styles.flag} src={flag} alt='flag' />
-        <h2>Formatos y Extensiones</h2>
-      </div>
-      <span className={styles.regular08}>
-        Puedes conectar cualquier tipo de formato digital, escaneado, foto..
-        Disponible en más de +10 formatos disponibles
-      </span>
-      <div className={styles.dashedContainer}>
-        {cardsData.map((card, index) => (
-          <div className={styles.innerCard} key={index}>
-            <img
-              className={index === 0 ? styles.pdfIcon : styles.pdfIcon}
-              src={card}
-              alt='card'
-            />
-          </div>
-        ))}
-      </div>
+      <section className={styles.extensionsContainer}>
+        <div className={styles.extensionsTitle}>
+          <img className={styles.flag} src={flag} alt='flag' />
+          <h2>Formatos y Extensiones</h2>
+        </div>
+        <span className={styles.regular08}>
+          Puedes conectar cualquier tipo de formato digital, escaneado, foto..
+          Disponible en más de +10 formatos disponibles
+        </span>
+        <div className={styles.dashedContainer}>
+          {cardsData.map((card, index) => (
+            <div className={styles.innerCard} key={index}>
+              <img
+                className={index === 0 ? styles.pdfIcon : styles.pdfIcon}
+                src={card}
+                alt='card'
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
       <div className={styles.extensionsTitle}>
         <img className={styles.heart} src={heart} alt='heart' />
         <h2>Programas Compatibles</h2>

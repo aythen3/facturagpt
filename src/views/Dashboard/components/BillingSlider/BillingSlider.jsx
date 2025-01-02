@@ -28,7 +28,7 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
   ];
 
   return (
-    <div className={styles.container} id='facturation'>
+    <div className={styles.container}>
       <h2 className={styles.title}>
         <img className={styles.star} src={star} alt='star' />
         ¿Cuál es tu facturación anual?
