@@ -3,7 +3,7 @@ import FileExplorer from "../../components/FileExplorer/FileExplorer.jsx";
 import InvoiceForm from "../../components/InvoiceForm/InvoiceForm.jsx";
 import Preview from "../../components/Preview/Preview.jsx";
 import FloatingMenu from "../../components/FloatingMenu/FloatingMenu.jsx";
-import Navbar from "../../components/Navbar/Navbar";
+import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 
 const company = {
   email: "coolmail@mail.com",
@@ -17,7 +17,7 @@ const company = {
 export default function InvoicePanel() {
   return (
     <>
-      {/* <Navbar /> */}
+      <NavbarAdmin />
       <div className={styles.container}>
         <FileExplorer />
         <InvoiceForm />

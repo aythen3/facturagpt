@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { X, Plus, Pencil } from "lucide-react";
+import { X, Pencil, Minus, Plus } from "lucide-react";
 import styles from "./FolderModal.module.css";
 import { ColorPicker } from "./ColorPicker";
-import { AutomationModal } from "./Automation";
+import AutomationModal from "./Automation";
+import CollaboratorManager from "./CollaboratorManager";
+import FolderForm from "./FolderForm";
 
 import { ReactComponent as GmailIcon } from "../../assets/gmail-icon.svg";
 import { ReactComponent as OutlookIcon } from "../../assets/outlook-icon.svg";
@@ -34,11 +36,7 @@ export default function FolderModal({ onClose, isOpen }) {
       >
         <div className={styles.modal}>
           <div className={styles.header}>
-            <input
-              type="text"
-              className={styles.inputNombre}
-              placeholder="Nombre de la Carpeta"
-            />
+            <h2 className={styles.title}>Nueva Carpeta</h2>
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <ColorPicker
                 selectedColor={selectedColor}
@@ -50,39 +48,39 @@ export default function FolderModal({ onClose, isOpen }) {
             </div>
           </div>
 
-          <div className={styles.locationSection}>
-            <label className={styles.label}>Location</label>
-            <input type="text" className={styles.input} defaultValue="/home" />
-          </div>
+          <div className={styles.content}>
+            <FolderForm />
+            <CollaboratorManager />
 
-          <button
-            className={styles.addButton}
-            onClick={() => setShowAutomation(true)}
-          >
-            <div className={styles.plusIcon}>
-              <Plus size={20} fill="#FFF" color="#FFF" />
-            </div>
-            Añadir Automatización
-          </button>
-
-          <div className={styles.serviceList}>
-            {services.map((service) => (
-              <div key={service.name} className={styles.serviceItem}>
-                <div className={styles.serviceIcon}>{service.icon}</div>
-                <div className={styles.serviceInfo}>
-                  <div className={styles.serviceName}>{service.name}</div>
-                  <div className={styles.serviceEmail}>{service.email}</div>
-                </div>
-                <div className={styles.actions}>
-                  <button className={styles.actionButton}>
-                    <Pencil size={16} />
-                  </button>
-                  <button className={styles.actionButton}>
-                    <X size={16} color="red" />
-                  </button>
-                </div>
+            <button
+              className={styles.addButton}
+              onClick={() => setShowAutomation(true)}
+            >
+              <div className={styles.plusIcon}>
+                <Plus size={20} fill="#000" color="#000" />
               </div>
-            ))}
+              Añadir Automatización
+            </button>
+
+            <div className={styles.serviceList}>
+              {services.map((service) => (
+                <div key={service.name} className={styles.serviceItem}>
+                  <div className={styles.serviceIcon}>{service.icon}</div>
+                  <div className={styles.serviceInfo}>
+                    <div className={styles.serviceName}>{service.name}</div>
+                    <div className={styles.serviceEmail}>{service.email}</div>
+                  </div>
+                  <div className={styles.actions}>
+                    <button className={styles.actionButton}>
+                      <Pencil size={16} />
+                    </button>
+                    <div className={styles.minusIcon}>
+                      <Minus size={20} fill="#FFF" color="#FFF" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className={styles.footer}>
