@@ -21,30 +21,39 @@ import onedrive from '../../assets/onedrive.svg';
 import droopbox from '../../assets/droopbox.svg';
 import Reviews from '../../components/Reviews/Reviews';
 import CompatibleProgramsSection from '../../components/CompatibleProgramsSection/CompatibleProgramsSection';
+
 const Packs = () => {
   const [sliderValue, setSliderValue] = useState(1000000); // Inicializado en 1M
-  const [facturasTotales, setFacturasTotales] = useState(0);
+  const [facturasTotales, setFacturasTotales] = useState(2000);
+  const [facturasPorMillon] = useState(2000); // 1 millón = 2000 facturas
+  const minutosPorFactura = 5; // Minutos por factura
+  const minutosAHoras = 60; // Conversión de minutos a horas
+  const tarifaPorHora = 10; // Dólares por hora
 
-  useEffect(() => {
-    setFacturasTotales((sliderValue * facturasPorMillon) / 1000000);
-  }, [sliderValue]);
+  // Configuración del formateador para números
+  const numberFormatter = new Intl.NumberFormat('es-ES', {
+    minimumFractionDigits: 0, // Sin decimales
+    maximumFractionDigits: 0, // Sin decimales
+    useGrouping: true, // Asegura el uso de separadores de miles
+  });
+  // Configuración del formateador para monedas
+  const currencyFormatter = new Intl.NumberFormat('es-ES', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2, // Dos decimales para monedas
+    maximumFractionDigits: 2,
+  });
+  // Variables con cálculos
+  const totalFacturas = (sliderValue / 1000000) * 2000; // Facturas al año
+  const totalMinutos = totalFacturas * minutosPorFactura; // Total de minutos
+  const horasTotales = totalMinutos / minutosAHoras; // Total de horas
+  const valorEnDolares = Math.round(horasTotales * tarifaPorHora); // Valor en dólares redondeado
 
-  // Calcular el número de facturas según el valor del slider
-  const facturasPorMillon = 2000; // 1 millón = 2000 facturas
-  //const facturasTotales = (sliderValue * facturasPorMillon) / 1000000; // Dividir por 1 millón para que la multiplicación sea correcta
-  // Calcular las horas (cada factura toma 5 minutos)
-  const horasTotales = (facturasTotales * 5) / 60; // Convertir minutos a horas
-
-  // Calcular el valor ganado en dólares (10$ por hora)
-  const valorEnDolares = horasTotales * 10;
-
-  // Formatear los números con separadores de miles
-  const formatNumber = (value) => value.toLocaleString('en-US');
-
-  // Formatear el valor en dólares con el signo €
-  const formatCurrency = (value) => {
-    return `${new Intl.NumberFormat('en-US').format(value)}€`;
-  };
+  // Variables formateadas
+  const sliderValueFormatted = sliderValue / 1000000;
+  const totalFacturasFormatted = numberFormatter.format(totalFacturas);
+  const horasTotalesFormatted = numberFormatter.format(horasTotales);
+  const valorEnDolaresFormatted = numberFormatter.format(valorEnDolares);
 
   const cardsData = [pdf, jpg, txt, png];
   const compatiblePrograms = [outlook, gmail, xslx, odoo, logoImage, stripe];
@@ -69,7 +78,7 @@ const Packs = () => {
         'Tu proceso 100% automatizado, 24h y 7 días a la semana disponible',
     },
   ];
-
+  console.log(sliderValueFormatted);
   const LogoIcons = [
     {
       title: 'excel',
@@ -123,13 +132,12 @@ const Packs = () => {
       />
       <span className={styles.packsDescription}>
         Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
-        empresa con una facturación de{' '}
-        <strong>{sliderValue / 1000000} M</strong> genera aproximadamente{' '}
-        <strong>{formatNumber(facturasTotales).replace(/,/g, '.')}</strong>{' '}
+        empresa con una facturación de <strong>{sliderValueFormatted}</strong> M
+        genera aproximadamente <strong>{totalFacturasFormatted}</strong>{' '}
         facturas al año. Con FacturaGPT, puedes ahorrar más de{' '}
-        <strong>{horasTotales.toFixed(2)}</strong> horas en tareas repetitivas y
+        <strong>{horasTotalesFormatted}</strong> horas en tareas repetitivas y
         obtener un beneficio de más de{' '}
-        <strong>{formatCurrency(valorEnDolares)}</strong> anuales.
+        <strong>{valorEnDolaresFormatted}</strong> anuales.
       </span>
       <PricingCards
         facturasTotales={facturasTotales}
@@ -178,18 +186,6 @@ const Packs = () => {
         Sube, recibe o emite facturas y automatiza tu proceso de facturación
       </span>
       <CompatibleProgramsSection />
-      {/* <div className={styles.compatibleProgramsContainer}>
-        {compatiblePrograms.map((card, index) => (
-          <div
-            className={`${styles.innerCard} ${
-              index === 3 && styles.innedOdoo
-            } ${index === 5 && styles.innerStripe}`}
-            key={index}
-          >
-            <img src={card} alt='card' />
-          </div>
-        ))}
-      </div> */}
       <Reviews />
     </div>
   );

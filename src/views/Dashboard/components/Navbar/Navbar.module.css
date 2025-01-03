@@ -74,6 +74,9 @@
 
 /* Media Queries */
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
   .hamburger {
     display: block; /* Mostrar el botón hamburguesa */
   }
@@ -86,24 +89,30 @@
     /*Comienzafueradelapantalla*/
     width: 70%;
     height: 100vh;
-    background-color: white;
-    color: black;
+    background-color: #073f32;
+    color: white;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+    /*justify-content: center;
+    */
+    align-items: start;
+    gap: 40px;
+    padding: 50px 30px;
+    box-sizing: border-box;
     transition: left 0.3s ease-in-out;
     /*Animaciónsuave*/
     z-index: 999;
-    /* Asegura que el menú esté encima de otros elementos */
+    /*Aseguraqueelmenúestéencimadeotroselementos*/
     -webkit-transition: left 0.3s ease-in-out;
     -moz-transition: left 0.3s ease-in-out;
     -ms-transition: left 0.3s ease-in-out;
     -o-transition: left 0.3s ease-in-out;
+    -webkit-transition: left 0.3s ease-in-out;
   }
 
   .chevDownIcon {
-    filter: brightness(0); /* Negro */
+    filter: brightness(100%);
+
+    -webkit-filter: brightness(100%);
   }
   .navLinksOpen {
     left: 0; /* Mueve el menú al centro */
@@ -119,5 +128,10 @@
   .button {
     background-color: #11a380;
     color: white;
+    width: 160px;
+    height: 40px;
+  }
+  .button:hover {
+    background-color: #0d8b6d;
   }
 }

@@ -2,32 +2,28 @@ import React, { useState } from 'react';
 import styles from './ProgramSlider.module.css';
 import arrow from '../../assets/arrowRight.svg';
 import check from '../../assets/checkProgram.svg';
+
 const ProgramSlider = ({ programs }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState('right');
 
   const handleNext = () => {
     setDirection('right');
+    // Si está en la última card, va a la primera
     setCurrentIndex((prevIndex) => (prevIndex + 1) % programs.length);
   };
 
   const handlePrev = () => {
     setDirection('left');
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + programs.length) % programs.length
+    // Si está en la primera card, va a la última
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? programs.length - 1 : prevIndex - 1
     );
   };
 
-  const isPrevDisabled = currentIndex === 0;
-  const isNextDisabled = currentIndex === programs.length - 1;
-
   return (
     <div className={styles.slider}>
-      <button
-        className={`${styles.button} ${isPrevDisabled ? styles.hidden : ''}`}
-        onClick={handlePrev}
-        disabled={isPrevDisabled}
-      >
+      <button className={styles.button} onClick={handlePrev}>
         <img src={arrow} className={styles.arrowLeft} />
       </button>
       <div className={styles.programsContainer}>
@@ -65,11 +61,7 @@ const ProgramSlider = ({ programs }) => {
           );
         })}
       </div>
-      <button
-        className={`${styles.button} ${isNextDisabled ? styles.hidden : ''}`}
-        onClick={handleNext}
-        disabled={isNextDisabled}
-      >
+      <button className={styles.button} onClick={handleNext}>
         <img src={arrow} />
       </button>
     </div>

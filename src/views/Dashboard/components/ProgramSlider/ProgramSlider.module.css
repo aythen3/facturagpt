@@ -53,6 +53,12 @@
   right: 10px;
 }
 
+@media (max-width: 768px) {
+  .button {
+    top: -30px;
+  }
+}
+
 .programsContainer {
   position: relative;
   width: 100%;
