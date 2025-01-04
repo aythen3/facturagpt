@@ -21,6 +21,8 @@ import Reseller from './views/Dashboard/screens/Reseller/index.jsx';
 import FreeTrial from './views/Dashboard/screens/FreeTrial/FreeTrial.jsx';
 import InvoicePanel from './views/Dashboard/screens/InvoicePanel/InvoicePanel.jsx';
 import TermAndConditions from './views/Dashboard/screens/TermsAndConditions/TermsAndConditions.jsx';
+import ContactForm from './views/Dashboard/components/ContactForm/ContactForm.jsx';
+import Clients from './views/Dashboard/screens/Clients/Clients.jsx';
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -57,20 +59,22 @@ const Layout = () => {
         <Provider store={store}>
           <BrowserRouter>
             <Routes>
-              <Route path='/login' element={<DashboardLogin />} />
-              <Route path='/landing' element={<LandingPage />} />
-              <Route path='/pricing' element={<Pricing />} />
-              <Route path='/home' element={<Dashboard />} />
-              <Route path='/reseller' element={<Reseller />} />
-              <Route path='/freetrial' element={<FreeTrial />} />
-              <Route path='/usersPermissions' element={<UsersPermissions />} />
-              <Route path='/userSettings' element={<UserSettings />} />
+              <Route path="/login" element={<DashboardLogin />} />
+              <Route path="/landing" element={<LandingPage />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/home" element={<Dashboard />} />
+              <Route path="/reseller" element={<Reseller />} />
+              <Route path="/freetrial" element={<FreeTrial />} />
+              <Route path="/usersPermissions" element={<UsersPermissions />} />
+              <Route path="/userSettings" element={<UserSettings />} />
+              <Route path="/clients" element={<Clients />} />
+              <Route path="/contact" element={<ContactForm />} />
               <Route
-                path='/termsandconditions'
+                path="/termsandconditions"
                 element={<TermAndConditions />}
               />
-              <Route path='*' element={<LandingPage />} />
-              <Route path='/Panel' element={<InvoicePanel />} />
+              <Route path="*" element={<LandingPage />} />
+              <Route path="/Panel" element={<InvoicePanel />} />
             </Routes>
           </BrowserRouter>
         </Provider>

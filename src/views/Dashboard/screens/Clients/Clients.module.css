@@ -1,0 +1,95 @@
+.container {
+  padding: 20px;
+}
+
+.clientsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 0 10px 10px 0;
+}
+
+.searchInput {
+  padding: 10px 10px 10px 35px;
+  /*Espacioparaelíconodentro*/
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  width: 250px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.searchInput::placeholder {
+  color: #aaa;
+}
+
+.inputIconInside {
+  position: absolute;
+  left: 10px; /* Ícono dentro del input */
+  font-size: 16px;
+  color: #aaa;
+}
+.inputIconOutsideContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #233f39;
+  position: absolute;
+  right: 0px;
+  border-radius: 0 10px 10px 0;
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+  -ms-border-radius: 0 10px 10px 0;
+  -o-border-radius: 0 10px 10px 0;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #233f39;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.addButton:hover {
+  background-color: #122521;
+}
+
+.addIconOutside {
+  font-size: 18px; /* Ícono fuera del input */
+}

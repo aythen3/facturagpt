@@ -28,7 +28,7 @@ const FreeTrial = () => {
           </button>
         </div>
         <p>
-          ¿Ya tienes cuenta? <a href="#">Inicia sesión</a>
+          ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
         </p>
 
         <p className={styles.policy}>

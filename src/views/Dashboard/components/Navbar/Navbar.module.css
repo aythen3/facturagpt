@@ -135,3 +135,7 @@
     background-color: #0d8b6d;
   }
 }
+
+.disabledBtn {
+  opacity: 0.5;
+}

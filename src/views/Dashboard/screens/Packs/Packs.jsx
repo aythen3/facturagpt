@@ -3,11 +3,12 @@ import styles from './Packs.module.css';
 import PricingCards from '../../components/PricingCard/PricingCard';
 import BillingSlider from '../../components/BillingSlider/BillingSlider';
 import flag from '../../assets/flag.svg';
-import heart from '../../assets/heart.svg';
-import pdf from '../../assets/pdf.svg';
-import jpg from '../../assets/jpg.svg';
-import txt from '../../assets/txt.svg';
-import png from '../../assets/png.svg';
+import heart from '../../assets/heart.jpg';
+import pdf from '../../assets/pdfIcon.png';
+import jpg from '../../assets/jpgIcon.png';
+import txt from '../../assets/txtIcon.png';
+import png from '../../assets/pngIcon.png';
+import csv from '../../assets/csvIcon.png';
 import outlook from '../../assets/outlook.svg';
 import gmail from '../../assets/gmail.svg';
 import xslx from '../../assets/xlsx.svg';
@@ -55,7 +56,7 @@ const Packs = () => {
   const horasTotalesFormatted = numberFormatter.format(horasTotales);
   const valorEnDolaresFormatted = numberFormatter.format(valorEnDolares);
 
-  const cardsData = [pdf, jpg, txt, png];
+  const cardsData = [pdf, jpg, txt, png, csv];
   const compatiblePrograms = [outlook, gmail, xslx, odoo, logoImage, stripe];
 
   const steps = [
@@ -108,7 +109,7 @@ const Packs = () => {
 
   return (
     <div className={styles.packsContainer}>
-      <div className={styles.stepsContainer} id='facturation'>
+      <div className={styles.stepsContainer} id="facturation">
         <div className={styles.logoContainer}>
           {LogoIcons.map((icon, index) => (
             <div key={index}>
@@ -132,12 +133,13 @@ const Packs = () => {
       />
       <span className={styles.packsDescription}>
         Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
-        empresa con una facturación de <strong>{sliderValueFormatted}</strong> M
-        genera aproximadamente <strong>{totalFacturasFormatted}</strong>{' '}
-        facturas al año. Con FacturaGPT, puedes ahorrar más de{' '}
-        <strong>{horasTotalesFormatted}</strong> horas en tareas repetitivas y
-        obtener un beneficio de más de{' '}
-        <strong>{valorEnDolaresFormatted}</strong> anuales.
+        empresa con una facturación de{' '}
+        <strong>{sliderValueFormatted} M </strong>
+        genera aproximadamente{' '}
+        <strong>{totalFacturasFormatted} facturas</strong>. Con FacturaGPT,
+        puedes ahorrar más de <strong>{horasTotalesFormatted} horas </strong> en
+        tareas repetitivas y obtener un beneficio de más de{' '}
+        <strong>{valorEnDolaresFormatted} €</strong>.
       </span>
       <PricingCards
         facturasTotales={facturasTotales}
@@ -158,7 +160,7 @@ const Packs = () => {
       </div>
       <section className={styles.extensionsContainer}>
         <div className={styles.extensionsTitle}>
-          <img className={styles.flag} src={flag} alt='flag' />
+          <img className={styles.flag} src={flag} alt="flag" />
           <h2>Formatos y Extensiones</h2>
         </div>
         <span className={styles.regular08}>
@@ -171,7 +173,7 @@ const Packs = () => {
               <img
                 className={index === 0 ? styles.pdfIcon : styles.pdfIcon}
                 src={card}
-                alt='card'
+                alt="card"
               />
             </div>
           ))}
@@ -179,7 +181,7 @@ const Packs = () => {
       </section>
 
       <div className={styles.extensionsTitle}>
-        <img className={styles.heart} src={heart} alt='heart' />
+        <img className={styles.heart} src={heart} alt="heart" />
         <h2>Programas Compatibles</h2>
       </div>
       <span className={styles.regular08}>

@@ -1,0 +1,14 @@
+.table {
+  width: 100%;
+  text-align: start;
+  th {
+    text-align: start;
+  }
+  td {
+    color: #666666;
+  }
+}
+.firstItem {
+  color: #000;
+  font-size: 18px;
+}

@@ -62,6 +62,13 @@ const PricingCards = ({
 
   const cardsData = [
     {
+      title: 'Hasta 20 Documentos',
+      price: 'FREE',
+      min: 0,
+      max: 0,
+      sliding: 0,
+    },
+    {
       title: '+2.000 Documentos',
       price: '0,15',
       min: 1000000,

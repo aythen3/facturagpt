@@ -15,22 +15,8 @@ const Navbar = () => {
   };
 
   const scrollToContact = () => {
-    if (location.pathname === '/landing') {
-      // Si ya está en la página de destino, simplemente hace scroll
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // Redirige y hace scroll después de cargar la página
-      navigate('/landing');
-      setTimeout(() => {
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 300); // Tiempo para asegurarse de que la página haya cargado
-    }
+    // Redirige y hace scroll después de cargar la página
+    navigate('/contact');
   };
 
   return (
@@ -38,11 +24,11 @@ const Navbar = () => {
       <img
         onClick={() => navigate('/landing')}
         src={facturaLogo}
-        alt='FacturaGPT'
+        alt="FacturaGPT"
         className={styles.logo}
       />
       <button className={styles.hamburger} onClick={toggleMenu}>
-        <img src={menuIcon} alt='Menu Icon' />
+        <img src={menuIcon} alt="Menu Icon" />
       </button>
       <ul
         className={`${styles.navLinks} ${
@@ -50,7 +36,12 @@ const Navbar = () => {
         }`}
       >
         <li onClick={() => navigate('/landing')}>Inicio</li>
-        <li onClick={scrollToContact}>Contacto </li>
+        {location.pathname !== '/contact' ? (
+          <li onClick={scrollToContact}>Contacto </li>
+        ) : (
+          <li className={styles.disabledBtn}>Contacto </li>
+        )}
+
         <li onClick={() => navigate('/pricing')}>Precios</li>
         <li style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           Idioma{' '}
@@ -59,7 +50,7 @@ const Navbar = () => {
               menuOpen ? styles.chevDownOpen : ''
             }`}
           >
-            <img src={chevDown} alt='chevDown' />
+            <img src={chevDown} alt="chevDown" />
           </span>
         </li>
         <button
