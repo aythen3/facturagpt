@@ -1,16 +1,17 @@
-const { default: axios } = require("axios");
-const { v4: uuidv4 } = require("uuid");
-const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
-const { sendOtpEmail } = require("./email");
+const { default: axios } = require('axios');
+const { v4: uuidv4 } = require('uuid');
+const nano = require('nano')('http://admin:1234@127.0.0.1:5984');
+const { sendOtpEmail } = require('./email');
+const nodemailer = require('nodemailer');
 
 const createAccount = async ({ nombre, email, password }) => {
-  console.log("Data received in createAccount service:", {
+  console.log('Data received in createAccount service:', {
     nombre,
     email,
     password,
   });
 
-  const dbName = "db_emailmanager_accounts";
+  const dbName = 'db_emailmanager_accounts';
   let db;
 
   try {
@@ -21,8 +22,8 @@ const createAccount = async ({ nombre, email, password }) => {
     }
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error checking/creating database:", error);
-    throw new Error("Database initialization failed");
+    console.error('Error checking/creating database:', error);
+    throw new Error('Database initialization failed');
   }
 
   try {
@@ -33,15 +34,15 @@ const createAccount = async ({ nombre, email, password }) => {
 
     if (accountExists) {
       console.log(`Account with email ${email} already exists.`);
-      return { success: false, message: "Account already exists." };
+      return { success: false, message: 'Account already exists.' };
     }
 
     const accountId = uuidv4();
     const docId = `account_${email}_${accountId}`;
 
-    const role = email === "info@aythen.com" ? "superadmin" : "user";
+    const role = email === 'info@aythen.com' ? 'superadmin' : 'user';
 
-    const hashedPassword = Buffer.from(password).toString("base64");
+    const hashedPassword = Buffer.from(password).toString('base64');
 
     const newAccount = {
       _id: docId,
@@ -50,8 +51,8 @@ const createAccount = async ({ nombre, email, password }) => {
       password: hashedPassword,
       id: docId,
       role,
-      companyName: "",
-      contactNumber: "",
+      companyName: '',
+      contactNumber: '',
     };
 
     const response = await db.insert(newAccount);
@@ -59,19 +60,19 @@ const createAccount = async ({ nombre, email, password }) => {
 
     return {
       success: true,
-      message: "Account created successfully.",
+      message: 'Account created successfully.',
       account: { nombre, email, docId, role },
     };
   } catch (error) {
-    console.error("Error creating account:", error);
-    throw new Error("Failed to create account");
+    console.error('Error creating account:', error);
+    throw new Error('Failed to create account');
   }
 };
 
 const updateAccount = async ({ userId, toUpdate }) => {
-  console.log("Data received in updateAccount service:", { userId, toUpdate });
+  console.log('Data received in updateAccount service:', { userId, toUpdate });
 
-  const dbName = "db_emailmanager_accounts";
+  const dbName = 'db_emailmanager_accounts';
   let db;
 
   try {
@@ -79,12 +80,12 @@ const updateAccount = async ({ userId, toUpdate }) => {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
       console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
+      return { success: false, message: 'Database does not exist.' };
     }
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error checking database:", error);
-    throw new Error("Database initialization failed");
+    console.error('Error checking database:', error);
+    throw new Error('Database initialization failed');
   }
 
   try {
@@ -93,7 +94,7 @@ const updateAccount = async ({ userId, toUpdate }) => {
 
     if (!existingDoc) {
       console.log(`No user found with ID: ${userId}`);
-      return { success: false, message: "User not found." };
+      return { success: false, message: 'User not found.' };
     }
 
     // Merge the existing document with the updates
@@ -118,27 +119,27 @@ const updateAccount = async ({ userId, toUpdate }) => {
   } catch (error) {
     if (error.statusCode === 404) {
       console.error(`User with ID ${userId} not found.`);
-      return { success: false, message: "User not found." };
+      return { success: false, message: 'User not found.' };
     }
-    console.error("Error updating user:", error);
-    throw new Error("Failed to update user");
+    console.error('Error updating user:', error);
+    throw new Error('Failed to update user');
   }
 };
 
 const getAllUsers = async () => {
-  const dbName = "db_emailmanager_accounts";
+  const dbName = 'db_emailmanager_accounts';
   let db;
 
   try {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
       console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
+      return { success: false, message: 'Database does not exist.' };
     }
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
+    console.error('Error accessing database:', error);
+    throw new Error('Database access failed');
   }
 
   try {
@@ -151,28 +152,28 @@ const getAllUsers = async () => {
 
     return users;
   } catch (error) {
-    console.error("Error fetching users:", error);
-    throw new Error("Failed to fetch users");
+    console.error('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
   }
 };
 
 const loginToManagerService = async ({ email, password }) => {
-  console.log("Data received in loginToManagerService:", { email, password });
+  console.log('Data received in loginToManagerService:', { email, password });
 
-  const dbName = "db_emailmanager_accounts";
+  const dbName = 'db_emailmanager_accounts';
   let db;
 
   try {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
       console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Account database does not exist." };
+      return { success: false, message: 'Account database does not exist.' };
     }
 
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
+    console.error('Error accessing database:', error);
+    throw new Error('Database access failed');
   }
 
   try {
@@ -182,31 +183,31 @@ const loginToManagerService = async ({ email, password }) => {
 
     if (queryResponse.docs.length === 0) {
       console.log(`No account found for email: ${email}`);
-      return { success: false, message: "Invalid email or password." };
+      return { success: false, message: 'Invalid email or password.' };
     }
 
     const account = queryResponse.docs[0];
-    const hashedPassword = Buffer.from(password).toString("base64");
+    const hashedPassword = Buffer.from(password).toString('base64');
 
     if (account.password !== hashedPassword) {
-      console.log("Invalid password provided.");
-      return { success: false, message: "Invalid email or password." };
+      console.log('Invalid password provided.');
+      return { success: false, message: 'Invalid email or password.' };
     }
 
     console.log(`Login successful for account: ${account._id}`);
     return {
       success: true,
-      message: "Login successful.",
+      message: 'Login successful.',
       account,
     };
   } catch (error) {
-    console.error("Error during login:", error);
-    throw new Error("Login process failed");
+    console.error('Error during login:', error);
+    throw new Error('Login process failed');
   }
 };
 
 const getAllClientsService = async () => {
-  const mainDbName = "db_emailmanager_clients";
+  const mainDbName = 'db_emailmanager_clients';
   let mainDb;
 
   try {
@@ -219,8 +220,8 @@ const getAllClientsService = async () => {
     }
     mainDb = nano.use(mainDbName);
   } catch (error) {
-    console.error("Error accessing or creating the main database:", error);
-    throw new Error("Database initialization failed");
+    console.error('Error accessing or creating the main database:', error);
+    throw new Error('Database initialization failed');
   }
 
   try {
@@ -234,7 +235,7 @@ const getAllClientsService = async () => {
         }
 
         const { _id, _rev, ...rest } = clientDoc;
-        const clientUid = clientDoc.id.split("_")[2];
+        const clientUid = clientDoc.id.split('_')[2];
         const processedEmailsDbName = `db_${clientUid}_processedemails`;
 
         // Fetch detailedTokenConsumption for each client
@@ -274,13 +275,13 @@ const getAllClientsService = async () => {
 
     return clientsWithDetails;
   } catch (error) {
-    console.error("Error fetching clients:", error);
-    throw new Error("Failed to fetch clients");
+    console.error('Error fetching clients:', error);
+    throw new Error('Failed to fetch clients');
   }
 };
 
 const addNewClientService = async ({ clientData }) => {
-  const dbName = "db_emailmanager_clients";
+  const dbName = 'db_emailmanager_clients';
   let db;
 
   try {
@@ -291,8 +292,8 @@ const addNewClientService = async ({ clientData }) => {
     }
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error accessing or creating database:", error);
-    throw new Error("Database initialization failed");
+    console.error('Error accessing or creating database:', error);
+    throw new Error('Database initialization failed');
   }
 
   try {
@@ -306,7 +307,7 @@ const addNewClientService = async ({ clientData }) => {
       );
       return {
         success: false,
-        message: "Client with this tokenEmail already exists.",
+        message: 'Client with this tokenEmail already exists.',
       };
     }
 
@@ -339,25 +340,25 @@ const addNewClientService = async ({ clientData }) => {
 
     return sanitizedClients;
   } catch (error) {
-    console.error("Error adding new client:", error);
-    throw new Error("Failed to add new client");
+    console.error('Error adding new client:', error);
+    throw new Error('Failed to add new client');
   }
 };
 
 const deleteClientService = async ({ clientId }) => {
-  const dbName = "db_emailmanager_clients";
+  const dbName = 'db_emailmanager_clients';
   let db;
 
   try {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
       console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
+      return { success: false, message: 'Database does not exist.' };
     }
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
+    console.error('Error accessing database:', error);
+    throw new Error('Database access failed');
   }
 
   try {
@@ -365,7 +366,7 @@ const deleteClientService = async ({ clientId }) => {
 
     if (!clientDoc) {
       console.log(`No client found with ID: ${clientId}`);
-      return { success: false, message: "Client not found." };
+      return { success: false, message: 'Client not found.' };
     }
 
     await db.destroy(clientDoc._id, clientDoc._rev);
@@ -383,13 +384,13 @@ const deleteClientService = async ({ clientId }) => {
 
     return sanitizedClients;
   } catch (error) {
-    console.error("Error deleting client:", error);
-    throw new Error("Failed to delete client");
+    console.error('Error deleting client:', error);
+    throw new Error('Failed to delete client');
   }
 };
 
 const generateAndSendOtpService = async ({ email }) => {
-  const dbName = "db_emailmanager_otp";
+  const dbName = 'db_emailmanager_otp';
   let db;
 
   try {
@@ -401,8 +402,8 @@ const generateAndSendOtpService = async ({ email }) => {
     }
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error accessing or creating database:", error);
-    throw new Error("Database initialization failed");
+    console.error('Error accessing or creating database:', error);
+    throw new Error('Database initialization failed');
   }
 
   try {
@@ -428,29 +429,29 @@ const generateAndSendOtpService = async ({ email }) => {
     // Enviar el correo electrónico con el OTP
     await sendOtpEmail(email, otp);
 
-    return { success: true, message: "OTP generado y enviado exitosamente." };
+    return { success: true, message: 'OTP generado y enviado exitosamente.' };
   } catch (error) {
-    console.error("Error generando o enviando OTP:", error);
-    throw new Error("No se pudo generar o enviar el OTP.");
+    console.error('Error generando o enviando OTP:', error);
+    throw new Error('No se pudo generar o enviar el OTP.');
   }
 };
 
 const verifyOTPService = async ({ email, otp }) => {
-  console.log("Data received in verifyOTPService:", { email, otp });
+  console.log('Data received in verifyOTPService:', { email, otp });
 
-  const dbName = "db_emailmanager_otp";
+  const dbName = 'db_emailmanager_otp';
   let db;
 
   try {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
       console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "OTP database does not exist." };
+      return { success: false, message: 'OTP database does not exist.' };
     }
     db = nano.use(dbName);
   } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
+    console.error('Error accessing database:', error);
+    throw new Error('Database access failed');
   }
 
   try {
@@ -460,7 +461,7 @@ const verifyOTPService = async ({ email, otp }) => {
 
     if (queryResponse.docs.length === 0) {
       console.log(`No matching OTP found for email: ${email}`);
-      return { success: false, message: "Invalid or expired OTP." };
+      return { success: false, message: 'Invalid or expired OTP.' };
     }
 
     const otpDoc = queryResponse.docs[0];
@@ -468,18 +469,47 @@ const verifyOTPService = async ({ email, otp }) => {
     const expiresAt = new Date(otpDoc.expirationTime);
 
     if (now > expiresAt) {
-      console.log("OTP has expired.");
-      return { success: false, message: "OTP has expired." };
+      console.log('OTP has expired.');
+      return { success: false, message: 'OTP has expired.' };
     }
 
     // Delete OTP after successful verification
     await db.destroy(otpDoc._id, otpDoc._rev);
-    console.log("OTP verified and deleted successfully.");
+    console.log('OTP verified and deleted successfully.');
 
-    return { success: true, message: "OTP verified successfully." };
+    return { success: true, message: 'OTP verified successfully.' };
   } catch (error) {
-    console.error("Error verifying OTP:", error);
-    throw new Error("Failed to verify OTP");
+    console.error('Error verifying OTP:', error);
+    throw new Error('Failed to verify OTP');
+  }
+};
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'yyeremi15@gmail.com',
+    pass: 'mosb cdlz wgqz ntdr',
+  },
+});
+
+const newsletter = async ({ name, email, message }) => {
+  console.log('name', name);
+  console.log('email', email);
+  console.log('message', message);
+  console.log('desde actions');
+  const mailOptions = {
+    from: email, // El correo del usuario que llenó el formulario
+    to: 'yyeremi15@gmail.com', // Tu correo donde recibirás los mensajes
+    subject: `Nuevo mensaje de ${name}`,
+    text: `Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:\n${message}`,
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Correo enviado:', info.response);
+    return { success: true, message: 'Email sent correctly' };
+  } catch (error) {
+    console.error('Error sending mail:', error);
+    throw new Error('Error sending mail');
   }
 };
 
@@ -493,4 +523,5 @@ module.exports = {
   getAllUsers: getAllUsers,
   generateAndSendOtp: generateAndSendOtpService,
   verifyOTP: verifyOTPService,
+  newsletter: newsletter,
 };
