@@ -1,4 +1,4 @@
-const { Router } = require("express");
+const { Router } = require('express');
 const userManagerRouter = Router();
 const {
   createAccountController,
@@ -11,19 +11,21 @@ const {
   updateAccountController,
   generateAndSendOtpController,
   verifyOTPController,
-} = require("../controllers/user");
+  sendNewsletter,
+} = require('../controllers/user');
 
 // -------------------------------
 userManagerRouter
-  .post("/createAccount", createAccountController)
-  .post("/loginToManager", loginToManagerController)
-  .post("/addNewClient", addNewClientController)
-  .get("/getAllClients", getAllClientsController)
-  .get("/getAllUsers", getAllUsersController)
-  .delete("/deleteClient", deleteClientController)
-  .put("/updateClient", updateClientController)
-  .put("/updateUser", updateAccountController)
-  .post("/send-otp", generateAndSendOtpController)
-  .post("/verify-otp", verifyOTPController);
+  .post('/createAccount', createAccountController)
+  .post('/loginToManager', loginToManagerController)
+  .post('/addNewClient', addNewClientController)
+  .get('/getAllClients', getAllClientsController)
+  .get('/getAllUsers', getAllUsersController)
+  .delete('/deleteClient', deleteClientController)
+  .put('/updateClient', updateClientController)
+  .put('/updateUser', updateAccountController)
+  .post('/send-otp', generateAndSendOtpController)
+  .post('/verify-otp', verifyOTPController)
+  .post('/newsletter', sendNewsletter);
 
 module.exports = userManagerRouter;

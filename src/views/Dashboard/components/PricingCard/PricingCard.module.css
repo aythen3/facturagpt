@@ -1,6 +1,6 @@
 .cardContainer {
   display: flex;
-  gap: 16px;
+  gap: 50px;
   padding: 16px;
   overflow-x: auto; /* Habilitar scroll horizontal */
   overflow-y: hidden; /* Evitar scroll vertical */

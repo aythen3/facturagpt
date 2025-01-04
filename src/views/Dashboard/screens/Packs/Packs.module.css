@@ -23,11 +23,12 @@
 }
 
 .extensionsContainer {
-  height: 100vh;
+  height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 0;
 }
 
 .packsDescription {
@@ -113,7 +114,7 @@
 
 .bannerTitle {
   color: #406f64 !important;
-  font-size: clamp(8px, 1.5vw, 18px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(8px, 1.5vw, 13px) !important; /* Ajuste dinámico con clamp */
   font-weight: bold;
   padding: 0 5px;
 }
@@ -127,10 +128,10 @@
 
 .regular08 {
   color: #71717a;
-  font-size: clamp(20px, 5vw, 28px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(20px, 5vw, 20px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   margin-top: 33px;
-  max-width: 1194px;
+  max-width: 55%;
   text-align: center;
   padding: 0 20px;
 }
@@ -167,9 +168,10 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: #211f54;
-  margin-top: 50px;
+  color: #18181b;
+  margin-top: 0px;
   text-align: center;
+
   h2 {
     font-size: clamp(
       20px,
@@ -198,28 +200,19 @@
   width: 90%; /* Asegura que el contenedor ocupe todo el ancho disponible */
   max-width: 1194px; /* Límite máximo para evitar que se expanda demasiado */
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   overflow-x: auto; /* Permite desplazamiento horizontal si las cards no caben */
   padding: 10px; /* Añade algo de espacio en los bordes */
-  gap: 10px; /* Espacio entre las cards */
+  gap: 40px; /* Espacio entre las cards */
 }
 
 .innerCard {
-  width: clamp(
-    120px,
-    20vw,
-    147px
-  ); /* Ajuste dinámico de la anchura de las cards */
-  height: clamp(
-    120px,
-    20vw,
-    147px
-  ); /* Ajuste dinámico de la altura de las cards */
   border-radius: 16px;
   cursor: pointer;
   user-select: none;
   background-color: #fff;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 50px;
+  /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -227,8 +220,6 @@
 }
 
 .pdfIcon {
-  margin-left: clamp(28px, 2vw, 25px); /* Ajuste dinámico de los márgenes */
-  margin-bottom: clamp(20px, 2vw, 25px); /* Ajuste dinámico de los márgenes */
 }
 
 .compatibleProgramsContainer {
@@ -266,8 +257,10 @@
   min-width: 280px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   margin-bottom: 20px; /* Añadir espacio entre las cards */
+  h3 {
+    margin: 3px;
+  }
 }
 
 .card:nth-child(3) {

@@ -15,7 +15,7 @@
 }
 
 .button {
-  background-color: #16c098;
+  background-color: #115c4a;
   color: #fff;
   border: none;
   min-height: 56px;
@@ -53,6 +53,12 @@
   right: 10px;
 }
 
+@media (max-width: 768px) {
+  .button {
+    top: -30px;
+  }
+}
+
 .programsContainer {
   position: relative;
   width: 100%;
@@ -76,7 +82,7 @@
 }
 
 .program img {
-  width: 100px;
+  width: 145px;
   height: auto;
 }
 
@@ -96,7 +102,7 @@
 .program .description {
   font-size: 14px;
   color: #2d8772;
-  background-color: #88e3cec3;
+  background-color: #70d8c064;
   width: fit-content;
   margin: 0 auto;
   padding: 5px 10px;

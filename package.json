@@ -58,7 +58,7 @@
     "node-fetch": "^3.3.2",
     "node-signpdf": "^3.0.0",
     "nodemailer": "^6.9.8",
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.9",
     "npm": "^10.8.2",
     "openai": "^4.26.1",
     "pdf-lib": "^1.17.1",

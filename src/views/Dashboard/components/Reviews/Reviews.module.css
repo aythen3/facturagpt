@@ -10,7 +10,7 @@
 .reviewsSection {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 70vh;
   justify-content: center;
   align-items: center;
   margin-top: 0;
@@ -66,11 +66,7 @@
 }
 
 .price {
-  font-size: clamp(
-    30px,
-    12vw,
-    140px
-  ) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(30px, 12vw, 86px) !important; /* Ajuste dinámico con clamp */
   color: #18181b;
   font-weight: 700;
   span {

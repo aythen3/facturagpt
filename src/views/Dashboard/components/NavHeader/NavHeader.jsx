@@ -5,9 +5,9 @@ import ArrowDown from '../../assets/ArrowDown.svg';
 import flagIcon from '../../assets/flagIcon.svg';
 import bombilla from '../../assets/bombilla.svg';
 import plusIcon from '../../assets/plusIcon.svg';
-import starIcon from '../../assets/starIcon.svg';
+import starIcon from '../../assets/starIcon.png';
 import frame99 from '../../assets/Frame10099.png';
-import frame100 from '../../assets/Frame10100.png';
+import logo from '../../assets/facturaLogoIcon.png';
 const NavHeader = () => {
   const handleScrollToFacturation = () => {
     const facturationElement = document.getElementById('facturation');
@@ -26,43 +26,20 @@ const NavHeader = () => {
   };
   return (
     <div className={styles.navHeaderContainer}>
-      <img
-        src={bombilla}
-        className={`${styles.iconfloat} ${styles.bombillaL} ${styles.bgBlue}`}
-      />
-      <img
-        src={plusIcon}
-        className={`${styles.iconfloat} ${styles.plusIconL}`}
-      />
-      <div className={`${styles.iconfloat} ${styles.starIconL}`}>
-        <img src={starIcon} />
+      <img src={logo} alt="FacturaGPT Logo" />
+      <div className={styles.navHeaderTitle}>
+        +30M de facturas automatizadas
       </div>
-      <img
-        src={bombilla}
-        className={`${styles.iconfloat} ${styles.bombillaL2} `}
-      />
-      <div className={styles.navHeaderTitle}>+3M de facturas automatizadas</div>
       <div className={styles.navHeaderSubtitle}>
-        Factura<span>GPT</span>
+        <span className={styles.factura}>Factura</span>
+        <span className={styles.gpt}>GPT</span>
       </div>
-      <img
-        src={bombilla}
-        className={`${styles.iconfloat} ${styles.bombillaR}`}
-      />
 
       <img
         src={starIcon}
-        className={`${styles.iconfloat} ${styles.starIconR} ${styles.bgBlue}`}
+        className={`${styles.iconfloat} ${styles.starIconR} `}
       />
-      <img
-        src={flagIcon}
-        className={`${styles.iconfloat} ${styles.flagIconR} ${styles.bgBlue}`}
-      />
-      <img
-        className={`${styles.ayFolderImage} ${styles.ayFolder}`}
-        src={ayFolder}
-        alt='ayFolder'
-      />
+
       <span className={styles.navHeaderDescription}>
         Digitaliza tu facturación de forma automática y automatiza tus procesos
         de venta para ahorrar tiempo y reducir el volumen de gestión documental.
@@ -74,7 +51,7 @@ const NavHeader = () => {
       >
         ¡Empieza ahora!
         <span>
-          <img src={ArrowDown} alt='' />
+          <img src={ArrowDown} alt="" />
         </span>
       </div>
     </div>

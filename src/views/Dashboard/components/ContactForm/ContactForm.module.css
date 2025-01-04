@@ -7,8 +7,8 @@
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  margin-bottom: 100px;
-  margin-top: 150px;
+  margin-bottom: 50px;
+  margin-top: 80px;
 }
 .content {
   display: flex;
@@ -32,16 +32,16 @@
 }
 
 .title {
-  font-size: clamp(35px, 5vw, 32px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(35px, 5vw, 55px) !important; /* Ajuste dinámico con clamp */
   font-weight: bold;
   color: #18181b;
   margin-bottom: 0.5rem;
 }
 
 .subtitle {
-  font-size: clamp(6px, 4vw, 30px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(12px, 3vw, 22px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
-  color: #18181b;
+  color: #71717a;
   margin-bottom: 2rem;
 }
 
@@ -54,7 +54,7 @@
 label {
   display: block;
   font-size: 14px;
-  color: #71717a;
+  color: #18181b;
   margin-bottom: 0.5rem;
 }
 
@@ -88,16 +88,39 @@ label {
   background-color: #233f39;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  width: 50%;
+  border-radius: 30px;
+  width: 70%;
   min-height: 53px;
   height: 53px;
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  -webkit-transition: background-color 0.3s ease;
+  -moz-transition: background-color 0.3s ease;
+  -ms-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  margin-top: 30px;
 }
 
+.wsBtn {
+  background: linear-gradient(45deg, #3ad656, #5bf876);
+  margin-top: 40px;
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}
 .button:hover {
   background-color: #13a583;
 }
@@ -114,7 +137,7 @@ label {
   opacity: 0.9;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .content {
     width: 99%;
   }
@@ -139,10 +162,21 @@ label {
   }
 }
 
+@media (max-width: 860px) {
+  .button {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .wsBtn {
+    display: block;
+  }
+}
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 85%;
 }
 
@@ -164,4 +198,41 @@ label {
 
 .subtitle {
   margin: 0;
+}
+
+.statusMessage {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  opacity: 0;
+  animation: fadeInOut 3s forwards;
+  z-index: 1000;
+}
+
+.success {
+  background-color: #4caf50; /* Verde */
+}
+
+.error {
+  background-color: #f44336; /* Rojo */
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

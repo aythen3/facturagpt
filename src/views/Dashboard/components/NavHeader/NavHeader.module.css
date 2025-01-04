@@ -3,11 +3,10 @@
 .navHeaderContainer {
   display: flex;
   width: 100%;
-  height: 86vh; /* Restar la barra superior (ajusta según sea necesario) */
+  height: 87vh; /* Restar la barra superior (ajusta según sea necesario) */
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background-image: url('../../assets/bgHero.png');
   /* background-color: red; */
   background-repeat: no-repeat;
   background-position: center;
@@ -27,139 +26,73 @@
   width: 30px; /* Responsive width */
 }
 
-.bgBlue {
-  background-color: #f2f1ff;
-  padding: 10px;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-}
-
-.bombillaL {
-  top: 10%;
-  left: 10%;
-}
-
-.bombillaR {
-  top: 3%;
-  right: 11%;
-  height: 100px;
-  width: 100px;
-  opacity: 0.7;
-}
-
-.bombillaL2 {
-  bottom: 7%; /* Responsive bottom position */
-  left: 10%; /* Responsive left position */
-  height: 20px;
-  width: 20px;
-  padding: 5px;
-  border-radius: 999px;
-  -webkit-border-radius: 999px;
-  -moz-border-radius: 999px;
-  -ms-border-radius: 999px;
-  -o-border-radius: 999px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.209);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.plusIconL {
-  top: 30%;
-  left: 15%;
-  border: #dcddeb 1px solid;
-  padding: 10px;
-  border-radius: 999px;
-  -webkit-border-radius: 999px;
-  -moz-border-radius: 999px;
-  -ms-border-radius: 999px;
-  -o-border-radius: 999px;
-}
-.starIconL {
-  bottom: 20%; /* Responsive bottom position */
-  left: 15%; /* Responsive left position */
-  height: 50px;
-  width: 50px;
-  padding: 10px;
-  border-radius: 999px;
-  -webkit-border-radius: 999px;
-  -moz-border-radius: 999px;
-  -ms-border-radius: 999px;
-  -o-border-radius: 999px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.209);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .starIconR {
-  top: 45%;
-  right: 6%;
-  height: 40px;
-  width: 40px;
+  top: 23%;
+  right: 15%;
+  height: 30px;
+  width: 30px;
+  border: 1px solid #16c098;
+  padding: 10px;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
 }
 
-.flagIconR {
-  bottom: 32%;
-  right: 25%;
-}
-
-.navHeaderTitle {
-  /* font-size: 66px; */
-  font-size: clamp(1rem, 2.5vw, 11vw); /* Tamaño escalable */
-  text-align: center;
-  font-weight: 700;
-  color: #211f54;
-}
-
-@media (max-width: 1270px) {
-  .starIconL {
-    bottom: 35%;
-    left: 8%;
-  }
-}
-@media (max-width: 780px) {
-  .bombillaR {
-    right: 3%;
-  }
-  .plusIconL {
-    left: 11%;
-  }
+@media (max-width: 900px) {
   .starIconR {
-    top: 40%;
-  }
-  .flagIconR {
-    bottom: 36%;
-  }
-  .starIconL {
-    bottom: 37%;
+    top: 20%;
+    right: 10%;
   }
 }
-@media (max-width: 510px) {
-  .bombillaR {
-    right: 0%;
-  }
-  .bombillaL {
-    left: 5%;
-  }
-}
-@media (max-width: 450px) {
-  .iconfloat {
+@media (max-width: 315px) {
+  .starIconR {
     display: none;
   }
 }
 
+.navHeaderTitle {
+  /* font-size: 66px; */
+  font-size: clamp(1.5rem, 2.5vw, 11vw); /* Tamaño escalable */
+  text-align: center;
+  font-weight: 700;
+  background: linear-gradient(90deg, #95959580 0%, #070707 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #222;
+}
+
 .navHeaderSubtitle {
   margin-top: -23px;
-  color: #16c098;
   font-weight: 700;
-  font-size: clamp(3rem, 9vw, 11vw); /* Tamaño escalable */
+  font-size: clamp(8rem, 9vw, 11vw); /* Tamaño escalable */
+
+  .factura {
+    background: linear-gradient(90deg, #16c098 0%, #0a5a47 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #16c098;
+  }
+  .gpt {
+    background: linear-gradient(90deg, #0f5443 66%, #222222 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #16c098;
+  }
 
   span {
     color: #222222;
+  }
+}
+@media (max-width: 768px) {
+  .navHeaderSubtitle {
+    font-size: 15vw; /* Tamaño escalable */
+  }
+}
+@media (max-width: 290px) {
+  .navHeaderSubtitle {
+    margin-top: -40px;
   }
 }
 
@@ -176,8 +109,8 @@
 
 .navHeaderDescription {
   font-weight: 500;
-  font-size: clamp(15px, 2vw, 18px);
-  color: #aeb9ca;
+  font-size: clamp(12px, 2vw, 18px);
+  color: #000;
   max-width: 728px;
   /* height: 205px; */
   margin-bottom: 20px;
