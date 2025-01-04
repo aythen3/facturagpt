@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Reviews.module.css';
 import Carousel from '../Carousel/Carousel';
 import ContactForm from '../ContactForm/ContactForm';
+import FAQ from '../Faqs/Faqs';
 
 const Reviews = () => {
   return (
@@ -29,14 +30,15 @@ const Reviews = () => {
           en cualquier momento.
         </span>
       </section>
-      <ContactForm />
+      {/* <ContactForm /> */}
+      <FAQ />
       <section className={styles.startNowSection}>
         <h2 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h2>
         <span className={styles.reviewsDescriptionLast}>
           Estás un paso más cerca de obtener el mejor servicio...
         </span>
-        <a href='/login' className={styles.startButton}>
-          Comience ahora
+        <a href="/login" className={styles.startButton}>
+          Probar Gratis
         </a>
       </section>
     </div>

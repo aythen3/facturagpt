@@ -9,30 +9,48 @@ const PricingPlanCard = ({
   features,
   priceTag,
   sliderValue,
+  documentos,
 }) => {
   const getDocumentPrice = () => {
-    if (sliderValue <= 10) return ""; // Hasta 20 documentos
-    if (sliderValue <= 20) return "0,20"; // +20 documentos
-    if (sliderValue <= 30) return "0,19"; // +200 documentos
-    if (sliderValue <= 40) return "0,18"; // +500 documentos
-    if (sliderValue <= 50) return "0,16"; // +1000 documentos
-    if (sliderValue <= 60) return "0,15"; // +2.000 documentos
-    if (sliderValue <= 70) return "0,13"; // +5.000 documentos
-    if (sliderValue <= 80) return "0,11"; // +20.000 documentos
-    if (sliderValue <= 90) return "0,09"; // +50.000 documentos
-    return "0,05"; // +100.000 documentos
+    if (sliderValue <= 10) return 0;
+    if (sliderValue <= 20) return 0.2;
+    if (sliderValue <= 30) return 0.19;
+    if (sliderValue <= 40) return 0.18;
+    if (sliderValue <= 50) return 0.16;
+    if (sliderValue <= 60) return 0.15;
+    if (sliderValue <= 70) return 0.13;
+    if (sliderValue <= 80) return 0.11;
+    if (sliderValue <= 90) return 0.09;
+    return 0.05;
   };
+
+  const calculatePrice = () => {
+    if (sliderValue <= 10) return "0,00";
+    if (sliderValue > 90) return "¿Aún más?";
+    const documentPrice = getDocumentPrice();
+    return (documentos * documentPrice).toFixed(2).replace(".", ",");
+  };
+
+  const calculatedPrice = calculatePrice();
 
   return (
     <div className={styles.pricingCardContainer}>
       <div className={styles.pricingBox}>
         <p className={styles.price}>
-          <strong>{price}€ </strong>
-          <span className={styles.perMonth}>/mes</span>
+          <strong>
+            {calculatedPrice === "¿Aún más?"
+              ? calculatedPrice
+              : `${calculatedPrice}€`}{" "}
+          </strong>
+          {calculatedPrice !== "¿Aún más?" && (
+            <span className={styles.perMonth}>/mes</span>
+          )}
         </p>
         {priceTag && <span className={styles.priceTag}>{priceTag}</span>}
-        {sliderValue > 10 && (
-          <p className={styles.docPrice}>{getDocumentPrice()}€ por documento</p>
+        {sliderValue > 10 && sliderValue < 90 && (
+          <p className={styles.docPrice}>
+            {getDocumentPrice().toFixed(2)}€ por documento
+          </p>
         )}
       </div>
       <div className={styles.planDetails}>

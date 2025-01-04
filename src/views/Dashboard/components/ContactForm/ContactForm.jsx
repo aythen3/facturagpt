@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './ContactForm.module.css';
 import handPointer from '../../assets/handPointer.svg';
+import Navbar from '../Navbar/Navbar';
+import wsIcon from '../../assets/whatsappIcon.svg';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -53,78 +55,96 @@ const ContactForm = () => {
     }, 3000); // El mensaje desaparecerá después de 3 segundos
   };
 
+  const handleWhatsAppClick = () => {
+    const phoneNumber = '584243356112'; // Replace with your WhatsApp number
+    const message = `Hola, mi nombre es ${formData.name}. ${formData.message}`;
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
+
   return (
-    <div className={styles.container} id='contact'>
-      <div className={styles.header}>
-        <img src={handPointer} alt='' className={styles.leftImage} />
-        <div className={styles.textContainer}>
-          <h2 className={styles.title}>Contáctenos</h2>
-          <p className={styles.subtitle}>
-            Estamos aquí para ayudar, solicite asistencia personalizada.
-          </p>
+    <>
+      <Navbar />
+      <div className={styles.container} id="contact">
+        <div className={styles.header}>
+          {/* <img src={handPointer} alt="" className={styles.leftImage} /> */}
+          <div className={styles.textContainer}>
+            <h2 className={styles.title}>Contáctenos</h2>
+            <p className={styles.subtitle}>
+              Estamos aquí para ayudar, solicite asistencia personalizada.
+            </p>
+          </div>
+          {/* <img src={handPointer} alt="" className={styles.rightImage} /> */}
         </div>
-        <img src={handPointer} alt='' className={styles.rightImage} />
+        <div className={styles.content}>
+          <div className={styles.leftSection}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.inputGroup}>
+                <label>Su nombre</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Introduce tu nombre"
+                  className={styles.input}
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label>Tu correo electrónico</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Introduce tu correo electrónico"
+                  className={styles.input}
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label>Tu mensaje</label>
+                <textarea
+                  name="message"
+                  placeholder="Escribe tu mensaje aquí"
+                  className={styles.textarea}
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <button type="submit" className={styles.button}>
+                Enviar mensaje
+              </button>
+              <button
+                type="button"
+                className={`${styles.button} ${styles.wsBtn}`}
+                onClick={handleWhatsAppClick}
+              >
+                <img src={wsIcon} alt="" />
+                <span>Habla con un nosotros por WhatsApp</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {isMessageVisible && (
+          <div
+            className={`${styles.statusMessage} ${
+              statusMessage.includes('exitosamente')
+                ? styles.success
+                : styles.error
+            }`}
+          >
+            {statusMessage}
+          </div>
+        )}
       </div>
-      <div className={styles.content}>
-        <div className={styles.leftSection}>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
-              <label>Su nombre</label>
-              <input
-                type='text'
-                name='name'
-                placeholder='Introduce tu nombre'
-                className={styles.input}
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.inputGroup}>
-              <label>Tu correo electrónico</label>
-              <input
-                type='email'
-                name='email'
-                placeholder='Introduce tu correo electrónico'
-                className={styles.input}
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.inputGroup}>
-              <label>Tu mensaje</label>
-              <textarea
-                name='message'
-                placeholder='Escribe tu mensaje aquí'
-                className={styles.textarea}
-                value={formData.message}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <button type='submit' className={styles.button}>
-              Enviar mensaje
-            </button>
-          </form>
-        </div>
-      </div>
-
-      {isMessageVisible && (
-        <div
-          className={`${styles.statusMessage} ${
-            statusMessage.includes('exitosamente')
-              ? styles.success
-              : styles.error
-          }`}
-        >
-          {statusMessage}
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 

@@ -65,17 +65,17 @@ const AccountSettings = () => {
       <div className={styles.profile}>
         <div className={styles.profileImage}>
           <img
-            src='https://imgs.search.brave.com/yszRftL1W07LQ1giXc8GEbXRV3GF1_nphk6aeJp4AOw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/bXlzdGVyaW91cy1w/cm9maWxlLXBpY3R1/cmUtdjAtbHZmZDgx/MnBwcTFlMS5qcGVn/P3dpZHRoPTY0MCZj/cm9wPXNtYXJ0JmF1/dG89d2VicCZzPTcx/MmIyNDNkMDBlMGI3/MDE3ODM1MmZhNWRj/MzhkNWZmNDVmM2Yz/OGE'
-            alt=''
+            src="https://imgs.search.brave.com/yszRftL1W07LQ1giXc8GEbXRV3GF1_nphk6aeJp4AOw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/bXlzdGVyaW91cy1w/cm9maWxlLXBpY3R1/cmUtdjAtbHZmZDgx/MnBwcTFlMS5qcGVn/P3dpZHRoPTY0MCZj/cm9wPXNtYXJ0JmF1/dG89d2VicCZzPTcx/MmIyNDNkMDBlMGI3/MDE3ODM1MmZhNWRj/MzhkNWZmNDVmM2Yz/OGE"
+            alt=""
           />
           <div className={styles.editProfile}>
-            <img src={editProfile} alt='' />
+            <img src={editProfile} alt="" />
           </div>
         </div>
         <div className={styles.profileInfo}>
           <p>John Doe</p>
           <span>john.doe@gmail.com</span>
-          <a href='#'>Switch Account</a>
+          <a href="#">Switch Account</a>
         </div>
       </div>
 
@@ -84,9 +84,9 @@ const AccountSettings = () => {
           <label>
             Tipo de Cuenta
             <div className={styles.accountType}>
-              <img src={briefcase} alt='' />
+              <img src={briefcase} alt="" />
               <input
-                type='text'
+                type="text"
                 value={accountType}
                 disabled
                 onChange={(e) => setAccountType(e.target.value)}
@@ -98,10 +98,10 @@ const AccountSettings = () => {
               Nombre Completo <span className={styles.required}>*</span>
             </p>
             <input
-              type='text'
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder='John Doe'
+              placeholder="John Doe"
             />
           </label>
           <label>
@@ -109,10 +109,10 @@ const AccountSettings = () => {
               Email <span className={styles.required}>*</span>
             </p>
             <input
-              type='email'
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder='john.doe@gmail.com'
+              placeholder="john.doe@gmail.com"
             />
           </label>
           <label>
@@ -120,10 +120,10 @@ const AccountSettings = () => {
               Contraseña <span className={styles.required}>*</span>
             </p>
             <input
-              type='password'
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder='********'
+              placeholder="********"
             />
             <p className={styles.passwordRequirements}>
               At least <span>8 characters</span>, containing{' '}
@@ -136,18 +136,18 @@ const AccountSettings = () => {
             </p>
             <div className={styles.phoneInputContainer}>
               <input
-                type='text'
+                type="text"
                 className={styles.countryCodeInput}
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
-                placeholder='+34'
+                placeholder="+34"
               />
               <input
-                type='tel'
+                type="tel"
                 className={styles.phoneNumberInput}
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder='000000000'
+                placeholder="000000000"
               />
             </div>
           </label>
@@ -159,7 +159,7 @@ const AccountSettings = () => {
                 <span>{selectedCountry.name}</span>
               </div>
               <span>
-                <img src={arrow} alt='' />
+                <img src={arrow} alt="" />
               </span>
             </div>
             {isDropdownOpen && (
@@ -183,10 +183,10 @@ const AccountSettings = () => {
               Provincia/Estado <span className={styles.required}>*</span>
             </p>
             <input
-              type='text'
+              type="text"
               value={province}
               onChange={(e) => setProvince(e.target.value)}
-              placeholder='Provincia'
+              placeholder="Provincia"
             />
           </label>
           <label>
@@ -194,10 +194,10 @@ const AccountSettings = () => {
               Código Postal <span className={styles.required}>*</span>
             </p>
             <input
-              type='text'
+              type="text"
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
-              placeholder='00000'
+              placeholder="00000"
             />
           </label>
           <label>
@@ -205,10 +205,10 @@ const AccountSettings = () => {
               Ciudad <span className={styles.required}>*</span>
             </p>
             <input
-              type='text'
+              type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              placeholder='00000'
+              placeholder="00000"
             />
           </label>
           <label>
@@ -216,35 +216,35 @@ const AccountSettings = () => {
               Calle <span className={styles.required}>*</span>
             </p>
             <input
-              type='text'
+              type="text"
               value={street}
               onChange={(e) => setStreet(e.target.value)}
-              placeholder='00000'
+              placeholder="00000"
             />
           </label>
           <label>
             <p>CIF o NIF</p>
             <input
-              type='text'
+              type="text"
               value={cif}
               onChange={(e) => setCif(e.target.value)}
-              placeholder='00000'
+              placeholder="00000"
             />
           </label>
           <label>
             <p>Web o dominio corporativo</p>
             <input
-              type='url'
+              type="url"
               value={web}
               onChange={(e) => setWeb(e.target.value)}
-              placeholder='www.dominio.com'
+              placeholder="www.dominio.com"
             />
           </label>
           <label>
             <p>Logo</p>
             <div className={styles.fileInput}>
               Añade tu Logo
-              <input type='file' />
+              <input type="file" />
             </div>
           </label>
 
@@ -252,17 +252,17 @@ const AccountSettings = () => {
             <p>Añadir Firma</p>
             <div className={styles.fileInput}>
               Añade tu Firma
-              <input type='file' />
+              <input type="file" />
             </div>
           </label>
-
+          {/* 
           <label>
             <p>Chatear por WhatsApp</p>
             <button>
               <img src={whatsApp} alt='' />
               Abrir WhatsApp
             </button>
-          </label>
+          </label> */}
         </form>
       </div>
     </div>

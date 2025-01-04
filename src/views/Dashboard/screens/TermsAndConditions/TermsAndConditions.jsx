@@ -28,27 +28,26 @@ const TermsAndConditions = () => {
             uso de los Servicios se rige por estos términos.
           </p>
           <p>
-            Nuestras Condiciones Comerciales rigen el uso de FacturaGPT
-            Enterprise, nuestras API y otros servicios para empresas y
-            desarrolladores.
-          </p>
-          <p>
-            Nuestra Política de Privacidad explica cómo recopilamos y usamos la
-            información personal. Aunque no forma parte de estos Términos, es un
-            documento importante que debe leer.
+            Nuestras Condiciones Comerciales regulan el uso de FacturaGPT
+            Enterprise, las API ofrecidas por FacturaGPT y otros servicios
+            diseñados específicamente para empresas y desarrolladores. Estas
+            condiciones incluyen detalles sobre el acceso, uso y tarifas
+            aplicables, garantizando un marco claro para su funcionamiento.
           </p>
         </section>
 
         <section>
           <h3>Quiénes Somos</h3>
           <p>
-            Aythen es una empresa de desarrollo de software. Nuestra misión es
-            mejorar el proceso empresarial en todo el mundo. <br />
+            FacturaGPT es un sistema avanzado de facturación diseñado para
+            digitalizar y simplificar todo el proceso de gestión de facturas.
+            Nuestra misión es facilitar el proceso de facturación para empresas
+            y profesionales, mejorando su eficiencia y productividad. <br />
             Para más información sobre nosotros, visite:{' '}
             <a
-              href='https://www.facturagpt.com'
-              target='_blank'
-              rel='noopener noreferrer'
+              href="https://www.facturagpt.com"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               https://www.facturagpt.com
             </a>
@@ -251,6 +250,154 @@ const TermsAndConditions = () => {
             FacturaGPT se reserva el derecho de modificar o suspender, temporal
             o permanentemente, el servicio en cualquier momento y por cualquier
             motivo si lo considera conveniente, con o sin previo aviso.
+          </p>
+        </section>
+
+        <section>
+          <h3>Terminación y Suspensión</h3>
+          <p>
+            <ul>
+              <li>
+                Terminación: Puede dejar de usar los Servicios en cualquier
+                momento. Podemos suspender o terminar su acceso si:
+                <ul>
+                  <li>Incumple estos Términos o nuestras Políticas de Uso.</li>
+                  <li>La ley lo requiere.</li>
+                  <li>Su uso puede causar daños o riesgos.</li>
+                </ul>
+              </li>
+              <li>
+                Apelaciones: Si cree que su cuenta fue suspendida o terminada
+                por error, puede apelar contactando al soporte.
+              </li>
+            </ul>
+          </p>
+          <p>
+            Exclusión de Garantías NUESTROS SERVICIOS SE PROPORCIONAN "TAL
+            CUAL". NO OFRECEMOS GARANTÍAS EXPRESAS O IMPLÍCITAS, SALVO DONDE LA
+            LEY LO EXIJA.
+          </p>
+          <p>
+            Limitación de Responsabilidad NO SOMOS RESPONSABLES DE DAÑOS
+            INDIRECTOS, INCIDENTALES O CONSECUENCIALES DERIVADOS DEL USO DE LOS
+            SERVICIOS. Esto incluye pérdidas económicas, interrupciones en el
+            servicio o pérdidas de datos.
+          </p>
+        </section>
+        <section>
+          <h3>Cancelación y Rescisión </h3>
+          <p>
+            El usuario puede cancelar su cuenta en cualquier momento. Los pagos
+            no son reembolsables salvo que la ley lo requiera.
+            <ul>
+              <li>
+                Cambios: Podemos cambiar los precios. Si aumentamos tarifas, le
+                notificaremos con 30 días de antelación antes de la renovación.
+              </li>
+              <li>
+                Si la cuenta es eliminada, todo su contenido será eliminado
+                después de treinta días. FacturaGPT se reserva el derecho de
+                cancelar una cuenta o impedir el uso del software a aquellos que
+                no cumplan con estas condiciones de uso.
+              </li>
+            </ul>
+          </p>
+        </section>
+        <section>
+          <h3>Política de Devoluciones </h3>
+          <p>
+            Si durante los primeros 30 días utilizando FacturaGPT no está
+            satisfecho con el servicio, contacte a través de{' '}
+            <a
+              href="soporteinfo@facturagpt.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              soporteinfo@facturagpt.com
+            </a>{' '}
+            para solicitar un reembolso completo. Las suscripciones se renuevan
+            automáticamente hasta su cancelación manual. Las devoluciones no se
+            aplicarán a usuarios que hayan incumplido los términos de uso.
+          </p>
+        </section>
+        <section>
+          <h3>Propiedad Intelectual </h3>
+          <p>
+            FacturaGPT posee todos los derechos de la Propiedad Intelectual
+            relacionados con el servicio, incluyendo, pero no limitándose, al
+            nombre del servicio, material gráfico y software asociado. El
+            usuario se compromete a no copiar, adaptar, reproducir, distribuir,
+            aplicar ingeniería inversa o descompilar cualquier faceta del
+            servicio.
+          </p>
+        </section>
+        <section>
+          <h3>Uso de Nuestros Servicios </h3>
+          <p>
+            El usuario es completamente responsable del acceso y correcto uso de
+            FacturaGPT con sujeción a la legalidad vigente. FacturaGPT no
+            garantiza que el servicio sea ininterrumpido o libre de errores, ni
+            se hace responsable de daños directos o indirectos derivados del uso
+            del servicio. La inteligencia artificial evoluciona rápidamente. El
+            uso de los Servicios podría generar resultados que no reflejen datos
+            reales. Usted acepta evaluar la precisión y adecuación del contenido
+            generado antes de usarlo o compartirlo.
+          </p>
+        </section>
+        <section>
+          <h3>Servicios de Terceros </h3>
+          <p>
+            Los Servicios pueden incluir software, productos o servicios de
+            terceros, sujetos a sus propios términos. No somos responsables por
+            ellos.
+          </p>
+        </section>
+
+        <section>
+          <h3>Comentarios</h3>
+          <p>
+            Valoramos sus comentarios y podemos utilizarlos sin restricciones ni
+            compensación.
+          </p>
+        </section>
+
+        <section>
+          <h3>Seguridad y Privacidad</h3>
+          <p>
+            FacturaGPT cumple con la normativa vigente en materia de protección
+            de datos, incluyendo la GDPR. Los datos de los usuarios se
+            encuentran alojados en servidores seguros dentro de la Unión
+            Europea. Todo acceso a los datos por parte del personal de
+            FacturaGPT está regulado mediante contratos de confidencialidad.
+          </p>
+        </section>
+
+        <section>
+          <h3>Términos Generales</h3>
+          <p>
+            Las condiciones de uso se regirán por las leyes de España. El
+            usuario y FacturaGPT aceptan someterse a la jurisdicción exclusiva
+            de los tribunales de Barcelona para resolver cualquier cuestión
+            legal relacionada con estas condiciones.
+            <ul>
+              <li>
+                La cesión de sus derechos bajo estos Términos está prohibida sin
+                nuestro consentimiento previo y por escrito.
+              </li>
+              <li>
+                Nos reservamos el derecho de transferir o delegar nuestros
+                derechos y obligaciones en cualquier momento.
+              </li>
+            </ul>
+          </p>
+        </section>
+
+        <section>
+          <p>
+            Estos Términos están regidos por las leyes de Barcelona, España, sin
+            perjuicio de los derechos que la legislación local pueda otorgarle.
+            En caso de conflicto, usted acepta someterse a la jurisdicción
+            exclusiva de los tribunales de dicha ciudad.
           </p>
         </section>
       </article>

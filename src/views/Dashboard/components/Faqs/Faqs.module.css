@@ -1,0 +1,111 @@
+.faqSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 60px 0;
+  h2 {
+    font-size: clamp(30px, 5vw, 32px) !important;
+    font-weight: 700;
+    color: #18181b;
+    text-align: center;
+  }
+}
+
+.faqContainer {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  border: 1px solid #dcdcdc;
+  padding: 10px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.faqItem {
+  margin-bottom: 15px;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.faqQuestion {
+  width: 100%;
+  background-color: white;
+  border: none;
+  padding: 15px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    color: #16c098;
+  }
+}
+
+.icon {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+}
+
+.icon.open {
+  transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+}
+
+.faqAnswer {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 15px;
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  transition:
+    max-height 0.3s ease-in-out,
+    padding 0.3s ease-in-out;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.faqAnswer.show {
+  max-height: 200px; /* Adjust based on your content */
+  padding: 15px;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-top: 10px;
+  margin: 0;
+  margin-left: 5px;
+  font-weight: 500;
+  a {
+    color: #16c098;
+    text-decoration: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    gap: 10px;
+    img {
+      width: 18px;
+    }
+  }
+}

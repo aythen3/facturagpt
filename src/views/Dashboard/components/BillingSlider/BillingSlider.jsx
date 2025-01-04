@@ -31,17 +31,17 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>
-        <img className={styles.star} src={star} alt='star' />
-        ¿Cuál es tu facturación anual?
+        <img className={styles.star} src={star} alt="star" />
+        ¿Cuál es tu facturación?
       </h2>
 
       <div className={styles.sliderWrapper}>
         {/* Slider Input */}
         <input
-          type='range'
-          min='1000000'
-          max='50000000'
-          step='100000'
+          type="range"
+          min="1000000"
+          max="50000000"
+          step="100000"
           value={sliderValue}
           onChange={handleSliderChange}
           className={styles.slider}
