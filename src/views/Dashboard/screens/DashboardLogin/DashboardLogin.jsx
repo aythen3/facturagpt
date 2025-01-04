@@ -3,7 +3,6 @@ import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import facturaLogo from "../../assets/logo.svg";
-import { ReactComponent as EmailIcon } from "../../assets/email-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
@@ -327,7 +326,8 @@ const DashboardLogin = () => {
         <div className={styles.content}>
           <div className={styles.rightContainer}>
             <div className={styles.mailIconContainer}>
-              <EmailIcon size={32} className={styles.mailIcon} />
+              {/* <Mail size={32} className={styles.mailIcon} /> */}
+              icon
             </div>
             <h1 className={styles.titleOtp}>{renderTitle()}</h1>
             <p className={styles.subtitleOtp}>

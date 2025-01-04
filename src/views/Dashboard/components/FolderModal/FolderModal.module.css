@@ -10,33 +10,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100000;
 }
 
 .modal {
   background: white;
   border-radius: 12px;
+  padding: 24px;
   width: 742px;
-  height: 750px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: "Inter", sans-serif;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 .header {
-  position: sticky;
-  top: 0;
-  background: white;
-  z-index: 10;
-  padding: 24px 24px 12px;
-  border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  margin-bottom: 24px;
 }
 
 .title {
@@ -51,35 +40,52 @@
   padding: 4px;
 }
 
-.content {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 24px;
-  margin-right: 2px;
+.locationSection {
+  margin-bottom: 24px;
 }
 
-.marginBottom {
-  margin-bottom: 24px;
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.inputNombre {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background-color: transparent;
+  border-radius: 6px;
+  color: #000;
+  font-size: 20px;
+}
+
+.inputNombre::placeholder {
+  color: #000;
+  font-size: 20px;
+}
+
+.inputNombre:focus {
+  outline: none;
+  border: none;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  margin-bottom: 16px;
 }
 
 .plusIcon {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: transparent;
+  background-color: #000;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.minusIcon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: #dc3545;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   align-items: center;
 }
 
@@ -94,7 +100,6 @@
   padding: 8px 0;
   font-size: 16px;
   font-weight: 600;
-  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -149,8 +154,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  padding: 24px;
-  border-top: 1px solid #eee;
+  margin-top: 24px;
 }
 
 .cancelButton {
@@ -172,17 +176,4 @@
 
 .primaryButton:hover {
   background: #059669;
-}
-
-.content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.content::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-}
-
-.content::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.1);
 }

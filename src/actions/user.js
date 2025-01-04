@@ -1,12 +1,12 @@
-import apiBackend from "@src/apiBackend.js";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import apiBackend from '@src/apiBackend.js';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createAccount = createAsyncThunk(
-  "user/createAccount",
+  'user/createAccount',
   async ({ nombre, email, password }) => {
-    console.log("data from createAccount", { nombre, email, password });
+    console.log('data from createAccount', { nombre, email, password });
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await apiBackend.post(
         `/user/createAccount`,
         { nombre, email, password },
@@ -18,17 +18,17 @@ export const createAccount = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      console.log("Error creating account:", error);
+      console.log('Error creating account:', error);
     }
   }
 );
 
 export const loginToManager = createAsyncThunk(
-  "user/loginToManager",
+  'user/loginToManager',
   async ({ email, password }) => {
-    console.log("Data from loginToManager action:", { email, password });
+    console.log('Data from loginToManager action:', { email, password });
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await apiBackend.post(
         `/user/loginToManager`,
         { email, password },
@@ -40,17 +40,17 @@ export const loginToManager = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      console.log("Error during login:", error);
-      throw new Error("Login failed");
+      console.log('Error during login:', error);
+      throw new Error('Login failed');
     }
   }
 );
 
 export const getAllClients = createAsyncThunk(
-  "user/getAllClients",
+  'user/getAllClients',
   async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await apiBackend.get(`/user/getAllClients`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -58,15 +58,15 @@ export const getAllClients = createAsyncThunk(
       });
       return res.data;
     } catch (error) {
-      console.log("Error fetching clients:", error);
-      throw new Error("Failed to fetch clients");
+      console.log('Error fetching clients:', error);
+      throw new Error('Failed to fetch clients');
     }
   }
 );
 
-export const getAllUsers = createAsyncThunk("user/getAllUsers", async () => {
+export const getAllUsers = createAsyncThunk('user/getAllUsers', async () => {
   try {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const res = await apiBackend.get(`/user/getAllUsers`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,16 +74,16 @@ export const getAllUsers = createAsyncThunk("user/getAllUsers", async () => {
     });
     return res.data;
   } catch (error) {
-    console.log("Error fetching users:", error);
-    throw new Error("Failed to fetch users");
+    console.log('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
   }
 });
 
 export const addNewClient = createAsyncThunk(
-  "user/addNewClient",
+  'user/addNewClient',
   async ({ clientData }) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await apiBackend.post(
         `/user/addNewClient`,
         { clientData },
@@ -95,17 +95,17 @@ export const addNewClient = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      console.log("Error adding new client:", error);
-      throw new Error("Failed to add new client");
+      console.log('Error adding new client:', error);
+      throw new Error('Failed to add new client');
     }
   }
 );
 
 export const deleteClient = createAsyncThunk(
-  "user/deleteClient",
+  'user/deleteClient',
   async ({ clientId }) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await apiBackend.delete(`/user/deleteClient`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -114,17 +114,17 @@ export const deleteClient = createAsyncThunk(
       });
       return res.data;
     } catch (error) {
-      console.log("Error deleting client:", error);
-      throw new Error("Failed to delete client");
+      console.log('Error deleting client:', error);
+      throw new Error('Failed to delete client');
     }
   }
 );
 
 export const updateClient = createAsyncThunk(
-  "user/updateClient",
+  'user/updateClient',
   async ({ clientId, toUpdate }) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await apiBackend.put(
         `/user/updateClient`,
         { clientId, toUpdate },
@@ -136,17 +136,17 @@ export const updateClient = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      console.log("Error updating client:", error);
-      throw new Error("Failed to update client");
+      console.log('Error updating client:', error);
+      throw new Error('Failed to update client');
     }
   }
 );
 
 export const updateUser = createAsyncThunk(
-  "user/updateUser",
+  'user/updateUser',
   async ({ userId, toUpdate }) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await apiBackend.put(
         `/user/updateUser`,
         { userId, toUpdate },
@@ -158,33 +158,33 @@ export const updateUser = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      console.log("Error updating user:", error);
-      throw new Error("Failed to update user");
+      console.log('Error updating user:', error);
+      throw new Error('Failed to update user');
     }
   }
 );
 
 export const sendOTP = createAsyncThunk(
-  "user/send-otp",
+  'user/send-otp',
   async ({ email }, { rejectWithValue }) => {
-    console.log("Sending OTP to:", email);
+    console.log('Sending OTP to:', email);
     try {
       const res = await apiBackend.post(`/user/send-otp`, { email });
       return res.data;
     } catch (error) {
       console.error(
-        "Error sending OTP:",
+        'Error sending OTP:',
         error.response?.data || error.message
       );
-      return rejectWithValue(error.response?.data || "Failed to send OTP");
+      return rejectWithValue(error.response?.data || 'Failed to send OTP');
     }
   }
 );
 
 export const verifyOTP = createAsyncThunk(
-  "user/verify-otp",
+  'user/verify-otp',
   async ({ email, otp }, { rejectWithValue }) => {
-    console.log("Verifying OTP for:", email);
+    console.log('Verifying OTP for:', email);
     try {
       const res = await apiBackend.post(`/user/verify-otp`, {
         email,
@@ -193,10 +193,32 @@ export const verifyOTP = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.error(
-        "Error verifying OTP:",
+        'Error verifying OTP:',
         error.response?.data || error.message
       );
-      return rejectWithValue(error.response?.data || "Failed to verify OTP");
+      return rejectWithValue(error.response?.data || 'Failed to verify OTP');
+    }
+  }
+);
+
+// Acción para enviar el correo
+export const sendEmail = createAsyncThunk(
+  'user/newsletter',
+  async ({ name, email, message }, { rejectWithValue }) => {
+    console.log('Sending email with:', { name, email, message });
+    try {
+      const res = await apiBackend.post(`/user/newsletter`, {
+        name,
+        email,
+        message,
+      });
+      return res.data;
+    } catch (error) {
+      console.error(
+        'Error sending email:',
+        error.response?.data || error.message
+      );
+      return rejectWithValue(error.response?.data || 'Failed to send email');
     }
   }
 );

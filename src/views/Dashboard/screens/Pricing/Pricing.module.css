@@ -7,10 +7,11 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
+  min-height: 100vh;
   background: #fff;
   overflow-x: hidden;
   font-family: "Inter", sans-serif;
-  padding: 110px 0 0;
+  padding: 110px 20px 0;
 }
 
 .plansHeader {
@@ -35,12 +36,6 @@
   font-weight: 400;
   font-size: clamp(16px, 3vw, 22px);
   color: #71717a;
-}
-
-.monthPrice {
-  font-size: 18px;
-  font-weight: 600;
-  color: #000;
 }
 
 .slider {
@@ -85,11 +80,15 @@
   transition: left 0.3s ease;
 }
 
-.textMes {
+.absoluteText {
+  position: absolute;
   color: #000000;
   font-size: clamp(14px, 2.5vw, 18px);
   font-weight: 600;
+  top: 27px;
   text-wrap: nowrap;
+  transform: translateX(-50%);
+  transition: left 0.3s ease;
 }
 
 .plansCardsContainer {
@@ -113,7 +112,7 @@
 .lightText,
 .lightTextSecondary {
   color: #71717a;
-  font-size: clamp(18px, 5vw, 21px);
+  font-size: clamp(18px, 3vw, 24px);
   font-weight: 400;
   margin-top: 70px;
   max-width: 800px;
@@ -125,30 +124,12 @@
 }
 
 .cardContainer {
-  max-width: 100%;
-  overflow: hidden;
-  margin: 2.5rem 0;
+  max-width: 1250px;
   display: flex;
-  gap: 20px;
-}
-
-@media (max-width: 768px) {
-  .cardContainer {
-    max-width: 100%;
-    overflow: hidden;
-  }
-}
-
-@media (min-width: 769px) {
-  .cardContainer {
-    max-width: 1250px;
-    margin: 2.5rem auto;
-  }
-
-  .cardWrapper {
-    flex: 0 0 auto;
-    margin: 10px;
-  }
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin: 2.5rem 0;
 }
 
 .pricingStarText {
@@ -190,7 +171,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: none;
   color: #fff;
   font-size: clamp(14px, 2.5vw, 18px);
   font-weight: 400;
@@ -216,6 +196,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 50px;
   margin: 50px 0px;
 }
@@ -253,11 +234,10 @@
 
 .trustpilotCard {
   background: #ffffff;
-  padding: 16px;
   border-radius: 2px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  width: 385px;
+  max-width: 385px;
 }
 
 .topContainer {
@@ -285,7 +265,7 @@
 .trustpilotBottomStars {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 5px;
   margin: 10px 0;
 }
 
@@ -316,6 +296,11 @@
 
   .trustContainer {
     flex-direction: column;
+  }
+
+  .googleCard,
+  .trustpilotCard {
+    max-width: 100%;
   }
 }
 

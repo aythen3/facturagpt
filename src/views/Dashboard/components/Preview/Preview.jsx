@@ -62,6 +62,11 @@ export default function DocumentPreview({ document, companyInfo }) {
             {companyInfo.address}
           </div>
         </div>
+
+        <div className={styles.formGroup}>
+          <label>Actividad CNAE</label>
+          <div className={styles.staticInfo}>{companyInfo.cnae}</div>
+        </div>
       </div>
     </div>
   );

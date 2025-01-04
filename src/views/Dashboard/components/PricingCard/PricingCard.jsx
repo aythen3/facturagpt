@@ -9,13 +9,18 @@ export const PricingCard = ({
   index,
   min,
   sliderValue,
+  setSliderValue,
   setFacturasTotales,
+  sliding,
 }) => {
   const handleClick = () => {
-    setSelectedCard(index); // Actualiza la card seleccionada
-    setFacturasTotales(min); // Actualiza las facturas directamente al hacer clic
-    console.log('Card clicked:', index, 'Min value set:', min);
+    setSelectedCard(index);
+    const validSlidingValue = Number(sliding);
+    if (!isNaN(validSlidingValue)) {
+      setSliderValue(validSlidingValue);
+    }
   };
+
   return (
     <div
       onClick={handleClick}
@@ -56,26 +61,63 @@ const PricingCards = ({
   const [scrollLeft, setScrollLeft] = useState(0);
 
   const cardsData = [
-    { title: '200 Documentos', price: '0,19', min: 200, max: 499 },
-    { title: '+500 Documentos', price: '0,18', min: 500, max: 999 },
-    { title: '+1000 Documentos', price: '0,16', min: 1000, max: 1999 },
-    { title: '+2.000 Documentos', price: '0,15', min: 2000, max: 4999 },
-    { title: '+5.000 Documentos', price: '0,13', min: 5000, max: 9999 },
-    { title: '+10.000 Documentos', price: '0,12', min: 10000, max: 19999 },
-    { title: '+20.000 Documentos', price: '0,11', min: 20000, max: 100000 },
+    {
+      title: '+2.000 Documentos',
+      price: '0,15',
+      min: 1000000,
+      max: 4999999,
+      sliding: 1000000,
+    },
+    {
+      title: '+5.000 Documentos',
+      price: '0,14',
+      min: 5000000,
+      max: 9999999,
+      sliding: 5000000,
+    },
+    {
+      title: '+10.000 Documentos',
+      price: '0,13',
+      min: 10000000,
+      max: 19999999,
+      sliding: 10000000,
+    },
+    {
+      title: '+20.000 Documentos',
+      price: '0,12',
+      min: 20000000,
+      max: 49999999,
+      sliding: 20000000,
+    },
+    {
+      title: '+50.000 Documentos',
+      price: '0,11',
+      min: 50000000,
+      max: 100000000,
+      sliding: 50000000,
+    },
   ];
 
   useEffect(() => {
-    const matchingIndex = cardsData.findIndex(
-      (card) => facturasTotales >= card.min && facturasTotales <= card.max
-    );
-    if (matchingIndex !== -1) {
-      setSelectedCard(matchingIndex);
-    }
-  }, [facturasTotales]);
+    cardsData.forEach((card, index) => {
+      if (sliderValue >= card.min && sliderValue <= card.max) {
+        setSelectedCard(index);
+      }
+    });
+  }, [sliderValue, cardsData]);
 
   useEffect(() => {
-    console.log('Selected card updated:', selectedCard);
+    if (containerRef.current && selectedCard !== null) {
+      const selectedCardElement = containerRef.current.children[selectedCard];
+      if (selectedCardElement) {
+        containerRef.current.scrollTo({
+          left:
+            selectedCardElement.offsetLeft -
+            containerRef.current.offsetWidth / 2,
+          behavior: 'smooth',
+        });
+      }
+    }
   }, [selectedCard]);
 
   const handleMouseDown = (e) => {
@@ -88,13 +130,17 @@ const PricingCards = ({
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Controla la velocidad del scroll
+    const walk = (x - startX) * 1.5;
     containerRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
   };
+
+  useEffect(() => {
+    setSelectedCard(0);
+  }, []);
 
   return (
     <div
@@ -117,6 +163,8 @@ const PricingCards = ({
           min={card.min}
           sliderValue={sliderValue}
           setFacturasTotales={setFacturasTotales}
+          setSliderValue={setSliderValue}
+          sliding={card.sliding}
         />
       ))}
     </div>

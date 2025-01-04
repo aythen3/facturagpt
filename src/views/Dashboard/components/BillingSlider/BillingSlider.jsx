@@ -10,6 +10,7 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
   const facturasTotales = (sliderValue * facturasPorMillon) / 1000000;
   const handleSliderChange = (event) => {
     setSliderValue(Number(event.target.value));
+    console.log('Slider value:', event.target.value);
   };
 
   const calculateProgress = () => {

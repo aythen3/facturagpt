@@ -2,15 +2,9 @@
 
 .container {
   display: flex;
-  height: calc(100vh - 50px);
+  height: 100vh;
   margin: 0;
   padding: 0;
   background-color: #fff;
   font-family: "Inter", serif;
-  overflow: hidden;
-}
-
-.container > * {
-  overflow-y: auto;
-  height: 100%;
 }

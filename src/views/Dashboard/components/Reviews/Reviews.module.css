@@ -10,7 +10,7 @@
 .reviewsSection {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 70vh;
   justify-content: center;
   align-items: center;
   margin-top: 0;

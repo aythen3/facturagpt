@@ -11,25 +11,24 @@ import googleLogo from "../../assets/googleLogo.svg";
 import googleStar from "../../assets/googleStar.svg";
 
 const Pricing = () => {
-  const [sliderValue, setSliderValue] = useState(1);
+  const [sliderValue, setSliderValue] = useState(100);
   const [selectedCard, setSelectedCard] = useState(9);
   const [currentPlan, setCurrentPlan] = useState({
-    documents: "Hasta 20 Documentos",
-    price: "FREE",
-    documentos: 0,
+    documents: "+100.000 Documentos",
+    price: "0,05",
   });
 
   const cardsData = [
-    { title: "Hasta 20 Documentos", price: "FREE", documentos: 0 },
-    { title: "+20 Documentos", price: "0,20", documentos: 20 },
-    { title: "+200 Documentos", price: "0,19", documentos: 200 },
-    { title: "+500 Documentos", price: "0,18", documentos: 500 },
-    { title: "+1000 Documentos", price: "0,16", documentos: 1000 },
-    { title: "+2.000 Documentos", price: "0,15", documentos: 2000 },
-    { title: "+5.000 Documentos", price: "0,13", documentos: 5000 },
-    { title: "+20.000 Documentos", price: "0,11", documentos: 20000 },
-    { title: "+50.000 Documentos", price: "0,09", documentos: 50000 },
-    { title: "+100.000 Documentos", price: "0,05", documentos: 100000 },
+    { title: "Hasta 20 Documentos", price: "FREE" },
+    { title: "+20 Documentos", price: "0,20" },
+    { title: "+200 Documentos", price: "0,19" },
+    { title: "+500 Documentos", price: "0,18" },
+    { title: "+1000 Documentos", price: "0,16" },
+    { title: "+2.000 Documentos", price: "0,15" },
+    { title: "+5.000 Documentos", price: "0,13" },
+    { title: "+20.000 Documentos", price: "0,11" },
+    { title: "+50.000 Documentos", price: "0,09" },
+    { title: "+100.000 Documentos", price: "0,05" },
   ];
 
   useEffect(() => {
@@ -39,7 +38,6 @@ const Pricing = () => {
       setCurrentPlan({
         documents: card.title,
         price: card.price,
-        documentos: card.documentos,
       });
       setSelectedCard(index);
     }
@@ -68,7 +66,6 @@ const Pricing = () => {
         <p className={styles.plansSubtitle}>
           Elige el mejor plan que se adapte a tus necesidades.
         </p>
-        <div className={styles.monthPrice}>{currentPlan.documents}/mes</div>
         <div className={styles.backgroundBar}>
           <input
             type="range"
@@ -86,6 +83,12 @@ const Pricing = () => {
             className={styles.thumb}
             style={{ left: `calc(${sliderValue}% + 9px)` }}
           ></div>
+          <div
+            className={styles.absoluteText}
+            style={{ left: `calc(${sliderValue}% + 12.5px)` }}
+          >
+            {currentPlan.documents}/mes
+          </div>
         </div>
       </div>
       <div className={styles.plansCardsContainer}>
@@ -98,7 +101,6 @@ const Pricing = () => {
           features={selectedPlan.features}
           isSelected={true}
           sliderValue={sliderValue}
-          documentos={currentPlan.documentos}
         />
       </div>
       <span className={styles.microText}>
@@ -125,7 +127,7 @@ const Pricing = () => {
       </div>
       <h1 className={styles.pricingStarText}>
         <img className={styles.star} src={star} alt="star" />
-        Valoración
+        Facturación
       </h1>
       <span className={styles.lightTextSecondary}>
         Escríbenos un email, una reseña en Google, una postal, o incluso puedes
