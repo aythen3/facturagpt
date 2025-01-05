@@ -4,8 +4,10 @@ import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
 import searchGray from '../../assets/searchGray.png';
 import searchWhite from '../../assets/searchWhite.png';
 import newClientIcon from '../../assets/newClientIcon.svg';
-import ClientTable from '../../components/ClientTable/ClientTable';
-
+import clock from '../../assets/clock.png';
+import edit from '../../assets/edit.png';
+import plusIcon from '../../assets/Plus Icon.png';
+import filterSearch from '../../assets/Filters Search.png';
 const Clients = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState('');
@@ -15,59 +17,55 @@ const Clients = () => {
   };
 
   const tableHeaders = [
-    'Cliente',
+    'Nombre',
+    'Email',
+    'Teléfono',
     'Dirección física',
-    'Métodos de pago',
+    'Número fiscal',
+    'Métodos de Pago',
     'Moneda Preferida',
-    'Número Fiscal',
-    'Historial de transacciones',
+    'Acciones',
   ];
 
   const tableData = [
     {
-      cliente: ['Aythen', 'info@gmail.com', '+34 123 456 789'],
+      nombre: 'Aythen',
+      email: ['info@aythen.com', 'support@aythen.com'],
+      telefono: '+34600789012',
       direccion: 'Calle A, Barcelona',
+      numeroFiscal: 'ES123456789',
       metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
       moneda: 'EUR',
+    },
+    {
+      nombre: 'Aythen',
+      email: 'info@aythen.com',
+      telefono: '+584243356112',
+      direccion: 'Calle A, Barcelona',
       numeroFiscal: 'ES123456789',
-      historial: 'icon',
-    },
-    {
-      cliente: ['Carlos', 'carlos@gmail.com', '+34 987 654 321'],
-      direccion: 'Calle B, Madrid',
-      metodosPago: ['Mastercard ****5678', 'Transferencia bancaria'],
-      moneda: 'USD',
-      numeroFiscal: 'US987654321',
-      historial: 'icon',
-    },
-    {
-      cliente: ['Maria', 'maria@gmail.com', '+34 456 789 123'],
-      direccion: 'Calle C, Valencia',
-      metodosPago: ['Amex ****4321', 'Stripe: maria@stripe.com'],
-      moneda: 'GBP',
-      numeroFiscal: 'UK123456789',
-      historial: 'icon',
+      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
+      moneda: 'EUR',
     },
   ];
+
+  const formatPhoneNumber = (phoneNumber) => {
+    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
+  };
 
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          <h2>Clientes</h2>
+          <h2>Clientes y Proveedores</h2>
           <div className={styles.searchContainer}>
             <button className={styles.addButton}>
-              <img src={newClientIcon} alt="Nuevo cliente" />
+              <img src={plusIcon} alt="Nuevo cliente" />
               Alta nuevo cliente
             </button>
 
             <div className={styles.inputWrapper}>
-              <img
-                src={searchGray}
-                className={styles.inputIconInside}
-                alt="Buscar"
-              />
+              <img src={searchGray} className={styles.inputIconInside} />
               <input
                 type="text"
                 placeholder="Search..."
@@ -76,18 +74,53 @@ const Clients = () => {
                 className={styles.searchInput}
               />
               <div className={styles.inputIconOutsideContainer}>
-                <img
-                  src={searchWhite}
-                  className={styles.inputIconOutside}
-                  alt="Buscar blanco"
-                />
+                <img src={filterSearch} className={styles.inputIconOutside} />
               </div>
             </div>
           </div>
         </div>
 
         <div className={styles.clientsTable}>
-          <ClientTable tableHeaders={tableHeaders} tableData={tableData} />
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                {tableHeaders.map((header, index) => (
+                  <th key={index} className={index == 7 ? styles.hola : ''}>
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  <td>{row.nombre}</td>
+                  <td>
+                    {Array.isArray(row.email)
+                      ? row.email.map((item, itemIndex) => (
+                          <p key={itemIndex}>{item}</p>
+                        ))
+                      : row.email}
+                  </td>
+                  <td>{formatPhoneNumber(row.telefono)}</td>
+                  <td>{row.direccion}</td>
+                  <td>{row.numeroFiscal}</td>
+                  <td>
+                    {Array.isArray(row.metodosPago)
+                      ? row.metodosPago.map((item, itemIndex) => (
+                          <p key={itemIndex}>{item}</p>
+                        ))
+                      : row.metodosPago}
+                  </td>
+                  <td>{row.moneda}</td>
+                  <td className={styles.actions}>
+                    <img src={clock} />
+                    <img src={edit} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

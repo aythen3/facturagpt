@@ -4,64 +4,78 @@ import editProfile from '../../assets/editProfile.svg';
 import briefcase from '../../assets/briefcase.svg';
 import whatsApp from '../../assets/whatsappIcon.svg';
 import arrow from '../../assets/arrow.svg';
+import visa from '../../assets/visaPayment.png';
+import mastercard from '../../assets/mastercardPayment.png';
+import americanexpress from '../../assets/americanExpressPayment.png';
+import paypal from '../../assets/paypalPayment.png';
+import gpay from '../../assets/gPayment.png';
+import metamask from '../../assets/metamaskPayment.png';
+import coinbase from '../../assets/coinbasePayment.png';
+import creditCard from '../../assets/creditCardIcon.png';
 
 const AccountSettings = () => {
-  const [accountType, setAccountType] = useState('Admin');
-  const [name, setName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [countryCode, setCountryCode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [province, setProvince] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [city, setCity] = useState('');
-  const [street, setStreet] = useState('');
-  const [cif, setCif] = useState('');
-  const [web, setWeb] = useState('');
-
-  const [file1, setFile1] = useState(null);
-  const [file2, setFile2] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('+34');
+  const [cardNumber, setCardNumber] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic
-  };
-  const countries = [
-    { name: 'Spain', flag: 'https://flagcdn.com/w40/es.png' },
-    { name: 'United States', flag: 'https://flagcdn.com/w40/us.png' },
-    { name: 'Mexico', flag: 'https://flagcdn.com/w40/mx.png' },
-    { name: 'Canada', flag: 'https://flagcdn.com/w40/ca.png' },
-  ];
+    console.log(fullName);
+    console.log(email);
+    console.log(password);
+    console.log(phone);
+    console.log(countryCode);
+    console.log(cardNumber);
+    console.log(paymentMethod);
 
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const handleSelect = (country) => {
-    setSelectedCountry(country);
-    setIsDropdownOpen(false);
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
-
-  const closeDropdown = (e) => {
-    if (!e.target.closest(`.${styles.customSelect}`)) {
-      setIsDropdownOpen(false);
+    // const emailValue = e.target.value;
+    // setEmail(email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError('El correo electrónico no es válido.');
+    } else {
+      setEmailError('');
     }
   };
 
-  React.useEffect(() => {
-    document.addEventListener('click', closeDropdown);
-    return () => {
-      document.removeEventListener('click', closeDropdown);
-    };
-  }, []);
+  const handlePasswordVerify = () => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        'At least 8 characters, containing a letter and a number'
+      );
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(emailValue)) {
+    //   setEmailError('El correo electrónico no es válido.');
+    // } else {
+    //   setEmailError('');
+    // }
+  };
+
+  const formatPhoneNumber = (value) => {
+    return value.replace(/\D/g, '').replace(/(\d{3})(?=\d)/g, '$1 ');
+  };
+
+  const formatCardNumber = (value) => {
+    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+  };
 
   return (
     <div className={styles.settingsProfile}>
-      <h3>Ajustes de Cuenta</h3>
       <div className={styles.profile}>
         <div className={styles.profileImage}>
           <img
@@ -75,194 +89,213 @@ const AccountSettings = () => {
         <div className={styles.profileInfo}>
           <p>John Doe</p>
           <span>john.doe@gmail.com</span>
-          <a href="#">Switch Account</a>
+          <button>Switch Account</button>
         </div>
       </div>
 
       <div>
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <label>
-            Tipo de Cuenta
-            <div className={styles.accountType}>
-              <img src={briefcase} alt="" />
-              <input
-                type="text"
-                value={accountType}
-                disabled
-                onChange={(e) => setAccountType(e.target.value)}
-              />
+            <div className={styles.row}>
+              <p>Plan Actual</p>
+              <span className={styles.taxes}>Impuestos no incluidos</span>
+            </div>
+            <div className={`${styles.row} ${styles.plan}`}>
+              <p>
+                Plan <strong>Plus</strong>
+              </p>
+              <span>322,20 € el día 1 Septiembre 2025</span>
             </div>
           </label>
+
           <label>
-            <p>
-              Nombre Completo <span className={styles.required}>*</span>
-            </p>
+            <div className={styles.row}>
+              <p>Última facturación</p>
+              <button>Ver Historial</button>
+            </div>
+            <div className={styles.row}>
+              <p>
+                Plan <strong>Pro</strong>
+              </p>
+              <p>1 Agosto 2025</p>
+            </div>
+          </label>
+
+          <label>
+            <div className={styles.row}>
+              <p>Nombre completo</p>
+              <button type="button">Editar</button>
+            </div>
+            John Doe
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               placeholder="John Doe"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
           </label>
+
           <label>
-            <p>
-              Email <span className={styles.required}>*</span>
-            </p>
+            <div className={styles.row}>
+              <p>Email</p>
+              <button type="button">Editar</button>
+            </div>
+            j***e@gmail.com
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               placeholder="john.doe@gmail.com"
+              value={email}
+              onChange={handleEmailChange}
             />
+            {emailError && <span className={styles.error}>{emailError}</span>}
           </label>
-          <label>
-            <p>
-              Contraseña <span className={styles.required}>*</span>
-            </p>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="********"
-            />
-            <p className={styles.passwordRequirements}>
-              At least <span>8 characters</span>, containing{' '}
-              <span>a letter</span> and <span>a number</span>
-            </p>
-          </label>
-          <label>
-            <p>
-              Teléfono <span className={styles.required}>*</span>
-            </p>
-            <div className={styles.phoneInputContainer}>
-              <input
-                type="text"
-                className={styles.countryCodeInput}
-                value={countryCode}
-                onChange={(e) => setCountryCode(e.target.value)}
-                placeholder="+34"
-              />
-              <input
-                type="tel"
-                className={styles.phoneNumberInput}
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="000000000"
-              />
+          <label className={styles.label}>
+            <div className={styles.row}>
+              <p>Contraseña</p>
+              <button type="button">Editar</button>
             </div>
-          </label>
-          <label className={styles.customSelect}>
-            <p>País</p>
-            <div className={styles.selectedOption} onClick={toggleDropdown}>
-              <div className={styles.countryInfo}>
-                <img src={selectedCountry.flag} alt={selectedCountry.name} />
-                <span>{selectedCountry.name}</span>
-              </div>
-              <span>
-                <img src={arrow} alt="" />
+            <div className={styles.inputWrapper}>
+              <input
+                type="password"
+                placeholder="****"
+                className={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span className={styles.verify} onClick={handlePasswordVerify}>
+                Verificar
               </span>
             </div>
-            {isDropdownOpen && (
-              <div className={styles.dropdownOptions}>
-                {countries.map((country) => (
-                  <div
-                    key={country.name}
-                    className={styles.dropdownOption}
-                    onClick={() => handleSelect(country)}
-                  >
-                    <img src={country.flag} alt={country.name} />
-                    <span>{country.name}</span>
-                  </div>
-                ))}
-              </div>
+            {passwordError && (
+              <span className={styles.error}>{passwordError}</span>
             )}
           </label>
 
-          <label>
-            <p>
-              Provincia/Estado <span className={styles.required}>*</span>
-            </p>
-            <input
-              type="text"
-              value={province}
-              onChange={(e) => setProvince(e.target.value)}
-              placeholder="Provincia"
-            />
-          </label>
-          <label>
-            <p>
-              Código Postal <span className={styles.required}>*</span>
-            </p>
-            <input
-              type="text"
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-              placeholder="00000"
-            />
-          </label>
-          <label>
-            <p>
-              Ciudad <span className={styles.required}>*</span>
-            </p>
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="00000"
-            />
-          </label>
-          <label>
-            <p>
-              Calle <span className={styles.required}>*</span>
-            </p>
-            <input
-              type="text"
-              value={street}
-              onChange={(e) => setStreet(e.target.value)}
-              placeholder="00000"
-            />
-          </label>
-          <label>
-            <p>CIF o NIF</p>
-            <input
-              type="text"
-              value={cif}
-              onChange={(e) => setCif(e.target.value)}
-              placeholder="00000"
-            />
-          </label>
-          <label>
-            <p>Web o dominio corporativo</p>
-            <input
-              type="url"
-              value={web}
-              onChange={(e) => setWeb(e.target.value)}
-              placeholder="www.dominio.com"
-            />
-          </label>
-          <label>
-            <p>Logo</p>
-            <div className={styles.fileInput}>
-              Añade tu Logo
-              <input type="file" />
+          <label className={styles.label}>
+            <div className={styles.row}>
+              <p>Teléfono</p>
+              <button type="button">Editar</button>
+            </div>
+            +34 000 000 000
+            <div className={styles.phoneInputs}>
+              <select
+                className={styles.countrySelect}
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+              >
+                <option value="+34">España (+34)</option>
+                <option value="+1">Estados Unidos (+1)</option>
+                <option value="+44">Reino Unido (+44)</option>
+                <option value="+52">México (+52)</option>
+                <option value="+91">India (+91)</option>
+                {/* Agrega más países según sea necesario */}
+              </select>
+              <input
+                type="text"
+                placeholder="000 000 000"
+                className={styles.numberInput}
+                value={formatPhoneNumber(phone)}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
           </label>
 
           <label>
-            <p>Añadir Firma</p>
-            <div className={styles.fileInput}>
-              Añade tu Firma
-              <input type="file" />
+            <div className={styles.row}>
+              <p>Métodos de Pago</p>
+              <button type="button">Añadir</button>
             </div>
-          </label>
-          {/* 
-          <label>
-            <p>Chatear por WhatsApp</p>
-            <button>
-              <img src={whatsApp} alt='' />
-              Abrir WhatsApp
+            Desconocido
+            <div className={styles.payContainer}>
+              <div>
+                <div className={styles.paymentMethod}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="creditCard"
+                    checked={paymentMethod === 'creditCard'}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  <div className={styles.paymentContainer}>
+                    <div className={styles.paymentImage}>
+                      <img src={visa} alt="Visa logo" />
+                    </div>
+                    <div className={styles.paymentImage}>
+                      <img src={mastercard} alt="Mastercard logo" />
+                    </div>
+                    <div className={styles.paymentImage}>
+                      <img src={americanexpress} alt="American Express logo" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className={styles.paymentMethod}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="paypal"
+                    checked={paymentMethod === 'paypal'}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  <div className={styles.paymentImage}>
+                    <img src={paypal} alt="Paypal logo" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className={styles.paymentMethod}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="googlepay"
+                    checked={paymentMethod === 'googlepay'}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  <div className={styles.paymentImage}>
+                    <img src={gpay} alt="Google pay logo" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className={styles.paymentMethod}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="criptos"
+                    checked={paymentMethod === 'criptos'}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  <div className={styles.paymentContainer}>
+                    <div className={styles.paymentImage}>
+                      <img src={metamask} alt="Metamask logo" />
+                    </div>
+                    <div className={styles.paymentImage}>
+                      <img src={coinbase} alt="CoinBase logo" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.row}>Card number</div>
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                placeholder="1234 1234 1234 1234"
+                className={styles.input}
+                value={formatCardNumber(cardNumber)}
+                onChange={(e) => setCardNumber(e.target.value)}
+              />
+              <img
+                src={creditCard}
+                alt="Credit Card Icon"
+                className={styles.icon}
+              />
+            </div>
+            <button className={styles.save} type="submit">
+              Guardar Cambios
             </button>
-          </label> */}
+          </label>
         </form>
       </div>
     </div>

@@ -3,7 +3,7 @@ import styles from './NavbarAdmin.module.css';
 import star from '../../assets/starPlus.svg';
 import facturaGPT from '../../assets/FacturaGPTIcon.svg';
 import bookIcon from '../../assets/bookIcon.svg';
-import clientIcon from '../../assets/peopleIcon.svg';
+import clientIcon from '../../assets/client.png';
 import headphonesIcon from '../../assets/headphonesIcon.svg';
 import AccountSettings from '../AccountSettings/AccountSettings';
 
@@ -41,7 +41,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
           <span>Admin</span>
         </div>
         <img
-          src="https://imgs.search.brave.com/PgZ2yAs6Q25FGu-KrTvZP7dBH3rQoJ268D7_MxlotEw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy9jb21tb25z/LzYvNjIvUnlhbl9B/Z29uY2lsbG9fKDIw/MDgpLmpwZw"
+          src="https://imgs.search.brave.com/xHfreYBWzJJzoeupLP8pjjo7wcsOpIaOMOxvEtFnX4w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuY3RmYXNzZXRz/Lm5ldC9oNmdvbzln/dzFoaDYvMnNOWnRG/QVdPZFAxbG1RMzNW/d1JOMy8yNGU5NTNi/OTIwYTljZDBmZjJl/MWQ1ODc3NDJhMjQ3/Mi8xLWludHJvLXBo/b3RvLWZpbmFsLmpw/Zz93PTEyMDAmaD05/OTImZmw9cHJvZ3Jl/c3NpdmUmcT03MCZm/bT1qcGc"
           alt=""
         />
       </div>
