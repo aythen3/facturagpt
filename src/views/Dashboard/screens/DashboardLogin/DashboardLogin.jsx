@@ -284,21 +284,16 @@ const DashboardLogin = () => {
       <div className={styles.forgotPasswordIcon}>
         <KeyIcon />
       </div>
-      <h1 className={styles.forgotPasswordTitle}>
-        ¡Ups! ¿Te olvidaste de la contraseña?
-      </h1>
-      <p className={styles.forgotPasswordSubtitle}>
-        No te preocupes, esto pasa. Ingresa tu email registrado a tu cuenta de
-        Usuario para resetear tu contraseña
-      </p>
+      <h1 className={styles.forgotPasswordTitle}>{t("title3")}</h1>
+      <p className={styles.forgotPasswordSubtitle}>{t("solution")}</p>
       <form className={styles.form}>
         <label className={styles.label}>
-          Email
+          {t("label1")}
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
-            placeholder="Example@email.com"
+            placeholder={t("placeholder1")}
             className={styles.input}
           />
         </label>
@@ -311,14 +306,14 @@ const DashboardLogin = () => {
           className={styles.continueButton}
           disabled={isLoading}
         >
-          {isLoading ? "Procesando..." : "Continuar"}
+          {isLoading ? t("buttonContinue2") : t("buttonContinue1")}
         </button>
       </form>
       <p className={styles.securityNote}>
         <span className={styles.lockIcon}>
           <LockIcon size={14} />
         </span>
-        Tu seguridad nos importa
+        {t("security")}
       </p>
     </div>
   );
