@@ -39,9 +39,19 @@ const Navbar = () => {
           menuOpen ? styles.navLinksOpen : styles.navLinksClosed
         }`}
       >
-        <div>
-          <button onClick={() => i18n.changeLanguage("es")}>Es</button>
-          <button onClick={() => i18n.changeLanguage("en")}>En</button>
+        <div style={{ display: "flex" }}>
+          <img
+            onClick={() => i18n.changeLanguage("es")}
+            src="./spain_flags.png"
+            alt="img"
+            style={{ width: 30, height: 30, cursor: "pointer" }}
+          />
+          <img
+            onClick={() => i18n.changeLanguage("en")}
+            src="./english_flag.png"
+            alt="img"
+            style={{ width: 30, height: 30, cursor: "pointer" }}
+          />
         </div>
 
         <li onClick={() => navigate("/landing")}>{t("item1")}</li>
