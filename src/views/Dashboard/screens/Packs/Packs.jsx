@@ -163,12 +163,9 @@ const Packs = () => {
       <section className={styles.extensionsContainer}>
         <div className={styles.extensionsTitle}>
           <img className={styles.flag} src={flag} alt="flag" />
-          <h2>Formatos y Extensiones</h2>
+          <h2>{t("formatsTitle")}</h2>
         </div>
-        <span className={styles.regular08}>
-          Puedes conectar cualquier tipo de formato digital, escaneado, foto..
-          Disponible en más de +10 formatos disponibles
-        </span>
+        <span className={styles.regular08}>{t("formatsDescription")}</span>
         <div className={styles.dashedContainer}>
           {cardsData.map((card, index) => (
             <div className={styles.innerCard} key={index}>
@@ -184,11 +181,9 @@ const Packs = () => {
 
       <div className={styles.extensionsTitle}>
         <img className={styles.heart} src={heart} alt="heart" />
-        <h2>Programas Compatibles</h2>
+        <h2>{t("programsTitle")}</h2>
       </div>
-      <span className={styles.regular08}>
-        Sube, recibe o emite facturas y automatiza tu proceso de facturación
-      </span>
+      <span className={styles.regular08}>{t("programsDescription")}</span>
       <CompatibleProgramsSection />
       <Reviews />
     </div>
