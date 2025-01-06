@@ -37,6 +37,8 @@ import compatibleProgramsSection_es from "./translation/compatibleProgramsSectio
 import compatibleProgramsSection_en from "./translation/compatibleProgramsSection/en/compatibleProgramsSection.json";
 import reviews_es from "./translation/reviews/es/reviews.json";
 import reviews_en from "./translation/reviews/en/reviews.json";
+import faq_es from "./translation/faq/es/faq.json";
+import faq_en from "./translation/faq/en/faq.json";
 
 i18n.init({
   interpolation: { escapeValue: false },
@@ -50,6 +52,7 @@ i18n.init({
       pricingCard: pricingCard_es,
       compatibleProgramsSection: compatibleProgramsSection_es,
       reviews: reviews_es,
+      faq: faq_es,
     },
     en: {
       navBar: navbar_en,
@@ -59,6 +62,7 @@ i18n.init({
       pricingCard: pricingCard_en,
       compatibleProgramsSection: compatibleProgramsSection_en,
       reviews: reviews_en,
+      faq: faq_en,
     },
   },
 });
