@@ -1,0 +1,23 @@
+{
+  "step1": "Paso 1",
+  "title1": "Inicia sesión",
+  "description1": "Conecta en un solo paso, gmail, drive, dropbox, etc.. y sincroniza tu bandeja de entrada",
+
+  "step2": "Paso 2",
+  "title2": "Factura con GPT",
+  "description2": "Reconoce todas tus facturas, recibos, etc.. y conecta con terceros",
+
+  "step3": "Paso 3",
+  "title3": "Ahorra un 88% de tiempo",
+  "description3": "Tu proceso 100% automatizado, 24h y 7 días a la semana disponible",
+
+  "resume": "Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una empresa con una facturación de",
+  "resume_strong": "genera aproximadamente",
+  "resume_strong2": "facturas",
+  "resume_cont": ". Con FacturaGPT, puedes ahorrar más de ",
+  "resume_hours": "horas",
+  "resume_end": "en tareas repetitivas y obtener un beneficio de más de ",
+  "reduces1": "Reduce la entrada manual en un 88%",
+  "reduces2": "Reduce la tasa de error promedio en un 30%",
+  "reduces3": "Reduce el tiempo de respuesta en un 57%"
+}

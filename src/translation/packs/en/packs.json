@@ -1,0 +1,23 @@
+{
+  "step1": "Step 1",
+  "title1": "Log in",
+  "description1": "Connect in one step, Gmail, Drive, Dropbox, etc. and synchronize your inbox",
+
+  "step2": "Step 2",
+  "title2": "Invoice with GPT",
+  "description2": "Recognize all your invoices, receipts, etc. and connect with third parties",
+
+  "step3": "Step 3",
+  "title3": "Save 88% of time",
+  "description3": "Your process is 100% automated, available 24 hours a day, 7 days a week",
+
+  "resume": "Companies take between 5 and 10 minutes to manage an invoice. A company with a turnover of",
+  "resume_strong": "generates approximately",
+  "resume_strong2": "invoices",
+  "resume_cont": ". With FacturaGPT, you can save more than ",
+  "resume_hours": "hours",
+  "resume_end": "in repetitive tasks and obtain a benefit of more than ",
+  "reduces1": "Reduce manual input by 88%",
+  "reduces2": "Reduce the average error rate by 30%",
+  "reduces3": "Reduce response time by 57%"
+}
