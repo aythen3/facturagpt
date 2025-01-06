@@ -403,7 +403,7 @@ const DashboardLogin = () => {
               onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
               className={styles.signUp}
             >
-              {mode === "signin" ? "Sign up" : "Sign in"}
+              {mode === "signin" ? t("register") : t("login")}
             </a>
           </p>
           <p className={styles.footer}>© {t("copyright")}</p>
