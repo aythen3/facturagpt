@@ -17,6 +17,8 @@ import faq_es from "./translation/faq/es/faq.json";
 import faq_en from "./translation/faq/en/faq.json";
 import contactForm_es from "./translation/contactForm/es/contactForm.json";
 import contactForm_en from "./translation/contactForm/en/contactForm.json";
+import freeTrial_es from "./translation/freeTrial/es/freeTrial.json";
+import freeTrial_en from "./translation/freeTrial/en/freeTrial.json";
 
 i18n.init({
   interpolation: { escapeValue: false },
@@ -32,6 +34,7 @@ i18n.init({
       reviews: reviews_es,
       faq: faq_es,
       contactForm: contactForm_es,
+      freeTrial: freeTrial_es,
     },
     en: {
       navBar: navbar_en,
@@ -43,6 +46,7 @@ i18n.init({
       reviews: reviews_en,
       faq: faq_en,
       contactForm: contactForm_en,
+      freeTrial: freeTrial_en,
     },
   },
 });
