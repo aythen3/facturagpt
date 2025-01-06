@@ -35,6 +35,8 @@ import pricingCard_es from "./translation/pricingCard/es/pricingCard.json";
 import pricingCard_en from "./translation/pricingCard/en/pricingCard.json";
 import compatibleProgramsSection_es from "./translation/compatibleProgramsSection/es/compatibleProgramsSection.json";
 import compatibleProgramsSection_en from "./translation/compatibleProgramsSection/en/compatibleProgramsSection.json";
+import reviews_es from "./translation/reviews/es/reviews.json";
+import reviews_en from "./translation/reviews/en/reviews.json";
 
 i18n.init({
   interpolation: { escapeValue: false },
@@ -47,6 +49,7 @@ i18n.init({
       billingSlides: billingSlider_es,
       pricingCard: pricingCard_es,
       compatibleProgramsSection: compatibleProgramsSection_es,
+      reviews: reviews_es,
     },
     en: {
       navBar: navbar_en,
@@ -55,6 +58,7 @@ i18n.init({
       billingSlides: billingSlider_en,
       pricingCard: pricingCard_en,
       compatibleProgramsSection: compatibleProgramsSection_en,
+      reviews: reviews_en,
     },
   },
 });
