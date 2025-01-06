@@ -25,6 +25,8 @@
 import i18n from "i18next";
 import navbar_es from "./translation/navbar/es/navbar.json";
 import navbar_en from "./translation/navbar/en/navbar.json";
+import navbarHeader_es from "./translation/navBarHeader/es/navbarHeader.json";
+import navbarHeader_en from "./translation/navBarHeader/en/navbarHeader.json";
 
 i18n.init({
   interpolation: { escapeValue: false },
@@ -32,9 +34,11 @@ i18n.init({
   resources: {
     es: {
       navBar: navbar_es,
+      navBarHeader: navbarHeader_es,
     },
     en: {
       navBar: navbar_en,
+      navBarHeader: navbarHeader_en,
     },
   },
 });
