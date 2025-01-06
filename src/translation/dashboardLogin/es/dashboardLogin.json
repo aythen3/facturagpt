@@ -3,6 +3,7 @@
   "title2": "Por favor, revisa tu correo",
   "title3": "¡Ups! ¿Te olvidaste de la contraseña?",
   "title4": "¡Estás de vuelta!",
+  "solution": "No te preocupes, esto pasa. Ingresa tu email registrado a tu cuenta de Usuario para resetear tu contraseña",
   "subTitle": "Controla tu facturación, controla tu negocio.",
   "label1": "Correo",
   "label2": "Contraseña",
@@ -19,5 +20,8 @@
   "yesAccount1": "¿Ya",
   "register": "Regístrate",
   "login": "Inciar sesión",
-  "copyright": "2024 RESERVADOS TODOS LOS DERECHOS"
+  "copyright": "2024 RESERVADOS TODOS LOS DERECHOS",
+  "buttonContinue1": "Continuar",
+  "buttonContinue2": "Procesando",
+  "security": "Tu seguridad nos importa"
 }

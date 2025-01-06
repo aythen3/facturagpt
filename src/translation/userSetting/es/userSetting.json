@@ -1,0 +1,8 @@
+{
+  "name": "Nombre de la compañía",
+  "email": "Dirección de Email",
+  "phone": "Número de teléfono",
+  "cif": "CIF",
+  "address": "Dirección",
+  "emergencyContact": "Número de emergencia"
+}

@@ -21,6 +21,8 @@ import freeTrial_es from "./translation/freeTrial/es/freeTrial.json";
 import freeTrial_en from "./translation/freeTrial/en/freeTrial.json";
 import dahsboardLogin_es from "./translation/dashboardLogin/es/dashboardLogin.json";
 import dahsboardLogin_en from "./translation/dashboardLogin/en/dashboardLogin.json";
+import userSetting_es from "./translation/userSetting/es/userSetting.json";
+import userSetting_en from "./translation/userSetting/en/userSetting.json";
 
 i18n.init({
   interpolation: { escapeValue: false },
@@ -38,6 +40,7 @@ i18n.init({
       contactForm: contactForm_es,
       freeTrial: freeTrial_es,
       dahsboardLogin: dahsboardLogin_es,
+      userSetting: userSetting_es,
     },
     en: {
       navBar: navbar_en,
@@ -51,6 +54,7 @@ i18n.init({
       contactForm: contactForm_en,
       freeTrial: freeTrial_en,
       dahsboardLogin: dahsboardLogin_en,
+      userSetting: userSetting_en,
     },
   },
 });

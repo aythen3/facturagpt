@@ -49,7 +49,7 @@ const FAQ = () => {
 
   return (
     <div className={styles.faqSection}>
-      <h2>¿Tienes alguna pregunta?</h2>
+      <h2>{t("title")}</h2>
       <div className={styles.faqContainer}>
         {faqs.map((faq, index) => (
           <div key={index} className={styles.faqItem}>
@@ -76,9 +76,9 @@ const FAQ = () => {
           </div>
         ))}
         <p className={styles.contact}>
-          ¿Quieres saber más?{" "}
+          {t("moreInfo")}{" "}
           <a href="/contact">
-            Contacta <img src={arrowDown} alt="" />
+            {t("contact")} <img src={arrowDown} alt="" />
           </a>
         </p>
       </div>
