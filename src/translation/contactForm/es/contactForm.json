@@ -1,0 +1,12 @@
+{
+  "title": "Contáctenos",
+  "subTitle": "Estamos aquí para ayudar, solicite asistencia personalizada.",
+  "label1": "Tu nombre",
+  "label2": "Tu correo electrónico",
+  "label3": "Tu mensaje",
+  "placeholder1": "Introduce tu nombre",
+  "placeholder2": "Introduce tu correo electrónico",
+  "placeholder3": "Escribe tu mensaje aquí",
+  "buttonSend": "Enviar mensaje",
+  "buttonWhatsApp": "Habla con nosotros por WhatsApp"
+}

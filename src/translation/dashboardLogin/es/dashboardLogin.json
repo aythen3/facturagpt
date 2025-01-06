@@ -1,0 +1,23 @@
+{
+  "title1": "¡Bienvenido!",
+  "title2": "Por favor, revisa tu correo",
+  "title3": "¡Ups! ¿Te olvidaste de la contraseña?",
+  "title4": "¡Estás de vuelta!",
+  "subTitle": "Controla tu facturación, controla tu negocio.",
+  "label1": "Correo",
+  "label2": "Contraseña",
+  "placeholder1": "ejemplo@gmail.com",
+  "placeholder2": "al menos 8 caracteres",
+  "conditionPassword": "Mínimo 8 caracteres y al menos 1 letra mayúscula y 1 número",
+  "remember": "Recuérdame",
+  "forgot": "¿Olvidaste la contraseña?",
+  "buttonRegister1": "Iniciar sesión",
+  "buttonRegister2": "Regístrate",
+  "loginIAButton": "Empezar con OpenAI",
+  "notAccount1": "¿No",
+  "notAccount2": "tienes una cuenta?",
+  "yesAccount1": "¿Ya",
+  "register": "Regístrate",
+  "login": "Inciar sesión",
+  "copyright": "2024 RESERVADOS TODOS LOS DERECHOS"
+}

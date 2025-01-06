@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './PricingCard.module.css';
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./PricingCard.module.css";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export const PricingCard = ({
   title,
@@ -13,6 +15,7 @@ export const PricingCard = ({
   setFacturasTotales,
   sliding,
 }) => {
+  const { t } = useTranslation("pricingCard");
   const handleClick = () => {
     setSelectedCard(index);
     const validSlidingValue = Number(sliding);
@@ -24,24 +27,24 @@ export const PricingCard = ({
   return (
     <div
       onClick={handleClick}
-      className={`${styles.card} ${selectedCard ? styles.selectedCard : ''}`}
+      className={`${styles.card} ${selectedCard ? styles.selectedCard : ""}`}
     >
       <div
-        className={`${styles.cardHeader} ${selectedCard ? styles.selectedCardHeader : ''}`}
+        className={`${styles.cardHeader} ${selectedCard ? styles.selectedCardHeader : ""}`}
       >
         {title}
       </div>
       <div className={styles.cardBody}>
         <p
-          className={`${styles.price} ${selectedCard ? styles.selectedPrice : ''}`}
+          className={`${styles.price} ${selectedCard ? styles.selectedPrice : ""}`}
         >
           {price}€
         </p>
-        <span className={styles.subText}>POR DOCUMENTO</span>
+        <span className={styles.subText}>{t("items")}</span>
         <button
-          className={`${styles.button} ${selectedCard ? styles.selectedButton : ''}`}
+          className={`${styles.button} ${selectedCard ? styles.selectedButton : ""}`}
         >
-          Buy Now
+          {t("purchase")}
         </button>
       </div>
     </div>
@@ -54,6 +57,7 @@ const PricingCards = ({
   sliderValue,
   setFacturasTotales,
 }) => {
+  const { t } = useTranslation("pricingCard");
   const [selectedCard, setSelectedCard] = useState(null);
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -62,43 +66,43 @@ const PricingCards = ({
 
   const cardsData = [
     {
-      title: 'Hasta 20 Documentos',
-      price: 'FREE',
+      title: t("title1"),
+      price: t("price1"),
       min: 0,
       max: 0,
       sliding: 0,
     },
     {
-      title: '+2.000 Documentos',
-      price: '0,15',
+      title: t("title2"),
+      price: t("price2"),
       min: 1000000,
       max: 4999999,
       sliding: 1000000,
     },
     {
-      title: '+5.000 Documentos',
-      price: '0,14',
+      title: t("title3"),
+      price: t("price3"),
       min: 5000000,
       max: 9999999,
       sliding: 5000000,
     },
     {
-      title: '+10.000 Documentos',
-      price: '0,13',
+      title: t("title4"),
+      price: t("price4"),
       min: 10000000,
       max: 19999999,
       sliding: 10000000,
     },
     {
-      title: '+20.000 Documentos',
-      price: '0,12',
+      title: t("title5"),
+      price: t("price5"),
       min: 20000000,
       max: 49999999,
       sliding: 20000000,
     },
     {
-      title: '+50.000 Documentos',
-      price: '0,11',
+      title: t("title6"),
+      price: t("price6"),
       min: 50000000,
       max: 100000000,
       sliding: 50000000,
@@ -121,7 +125,7 @@ const PricingCards = ({
           left:
             selectedCardElement.offsetLeft -
             containerRef.current.offsetWidth / 2,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       }
     }
@@ -157,7 +161,7 @@ const PricingCards = ({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      style={{ overflowX: 'auto', cursor: isDragging ? 'grabbing' : 'grab' }}
+      style={{ overflowX: "auto", cursor: isDragging ? "grabbing" : "grab" }}
     >
       {cardsData.map((card, index) => (
         <PricingCard
