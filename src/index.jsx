@@ -9,6 +9,9 @@ import { createRoot } from "react-dom/client";
 
 import store from "./utils/store";
 
+import Transactions from "./views/Dashboard/screens/Transactions/Transactions.jsx";
+import ArticlesTransactions from "./views/Dashboard/screens/ArticlesTransactions/ArticlesTransactions.jsx";
+
 import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
 import Dashboard from "./views/Dashboard/Dashboard.jsx";
 import UsersPermissions from "./views/Dashboard/screens/UsersPermissions/UsersPermissions.jsx";
