@@ -29,6 +29,8 @@ import accountSetting_es from "./translation/accountSetting/es/accountSetting.js
 import accountSetting_en from "./translation/accountSetting/en/accountSetting.json";
 import clients_es from "./translation/clients/es/clients.json";
 import clients_en from "./translation/clients/en/clients.json";
+import navbarAdmin_es from "./translation/navbarAdmin/es/navbarAdmin.json";
+import navbarAdmin_en from "./translation/navbarAdmin/en/navbarAdmin.json";
 
 i18n.init({
   interpolation: { escapeValue: false },
@@ -50,6 +52,7 @@ i18n.init({
       dashboard: dashboard_es,
       accountSetting: accountSetting_es,
       clients: clients_es,
+      navbarAdmin: navbarAdmin_es,
     },
     en: {
       navBar: navbar_en,
@@ -67,6 +70,7 @@ i18n.init({
       dashboard: dashboard_en,
       accountSetting: accountSetting_en,
       clients: clients_en,
+      navbarAdmin: navbarAdmin_en,
     },
   },
 });

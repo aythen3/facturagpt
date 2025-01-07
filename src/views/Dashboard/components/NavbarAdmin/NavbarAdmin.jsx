@@ -7,8 +7,11 @@ import clientIcon from "../../assets/client.png";
 import headphonesIcon from "../../assets/headphonesIcon.svg";
 import AccountSettings from "../AccountSettings/AccountSettings";
 import i18n from "../../../../i18";
+import { useTranslation } from "react-i18next";
 
 const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
+  const { t } = useTranslation("navbarAdmin");
+
   const handleProfileClick = () => {
     setShowSidebar(!showSidebar);
   };
@@ -48,7 +51,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
       </div>
 
       <button className={styles.plus}>
-        Obtener Plus <img src={star} alt="" />
+        {t("buttonGetPlus")} <img src={star} alt="" />
       </button>
       <div className={styles.profile} onClick={handleProfileClick}>
         <div className={styles.profileText}>
