@@ -12,5 +12,14 @@
   "option1": "All",
   "option2": "Active",
   "option3": "Emails processed",
-  "option4": "Company A-Z"
+  "option4": "Company A-Z",
+  "tableCol1": "Company Name",
+  "tableCol2": "Payment Method",
+  "tableCol3": "Contact",
+  "tableCol4": "Token (Email + AI)",
+  "tableCol5": "Email",
+  "tableCol6": "Emails Processed",
+  "tableCol7": "Port",
+  "tableCol8": "Active",
+  "notResults": "No results for your search!"
 }

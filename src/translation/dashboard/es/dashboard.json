@@ -12,5 +12,14 @@
   "option1": "Todos",
   "option2": "Activos",
   "option3": "Correos procesados",
-  "option4": "Empresa A-Z"
+  "option4": "Empresa A-Z",
+  "tableCol1": "Nombre de empresa",
+  "tableCol2": "Metodo de pago",
+  "tableCol3": "Contacto",
+  "tableCol4": "Token (Correo + AI)",
+  "tableCol5": "Correo",
+  "tableCol6": "Correos procesados",
+  "tableCol7": "Puerto",
+  "tableCol8": "Activo",
+  "notResults": "No hay resultados para su busqueda!."
 }

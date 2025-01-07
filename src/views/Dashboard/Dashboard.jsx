@@ -419,16 +419,16 @@ const Dashboard = () => {
           </div>
           <div className={styles.tableContainer}>
             <div className={styles.tableHeader}>
-              <span className={styles.columnName}>Nombre empresa</span>
-              <span className={styles.columnStatus}>Metodo de pago</span>
-              <span className={styles.columnContact}>Contacto</span>
-              <span className={styles.columnTokens}>Tokens (Email + AI)</span>
-              <span className={styles.columnEmail}>Email</span>
+              <span className={styles.columnName}>{t("tableCol1")}</span>
+              <span className={styles.columnStatus}>{t("tableCol2")}</span>
+              <span className={styles.columnContact}>{t("tableCol3")}</span>
+              <span className={styles.columnTokens}>{t("tableCol4")}</span>
+              <span className={styles.columnEmail}>{t("tableCol5")}</span>
               <span className={styles.columnRecognitions}>
-                Emails procesados
+                {t("tableCol6")}
               </span>
-              <span className={styles.columnPort}>Puerto</span>
-              <span className={styles.columnActive}>Activo</span>
+              <span className={styles.columnPort}>{t("tableCol7")}</span>
+              <span className={styles.columnActive}>{t("tableCol8")}</span>
             </div>
             {filteredClients.length > 0 ? (
               filteredClients.map((client, index) => (
@@ -503,9 +503,7 @@ const Dashboard = () => {
                 </div>
               ))
             ) : (
-              <div className={styles.noResultsMessage}>
-                No hay resultados para su busqueda!.
-              </div>
+              <div className={styles.noResultsMessage}>{t("notResults")}</div>
             )}
           </div>
         </div>
