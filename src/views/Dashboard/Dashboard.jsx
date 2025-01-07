@@ -44,6 +44,7 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 import { useTranslation } from "react-i18next";
+import i18n from "../../i18";
 
 const Dashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -57,9 +58,15 @@ const Dashboard = () => {
   );
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
-  const [selectedOption, setSelectedOption] = useState(t("option1")); // Selected filter
+  const storedOption = localStorage.getItem("selectedOption") || "option1";
+  const [selectedOption, setSelectedOption] = useState(t(storedOption));
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    setSelectedOption(t(storedOption));
+  }, [i18n.language, storedOption, t]);
 
   const options = [t("option1"), t("option2"), t("option3"), t("option4")];
 
