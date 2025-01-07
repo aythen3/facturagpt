@@ -292,10 +292,10 @@ const AccountSettings = () => {
                 className={styles.icon}
               />
             </div>
+            <button className={styles.save} type="submit">
+              Guardar Cambios
+            </button>
           </label>
-          <button className={styles.save} type="submit">
-            Guardar Cambios
-          </button>
         </form>
       </div>
     </div>
