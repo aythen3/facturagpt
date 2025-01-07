@@ -23,6 +23,10 @@ const Navbar = () => {
     navigate("/contact");
   };
 
+  const handleLanguage = (lng) => {
+    localStorage.setItem("language", lng);
+    i18n.changeLanguage(lng);
+  };
   return (
     <nav className={styles.navbar}>
       <img
@@ -41,13 +45,13 @@ const Navbar = () => {
       >
         <div style={{ display: "flex" }}>
           <img
-            onClick={() => i18n.changeLanguage("es")}
+            onClick={() => handleLanguage("es")}
             src="./spain_flags.png"
             alt="img"
             style={{ width: 30, height: 30, cursor: "pointer" }}
           />
           <img
-            onClick={() => i18n.changeLanguage("en")}
+            onClick={() => handleLanguage("en")}
             src="./english_flag.png"
             alt="img"
             style={{ width: 30, height: 30, cursor: "pointer" }}

@@ -79,12 +79,12 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
   };
 
   const placeholdersValues = {
-    companyName: "Peter Griffin",
-    email: "example@gmail.com",
-    phoneNumber: "+34 (91) 123 456789",
-    cif: "No provisto",
-    address: "No provisto",
-    emergencyContact: "No provisto",
+    companyName: t("placeholderName"),
+    email: t("placeholderEmail"),
+    phoneNumber: t("placeholderPhone"),
+    cif: t("placeholderCif"),
+    address: t("placeholderAddress"),
+    emergencyContact: t("placeholderEmergencyNumer"),
   };
 
   const [tokenEmail, setTokenEmail] = useState(""); // Email (Bandejas)
@@ -228,7 +228,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
           <div className={styles.leftSection}>
             <div className={styles.breadcrumb}>
               <span onClick={() => navigate("/home")}>Admin</span>{" "}
-              <FaChevronRight /> <span>Alta nuevo cliente</span>
+              <FaChevronRight /> <span>{t("newRegistration")}</span>
             </div>
             <div className={styles.userIconContainer}>
               <img src={userAdd} alt="User Add" className={styles.userIcon} />
@@ -244,7 +244,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                       className={styles.detailEdit}
                       onClick={() => toggleEdit(field)}
                     >
-                      {editFields[field] ? "Guardar" : "Editar"}
+                      {editFields[field] ? t("save") : t("edit")}
                     </span>
                   </div>
                   <div className={styles.detailContent}>
@@ -285,7 +285,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                         value={tokenEmail}
                         onChange={(e) => setTokenEmail(e.target.value)}
                         type="text"
-                        placeholder="Bandejas"
+                        placeholder={t("placeholderInboxes")}
                         className={styles.input}
                       />
                     </div>
@@ -299,7 +299,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                         value={tokenPassword}
                         onChange={(e) => setTokenPassword(e.target.value)}
                         type="password"
-                        placeholder="Contraseña"
+                        placeholder={t("placeholderPassword")}
                         className={styles.input}
                       />
                     </div>
@@ -315,7 +315,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                         value={tokenGPT}
                         onChange={(e) => setTokenGPT(e.target.value)}
                         type="text"
-                        placeholder="Token GPT"
+                        placeholder={t("placeholderTokenGPT")}
                         className={styles.input}
                       />
                     </div>
@@ -327,7 +327,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                         value={host}
                         onChange={(e) => setHost(e.target.value)}
                         type="text"
-                        placeholder="Host"
+                        placeholder={t("placeholderHost")}
                         className={styles.input}
                       />
                     </div>
@@ -339,7 +339,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                         value={port}
                         onChange={(e) => setPort(e.target.value)}
                         type="text"
-                        placeholder="Puerto"
+                        placeholder={t("placeholderPort")}
                         className={styles.input}
                       />
                     </div>
@@ -348,7 +348,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                         value={tokenUser}
                         onChange={(e) => setTokenUser(e.target.value)}
                         type="text"
-                        placeholder="Usuario"
+                        placeholder={t("placeholderUser")}
                         className={styles.input}
                       />
                     </div>
@@ -357,7 +357,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                         value={tokenUserPassword}
                         onChange={(e) => setTokenUserPassword(e.target.value)}
                         type="password"
-                        placeholder="Contraseña"
+                        placeholder={t("placeholderPasswordHost")}
                         className={styles.input}
                       />
                     </div>
@@ -371,7 +371,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                   className={styles.icon}
                 />
                 <div className={styles.tagsContent}>
-                  <label>#Etiquetas</label>
+                  <label>#{t("labels")}</label>
                   <input
                     value={firstTag}
                     onChange={(e) => setFirstTag(e.target.value)}
@@ -417,38 +417,27 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                     htmlFor="paymentSwitch"
                     className={styles.switchLabel}
                   ></label>
-                  <span className={styles.switchText}>Pago configurado</span>
+                  <span className={styles.switchText}>{t("payConfig")}</span>
                 </div>
                 {paymentId && <span>{paymentId}</span>}
-                <p>Selecciona el método de pago para la licencia.</p>
-                <span>
-                  Conectados a Stripe ofrecemos multimodalidades para crear
-                  pagos.
-                </span>
+                <p>{t("titleRight1")}</p>
+                <span>{t("subTitle1")}</span>
               </div>
               <div className={styles.faqItem}>
                 {/* <img src={lock} alt='Lock' /> */}
-                <p>Datos en entornos seguros.</p>
-                <span>
-                  Cumplimos con toda la normativa y compliance en base a la
-                  normativa ISO con la seguridad de la información (27001), con
-                  sistemas de gestión de calidad (9001) en ambientes sostenibles
-                  (5001).
-                </span>
+                <p>{t("titleRight2")}</p>
+                <span>{t("subTitle2")}</span>
               </div>
               <div className={styles.faqItem}>
                 <img src={eye} alt="Eye" />
-                <p>Número de reconocimientos</p>
-                <span>
-                  Además del precio fijo, según volumen tendrás costes
-                  adicionales.
-                </span>
+                <p>{t("titleRight3")}</p>
+                <span>{t("subTitle3")}</span>
                 <div
                   className={styles.filterSort}
                   onClick={handleDropdownToggle}
                   ref={dropdownRef}
                 >
-                  <b>{selectedOption}</b> documentos
+                  <b>{selectedOption}</b> {t("documents")}
                   <FaChevronDown className={styles.chevronIcon} />
                   {isOpen && (
                     <div className={styles.dropdownOptions}>
@@ -465,7 +454,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
                   )}
                 </div>
                 <div onClick={handleAddClient} className={styles.signInButton}>
-                  Dar de alta
+                  {t("buttonActive")}
                 </div>
               </div>
             </div>

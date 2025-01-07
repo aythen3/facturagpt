@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
-import styles from './AccountSettings.module.css';
-import editProfile from '../../assets/editProfile.svg';
-import briefcase from '../../assets/briefcase.svg';
-import whatsApp from '../../assets/whatsappIcon.svg';
-import arrow from '../../assets/arrow.svg';
-import visa from '../../assets/visaPayment.png';
-import mastercard from '../../assets/mastercardPayment.png';
-import americanexpress from '../../assets/americanExpressPayment.png';
-import paypal from '../../assets/paypalPayment.png';
-import gpay from '../../assets/gPayment.png';
-import metamask from '../../assets/metamaskPayment.png';
-import coinbase from '../../assets/coinbasePayment.png';
-import creditCard from '../../assets/creditCardIcon.png';
+import React, { useState } from "react";
+import styles from "./AccountSettings.module.css";
+import editProfile from "../../assets/editProfile.svg";
+import briefcase from "../../assets/briefcase.svg";
+import whatsApp from "../../assets/whatsappIcon.svg";
+import arrow from "../../assets/arrow.svg";
+import visa from "../../assets/visaPayment.png";
+import mastercard from "../../assets/mastercardPayment.png";
+import americanexpress from "../../assets/americanExpressPayment.png";
+import paypal from "../../assets/paypalPayment.png";
+import gpay from "../../assets/gPayment.png";
+import metamask from "../../assets/metamaskPayment.png";
+import coinbase from "../../assets/coinbasePayment.png";
+import creditCard from "../../assets/creditCardIcon.png";
+import { useTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AccountSettings = () => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [countryCode, setCountryCode] = useState('+34');
-  const [cardNumber, setCardNumber] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const { t } = useTranslation("accountSetting");
+  const { logout } = useAuth0();
+
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+34");
+  const [cardNumber, setCardNumber] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,9 +43,9 @@ const AccountSettings = () => {
     // setEmail(email);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setEmailError('El correo electrónico no es válido.');
+      setEmailError("El correo electrónico no es válido.");
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
 
@@ -48,10 +53,10 @@ const AccountSettings = () => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(password)) {
       setPasswordError(
-        'At least 8 characters, containing a letter and a number'
+        "At least 8 characters, containing a letter and a number"
       );
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
   };
 
@@ -66,12 +71,18 @@ const AccountSettings = () => {
     // }
   };
 
+  const handleLogOut = () => {
+    const isConfirm = confirm(t("confirmLogout"));
+    if (isConfirm) {
+      logout();
+    }
+  };
   const formatPhoneNumber = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{3})(?=\d)/g, '$1 ');
+    return value.replace(/\D/g, "").replace(/(\d{3})(?=\d)/g, "$1 ");
   };
 
   const formatCardNumber = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
   };
 
   return (
@@ -89,7 +100,13 @@ const AccountSettings = () => {
         <div className={styles.profileInfo}>
           <p>John Doe</p>
           <span>john.doe@gmail.com</span>
-          <button>Switch Account</button>
+          <button>{t("changeAccount")}</button>
+          <button
+            style={{ cursor: "pointer", color: "red" }}
+            onClick={handleLogOut}
+          >
+            {t("logout")}
+          </button>
         </div>
       </div>
 
@@ -97,21 +114,21 @@ const AccountSettings = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
           <label>
             <div className={styles.row}>
-              <p>Plan Actual</p>
-              <span className={styles.taxes}>Impuestos no incluidos</span>
+              <p>{t("currentPlan")}</p>
+              <span className={styles.taxes}>{t("taxes")}</span>
             </div>
             <div className={`${styles.row} ${styles.plan}`}>
               <p>
                 Plan <strong>Plus</strong>
               </p>
-              <span>322,20 € el día 1 Septiembre 2025</span>
+              <span>322,20 € {t("day")} 1 Septiembre 2025</span>
             </div>
           </label>
 
           <label>
             <div className={styles.row}>
-              <p>Última facturación</p>
-              <button>Ver Historial</button>
+              <p>{t("lastBilling")}</p>
+              <button>{t("record")}</button>
             </div>
             <div className={styles.row}>
               <p>
@@ -123,8 +140,8 @@ const AccountSettings = () => {
 
           <label>
             <div className={styles.row}>
-              <p>Nombre completo</p>
-              <button type="button">Editar</button>
+              <p>{t("fullName")}</p>
+              <button type="button">{t("edit")}</button>
             </div>
             John Doe
             <input
@@ -137,8 +154,8 @@ const AccountSettings = () => {
 
           <label>
             <div className={styles.row}>
-              <p>Email</p>
-              <button type="button">Editar</button>
+              <p>{t("email")}</p>
+              <button type="button">{t("edit")}</button>
             </div>
             j***e@gmail.com
             <input
@@ -151,8 +168,8 @@ const AccountSettings = () => {
           </label>
           <label className={styles.label}>
             <div className={styles.row}>
-              <p>Contraseña</p>
-              <button type="button">Editar</button>
+              <p>{t("password")}</p>
+              <button type="button">{t("edit")}</button>
             </div>
             <div className={styles.inputWrapper}>
               <input
@@ -163,7 +180,7 @@ const AccountSettings = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <span className={styles.verify} onClick={handlePasswordVerify}>
-                Verificar
+                {t("verify")}
               </span>
             </div>
             {passwordError && (
@@ -173,8 +190,8 @@ const AccountSettings = () => {
 
           <label className={styles.label}>
             <div className={styles.row}>
-              <p>Teléfono</p>
-              <button type="button">Editar</button>
+              <p>{t("phone")}</p>
+              <button type="button">{t("edit")}</button>
             </div>
             +34 000 000 000
             <div className={styles.phoneInputs}>
@@ -183,11 +200,11 @@ const AccountSettings = () => {
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
               >
-                <option value="+34">España (+34)</option>
-                <option value="+1">Estados Unidos (+1)</option>
-                <option value="+44">Reino Unido (+44)</option>
-                <option value="+52">México (+52)</option>
-                <option value="+91">India (+91)</option>
+                <option value="+34">{t("spain")} (+34)</option>
+                <option value="+1">{t("unitedStates")} (+1)</option>
+                <option value="+44">{t("unitedKingdom")} (+44)</option>
+                <option value="+52">{t("mexico")} (+52)</option>
+                <option value="+91">{t("india")} (+91)</option>
                 {/* Agrega más países según sea necesario */}
               </select>
               <input
@@ -202,10 +219,10 @@ const AccountSettings = () => {
 
           <label>
             <div className={styles.row}>
-              <p>Métodos de Pago</p>
-              <button type="button">Añadir</button>
+              <p>{t("payMethods")}</p>
+              <button type="button">{t("add")}</button>
             </div>
-            Desconocido
+            {t("unknown")}
             <div className={styles.payContainer}>
               <div>
                 <div className={styles.paymentMethod}>
@@ -213,7 +230,7 @@ const AccountSettings = () => {
                     type="radio"
                     name="paymentMethod"
                     value="creditCard"
-                    checked={paymentMethod === 'creditCard'}
+                    checked={paymentMethod === "creditCard"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   <div className={styles.paymentContainer}>
@@ -235,7 +252,7 @@ const AccountSettings = () => {
                     type="radio"
                     name="paymentMethod"
                     value="paypal"
-                    checked={paymentMethod === 'paypal'}
+                    checked={paymentMethod === "paypal"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   <div className={styles.paymentImage}>
@@ -249,7 +266,7 @@ const AccountSettings = () => {
                     type="radio"
                     name="paymentMethod"
                     value="googlepay"
-                    checked={paymentMethod === 'googlepay'}
+                    checked={paymentMethod === "googlepay"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   <div className={styles.paymentImage}>
@@ -263,7 +280,7 @@ const AccountSettings = () => {
                     type="radio"
                     name="paymentMethod"
                     value="criptos"
-                    checked={paymentMethod === 'criptos'}
+                    checked={paymentMethod === "criptos"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                   <div className={styles.paymentContainer}>
@@ -277,7 +294,7 @@ const AccountSettings = () => {
                 </div>
               </div>
             </div>
-            <div className={styles.row}>Card number</div>
+            <div className={styles.row}>{t("cardNumber")}</div>
             <div className={styles.inputContainer}>
               <input
                 type="text"
@@ -293,7 +310,7 @@ const AccountSettings = () => {
               />
             </div>
             <button className={styles.save} type="submit">
-              Guardar Cambios
+              {t("saveChange")}
             </button>
           </label>
         </form>

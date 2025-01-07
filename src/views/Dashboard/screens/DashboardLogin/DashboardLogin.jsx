@@ -15,9 +15,12 @@ import {
   sendOTP,
 } from "../../../../actions/user";
 import { useTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const DashboardLogin = () => {
   const { t } = useTranslation("dahsboardLogin");
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+
   const { user } = useSelector((state) => state.emailManager);
   const dispatch = useDispatch();
   const [mode, setMode] = useState("signin");
@@ -33,6 +36,12 @@ const DashboardLogin = () => {
   const [storedPassword, setStoredPassword] = useState("");
   const [recaptchaValue, setRecaptchaValue] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
@@ -271,7 +280,10 @@ const DashboardLogin = () => {
             : t("buttonRegister2")}
       </div>
       {mode === "signin" && (
-        <button className={styles.buttonOpenAi}>
+        <button
+          onClick={() => loginWithRedirect()}
+          className={styles.buttonOpenAi}
+        >
           <OpenAiLogo />
           <span>{t("loginIAButton")}</span>
         </button>
