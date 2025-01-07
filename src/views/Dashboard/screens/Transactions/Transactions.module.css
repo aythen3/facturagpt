@@ -9,6 +9,123 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.infoClient {
+  display: flex;
+  flex-direction: column;
+  color: #666666;
+  h3,
+  p {
+    margin: 0;
+    color: black;
+  }
+  h3 {
+    font-weight: bold;
+    font-size: 22px;
+  }
+  p {
+    font-weight: bold;
+  }
+}
+tr {
+}
+.contactInfo,
+.info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+tr {
+}
+.idContainer {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  background-color: re;
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tag {
+  text-align: center;
+  padding: 2px 20px;
+  color: white;
+  width: fit-content;
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  -ms-border-radius: 40px;
+  -o-border-radius: 40px;
+}
+
+.tagBlack {
+  background-color: #222222;
+}
+
+.tagBlue {
+  background-color: #0b06ff;
+}
+
+.tagRed {
+  background-color: #ff0000;
+}
+
+.tagGreen {
+  background-color: #12a27f;
+}
+
+.pdfIcon {
+  height: 20px;
+  width: 20px;
+}
+
+.pagada {
+  color: #009f7a;
+  font-weight: bold;
+  font-size: 15px;
+  span {
+    margin-right: 5px;
+  }
+}
+
+.pendiente {
+  color: #ff9d00;
+  font-weight: bold;
+  font-size: 15px;
+  span {
+    margin-right: 5px;
+  }
+}
+
+.incumplida {
+  color: #ff5500;
+  font-weight: bold;
+  font-size: 15px;
+  span {
+    margin-right: 5px;
+  }
+}
+
+.vencida {
+  color: #c5221f;
+  font-weight: bold;
+  font-size: 15px;
+  span {
+    margin-right: 5px;
+  }
+}
+
+.anulada {
+  color: #8a0300;
+  font-weight: bold;
+  font-size: 15px;
+  span {
+    margin-right: 5px;
+  }
+}
 
 .searchContainer {
   display: flex;

@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import styles from './Clients.module.css';
+import styles from './ArticlesTransactions.module.css';
 import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
 import searchGray from '../../assets/searchGray.png';
-import searchWhite from '../../assets/searchWhite.png';
 import optionDots from '../../assets/optionDots.png';
-import clock from '../../assets/clock.png';
-import edit from '../../assets/edit.png';
 import plusIcon from '../../assets/Plus Icon.png';
 import filterSearch from '../../assets/Filters Search.png';
 import creditCard from '../../assets/creditCardIcon.png';
 import closeIcon from '../../assets/closeMenu.png';
+import pdf from '../../assets/pdfIcon.png';
 
-const Clients = () => {
+const ArticlesTransactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState('');
   const [clientSelected, setClientSelected] = useState([]);
@@ -57,41 +55,70 @@ const Clients = () => {
     setSearch(e.target.value);
   };
 
+  const getStateClass = (state) => {
+    switch (state.toLowerCase()) {
+      case 'pagada':
+        return styles.pagada;
+      case 'pendiente':
+        return styles.pendiente;
+      case 'incumplida':
+        return styles.incumplida;
+      case 'vencida':
+        return styles.vencida;
+      case 'anulada':
+        return styles.anulada;
+      default:
+        return '';
+    }
+  };
+
   const tableHeaders = [
-    'Nombre',
-    'Email',
-    'Teléfono',
-    'Dirección física',
-    'Número fiscal',
-    'Métodos de Pago',
-    'Moneda Pref.',
-    'Transacciones',
+    'Nombre o Descripción',
+    'Fecha',
+    'Cantidad',
+    'Precio Unit',
+    'Subtotal',
+    'Impuesto',
+    'Pagado',
+    'Método de Pago',
   ];
 
   const tableData = [
     {
-      nombre: 'Aythen',
-      email: ['info@aythen.com', 'support@aythen.com'],
-      telefono: '+34600789012',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      img: 'https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc',
+      name: 'Nombre o Descripcion',
+      date: '25 Dec 2025',
+      quantity: 1,
+      priceUnit: '00,00EUR',
+      tax: ['No', 'Sí,21%'],
+      state: 'Pagado',
+      payMethod: 'Mastercard ****5678',
     },
     {
-      nombre: 'Aythen',
-      email: 'info@aythen.com',
-      telefono: '+584243356112',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      img: 'https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc',
+      name: 'Nombre o Descripcion',
+      date: '25 Dec 2025',
+      quantity: 1,
+      priceUnit: '00,00EUR',
+      tax: ['No', 'Sí,21%'],
+      state: 'Pagado',
+      payMethod: 'Mastercard ****5678',
+    },
+    {
+      img: 'https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc',
+      name: 'Nombre o Descripcion',
+      date: '25 Dec 2025',
+      quantity: 1,
+      priceUnit: '00,00EUR',
+      tax: ['No', 'Sí,21%'],
+      state: 'Pagado',
+      payMethod: 'Mastercard ****5678',
     },
   ];
 
-  const formatCardNumber = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
-  };
+  //   const formatCardNumber = (value) => {
+  //     return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+  //   };
 
   const formatPhoneNumber = (phoneNumber) => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
@@ -113,16 +140,20 @@ const Clients = () => {
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          <h2>Clientes y Proveedores</h2>
-          <div className={styles.searchContainer}>
-            <button
-              className={styles.infoBtn}
-              onClick={() => setShowNewClient(true)}
-            >
-              Productos y Servicios
-            </button>
-            <button className={styles.infoBtn}>Analíticas</button>
+          <div className={styles.infoClient}>
+            <div className={styles.contactInfo}>
+              <h3>Aythen</h3>
+              <span>info@aythen.com</span>
+              <span>+34 600 789 012</span>
+            </div>
 
+            <div className={styles.info}>
+              <img src={pdf} />
+              <span>T001</span>
+              <span>Titulo del documento</span>
+            </div>
+          </div>
+          <div className={styles.searchContainer}>
             <div className={styles.inputWrapper}>
               <img src={searchGray} className={styles.inputIconInside} />
               <input
@@ -136,9 +167,6 @@ const Clients = () => {
                 <img src={filterSearch} className={styles.inputIconOutside} />
               </div>
             </div>
-            <button className={styles.addButton}>
-              <img src={plusIcon} />
-            </button>
           </div>
         </div>
 
@@ -157,7 +185,7 @@ const Clients = () => {
                   />
                 </th>
                 {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 7 ? styles.small : ''}>
+                  <th key={index} className={index == 2 ? styles.small : ''}>
                     {header}
                   </th>
                 ))}
@@ -174,29 +202,31 @@ const Clients = () => {
                       checked={clientSelected.includes(rowIndex) ? true : false}
                     />
                   </td>
-                  <td className={styles.name}>{row.nombre}</td>
+                  <td className={styles.imgContainer}>
+                    <img src={row.img} alt="" />
+                    <p>{row.name}</p>
+                  </td>
+
+                  <td>{row.date}</td>
+                  <td>{row.quantity}</td>
+                  <td>{row.priceUnit}</td>
                   <td>
-                    {Array.isArray(row.email)
-                      ? row.email.map((item, itemIndex) => (
+                    {Array.isArray(row.tax)
+                      ? row.tax.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
-                      : row.email}
+                      : row.tax}
                   </td>
-                  <td>{formatPhoneNumber(row.telefono)}</td>
-                  <td>{row.direccion}</td>
-                  <td>{row.numeroFiscal}</td>
-                  <td>
-                    {Array.isArray(row.metodosPago)
-                      ? row.metodosPago.map((item, itemIndex) => (
-                          <p key={itemIndex}>{item}</p>
-                        ))
-                      : row.metodosPago}
+                  <td>{row.state}</td>
+                  <td className={styles.rowState}>
+                    <span>&bull;</span>
+                    {row.state}
                   </td>
-                  <td>{row.moneda}</td>
+                  <td>{row.payMethod}</td>
                   <td className={styles.actions}>
                     <div className={styles.transacciones}>
-                      <a href="#">Ver</a>
-                      <span>(2.345)</span>
+                      <a href="#">stripe</a>
+                      <span>Refund</span>
                     </div>
                     <div>
                       <img src={optionDots} />
@@ -394,4 +424,4 @@ const Clients = () => {
   );
 };
 
-export default Clients;
+export default ArticlesTransactions;

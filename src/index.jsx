@@ -23,6 +23,8 @@ import InvoicePanel from './views/Dashboard/screens/InvoicePanel/InvoicePanel.js
 import TermAndConditions from './views/Dashboard/screens/TermsAndConditions/TermsAndConditions.jsx';
 import ContactForm from './views/Dashboard/components/ContactForm/ContactForm.jsx';
 import Clients from './views/Dashboard/screens/Clients/Clients.jsx';
+import Transactions from './views/Dashboard/screens/Transactions/Transactions.jsx';
+import ArticlesTransactions from './views/Dashboard/screens/ArticlesTransactions/ArticlesTransactions.jsx';
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -68,7 +70,12 @@ const Layout = () => {
               <Route path="/usersPermissions" element={<UsersPermissions />} />
               <Route path="/userSettings" element={<UserSettings />} />
               <Route path="/clients" element={<Clients />} />
+              <Route path="/transactions" element={<Transactions />} />
               <Route path="/contact" element={<ContactForm />} />
+              <Route
+                path="/articlestransactions"
+                element={<ArticlesTransactions />}
+              />
               <Route
                 path="/termsandconditions"
                 element={<TermAndConditions />}

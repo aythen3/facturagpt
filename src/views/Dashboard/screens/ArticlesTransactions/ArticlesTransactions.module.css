@@ -9,6 +9,100 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.infoClient {
+  display: flex;
+  flex-direction: column;
+  color: #666666;
+  h3,
+  p {
+    margin: 0;
+    color: black;
+  }
+  h3 {
+    font-weight: bold;
+    font-size: 22px;
+  }
+  p {
+    font-weight: bold;
+  }
+}
+tr {
+}
+.contactInfo,
+.info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  img {
+    height: 30px;
+  }
+}
+tr {
+}
+.imgContainer {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  width: 200px;
+  gap: 10px;
+  img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tag {
+  text-align: center;
+  padding: 2px 20px;
+  color: white;
+  width: fit-content;
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  -ms-border-radius: 40px;
+  -o-border-radius: 40px;
+}
+
+.tagBlack {
+  background-color: #222222;
+}
+
+.tagBlue {
+  background-color: #0b06ff;
+}
+
+.tagRed {
+  background-color: #ff0000;
+}
+
+.tagGreen {
+  background-color: #12a27f;
+}
+
+.pdfIcon {
+  height: 20px;
+  width: 20px;
+}
+
+.rowState {
+  font-size: 15px;
+  span {
+    font-weight: bold;
+    color: #009f7a;
+    margin-right: 5px;
+  }
+}
 
 .searchContainer {
   display: flex;
@@ -156,7 +250,7 @@ thead th {
   width: 40px;
 }
 td p:first-of-type {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .actions {
@@ -175,10 +269,10 @@ td p:first-of-type {
   gap: 3px;
   a {
     font-weight: bold;
+    text-decoration: none;
   }
-  a,
   span {
-    color: #073f31;
+    text-decoration: underline;
   }
 }
 
