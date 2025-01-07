@@ -11,6 +11,9 @@ import { createRoot } from "react-dom/client";
 
 import store from "./utils/store";
 
+import Transactions from './views/Dashboard/screens/Transactions/Transactions.jsx';
+import ArticlesTransactions from './views/Dashboard/screens/ArticlesTransactions/ArticlesTransactions.jsx';
+
 import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
 import Dashboard from "./views/Dashboard/Dashboard.jsx";
 import UsersPermissions from "./views/Dashboard/screens/UsersPermissions/UsersPermissions.jsx";
@@ -25,6 +28,7 @@ import ContactForm from "./views/Dashboard/components/ContactForm/ContactForm.js
 import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
+
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -57,6 +61,9 @@ const Layout = () => {
 
   return (
     <>
+
+      
+
       <I18nextProvider i18n={i18n}>
         <DndProvider backend={HTML5Backend}>
           <Provider store={store}>
@@ -74,11 +81,16 @@ const Layout = () => {
                 />
                 <Route path="/userSettings" element={<UserSettings />} />
                 <Route path="/clients" element={<Clients />} />
-                <Route path="/contact" element={<ContactForm />} />
-                <Route
-                  path="/termsandconditions"
-                  element={<TermAndConditions />}
-                />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/contact" element={<ContactForm />} />
+              <Route
+                path="/articlestransactions"
+                element={<ArticlesTransactions />}
+              />
+              <Route
+                path="/termsandconditions"
+                element={<TermAndConditions />}
+              />
                 <Route path="*" element={<LandingPage />} />
                 <Route path="/Panel" element={<InvoicePanel />} />
               </Routes>
@@ -86,6 +98,7 @@ const Layout = () => {
           </Provider>
         </DndProvider>
       </I18nextProvider>
+
     </>
   );
 };

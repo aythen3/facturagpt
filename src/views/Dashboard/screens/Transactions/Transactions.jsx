@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import styles from './Clients.module.css';
+import styles from './Transactions.module.css';
 import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
 import searchGray from '../../assets/searchGray.png';
-import searchWhite from '../../assets/searchWhite.png';
 import optionDots from '../../assets/optionDots.png';
-import clock from '../../assets/clock.png';
-import edit from '../../assets/edit.png';
 import plusIcon from '../../assets/Plus Icon.png';
 import filterSearch from '../../assets/Filters Search.png';
 import creditCard from '../../assets/creditCardIcon.png';
 import closeIcon from '../../assets/closeMenu.png';
-
-const Clients = () => {
+import pdf from '../../assets/pdfIcon.png';
+const Transactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState('');
   const [clientSelected, setClientSelected] = useState([]);
@@ -57,41 +54,86 @@ const Clients = () => {
     setSearch(e.target.value);
   };
 
+  const getStateClass = (state) => {
+    switch (state.toLowerCase()) {
+      case 'pagada':
+        return styles.pagada;
+      case 'pendiente':
+        return styles.pendiente;
+      case 'incumplida':
+        return styles.incumplida;
+      case 'vencida':
+        return styles.vencida;
+      case 'anulada':
+        return styles.anulada;
+      default:
+        return '';
+    }
+  };
+
   const tableHeaders = [
-    'Nombre',
-    'Email',
-    'Teléfono',
-    'Dirección física',
-    'Número fiscal',
-    'Métodos de Pago',
-    'Moneda Pref.',
-    'Transacciones',
+    'ID Transacción',
+    'Descripción y Categoria',
+    'Etiquetas',
+    'Total',
+    'Fecha',
+    'Vencimiento',
+    'Método de Pago',
+    'Estado',
+    'Artículos',
   ];
 
   const tableData = [
     {
-      nombre: 'Aythen',
-      email: ['info@aythen.com', 'support@aythen.com'],
-      telefono: '+34600789012',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      id: 'T001',
+      desc: ['Gasto', 'Gastos Operativos'],
+      total: '00,00EUR',
+      date: '25 Dec 2025',
+      expire: '25 Dec 2025',
+      PayMethod: 'Mastercard ****5678',
+      state: 'Pagada',
     },
     {
-      nombre: 'Aythen',
-      email: 'info@aythen.com',
-      telefono: '+584243356112',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      id: 'T001',
+      desc: ['Gasto', 'Gastos Operativos'],
+      total: '00,00EUR',
+      date: '25 Dec 2025',
+      expire: '25 Dec 2025',
+      PayMethod: 'Mastercard ****5678',
+      state: 'Pendiente',
+    },
+    {
+      id: 'T001',
+      desc: ['Gasto', 'Gastos Operativos'],
+      total: '00,00EUR',
+      date: '25 Dec 2025',
+      expire: '25 Dec 2025',
+      PayMethod: 'Mastercard ****5678',
+      state: 'Incumplida',
+    },
+    {
+      id: 'T001',
+      desc: ['Gasto', 'Gastos Operativos'],
+      total: '00,00EUR',
+      date: '25 Dec 2025',
+      expire: '25 Dec 2025',
+      PayMethod: 'Mastercard ****5678',
+      state: 'Vencida',
+    },
+    {
+      id: 'T001',
+      desc: ['Gasto', 'Gastos Operativos'],
+      total: '00,00EUR',
+      date: '25 Dec 2025',
+      expire: '25 Dec 2025',
+      PayMethod: 'Mastercard ****5678',
+      state: 'Anulada',
     },
   ];
 
-  const formatCardNumber = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
-  };
+  //   const formatCardNumber = (value) => {
+  //     return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+  //   };
 
   const formatPhoneNumber = (phoneNumber) => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
@@ -113,15 +155,29 @@ const Clients = () => {
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          <h2>Clientes y Proveedores</h2>
+          <div className={styles.infoClient}>
+            <div className={styles.contactInfo}>
+              <h3>Aythen</h3>
+              <span>info@aythen.com</span>
+              <span>+34 600 789 012</span>
+            </div>
+            <div className={styles.info}>
+              <p>Número Fiscal</p>
+              <span>Desconocido</span>
+            </div>
+            <div className={styles.info}>
+              <p>ID Cliente</p>
+              <span>C001</span>
+            </div>
+          </div>
           <div className={styles.searchContainer}>
             <button
               className={styles.infoBtn}
               onClick={() => setShowNewClient(true)}
             >
-              Productos y Servicios
+              <img src={plusIcon} alt="" />
+              Nueva transacción
             </button>
-            <button className={styles.infoBtn}>Analíticas</button>
 
             <div className={styles.inputWrapper}>
               <img src={searchGray} className={styles.inputIconInside} />
@@ -136,9 +192,6 @@ const Clients = () => {
                 <img src={filterSearch} className={styles.inputIconOutside} />
               </div>
             </div>
-            <button className={styles.addButton}>
-              <img src={plusIcon} />
-            </button>
           </div>
         </div>
 
@@ -157,7 +210,7 @@ const Clients = () => {
                   />
                 </th>
                 {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 7 ? styles.small : ''}>
+                  <th key={index} className={index == 8 ? styles.small : ''}>
                     {header}
                   </th>
                 ))}
@@ -174,25 +227,41 @@ const Clients = () => {
                       checked={clientSelected.includes(rowIndex) ? true : false}
                     />
                   </td>
-                  <td className={styles.name}>{row.nombre}</td>
+                  <td className={styles.idContainer}>
+                    <img src={pdf} className={styles.pdfIcon} />
+                    {row.id}
+                  </td>
                   <td>
-                    {Array.isArray(row.email)
-                      ? row.email.map((item, itemIndex) => (
+                    {Array.isArray(row.desc)
+                      ? row.desc.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
-                      : row.email}
+                      : row.desc}
                   </td>
-                  <td>{formatPhoneNumber(row.telefono)}</td>
-                  <td>{row.direccion}</td>
-                  <td>{row.numeroFiscal}</td>
                   <td>
-                    {Array.isArray(row.metodosPago)
-                      ? row.metodosPago.map((item, itemIndex) => (
-                          <p key={itemIndex}>{item}</p>
-                        ))
-                      : row.metodosPago}
+                    <div className={styles.tags}>
+                      <span className={`${styles.tag} ${styles.tagBlack}`}>
+                        Etiqueta
+                      </span>
+                      <span className={`${styles.tag} ${styles.tagBlue}`}>
+                        Etiqueta
+                      </span>
+                      <span className={`${styles.tag} ${styles.tagRed}`}>
+                        Etiqueta
+                      </span>
+                      <span className={`${styles.tag} ${styles.tagGreen}`}>
+                        Etiqueta
+                      </span>
+                    </div>
                   </td>
-                  <td>{row.moneda}</td>
+                  <td>{row.total}</td>
+                  <td>{row.date}</td>
+                  <td>{row.expire}</td>
+                  <td>{row.PayMethod}</td>
+                  <td className={getStateClass(row.state)}>
+                    <span>&bull;</span>
+                    {row.state}
+                  </td>
                   <td className={styles.actions}>
                     <div className={styles.transacciones}>
                       <a href="#">Ver</a>
@@ -394,4 +463,4 @@ const Clients = () => {
   );
 };
 
-export default Clients;
+export default Transactions;
