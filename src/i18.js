@@ -34,9 +34,11 @@ import navbarAdmin_en from "./translation/navbarAdmin/en/navbarAdmin.json";
 import termsAndCondition_es from "./translation/termsAndConditions/es/termsAndConditions.json";
 import termsAndCondition_en from "./translation/termsAndConditions/en/termsAndConditions.json";
 
+const languageFromStorage = localStorage.getItem("language") || "es";
+
 i18n.init({
   interpolation: { escapeValue: false },
-  lng: "es",
+  lng: languageFromStorage,
   resources: {
     es: {
       navBar: navbar_es,
