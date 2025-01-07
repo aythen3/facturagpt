@@ -1,0 +1,16 @@
+{
+  "titleHeader1": "TOTAL",
+  "titleHeader2": "New registrations",
+  "titleHeader3": "Active",
+  "lastMonth1": "16% this month",
+  "lastMonth2": "1% this month",
+  "lastMonth3": " Emails processed",
+  "bodyTitle": "Tracking and statuses",
+  "buttonAddClient": "Add new client",
+  "placeholder": "Search",
+  "sortBy": "Sort by:",
+  "option1": "All",
+  "option2": "Active",
+  "option3": "Emails processed",
+  "option4": "Company A-Z"
+}

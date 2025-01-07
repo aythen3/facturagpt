@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import styles from './NavbarAdmin.module.css';
-import star from '../../assets/starPlus.svg';
-import facturaGPT from '../../assets/FacturaGPTIcon.svg';
-import bookIcon from '../../assets/bookIcon.svg';
-import clientIcon from '../../assets/client.png';
-import headphonesIcon from '../../assets/headphonesIcon.svg';
-import AccountSettings from '../AccountSettings/AccountSettings';
+import React, { useState } from "react";
+import styles from "./NavbarAdmin.module.css";
+import star from "../../assets/starPlus.svg";
+import facturaGPT from "../../assets/FacturaGPTIcon.svg";
+import bookIcon from "../../assets/bookIcon.svg";
+import clientIcon from "../../assets/client.png";
+import headphonesIcon from "../../assets/headphonesIcon.svg";
+import AccountSettings from "../AccountSettings/AccountSettings";
+import i18n from "../../../../i18";
 
 const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
   const handleProfileClick = () => {
@@ -14,6 +15,20 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
 
   return (
     <div className={styles.navbarAdmin}>
+      <div style={{ display: "flex" }}>
+        <img
+          onClick={() => i18n.changeLanguage("es")}
+          src="./spain_flags.png"
+          alt="img"
+          style={{ width: 30, height: 30, cursor: "pointer" }}
+        />
+        <img
+          onClick={() => i18n.changeLanguage("en")}
+          src="./english_flag.png"
+          alt="img"
+          style={{ width: 30, height: 30, cursor: "pointer" }}
+        />
+      </div>
       <div className={styles.navbarAdminIcons}>
         <a href="/">
           <img src={facturaGPT} alt="" />
@@ -46,7 +61,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
         />
       </div>
 
-      <div className={`${styles.sidebar} ${showSidebar ? styles.show : ''}`}>
+      <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
         <AccountSettings />
       </div>
     </div>
