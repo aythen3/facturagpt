@@ -24,6 +24,7 @@ import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
+import Automate from "./views/Dashboard/screens/Automate/Automate.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -73,6 +74,7 @@ const Layout = () => {
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/reseller" element={<Reseller />} />
                   <Route path="/freetrial" element={<FreeTrial />} />
+                  <Route path="/automate" element={<Automate />} />
                   <Route
                     path="/usersPermissions"
                     element={<UsersPermissions />}
