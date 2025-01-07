@@ -3,13 +3,13 @@ import styles from './Clients.module.css';
 import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
 import searchGray from '../../assets/searchGray.png';
 import searchWhite from '../../assets/searchWhite.png';
-import optionDots from '../../assets/optionDots.png';
+import optionDots from '../../assets/optionDots.svg';
 import clock from '../../assets/clock.png';
 import edit from '../../assets/edit.png';
 import plusIcon from '../../assets/Plus Icon.png';
 import filterSearch from '../../assets/Filters Search.png';
 import creditCard from '../../assets/creditCardIcon.png';
-import closeIcon from '../../assets/closeMenu.png';
+import closeIcon from '../../assets/closeMenu.svg';
 
 const Clients = () => {
   const [showSidebar, setShowSidebar] = useState(false);

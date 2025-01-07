@@ -1,13 +1,9 @@
 import React from 'react';
 import styles from './NavHeader.module.css';
-import ayFolder from '../../assets/folderAy.svg';
 import ArrowDown from '../../assets/ArrowDown.svg';
-import flagIcon from '../../assets/flagIcon.svg';
-import bombilla from '../../assets/bombilla.svg';
-import plusIcon from '../../assets/plusIcon.svg';
-import starIcon from '../../assets/starIcon.png';
-import frame99 from '../../assets/Frame10099.png';
-import logo from '../../assets/facturaLogoIcon.png';
+import starIcon from '../../assets/starIcon.svg';
+import logo from '../../assets/facturaLogoIcon.svg';
+
 const NavHeader = () => {
   const handleScrollToFacturation = () => {
     const facturationElement = document.getElementById('facturation');

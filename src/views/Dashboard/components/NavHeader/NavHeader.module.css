@@ -57,7 +57,7 @@
   font-size: clamp(1.5rem, 2.5vw, 11vw); /* Tamaño escalable */
   text-align: center;
   font-weight: 700;
-  background: linear-gradient(90deg, #95959580 0%, #070707 100%);
+  background: linear-gradient(90deg, #00ffc3 0%, #222222 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #222;
