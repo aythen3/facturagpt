@@ -20,6 +20,8 @@ const FreeTrial = () => {
     }
   }, [isAuthenticated]);
 
+  console.log(user);
+
   return (
     <div className={styles.container}>
       <Navbar />

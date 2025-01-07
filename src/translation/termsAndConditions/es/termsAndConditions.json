@@ -69,7 +69,8 @@
   "cancelLi2": "Si la cuenta es eliminada, todo su contenido será eliminado después de treinta días. FacturaGPT se reserva el derecho de cancelar una cuenta o impedir el uso del software a aquellos que no cumplan con estas condiciones de uso.",
 
   "returnPolicyTitle": "Política de Devoluciones",
-  "returnPolicyText": "Si durante los primeros 30 días utilizando FacturaGPT no está satisfecho con el servicio, contacte a través de para solicitar un reembolso completo. Las suscripciones se renuevan automáticamente hasta su cancelación manual. Las devoluciones no se aplicarán a usuarios que hayan incumplido los términos de uso.",
+  "returnPolicyText1": "Si durante los primeros 30 días utilizando FacturaGPT no está satisfecho con el servicio, contacte a través de",
+  "returnPolicyText2": "para solicitar un reembolso completo. Las suscripciones se renuevan automáticamente hasta su cancelación manual. Las devoluciones no se aplicarán a usuarios que hayan incumplido los términos de uso.",
   "returnPolicyLink": "soporteinfo@facturagpt.com",
 
   "intellectualPropertyTitle": "Propiedad Intelectual",

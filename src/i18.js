@@ -31,6 +31,8 @@ import clients_es from "./translation/clients/es/clients.json";
 import clients_en from "./translation/clients/en/clients.json";
 import navbarAdmin_es from "./translation/navbarAdmin/es/navbarAdmin.json";
 import navbarAdmin_en from "./translation/navbarAdmin/en/navbarAdmin.json";
+import termsAndCondition_es from "./translation/termsAndConditions/es/termsAndConditions.json";
+import termsAndCondition_en from "./translation/termsAndConditions/en/termsAndConditions.json";
 
 i18n.init({
   interpolation: { escapeValue: false },
@@ -53,6 +55,7 @@ i18n.init({
       accountSetting: accountSetting_es,
       clients: clients_es,
       navbarAdmin: navbarAdmin_es,
+      termsAndCondition: termsAndCondition_es,
     },
     en: {
       navBar: navbar_en,
@@ -71,6 +74,7 @@ i18n.init({
       accountSetting: accountSetting_en,
       clients: clients_en,
       navbarAdmin: navbarAdmin_en,
+      termsAndCondition: termsAndCondition_en,
     },
   },
 });

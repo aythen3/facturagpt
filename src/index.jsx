@@ -60,7 +60,7 @@ const Layout = () => {
         domain="dev-zyrjdzqhe56cmd65.us.auth0.com"
         clientId="IciYvD7LqDQ4kQkYqlp5cCLJwjHKSIO3"
         redirectUri="http://localhost:3005/freetrial"
-        // cacheLocation="localstorage"
+        cacheLocation="localstorage"
       >
         <I18nextProvider i18n={i18n}>
           <DndProvider backend={HTML5Backend}>
