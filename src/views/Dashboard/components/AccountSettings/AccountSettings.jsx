@@ -13,9 +13,12 @@ import metamask from "../../assets/metamaskPayment.png";
 import coinbase from "../../assets/coinbasePayment.png";
 import creditCard from "../../assets/creditCardIcon.png";
 import { useTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AccountSettings = () => {
   const { t } = useTranslation("accountSetting");
+  const { logout } = useAuth0();
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,6 +71,12 @@ const AccountSettings = () => {
     // }
   };
 
+  const handleLogOut = () => {
+    const isConfirm = confirm("¿Estás seguro de que deseas cerrar sesión?");
+    if (isConfirm) {
+      logout();
+    }
+  };
   const formatPhoneNumber = (value) => {
     return value.replace(/\D/g, "").replace(/(\d{3})(?=\d)/g, "$1 ");
   };
@@ -92,6 +101,9 @@ const AccountSettings = () => {
           <p>John Doe</p>
           <span>john.doe@gmail.com</span>
           <button>{t("changeAccount")}</button>
+          <button style={{ cursor: "pointer" }} onClick={handleLogOut}>
+            Cerrar Sesión
+          </button>
         </div>
       </div>
 
