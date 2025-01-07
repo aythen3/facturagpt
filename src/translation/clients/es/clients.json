@@ -1,0 +1,13 @@
+{
+  "title": "Clientes y Proveedores",
+  "buttonNewClient": "Alta nuevo cliente",
+  "placeholderSearch": "Buscar",
+  "tableCol1": "Nombre",
+  "tableCol2": "Correo",
+  "tableCol3": "Teléfono",
+  "tableCol4": "Dirección física",
+  "tableCol5": "Número fiscal",
+  "tableCol6": "Métodos de Pago",
+  "tableCol7": "Moneda Preferida",
+  "tableCol8": "Acciones"
+}
