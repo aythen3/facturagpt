@@ -25,7 +25,8 @@ import userSetting_es from "./translation/userSetting/es/userSetting.json";
 import userSetting_en from "./translation/userSetting/en/userSetting.json";
 import dashboard_es from "./translation/dashboard/es/dashboard.json";
 import dashboard_en from "./translation/dashboard/en/dashboard.json";
-
+import accountSetting_es from "./translation/accountSetting/es/accountSetting.json";
+import accountSetting_en from "./translation/accountSetting/en/accountSetting.json";
 i18n.init({
   interpolation: { escapeValue: false },
   lng: "es",
@@ -44,6 +45,7 @@ i18n.init({
       dahsboardLogin: dahsboardLogin_es,
       userSetting: userSetting_es,
       dashboard: dashboard_es,
+      accountSetting: accountSetting_es,
     },
     en: {
       navBar: navbar_en,
@@ -59,6 +61,7 @@ i18n.init({
       dahsboardLogin: dahsboardLogin_en,
       userSetting: userSetting_en,
       dashboard: dashboard_en,
+      accountSetting: accountSetting_en,
     },
   },
 });
