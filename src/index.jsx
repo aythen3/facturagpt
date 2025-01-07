@@ -57,9 +57,9 @@ const Layout = () => {
   return (
     <>
       <Auth0Provider
-        domain="dev-zyrjdzqhe56cmd65.us.auth0.com"
-        clientId="IciYvD7LqDQ4kQkYqlp5cCLJwjHKSIO3"
-        redirectUri="http://localhost:3005/freetrial"
+        domain={process.env.REACT_APP_AUTH0_DOMAIN}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+        redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
         cacheLocation="localstorage"
       >
         <I18nextProvider i18n={i18n}>
