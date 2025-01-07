@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import facturaLogo from "../../assets/FacturaLogoGreen.svg";
@@ -7,10 +7,18 @@ import openai from "../../assets/openaiIcon.svg";
 import mail from "../../assets/emailIcon.svg";
 import lock from "../../assets/lock.svg";
 import { useTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const FreeTrial = () => {
+  const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
   const { t } = useTranslation("freeTrial");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className={styles.container}>
@@ -24,11 +32,12 @@ const FreeTrial = () => {
             <img src={mail} alt="Mail Icon" />
             {t("registerButton")}
           </button>
-          <button>
+          <button onClick={() => loginWithRedirect()}>
             <img src={openai} alt="OpenAI Logo" className={styles.openaiLogo} />
             {t("loginAIButton")}
           </button>
         </div>
+
         <p>
           {t("optionLogin")} <a href="/login">{t("login")}</a>
         </p>

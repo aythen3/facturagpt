@@ -7,8 +7,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { createRoot } from "react-dom/client";
 
-// import i18n from "./i18n";
-
 import store from "./utils/store";
 
 import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
@@ -25,6 +23,7 @@ import ContactForm from "./views/Dashboard/components/ContactForm/ContactForm.js
 import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -57,35 +56,42 @@ const Layout = () => {
 
   return (
     <>
-      <I18nextProvider i18n={i18n}>
-        <DndProvider backend={HTML5Backend}>
-          <Provider store={store}>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/login" element={<DashboardLogin />} />
-                <Route path="/landing" element={<LandingPage />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/home" element={<Dashboard />} />
-                <Route path="/reseller" element={<Reseller />} />
-                <Route path="/freetrial" element={<FreeTrial />} />
-                <Route
-                  path="/usersPermissions"
-                  element={<UsersPermissions />}
-                />
-                <Route path="/userSettings" element={<UserSettings />} />
-                <Route path="/clients" element={<Clients />} />
-                <Route path="/contact" element={<ContactForm />} />
-                <Route
-                  path="/termsandconditions"
-                  element={<TermAndConditions />}
-                />
-                <Route path="*" element={<LandingPage />} />
-                <Route path="/Panel" element={<InvoicePanel />} />
-              </Routes>
-            </BrowserRouter>
-          </Provider>
-        </DndProvider>
-      </I18nextProvider>
+      <Auth0Provider
+        domain="dev-zyrjdzqhe56cmd65.us.auth0.com"
+        clientId="IciYvD7LqDQ4kQkYqlp5cCLJwjHKSIO3"
+        redirectUri="http://localhost:3005/freetrial"
+        // cacheLocation="localstorage"
+      >
+        <I18nextProvider i18n={i18n}>
+          <DndProvider backend={HTML5Backend}>
+            <Provider store={store}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/login" element={<DashboardLogin />} />
+                  <Route path="/landing" element={<LandingPage />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/home" element={<Dashboard />} />
+                  <Route path="/reseller" element={<Reseller />} />
+                  <Route path="/freetrial" element={<FreeTrial />} />
+                  <Route
+                    path="/usersPermissions"
+                    element={<UsersPermissions />}
+                  />
+                  <Route path="/userSettings" element={<UserSettings />} />
+                  <Route path="/clients" element={<Clients />} />
+                  <Route path="/contact" element={<ContactForm />} />
+                  <Route
+                    path="/termsandconditions"
+                    element={<TermAndConditions />}
+                  />
+                  <Route path="*" element={<LandingPage />} />
+                  <Route path="/Panel" element={<InvoicePanel />} />
+                </Routes>
+              </BrowserRouter>
+            </Provider>
+          </DndProvider>
+        </I18nextProvider>
+      </Auth0Provider>
     </>
   );
 };
