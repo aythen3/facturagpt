@@ -3,4 +3,3 @@ build/
 data/
 app/data
 src/apiBackend.js
-.vscode/tasks.json
