@@ -1,0 +1,14 @@
+{
+  "stripeDescription1": "Gestión automática de facturas por suscripciones",
+  "stripeDescription2": "Conciliación de pagos en tiempo real",
+  "stripeDescription3": "Notificaciones automáticas de pago",
+  "woltersDescription1": "Importación de facturas digitales",
+  "woltersDescription2": "Reportes financieros automatizados",
+  "whatsAppDesciption1": "Comparte facturas",
+  "whatsAppDesciption2": "Recordatorios de pago",
+  "whatsAppDesciption3": "Chatea con FacturaGPT para crear facturas",
+  "odooDescription1": "Sincronización de datos de clientes y facturas",
+  "odooDescription2": "Gestión de inventarios y facturación",
+  "holdedDescripion1": "Sincronización bidireccional",
+  "holdedDescripion2": "Gestión de proyectos y facturación"
+}

@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import styles from './BillingSlider.module.css';
-import star from '../../assets/star.svg';
+import React, { useState } from "react";
+import styles from "./BillingSlider.module.css";
+import star from "../../assets/star.svg";
+import { useTranslation } from "react-i18next";
 
 const BillingSlider = ({ sliderValue, setSliderValue }) => {
-  const formatNumber = (value) => value.toLocaleString('en-US');
+  const { t } = useTranslation("billingSlides");
+  const formatNumber = (value) => value.toLocaleString("en-US");
 
   // Calcular el número de facturas según el valor del slider
   const facturasPorMillon = 2000; // 1 millón = 2000 facturas
   const facturasTotales = (sliderValue * facturasPorMillon) / 1000000;
   const handleSliderChange = (event) => {
     setSliderValue(Number(event.target.value));
-    console.log('Slider value:', event.target.value);
+    console.log("Slider value:", event.target.value);
   };
 
   const calculateProgress = () => {
@@ -20,19 +22,19 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
   };
 
   const marks = [
-    { value: 1000000, label: '1M', position: 'calc(1% + 4px)' }, // Mover la primera marca un poco más a la derecha
-    { value: 10000000, label: '10M', position: 'calc(19% + 2px)' },
-    { value: 20000000, label: '20M', position: 'calc(39% + 1px)' },
-    { value: 30000000, label: '30M', position: 'calc(58% + 5px)' },
-    { value: 40000000, label: '40M', position: 'calc(78% + 4px)' },
-    { value: 50000000, label: '+50M', position: 'calc(100% - 10px)' }, // Mover la última marca más a la izquierda
+    { value: 1000000, label: "1M", position: "calc(1% + 4px)" }, // Mover la primera marca un poco más a la derecha
+    { value: 10000000, label: "10M", position: "calc(19% + 2px)" },
+    { value: 20000000, label: "20M", position: "calc(39% + 1px)" },
+    { value: 30000000, label: "30M", position: "calc(58% + 5px)" },
+    { value: 40000000, label: "40M", position: "calc(78% + 4px)" },
+    { value: 50000000, label: "+50M", position: "calc(100% - 10px)" }, // Mover la última marca más a la izquierda
   ];
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>
         <img className={styles.star} src={star} alt="star" />
-        ¿Cuál es tu facturación?
+        {t("title")}
       </h2>
 
       <div className={styles.sliderWrapper}>
@@ -69,7 +71,7 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
 
         {/* Output Value */}
         <p className={styles.subtitle}>
-          {formatNumber(facturasTotales).replace(/,/g, '.')} Facturas / Año
+          {formatNumber(facturasTotales).replace(/,/g, ".")} {t("subTitle")}
         </p>
       </div>
     </div>

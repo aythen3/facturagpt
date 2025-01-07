@@ -1,0 +1,12 @@
+{
+  "title": "Contact Us",
+  "subTitle": "We are here to help, request personalized assistance.",
+  "label1": "Your name",
+  "label2": "Your email",
+  "label3": "Your message",
+  "placeholder1": "Enter your name",
+  "placeholder2": "Enter your email",
+  "placeholder3": "Write your message here",
+  "buttonSend": "Send message",
+  "buttonWhatsApp": "Chat with us on WhatsApp"
+}

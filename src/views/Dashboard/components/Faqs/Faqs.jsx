@@ -1,45 +1,40 @@
-import React, { useState } from 'react';
-import styles from './Faqs.module.css';
-import arrow from '../../assets/arrowlit.svg';
-import arrowDown from '../../assets/arrowRightContact.png';
+import React, { useState } from "react";
+import styles from "./Faqs.module.css";
+import arrow from "../../assets/arrowlit.svg";
+import arrowDown from "../../assets/arrowRightContact.png";
+import { useTranslation } from "react-i18next";
 const FAQ = () => {
+  const { t } = useTranslation("faq");
+
   const faqs = [
     {
-      question: '¿Qué es FacturaGPT?',
-      answer:
-        'FacturaGPT es una herramienta de gestión y análisis financiero que utiliza inteligencia artificial para simplificar y optimizar el análisis de facturas y datos contables. FacturaGPT és una solución basada en la nube, accesible desde cualquier dispositivo con conexión a internet.',
+      question: t("ask1"),
+      answer: t("answer1"),
     },
     {
-      question: '¿Qué formatos de archivos acepta Factura GPT?',
-      answer:
-        'Aceptamos archivos Excel, CSV y PDF, entre otros formatos estándar.',
+      question: t("ask2"),
+      answer: t("answer2"),
     },
     {
-      question: '¿Cómo ayuda Factura GPT en la planificación financiera?',
-      answer:
-        'Proporciona insights clave como márgenes de ganancia, patrones de gasto y recomendaciones personalizadas.',
+      question: t("ask3"),
+      answer: t("answer3"),
     },
     ,
     {
-      question:
-        '¿Se pueden integrar otras herramientas de software con Factura GPT?',
-      answer:
-        'Sí, es compatible con ERP y sistemas de contabilidad populares como SAP, QuickBooks y Odoo.',
+      question: t("ask4"),
+      answer: t("answer4"),
     },
     {
-      question: '¿Factura GPT detecta errores en las facturas?',
-      answer:
-        'Sí, identifica discrepancias y posibles errores en las facturas automáticamente.',
+      question: t("ask5"),
+      answer: t("answer5"),
     },
     {
-      question: '¿Factura GPT realiza cálculos de impuestos?',
-      answer:
-        'Sí, identifica y calcula automáticamente impuestos aplicables en las facturas.',
+      question: t("ask6"),
+      answer: t("answer6"),
     },
     {
-      question: '¿Factura GPT se actualiza automáticamente?',
-      answer:
-        'Sí, todas las actualizaciones y mejoras se implementan automáticamente sin costo adicional.',
+      question: t("ask7"),
+      answer: t("answer7"),
     },
   ];
   const [activeIndexes, setActiveIndexes] = useState([]);
@@ -54,7 +49,7 @@ const FAQ = () => {
 
   return (
     <div className={styles.faqSection}>
-      <h2>¿Tienes alguna pregunta?</h2>
+      <h2>{t("title")}</h2>
       <div className={styles.faqContainer}>
         {faqs.map((faq, index) => (
           <div key={index} className={styles.faqItem}>
@@ -65,7 +60,7 @@ const FAQ = () => {
               <span>{faq.question}</span>
               <span
                 className={`${styles.icon} ${
-                  activeIndexes.includes(index) ? styles.open : ''
+                  activeIndexes.includes(index) ? styles.open : ""
                 }`}
               >
                 <img src={arrow} alt="" />
@@ -73,7 +68,7 @@ const FAQ = () => {
             </button>
             <div
               className={`${styles.faqAnswer} ${
-                activeIndexes.includes(index) ? styles.show : ''
+                activeIndexes.includes(index) ? styles.show : ""
               }`}
             >
               <span>{faq.answer}</span>
@@ -81,9 +76,9 @@ const FAQ = () => {
           </div>
         ))}
         <p className={styles.contact}>
-          ¿Quieres saber más?{' '}
+          {t("moreInfo")}{" "}
           <a href="/contact">
-            Contacta <img src={arrowDown} alt="" />
+            {t("contact")} <img src={arrowDown} alt="" />
           </a>
         </p>
       </div>

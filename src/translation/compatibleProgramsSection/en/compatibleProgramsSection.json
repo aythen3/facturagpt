@@ -1,0 +1,14 @@
+{
+  "stripeDescription1": "Automatic management of invoices for subscriptions",
+  "stripeDescription2": "Real-time payment reconciliation",
+  "stripeDescription3": "Automatic payment notifications",
+  "woltersDescription1": "Importing digital invoices",
+  "woltersDescription2": "Automated financial reporting",
+  "whatsAppDesciption1": "Share invoices",
+  "whatsAppDesciption2": "Payment reminders",
+  "whatsAppDesciption3": "Chat with FacturaGPT to create invoices",
+  "odooDescription1": "Synchronization of customer data and invoices",
+  "odooDescription2": "Inventory management and billing",
+  "holdedDescripion1": "Two-way synchronization",
+  "holdedDescripion2": "Project management and billing"
+}
