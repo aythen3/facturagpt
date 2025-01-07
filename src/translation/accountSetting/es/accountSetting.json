@@ -20,5 +20,7 @@
   "unitedStates": "Estados Unidos",
   "unitedKingdom": "Reino Unido",
   "mexico": "Mexico",
-  "india": "India"
+  "india": "India",
+  "logout": "Cerrar Sesión",
+  "confirmLogout": "¿Estás seguro de que deseas cerrar sesión?"
 }

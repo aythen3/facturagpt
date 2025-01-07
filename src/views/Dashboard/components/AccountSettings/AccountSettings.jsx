@@ -72,7 +72,7 @@ const AccountSettings = () => {
   };
 
   const handleLogOut = () => {
-    const isConfirm = confirm("¿Estás seguro de que deseas cerrar sesión?");
+    const isConfirm = confirm(t("confirmLogout"));
     if (isConfirm) {
       logout();
     }
@@ -101,8 +101,11 @@ const AccountSettings = () => {
           <p>John Doe</p>
           <span>john.doe@gmail.com</span>
           <button>{t("changeAccount")}</button>
-          <button style={{ cursor: "pointer" }} onClick={handleLogOut}>
-            Cerrar Sesión
+          <button
+            style={{ cursor: "pointer", color: "red" }}
+            onClick={handleLogOut}
+          >
+            {t("logout")}
           </button>
         </div>
       </div>

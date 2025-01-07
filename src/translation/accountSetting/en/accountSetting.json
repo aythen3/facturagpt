@@ -20,5 +20,7 @@
   "unitedStates": "United States",
   "unitedKingdom": "United Kingdom",
   "mexico": "Mexico",
-  "india": "India"
+  "india": "India",
+  "logout": "Log out",
+  "confirmLogout": "Are you sure you want to log out?"
 }
