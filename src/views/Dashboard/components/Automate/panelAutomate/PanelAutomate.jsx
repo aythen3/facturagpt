@@ -8,8 +8,9 @@ import CardAutomate from "../Components/CardAutomate/CardAutomate";
 import { useDispatch } from "react-redux";
 import { data } from "../utils/automatesJson";
 import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
+import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/GmailAndOutlook";
 
-const PanelAutomate = ({ type, close }) => {
+const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();
   const handleDataFilter = (searchTerm) => {
@@ -53,11 +54,12 @@ const PanelAutomate = ({ type, close }) => {
                 name={card.automateName}
                 image={card.image}
                 contactType={card.contactType}
+                typeContent={typeContent}
               />
             ))}
           </div>
           <div>
-            <h1>Hola desde {type}</h1>
+            <GmailAndOutlook type={type} />
           </div>
         </div>
         <div className={styles.container_buttons_footer}>

@@ -64,6 +64,7 @@ export default function InvoicePanel() {
 
       {typeContentAutomate && (
         <PanelAutomate
+          typeContent={handleShowContentAutomate}
           close={handleCloseContentAutomate}
           type={typeContentAutomate}
         />

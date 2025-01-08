@@ -10,14 +10,14 @@ export const data = [
     automateName: "Sube tus Facturas de Gmail",
     image: mail,
     contactType: "example@gmail.com",
-    type: "gmail",
+    type: "Gmail",
   },
   {
     id: 2,
     automateName: "Sube tus Facturas de Outlook",
     image: outlook,
     contactType: "example@gmail.com",
-    type: "outlook",
+    type: "Outlook",
   },
   {
     id: 3,
