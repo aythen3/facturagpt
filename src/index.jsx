@@ -18,10 +18,9 @@ import UsersPermissions from "./views/Dashboard/screens/UsersPermissions/UsersPe
 import UserSettings from "./views/Dashboard/screens/UserSettings/UserSettings.jsx";
 import LandingPage from "./views/Dashboard/screens/Landing/Landing.jsx";
 import Pricing from "./views/Dashboard/screens/Pricing/Pricing.jsx";
-import Reseller from "./views/Dashboard/screens/Reseller/index.jsx";
 import FreeTrial from "./views/Dashboard/screens/FreeTrial/FreeTrial.jsx";
 import InvoicePanel from "./views/Dashboard/screens/InvoicePanel/InvoicePanel.jsx";
-import TermAndConditions from "./views/Dashboard/screens/TermsAndConditions/TermsAndConditions.jsx";
+import Terms from "./views/Dashboard/screens/Terms/TermsAndConditions.jsx";
 import ContactForm from "./views/Dashboard/components/ContactForm/ContactForm.jsx";
 import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
@@ -75,7 +74,6 @@ const Layout = () => {
                   <Route path="/landing" element={<LandingPage />} />
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/home" element={<Dashboard />} />
-                  <Route path="/reseller" element={<Reseller />} />
                   <Route path="/freetrial" element={<FreeTrial />} />
                   <Route path="/automate" element={<Automate />} />
                   <Route
@@ -86,8 +84,8 @@ const Layout = () => {
                   <Route path="/clients" element={<Clients />} />
                   <Route path="/contact" element={<ContactForm />} />
                   <Route
-                    path="/termsandconditions"
-                    element={<TermAndConditions />}
+                    path="/terms"
+                    element={<Terms />}
                   />
                   <Route path="*" element={<LandingPage />} />
                   <Route path="/Panel" element={<InvoicePanel />} />
