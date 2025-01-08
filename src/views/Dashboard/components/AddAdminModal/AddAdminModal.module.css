@@ -1,0 +1,87 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  width: 360px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+  padding: 0px 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0c1421;
+  position: relative;
+}
+
+.input {
+  margin-top: 8px;
+  display: flex;
+  width: 100%;
+  max-width: 388px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #8897ad;
+  border: none !important;
+  outline: none !important;
+  margin-bottom: 20px;
+  background-color: #f4f4f4;
+  height: 48px;
+  box-sizing: border-box;
+}
+
+.closeButton {
+  margin-top: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.passwordRequirements {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  color: #8897ad;
+  font-size: 9px;
+}
+
+.signInButton {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 388px;
+  background-color: #162d3a;
+  color: #ffffff;
+  font-size: 18px;
+  height: 48px;
+  font-weight: 400;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 28px;
+  display: flex;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+}

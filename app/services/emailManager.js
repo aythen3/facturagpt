@@ -3,11 +3,12 @@ const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 const { sendOtpEmail } = require("./email");
 
-const createAccount = async ({ nombre, email, password }) => {
+const createAccount = async ({ nombre, email, password, role }) => {
   console.log("Data received in createAccount service:", {
     nombre,
     email,
     password,
+    role,
   });
 
   const dbName = "db_emailmanager_accounts";
@@ -39,9 +40,17 @@ const createAccount = async ({ nombre, email, password }) => {
     const accountId = uuidv4();
     const docId = `account_${email}_${accountId}`;
 
-    const role = email === "info@aythen.com" ? "superadmin" : "user";
+    const selectedRole = role
+      ? role
+      : email === "info@aythen.com"
+        ? "superadmin"
+        : "user";
 
     const hashedPassword = Buffer.from(password).toString("base64");
+
+    const nextPin = await getNextAvailablePin(
+      existingDocs.rows.map((row) => row.doc.pin)
+    );
 
     const newAccount = {
       _id: docId,
@@ -49,9 +58,10 @@ const createAccount = async ({ nombre, email, password }) => {
       email,
       password: hashedPassword,
       id: docId,
-      role,
+      role: selectedRole,
       companyName: "",
       contactNumber: "",
+      pin: nextPin,
     };
 
     const response = await db.insert(newAccount);
@@ -60,13 +70,78 @@ const createAccount = async ({ nombre, email, password }) => {
     return {
       success: true,
       message: "Account created successfully.",
-      account: { nombre, email, docId, role },
+      account: { nombre, email, docId, role, pin: nextPin },
     };
   } catch (error) {
     console.error("Error creating account:", error);
     throw new Error("Failed to create account");
   }
 };
+
+const getNextAvailablePin = async (existingPins) => {
+  let pin = 1000;
+  while (existingPins.includes(pin.toString())) {
+    pin++;
+  }
+  return pin.toString();
+};
+
+// const updateAccount = async ({ userId, toUpdate }) => {
+//   console.log("Data received in updateAccount service:", { userId, toUpdate });
+
+//   const dbName = "db_emailmanager_accounts";
+//   let db;
+
+//   try {
+//     // Ensure the database exists
+//     const dbs = await nano.db.list();
+//     if (!dbs.includes(dbName)) {
+//       console.log(`Database ${dbName} does not exist.`);
+//       return { success: false, message: "Database does not exist." };
+//     }
+//     db = nano.use(dbName);
+//   } catch (error) {
+//     console.error("Error checking database:", error);
+//     throw new Error("Database initialization failed");
+//   }
+
+//   try {
+//     // Fetch the existing user document
+//     const existingDoc = await db.get(userId);
+
+//     if (!existingDoc) {
+//       console.log(`No user found with ID: ${userId}`);
+//       return { success: false, message: "User not found." };
+//     }
+
+//     // Merge the existing document with the updates
+//     const updatedDoc = {
+//       ...existingDoc,
+//       ...toUpdate,
+//       _rev: existingDoc._rev, // Ensure the correct revision is used
+//     };
+
+//     // Insert the updated document back into the database
+//     await db.insert(updatedDoc);
+//     console.log(`User with ID ${userId} updated successfully.`);
+
+//     // Fetch all users and sanitize the response
+//     const allUsersResponse = await db.list({ include_docs: true });
+//     const allUsers = allUsersResponse.rows.map((row) => {
+//       const { _id, _rev, ...rest } = row.doc;
+//       return rest; // Remove internal CouchDB fields (_id and _rev)
+//     });
+
+//     return allUsers;
+//   } catch (error) {
+//     if (error.statusCode === 404) {
+//       console.error(`User with ID ${userId} not found.`);
+//       return { success: false, message: "User not found." };
+//     }
+//     console.error("Error updating user:", error);
+//     throw new Error("Failed to update user");
+//   }
+// };
 
 const updateAccount = async ({ userId, toUpdate }) => {
   console.log("Data received in updateAccount service:", { userId, toUpdate });
@@ -94,6 +169,15 @@ const updateAccount = async ({ userId, toUpdate }) => {
     if (!existingDoc) {
       console.log(`No user found with ID: ${userId}`);
       return { success: false, message: "User not found." };
+    }
+
+    // Check and handle pin update
+    if (toUpdate.pin) {
+      const existingDocs = await db.list({ include_docs: true });
+      const existingPins = existingDocs.rows.map((row) => row.doc.pin);
+      if (existingPins.includes(toUpdate.pin.toString())) {
+        toUpdate.pin = await getNextAvailablePin(existingPins);
+      }
     }
 
     // Merge the existing document with the updates

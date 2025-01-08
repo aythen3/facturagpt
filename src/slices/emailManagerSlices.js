@@ -5,10 +5,10 @@ import {
   deleteClient,
   getAllClients,
   getAllUsers,
-  loginToManager,
   updateClient,
   updateUser,
 } from "../actions/emailManager";
+import { loginToManager } from "../actions/user";
 
 const emailManagerSlices = createSlice({
   name: "emailManager",
