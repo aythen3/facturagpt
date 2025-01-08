@@ -6,10 +6,11 @@ import { data } from "./utils/automatesJson";
 import styles from "./automate.module.css";
 import CloseSVG from "./svgs/CloseSVG";
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
+import { useDispatch } from "react-redux";
 
-const Automate = ({ close, newData }) => {
+const Automate = ({ close, newData, typeContent, isGeneral, fullContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
-
+  const dispach = useDispatch();
   const handleDataFilter = (searchTerm) => {
     const filteredData = data.filter((card) =>
       card.automateName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -18,7 +19,7 @@ const Automate = ({ close, newData }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={isGeneral ? styles.container : ""}>
       <div className={styles.content}>
         <div style={{ justifySelf: "end" }}>
           <CloseSVG action={close} />
@@ -28,10 +29,14 @@ const Automate = ({ close, newData }) => {
 
         {dataFilter.map((card) => (
           <CardAutomate
+            fullContent={true}
+            type={card.type}
+            typeContent={typeContent}
             key={card.id}
             name={card.automateName}
             image={card.image}
             contactType={card.contactType}
+            isBorders={true}
           />
         ))}
         <div className={styles.container_buttons_footer}>

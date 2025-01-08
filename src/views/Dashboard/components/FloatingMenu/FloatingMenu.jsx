@@ -10,10 +10,12 @@ import { ReactComponent as CloudIcon } from "../../assets/cloud-icon.svg";
 import { ReactComponent as CameraIcon } from "../../assets/camera.svg";
 import { ReactComponent as FacturaIcon } from "../../assets/factura.svg";
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
+import { useDispatch } from "react-redux";
 
 export default function FloatingMenu({ openModalAutomate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
+  const dispach = useDispatch();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 

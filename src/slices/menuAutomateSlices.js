@@ -1,19 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  addNewClient,
-  createAccount,
-  deleteClient,
-  getAllClients,
-  getAllUsers,
-  loginToManager,
-  updateClient,
-  updateUser,
-} from "../actions/emailManager";
 
 const menuAutomateSlices = createSlice({
   name: "menuAutomate",
   initialState: {
-    showAutomate: "general",
+    showAutomate: "",
   },
   reducers: {
     setShowAutomate: (state, action) => {
