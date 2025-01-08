@@ -146,19 +146,19 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
       (item) => item && item.length > 0
     );
 
-    if (missingFields.length > 0) {
-      console.log(
-        "Missing Fields:",
-        missingFields.map(([key]) => key)
-      );
-      alert("Completa todos los campos requeridos.");
-      return;
-    }
+    // if (missingFields.length > 0) {
+    //   console.log(
+    //     "Missing Fields:",
+    //     missingFields.map(([key]) => key)
+    //   );
+    //   alert("Completa todos los campos requeridos.");
+    //   return;
+    // }
 
-    if (emailQueries.length === 0) {
-      alert("Debes agregar por lo menos una etiqueta.");
-      return;
-    }
+    // if (emailQueries.length === 0) {
+    //   alert("Debes agregar por lo menos una etiqueta.");
+    //   return;
+    // }
 
     let finalData = {
       ...requiredFields,
@@ -174,30 +174,31 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
 
     console.log("Adding new client with:", finalData);
 
-    dispatch(addNewClient({ clientData: finalData }));
+    // dispatch(addNewClient({ clientData: finalData }));
 
     // =================================================
-    //   const defaultClient = {
-    //     companyName: "Aythen test",
-    //     email: "aythen@info.com",
-    //     phoneNumber: "131313",
-    //     cif: "cif test",
-    //     address: "address test",
-    //     emergencyContact: "emergency contact test",
-    //     tokenEmail: "kragoat13@gmail.com",
-    //     tokenPassword: "bmqe dorj hcdb qfic",
-    //     tokenGPT: "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",
-    //     host: '46.183.119.66',
-    //     port: "21",
-    //     tokenUser: "Aythen",
-    //     tokenUserPassword: "Cloud@24",
-    //     emailQueries: ['factura/albaran'],
-    //     selectedOption: "0,20€ / 20.000",
-    //     isPaymentConfigured: false
-    // }
+    const defaultClient = {
+      companyName: "Aythen test",
+      email: "aythen@info.com",
+      phoneNumber: "131313",
+      cif: "cif test",
+      address: "address test",
+      emergencyContact: "emergency contact test",
+      tokenEmail: "kragoat13@gmail.com",
+      tokenPassword: "bmqe dorj hcdb qfic",
+      tokenGPT:
+        "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",
+      host: "46.183.119.66",
+      port: "21",
+      tokenUser: "Aythen",
+      tokenUserPassword: "Cloud@24",
+      emailQueries: ["factura/albaran"],
+      selectedOption: "0,20€ / 20.000",
+      isPaymentConfigured: false,
+    };
 
-    //  console.log('Adding new client with default values:', defaultClient);
-    //  dispatch(addNewClient({clientData:defaultClient}))
+    console.log("Adding new client with default values:", defaultClient);
+    dispatch(addNewClient({ clientData: defaultClient }));
     navigate("/home");
     alert("Cliente agregado satisfactoriamente!");
   };
