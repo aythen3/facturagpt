@@ -157,9 +157,16 @@ const verifyOTPController = async (req, res) => {
 
 const sendNewsletter = async (req, res) => {
   try {
-    const { name, email, message } = req.body;
+    const { name, email, message, work, phone, keepInformed } = req.body;
 
-    const response = await newsletter({ name, email, message });
+    const response = await newsletter({
+      name,
+      email,
+      message,
+      work,
+      phone,
+      keepInformed,
+    });
 
     if (response.success) {
       return res.status(200).send(response);

@@ -63,17 +63,44 @@
   height: 30px;
   font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 .button:hover {
   background-color: #ececec;
 }
 
+.buttonLogIn {
+  background-color: #1a6555;
+  color: white;
+  font-weight: 500;
+}
+.buttonLogIn:hover {
+  background-color: #104237;
+}
+.navFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+@media (max-width: 1000px) {
+  .buttonLogIn {
+    display: none;
+  }
+  .navFlex {
+    flex-direction: column-reverse;
+    align-items: start;
+  }
+}
 /* Media Queries */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .navbar {
     padding: 0 20px;
   }

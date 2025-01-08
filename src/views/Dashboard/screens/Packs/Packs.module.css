@@ -14,8 +14,7 @@
 }
 
 .stepsContainer {
-  height: 100vh;
-  /* background-color: red; */
+  height: 75vh;
   justify-content: center;
   align-items: center;
   display: flex;

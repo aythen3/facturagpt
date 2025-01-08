@@ -1,19 +1,15 @@
-import React from "react";
-import styles from "./NavHeader.module.css";
-import ayFolder from "../../assets/folderAy.svg";
-import ArrowDown from "../../assets/ArrowDown.svg";
-import flagIcon from "../../assets/flagIcon.svg";
-import bombilla from "../../assets/bombilla.svg";
-import plusIcon from "../../assets/plusIcon.svg";
-import starIcon from "../../assets/starIcon.png";
-import frame99 from "../../assets/Frame10099.png";
-import logo from "../../assets/facturaLogoIcon.png";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import starIcon from '../../assets/starIcon.svg';
+import logo from '../../assets/facturaLogoIcon.svg';
+import styles from './NavHeader.module.css';
+import ArrowDown from '../../assets/ArrowDown.svg';
+
+import { useTranslation } from 'react-i18next';
 const NavHeader = () => {
-  const { t } = useTranslation("navBarHeader");
+  const { t } = useTranslation('navBarHeader');
 
   const handleScrollToFacturation = () => {
-    const facturationElement = document.getElementById("facturation");
+    const facturationElement = document.getElementById('facturation');
     if (facturationElement) {
       const rect = facturationElement.getBoundingClientRect();
       const offsetTop =
@@ -23,14 +19,14 @@ const NavHeader = () => {
 
       window.scrollTo({
         top: offsetTop,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
   return (
     <div className={styles.navHeaderContainer}>
       <img src={logo} alt="FacturaGPT Logo" />
-      <div className={styles.navHeaderTitle}>{t("publicity")}</div>
+      <div className={styles.navHeaderTitle}>{t('publicity')}</div>
       <div className={styles.navHeaderSubtitle}>
         <span className={styles.factura}>Factura</span>
         <span className={styles.gpt}>GPT</span>
@@ -41,13 +37,13 @@ const NavHeader = () => {
         className={`${styles.iconfloat} ${styles.starIconR} `}
       />
 
-      <span className={styles.navHeaderDescription}>{t("description")}</span>
+      <span className={styles.navHeaderDescription}>{t('description')}</span>
       <div
         className={styles.nextSteps}
         onClick={handleScrollToFacturation}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: 'pointer' }}
       >
-        {t("invitation")}
+        {t('invitation')}
         <span>
           <img src={ArrowDown} alt="" />
         </span>

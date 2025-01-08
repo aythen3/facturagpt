@@ -491,7 +491,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const newsletter = async ({ name, email, message }) => {
+const newsletter = async ({
+  name,
+  email,
+  message,
+  work,
+  phone,
+  keepInformed,
+}) => {
   console.log('name', name);
   console.log('email', email);
   console.log('message', message);
@@ -500,7 +507,7 @@ const newsletter = async ({ name, email, message }) => {
     from: email, // El correo del usuario que llenó el formulario
     to: 'yyeremi15@gmail.com', // Tu correo donde recibirás los mensajes
     subject: `Nuevo mensaje de ${name}`,
-    text: `Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:\n${message}`,
+    text: `Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}`,
   };
 
   try {
