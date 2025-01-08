@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<documento_ptl version="0.6">
+   <info_control>
+      <transaccion >
+         <fecha_creacion>
+            <anyo>%invoiceDate::year%</anyo>
+            <mes>%invoiceDate::month%</mes>
+            <dia>%invoiceDate::day%</dia>
+            <hora>000</hora>
+            <minuto>000</minuto>
+            <segundo>000</segundo>
+            <msegundo>000</msegundo>
+         </fecha_creacion>
+         <fecha_modificacion>
+             <anyo>%invoiceDate::year%</anyo>
+            <mes>%invoiceDate::month%</mes>
+            <dia>%invoiceDate::day%</dia>
+            <hora>000</hora>
+            <minuto>000</minuto>
+            <segundo>000</segundo>
+            <msegundo>000</msegundo>
+         </fecha_modificacion>
+         <estado />
+      </transaccion>
+      <info_tipo version="0.6" url_xsd="" />
+   </info_control>
+   <datos_doc>
+      <envio_albaran version="0.6">
+         <id_control_fabricante />
+         <albaran>
+            <cabecera>
+               <solicitante />
+               <destinatario />
+               <cod_punto_venta />
+               <numero_albaran>%numberDelivery%</numero_albaran>
+               <fecha_albaran>
+                   <anyo>%invoiceDate::year%</anyo>
+                  <mes>%invoiceDate::month%</mes>
+                  <dia>%invoiceDate::day%</dia>
+                  <hora>000</hora>
+                  <minuto>000</minuto>
+                  <segundo>000</segundo>
+               </fecha_albaran>
+               <fecha_entrega>
+                   <anyo>%invoiceDate::year%</anyo>
+                  <mes>%invoiceDate::month%</mes>
+                  <dia>%invoiceDate::day%</dia>
+                  <hora>000</hora>
+                  <minuto>000</minuto>
+                  <segundo>000</segundo>
+               </fecha_entrega>
+               <incoterm />
+               <desc_incoterm />
+               <transportista_texto />
+               <exped_transportista />
+               <bultos />
+               <peso />
+               <unidad_peso>KGM</unidad_peso>
+               <volumen />
+               <unidad_volumen />
+               <centro_expedidor_nombre>%clientName%</centro_expedidor_nombre>
+               <centro_expedidor_direccion>%clientAddress%</centro_expedidor_direccion>
+               <centro_expedidor_poblacion>%clientCity%</centro_expedidor_poblacion>
+               <centro_expedidor_cpostal>%clientPostCode%</centro_expedidor_cpostal>
+               <centro_expedidor_provincia>%clientProvince%</centro_expedidor_provincia>
+               <centro_expedidor_pais>%clientCountry%</centro_expedidor_pais>
+               <cod_fabricante_externo >%clientCif%</cod_fabricante_externo>
+               <centro_expedidor_telefono />
+               <cod_fabricante_fabricante />
+               <cliente_nif>A59095281</cliente_nif>
+               <cliente_nombre>TECNICAL MANRESA, S.A.</cliente_nombre>
+               <cliente_direccion>POL.DELS DOLORS, C/SALLENT 46-48</cliente_direccion>
+               <cliente_poblacion>MANRESA</cliente_poblacion>
+               <cliente_cpostal>08240</cliente_cpostal>
+               <cliente_provincia>08</cliente_provincia>
+               <cliente_pais>ES</cliente_pais>
+               <destino_nombre>TECNICAL MANRESA, S.A.</destino_nombre>
+               <destino_direccion>POL.DELS DOLORS, C/SALLENT 46-48</destino_direccion>
+               <destino_poblacion>MANRESA</destino_poblacion>
+               <destino_cpostal>08240</destino_cpostal>
+               <destino_provincia>08</destino_provincia>
+               <destino_pais>ES</destino_pais>
+               <destino_telefono />
+               <observaciones />
+            </cabecera>
+            <posiciones for-data="productList" >
+               <posicion_albaran>%n%</posicion_albaran>
+               <posicion_pedido />
+               <referencia>%productRef%</referencia>
+               <cod_fegime />
+               <descripcion>%productDescription%</descripcion>
+               <pedido>%numberOrder%</pedido>
+               <pedido_cliente />
+               <cantidad_entregada>%productQuantity%</cantidad_entregada>
+               <unidad>UN</unidad>
+               <ean_n1 />
+               <ean_n2 />
+               <ean_n3 />
+               <importe />
+               <numero_serie />
+               <info_adicional />
+               <observaciones />
+            </posiciones>
+         </albaran>
+      </envio_albaran>
+   </datos_doc>
+   <mensajes>
+      <severidad />
+      <msg_ptl id="1" />
+      <msg_funcional id="" />
+   </mensajes>
+</documento_ptl>

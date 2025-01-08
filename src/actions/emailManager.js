@@ -1,6 +1,34 @@
 import apiBackend from "@src/apiBackend.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+export const getEmailsByQuery = createAsyncThunk(
+  "emailManager/getEmailsByQuery",
+  async ({ userId, email, password, query, tokenGpt, logs, ftpData }) => {
+    try {
+      console.log("EMAIL FETCH REQUEST:", { userId, email, query, ftpData });
+
+      const token = localStorage.getItem("token");
+      // Call your backend endpoint for fetching emails
+      const res = await apiBackend.post(
+        "/emailManager/getEmailsByQuery",
+        { userId, email, password, query, tokenGpt, logs, ftpData },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Replace with your token
+          },
+        }
+      );
+
+      console.log("EMAIL FETCH RESPONSE:", res.data);
+      return res.data; // Return the email data
+    } catch (error) {
+      console.error("Error in getEmailsByQuery action:", error);
+      return rejectWithValue(error.response?.data || "Failed to fetch emails");
+    }
+  }
+);
+
 export const createAccount = createAsyncThunk(
   "emailManager/createAccount",
   async ({ nombre, email, password }) => {
@@ -85,6 +113,8 @@ export const getAllUsers = createAsyncThunk(
 export const addNewClient = createAsyncThunk(
   "emailManager/addNewClient",
   async ({ clientData }) => {
+    console.log("Adding client with data:", clientData);
+    console.log("APIBACKEND", apiBackend);
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(

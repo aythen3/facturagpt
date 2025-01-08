@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  FaChevronLeft,
-  FaChevronRight,
   FaArrowUp,
   FaArrowDown,
   FaChevronDown,
@@ -9,29 +7,33 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import styles from "./Dashboard.module.css";
-import usersIcon from "./assets/2people.svg";
+
 import userTick from "./assets/profile-tick.svg";
 import userPlus from "./assets/userPlus.svg";
 import monitor from "./assets/monitor.svg";
-import calendarDate from "./assets/calendarDate.svg";
-import calendar from "./assets/calendar.svg";
+import profilePlus from "./assets/profilePlus.svg";
 import circuit from "./assets/circuit.svg";
 import magnify from "./assets/magnify.svg";
 import openEmail from "./assets/openEmail.svg";
-import profile1 from "./assets/profile1.png";
-import profile2 from "./assets/profile2.png";
-import profile3 from "./assets/profile3.png";
+import plus from "./assets/plus.svg";
+import listIcon from "./assets/listIcon.svg";
+import profiles from "./assets/profiles.svg";
+import dbIcon from "./assets/dbIcon.svg";
+import analyticsIcon from "./assets/analyticsIcon.svg";
+import monitorIcon from "./assets/monitorIcon.svg";
+import greenArrow from "./assets/greenArrow.svg";
+import redArrow from "./assets/redArrow.svg";
+
 import { useNavigate } from "react-router-dom";
 import {
   getAllClients,
   getAllUsers,
   updateClient,
-  updateUser,
+  getEmailsByQuery,
 } from "../../actions/emailManager";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getEmailsByQuery } from "../../actions/bot";
-// import { colors } from "./../views/app/v1-1/pages/Calendar/components/colors";
+
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import Payment from "./screens/UserSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
@@ -58,41 +60,73 @@ const Dashboard = () => {
   );
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
-  const storedOption = localStorage.getItem("selectedOption") || "option1";
-  const [selectedOption, setSelectedOption] = useState(t(storedOption));
 
+  const [selectedOption, setSelectedOption] = useState("Todos"); // Selected filter
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
-    setSelectedOption(t(storedOption));
-  }, [i18n.language, storedOption, t]);
+  const options = ["Todos", "Activos", "Emails procesados", "Empresa A-Z"];
 
-  const options = [t("option1"), t("option2"), t("option3"), t("option4")];
+  useEffect(() => {
+    console.log("ALL CLIENTS", allClients);
+  }, [allClients]);
 
   const stats = [
     {
-      icon: usersIcon,
-      title: t("titleHeader1"),
+      icon: profiles,
+      title: "# Usuarios",
       value: allClients?.length,
-      change: t("lastMonth1"),
+      change: "16%",
+
       isPositive: true,
       toUserPermission: true,
     },
     {
-      icon: userTick,
-      title: t("titleHeader2"),
-      value: allClients?.length,
-      change: t("lastMonth2"),
+      icon: profilePlus,
+      multiple: [
+        {
+          title: "# Clientes Plus",
+          value: 0,
+          change: "1%",
+          isPositive: false,
+        },
+        {
+          title: "# Clientes Pro",
+          value: 0,
+          change: "1%",
+          isPositive: false,
+        },
+        {
+          title: "# Clientes Enterprise",
+          value: 0,
+          change: "1%",
+          isPositive: false,
+        },
+      ],
+    },
+    {
+      icon: monitorIcon,
+      title: "# Reconocimientos",
+      value: 0,
+      change: "16%",
       isPositive: false,
     },
     {
-      icon: monitor,
-      title: t("titleHeader3"),
-      value: allClients
-        ? allClients?.filter((client) => client.active).length
-        : 0,
-      emails: true,
+      icon: analyticsIcon,
+      title: "EUR Generado",
+      change: "16%",
+      isPositive: true,
+      value: 0,
+      currency: "EUR",
+    },
+    {
+      icon: dbIcon,
+      title: "# GB",
+      change: "16%",
+      isPositive: true,
+      value: 0,
+      currency: "TB",
+
     },
   ];
 
@@ -102,10 +136,8 @@ const Dashboard = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // Filter and sort clients whenever searchQuery or selectedOption changes
     let updatedClients = [...allClients];
 
-    // Apply search filter
     if (searchQuery) {
       updatedClients = updatedClients.filter(
         (client) =>
@@ -119,7 +151,6 @@ const Dashboard = () => {
       );
     }
 
-    // Apply sorting based on selectedOption
     switch (selectedOption) {
       case "Activos":
         updatedClients = updatedClients.sort((a, b) => b.active - a.active);
@@ -347,57 +378,105 @@ const Dashboard = () => {
                 onClick={() =>
                   stat.toUserPermission && navigate("/usersPermissions")
                 }
-                className={styles.inconWrapper}
+                className={styles.iconWrapper}
               >
-                <img
-                  src={stat.icon}
-                  alt={stat.title}
-                  className={styles.statIcon}
-                />
+                <img src={stat.icon} alt={stat.title} />
               </div>
-              <div className={styles.statContent}>
-                <span className={styles.statTitle}>{stat.title}</span>
-                <h2 className={styles.statValue}>{stat.value}</h2>
-                {stat.change && (
-                  <span
-                    className={`${styles.statChange} ${stat.isPositive ? styles.positive : styles.negative}`}
+              {stat.multiple ? (
+                stat.multiple.map((item, index) => (
+                  <div
+                    style={{ paddingRight: "24px" }}
+                    className={styles.statContent}
                   >
-                    {stat.isPositive ? <FaArrowUp /> : <FaArrowDown />}
-                    {stat.change}
-                  </span>
-                )}
-                {stat.emails && (
-                  <span className={`${styles.statChange} ${styles.positive}`}>
-                    <MdOutlineMarkEmailRead size={25} color={"#16c098"} />
-                    {`${allClients?.map((client) => client?.processedEmails?.length).reduce((a, b) => a + b, 0)} ${t("lastMonth3")}`}
-                  </span>
-                )}
-              </div>
+                    <span className={styles.statTitle}>{item.title}</span>
+
+                    {item.change && (
+                      <span
+                        className={`${styles.statChange} ${item.isPositive ? styles.positive : styles.negative}`}
+                      >
+                        {item.isPositive ? (
+                          <img src={greenArrow} alt={item.title} />
+                        ) : (
+                          <img src={redArrow} alt={item.title} />
+                        )}
+                        {`${item.change}`}
+                        <span style={{ color: "#292D32" }}>este mes</span>
+                      </span>
+                    )}
+                    <h2 className={styles.statValue}>
+                      {item.value} {item.currency}
+                    </h2>
+                    {stat.emails && (
+                      <span
+                        className={`${styles.statChange} ${styles.positive}`}
+                      >
+                        <MdOutlineMarkEmailRead size={25} color={"#16c098"} />
+                        {`${allClients?.map((client) => client?.processedEmails?.length).reduce((a, b) => a + b, 0)} Emails procesados`}
+                      </span>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className={styles.statContent}>
+                  <span className={styles.statTitle}>{stat.title}</span>
+
+                  {stat.change && (
+                    <span
+                      className={`${styles.statChange} ${stat.isPositive ? styles.positive : styles.negative}`}
+                    >
+                      {stat.isPositive ? (
+                        <img src={greenArrow} alt={stat.title} />
+                      ) : (
+                        <img src={redArrow} alt={stat.title} />
+                      )}
+                      {`${stat.change}`}
+                      <span style={{ color: "#292D32" }}>este mes</span>
+                    </span>
+                  )}
+                  <h2 className={styles.statValue}>
+                    {stat.value} {stat.currency}
+                  </h2>
+                  {stat.emails && (
+                    <span className={`${styles.statChange} ${styles.positive}`}>
+                      <MdOutlineMarkEmailRead size={25} color={"#16c098"} />
+                      {`${allClients?.map((client) => client?.processedEmails?.length).reduce((a, b) => a + b, 0)} Emails procesados`}
+                    </span>
+                  )}
+                </div>
+              )}
+
             </div>
           ))}
         </div>
         <div className={styles.tableSection}>
           <div className={styles.tableTopContainer}>
             <div className={styles.tableHeaderContainer}>
-              <h1 className={styles.tableTitle}>{t("bodyTitle")}</h1>
+              <h1 className={styles.tableTitle}>Seguimiento y estados</h1>
+              <span className={styles.tableSpan}>Asocidos y sus cuentas</span>
+            </div>
+            <div className={styles.filters}>
+
               <button
                 // onClick={() => navigate("/userSettings")}
                 onClick={() => setShowUserSettings(true)}
                 className={styles.addClientButton}
               >
-                <img src={userPlus} alt="Add client" />
-                {t("buttonAddClient")}
+                <img src={plus} alt="Add client" />
+                Alta nuevo cliente
+
               </button>
-            </div>
-            <div className={styles.filters}>
               <div className={styles.filterSearch}>
                 <img src={magnify} alt="search" />
                 <input
                   type="text"
-                  placeholder={t("placeholder")}
+                  placeholder="Buscar"
+
                   value={searchQuery}
                   onChange={handleSearchChange}
                 />
+                <div className={styles.listRight}>
+                  <img src={listIcon} alt="listIcon" />
+                </div>
               </div>
               <div className={styles.dropdownContainer}>
                 <div

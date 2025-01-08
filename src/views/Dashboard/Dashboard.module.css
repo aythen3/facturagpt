@@ -1,23 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 .container {
   padding: 24px;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
+  font-family: "Poppins", sans-serif;
+  /* background-color: #f9f9f9; */
   flex: 1;
   height: 100vh;
 }
 
 .statsContainer {
   display: flex;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px;  */
   background-color: #fff;
   height: 215px;
   align-items: center;
   justify-content: center;
-  padding: 0px 71px;
-  border-radius: 30px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+  padding-left: 20px;
+  /* padding: 0px 25px; */
+}
+
+.listRight {
+  background: #233f39;
+  width: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .statCard {
@@ -25,10 +33,10 @@
   background: #ffffff;
   display: flex;
   height: 120px;
-  padding-left: 80px;
-  align-items: center;
+  align-items: flex-start;
   border-right: 1px solid #f0f0f0;
-  gap: 16px;
+  margin-right: 24px;
+  gap: 4px;
 }
 .statCard:first-child {
   padding-left: 0px;
@@ -36,16 +44,13 @@
 .statCard:last-child {
   border-right: 1px solid transparent;
 }
-.statIcon {
-  width: 60px;
-  height: 60px;
-}
 
 .statContent {
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
+  min-width: 150px;
 }
 
 .statTitle {
@@ -67,7 +72,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-top: 8px;
+  margin-top: 20px;
 }
 
 .statChange svg {
@@ -77,11 +82,11 @@
 }
 
 .positive {
-  color: #16c098;
+  color: #233f39;
 }
 
 .negative {
-  color: #ff5c5c;
+  color: #d0004b;
 }
 .avatars {
   display: flex;
@@ -99,15 +104,17 @@
 
 .tableSection {
   background: #ffffff;
-  border-radius: 30px;
+  /* border-radius: 30px; */
   padding: 24px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05); */
 }
 
 .tableTitle {
   font-size: 22px;
   font-weight: 600;
+  line-height: 20px;
   color: #000;
+  margin-top: -9px;
 }
 
 .filters {
@@ -139,12 +146,13 @@
   flex: 1;
   display: flex;
   align-items: center;
+  border: 1px solid #d8d8d8;
   gap: 8px;
   width: 300px;
-  background: #f9fbff;
+  overflow: hidden;
   border-radius: 10px;
   height: 40px;
-  padding: 0px 12px;
+  padding-left: 12px;
 }
 
 .filterSearch input {
@@ -177,7 +185,9 @@
 }
 
 .tableHeader {
-  color: #b5b7c0;
+  background: #fafafa;
+  border-radius: 3px;
+  color: #484848;
   font-weight: 500;
   font-size: 14px;
 }
@@ -271,7 +281,7 @@
 
 .slider:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 14px;
   width: 14px;
   left: 3px;
@@ -312,16 +322,16 @@ input:checked + .slider:before {
   color: #292d32;
 }
 
-.inconWrapper {
+.iconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 120px;
-  height: 120px;
-  min-width: 120px;
-  min-height: 120px;
+  width: 55px;
+  height: 55px;
+  min-width: 55px;
+  min-height: 55px;
   border-radius: 50%;
-  background: #d3ffe7;
+  background: linear-gradient(to right, #d8ffea 0%, #effff6 37%, #effff6 100%);
 }
 
 .pageNumber:hover {
@@ -342,7 +352,8 @@ input:checked + .slider:before {
 .tableHeaderContainer {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .addClientButton {
   display: flex;
@@ -350,12 +361,15 @@ input:checked + .slider:before {
   gap: 10px;
   font-size: 14px;
   font-weight: 400;
+  cursor: pointer;
+  user-select: none;
   align-items: center;
   justify-content: flex-start;
-  background-color: #11a380;
+  background-color: #233f39;
   color: #ffffff;
   outline: none;
-  padding: 5px 10px;
+  padding: 0px 10px;
+  height: 42px;
   border: none;
   border-radius: 7px;
   -webkit-border-radius: 7px;
@@ -364,6 +378,11 @@ input:checked + .slider:before {
   -o-border-radius: 7px;
 }
 
+.tableSpan {
+  color: #16c098;
+  font-size: 14px;
+  font-weight: 400;
+}
 .calendarFilterContainer {
   display: flex;
   border-radius: 10px;
@@ -380,7 +399,7 @@ input:checked + .slider:before {
   font-weight: 400;
   color: #7e7e7e;
   height: 40px;
-  background: #f9fbff;
+  border: 1px solid #d8d8d8;
   border-radius: 10px;
   padding: 0px 12px;
   width: 240px;
@@ -408,7 +427,7 @@ input:checked + .slider:before {
   left: 0;
   width: 100%;
   margin-top: 4px;
-  background: #f9fbff;
+  background: #fff;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
