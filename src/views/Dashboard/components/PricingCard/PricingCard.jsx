@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './PricingCard.module.css';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 export const PricingCard = ({
   title,
@@ -13,6 +15,7 @@ export const PricingCard = ({
   setFacturasTotales,
   sliding,
 }) => {
+  const { t } = useTranslation('pricingCard');
   const handleClick = () => {
     setSelectedCard(index);
     const validSlidingValue = Number(sliding);
@@ -35,13 +38,14 @@ export const PricingCard = ({
         <p
           className={`${styles.price} ${selectedCard ? styles.selectedPrice : ''}`}
         >
-          {price}€
+          {price}
+          {price !== 'FREE' ? '€' : ''}
         </p>
-        <span className={styles.subText}>POR DOCUMENTO</span>
+        <span className={styles.subText}>{t('items')}</span>
         <button
           className={`${styles.button} ${selectedCard ? styles.selectedButton : ''}`}
         >
-          Buy Now
+          {t('purchase')}
         </button>
       </div>
     </div>
@@ -54,6 +58,7 @@ const PricingCards = ({
   sliderValue,
   setFacturasTotales,
 }) => {
+  const { t } = useTranslation('pricingCard');
   const [selectedCard, setSelectedCard] = useState(null);
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -62,46 +67,46 @@ const PricingCards = ({
 
   const cardsData = [
     {
-      title: 'Hasta 20 Documentos',
-      price: 'FREE',
+      title: t('title1'),
+      price: t('price1'),
       min: 0,
       max: 0,
       sliding: 0,
     },
     {
-      title: '+2.000 Documentos',
-      price: '0,15',
-      min: 1000000,
-      max: 4999999,
-      sliding: 1000000,
+      title: t('title2'),
+      price: t('price2'),
+      min: 20,
+      max: 199,
+      sliding: 20,
     },
     {
-      title: '+5.000 Documentos',
-      price: '0,14',
-      min: 5000000,
-      max: 9999999,
-      sliding: 5000000,
+      title: t('title3'),
+      price: t('price3'),
+      min: 200,
+      max: 499,
+      sliding: 200,
     },
     {
-      title: '+10.000 Documentos',
-      price: '0,13',
-      min: 10000000,
-      max: 19999999,
-      sliding: 10000000,
+      title: t('title4'),
+      price: t('price4'),
+      min: 500,
+      max: 999,
+      sliding: 500,
     },
     {
-      title: '+20.000 Documentos',
-      price: '0,12',
-      min: 20000000,
-      max: 49999999,
-      sliding: 20000000,
+      title: t('title5'),
+      price: t('price5'),
+      min: 1000,
+      max: 1999,
+      sliding: 1000,
     },
     {
-      title: '+50.000 Documentos',
-      price: '0,11',
-      min: 50000000,
-      max: 100000000,
-      sliding: 50000000,
+      title: t('title6'),
+      price: t('price6'),
+      min: 2000,
+      max: 5000000,
+      sliding: 2000,
     },
   ];
 

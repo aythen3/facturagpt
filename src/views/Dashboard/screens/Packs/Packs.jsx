@@ -4,11 +4,9 @@ import PricingCards from '../../components/PricingCard/PricingCard';
 import BillingSlider from '../../components/BillingSlider/BillingSlider';
 import flag from '../../assets/flag.svg';
 import heart from '../../assets/heart.jpg';
-import pdf from '../../assets/pdfIcon.png';
-import jpg from '../../assets/jpgIcon.png';
-import txt from '../../assets/txtIcon.png';
-import png from '../../assets/pngIcon.png';
-import csv from '../../assets/csvIcon.png';
+import pdf from '../../assets/pdfIconNew.svg';
+import jpg from '../../assets/jpgIconNew.svg';
+import png from '../../assets/pngIconNew.svg';
 import outlook from '../../assets/outlook.svg';
 import gmail from '../../assets/gmail.svg';
 import xslx from '../../assets/xlsx.svg';
@@ -22,8 +20,10 @@ import onedrive from '../../assets/onedrive.svg';
 import droopbox from '../../assets/droopbox.svg';
 import Reviews from '../../components/Reviews/Reviews';
 import CompatibleProgramsSection from '../../components/CompatibleProgramsSection/CompatibleProgramsSection';
+import { useTranslation } from 'react-i18next';
 
 const Packs = () => {
+  const { t } = useTranslation('packs');
   const [sliderValue, setSliderValue] = useState(1000000); // Inicializado en 1M
   const [facturasTotales, setFacturasTotales] = useState(2000);
   const [facturasPorMillon] = useState(2000); // 1 millón = 2000 facturas
@@ -51,32 +51,30 @@ const Packs = () => {
   const valorEnDolares = Math.round(horasTotales * tarifaPorHora); // Valor en dólares redondeado
 
   // Variables formateadas
-  const sliderValueFormatted = sliderValue / 1000000;
+  // const sliderValueFormatted = sliderValue / 1000000;
+  const sliderValueFormatted = numberFormatter.format(sliderValue);
   const totalFacturasFormatted = numberFormatter.format(totalFacturas);
   const horasTotalesFormatted = numberFormatter.format(horasTotales);
   const valorEnDolaresFormatted = numberFormatter.format(valorEnDolares);
 
-  const cardsData = [pdf, jpg, txt, png, csv];
+  const cardsData = [pdf, jpg, png];
   const compatiblePrograms = [outlook, gmail, xslx, odoo, logoImage, stripe];
 
   const steps = [
     {
-      step: 'Paso 1',
-      title: 'Inicia sesión',
-      description:
-        'Conecta en un solo paso, gmail, drive, dropbox, etc.. y sincroniza tu bandeja de entrada',
+      step: t('step1'),
+      title: t('title1'),
+      description: t('description1'),
     },
     {
-      step: 'Paso 2',
-      title: 'Factura con GPT',
-      description:
-        'Reconoce todas tus facturas, recibos, etc.. y conecta con terceros',
+      step: t('step2'),
+      title: t('title2'),
+      description: t('description2'),
     },
     {
-      step: 'Paso 3',
-      title: 'Ahorra un 88% de tiempo',
-      description:
-        'Tu proceso 100% automatizado, 24h y 7 días a la semana disponible',
+      step: t('step3'),
+      title: t('title3'),
+      description: t('description3'),
     },
   ];
   console.log(sliderValueFormatted);
@@ -132,13 +130,28 @@ const Packs = () => {
         sliderValue={sliderValue}
       />
       <span className={styles.packsDescription}>
-        Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
-        empresa con una facturación de{' '}
-        <strong>{sliderValueFormatted} M </strong>
-        genera aproximadamente{' '}
-        <strong>{totalFacturasFormatted} facturas</strong>. Con FacturaGPT,
-        puedes ahorrar más de <strong>{horasTotalesFormatted} horas </strong> en
-        tareas repetitivas y obtener un beneficio de más de{' '}
+        {/* Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
+        empresa con una facturación de{" "} */}
+        {t('resume')}
+        {/* <strong> {sliderValueFormatted} M </strong> */}
+        <strong>
+          {' '}
+          {/* {sliderValueFormatted} {sliderValue <= 999999 ? 'K' : 'M'}{' '} */}
+          {sliderValueFormatted}{' '}
+          {sliderValue <= 900 ? '' : sliderValue <= 999999 ? 'K' : 'M'}{' '}
+        </strong>
+        {/* genera aproximadamente{" "} */}
+        {t('resume_strong')}
+        <strong>
+          {' '}
+          {totalFacturasFormatted} {t('resume_strong2')}
+        </strong>
+        {/* . Con FacturaGPT, puedes ahorrar más de{" "} */}
+        {t('resume_cont')}
+        <strong>
+          {horasTotalesFormatted} {t('resume_hours')}{' '}
+        </strong>{' '}
+        {t('resume_end')}
         <strong>{valorEnDolaresFormatted} €</strong>.
       </span>
       <PricingCards
@@ -148,25 +161,16 @@ const Packs = () => {
         setFacturasTotales={setFacturasTotales}
       />
       <div className={styles.banner}>
-        <h3 className={styles.bannerTitle}>
-          Reduce la entrada manual en un 88%
-        </h3>
-        <h3 className={styles.bannerTitle}>
-          Reduce la tasa de error promedio en un 30%
-        </h3>
-        <h3 className={styles.bannerTitle}>
-          Reduce el tiempo de respuesta en un 57 %
-        </h3>
+        <h3 className={styles.bannerTitle}>{t('reduces1')}</h3>
+        <h3 className={styles.bannerTitle}>{t('reduces2')}</h3>
+        <h3 className={styles.bannerTitle}>{t('reduces3')}</h3>
       </div>
       <section className={styles.extensionsContainer}>
         <div className={styles.extensionsTitle}>
           <img className={styles.flag} src={flag} alt="flag" />
-          <h2>Formatos y Extensiones</h2>
+          <h2>{t('formatsTitle')}</h2>
         </div>
-        <span className={styles.regular08}>
-          Puedes conectar cualquier tipo de formato digital, escaneado, foto..
-          Disponible en más de +10 formatos disponibles
-        </span>
+        <span className={styles.regular08}>{t('formatsDescription')}</span>
         <div className={styles.dashedContainer}>
           {cardsData.map((card, index) => (
             <div className={styles.innerCard} key={index}>
@@ -182,11 +186,9 @@ const Packs = () => {
 
       <div className={styles.extensionsTitle}>
         <img className={styles.heart} src={heart} alt="heart" />
-        <h2>Programas Compatibles</h2>
+        <h2>{t('programsTitle')}</h2>
       </div>
-      <span className={styles.regular08}>
-        Sube, recibe o emite facturas y automatiza tu proceso de facturación
-      </span>
+      <span className={styles.regular08}>{t('programsDescription')}</span>
       <CompatibleProgramsSection />
       <Reviews />
     </div>

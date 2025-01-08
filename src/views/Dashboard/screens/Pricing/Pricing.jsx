@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Pricing.module.css";
-import Navbar from "../../components/Navbar/Navbar";
-import { plansData } from "./plans";
-import PricingPlanCard from "../../components/PricingPlanCard/PricingPlanCard";
-import { PricingCard } from "../../components/PricingCard/PricingCard";
-import star from "../../assets/star.svg";
-import topTrustpilotStar from "../../assets/topTrustpilotStar.svg";
-import bottomTrustpilotStar from "../../assets/bottomTrustpilotStar.svg";
-import googleLogo from "../../assets/googleLogo.svg";
-import googleStar from "../../assets/googleStar.svg";
+import React, { useState, useEffect } from 'react';
+import styles from './Pricing.module.css';
+import Navbar from '../../components/Navbar/Navbar';
+import { plansData } from './plans';
+import PricingPlanCard from '../../components/PricingPlanCard/PricingPlanCard';
+import { PricingCard } from '../../components/PricingCard/PricingCard';
+import star from '../../assets/star.svg';
+import topTrustpilotStar from '../../assets/topTrustpilotStar.svg';
+import bottomTrustpilotStar from '../../assets/bottomTrustpilotStar.svg';
+import googleLogo from '../../assets/googleLogo.svg';
+import googleStar from '../../assets/googleStar.svg';
 
 const Pricing = () => {
-  const [sliderValue, setSliderValue] = useState(100);
+  const [sliderValue, setSliderValue] = useState(20);
   const [selectedCard, setSelectedCard] = useState(9);
   const [currentPlan, setCurrentPlan] = useState({
-    documents: "+100.000 Documentos",
-    price: "0,05",
+    documents: '+100.000 Documentos',
+    price: '0,05',
   });
 
   const cardsData = [
-    { title: "Hasta 20 Documentos", price: "FREE" },
-    { title: "+20 Documentos", price: "0,20" },
-    { title: "+200 Documentos", price: "0,19" },
-    { title: "+500 Documentos", price: "0,18" },
-    { title: "+1000 Documentos", price: "0,16" },
-    { title: "+2.000 Documentos", price: "0,15" },
-    { title: "+5.000 Documentos", price: "0,13" },
-    { title: "+20.000 Documentos", price: "0,11" },
-    { title: "+50.000 Documentos", price: "0,09" },
-    { title: "+100.000 Documentos", price: "0,05" },
+    { title: 'Hasta 20 Documentos', price: 'FREE' },
+    { title: '+20 Documentos', price: '0,20' },
+    { title: '+200 Documentos', price: '0,19' },
+    { title: '+500 Documentos', price: '0,18' },
+    { title: '+1000 Documentos', price: '0,16' },
+    { title: '+2.000 Documentos', price: '0,15' },
+    { title: '+5.000 Documentos', price: '0,13' },
+    { title: '+10.000 Documentos', price: '0,12' },
+    { title: '+20.000 Documentos', price: '0,11' },
+    { title: '+50.000 Documentos', price: '0,09' },
+    { title: '+100.000 Documentos', price: '0,05' },
   ];
 
   useEffect(() => {
@@ -58,6 +59,12 @@ const Pricing = () => {
   const selectedPlanIndex = getSelectedPlanIndex();
   const selectedPlan = plansData[selectedPlanIndex];
 
+  const calculateProgress = () => {
+    const min = 0;
+    const max = 100;
+    return ((sliderValue - min) / (max - min)) * 100; // Calcula el progreso en porcentaje
+  };
+
   return (
     <div className={styles.pricingContainer}>
       <Navbar />
@@ -66,30 +73,18 @@ const Pricing = () => {
         <p className={styles.plansSubtitle}>
           Elige el mejor plan que se adapte a tus necesidades.
         </p>
-        <div className={styles.backgroundBar}>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={sliderValue}
-            onChange={handleSliderChange}
-            className={styles.slider}
-          />
-          <div
-            className={styles.filledBar}
-            style={{ width: `${sliderValue}%` }}
-          ></div>
-          <div
-            className={styles.thumb}
-            style={{ left: `calc(${sliderValue}% + 9px)` }}
-          ></div>
-          <div
-            className={styles.absoluteText}
-            style={{ left: `calc(${sliderValue}% + 12.5px)` }}
-          >
-            {currentPlan.documents}/mes
-          </div>
-        </div>
+        <p className={styles.currentPlan}>{currentPlan.documents}/mes</p>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={sliderValue}
+          onChange={handleSliderChange}
+          className={styles.slider}
+          style={{
+            background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
+          }}
+        />
       </div>
       <div className={styles.plansCardsContainer}>
         <PricingPlanCard
@@ -113,21 +108,40 @@ const Pricing = () => {
       </span>
 
       <div className={styles.cardContainer}>
-        {cardsData.map((card, index) => (
-          <PricingCard
-            fromPricing={true}
-            key={index}
-            index={index}
-            selectedCard={selectedCard === index}
-            setSelectedCard={setSelectedCard}
-            title={card.title}
-            price={card.price}
-          />
-        ))}
+        <div className={`${styles.row1} ${styles.rows}`}>
+          {cardsData.slice(0, 4).map((card, index) => (
+            <PricingCard
+              key={index}
+              title={card.title || 'Hasta 20 Documentos'}
+              price={card.price || 'FREE'}
+              setSelectedCard={setSelectedCard}
+            />
+          ))}
+        </div>
+        <div className={`${styles.row2} ${styles.rows}`}>
+          {cardsData.slice(4, 8).map((card, index) => (
+            <PricingCard
+              key={index}
+              title={card.title || 'Hasta 20 Documentos'}
+              price={card.price || 'FREE'}
+              setSelectedCard={setSelectedCard}
+            />
+          ))}
+        </div>
+        <div className={`${styles.row3}  ${styles.rows}`}>
+          {cardsData.slice(8, 11).map((card, index) => (
+            <PricingCard
+              key={index}
+              title={card.title || 'Hasta 20 Documentos'}
+              price={card.price || 'FREE'}
+              setSelectedCard={setSelectedCard}
+            />
+          ))}
+        </div>
       </div>
       <h1 className={styles.pricingStarText}>
         <img className={styles.star} src={star} alt="star" />
-        Facturación
+        Valoración
       </h1>
       <span className={styles.lightTextSecondary}>
         Escríbenos un email, una reseña en Google, una postal, o incluso puedes
@@ -175,7 +189,6 @@ const Pricing = () => {
             Trustpilot
           </div>
           <div className={styles.bottomContainer}>
-            <span>Excellent</span>
             <div className={styles.trustpilotBottomStars}>
               <div className={styles.trustStarContainer}>
                 <img src={bottomTrustpilotStar} alt="bottomTrustpilotStar" />
@@ -193,9 +206,6 @@ const Pricing = () => {
                 <img src={bottomTrustpilotStar} alt="bottomTrustpilotStar" />
               </div>
             </div>
-            <div className={styles.bottomText}>
-              Based on <span>456 reviews</span>
-            </div>
           </div>
         </div>
       </div>
@@ -207,7 +217,7 @@ const Pricing = () => {
       <span className={styles.reviewsDescriptionLast}>
         Estás un paso más cerca de obtener el mejor servicio...
       </span>
-      <button className={styles.startButton}>Comience ahora</button>
+      <button className={styles.startButton}>Probar Gratis</button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import facturaLogo from '../../assets/FacturaLogoGreen.svg';
@@ -6,9 +6,19 @@ import styles from './FreeTrial.module.css';
 import openai from '../../assets/openaiIcon.svg';
 import mail from '../../assets/emailIcon.svg';
 import lock from '../../assets/Lock.svg';
+import { useTranslation } from 'react-i18next';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const FreeTrial = () => {
+  const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
+  const { t } = useTranslation('freeTrial');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home');
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className={styles.container}>
@@ -18,26 +28,27 @@ const FreeTrial = () => {
           <img src={facturaLogo} alt="FacturaGPT" />
         </a>
         <div className={styles.btnContainer}>
-          <button onClick={() => navigate('/register')}>
+          <button onClick={() => navigate('/login')}>
             <img src={mail} alt="Mail Icon" />
-            Registrarse con correo electrónico
+            {t('registerButton')}
           </button>
-          <button>
+          <button onClick={() => loginWithRedirect()}>
             <img src={openai} alt="OpenAI Logo" className={styles.openaiLogo} />
-            Empezar con OpenAI
+            {t('loginAIButton')}
           </button>
         </div>
+
         <p>
-          ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
+          {t('optionLogin')} <a href="/login">{t('login')}</a>
         </p>
 
         <p className={styles.policy}>
-          Creando una cuenta afirmas estar de acuerdo con nuestros{' '}
-          <a href="termsandconditions">Términos y Política de Privacidad</a>
+          {t('termAndCon')}
+          <a href="termsandconditions">{t('termAndConLink')}</a>
         </p>
         <p className={styles.safety}>
           <img src={lock} alt="Lock Icon" />
-          Tu seguridad nos importa
+          {t('security')}
         </p>
       </div>
     </div>

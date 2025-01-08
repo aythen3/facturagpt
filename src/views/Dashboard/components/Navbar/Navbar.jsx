@@ -4,8 +4,14 @@ import chevDown from '../../assets/chevDown.svg';
 import facturaLogo from '../../assets/facturaLogo.svg';
 import menuIcon from '../../assets/Barchart.svg'; // Ícono de menú
 import { useNavigate, useLocation } from 'react-router-dom';
+import english_flag from '../../assets/english_flag.svg';
+import spain_flag from '../../assets/spain_flag.svg';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../../i18';
 
 const Navbar = () => {
+  const [t] = useTranslation('navBar');
+
   const [menuOpen, setMenuOpen] = useState(false); // Estado para el menú
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,6 +25,10 @@ const Navbar = () => {
     navigate('/contact');
   };
 
+  const handleLanguage = (lng) => {
+    localStorage.setItem('language', lng);
+    i18n.changeLanguage(lng);
+  };
   return (
     <nav className={styles.navbar}>
       <img
@@ -30,36 +40,49 @@ const Navbar = () => {
       <button className={styles.hamburger} onClick={toggleMenu}>
         <img src={menuIcon} alt="Menu Icon" />
       </button>
-      <ul
+      <div
         className={`${styles.navLinks} ${
           menuOpen ? styles.navLinksOpen : styles.navLinksClosed
         }`}
       >
-        <li onClick={() => navigate('/landing')}>Inicio</li>
-        {location.pathname !== '/contact' ? (
-          <li onClick={scrollToContact}>Contacto </li>
-        ) : (
-          <li className={styles.disabledBtn}>Contacto </li>
-        )}
+        <div className={styles.navFlex}>
+          <div onClick={() => navigate('/landing')}>{t('item1')}</div>
+          {location.pathname !== '/contact' ? (
+            <div onClick={scrollToContact}>{t('item2')} </div>
+          ) : (
+            <div className={styles.disabledBtn}>{t('item2')}</div>
+          )}
 
-        <li onClick={() => navigate('/pricing')}>Precios</li>
-        <li style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-          Idioma{' '}
-          <span
-            className={`${styles.chevDownIcon} ${
-              menuOpen ? styles.chevDownOpen : ''
-            }`}
-          >
-            <img src={chevDown} alt="chevDown" />
-          </span>
-        </li>
+          <div onClick={() => navigate('/pricing')}>{t('item3')}</div>
+
+          <div style={{ display: 'flex', gap: '30px' }}>
+            <img
+              onClick={() => handleLanguage('en')}
+              src={english_flag}
+              alt="img"
+              style={{ width: 30, height: 30, cursor: 'pointer' }}
+            />
+            <img
+              onClick={() => handleLanguage('es')}
+              src={spain_flag}
+              alt="img"
+              style={{ width: 30, height: 30, cursor: 'pointer' }}
+            />
+          </div>
+        </div>
+        <button
+          className={`${styles.button} ${styles.buttonLogIn}`}
+          onClick={() => navigate('/login')}
+        >
+          {t('logIn')}
+        </button>
         <button
           className={styles.button}
           onClick={() => navigate('/freetrial')}
         >
-          Probar Gratis
+          {t('button')}
         </button>
-      </ul>
+      </div>
     </nav>
   );
 };

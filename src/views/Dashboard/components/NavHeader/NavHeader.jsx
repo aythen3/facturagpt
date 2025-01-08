@@ -1,10 +1,13 @@
 import React from 'react';
-import styles from './NavHeader.module.css';
-import ArrowDown from '../../assets/ArrowDown.svg';
 import starIcon from '../../assets/starIcon.svg';
 import logo from '../../assets/facturaLogoIcon.svg';
+import styles from './NavHeader.module.css';
+import ArrowDown from '../../assets/ArrowDown.svg';
 
+import { useTranslation } from 'react-i18next';
 const NavHeader = () => {
+  const { t } = useTranslation('navBarHeader');
+
   const handleScrollToFacturation = () => {
     const facturationElement = document.getElementById('facturation');
     if (facturationElement) {
@@ -23,9 +26,7 @@ const NavHeader = () => {
   return (
     <div className={styles.navHeaderContainer}>
       <img src={logo} alt="FacturaGPT Logo" />
-      <div className={styles.navHeaderTitle}>
-        +30M de facturas automatizadas
-      </div>
+      <div className={styles.navHeaderTitle}>{t('publicity')}</div>
       <div className={styles.navHeaderSubtitle}>
         <span className={styles.factura}>Factura</span>
         <span className={styles.gpt}>GPT</span>
@@ -36,16 +37,13 @@ const NavHeader = () => {
         className={`${styles.iconfloat} ${styles.starIconR} `}
       />
 
-      <span className={styles.navHeaderDescription}>
-        Digitaliza tu facturación de forma automática y automatiza tus procesos
-        de venta para ahorrar tiempo y reducir el volumen de gestión documental.
-      </span>
+      <span className={styles.navHeaderDescription}>{t('description')}</span>
       <div
         className={styles.nextSteps}
         onClick={handleScrollToFacturation}
         style={{ cursor: 'pointer' }}
       >
-        ¡Empieza ahora!
+        {t('invitation')}
         <span>
           <img src={ArrowDown} alt="" />
         </span>

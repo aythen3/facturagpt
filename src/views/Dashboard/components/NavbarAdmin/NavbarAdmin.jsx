@@ -1,19 +1,42 @@
-import React, { useState } from 'react';
-import styles from './NavbarAdmin.module.css';
-import star from '../../assets/starPlus.svg';
-import facturaGPT from '../../assets/FacturaGPTIcon.svg';
-import bookIcon from '../../assets/bookIcon.svg';
-import clientIcon from '../../assets/client.png';
-import headphonesIcon from '../../assets/headphonesIcon.svg';
-import AccountSettings from '../AccountSettings/AccountSettings';
+import React, { useState } from "react";
+import styles from "./NavbarAdmin.module.css";
+import star from "../../assets/starPlus.svg";
+import facturaGPT from "../../assets/FacturaGPTIcon.svg";
+import bookIcon from "../../assets/bookIcon.svg";
+import clientIcon from "../../assets/client.png";
+import headphonesIcon from "../../assets/headphonesIcon.svg";
+import AccountSettings from "../AccountSettings/AccountSettings";
+import i18n from "../../../../i18";
+import { useTranslation } from "react-i18next";
 
 const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
+  const { t } = useTranslation("navbarAdmin");
+
   const handleProfileClick = () => {
     setShowSidebar(!showSidebar);
   };
 
+  const handleLanguage = (lng) => {
+    localStorage.setItem("language", lng);
+    i18n.changeLanguage(lng);
+  };
+
   return (
     <div className={styles.navbarAdmin}>
+      <div style={{ display: "flex" }}>
+        <img
+          onClick={() => handleLanguage("es")}
+          src="./spain_flags.png"
+          alt="img"
+          style={{ width: 30, height: 30, cursor: "pointer" }}
+        />
+        <img
+          onClick={() => handleLanguage("en")}
+          src="./english_flag.png"
+          alt="img"
+          style={{ width: 30, height: 30, cursor: "pointer" }}
+        />
+      </div>
       <div className={styles.navbarAdminIcons}>
         <a href="/">
           <img src={facturaGPT} alt="" />
@@ -33,7 +56,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
       </div>
 
       <button className={styles.plus}>
-        Obtener Plus <img src={star} alt="" />
+        {t("buttonGetPlus")} <img src={star} alt="" />
       </button>
       <div className={styles.profile} onClick={handleProfileClick}>
         <div className={styles.profileText}>
@@ -46,7 +69,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
         />
       </div>
 
-      <div className={`${styles.sidebar} ${showSidebar ? styles.show : ''}`}>
+      <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
         <AccountSettings />
       </div>
     </div>

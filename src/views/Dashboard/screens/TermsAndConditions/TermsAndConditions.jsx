@@ -1,16 +1,18 @@
-import React from 'react';
-import styles from './TermsAndConditions.module.css';
-import Navbar from '../../components/Navbar/Navbar';
+import React from "react";
+import styles from "./TermsAndConditions.module.css";
+import Navbar from "../../components/Navbar/Navbar";
+import { useTranslation } from "react-i18next";
 
 const TermsAndConditions = () => {
+  const { t } = useTranslation("termsAndCondition");
   return (
     <div className={styles.main}>
       <Navbar />
       <article className={styles.article}>
         <header>
-          <h2>Términos de Uso</h2>
-          <span>Vigentes desde: 1 de enero de 2025</span>
-          <p>¡Gracias por usar FacturaGPT!</p>
+          <h2>{t("title")}</h2>
+          <span>{t("vigency")}</span>
+          <p>{t("subTitle")}</p>
         </header>
 
         <section>
@@ -37,13 +39,9 @@ const TermsAndConditions = () => {
         </section>
 
         <section>
-          <h3>Quiénes Somos</h3>
+          <h3>{t("aboutTitle")}</h3>
           <p>
-            FacturaGPT es un sistema avanzado de facturación diseñado para
-            digitalizar y simplificar todo el proceso de gestión de facturas.
-            Nuestra misión es facilitar el proceso de facturación para empresas
-            y profesionales, mejorando su eficiencia y productividad. <br />
-            Para más información sobre nosotros, visite:{' '}
+            {t("aboutText")}{" "}
             <a
               href="https://www.facturagpt.com"
               target="_blank"
@@ -55,161 +53,89 @@ const TermsAndConditions = () => {
         </section>
 
         <section>
-          <h3>Política de Privacidad </h3>
+          <h3>{t("polAndPrivTitle")}</h3>
           <p>
-            La Política de Privacidad de FacturaGPT detalla cómo recopilamos,
-            usamos, almacenamos y protegemos su información personal.
+            {t("polAndPrivSubTitle")}
             <ul>
+              <li>{t("polAndPrivLi1")}</li>
               <li>
-                Recopilación de Información: Recopilamos información
-                proporcionada por usted al registrarse, interactuar con nuestros
-                Servicios o comunicarse con nosotros. Esto incluye datos de
-                contacto (nombre, correo electrónico, teléfono), información
-                financiera (métodos de pago y datos de facturación) e
-                información técnica (dirección IP, tipo de dispositivo, datos de
-                uso de la aplicación).
-              </li>
-              <li>
-                Uso de la Información: Utilizamos sus datos para:
+                {t("polAndPrivLi2")}
                 <ul>
-                  <li>Operar y mantener los Servicios.</li>
-                  <li>Procesar pagos y gestionar suscripciones.</li>
-                  <li>Personalizar su experiencia de usuario.</li>
-                  <li>Mejorar y desarrollar nuevas funcionalidades.</li>
-                  <li>Cumplir con obligaciones legales.</li>
+                  <li>{t("polAndPrivLi3")}</li>
+                  <li>{t("polAndPrivLi4")}</li>
+                  <li>{t("polAndPrivLi5")}</li>
+                  <li>{t("polAndPrivLi6")}</li>
+                  <li>{t("polAndPrivLi7")}</li>
+                </ul>
+              </li>
+              <li>{t("polAndPrivLi8")}</li>
+              <li>{t("polAndPrivLi9")}</li>
+              <li>
+                {t("polAndPrivLi10")}
+                <ul>
+                  <li>{t("polAndPrivLi11")}</li>
+                  <li>{t("polAndPrivLi12")}</li>
                 </ul>
               </li>
               <li>
-                Protección de Datos: Implementamos medidas de seguridad técnicas
-                (como cifrado de datos) y organizativas (control de acceso y
-                capacitación del personal) para proteger su información contra
-                accesos no autorizados, pérdidas o alteraciones.
-              </li>
-              <li>
-                Retención de Datos: Conservamos sus datos solo durante el tiempo
-                necesario para prestar los Servicios, cumplir con nuestras
-                obligaciones legales o resolver disputas.
-              </li>
-              <li>
-                Cancelación de la Suscripción: Si decide cancelar su
-                suscripción:
+                {t("polAndPrivLi13")}
                 <ul>
-                  <li>
-                    Su información permanecerá en nuestros sistemas el tiempo
-                    necesario para cumplir con nuestras obligaciones legales y
-                    permitir una posible reactivación.
-                  </li>
-                  <li>
-                    Puede solicitar la eliminación completa de sus datos, salvo
-                    que existan razones legales para retenerlos.
-                  </li>
+                  <li>{t("polAndPrivLi14")}</li>
+                  <li>{t("polAndPrivLi15")}</li>
                 </ul>
               </li>
               <li>
-                Compartición de Información: Compartimos su información personal
-                exclusivamente:
+                {t("polAndPrivLi16")}
                 <ul>
-                  <li>
-                    Con proveedores de servicios de confianza para procesar
-                    pagos, almacenar datos o prestar soporte técnico.
-                  </li>
-                  <li>
-                    Cuando la ley lo exija o para proteger nuestros derechos
-                    legales.
-                  </li>
+                  <li>{t("polAndPrivLi17")}</li>
+                  <li>{t("polAndPrivLi18")}</li>
+                  <li>{t("polAndPrivLi19")}</li>
                 </ul>
               </li>
-              <li>
-                Sus Derechos: Usted tiene derecho a:
-                <ul>
-                  <li>Acceder a sus datos personales.</li>
-                  <li>Solicitar la corrección o eliminación de sus datos.</li>
-                  <li>
-                    Limitar el tratamiento de sus datos o retirar su
-                    consentimiento.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                Transferencias Internacionales de Datos: Si sus datos se
-                transfieren fuera de su región, implementamos medidas adecuadas
-                para garantizar su protección, como el uso de cláusulas
-                contractuales tipo.
-              </li>
+              <li>{t("polAndPrivLi20")}</li>
             </ul>
           </p>
         </section>
         <section>
-          <h3>Política de Cookies</h3>
+          <h3>{t("polCookiesTitle")}</h3>
           <p>
-            FacturaGPT utiliza cookies para optimizar su experiencia y mejorar
-            los Servicios.
+            {t("polCookiesSubTitle")}
             <ul>
+              <li>{t("polCookiesLi1")}</li>
               <li>
-                Qué son las cookies: Pequeños archivos de texto almacenados en
-                su dispositivo que recopilan información sobre su navegación.
-              </li>
-              <li>
-                Tipos de cookies utilizadas:
+                {t("polCookiesLi2")}
+
                 <ul>
-                  <li>
-                    Cookies esenciales: Necesarias para el funcionamiento del
-                    sitio.
-                  </li>
-                  <li>
-                    Cookies analíticas: Ayudan a mejorar el rendimiento y
-                    funcionalidad del sitio.
-                  </li>
-                  <li>
-                    Cookies publicitarias: Personalizan anuncios basados en sus
-                    intereses.
-                  </li>
+                  <li>{t("polCookiesLi3")}</li>
+                  <li>{t("polCookiesLi4")}</li>
+                  <li>{t("polCookiesLi5")}</li>
                 </ul>
               </li>
-              Gestión de cookies: Puede ajustar las preferencias de cookies a
-              través de la configuración de su navegador.
+              {t("polCookiesLi6")}
+
               <li></li>
-              Política de retención: Las cookies se eliminan automáticamente
-              después de un período de tiempo específico, dependiendo de su
-              propósito.
+              {t("polCookiesLi7")}
+
               <li></li>
             </ul>
           </p>
         </section>
 
         <section>
-          <h3>Condiciones de Uso y Contratos</h3>
+          <h3>{t("conditionUseTitle")}</h3>
           <p>
-            {' '}
+            {" "}
             <ul>
               <li>
-                Condiciones de la Cuenta:
+                {t("conditionUseLi1")}
                 <ul>
-                  <li>
-                    Para acceder al servicio, es imprescindible ser mayor de
-                    dieciséis años. Se debe proporcionar un nombre legal
-                    completo, una dirección de correo electrónico y toda la
-                    información requerida por FacturaGPT en el proceso de
-                    creación de la cuenta. Es responsabilidad del usuario
-                    proporcionar información veraz. También es responsable de
-                    todas las actividades realizadas bajo su cuenta. Si crea una
-                    cuenta o utiliza los Servicios en nombre de otra persona o
-                    entidad, debe tener la autoridad para aceptar estos Términos
-                    en su nombre. FacturaGPT se reserva el derecho de eliminar
-                    cualquier cuenta si se sospecha de su veracidad o pudiera
-                    incumplir alguna de las normas de uso.
-                  </li>
+                  <li>{t("conditionUseLi2")}</li>
                 </ul>
               </li>
               <li>
-                Dominios Corporativos:
+                {t("conditionUseLi3")}
                 <ul>
-                  <li>
-                    Si crea una cuenta con un correo corporativo, esta puede ser
-                    añadida a la cuenta empresarial de la organización,
-                    otorgando al administrador control sobre su cuenta,
-                    incluyendo acceso a sus datos.
-                  </li>
+                  <li>{t("conditionUseLi4")}</li>
                 </ul>
               </li>
             </ul>
@@ -217,188 +143,100 @@ const TermsAndConditions = () => {
         </section>
 
         <section>
-          <h3>Pago y Facturación</h3>
+          <h3>{t("paymentAndBillingTitle")}</h3>
           <p>
             <ul>
-              <li>
-                Debe proporcionar información de facturación precisa y un método
-                de pago válido.
-              </li>
-              <li>
-                Las suscripciones pagadas se renuevan automáticamente hasta que
-                las cancele. Para realizar los pagos, es necesario introducir en
-                la cuenta una tarjeta bancaria válida.
-              </li>
-              <li>
-                FacturaGPT cobrará periódicamente al usuario una tarifa
-                recurrente dependiendo del tipo de cuenta contratada. El
-                servicio será cobrado cada período por adelantado y no es
-                reembolsable, salvo en los casos previstos en estas condiciones.
-              </li>
-              <li>
-                En caso de impago, el acceso al servicio será suspendido y los
-                datos se eliminarán en un plazo de treinta (30) días a partir de
-                la fecha de incumplimiento.
-              </li>
+              <li>{t("paymentAndBillingLi1")}</li>
+              <li>{t("paymentAndBillingLi2")}</li>
+              <li>{t("paymentAndBillingLi3")}</li>
+              <li>{t("paymentAndBillingLi4")}</li>
             </ul>
           </p>
         </section>
 
         <section>
-          <h3>Modificaciones del Servicio y de los Planes</h3>
-          <p>
-            FacturaGPT se reserva el derecho de modificar o suspender, temporal
-            o permanentemente, el servicio en cualquier momento y por cualquier
-            motivo si lo considera conveniente, con o sin previo aviso.
-          </p>
+          <h3>{t("modificationsServiceTitle")}</h3>
+          <p>{t("modificationsServiceSubTitle")}</p>
         </section>
 
         <section>
-          <h3>Terminación y Suspensión</h3>
+          <h3>{t("suspensionTitle")}</h3>
           <p>
             <ul>
               <li>
-                Terminación: Puede dejar de usar los Servicios en cualquier
-                momento. Podemos suspender o terminar su acceso si:
+                {t("suspensionLi1")}
                 <ul>
-                  <li>Incumple estos Términos o nuestras Políticas de Uso.</li>
-                  <li>La ley lo requiere.</li>
-                  <li>Su uso puede causar daños o riesgos.</li>
+                  <li>{t("suspensionLi2")}</li>
+                  <li>{t("suspensionLi3")}</li>
+                  <li>{t("suspensionLi4")}</li>
                 </ul>
               </li>
-              <li>
-                Apelaciones: Si cree que su cuenta fue suspendida o terminada
-                por error, puede apelar contactando al soporte.
-              </li>
+              <li>{t("suspensionLi5")}</li>
             </ul>
           </p>
-          <p>
-            Exclusión de Garantías NUESTROS SERVICIOS SE PROPORCIONAN "TAL
-            CUAL". NO OFRECEMOS GARANTÍAS EXPRESAS O IMPLÍCITAS, SALVO DONDE LA
-            LEY LO EXIJA.
-          </p>
-          <p>
-            Limitación de Responsabilidad NO SOMOS RESPONSABLES DE DAÑOS
-            INDIRECTOS, INCIDENTALES O CONSECUENCIALES DERIVADOS DEL USO DE LOS
-            SERVICIOS. Esto incluye pérdidas económicas, interrupciones en el
-            servicio o pérdidas de datos.
-          </p>
+          <p>{t("suspensionFooter1")}</p>
+          <p>{t("suspensionFooter2")}</p>
         </section>
         <section>
-          <h3>Cancelación y Rescisión </h3>
+          <h3>{t("cancelTitle")}</h3>
           <p>
-            El usuario puede cancelar su cuenta en cualquier momento. Los pagos
-            no son reembolsables salvo que la ley lo requiera.
+            {t("cancelSubTitle")}
             <ul>
-              <li>
-                Cambios: Podemos cambiar los precios. Si aumentamos tarifas, le
-                notificaremos con 30 días de antelación antes de la renovación.
-              </li>
-              <li>
-                Si la cuenta es eliminada, todo su contenido será eliminado
-                después de treinta días. FacturaGPT se reserva el derecho de
-                cancelar una cuenta o impedir el uso del software a aquellos que
-                no cumplan con estas condiciones de uso.
-              </li>
+              <li>{t("cancelLi1")}</li>
+              <li>{t("cancelLi2")}</li>
             </ul>
           </p>
         </section>
         <section>
-          <h3>Política de Devoluciones </h3>
+          <h3>{t("returnPolicyTitle")}</h3>
           <p>
-            Si durante los primeros 30 días utilizando FacturaGPT no está
-            satisfecho con el servicio, contacte a través de{' '}
+            {t("returnPolicyText1")}{" "}
             <a
               href="soporteinfo@facturagpt.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               soporteinfo@facturagpt.com
-            </a>{' '}
-            para solicitar un reembolso completo. Las suscripciones se renuevan
-            automáticamente hasta su cancelación manual. Las devoluciones no se
-            aplicarán a usuarios que hayan incumplido los términos de uso.
+            </a>{" "}
+            {t("returnPolicyText2")}
           </p>
         </section>
         <section>
-          <h3>Propiedad Intelectual </h3>
-          <p>
-            FacturaGPT posee todos los derechos de la Propiedad Intelectual
-            relacionados con el servicio, incluyendo, pero no limitándose, al
-            nombre del servicio, material gráfico y software asociado. El
-            usuario se compromete a no copiar, adaptar, reproducir, distribuir,
-            aplicar ingeniería inversa o descompilar cualquier faceta del
-            servicio.
-          </p>
+          <h3>{t("intellectualPropertyTitle")}</h3>
+          <p>{t("intellectualPropertyText")}</p>
         </section>
         <section>
-          <h3>Uso de Nuestros Servicios </h3>
-          <p>
-            El usuario es completamente responsable del acceso y correcto uso de
-            FacturaGPT con sujeción a la legalidad vigente. FacturaGPT no
-            garantiza que el servicio sea ininterrumpido o libre de errores, ni
-            se hace responsable de daños directos o indirectos derivados del uso
-            del servicio. La inteligencia artificial evoluciona rápidamente. El
-            uso de los Servicios podría generar resultados que no reflejen datos
-            reales. Usted acepta evaluar la precisión y adecuación del contenido
-            generado antes de usarlo o compartirlo.
-          </p>
+          <h3>{t("useofOurServicesTitle")}</h3>
+          <p>{t("useofOurServicesText")}</p>
         </section>
         <section>
-          <h3>Servicios de Terceros </h3>
-          <p>
-            Los Servicios pueden incluir software, productos o servicios de
-            terceros, sujetos a sus propios términos. No somos responsables por
-            ellos.
-          </p>
+          <h3>{t("thirdPartyServicesTitle")}</h3>
+          <p>{t("thirdPartyServicesText")}</p>
         </section>
 
         <section>
-          <h3>Comentarios</h3>
-          <p>
-            Valoramos sus comentarios y podemos utilizarlos sin restricciones ni
-            compensación.
-          </p>
+          <h3>{t("commentsTitle")}</h3>
+          <p>{t("commentsText")}</p>
         </section>
 
         <section>
-          <h3>Seguridad y Privacidad</h3>
-          <p>
-            FacturaGPT cumple con la normativa vigente en materia de protección
-            de datos, incluyendo la GDPR. Los datos de los usuarios se
-            encuentran alojados en servidores seguros dentro de la Unión
-            Europea. Todo acceso a los datos por parte del personal de
-            FacturaGPT está regulado mediante contratos de confidencialidad.
-          </p>
+          <h3>{t("securityAndPrivacyTitle")}</h3>
+          <p>{t("securityAndPrivacyText")}</p>
         </section>
 
         <section>
-          <h3>Términos Generales</h3>
+          <h3>{t("generalTermsTitle")}</h3>
           <p>
-            Las condiciones de uso se regirán por las leyes de España. El
-            usuario y FacturaGPT aceptan someterse a la jurisdicción exclusiva
-            de los tribunales de Barcelona para resolver cualquier cuestión
-            legal relacionada con estas condiciones.
+            {t("generalTermsText")}
             <ul>
-              <li>
-                La cesión de sus derechos bajo estos Términos está prohibida sin
-                nuestro consentimiento previo y por escrito.
-              </li>
-              <li>
-                Nos reservamos el derecho de transferir o delegar nuestros
-                derechos y obligaciones en cualquier momento.
-              </li>
+              <li>{t("generalTermsLi1")}</li>
+              <li>{t("generalTermsLi2")}</li>
             </ul>
           </p>
         </section>
 
         <section>
-          <p>
-            Estos Términos están regidos por las leyes de Barcelona, España, sin
-            perjuicio de los derechos que la legislación local pueda otorgarle.
-            En caso de conflicto, usted acepta someterse a la jurisdicción
-            exclusiva de los tribunales de dicha ciudad.
-          </p>
+          <p>{t("footer")}</p>
         </section>
       </article>
     </div>

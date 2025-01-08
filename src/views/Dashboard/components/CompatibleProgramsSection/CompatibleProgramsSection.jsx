@@ -6,7 +6,11 @@ import a3 from '../../assets/a3.svg';
 import whatsapp from '../../assets/whatsapp.svg';
 import odoo from '../../assets/odoo.svg';
 import holded from '../../assets/holded.png';
+import espublicogestionaLogo from '../../assets/espublicogestionaLogo.svg';
+import agenciatributariaLogo from '../../assets/agenciatributariaLogo.svg';
+import { useTranslation } from 'react-i18next';
 const CompatibleProgramsSection = () => {
+  const { t } = useTranslation('compatibleProgramsSection');
   // Datos de ejemplo para los sliders
   const slidersData = [
     [
@@ -14,26 +18,28 @@ const CompatibleProgramsSection = () => {
         logo: stripe,
         name: 'Stripe',
         description: [
-          'Gestión automática de facturas por suscripciones',
-          'Conciliación de pagos en tiempo real',
-          'Notificaciones automáticas de pago',
+          t('stripeDescription1'),
+          t('stripeDescription2'),
+          t('stripeDescription3'),
         ],
       },
       {
         logo: a3,
         name: 'Wolters Kluwer A3 Software',
         description: [
-          'Importación de facturas digitales',
-          'Reportes financieros automatizados',
+          t('woltersDescription1'),
+          t('woltersDescription2'),
+          t('woltersDescription3'),
         ],
       },
       {
         logo: whatsapp,
         name: 'WhatsApp',
         description: [
-          'Comparte facturas',
-          'Recordatorios de pago',
-          'Chatea con FacturaGPT para crear facturas',
+          t('whatsAppDesciption1'),
+          t('whatsAppDesciption2'),
+          t('whatsAppDesciption3'),
+          t('whatsAppDesciption4'),
         ],
       },
 
@@ -41,16 +47,39 @@ const CompatibleProgramsSection = () => {
         logo: odoo,
         name: 'Odoo',
         description: [
-          'Sincronización de datos de clientes y facturas',
-          'Gestión de inventarios y facturación',
+          t('odooDescription1'),
+          t('odooDescription2'),
+          t('odooDescription3'),
+          t('odooDescription4'),
         ],
       },
       {
         logo: holded,
         name: 'Holded',
         description: [
-          'Sincronización bidireccional',
-          'Gestión de proyectos y facturación',
+          t('holdedDescripion1'),
+          t('holdedDescripion2'),
+          t('holdedDescripion3'),
+        ],
+      },
+      {
+        logo: espublicogestionaLogo,
+        name: 'EsPublico Gestiona',
+        description: [
+          t('espublicoDescripion1'),
+          t('espublicoDescripion3'),
+          t('espublicoDescripion3'),
+          t('espublicoDescripion4'),
+        ],
+      },
+      {
+        logo: agenciatributariaLogo,
+        name: 'Agéncia Tributária',
+        description: [
+          t('agenciatributariaDescripion1'),
+          t('agenciatributariaDescripion2'),
+          t('agenciatributariaDescripion3'),
+          t('agenciatributariaDescripion4'),
         ],
       },
     ],

@@ -14,8 +14,13 @@ import {
   verifyOTP,
   sendOTP,
 } from "../../../../actions/user";
+import { useTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const DashboardLogin = () => {
+  const { t } = useTranslation("dahsboardLogin");
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+
   const { user } = useSelector((state) => state.emailManager);
   const dispatch = useDispatch();
   const [mode, setMode] = useState("signin");
@@ -31,6 +36,12 @@ const DashboardLogin = () => {
   const [storedPassword, setStoredPassword] = useState("");
   const [recaptchaValue, setRecaptchaValue] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
@@ -177,13 +188,15 @@ const DashboardLogin = () => {
   const renderTitle = () => {
     switch (mode) {
       case "signup":
-        return "¡Bienvenido!";
+        return t("title1");
       case "otp":
-        return "Por favor, revisa tu correo";
+        return t("title2");
+
       case "forgot-password":
-        return "¡Ups! ¿Te olvidaste de la contraseña?";
+        return t("title3");
+
       default:
-        return "¡Estás de vuelta!";
+        return t("title4");
     }
   };
 
@@ -214,33 +227,33 @@ const DashboardLogin = () => {
         </label>
       )}
       <label className={styles.label}>
-        Email
+        {t("label1")}
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          placeholder="Example@email.com"
+          placeholder={t("placeholder1")}
           className={styles.input}
         />
       </label>
       <label className={styles.label}>
-        Password
+        {t("label2")}
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
-          placeholder="at least 8 characters"
+          placeholder={t("placeholder2")}
           className={styles.input}
         />
         <span className={styles.passwordRequirements}>
-          8 characters minimum, and at least 1 uppercase letter and 1 number
+          {t("conditionPassword")}
         </span>
       </label>
       {mode === "signin" && (
         <div className={styles.forgotPasswordContainer}>
           <div className={styles.rememberMe}>
             <input type="checkbox" />
-            <span>Recuérdame</span>
+            <span>{t("remember")}</span>
           </div>
           <a
             href="#"
@@ -250,7 +263,7 @@ const DashboardLogin = () => {
               setMode("forgot-password");
             }}
           >
-            ¿Olvidaste la contraseña?
+            {t("forgot")}
           </a>
         </div>
       )}
@@ -263,13 +276,16 @@ const DashboardLogin = () => {
             ? "Signing in..."
             : "Signing up..."
           : mode === "signin"
-            ? "Sign in"
-            : "Sign up"}
+            ? t("buttonRegister1")
+            : t("buttonRegister2")}
       </div>
       {mode === "signin" && (
-        <button className={styles.buttonOpenAi}>
+        <button
+          onClick={() => loginWithRedirect()}
+          className={styles.buttonOpenAi}
+        >
           <OpenAiLogo />
-          <span>Empezar con OpenAI</span>
+          <span>{t("loginIAButton")}</span>
         </button>
       )}
     </form>
@@ -280,21 +296,16 @@ const DashboardLogin = () => {
       <div className={styles.forgotPasswordIcon}>
         <KeyIcon />
       </div>
-      <h1 className={styles.forgotPasswordTitle}>
-        ¡Ups! ¿Te olvidaste de la contraseña?
-      </h1>
-      <p className={styles.forgotPasswordSubtitle}>
-        No te preocupes, esto pasa. Ingresa tu email registrado a tu cuenta de
-        Usuario para resetear tu contraseña
-      </p>
+      <h1 className={styles.forgotPasswordTitle}>{t("title3")}</h1>
+      <p className={styles.forgotPasswordSubtitle}>{t("solution")}</p>
       <form className={styles.form}>
         <label className={styles.label}>
-          Email
+          {t("label1")}
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
-            placeholder="Example@email.com"
+            placeholder={t("placeholder1")}
             className={styles.input}
           />
         </label>
@@ -307,14 +318,14 @@ const DashboardLogin = () => {
           className={styles.continueButton}
           disabled={isLoading}
         >
-          {isLoading ? "Procesando..." : "Continuar"}
+          {isLoading ? t("buttonContinue2") : t("buttonContinue1")}
         </button>
       </form>
       <p className={styles.securityNote}>
         <span className={styles.lockIcon}>
           <LockIcon size={14} />
         </span>
-        Tu seguridad nos importa
+        {t("security")}
       </p>
     </div>
   );
@@ -389,21 +400,20 @@ const DashboardLogin = () => {
         <div className={styles.leftContainer}>{renderLogo()}</div>
         <div className={styles.rightContainer}>
           <h1 className={styles.title}>{renderTitle()}</h1>
-          <p className={styles.subtitle}>
-            Controla tu facturación, controla tu negocio.
-          </p>
+          <p className={styles.subtitle}>{t("subTitle")}</p>
           {renderForm()}
           {error && <p className={styles.error}>{error}</p>}
           <p className={styles.footerText}>
-            {mode === "signin" ? "Don't you" : "Already"} have an account?{" "}
+            {mode === "signin" ? t("notAccount1") : t("yesAccount1")}{" "}
+            {t("notAccount2")}{" "}
             <a
               onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
               className={styles.signUp}
             >
-              {mode === "signin" ? "Sign up" : "Sign in"}
+              {mode === "signin" ? t("register") : t("login")}
             </a>
           </p>
-          <p className={styles.footer}>© 2024 ALL RIGHTS RESERVED</p>
+          <p className={styles.footer}>© {t("copyright")}</p>
         </div>
       </div>
     </div>

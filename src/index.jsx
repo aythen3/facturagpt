@@ -1,49 +1,52 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Provider } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Provider } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 
-// import i18n from "./i18n";
+import store from "./utils/store";
 
-import store from './utils/store';
+import Transactions from "./views/Dashboard/screens/Transactions/Transactions.jsx";
+import ArticlesTransactions from "./views/Dashboard/screens/ArticlesTransactions/ArticlesTransactions.jsx";
 
-import DashboardLogin from './views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx';
-import Dashboard from './views/Dashboard/Dashboard.jsx';
-import UsersPermissions from './views/Dashboard/screens/UsersPermissions/UsersPermissions.jsx';
-import UserSettings from './views/Dashboard/screens/UserSettings/UserSettings.jsx';
-import LandingPage from './views/Dashboard/screens/Landing/Landing.jsx';
-import Pricing from './views/Dashboard/screens/Pricing/Pricing.jsx';
-import Reseller from './views/Dashboard/screens/Reseller/index.jsx';
-import FreeTrial from './views/Dashboard/screens/FreeTrial/FreeTrial.jsx';
-import InvoicePanel from './views/Dashboard/screens/InvoicePanel/InvoicePanel.jsx';
-import TermAndConditions from './views/Dashboard/screens/TermsAndConditions/TermsAndConditions.jsx';
-import ContactForm from './views/Dashboard/components/ContactForm/ContactForm.jsx';
-import Clients from './views/Dashboard/screens/Clients/Clients.jsx';
-import Transactions from './views/Dashboard/screens/Transactions/Transactions.jsx';
-import ArticlesTransactions from './views/Dashboard/screens/ArticlesTransactions/ArticlesTransactions.jsx';
+import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
+import Dashboard from "./views/Dashboard/Dashboard.jsx";
+import UsersPermissions from "./views/Dashboard/screens/UsersPermissions/UsersPermissions.jsx";
+import UserSettings from "./views/Dashboard/screens/UserSettings/UserSettings.jsx";
+import LandingPage from "./views/Dashboard/screens/Landing/Landing.jsx";
+import Pricing from "./views/Dashboard/screens/Pricing/Pricing.jsx";
+import Reseller from "./views/Dashboard/screens/Reseller/index.jsx";
+import FreeTrial from "./views/Dashboard/screens/FreeTrial/FreeTrial.jsx";
+import InvoicePanel from "./views/Dashboard/screens/InvoicePanel/InvoicePanel.jsx";
+import TermAndConditions from "./views/Dashboard/screens/TermsAndConditions/TermsAndConditions.jsx";
+import ContactForm from "./views/Dashboard/components/ContactForm/ContactForm.jsx";
+import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18.js";
+import { Auth0Provider } from "@auth0/auth0-react";
+import Automate from "./views/Dashboard/screens/Automate/Automate.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
 
-  const languageFromPath = pathname.split('/')[1];
+  const languageFromPath = pathname.split("/")[1];
 
   const supportedLanguages = [
-    'en',
-    'es',
-    'fr',
-    'de',
-    'it',
-    'ru',
-    'pt',
-    'nl',
-    'sv',
+    "en",
+    "es",
+    "fr",
+    "de",
+    "it",
+    "ru",
+    "pt",
+    "nl",
+    "sv",
   ];
 
-  const defaultLanguage = 'es';
+  const defaultLanguage = "es";
   const currentLanguage =
     languageFromPath && supportedLanguages.includes(languageFromPath)
       ? languageFromPath
@@ -57,40 +60,48 @@ const Layout = () => {
 
   return (
     <>
-      <DndProvider backend={HTML5Backend}>
-        <Provider store={store}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/login" element={<DashboardLogin />} />
-              <Route path="/landing" element={<LandingPage />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/home" element={<Dashboard />} />
-              <Route path="/reseller" element={<Reseller />} />
-              <Route path="/freetrial" element={<FreeTrial />} />
-              <Route path="/usersPermissions" element={<UsersPermissions />} />
-              <Route path="/userSettings" element={<UserSettings />} />
-              <Route path="/clients" element={<Clients />} />
-              <Route path="/transactions" element={<Transactions />} />
-              <Route path="/contact" element={<ContactForm />} />
-              <Route
-                path="/articlestransactions"
-                element={<ArticlesTransactions />}
-              />
-              <Route
-                path="/termsandconditions"
-                element={<TermAndConditions />}
-              />
-              <Route path="*" element={<LandingPage />} />
-              <Route path="/Panel" element={<InvoicePanel />} />
-            </Routes>
-          </BrowserRouter>
-        </Provider>
-      </DndProvider>
+      <Auth0Provider
+        domain={process.env.REACT_APP_AUTH0_DOMAIN}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+        redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
+        cacheLocation="localstorage"
+      >
+        <I18nextProvider i18n={i18n}>
+          <DndProvider backend={HTML5Backend}>
+            <Provider store={store}>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/login" element={<DashboardLogin />} />
+                  <Route path="/landing" element={<LandingPage />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/home" element={<Dashboard />} />
+                  <Route path="/reseller" element={<Reseller />} />
+                  <Route path="/freetrial" element={<FreeTrial />} />
+                  <Route path="/automate" element={<Automate />} />
+                  <Route
+                    path="/usersPermissions"
+                    element={<UsersPermissions />}
+                  />
+                  <Route path="/userSettings" element={<UserSettings />} />
+                  <Route path="/clients" element={<Clients />} />
+                  <Route path="/contact" element={<ContactForm />} />
+                  <Route
+                    path="/termsandconditions"
+                    element={<TermAndConditions />}
+                  />
+                  <Route path="*" element={<LandingPage />} />
+                  <Route path="/Panel" element={<InvoicePanel />} />
+                </Routes>
+              </BrowserRouter>
+            </Provider>
+          </DndProvider>
+        </I18nextProvider>
+      </Auth0Provider>
     </>
   );
 };
 
-const container = document.getElementById('app');
+const container = document.getElementById("app");
 if (container) {
   const root = createRoot(container);
   root.render(<Layout />);
