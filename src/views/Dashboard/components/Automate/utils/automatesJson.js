@@ -1,0 +1,43 @@
+import mail from "../../../assets/gmail.svg";
+import outlook from "../../../assets/outlook.svg";
+import drive from "../../../assets/drive.svg";
+import dropbox from "../../../assets/droopbox.svg";
+import whatsApp from "../../../assets/whatsapp.svg";
+
+export const data = [
+  {
+    id: 1,
+    automateName: "Sube tus Facturas de Gmail",
+    image: mail,
+    contactType: "example@gmail.com",
+    type: "gmail",
+  },
+  {
+    id: 2,
+    automateName: "Sube tus Facturas de Outlook",
+    image: outlook,
+    contactType: "example@gmail.com",
+    type: "outlook",
+  },
+  {
+    id: 3,
+    automateName: "Sube tus Facturas de Google Drive",
+    image: drive,
+    contactType: "example@gmail.com",
+    type: "drive",
+  },
+  {
+    id: 4,
+    automateName: "Sube tus Facturas de Dropbox",
+    image: dropbox,
+    contactType: "example@gmail.com",
+    type: "dropbox",
+  },
+  {
+    id: 5,
+    automateName: "Recibe Facturas desde WhatsApp",
+    image: whatsApp,
+    contactType: "+00000000",
+    type: "whatsApp",
+  },
+];

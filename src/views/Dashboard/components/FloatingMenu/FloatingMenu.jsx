@@ -3,13 +3,15 @@ import { Plus } from "lucide-react";
 import styles from "./FloatingMenu.module.css";
 import FolderModal from "../FolderModal/FolderModal";
 import TagModal from "../TagModal/TagModal";
+import Automate from "../Automate/Automate";
 import { ReactComponent as FolderIcon } from "../../assets/folder-2.svg";
 import { ReactComponent as TagIcon } from "../../assets/etiqueta.svg";
 import { ReactComponent as CloudIcon } from "../../assets/cloud-icon.svg";
 import { ReactComponent as CameraIcon } from "../../assets/camera.svg";
 import { ReactComponent as FacturaIcon } from "../../assets/factura.svg";
+import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
 
-export default function FloatingMenu() {
+export default function FloatingMenu({ openModalAutomate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
 
@@ -53,6 +55,11 @@ export default function FloatingMenu() {
       icon: <FacturaIcon />,
       text: "Nueva Factura",
       action: () => console.log("Nueva Factura clicked"),
+    },
+    {
+      icon: <PlusIcon />,
+      text: "Automatiza",
+      action: openModalAutomate,
     },
   ];
 
