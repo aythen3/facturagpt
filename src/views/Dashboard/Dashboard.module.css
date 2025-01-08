@@ -10,17 +10,15 @@
 
 .statsContainer {
   display: flex;
-  /* margin-bottom: 20px;  */
   background-color: #fff;
-  height: 215px;
+  min-height: 215px;
   align-items: center;
-  justify-content: center;
-  padding-left: 20px;
-  /* padding: 0px 25px; */
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .listRight {
-  background: #233f39;
+  background: linear-gradient(90deg, #11a380 0%, #0c6d56 100%);
   width: 38px;
   display: flex;
   align-items: center;
@@ -29,14 +27,17 @@
 }
 
 .statCard {
-  flex: 1;
   background: #ffffff;
   display: flex;
+  margin-bottom: 24px;
   height: 120px;
   align-items: flex-start;
   border-right: 1px solid #f0f0f0;
   margin-right: 24px;
   gap: 4px;
+  &:last-child {
+    margin-right: 0px;
+  }
 }
 .statCard:first-child {
   padding-left: 0px;
@@ -51,6 +52,7 @@
   height: 100%;
   justify-content: flex-start;
   min-width: 150px;
+  max-width: 160px;
 }
 
 .statTitle {
@@ -109,12 +111,39 @@
   /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05); */
 }
 
+.changeTabButton {
+  display: flex;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  background: linear-gradient(90deg, #11a380 0%, #0c6d56 100%);
+  color: #ffffff;
+  outline: none;
+  padding: 0px 8px;
+  height: 20px;
+  border: none;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+}
+
 .tableTitle {
   font-size: 22px;
   font-weight: 600;
   line-height: 20px;
   color: #000;
   margin-top: -9px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .filters {
@@ -347,7 +376,7 @@ input:checked + .slider:before {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 53px;
+  margin-bottom: 20px;
 }
 .tableHeaderContainer {
   display: flex;
@@ -365,7 +394,7 @@ input:checked + .slider:before {
   user-select: none;
   align-items: center;
   justify-content: flex-start;
-  background-color: #233f39;
+  background: linear-gradient(90deg, #11a380 0%, #0c6d56 100%);
   color: #ffffff;
   outline: none;
   padding: 0px 10px;
@@ -475,7 +504,8 @@ input:checked + .slider:before {
 
 .greenButton {
   width: 100px;
-  background-color: #16c098;
+  background: linear-gradient(90deg, #11a380 0%, #0c6d56 100%);
+
   color: #ffffff;
   font-size: 11px;
   height: 30px;
