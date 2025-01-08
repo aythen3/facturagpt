@@ -26,7 +26,6 @@ import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
-import Automate from "./views/Dashboard/screens/Automate/Automate.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -75,7 +74,6 @@ const Layout = () => {
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/freetrial" element={<FreeTrial />} />
-                  <Route path="/automate" element={<Automate />} />
                   <Route
                     path="/usersPermissions"
                     element={<UsersPermissions />}
@@ -83,10 +81,7 @@ const Layout = () => {
                   <Route path="/userSettings" element={<UserSettings />} />
                   <Route path="/clients" element={<Clients />} />
                   <Route path="/contact" element={<ContactForm />} />
-                  <Route
-                    path="/terms"
-                    element={<Terms />}
-                  />
+                  <Route path="/terms" element={<Terms />} />
                   <Route path="*" element={<LandingPage />} />
                   <Route path="/Panel" element={<InvoicePanel />} />
                 </Routes>
