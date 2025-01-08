@@ -49,6 +49,18 @@
 .inputGroup {
   margin-bottom: 1rem;
   width: 100%;
+  flex: 1;
+}
+.inputGroupContainer {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+}
+@media (max-width: 468px) {
+  .inputGroupContainer {
+    flex-direction: column;
+    gap: 2px;
+  }
 }
 
 label {
@@ -61,6 +73,7 @@ label {
 .input,
 .textarea {
   width: 100%;
+  min-width: 200px;
   outline: none;
   border: 1px solid #f4f4f4;
   border-radius: 8px;
@@ -89,7 +102,6 @@ label {
   color: #fff;
   border: none;
   border-radius: 30px;
-  width: 70%;
   min-height: 53px;
   height: 53px;
   font-size: 17px;
@@ -111,9 +123,16 @@ label {
   margin-top: 30px;
 }
 
+.buttonForm {
+  height: 48px;
+  min-height: 48px;
+  padding: 4px 35px;
+}
+
 .wsBtn {
   background: linear-gradient(45deg, #3ad656, #5bf876);
   margin-top: 40px;
+  width: 100%;
   p {
     display: flex;
     align-items: center;
@@ -123,6 +142,52 @@ label {
 }
 .button:hover {
   background-color: #13a583;
+}
+
+.infoContact,
+.infoText.infoText a {
+  color: #71717a;
+}
+.infoText {
+  span {
+    color: #222;
+  }
+}
+.keepInformed {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #71717a;
+  input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    accent-color: #233f39; /* Cambia el color del check */
+  }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  width: 80%;
+}
+
+.line {
+  flex: 1;
+  height: 2px;
+  background-color: #11a38125;
+  margin: 0 10px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  color: #e1e1e1;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Right Section */
@@ -170,7 +235,7 @@ label {
 
 @media (max-width: 360px) {
   .wsBtn {
-    display: block;
+    /* display: block; */
   }
 }
 .header {

@@ -3,15 +3,14 @@ import styles from './Clients.module.css';
 import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
 import searchGray from '../../assets/searchGray.png';
 import searchWhite from '../../assets/searchWhite.png';
-import optionDots from '../../assets/optionDots.png';
+import newClientIcon from '../../assets/newClientIcon.svg';
 import clock from '../../assets/clock.png';
 import edit from '../../assets/edit.png';
 import plusIcon from '../../assets/Plus Icon.png';
 import filterSearch from '../../assets/Filters Search.png';
-import creditCard from '../../assets/creditCardIcon.png';
-import closeIcon from '../../assets/closeMenu.png';
-
+import { useTranslation } from 'react-i18next';
 const Clients = () => {
+  const { t } = useTranslation('clients');
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState('');
   const [clientSelected, setClientSelected] = useState([]);
@@ -58,14 +57,14 @@ const Clients = () => {
   };
 
   const tableHeaders = [
-    'Nombre',
-    'Email',
-    'Teléfono',
-    'Dirección física',
-    'Número fiscal',
-    'Métodos de Pago',
-    'Moneda Pref.',
-    'Transacciones',
+    t('tableCol1'),
+    t('tableCol2'),
+    t('tableCol3'),
+    t('tableCol4'),
+    t('tableCol5'),
+    t('tableCol6'),
+    t('tableCol7'),
+    t('tableCol8'),
   ];
 
   const tableData = [
@@ -97,29 +96,16 @@ const Clients = () => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
   };
 
-  const handleEmailChange = (e) => {
-    const emailValue = e.target.value;
-    setEmail(emailValue);
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(emailValue)) {
-    //   setEmailError('El correo electrónico no es válido.');
-    // } else {
-    //   setEmailError('');
-    // }
-  };
-
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          <h2>Clientes y Proveedores</h2>
+          <h2>{t('title')}</h2>
           <div className={styles.searchContainer}>
-            <button
-              className={styles.infoBtn}
-              onClick={() => setShowNewClient(true)}
-            >
-              Productos y Servicios
+            <button className={styles.addButton}>
+              <img src={plusIcon} alt="Nuevo cliente" />
+              {t('buttonNewClient')}
             </button>
             <button className={styles.infoBtn}>Analíticas</button>
 
@@ -127,7 +113,7 @@ const Clients = () => {
               <img src={searchGray} className={styles.inputIconInside} />
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder={t('placeholderSearch')}
                 value={search}
                 onChange={handleSearchChange}
                 className={styles.searchInput}
@@ -157,7 +143,7 @@ const Clients = () => {
                   />
                 </th>
                 {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 7 ? styles.small : ''}>
+                  <th key={index} className={index == 7 ? styles.hola : ''}>
                     {header}
                   </th>
                 ))}

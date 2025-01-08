@@ -23,10 +23,22 @@ import dahsboardLogin_es from "./translation/dashboardLogin/es/dashboardLogin.js
 import dahsboardLogin_en from "./translation/dashboardLogin/en/dashboardLogin.json";
 import userSetting_es from "./translation/userSetting/es/userSetting.json";
 import userSetting_en from "./translation/userSetting/en/userSetting.json";
+import dashboard_es from "./translation/dashboard/es/dashboard.json";
+import dashboard_en from "./translation/dashboard/en/dashboard.json";
+import accountSetting_es from "./translation/accountSetting/es/accountSetting.json";
+import accountSetting_en from "./translation/accountSetting/en/accountSetting.json";
+import clients_es from "./translation/clients/es/clients.json";
+import clients_en from "./translation/clients/en/clients.json";
+import navbarAdmin_es from "./translation/navbarAdmin/es/navbarAdmin.json";
+import navbarAdmin_en from "./translation/navbarAdmin/en/navbarAdmin.json";
+import termsAndCondition_es from "./translation/termsAndConditions/es/termsAndConditions.json";
+import termsAndCondition_en from "./translation/termsAndConditions/en/termsAndConditions.json";
+
+const language = localStorage.getItem("language") || "es";
 
 i18n.init({
   interpolation: { escapeValue: false },
-  lng: "es",
+  lng: language,
   resources: {
     es: {
       navBar: navbar_es,
@@ -41,6 +53,11 @@ i18n.init({
       freeTrial: freeTrial_es,
       dahsboardLogin: dahsboardLogin_es,
       userSetting: userSetting_es,
+      dashboard: dashboard_es,
+      accountSetting: accountSetting_es,
+      clients: clients_es,
+      navbarAdmin: navbarAdmin_es,
+      termsAndCondition: termsAndCondition_es,
     },
     en: {
       navBar: navbar_en,
@@ -55,6 +72,11 @@ i18n.init({
       freeTrial: freeTrial_en,
       dahsboardLogin: dahsboardLogin_en,
       userSetting: userSetting_en,
+      dashboard: dashboard_en,
+      accountSetting: accountSetting_en,
+      clients: clients_en,
+      navbarAdmin: navbarAdmin_en,
+      termsAndCondition: termsAndCondition_en,
     },
   },
 });

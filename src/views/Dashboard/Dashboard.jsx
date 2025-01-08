@@ -7,6 +7,7 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import styles from "./Dashboard.module.css";
+
 import userTick from "./assets/profile-tick.svg";
 import userPlus from "./assets/userPlus.svg";
 import monitor from "./assets/monitor.svg";
@@ -22,6 +23,7 @@ import analyticsIcon from "./assets/analyticsIcon.svg";
 import monitorIcon from "./assets/monitorIcon.svg";
 import greenArrow from "./assets/greenArrow.svg";
 import redArrow from "./assets/redArrow.svg";
+
 import { useNavigate } from "react-router-dom";
 import {
   getAllClients,
@@ -31,6 +33,7 @@ import {
 } from "../../actions/emailManager";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import Payment from "./screens/UserSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
@@ -42,8 +45,12 @@ import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18";
 
 const Dashboard = () => {
+  const { t } = useTranslation("dashboard");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showUserSettings, setShowUserSettings] = useState(false);
@@ -53,6 +60,7 @@ const Dashboard = () => {
   );
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
+
   const [selectedOption, setSelectedOption] = useState("Todos"); // Selected filter
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -69,6 +77,7 @@ const Dashboard = () => {
       title: "# Usuarios",
       value: allClients?.length,
       change: "16%",
+
       isPositive: true,
       toUserPermission: true,
     },
@@ -117,6 +126,7 @@ const Dashboard = () => {
       isPositive: true,
       value: 0,
       currency: "TB",
+
     },
   ];
 
@@ -434,6 +444,7 @@ const Dashboard = () => {
                   )}
                 </div>
               )}
+
             </div>
           ))}
         </div>
@@ -444,6 +455,7 @@ const Dashboard = () => {
               <span className={styles.tableSpan}>Asocidos y sus cuentas</span>
             </div>
             <div className={styles.filters}>
+
               <button
                 // onClick={() => navigate("/userSettings")}
                 onClick={() => setShowUserSettings(true)}
@@ -451,12 +463,14 @@ const Dashboard = () => {
               >
                 <img src={plus} alt="Add client" />
                 Alta nuevo cliente
+
               </button>
               <div className={styles.filterSearch}>
                 <img src={magnify} alt="search" />
                 <input
                   type="text"
                   placeholder="Buscar"
+
                   value={searchQuery}
                   onChange={handleSearchChange}
                 />
@@ -470,7 +484,7 @@ const Dashboard = () => {
                   onClick={handleDropdownToggle}
                   ref={dropdownRef}
                 >
-                  Ordenar por: <b>{selectedOption}</b>
+                  {t("sortBy")} <b>{selectedOption}</b>
                   <FaChevronDown className={styles.chevronIcon} />
                 </div>
                 {isOpen && (
@@ -491,16 +505,16 @@ const Dashboard = () => {
           </div>
           <div className={styles.tableContainer}>
             <div className={styles.tableHeader}>
-              <span className={styles.columnName}>Nombre empresa</span>
-              <span className={styles.columnStatus}>Metodo de pago</span>
-              <span className={styles.columnContact}>Contacto</span>
-              <span className={styles.columnTokens}>Tokens (Email + AI)</span>
-              <span className={styles.columnEmail}>Email</span>
+              <span className={styles.columnName}>{t("tableCol1")}</span>
+              <span className={styles.columnStatus}>{t("tableCol2")}</span>
+              <span className={styles.columnContact}>{t("tableCol3")}</span>
+              <span className={styles.columnTokens}>{t("tableCol4")}</span>
+              <span className={styles.columnEmail}>{t("tableCol5")}</span>
               <span className={styles.columnRecognitions}>
-                Emails procesados
+                {t("tableCol6")}
               </span>
-              <span className={styles.columnPort}>Puerto</span>
-              <span className={styles.columnActive}>Activo</span>
+              <span className={styles.columnPort}>{t("tableCol7")}</span>
+              <span className={styles.columnActive}>{t("tableCol8")}</span>
             </div>
             {filteredClients.length > 0 ? (
               filteredClients.map((client, index) => (
@@ -575,9 +589,7 @@ const Dashboard = () => {
                 </div>
               ))
             ) : (
-              <div className={styles.noResultsMessage}>
-                No hay resultados para su busqueda!.
-              </div>
+              <div className={styles.noResultsMessage}>{t("notResults")}</div>
             )}
           </div>
         </div>

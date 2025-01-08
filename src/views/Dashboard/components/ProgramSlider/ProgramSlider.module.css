@@ -24,6 +24,7 @@
   cursor: pointer;
   border-radius: 100%;
   position: relative;
+  z-index: 9;
   visibility: visible;
   opacity: 1;
   transition:
@@ -33,6 +34,18 @@
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
   -o-border-radius: 100%;
+  -webkit-transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  -moz-transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  -ms-transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  -o-transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .button:disabled {
@@ -58,21 +71,30 @@
     top: -30px;
   }
 }
+@media (max-width: 450px) {
+  .button {
+    top: -70px;
+  }
+}
 
 .programsContainer {
   position: relative;
   width: 100%;
-  min-height: 300px;
+  min-height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
+@media (max-width: 300px) {
+  .programsContainer {
+    min-height: 600px;
+  }
+}
 .program {
   position: absolute;
   width: 100%;
-  max-width: 400px;
   text-align: center;
   opacity: 0;
   transform: translateX(0);
