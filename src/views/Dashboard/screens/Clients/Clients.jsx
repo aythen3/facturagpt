@@ -185,7 +185,7 @@ const Clients = () => {
                       <span>(2.345)</span>
                     </div>
                     <div>
-                      <img src={optionDots} />
+                      {/* <img src={optionDots} /> */}
                     </div>
                   </td>
                 </tr>
