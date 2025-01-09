@@ -1,13 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-import ReactDOM from "react-dom";
-import styles from "./FileExplorer.module.css";
-import { ReactComponent as FolderIcon } from "../../assets/folder.svg";
-import { ReactComponent as ImageIcon } from "../../assets/image-icon.svg";
-import { ReactComponent as PdfIcon } from "../../assets/pdf-ico.svg";
-import { ReactComponent as TxtIcon } from "../../assets/txt-icon.svg";
-import { ReactComponent as CsvIcon } from "../../assets/csv-icon.svg";
-import { ReactComponent as PngIcon } from "../../assets/png-icon.svg";
-import { Search, AlignRight, MoreVertical } from "lucide-react";
+import React, { useState, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import styles from './FileExplorer.module.css';
+import { ReactComponent as FolderIcon } from '../../assets/folder.svg';
+import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
+import { ReactComponent as PdfIcon } from '../../assets/pdf-ico.svg';
+import { ReactComponent as TxtIcon } from '../../assets/txt-icon.svg';
+import { ReactComponent as CsvIcon } from '../../assets/csv-icon.svg';
+import { ReactComponent as PngIcon } from '../../assets/png-icon.svg';
+import { Search, AlignRight, MoreVertical } from 'lucide-react';
+import filterSearch from '../../assets/Filters Search.png';
+
+import PlusIcon from '../../assets/automatizaIconBW.svg';
 
 import Filter from './Filters';
 
@@ -21,11 +24,11 @@ const FileOptionsPopup = ({ onClose, style }) => {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [onClose]);
 
-  const options = ["Move", "Download", "Share", "Rename", "Delete"];
+  const options = ['Move', 'Download', 'Share', 'Rename', 'Delete'];
 
   return ReactDOM.createPortal(
     <div ref={popupRef} className={styles.optionsPopup} style={style}>
@@ -39,7 +42,7 @@ const FileOptionsPopup = ({ onClose, style }) => {
   );
 };
 
-export default function FileExplorer() {
+export default function FileExplorer({ isOpen, setIsOpen }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
   const optionsButtonRefs = useRef([]);
@@ -66,10 +69,12 @@ export default function FileExplorer() {
             className={styles.menuIcon}
             onClick={() => setIsFilterOpen(true)}
           >
-            <AlignRight size={20} />
+            <img src={filterSearch} />
           </button>
         </div>
-
+        <button onClick={() => setIsOpen(true)} className={styles.openModal}>
+          <img src={PlusIcon} />
+        </button>
         <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
       </div>
 
@@ -85,19 +90,19 @@ export default function FileExplorer() {
 
       <div className={styles.fileList}>
         {[
-          { icon: ImageIcon, text: ".jpg" },
-          { icon: ImageIcon, text: ".jpg" },
-          { icon: TxtIcon, text: ".txt" },
-          { icon: ImageIcon, text: ".jpg" },
-          { icon: PngIcon, text: ".png" },
-          { icon: PdfIcon, text: ".pdf" },
-          { icon: PngIcon, text: ".png" },
-          { icon: CsvIcon, text: ".csv" },
-          { icon: PngIcon, text: ".png" },
-          { icon: FolderIcon, text: "Recibos", isFolder: true },
-          { icon: PdfIcon, text: ".pdf" },
-          { icon: PdfIcon, text: ".pdf" },
-          { icon: PdfIcon, text: ".pdf" },
+          { icon: ImageIcon, text: '.jpg' },
+          { icon: ImageIcon, text: '.jpg' },
+          { icon: TxtIcon, text: '.txt' },
+          { icon: ImageIcon, text: '.jpg' },
+          { icon: PngIcon, text: '.png' },
+          { icon: PdfIcon, text: '.pdf' },
+          { icon: PngIcon, text: '.png' },
+          { icon: CsvIcon, text: '.csv' },
+          { icon: PngIcon, text: '.png' },
+          { icon: FolderIcon, text: 'Recibos', isFolder: true },
+          { icon: PdfIcon, text: '.pdf' },
+          { icon: PdfIcon, text: '.pdf' },
+          { icon: PdfIcon, text: '.pdf' },
         ].map((item, index) => (
           <div
             key={index}
@@ -110,7 +115,7 @@ export default function FileExplorer() {
                 <button
                   ref={(el) => (optionsButtonRefs.current[index] = el)}
                   className={styles.moreButton}
-                  aria-label="More options"
+                  aria-label='More options'
                   onClick={(e) => handleOptionsClick(index, e)}
                 >
                   <MoreVertical size={16} />
@@ -121,7 +126,7 @@ export default function FileExplorer() {
               <FileOptionsPopup
                 onClose={() => setActivePopup(null)}
                 style={{
-                  position: "fixed",
+                  position: 'fixed',
                   top:
                     optionsButtonRefs.current[index].getBoundingClientRect()
                       .top + optionsButtonRefs.current[index].offsetHeight,

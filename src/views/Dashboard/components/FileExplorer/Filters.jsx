@@ -1,20 +1,83 @@
-import { X } from "lucide-react";
-import styles from "./Filters.module.css";
+import { X } from 'lucide-react';
+import styles from './Filters.module.css';
+import graySearch from '../../assets/searchGray.svg';
+import { useState } from 'react';
+
+// Importar los íconos de redes sociales
+import gmailIcon from '../../assets/gmail-icon.svg';
+import outlook from '../../assets/outlook-icon.svg';
+import drive from '../../assets/drive-icon.svg';
+import onedrive from '../../assets/onedrive-icon.svg';
+import dropbox from '../../assets/dropbox-icon.svg';
+import whatsapp from '../../assets/whatsapp-icon-green.svg';
 
 const documentTypes = [
-  "Factura",
-  "Factura de impuestos",
-  "Recibo",
-  "Recibo de la venta",
-  "Recibo de efectivo",
-  "Oferta",
-  "Cotización",
-  "Abono",
-  "Pedido",
-  "Nota de Entrega"
+  'Factura',
+  'Factura de impuestos',
+  'Recibo',
+  'Recibo de la venta',
+  'Recibo de efectivo',
+  'Oferta',
+  'Cotización',
+  'Abono',
+  'Pedido',
+  'Nota de Entrega',
+];
+
+const SOCIAL_NETWORKS = [
+  {
+    id: 'gmail',
+    name: 'Gmail',
+    icon: gmailIcon,
+  },
+  {
+    id: 'outlook',
+    name: 'Outlook',
+    icon: outlook,
+  },
+  {
+    id: 'drive',
+    name: 'Drive',
+    icon: drive,
+  },
+  {
+    id: 'onedrive',
+    name: 'One Drive',
+    icon: onedrive,
+  },
+  {
+    id: 'dropbox',
+    name: 'Dropbox',
+    icon: dropbox,
+  },
+  {
+    id: 'whatsapp',
+    name: 'WhatsApp',
+    icon: whatsapp,
+  },
 ];
 
 export default function Filter({ isOpen, onClose }) {
+  const [selectedNetworks, setSelectedNetworks] = useState([]);
+
+  const handleNetworkChange = (network) => {
+    setSelectedNetworks((prev) => {
+      if (prev.includes(network)) {
+        return prev.filter((n) => n !== network);
+      } else {
+        return [...prev, network];
+      }
+    });
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedNetworks(SOCIAL_NETWORKS.map((network) => network.id));
+    } else {
+      setSelectedNetworks([]);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -30,14 +93,14 @@ export default function Filter({ isOpen, onClose }) {
         <div className={styles.content}>
           <div className={styles.filterSection}>
             <label>Search by document title</label>
-            <input type="text" placeholder="Text" className={styles.input} />
+            <input type='text' placeholder='Text' className={styles.input} />
           </div>
 
           <div className={styles.filterSection}>
             <label>Search by email</label>
             <input
-              type="email"
-              placeholder="example@email.com"
+              type='email'
+              placeholder='example@email.com'
               className={styles.input}
             />
           </div>
@@ -53,101 +116,147 @@ export default function Filter({ isOpen, onClose }) {
 
           <div className={styles.filterSection}>
             <label>Search by type</label>
-            <input
-              type="text"
-              placeholder="JPG,PNG,PDF,TXT"
-              className={styles.input}
-            />
+            <span className={styles.checktypes}>
+              <input type='checkbox' />
+              Permitir todos los tipos de archivo
+            </span>
+            <select className={styles.select}>
+              <option>PDF</option>
+              <option>PNG</option>
+              <option>JPG</option>
+              <option>XLM</option>
+              <option>JSON</option>
+              <option>HTML</option>
+            </select>
           </div>
 
           <div className={styles.filterSection}>
-            <label>Search by amount</label>
+            <div className={styles.searchAmount}>
+              <label>Search by amount</label>
+              <select className={styles.currencySelect}>
+                <option>EUR</option>
+              </select>
+            </div>
             <div className={styles.amountContainer}>
               <div className={styles.amountInput}>
                 <span>$</span>
-                <input type="text" placeholder="Min" />
+                <input type='text' placeholder='Min' />
               </div>
               <span>-</span>
               <div className={styles.amountInput}>
                 <span>$</span>
-                <input type="text" placeholder="Max" />
+                <input type='text' placeholder='Max' />
               </div>
-              <select className={styles.currencySelect}>
-                <option>EUR</option>
-              </select>
             </div>
           </div>
 
           <div className={styles.filterSection}>
             <label>Search by Tag</label>
-            <div>
+            <div className={styles.searchContainer}>
+              <img src={graySearch} alt='search icon' />
               <input
-                type="text"
-                placeholder="Search tag"
+                type='text'
+                placeholder='Search tag'
                 className={styles.input}
               />
             </div>
             <div className={styles.tags}>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#333333" }}
+                style={{ backgroundColor: '#222222' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#4339F2" }}
+                style={{ backgroundColor: '#0B06FF' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#FF3838" }}
+                style={{ backgroundColor: '#FF0000' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#34B53A" }}
+                style={{ backgroundColor: '#12A27F' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#7B61FF" }}
+                style={{ backgroundColor: '#7329A5' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#892CDC" }}
+                style={{ backgroundColor: '#7086FD' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#FF8A00" }}
+                style={{ backgroundColor: '#FF8C00' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#2CCCC3" }}
+                style={{ backgroundColor: '#16C098' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#E73C7E" }}
+                style={{ backgroundColor: '#C075EE' }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: "#FFCD38" }}
+                style={{ backgroundColor: '#EEFF00', color: '#333333' }}
               >
                 Etiqueta
               </span>
+            </div>
+          </div>
+          <div className={styles.filterSection}>
+            <p className={styles.rrss}>Busqueda por entrada/salida</p>
+          </div>
+
+          <div className={styles.filterSection}>
+            <div className={styles.socialNetworks}>
+              <div className={styles.checkboxContainer}>
+                <input
+                  type='checkbox'
+                  id='allNetworks'
+                  checked={selectedNetworks.length === SOCIAL_NETWORKS.length}
+                  onChange={handleSelectAll}
+                />
+                <label htmlFor='allNetworks'>Seleccionar todas las redes</label>
+              </div>
+
+              <div className={styles.networksGrid}>
+                {SOCIAL_NETWORKS.map((network) => (
+                  <div key={network.id} className={styles.checkboxContainer}>
+                    <input
+                      type='checkbox'
+                      id={network.id}
+                      checked={selectedNetworks.includes(network.id)}
+                      onChange={() => handleNetworkChange(network.id)}
+                    />
+                    <img
+                      src={network.icon}
+                      alt={network.name}
+                      className={styles.networkIcon}
+                    />
+                    <label htmlFor={network.id}>{network.name}</label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
