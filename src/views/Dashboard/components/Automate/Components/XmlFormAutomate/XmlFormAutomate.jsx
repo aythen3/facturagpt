@@ -1,0 +1,168 @@
+import React from "react";
+import TitleFormsComponent from "../../shared/TitleFormsComponent";
+import InputComponent from "../../shared/InputComponent";
+import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
+import CheckboxComponent from "../../shared/CheckboxComponent";
+import SearchSVG from "../../svgs/SearchSVG";
+import SelectComponent from "../../shared/SelectComponent";
+import OptionsSwitchComponent from "../../shared/OptionsSwitchComponent";
+import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
+import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
+import NotificationsSVG from "../../svgs/NotificationsSVG";
+
+const XmlFormAutomate = ({ type }) => {
+  return (
+    <div>
+      <TitleFormsComponent title="Genera Archivos" type={type} />
+      <div>
+        <p>Nombre del archivo</p>
+        <InputComponent placeholder="[fecha]-[empresa]-[importe]-[etiqueta]" />
+      </div>
+      <div className={styles.content_input}>
+        <p className={styles.title_content_input}>
+          Fuente de Datos{" "}
+          <span style={{ color: "#18181B", fontSize: "14px" }}>
+            Conecta la fuente de facturas desde la cual se generarán los XML
+          </span>{" "}
+        </p>
+
+        <InputComponent
+          placeholder="/NombredelaCuenta"
+          icon={<SearchSVG />}
+          textButton="Seleccionar Ubicación"
+          typeInput="text"
+        />
+      </div>
+
+      <div className={styles.content_input}>
+        <p className={styles.title_content_input}>
+          Formato del Archivo XML{" "}
+          <span style={{ color: "#18181B", fontSize: "14px" }}>
+            Selecciona estándar de exportación
+          </span>{" "}
+        </p>
+
+        <SelectComponent options={["FacturaE/UBL/PEPPOL", "Otro", "Otro2"]} />
+        <p className={styles.title_content_input}>
+          Validaciones Automáticas{" "}
+          <span style={{ color: "#18181B", fontSize: "14px" }}>
+            Verifica la integridad de los datos antes de la generación.
+          </span>{" "}
+        </p>
+
+        <p className={styles.title_content_input}>
+          Campos a incluidos{" "}
+          <span style={{ color: "#18181B", fontSize: "14px" }}>
+            Nº Factura, Fecha de emisión, Datos del cliente (nombre, NIF,
+            dirección), Desglose de impuestos (IVA, retenciones, etc.), Total de
+            la factura{" "}
+          </span>{" "}
+        </p>
+
+        <div style={{ marginTop: "10px" }}>
+          <OptionsSwitchComponent
+            icon={<NotificationsSVG />}
+            text="Notificar tras la exportación"
+          />
+        </div>
+        <div
+          style={{
+            marginTop: "24px",
+
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: 46,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <CheckboxComponent />
+            <GmailIcon style={{ width: 25 }} />
+            <p>{type}</p>
+          </div>
+          <InputComponent placeholder="[email],..." typeInput="text" />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: 46,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <CheckboxComponent />
+            <WhatsAppIcon style={{ width: 25 }} />
+            <p>{type}</p>
+          </div>
+          <InputComponent placeholder="[00000000],..." typeInput="text" />
+        </div>
+
+        <div style={{ marginTop: "10px" }}>
+          <OptionsSwitchComponent
+            icon={<NotificationsSVG />}
+            text="Notificar en el caso de detectar un error en la validación"
+          />
+        </div>
+        <div
+          style={{
+            marginTop: "24px",
+
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: 46,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <CheckboxComponent />
+            <GmailIcon style={{ width: 25 }} />
+            <p>{type}</p>
+          </div>
+          <InputComponent placeholder="[email],..." typeInput="text" />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: 46,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <CheckboxComponent />
+            <WhatsAppIcon style={{ width: 25 }} />
+            <p>{type}</p>
+          </div>
+          <InputComponent placeholder="[00000000],..." typeInput="text" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default XmlFormAutomate;

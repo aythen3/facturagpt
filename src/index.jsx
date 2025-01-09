@@ -25,7 +25,6 @@ import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
-import Automate from "./views/Dashboard/screens/Automate/Automate.jsx";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 
 const Layout = () => {
@@ -75,7 +74,6 @@ const Layout = () => {
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/freetrial" element={<FreeTrial />} />
-                  <Route path="/automate" element={<Automate />} />
                   <Route path="/users" element={<UsersDashboard />} />
                   <Route path="/userSettings" element={<UserSettings />} />
                   <Route path="/clients" element={<Clients />} />

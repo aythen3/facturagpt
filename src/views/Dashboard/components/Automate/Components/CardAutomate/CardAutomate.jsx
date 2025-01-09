@@ -11,6 +11,8 @@ const CardAutomate = ({
   fullContent,
   isBorders,
 }) => {
+  console.log("TYPE BY CARD", type);
+
   return (
     <>
       <div

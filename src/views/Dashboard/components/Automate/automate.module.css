@@ -11,7 +11,6 @@
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(1px);
-  overflow: hidden;
 }
 
 .content {
@@ -20,6 +19,12 @@
   padding: 24px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
 }
 
 .container_buttons_footer {

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Automate from "../Automate";
 import styles from "./panelAutomate.module.css";
 import CloseSVG from "../svgs/CloseSVG";
 import TitleComponent from "../Components/TitleComponent";
@@ -7,8 +6,13 @@ import SearchComponent from "../Components/SearchComponent/SearchComponent";
 import CardAutomate from "../Components/CardAutomate/CardAutomate";
 import { useDispatch } from "react-redux";
 import { data } from "../utils/automatesJson";
-import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
 import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/GmailAndOutlook";
+import GoogleDriveFormCreateAutomate from "../Components/GoogleDriveFormCreateAutomate/GoogleDriveFormCreateAutomate";
+import WhatsAppFormCreateAutomate from "../Components/WhatsAppFormCreateAutomate/WhatsAppFormCreateAutomate";
+import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAutomate/EsPublicoGestionaFormAutomate";
+import GoogleSheetsFormAutomate from "../Components/GoogleSheetsFormAutomate/GoogleSheetsFormAutomate";
+import XmlFormAutomate from "../Components/XmlFormAutomate/XmlFormAutomate";
+import OdooFormAutomate from "../Components/OdooFormAutomate/OdooFormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -47,21 +51,62 @@ const PanelAutomate = ({ type, close, typeContent }) => {
                 Salida / Output
               </button>
             </div>
-            {dataFilter.map((card) => (
-              <CardAutomate
-                type={card.type}
-                key={card.id}
-                name={card.automateName}
-                image={card.image}
-                contactType={card.contactType}
-                typeContent={typeContent}
-              />
-            ))}
+            <>
+              <p style={{ fontWeight: "bold" }}>Entrada / Input</p>
+              {dataFilter
+                .filter((card) => card.role === "input")
+                .map((card) => (
+                  <CardAutomate
+                    key={card.id}
+                    type={card.type}
+                    name={card.automateName}
+                    image={card.image}
+                    contactType={card.contactType}
+                    typeContent={typeContent}
+                  />
+                ))}
+
+              <p style={{ fontWeight: "bold" }}>Salida / Output</p>
+              {dataFilter
+                .filter((card) => card.role === "output")
+                .map((card) => (
+                  <CardAutomate
+                    key={card.id}
+                    type={card.type}
+                    name={card.automateName}
+                    image={card.image}
+                    contactType={card.contactType}
+                    typeContent={typeContent}
+                  />
+                ))}
+            </>
           </div>
+
           <div>
-            <GmailAndOutlook type={type} />
+            {(() => {
+              switch (type) {
+                case "Gmail":
+                case "Outlook":
+                  return <GmailAndOutlook type={type} />;
+                case "Google Drive":
+                  return <GoogleDriveFormCreateAutomate type={type} />;
+                case "WhatsApp":
+                  return <WhatsAppFormCreateAutomate type={type} />;
+                case "esPúblico Gestiona":
+                  return <EsPublicoGestionaFormAutomate type={type} />;
+                case "Google Sheets":
+                  return <GoogleSheetsFormAutomate type={type} />;
+                case "XML para Declaciones Físcales":
+                  return <XmlFormAutomate type={type} />;
+                case "Odoo":
+                  return <OdooFormAutomate type={type} />;
+                default:
+                  return <div>OTRO</div>;
+              }
+            })()}
           </div>
         </div>
+
         <div className={styles.container_buttons_footer}>
           <button
             onClick={close}
