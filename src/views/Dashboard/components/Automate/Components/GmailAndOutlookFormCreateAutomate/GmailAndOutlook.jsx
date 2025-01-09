@@ -13,45 +13,14 @@ import LabelSVG from "../../svgs/LabelSVG";
 import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../shared/InputComponent";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
+import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
 
 const GmailAndOutlook = ({ type }) => {
   return (
     <div>
-      <div className={styles.header}>
-        <div className={styles.header_mail}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "1px solid #D9D9D9",
-              borderTopLeftRadius: "8px",
-              borderBottomLeftRadius: "8px",
-              height: 30,
-              width: 30,
-            }}
-          >
-            {type === "Gmail" ? (
-              <GmailIcon style={{ width: 25, height: 25 }} />
-            ) : (
-              <OutlookIcon style={{ width: 25, height: 25 }} />
-            )}{" "}
-          </div>
-
-          <SelectComponent
-            options={[
-              "example1@gmail.com",
-              "example2@gmail.com",
-              "example3@gmail.com",
-            ]}
-            name="mail"
-            id="mail"
-            isEmail={true}
-          />
-        </div>
-        <p style={{ color: "#159B7C" }}>Añadir conexion</p>
-      </div>
-
+      <HeaderFormsComponent
+        icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
+      />
       <TitleFormsComponent type={type} title="Sube tus facturas de" />
 
       <div>

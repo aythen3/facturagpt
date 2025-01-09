@@ -6,6 +6,7 @@ import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import InputComponent from "../../shared/InputComponent";
 import SearchSVG from "../../svgs/SearchSVG";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
+import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
 
 const WhatsAppFormCreateAutomate = ({ type }) => {
   const numbers = [
@@ -15,37 +16,7 @@ const WhatsAppFormCreateAutomate = ({ type }) => {
 
   return (
     <div>
-      <div className={styles.header}>
-        <div className={styles.header_mail}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "1px solid #D9D9D9",
-              borderTopLeftRadius: "8px",
-              borderBottomLeftRadius: "8px",
-              height: 30,
-              width: 30,
-            }}
-          >
-            <WhatsAppIcon />
-          </div>
-
-          <SelectComponent
-            options={[
-              "example1@gmail.com",
-              "example2@gmail.com",
-              "example3@gmail.com",
-            ]}
-            name="mail"
-            id="mail"
-            isEmail={true}
-          />
-        </div>
-        <p style={{ color: "#159B7C" }}>Añadir conexion</p>
-      </div>
-
+      <HeaderFormsComponent icon={<WhatsAppIcon />} />
       <TitleFormsComponent title="Recibe Facturas desde" type={type} />
 
       <div>

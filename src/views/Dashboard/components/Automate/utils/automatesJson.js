@@ -4,6 +4,7 @@ import drive from "../../../assets/drive.svg";
 import dropbox from "../../../assets/droopbox.svg";
 import whatsApp from "../../../assets/whatsapp.svg";
 import esPublico from "../../../assets/espublicogestionaLogo.svg";
+import googleSheets from "../../../assets/excel.svg";
 
 export const data = [
   {
@@ -12,6 +13,7 @@ export const data = [
     image: mail,
     contactType: "example@gmail.com",
     type: "Gmail",
+    role: "input",
   },
   {
     id: 2,
@@ -19,6 +21,7 @@ export const data = [
     image: outlook,
     contactType: "example@gmail.com",
     type: "Outlook",
+    role: "input",
   },
   {
     id: 3,
@@ -26,6 +29,7 @@ export const data = [
     image: drive,
     contactType: "example@gmail.com",
     type: "Google Drive",
+    role: "input",
   },
   {
     id: 4,
@@ -33,6 +37,7 @@ export const data = [
     image: dropbox,
     contactType: "example@gmail.com",
     type: "dropbox",
+    role: "input",
   },
   {
     id: 5,
@@ -40,6 +45,7 @@ export const data = [
     image: whatsApp,
     contactType: "+00000000",
     type: "WhatsApp",
+    role: "input",
   },
   {
     id: 6,
@@ -47,5 +53,14 @@ export const data = [
     image: esPublico,
     contactType: "example@gmail.com",
     type: "esPúblico Gestiona",
+    role: "input",
+  },
+  {
+    id: 7,
+    automateName: "Actualiza tu Google Sheets ",
+    image: googleSheets,
+    contactType: "Título de la hoja.xls",
+    type: "Google Sheets",
+    role: "output",
   },
 ];

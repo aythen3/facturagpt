@@ -10,6 +10,7 @@ import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/Gma
 import GoogleDriveFormCreateAutomate from "../Components/GoogleDriveFormCreateAutomate/GoogleDriveFormCreateAutomate";
 import WhatsAppFormCreateAutomate from "../Components/WhatsAppFormCreateAutomate/WhatsAppFormCreateAutomate";
 import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAutomate/EsPublicoGestionaFormAutomate";
+import GoogleSheetsFormAutomate from "../Components/GoogleSheetsFormAutomate/GoogleSheetsFormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -48,16 +49,35 @@ const PanelAutomate = ({ type, close, typeContent }) => {
                 Salida / Output
               </button>
             </div>
-            {dataFilter.map((card) => (
-              <CardAutomate
-                type={card.type}
-                key={card.id}
-                name={card.automateName}
-                image={card.image}
-                contactType={card.contactType}
-                typeContent={typeContent}
-              />
-            ))}
+            <>
+              <p style={{ fontWeight: "bold" }}>Entrada / Input</p>
+              {dataFilter
+                .filter((card) => card.role === "input")
+                .map((card) => (
+                  <CardAutomate
+                    key={card.id}
+                    type={card.type}
+                    name={card.automateName}
+                    image={card.image}
+                    contactType={card.contactType}
+                    typeContent={typeContent}
+                  />
+                ))}
+
+              <p style={{ fontWeight: "bold" }}>Salida / Output</p>
+              {dataFilter
+                .filter((card) => card.role === "output")
+                .map((card) => (
+                  <CardAutomate
+                    key={card.id}
+                    type={card.type}
+                    name={card.automateName}
+                    image={card.image}
+                    contactType={card.contactType}
+                    typeContent={typeContent}
+                  />
+                ))}
+            </>
           </div>
           <div>
             {type === "Gmail" || type === "Outlook" ? (
@@ -68,6 +88,8 @@ const PanelAutomate = ({ type, close, typeContent }) => {
               <WhatsAppFormCreateAutomate type={type} />
             ) : type === "esPúblico Gestiona" ? (
               <EsPublicoGestionaFormAutomate type={type} />
+            ) : type === "Google Sheets" ? (
+              <GoogleSheetsFormAutomate type={type} />
             ) : (
               <div>OTRO</div>
             )}

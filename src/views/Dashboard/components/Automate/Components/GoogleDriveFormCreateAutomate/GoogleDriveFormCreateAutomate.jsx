@@ -12,40 +12,12 @@ import LabelSVG from "../../svgs/LabelSVG";
 import TextSVG from "../../svgs/TextSVG";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
+import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
 
 const GoogleDriveFormCreateAutomate = ({ type }) => {
   return (
     <div>
-      <div className={styles.header}>
-        <div className={styles.header_mail}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "1px solid #D9D9D9",
-              borderTopLeftRadius: "8px",
-              borderBottomLeftRadius: "8px",
-              height: 30,
-              width: 30,
-            }}
-          >
-            <DriveIcon />
-          </div>
-
-          <SelectComponent
-            options={[
-              "example1@gmail.com",
-              "example2@gmail.com",
-              "example3@gmail.com",
-            ]}
-            name="mail"
-            id="mail"
-            isEmail={true}
-          />
-        </div>
-        <p style={{ color: "#159B7C" }}>Añadir conexion</p>
-      </div>
+      <HeaderFormsComponent icon={<DriveIcon />} />
       <TitleFormsComponent title="Sube tus facturas de" type={type} />
 
       <div>
