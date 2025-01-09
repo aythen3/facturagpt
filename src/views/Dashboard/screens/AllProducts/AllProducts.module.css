@@ -1,0 +1,415 @@
+.container {
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.clientsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 0 10px 10px 0;
+}
+
+.searchInput {
+  padding: 10px 10px 10px 35px;
+  /*Espacioparaelíconodentro*/
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  width: 250px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.searchInput::placeholder {
+  color: #aaa;
+}
+
+.inputIconInside {
+  position: absolute;
+  left: 10px; /* Ícono dentro del input */
+  font-size: 16px;
+  color: #aaa;
+}
+.inputIconOutsideContainer {
+  height: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  background-color: #233f39;
+  position: absolute;
+  right: 0px;
+  border-radius: 0 10px 10px 0;
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+  -ms-border-radius: 0 10px 10px 0;
+  -o-border-radius: 0 10px 10px 0;
+}
+
+.infoBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #233f39;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  img {
+    width: 15px;
+    height: 15px;
+  }
+}
+.moreBtn {
+  width: 40px;
+}
+.addButton,
+.moreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 40px;
+  background-color: #233f39;
+  color: white;
+  border: none;
+  /*padding: 12px;
+  */
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 13px;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
+  img {
+    width: 15px;
+    height: 15px;
+  }
+}
+.addButton:hover {
+  background-color: #122521;
+}
+
+.addIconOutside {
+  font-size: 18px; /* Ícono fuera del input */
+}
+
+.table {
+  width: 100%;
+  text-align: start;
+  border-collapse: collapse; /* Asegura que las celdas se vean uniformes */
+}
+
+.name {
+  color: #333333;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
+}
+tbody {
+  p {
+    margin: 0;
+  }
+}
+th {
+  text-align: start;
+  padding: 10px; /* Añade espacio interno */
+  color: #333; /* Color del texto */
+  font-weight: bold; /* Asegura que los encabezados sean visibles */
+  width: 150px; /* Ajusta la anchura según lo necesario */
+}
+
+td {
+  padding: 10px; /* Espaciado interno para las celdas */
+  color: #666666;
+  font-size: 13px;
+}
+
+thead th {
+  min-width: 120px; /* Mínima anchura para garantizar espacio */
+}
+
+.small {
+  min-width: 40px;
+  width: 40px;
+}
+.big {
+  width: 190px;
+}
+td p:first-of-type {
+  margin-bottom: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 35px;
+  img {
+    cursor: pointer;
+  }
+}
+
+.transacciones {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  a {
+    font-weight: bold;
+  }
+  a,
+  span {
+    color: #073f31;
+  }
+}
+
+input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+}
+
+.bg {
+  background-color: rgba(0, 0, 0, 0.47);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.newClientContainer {
+  position: fixed;
+  background-color: white;
+  padding-bottom: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80%;
+  overflow-y: scroll;
+  border-radius: 10px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+
+  .newClientForm {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .containerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 30px;
+    border-bottom: 1px solid #ebebeb;
+    h3 {
+      color: #222222;
+    }
+    span {
+      background-color: #ededed;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .phoneInputs {
+    width: 100%;
+    display: flex;
+    input {
+      flex: 1;
+    }
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  p {
+    color: #000;
+    font-weight: 500;
+    margin: 0;
+  }
+  .plan {
+    padding-right: 30px;
+    span {
+      color: #000;
+    }
+  }
+
+  .inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input {
+    width: 100%;
+    padding-right: 40px; /* Espacio para la imagen */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  }
+
+  .icon {
+    position: absolute;
+    right: 10px; /* Ajusta la posición según el diseño */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px; /* Ajusta el tamaño según necesites */
+    height: 20px;
+    pointer-events: none; /* Evita que interfiera con la interacción del input */
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    color: #717171;
+    gap: 8px;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ebebeb;
+    input,
+    select,
+    option {
+      padding: 10px;
+      border: none;
+      outline: none;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
+    }
+
+    select,
+    option {
+      color: #757575;
+    }
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btnOptionsContainer {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    align-items: center;
+    gap: 10px;
+    button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      -ms-border-radius: 8px;
+      -o-border-radius: 8px;
+    }
+    .view {
+      background-color: white;
+      border: 1px solid #cbcbcb;
+      color: #232222;
+    }
+    .new {
+      background-color: #233f39;
+      color: white;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    text-decoration: underline;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.headerStack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* align-items: center; */
+}
+
+.subHeader {
+  color: #71717a;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* Asegúrate que los th tengan suficiente altura */
+.table th {
+  padding: 16px 8px;
+  vertical-align: middle;
+  color: #484848;
+
+  /* text-align: center; */
+}
+
+.edit {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+  a {
+    color: #073f31;
+  }
+}

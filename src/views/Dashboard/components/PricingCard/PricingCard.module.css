@@ -24,8 +24,7 @@
 .card {
   display: inline-block; /* Asegurar que las tarjetas estén en una sola línea */
   min-width: 200px;
-  flex-shrink: 0;
-  /* border: 1px solid #ddd; */
+
   border-radius: 8px;
   background-color: #fff;
   text-align: center;
