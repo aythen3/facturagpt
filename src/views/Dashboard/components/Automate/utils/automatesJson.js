@@ -24,7 +24,7 @@ export const data = [
     automateName: "Sube tus Facturas de Google Drive",
     image: drive,
     contactType: "example@gmail.com",
-    type: "drive",
+    type: "Google Drive",
   },
   {
     id: 4,

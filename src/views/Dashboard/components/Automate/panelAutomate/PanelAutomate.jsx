@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Automate from "../Automate";
 import styles from "./panelAutomate.module.css";
 import CloseSVG from "../svgs/CloseSVG";
 import TitleComponent from "../Components/TitleComponent";
@@ -7,8 +6,8 @@ import SearchComponent from "../Components/SearchComponent/SearchComponent";
 import CardAutomate from "../Components/CardAutomate/CardAutomate";
 import { useDispatch } from "react-redux";
 import { data } from "../utils/automatesJson";
-import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
 import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/GmailAndOutlook";
+import GoogleDriveFormCreateAutomate from "../Components/GoogleDriveFormCreateAutomate/GoogleDriveFormCreateAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -61,6 +60,8 @@ const PanelAutomate = ({ type, close, typeContent }) => {
           <div>
             {type === "Gmail" || type === "Outlook" ? (
               <GmailAndOutlook type={type} />
+            ) : type === "Google Drive" ? (
+              <GoogleDriveFormCreateAutomate type={type} />
             ) : (
               <div>OTRO</div>
             )}

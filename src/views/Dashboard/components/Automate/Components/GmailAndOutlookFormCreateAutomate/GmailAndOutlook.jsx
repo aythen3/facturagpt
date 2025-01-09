@@ -12,6 +12,7 @@ import TextSVG from "../../svgs/TextSVG";
 import LabelSVG from "../../svgs/LabelSVG";
 import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../shared/InputComponent";
+import TitleFormsComponent from "../../shared/TitleFormsComponent";
 
 const GmailAndOutlook = ({ type }) => {
   return (
@@ -51,9 +52,7 @@ const GmailAndOutlook = ({ type }) => {
         <p style={{ color: "#159B7C" }}>Añadir conexion</p>
       </div>
 
-      <p style={{ fontWeight: "bold", color: "#929598", fontSize: "22px" }}>
-        Sube tus facturas de {type}
-      </p>
+      <TitleFormsComponent type={type} title="Sube tus facturas de" />
 
       <div>
         <p>
@@ -151,6 +150,8 @@ const GmailAndOutlook = ({ type }) => {
           </div>
           <div
             style={{
+              marginTop: "24px",
+
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
