@@ -8,7 +8,7 @@ import CloseSVG from "./svgs/CloseSVG";
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
 import { useDispatch } from "react-redux";
 
-const Automate = ({ close, newData, typeContent, isGeneral, fullContent }) => {
+const Automate = ({ close, newData, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();
   const handleDataFilter = (searchTerm) => {
@@ -19,7 +19,7 @@ const Automate = ({ close, newData, typeContent, isGeneral, fullContent }) => {
   };
 
   return (
-    <div className={isGeneral ? styles.container : ""}>
+    <div className={styles.container}>
       <div className={styles.content}>
         <div style={{ justifySelf: "end" }}>
           <CloseSVG action={close} />

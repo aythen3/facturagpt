@@ -12,6 +12,7 @@ import WhatsAppFormCreateAutomate from "../Components/WhatsAppFormCreateAutomate
 import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAutomate/EsPublicoGestionaFormAutomate";
 import GoogleSheetsFormAutomate from "../Components/GoogleSheetsFormAutomate/GoogleSheetsFormAutomate";
 import XmlFormAutomate from "../Components/XmlFormAutomate/XmlFormAutomate";
+import OdooFormAutomate from "../Components/OdooFormAutomate/OdooFormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -80,26 +81,32 @@ const PanelAutomate = ({ type, close, typeContent }) => {
                 ))}
             </>
           </div>
+
           <div>
-            {type === "Gmail" || type === "Outlook" ? (
-              <GmailAndOutlook type={type} />
-            ) : type === "Google Drive" ? (
-              <GoogleDriveFormCreateAutomate type={type} />
-            ) : type === "WhatsApp" ? (
-              <WhatsAppFormCreateAutomate type={type} />
-            ) : type === "esPúblico Gestiona" ? (
-              <EsPublicoGestionaFormAutomate type={type} />
-            ) : type === "Google Sheets" ? (
-              <GoogleSheetsFormAutomate type={type} />
-            ) : (
-              (type = "XML para Declaciones Físcales" ? (
-                <XmlFormAutomate type={type} />
-              ) : (
-                <div>OTRO</div>
-              ))
-            )}
+            {(() => {
+              switch (type) {
+                case "Gmail":
+                case "Outlook":
+                  return <GmailAndOutlook type={type} />;
+                case "Google Drive":
+                  return <GoogleDriveFormCreateAutomate type={type} />;
+                case "WhatsApp":
+                  return <WhatsAppFormCreateAutomate type={type} />;
+                case "esPúblico Gestiona":
+                  return <EsPublicoGestionaFormAutomate type={type} />;
+                case "Google Sheets":
+                  return <GoogleSheetsFormAutomate type={type} />;
+                case "XML para Declaciones Físcales":
+                  return <XmlFormAutomate type={type} />;
+                case "Odoo":
+                  return <OdooFormAutomate type={type} />;
+                default:
+                  return <div>OTRO</div>;
+              }
+            })()}
           </div>
         </div>
+
         <div className={styles.container_buttons_footer}>
           <button
             onClick={close}
