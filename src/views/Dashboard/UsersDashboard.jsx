@@ -7,7 +7,7 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import styles from "./Dashboard.module.css";
-
+import style from "./UsersDashboard.module.css";
 import userTick from "./assets/profile-tick.svg";
 import userPlus from "./assets/userPlus.svg";
 import monitor from "./assets/monitor.svg";
@@ -30,6 +30,7 @@ import {
   getAllUsers,
   updateClient,
   getEmailsByQuery,
+  updateUser,
 } from "../../actions/emailManager";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -47,35 +48,36 @@ const stripePromise = loadStripe(
 );
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
+import { setUser } from "../../slices/emailManagerSlices";
+import AddAdminModal from "./components/AddAdminModal/AddAdminModal";
 
-const Dashboard = () => {
+const UsersDashboard = () => {
   const { t } = useTranslation("dashboard");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showUserSettings, setShowUserSettings] = useState(false);
 
-  const { allClients, allUsers, user } = useSelector(
-    (state) => state.emailManager
-  );
+  const {
+    allClients,
+    allUsers,
+    user: userData,
+  } = useSelector((state) => state.emailManager);
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 
   const [selectedOption, setSelectedOption] = useState("Todos"); // Selected filter
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [showAddAdminModal, setShowAddAdminModal] = useState(false);
 
-  const options = ["Todos", "Activos", "Emails procesados", "Empresa A-Z"];
-
-  useEffect(() => {
-    console.log("ALL CLIENTS", allClients);
-  }, [allClients]);
+  const options = ["Todos", "Email A-Z", "Rol", "Pin"];
 
   const stats = [
     {
       icon: profiles,
-      title: "# Clientes",
-      value: allClients?.length,
+      title: "# Usuarios",
+      value: allUsers?.length,
       change: "16%",
 
       isPositive: true,
@@ -85,19 +87,19 @@ const Dashboard = () => {
       icon: profilePlus,
       multiple: [
         {
-          title: "# Clientes Plus",
+          title: "# Usuarios Plus",
           value: 0,
           change: "1%",
           isPositive: false,
         },
         {
-          title: "# Clientes Pro",
+          title: "# Usuarios Pro",
           value: 0,
           change: "1%",
           isPositive: false,
         },
         {
-          title: "# Clientes Enterprise",
+          title: "# Usuarios Enterprise",
           value: 0,
           change: "1%",
           isPositive: false,
@@ -134,81 +136,39 @@ const Dashboard = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
   useEffect(() => {
-    let updatedClients = [...allClients];
+    let updatedUsers = [...allUsers];
 
     if (searchQuery) {
-      updatedClients = updatedClients.filter(
-        (client) =>
-          client.companyName
-            ?.toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          client.tokenEmail
-            .split("@")[0]
-            ?.toLowerCase()
-            .includes(searchQuery.toLowerCase())
+      updatedUsers = updatedUsers.filter((user) =>
+        user.email?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     switch (selectedOption) {
-      case "Activos":
-        updatedClients = updatedClients.sort((a, b) => b.active - a.active);
-        break;
-      case "Emails procesados":
-        updatedClients = updatedClients.sort(
-          (a, b) =>
-            (b.processedEmails?.length || 0) - (a.processedEmails?.length || 0)
+      case "Empresa A-Z":
+        updatedUsers = updatedUsers.sort((a, b) =>
+          (a.email || "").localeCompare(b.email || "")
         );
         break;
-      case "Empresa A-Z":
-        updatedClients = updatedClients.sort((a, b) =>
-          (a.companyName || "").localeCompare(b.companyName || "")
+      case "Rol":
+        updatedUsers = updatedUsers.sort((a, b) =>
+          (a.role || "").localeCompare(b.role || "")
+        );
+        break;
+      case "Pin":
+        updatedUsers = updatedUsers.sort((a, b) =>
+          (a.pin || "").localeCompare(b.pin || "")
         );
         break;
       default:
         break;
     }
 
-    setFilteredClients(updatedClients);
-  }, [allClients, searchQuery, selectedOption]);
-
-  useEffect(() => {
-    const checkUserPayments = async () => {
-      for (const client of allClients) {
-        const hasToPay = hasDatePassed(client.nextPaymentDate);
-        // console.log(
-        //   `Checking payment for ${client.tokenEmail}, has to pay?`,
-        //   hasToPay
-        // );
-
-        if (hasToPay) {
-          const startDate = getPreviousPaymentDate(client.nextPaymentDate);
-          const endDate = client.nextPaymentDate;
-          const paymentData = await checkUserMonthlyPayment(
-            client,
-            startDate,
-            endDate
-          );
-          console.log(
-            `This client has to pay ${paymentData?.finalPrice} euros`
-          );
-
-          if (paymentData?.finalPrice >= 0.5) {
-            console.log(
-              `This client has to pay ${paymentData.finalPrice} euros`
-            );
-            setShowPaymentModal(client.id);
-            setAmountToPay(paymentData.finalPrice * 100);
-            break;
-          }
-        }
-      }
-    };
-
-    if (allClients?.length) {
-      checkUserPayments();
-    }
-  }, [allClients]);
+    setFilteredUsers(updatedUsers);
+  }, [allUsers, searchQuery, selectedOption]);
 
   const handleDropdownToggle = () => {
     setIsOpen(!isOpen);
@@ -353,6 +313,91 @@ const Dashboard = () => {
   }, [showPaymentModal]);
   const [showSidebar, setShowSidebar] = useState(false);
 
+  const [userOptions, setUserOptions] = useState({});
+  const [openRoleDropdown, setOpenRoleDropdown] = useState(null); // Track open dropdown by user ID
+  const dropdownRoleRef = useRef(null);
+
+  const roleOptions = ["user", "admin", "superadmin"];
+
+  // Fetch all users on mount
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
+  // Initialize userOptions with user roles
+  useEffect(() => {
+    const initialOptions = {};
+    allUsers.forEach((user) => {
+      initialOptions[user.id] = user.role || "user"; // Default to 'user' if role is not defined
+    });
+    setUserOptions(initialOptions);
+  }, [allUsers]);
+
+  //   useEffect(() => {
+  //     if (allUsers.length > 0) {
+  //       allUsers.forEach((user) => {
+  //         if (!user?.pin) {
+  //           dispatch(updateUser({ userId: user?.id, toUpdate: { pin: "1234" } }));
+  //         }
+  //       });
+  //     }
+  //   }, [allUsers]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        dropdownRoleRef.current &&
+        !dropdownRoleRef.current.contains(event.target)
+      ) {
+        setOpenRoleDropdown(null); // Close dropdown
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  // Handle dropdown toggle for a specific user
+  const handleRoleDropdownToggle = (userId) => {
+    setOpenRoleDropdown((prev) => (prev === userId ? null : userId));
+  };
+
+  // Handle role change for a specific user
+  const handleRoleOptionClick = (userId, option) => {
+    setUserOptions((prevOptions) => ({
+      ...prevOptions,
+      [userId]: option,
+    }));
+    setOpenRoleDropdown(false); // Close the dropdown
+    // Here you can dispatch an update action to save the new role
+    console.log(`Updated role for user ${userId}: ${option}`);
+    dispatch(updateUser({ userId, toUpdate: { role: option } }));
+  };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("emailManagerAccount");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        if (parsedUser?.email && parsedUser?.id && parsedUser?.role) {
+          dispatch(setUser(parsedUser));
+          console.log(
+            "Logged-in account restored from localStorage:",
+            parsedUser
+          );
+        }
+      } catch (error) {
+        console.error("Error parsing stored user data:", error);
+      }
+    } else {
+      navigate("/login");
+    }
+  }, []);
+
+  if (!userData) return null;
+
   return (
     <Elements stripe={stripePromise}>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
@@ -446,23 +491,23 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
-        <div className={styles.tableSection}>
+        <div className={style.contentContainer}>
           <div className={styles.tableTopContainer}>
             <div className={styles.tableHeaderContainer}>
               <h1 className={styles.tableTitle}>
-                Seguimiento y estados{" "}
+                Usuarios y permisos{" "}
                 <span
-                  onClick={() => navigate("/users")}
+                  onClick={() => navigate("/home")}
                   className={styles.changeTabButton}
                 >
-                  Ir a usuarios
+                  Ir a clientes
                 </span>
               </h1>
-              <span className={styles.tableSpan}>Asocidos y sus cuentas</span>
+              <span className={styles.tableSpan}>Todos los usuarios</span>
             </div>
             <div className={styles.filters}>
               <button
-                // onClick={() => setShowUserSettings(true)}
+                onClick={() => setShowAddAdminModal(true)}
                 className={styles.addClientButton}
               >
                 <img src={plus} alt="Add client" />
@@ -513,89 +558,67 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className={styles.tableContainer}>
+          <div className={style.tableContainer}>
             <div className={styles.tableHeader}>
-              <span className={styles.columnName}>{t("tableCol1")}</span>
-              <span className={styles.columnStatus}>{t("tableCol2")}</span>
-              <span className={styles.columnContact}>{t("tableCol3")}</span>
-              <span className={styles.columnTokens}>{t("tableCol4")}</span>
-              <span className={styles.columnEmail}>{t("tableCol5")}</span>
-              <span className={styles.columnRecognitions}>
-                {t("tableCol6")}
+              <span style={{ flex: 0.242 }} className={style.columnName}>
+                Nombre empresa
               </span>
-              <span className={styles.columnPort}>{t("tableCol7")}</span>
-              <span className={styles.columnActive}>{t("tableCol8")}</span>
+              <span className={style.columnPin}>PIN</span>
+              <span className={style.columnContact}>Contacto</span>
+              <span className={style.columnPassword}>Contraseña</span>
+              <span className={style.columnEmail}>Email</span>
+              <span className={style.columnRole}>Rol</span>
             </div>
-            {filteredClients.length > 0 ? (
-              filteredClients.map((client, index) => (
-                <div key={index} className={styles.tableRow}>
-                  <span
-                    onClick={() => checkUserMonthlyPayment(client)}
-                    className={styles.columnName}
-                  >
-                    {client.companyName}
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((user) => (
+                <div key={user.id} className={style.tableRow}>
+                  <span className={style.columnName}>{user.email || "-"}</span>
+                  <span className={style.columnPin}>{user.pin || "-"}</span>
+                  <span className={style.columnContact}>
+                    {user.email || "-"}
                   </span>
-                  <span className={styles.columnStatus}>
-                    {client.paymentMethodId ? (
-                      <div
-                        // onClick={() => setShowPaymentModal(client.id)}
-                        className={styles.greenButton}
-                      >
-                        Configurado <FaCheck size={12} color="#fff" />
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => {
-                          setClientIdForPaymentSetup(client.id);
-                          setShowSetPaymentModal(true);
-                        }}
-                        className={styles.redButton}
-                      >
-                        Agregar <FaPlus size={12} color="#fff" />
-                      </div>
-                    )}
-                  </span>
-                  <span className={styles.columnContact}>
-                    {client.phoneNumber}
-                  </span>
-                  <span className={styles.columnTokens}>
-                    <div className={styles.gapDiv}>
-                      <img
-                        src={openEmail}
-                        alt="Email"
-                        className={styles.icon}
-                      />
-                      {client.tokenEmail}
+                  <span className={style.columnPassword}>-</span>
+                  <span className={style.columnEmail}>{user.email}</span>
+                  {user.email === userData.email ? (
+                    <span
+                      style={{ cursor: "default" }}
+                      className={style.filterSort}
+                    >
+                      <b>{user.role}</b>
+                    </span>
+                  ) : userData.role !== "user" ? (
+                    <div
+                      className={style.filterSort}
+                      onClick={() => handleRoleDropdownToggle(user.id)}
+                    >
+                      <b>{userOptions[user.id]}</b>
+                      <FaChevronDown className={style.chevronIcon} />
+                      {openRoleDropdown === user.id && (
+                        <div
+                          ref={dropdownRoleRef}
+                          className={style.dropdownOptions}
+                        >
+                          {roleOptions.map((option, index) => (
+                            <div
+                              key={option}
+                              className={style.dropdownOption}
+                              onClick={() =>
+                                handleRoleOptionClick(user.id, option)
+                              }
+                              style={{
+                                borderBottom:
+                                  index === roleOptions.length - 1 && "none",
+                              }}
+                            >
+                              {option}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <div className={styles.gapDiv}>
-                      <img
-                        src={circuit}
-                        alt="circuit"
-                        className={styles.icon}
-                      />
-                      {client.tokenGPT}
-                    </div>
-                  </span>
-                  <span className={styles.columnEmail}>
-                    {client.tokenEmail}
-                  </span>
-                  <span
-                    onClick={() => resetProcessedEmails(client)}
-                    className={styles.columnRecognitions}
-                  >
-                    {client.processedEmails?.length}
-                  </span>
-                  <span className={styles.columnPort}>{client.port}</span>
-                  <span className={styles.columnActive}>
-                    <label className={styles.switch}>
-                      <input
-                        type="checkbox"
-                        checked={client.active || false}
-                        onChange={() => toggleUserActive(client)}
-                      />
-                      <span className={styles.slider}></span>
-                    </label>
-                  </span>
+                  ) : (
+                    <span className={style.filterSort}>{user.role}</span>
+                  )}
                 </div>
               ))
             ) : (
@@ -610,8 +633,11 @@ const Dashboard = () => {
           />
         )}
       </div>
+      {showAddAdminModal && (
+        <AddAdminModal onClose={() => setShowAddAdminModal(false)} />
+      )}
     </Elements>
   );
 };
 
-export default Dashboard;
+export default UsersDashboard;

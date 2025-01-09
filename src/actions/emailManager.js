@@ -31,13 +31,13 @@ export const getEmailsByQuery = createAsyncThunk(
 
 export const createAccount = createAsyncThunk(
   "emailManager/createAccount",
-  async ({ nombre, email, password }) => {
-    console.log("data from createAccount", { nombre, email, password });
+  async ({ nombre, email, password, role }) => {
+    console.log("data from createAccount", { nombre, email, password, role });
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
         `/emailManager/createAccount`,
-        { nombre, email, password },
+        { nombre, email, password, role },
         {
           headers: {
             Authorization: `Bearer ${token}`,

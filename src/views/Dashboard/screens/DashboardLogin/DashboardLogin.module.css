@@ -13,8 +13,9 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: center;
   padding: 24px;
+  gap: 222px;
   flex: 1;
   max-width: 1200px;
   margin: 0 auto;
@@ -42,7 +43,7 @@
 .logoContainer {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 20px 0;
   background-color: #fff;
   border-radius: 8px;
@@ -50,15 +51,18 @@
 }
 
 .logo {
-  width: 60px;
-  height: 60px;
+  width: 106px;
+  height: 94px;
   margin-right: 10px;
 }
 
 .logoText {
-  font-size: 48px;
-  font-weight: 500;
+  font-size: 55px;
+  font-weight: 600;
   color: #162d3a;
+  strong {
+    font-size: 58px;
+  }
 }
 
 .title {
@@ -102,7 +106,7 @@
 .label {
   font-size: 14px;
   font-weight: 500;
-  color: #292d32;
+  color: #0c1421;
   margin-bottom: 8px;
   display: flex;
   flex-direction: column;
@@ -110,14 +114,20 @@
 }
 
 .input {
+  display: flex;
   width: 100%;
+
   padding: 15px;
+
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 14px;
   color: #8897ad;
+  border: none !important;
+  outline: none !important;
   margin-bottom: 20px;
   background-color: #f4f4f4;
+  height: 48px;
   box-sizing: border-box;
 }
 
@@ -132,6 +142,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  max-width: 388px;
 }
 
 .rememberMe {
@@ -151,6 +162,7 @@
 
 .signInButton {
   width: 100%;
+  max-width: 388px;
   background-color: #162d3a;
   color: #ffffff;
   font-size: 18px;
@@ -161,6 +173,7 @@
   cursor: pointer;
   margin-bottom: 28px;
   display: flex;
+  height: 48px;
   align-items: center;
   justify-content: center;
 }
@@ -170,6 +183,7 @@
   text-align: center;
   font-weight: 400;
   color: #313957;
+  max-width: 388px;
 }
 
 .footerText a {
@@ -187,6 +201,7 @@
   font-size: 14px;
   text-align: center;
   color: #959cb6;
+  max-width: 388px;
   font-weight: 400;
   margin-top: 20px;
 }
@@ -249,7 +264,9 @@
 .error {
   color: #dc3545;
   font-size: 0.875rem;
+  height: 21px;
   margin-top: 0.5rem;
+  min-height: 21px;
 }
 
 .loading {
@@ -261,17 +278,18 @@
   background-color: transparent;
   color: #000;
   font-size: 16px;
-  height: 48px;
   font-weight: 400;
   border: 1px solid #d9d9d9;
   border-radius: 12px;
   cursor: pointer;
-  margin-bottom: 28px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   gap: 8px;
+  height: 48px;
+  max-width: 388px;
 }
 
 .forgotPasswordIcon {
@@ -323,17 +341,30 @@
   justify-content: center;
 }
 
+@media (max-width: 1524px) {
+  .content {
+    gap: 120px;
+  }
+}
+
+@media (max-width: 1248px) {
+  .content {
+    gap: 80px;
+  }
+}
+
 @media (max-width: 1024px) {
   .content {
     flex-direction: column;
     align-items: center;
+    gap: 50px;
     padding: 20px;
   }
 
   .leftContainer,
   .rightContainer {
-    max-width: 100%;
     width: 100%;
+    max-width: 388px;
     padding-right: 0;
   }
 
@@ -364,6 +395,7 @@
 @media (max-width: 480px) {
   .content {
     padding: 16px;
+    gap: 0px;
   }
 
   .forgotPasswordContainer {

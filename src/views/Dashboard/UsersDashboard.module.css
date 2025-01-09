@@ -1,15 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 .container {
   padding: 24px 48px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #ffffff;
   display: flex;
   justify-content: center;
 }
 .contentContainer {
-    width: 100%;
-    max-width: 1300px;
+  padding: 24px;
 }
 .headerTitle {
   font-size: 22px;
@@ -62,6 +61,9 @@
 .columnName {
   flex: 0.25;
 }
+.columnPin {
+  flex: 0.1;
+}
 
 .columnContact {
   flex: 0.2;
@@ -83,17 +85,19 @@
   font-weight: 300;
   color: #000;
   padding: 0px 16px;
-  flex:0.1;
+  flex: 0.1;
   height: 30px;
   min-height: 30px;
+  max-height: 30px;
   border-radius: 4px;
-  border: 1px solid #BDBDBD;
+  border: 1px solid #bdbdbd;
   display: flex;
   align-items: center;
   font-size: 11px;
   justify-content: flex-start;
   cursor: pointer;
-  position:relative;
+  position: relative;
+  min-width: 90px;
 }
 
 .filterSort b {
@@ -103,8 +107,8 @@
 }
 
 .chevronIcon {
-  margin-left:auto;
-  color: #09121F;
+  margin-left: auto;
+  color: #09121f;
 }
 
 .dropdownOptions {
@@ -113,7 +117,7 @@
   left: 0;
   width: 100%;
   background: #fff;
-  border: 1px solid #BDBDBD;
+  border: 1px solid #bdbdbd;
   margin-top: 4px;
   border-radius: 4px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -125,7 +129,7 @@
   margin: 0px 12px;
   padding: 14px 0px;
   font-size: 12px;
-  border-bottom: 1px solid #BDBDBD;
+  border-bottom: 1px solid #bdbdbd;
   font-weight: 500;
   color: #131313;
   cursor: pointer;

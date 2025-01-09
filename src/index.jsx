@@ -12,21 +12,23 @@ import store from './utils/store';
 import Transactions from './views/Dashboard/screens/Transactions/Transactions.jsx';
 import ArticlesTransactions from './views/Dashboard/screens/ArticlesTransactions/ArticlesTransactions.jsx';
 
-import DashboardLogin from './views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx';
-import Dashboard from './views/Dashboard/Dashboard.jsx';
+
+import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
+import Dashboard from "./views/Dashboard/Dashboard.jsx";
 import UsersPermissions from './views/Dashboard/screens/UsersPermissions/UsersPermissions.jsx';
-import UserSettings from './views/Dashboard/screens/UserSettings/UserSettings.jsx';
-import LandingPage from './views/Dashboard/screens/Landing/Landing.jsx';
-import Pricing from './views/Dashboard/screens/Pricing/Pricing.jsx';
-import FreeTrial from './views/Dashboard/screens/FreeTrial/FreeTrial.jsx';
-import InvoicePanel from './views/Dashboard/screens/InvoicePanel/InvoicePanel.jsx';
-import Terms from './views/Dashboard/screens/Terms/TermsAndConditions.jsx';
-import ContactForm from './views/Dashboard/components/ContactForm/ContactForm.jsx';
-import Clients from './views/Dashboard/screens/Clients/Clients.jsx';
-import { I18nextProvider } from 'react-i18next';
-import i18n from './i18.js';
-import { Auth0Provider } from '@auth0/auth0-react';
-import AllProducts from './views/Dashboard/screens/AllProducts/AllProducts.jsx';
+import UserSettings from "./views/Dashboard/screens/UserSettings/UserSettings.jsx";
+import LandingPage from "./views/Dashboard/screens/Landing/Landing.jsx";
+import Pricing from "./views/Dashboard/screens/Pricing/Pricing.jsx";
+import FreeTrial from "./views/Dashboard/screens/FreeTrial/FreeTrial.jsx";
+import InvoicePanel from "./views/Dashboard/screens/InvoicePanel/InvoicePanel.jsx";
+import Terms from "./views/Dashboard/screens/Terms/TermsAndConditions.jsx";
+import ContactForm from "./views/Dashboard/components/ContactForm/ContactForm.jsx";
+import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18.js";
+import { Auth0Provider } from "@auth0/auth0-react";
+import Automate from "./views/Dashboard/screens/Automate/Automate.jsx";
+import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -70,22 +72,23 @@ const Layout = () => {
             <Provider store={store}>
               <BrowserRouter>
                 <Routes>
-                  <Route path='/login' element={<DashboardLogin />} />
-                  <Route path='/landing' element={<LandingPage />} />
-                  <Route path='/pricing' element={<Pricing />} />
-                  <Route path='/home' element={<Dashboard />} />
-                  <Route path='/freetrial' element={<FreeTrial />} />
-                  <Route
-                    path='/usersPermissions'
-                    element={<UsersPermissions />}
-                  />
-                  <Route path='/userSettings' element={<UserSettings />} />
-                  <Route path='/clients' element={<Clients />} />
-                  <Route path='/allproducts' element={<AllProducts />} />
-                  <Route path='/contact' element={<ContactForm />} />
-                  <Route path='/terms' element={<Terms />} />
-                  <Route path='*' element={<LandingPage />} />
-                  <Route path='/Panel' element={<InvoicePanel />} />
+
+                  <Route path="/login" element={<DashboardLogin />} />
+                  <Route path="/landing" element={<LandingPage />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/home" element={<Dashboard />} />
+                  <Route path="/freetrial" element={<FreeTrial />} />
+                  <Route path="/automate" element={<Automate />} />
+                  <Route path="/users" element={<UsersDashboard />} />
+                   <Route path='/usersPermissions' element={<UsersPermissions />}/>
+                  <Route path="/userSettings" element={<UserSettings />} />
+                  <Route path="/clients" element={<Clients />} />
+                      <Route path='/allproducts' element={<AllProducts />} />
+                  <Route path="/contact" element={<ContactForm />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="*" element={<LandingPage />} />
+                  <Route path="/Panel" element={<InvoicePanel />} />
+
                 </Routes>
               </BrowserRouter>
             </Provider>

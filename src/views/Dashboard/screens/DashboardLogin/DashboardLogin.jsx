@@ -13,9 +13,12 @@ import {
   loginToManager,
   verifyOTP,
   sendOTP,
-} from '../../../../actions/user';
-import { useTranslation } from 'react-i18next';
-import { useAuth0 } from '@auth0/auth0-react';
+
+} from "../../../../actions/user";
+import { useTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
+import { setUser } from "../../../../slices/emailManagerSlices";
+
 
 const DashboardLogin = () => {
   const { t } = useTranslation('dahsboardLogin');
@@ -36,6 +39,38 @@ const DashboardLogin = () => {
   const [storedPassword, setStoredPassword] = useState('');
   const [recaptchaValue, setRecaptchaValue] = useState('');
   const navigate = useNavigate();
+
+  const validatePassword = (password) => {
+    const minLength = /.{8,}/;
+    const hasUpperCase = /[A-Z]/;
+    const hasLowerCase = /[a-z]/;
+    const hasNumber = /[0-9]/;
+    if (!minLength.test(password)) {
+      setError("La contraseña debe tener al menos 8 caracteres.");
+      return false;
+    }
+    if (!hasUpperCase.test(password)) {
+      setError("La contraseña debe contener al menos una letra mayúscula.");
+      return false;
+    }
+    if (!hasLowerCase.test(password)) {
+      setError("La contraseña debe contener al menos una letra minúscula.");
+      return false;
+    }
+    if (!hasNumber.test(password)) {
+      setError("La contraseña debe contener al menos un número.");
+      return false;
+    }
+
+    setError("");
+    return true;
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    validatePassword(newPassword);
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -93,6 +128,9 @@ const DashboardLogin = () => {
   }, [email, password, mode]);
 
   const handleSignin = () => {
+    if (error !== "") {
+      return;
+    }
     if (email.length > 1 && password.length > 1) {
       setIsLoading(true);
       dispatch(loginToManager({ email, password }))
@@ -102,7 +140,11 @@ const DashboardLogin = () => {
           navigate('/home');
         })
         .catch((error) => {
+
           setError(error.message || 'Failed to sign in');
+
+          setError(error.message || "Error al iniciar sesión");
+
         })
         .finally(() => {
           setIsLoading(false);
@@ -120,7 +162,9 @@ const DashboardLogin = () => {
           setResendTimer(45);
         })
         .catch((error) => {
-          setError(error.message || 'Failed to send OTP');
+
+          setError(error.message || "Error al enviar código de verificación");
+
         })
         .finally(() => {
           setIsLoading(false);
@@ -148,11 +192,13 @@ const DashboardLogin = () => {
               setMode('signin');
             })
             .catch((error) => {
-              setError(error.message || 'Failed to create account');
+
+              setError(error.message || "Error al crear cuenta");
             });
         })
         .catch((error) => {
-          setError(error.message || 'Failed to verify OTP');
+          setError(error.message || "Error al verificar código");
+
         })
         .finally(() => {
           setIsLoading(false);
@@ -168,7 +214,9 @@ const DashboardLogin = () => {
         setResendTimer(45);
       })
       .catch((error) => {
-        setError(error.message || 'Failed to resend OTP');
+
+        setError(error.message || "Error al reenviar código de verificación");
+
       })
       .finally(() => {
         setIsLoading(false);
@@ -208,7 +256,9 @@ const DashboardLogin = () => {
         alt="FacturaGPT"
         className={styles.logo}
       />
-      <span className={styles.logoText}>FacturaGPT</span>
+      <span className={styles.logoText}>
+        Factura<strong>GPT</strong>
+      </span>
     </div>
   );
 
@@ -240,7 +290,7 @@ const DashboardLogin = () => {
         {t('label2')}
         <input
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           type="password"
           placeholder={t('placeholder2')}
           className={styles.input}
@@ -368,7 +418,7 @@ const DashboardLogin = () => {
             >
               {isLoading ? 'Verifying...' : 'Next'}
             </div>
-            {error && <p className={styles.error}>{error}</p>}
+            <p className={styles.error}>{error}</p>
             <p className={styles.securityNote}>
               <span className={styles.lockIcon}>
                 <LockIcon />

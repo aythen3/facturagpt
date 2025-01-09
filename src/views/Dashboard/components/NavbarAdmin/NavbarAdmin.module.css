@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background: #223f39;
+  background: linear-gradient(90deg, #11a380 0%, #063d30 100%);
   color: white;
   font-size: 13px;
   padding: 10px 40px;
@@ -38,7 +38,8 @@
   outline: none;
   border: none;
   cursor: pointer;
-  background-color: #1a6555;
+  background: linear-gradient(270deg, #0d886b 0%, #084739 100%);
+
   padding: 5px 10px;
   border-radius: 8px;
   -webkit-border-radius: 8px;
