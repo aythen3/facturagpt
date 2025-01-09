@@ -5,6 +5,7 @@ import dropbox from "../../../assets/droopbox.svg";
 import whatsApp from "../../../assets/whatsapp.svg";
 import esPublico from "../../../assets/espublicogestionaLogo.svg";
 import googleSheets from "../../../assets/excel.svg";
+import xml from "../../../assets/xmlIcon.svg";
 
 export const data = [
   {
@@ -57,10 +58,19 @@ export const data = [
   },
   {
     id: 7,
-    automateName: "Actualiza tu Google Sheets ",
+    automateName: "Actualiza tu Google Sheets",
     image: googleSheets,
     contactType: "Título de la hoja.xls",
     type: "Google Sheets",
+    role: "output",
+  },
+
+  {
+    id: 8,
+    automateName: "Genera Archivos XML para Declaraciones Físcales",
+    image: xml,
+    contactType: "example@gmail.com ",
+    type: "XML para Declaciones Físcales",
     role: "output",
   },
 ];

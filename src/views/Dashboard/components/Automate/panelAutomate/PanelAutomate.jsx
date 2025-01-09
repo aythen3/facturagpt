@@ -11,6 +11,7 @@ import GoogleDriveFormCreateAutomate from "../Components/GoogleDriveFormCreateAu
 import WhatsAppFormCreateAutomate from "../Components/WhatsAppFormCreateAutomate/WhatsAppFormCreateAutomate";
 import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAutomate/EsPublicoGestionaFormAutomate";
 import GoogleSheetsFormAutomate from "../Components/GoogleSheetsFormAutomate/GoogleSheetsFormAutomate";
+import XmlFormAutomate from "../Components/XmlFormAutomate/XmlFormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -91,7 +92,11 @@ const PanelAutomate = ({ type, close, typeContent }) => {
             ) : type === "Google Sheets" ? (
               <GoogleSheetsFormAutomate type={type} />
             ) : (
-              <div>OTRO</div>
+              (type = "XML para Declaciones Físcales" ? (
+                <XmlFormAutomate type={type} />
+              ) : (
+                <div>OTRO</div>
+              ))
             )}
           </div>
         </div>
