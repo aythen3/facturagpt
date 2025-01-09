@@ -59,7 +59,11 @@ const PanelAutomate = ({ type, close, typeContent }) => {
             ))}
           </div>
           <div>
-            <GmailAndOutlook type={type} />
+            {type === "Gmail" || type === "Outlook" ? (
+              <GmailAndOutlook type={type} />
+            ) : (
+              <div>OTRO</div>
+            )}
           </div>
         </div>
         <div className={styles.container_buttons_footer}>

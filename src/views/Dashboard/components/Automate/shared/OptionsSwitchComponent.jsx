@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import styles from "./optionsSwitch.module.css";
 
-const OptionsSwitchComponent = ({ title, icon }) => {
+const OptionsSwitchComponent = ({ text, icon }) => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
+
   return (
     <div
       style={{
@@ -8,29 +15,28 @@ const OptionsSwitchComponent = ({ title, icon }) => {
         alignItems: "center",
         justifyContent: "space-between",
         border: "1px solid #E5E5E5",
-        borderTopLeftRadius: "8px",
-        borderBottomLeftRadius: "8px",
+        height: "46px",
+        borderRadius: "8px",
+        overflow: "hidden",
+        paddingRight: "10px",
       }}
     >
-      <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-        <div
-          style={{
-            backgroundColor: "#233F39",
-            borderTopLeftRadius: "8px",
-            borderBottomLeftRadius: "8px",
+      <div
+        style={{
+          display: "flex",
+          gap: 6,
+          alignItems: "center",
+          // backgroundColor: "red",
+        }}
+      >
+        <div style={{ backgroundColor: "#233F39" }}>{icon}</div>
 
-            width: 50,
-            textAlign: "center",
-            color: "white",
-          }}
-        >
-          <p style={{ fontSize: 20 }}>{icon}</p>
-        </div>
-        <div>
-          <p>{title}</p>
-        </div>
+        <p>{text}</p>
       </div>
-      <input type="checkbox" />
+      <label className={styles.switch}>
+        <input type="checkbox" checked={isChecked} onChange={handleToggle} />
+        <span className={styles.slider}></span>
+      </label>
     </div>
   );
 };

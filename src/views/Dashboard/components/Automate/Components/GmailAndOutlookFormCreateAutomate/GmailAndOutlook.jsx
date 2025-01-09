@@ -3,17 +3,26 @@ import styles from "./gmailAndOutlook.module.css";
 import SearchSVG from "../../svgs/SearchSVG";
 import WarningSVG from "../../svgs/WarningSVG";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
+import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
+import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 import SelectComponent from "../../shared/SelectComponent";
 import CheckboxComponent from "../../shared/CheckboxComponent";
 import OptionsSwitchComponent from "../../shared/OptionsSwitchComponent";
+import TextSVG from "../../svgs/TextSVG";
+import LabelSVG from "../../svgs/LabelSVG";
+import NotificationsSVG from "../../svgs/NotificationsSVG";
+import InputComponent from "../../shared/InputComponent";
 
 const GmailAndOutlook = ({ type }) => {
   return (
-    <div className={styles.gmailOutlookContainer}>
+    <div>
       <div className={styles.header}>
         <div className={styles.header_mail}>
           <div
             style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               border: "1px solid #D9D9D9",
               borderTopLeftRadius: "8px",
               borderBottomLeftRadius: "8px",
@@ -21,7 +30,11 @@ const GmailAndOutlook = ({ type }) => {
               width: 30,
             }}
           >
-            <GmailIcon style={{ height: 30, width: 30 }} />
+            {type === "Gmail" ? (
+              <GmailIcon style={{ width: 25, height: 25 }} />
+            ) : (
+              <OutlookIcon style={{ width: 25, height: 25 }} />
+            )}{" "}
           </div>
 
           <SelectComponent
@@ -47,24 +60,16 @@ const GmailAndOutlook = ({ type }) => {
           Ubicación{" "}
           <span>Configura la ubicación donde Gmail guardará los datos</span>
         </p>
-        <div className={styles.inputs}>
-          <div className={styles.input_ubication}>
-            <SearchSVG />
-            <input type="text" placeholder="/NombredelaCuenta" name="" id="" />
-          </div>
-          <p>Seleccionar Ubicación</p>
-        </div>
+        <InputComponent
+          textButton="Seleccionar Ubicación"
+          placeholder="/NombredelaCuenta"
+          icon={<SearchSVG />}
+        />
+
         <div className={styles.content_input}>
           <p className={styles.title_content_input}>Remitentes</p>
-          <div className={styles.inputs}>
-            <input
-              className={styles.input_remitente}
-              type="text"
-              placeholder="johndoe@gmail.com"
-              name=""
-              id=""
-            />
-          </div>
+
+          <InputComponent labelTag="johndoe@gmail.com" />
           <div className={styles.content_checkbox}>
             <CheckboxComponent />
             <p className={styles.text_checkbox}>Incluir todos los remitentes</p>
@@ -74,12 +79,9 @@ const GmailAndOutlook = ({ type }) => {
         <div className={styles.content_input}>
           <p className={styles.title_content_input}>Asunto Contine</p>
 
-          <input
-            className={styles.inputs}
-            type="text"
+          <InputComponent
             placeholder="Palabras clave separadas por coma"
-            name=""
-            id=""
+            typeInput="text"
           />
 
           <div className={styles.content_checkbox}>
@@ -91,13 +93,9 @@ const GmailAndOutlook = ({ type }) => {
 
         <div className={styles.content_input}>
           <p className={styles.title_content_input}>Body Contine</p>
-
-          <input
-            className={styles.inputs}
-            type="text"
+          <InputComponent
             placeholder="Palabras clave separadas por coma"
-            name=""
-            id=""
+            typeInput="text"
           />
 
           <div className={styles.content_checkbox}>
@@ -124,12 +122,75 @@ const GmailAndOutlook = ({ type }) => {
               factura
             </p>
           </div>
-          <OptionsSwitchComponent
-            icon="Tt"
-            title="Cambiar nombre del archivo"
-          />
-
-          <OptionsSwitchComponent icon="Aa" title="Añadir etiqueta" />
+          <div style={{ display: "grid", gap: "10px" }}>
+            <OptionsSwitchComponent
+              icon={<TextSVG />}
+              text="Cambiar nombre del archivo"
+            />
+            <InputComponent
+              placeholder="[fecha]-[empresa]-[importe]-[etiqueta]"
+              typeInput="text"
+            />
+          </div>
+          <div style={{ display: "grid", gap: "10px" }}>
+            <OptionsSwitchComponent
+              icon={<LabelSVG />}
+              text="Añadir etiqueta"
+            />
+            <InputComponent
+              placeholder="Buscar etiqueta"
+              typeInput="text"
+              textButton="Crear"
+            />
+          </div>
+          <div style={{ marginTop: "10px" }}>
+            <OptionsSwitchComponent
+              icon={<NotificationsSVG />}
+              text="Notificar tras la exportacion"
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              height: 46,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <CheckboxComponent />
+              <GmailIcon style={{ width: 35 }} />
+              <p>{type}</p>
+            </div>
+            <InputComponent placeholder="[email],..." typeInput="text" />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              height: 46,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <CheckboxComponent />
+              <WhatsAppIcon style={{ width: 35 }} />
+              <p>{type}</p>
+            </div>
+            <InputComponent placeholder="[00000000],..." typeInput="text" />
+          </div>
         </div>
       </div>
     </div>

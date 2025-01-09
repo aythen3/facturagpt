@@ -38,7 +38,7 @@
 .content_input {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  /* gap: 5px; */
 }
 
 .content_checkbox {
@@ -85,6 +85,7 @@
   background-color: #f5f5f5;
   padding: 12px;
   border-radius: 6px;
+  border: none;
 }
 
 .advertency {
