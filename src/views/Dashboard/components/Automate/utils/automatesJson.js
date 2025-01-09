@@ -3,6 +3,7 @@ import outlook from "../../../assets/outlook.svg";
 import drive from "../../../assets/drive.svg";
 import dropbox from "../../../assets/droopbox.svg";
 import whatsApp from "../../../assets/whatsapp.svg";
+import esPublico from "../../../assets/espublicogestionaLogo.svg";
 
 export const data = [
   {
@@ -38,6 +39,13 @@ export const data = [
     automateName: "Recibe Facturas desde WhatsApp",
     image: whatsApp,
     contactType: "+00000000",
-    type: "whatsApp",
+    type: "WhatsApp",
+  },
+  {
+    id: 6,
+    automateName: "Sincroniza con esPúblico Gestiona",
+    image: esPublico,
+    contactType: "example@gmail.com",
+    type: "esPúblico Gestiona",
   },
 ];

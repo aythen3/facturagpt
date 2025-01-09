@@ -125,7 +125,7 @@ const GoogleDriveFormCreateAutomate = ({ type }) => {
             }}
           >
             <CheckboxComponent />
-            <GmailIcon style={{ width: 35 }} />
+            <GmailIcon style={{ width: 25 }} />
             <p>{type}</p>
           </div>
           <InputComponent placeholder="[email],..." typeInput="text" />
@@ -146,7 +146,7 @@ const GoogleDriveFormCreateAutomate = ({ type }) => {
             }}
           >
             <CheckboxComponent />
-            <WhatsAppIcon style={{ width: 35 }} />
+            <WhatsAppIcon style={{ width: 25 }} />
             <p>{type}</p>
           </div>
           <InputComponent placeholder="[00000000],..." typeInput="text" />

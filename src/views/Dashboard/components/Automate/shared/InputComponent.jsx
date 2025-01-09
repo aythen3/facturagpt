@@ -19,7 +19,6 @@ const InputComponent = ({
         borderRadius: "4px",
       }}
     >
-      {icon && <div>{icon}</div>}
       {labelTag && (
         <div
           style={{
@@ -43,16 +42,28 @@ const InputComponent = ({
           </button>
         </div>
       )}
-      <input
+      <div style={{ display: "flex", gap: "5px", width: "100%" }}>
+        {icon && <div>{icon}</div>}
+        <input
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            width: "60%",
+          }}
+          type={typeInput}
+          placeholder={placeholder}
+        />
+      </div>
+
+      <p
         style={{
-          backgroundColor: "transparent",
-          border: "none",
-          width: "60%",
+          cursor: "pointer",
+          fontSize: "12px",
+          whiteSpace: "nowrap",
         }}
-        type={typeInput}
-        placeholder={placeholder}
-      />
-      <p style={{ cursor: "pointer", fontSize: "12px" }}>{textButton}</p>
+      >
+        {textButton}
+      </p>
     </div>
   );
 };

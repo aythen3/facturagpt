@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { data } from "../utils/automatesJson";
 import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/GmailAndOutlook";
 import GoogleDriveFormCreateAutomate from "../Components/GoogleDriveFormCreateAutomate/GoogleDriveFormCreateAutomate";
+import WhatsAppFormCreateAutomate from "../Components/WhatsAppFormCreateAutomate/WhatsAppFormCreateAutomate";
+import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAutomate/EsPublicoGestionaFormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -62,6 +64,10 @@ const PanelAutomate = ({ type, close, typeContent }) => {
               <GmailAndOutlook type={type} />
             ) : type === "Google Drive" ? (
               <GoogleDriveFormCreateAutomate type={type} />
+            ) : type === "WhatsApp" ? (
+              <WhatsAppFormCreateAutomate type={type} />
+            ) : type === "esPúblico Gestiona" ? (
+              <EsPublicoGestionaFormAutomate type={type} />
             ) : (
               <div>OTRO</div>
             )}
