@@ -8,7 +8,7 @@
   max-width: 522px;
   font-family: 'Inter', sans-serif;
   margin: 20px auto;
-  padding: 0 16px;
+  /* padding: 0 16px; */
 }
 
 /* Pricing Box */
@@ -70,7 +70,7 @@
 }
 
 .planTitle {
-  font-size: clamp(28px, 6vw, 36px);
+  font-size: clamp(18px, 6vw, 28px);
   font-weight: 400;
   color: #18181b;
   margin: 0;
