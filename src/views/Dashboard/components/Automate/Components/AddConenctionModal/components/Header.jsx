@@ -2,13 +2,16 @@ import React from "react";
 import CloseSVG from "../../../svgs/CloseSVG";
 
 const Header = ({ icon, type, close, headerColor }) => {
+  const background = headerColor
+    ? `linear-gradient(to right, ${headerColor[0]}, ${headerColor[1]})`
+    : "#F5F5F5"; // Color de fondo por defecto si no se envían colores
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: headerColor || "#F5F5F5",
+        background: background,
         padding: "10px",
         height: 44,
       }}

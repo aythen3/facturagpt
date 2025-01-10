@@ -1,14 +1,14 @@
 import React from "react";
 import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-const ModalAddConnectionWhatsApp = ({ close }) => {
+import { ReactComponent as EsPublicoIcon } from "../../../../assets/espublico-icon.svg";
+const ModalAddConnectionEsPublico = ({ close }) => {
   return (
     <AddConnectionModal
-      headerColor={["#3AD656", "#5BF876"]}
+      headerColor={["#EE7A01", "#FF9F3B"]}
       close={close}
-      type="WhatsApp"
-      icon={<WhatsAppIcon />}
+      type="esPúblico"
+      icon={<EsPublicoIcon />}
     >
       <div
         style={{
@@ -17,19 +17,19 @@ const ModalAddConnectionWhatsApp = ({ close }) => {
         }}
       >
         <LabelInputComponent
-          label="WhatsApp Account ID"
-          placeholder="Account ID"
+          label="Client ID"
+          placeholder="Client ID"
           inputType="text"
         />
 
         <LabelInputComponent
-          label="Token"
-          placeholder="Token"
+          label="Secret Key"
+          placeholder="Secret Key"
           inputType="text"
         />
         <button
           style={{
-            backgroundColor: "#4BE666",
+            backgroundColor: "#EE7A01",
             color: "white",
             display: "flex",
             justifyContent: "flex-start",
@@ -43,7 +43,7 @@ const ModalAddConnectionWhatsApp = ({ close }) => {
             width: "100%",
           }}
         >
-          <WhatsAppIcon width={25} height={25} />
+          <EsPublicoIcon width={25} height={25} />
           <span>Add Connection</span>
         </button>
       </div>
@@ -51,4 +51,4 @@ const ModalAddConnectionWhatsApp = ({ close }) => {
   );
 };
 
-export default ModalAddConnectionWhatsApp;
+export default ModalAddConnectionEsPublico;

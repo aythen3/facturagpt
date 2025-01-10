@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import SelectComponent from "../../shared/SelectComponent";
 import { ReactComponent as EsPublicoIcon } from "../../../../assets/espublicogestionaLogo.svg";
@@ -11,10 +11,24 @@ import CheckboxComponent from "../../shared/CheckboxComponent";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import ModalAddConnectionEsPublico from "./ModalAddConnectionEsPublico";
 const EsPublicoGestionaFormAutomate = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
+
   return (
     <div>
-      <HeaderFormsComponent icon={<EsPublicoIcon />} />
+      <HeaderFormsComponent
+        action={openAddConnection}
+        icon={<EsPublicoIcon />}
+      />
 
       <TitleFormsComponent title="Sincroniza con" type={type} />
       <div style={{ marginTop: "24px" }}>
@@ -122,6 +136,10 @@ const EsPublicoGestionaFormAutomate = ({ type }) => {
         </div>
         <InputComponent placeholder="[00000000],..." typeInput="text" />
       </div>
+
+      {isAddConnection && (
+        <ModalAddConnectionEsPublico close={closeAddConnection} />
+      )}
     </div>
   );
 };
