@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SelectComponent from "../../shared/SelectComponent";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
@@ -61,7 +60,7 @@ const WhatsAppFormCreateAutomate = ({ type }) => {
             }}
             key={number.id}
           >
-            <p>{number.number}</p>
+            <p style={{ color: "#71717A" }}>{number.number}</p>
             <CircleDeleteSVG />
           </div>
         ))}

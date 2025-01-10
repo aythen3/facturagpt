@@ -8,6 +8,7 @@ import googleSheets from "../../../assets/excel.svg";
 import xml from "../../../assets/xmlIcon.svg";
 import odoo from "../../../assets/odoo.svg";
 import wolters from "../../../assets/wolters-icon.svg";
+import agencyTribut from "../../../assets/agenciatributariaLogo.svg";
 
 export const data = [
   {
@@ -91,6 +92,25 @@ export const data = [
     image: wolters,
     contactType: "example@gmail.com ",
     type: "Wolters Kluwer A3",
+    role: "output",
+  },
+
+  {
+    id: 11,
+    automateName:
+      "Envía Facturas automáticamente a tu portal de la Agencia Tributaria",
+    image: agencyTribut,
+    contactType: "example@gmail.com ",
+    type: "Facturas automáticamente a tu portal de la Agencia Tributaria",
+    role: "output",
+  },
+
+  {
+    id: 12,
+    automateName: "Envía Notificaciónes por WhatApp",
+    image: whatsApp,
+    contactType: "+00000000",
+    type: "whatsApp notifications",
     role: "output",
   },
 ];

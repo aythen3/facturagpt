@@ -13,7 +13,7 @@ const NotificationsConfirmComponent = ({
   placeholder2,
 }) => {
   return (
-    <>
+    <div style={{ display: "grid", gap: "24px" }}>
       <div style={{ marginTop: "10px" }}>
         <OptionsSwitchComponent icon={<NotificationsSVG />} text={title} />
       </div>
@@ -62,7 +62,7 @@ const NotificationsConfirmComponent = ({
         </div>
         <InputComponent placeholder={placeholder2} typeInput="text" />
       </div>
-    </>
+    </div>
   );
 };
 

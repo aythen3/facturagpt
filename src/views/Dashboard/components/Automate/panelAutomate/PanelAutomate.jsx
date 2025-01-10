@@ -14,6 +14,8 @@ import GoogleSheetsFormAutomate from "../Components/GoogleSheetsFormAutomate/Goo
 import XmlFormAutomate from "../Components/XmlFormAutomate/XmlFormAutomate";
 import OdooFormAutomate from "../Components/OdooFormAutomate/OdooFormAutomate";
 import WoltersKluwerA3FormAutomate from "../Components/WoltersKluwerA3/WoltersKluwerA3FormAutomate";
+import AgencyTributFormAutomate from "../Components/AgencyTributFormAutomate/AgencyTributFormAutomate";
+import WhatsAppSendNotificationsFormAutomate from "../Components/WhatsAppSendNotificationsFormAutomate/WhatsAppSendNotificationsFormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -103,6 +105,10 @@ const PanelAutomate = ({ type, close, typeContent }) => {
                   return <OdooFormAutomate type={type} />;
                 case "Wolters Kluwer A3":
                   return <WoltersKluwerA3FormAutomate type={type} />;
+                case "Facturas automáticamente a tu portal de la Agencia Tributaria":
+                  return <AgencyTributFormAutomate type={type} />;
+                case "whatsApp notifications":
+                  return <WhatsAppSendNotificationsFormAutomate type={type} />;
                 default:
                   return <div>OTRO</div>;
               }
