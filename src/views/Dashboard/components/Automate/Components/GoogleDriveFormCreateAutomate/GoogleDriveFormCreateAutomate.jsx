@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import { ReactComponent as DriveIcon } from "../../../../assets/drive.svg";
@@ -13,11 +13,22 @@ import TextSVG from "../../svgs/TextSVG";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import ModalAddConnectionGoogleDrive from "./ModalAddConnectionGoogleDrive";
+import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 
 const GoogleDriveFormCreateAutomate = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
   return (
     <div>
-      <HeaderFormsComponent icon={<DriveIcon />} />
+      <HeaderFormsComponent action={openAddConnection} icon={<DriveIcon />} />
       <TitleFormsComponent title="Sube tus facturas de" type={type} />
 
       <div>
@@ -72,58 +83,22 @@ const GoogleDriveFormCreateAutomate = ({ type }) => {
               textButton="Crear"
             />
           </div>
-          <div style={{ marginTop: "10px" }}>
-            <OptionsSwitchComponent
-              icon={<NotificationsSVG />}
-              text="Notificar tras la exportacion"
-            />
-          </div>
-        </div>
-
-        <div
-          style={{
-            marginTop: "24px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: 46,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <CheckboxComponent />
-            <GmailIcon style={{ width: 25 }} />
-            <p>{type}</p>
-          </div>
-          <InputComponent placeholder="[email],..." typeInput="text" />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: 46,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <CheckboxComponent />
-            <WhatsAppIcon style={{ width: 25 }} />
-            <p>{type}</p>
-          </div>
-          <InputComponent placeholder="[00000000],..." typeInput="text" />
+          <NotificationsConfirmComponent
+            placeholder1="[email],..."
+            placeholder2="[00000000],..."
+            type1="Gmail"
+            type2="WhatsApp"
+            title="Notificar tras la exportacion"
+            icons={[
+              <GmailIcon style={{ width: 25 }} />,
+              <WhatsAppIcon style={{ width: 25 }} />,
+            ]}
+          />
         </div>
       </div>
+      {isAddConnection && (
+        <ModalAddConnectionGoogleDrive close={closeAddConnection} />
+      )}
     </div>
   );
 };

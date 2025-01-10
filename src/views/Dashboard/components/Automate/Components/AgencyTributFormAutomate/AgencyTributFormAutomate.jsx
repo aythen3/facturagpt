@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { ReactComponent as EsPublicoIcon } from "../../../../assets/espublicogestionaLogo.svg";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
+import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
+import { ReactComponent as AgencyTributIcon } from "../../../../assets/agenciatributariaLogo.svg";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
-import ModalAddConnectionEsPublico from "./ModalAddConnectionEsPublico";
-import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
-const EsPublicoGestionaFormAutomate = ({ type }) => {
+import ModalAddConnectionAgencyTribut from "./ModalAddConnectionAgencyTribut";
+
+const AgencyTributFormAutomate = ({ type }) => {
   const [isAddConnection, setIsAddConnection] = useState(false);
 
   const openAddConnection = () => {
@@ -16,15 +17,15 @@ const EsPublicoGestionaFormAutomate = ({ type }) => {
   const closeAddConnection = () => {
     setIsAddConnection(false);
   };
-
   return (
     <div>
       <HeaderFormsComponent
         action={openAddConnection}
-        icon={<EsPublicoIcon />}
+        icon={<AgencyTributIcon />}
       />
 
-      <TitleFormsComponent title="Sincroniza con" type={type} />
+      <TitleFormsComponent title="Envia" type={type} />
+
       <NotificationsConfirmComponent
         placeholder1="[email],..."
         placeholder2="[00000000],..."
@@ -50,10 +51,10 @@ const EsPublicoGestionaFormAutomate = ({ type }) => {
       />
 
       {isAddConnection && (
-        <ModalAddConnectionEsPublico close={closeAddConnection} />
+        <ModalAddConnectionAgencyTribut close={closeAddConnection} />
       )}
     </div>
   );
 };
 
-export default EsPublicoGestionaFormAutomate;
+export default AgencyTributFormAutomate;

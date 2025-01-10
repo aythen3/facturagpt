@@ -4,7 +4,6 @@ import CloseSVG from "../svgs/CloseSVG";
 import TitleComponent from "../Components/TitleComponent";
 import SearchComponent from "../Components/SearchComponent/SearchComponent";
 import CardAutomate from "../Components/CardAutomate/CardAutomate";
-import { useDispatch } from "react-redux";
 import { data } from "../utils/automatesJson";
 import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/GmailAndOutlook";
 import GoogleDriveFormCreateAutomate from "../Components/GoogleDriveFormCreateAutomate/GoogleDriveFormCreateAutomate";
@@ -13,15 +12,27 @@ import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAu
 import GoogleSheetsFormAutomate from "../Components/GoogleSheetsFormAutomate/GoogleSheetsFormAutomate";
 import XmlFormAutomate from "../Components/XmlFormAutomate/XmlFormAutomate";
 import OdooFormAutomate from "../Components/OdooFormAutomate/OdooFormAutomate";
+import WoltersKluwerA3FormAutomate from "../Components/WoltersKluwerA3/WoltersKluwerA3FormAutomate";
+import AgencyTributFormAutomate from "../Components/AgencyTributFormAutomate/AgencyTributFormAutomate";
+import WhatsAppSendNotificationsFormAutomate from "../Components/WhatsAppSendNotificationsFormAutomate/WhatsAppSendNotificationsFormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
-  const dispach = useDispatch();
+  const [filterType, setfilterType] = useState("Todas");
   const handleDataFilter = (searchTerm) => {
     const filteredData = data.filter((card) =>
       card.automateName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setDataFilter(filteredData);
+  };
+
+  const typeFilterButton =
+    filterType === "Entrada / Input" ? "input" : "output";
+
+  const [activeCard, setActiveCard] = useState(null);
+
+  const handleCardClick = (id) => {
+    setActiveCard(id);
   };
 
   return (
@@ -40,46 +51,77 @@ const PanelAutomate = ({ type, close, typeContent }) => {
             <SearchComponent onSearch={handleDataFilter} />
             <div className={styles.buttons_header}>
               <button
-                className={`${styles.button_header} ${styles.button_header_all}`}
+                onClick={() => setfilterType("Todas")}
+                className={`${styles.button_header} ${filterType === "Todas" && styles.button_header_active}`}
               >
                 Todas
               </button>
-              <button className={`${styles.button_header}`}>
+              <button
+                onClick={() => setfilterType("Entrada / Input")}
+                className={`${styles.button_header} ${filterType === "Entrada / Input" && styles.button_header_active}`}
+              >
                 Entrada / Input
               </button>
-              <button className={`${styles.button_header}`}>
+              <button
+                onClick={() => setfilterType("Salida / Output")}
+                className={`${styles.button_header} ${filterType === "Salida / Output" && styles.button_header_active}`}
+              >
                 Salida / Output
               </button>
             </div>
-            <>
-              <p style={{ fontWeight: "bold" }}>Entrada / Input</p>
-              {dataFilter
-                .filter((card) => card.role === "input")
-                .map((card) => (
-                  <CardAutomate
-                    key={card.id}
-                    type={card.type}
-                    name={card.automateName}
-                    image={card.image}
-                    contactType={card.contactType}
-                    typeContent={typeContent}
-                  />
-                ))}
+            {filterType === "Todas" ? (
+              <>
+                <p style={{ fontWeight: "bold" }}>Entrada / Input</p>
+                {dataFilter
+                  .filter((card) => card.role === "input")
+                  .map((card) => (
+                    <CardAutomate
+                      key={card.id}
+                      type={card.type}
+                      name={card.automateName}
+                      image={card.image}
+                      contactType={card.contactType}
+                      typeContent={typeContent}
+                      isActive={activeCard === card.id}
+                      onCardClick={() => handleCardClick(card.id)}
+                    />
+                  ))}
 
-              <p style={{ fontWeight: "bold" }}>Salida / Output</p>
-              {dataFilter
-                .filter((card) => card.role === "output")
-                .map((card) => (
-                  <CardAutomate
-                    key={card.id}
-                    type={card.type}
-                    name={card.automateName}
-                    image={card.image}
-                    contactType={card.contactType}
-                    typeContent={typeContent}
-                  />
-                ))}
-            </>
+                <p style={{ fontWeight: "bold" }}>Salida / Output</p>
+                {dataFilter
+                  .filter((card) => card.role === "output")
+                  .map((card) => (
+                    <CardAutomate
+                      key={card.id}
+                      type={card.type}
+                      name={card.automateName}
+                      image={card.image}
+                      contactType={card.contactType}
+                      typeContent={typeContent}
+                      isActive={activeCard === card.id}
+                      onCardClick={() => handleCardClick(card.id)}
+                    />
+                  ))}
+              </>
+            ) : (
+              <>
+                <p style={{ fontWeight: "bold" }}>{filterType}</p>
+                {dataFilter
+                  .filter((card) => card.role === typeFilterButton)
+                  .map((card) => (
+                    <CardAutomate
+                      key={card.id}
+                      type={card.type}
+                      name={card.automateName}
+                      image={card.image}
+                      contactType={card.contactType}
+                      typeContent={typeContent}
+                      isActive={activeCard === card.id}
+                      onCardClick={() => handleCardClick(card.id)}
+                    />
+                  ))}
+              </>
+            )}
           </div>
 
           <div>
@@ -100,6 +142,12 @@ const PanelAutomate = ({ type, close, typeContent }) => {
                   return <XmlFormAutomate type={type} />;
                 case "Odoo":
                   return <OdooFormAutomate type={type} />;
+                case "Wolters Kluwer A3":
+                  return <WoltersKluwerA3FormAutomate type={type} />;
+                case "Facturas automáticamente a tu portal de la Agencia Tributaria":
+                  return <AgencyTributFormAutomate type={type} />;
+                case "whatsApp notifications":
+                  return <WhatsAppSendNotificationsFormAutomate type={type} />;
                 default:
                   return <div>OTRO</div>;
               }
