@@ -13,16 +13,31 @@
 
 .plansHeader {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  /* align-items: center;
+  justify-content: flex-start; */
   flex-direction: column;
-  gap: 16px;
+  gap: 3px;
   width: 100%;
   max-width: 800px;
   text-align: center;
   margin-top: 20px;
 }
 
+@media (max-width: 450px) {
+  .plansHeader {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+.test {
+  height: 100vh;
+  max-height: 1080px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .plansTitle {
   font-weight: 800;
   font-size: clamp(28px, 5vw, 40px);
@@ -118,11 +133,11 @@
 }
 
 .plansCardsContainer {
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  gap: 40px;
+  gap: 40px; */
   width: 100%;
 }
 

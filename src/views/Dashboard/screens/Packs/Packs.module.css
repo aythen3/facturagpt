@@ -136,6 +136,11 @@
   text-align: center;
   padding: 0 20px;
 }
+@media (max-width: 1000px) {
+  .regular08 {
+    max-width: 100%;
+  }
+}
 
 .logoContainer {
   display: flex;
@@ -202,7 +207,6 @@
   max-width: 1194px; /* Límite máximo para evitar que se expanda demasiado */
   align-items: center;
   justify-content: center;
-  overflow-x: auto; /* Permite desplazamiento horizontal si las cards no caben */
   padding: 10px; /* Añade algo de espacio en los bordes */
   gap: 40px; /* Espacio entre las cards */
 }

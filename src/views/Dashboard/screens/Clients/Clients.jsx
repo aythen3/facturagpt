@@ -10,6 +10,8 @@ import plusIcon from '../../assets/Plus Icon.png';
 import optionDots from '../../assets/optionDots.svg';
 import filterSearch from '../../assets/Filters Search.png';
 import { useTranslation } from 'react-i18next';
+import SeeHistory from '../../components/SeeHistory/SeeHistory';
+import SendEmailModal from '../../components/SendEmailModal/SendEmailModal';
 const Clients = () => {
   const { t } = useTranslation('clients');
   const [showSidebar, setShowSidebar] = useState(false);
@@ -102,9 +104,11 @@ const Clients = () => {
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
+          {/* <SeeHistory /> */}
+          {/* <SendEmailModal /> */}
           <h2>{t('title')}</h2>
           <div className={styles.searchContainer}>
-            <button className={styles.addButton}>
+            <button className={`${styles.addButton} ${styles.btnNewClient}`}>
               <img src={plusIcon} alt='Nuevo cliente' />
               {t('buttonNewClient')}
             </button>
@@ -185,9 +189,7 @@ const Clients = () => {
                       <a href='#'>Ver</a>
                       <span>(2.345)</span>
                     </div>
-                    <div>
-                      {/* <img src={optionDots} /> */}
-                    </div>
+                    <div>{/* <img src={optionDots} /> */}</div>
                   </td>
                 </tr>
               ))}
