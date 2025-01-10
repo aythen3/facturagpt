@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SelectComponent from "../../shared/SelectComponent";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
@@ -7,8 +7,19 @@ import InputComponent from "../../shared/InputComponent";
 import SearchSVG from "../../svgs/SearchSVG";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import ModalAddConnectionWhatsApp from "./ModalAddConnectionWhatsApp";
 
 const WhatsAppFormCreateAutomate = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
+
   const numbers = [
     { id: 1, number: "+00000000" },
     { id: 2, number: "+000000" },
@@ -16,7 +27,10 @@ const WhatsAppFormCreateAutomate = ({ type }) => {
 
   return (
     <div>
-      <HeaderFormsComponent icon={<WhatsAppIcon />} />
+      <HeaderFormsComponent
+        action={openAddConnection}
+        icon={<WhatsAppIcon />}
+      />
       <TitleFormsComponent title="Recibe Facturas desde" type={type} />
 
       <div>
@@ -52,6 +66,10 @@ const WhatsAppFormCreateAutomate = ({ type }) => {
           </div>
         ))}
       </div>
+
+      {isAddConnection && (
+        <ModalAddConnectionWhatsApp close={closeAddConnection} />
+      )}
     </div>
   );
 };
