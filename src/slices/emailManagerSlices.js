@@ -37,7 +37,6 @@ const emailManagerSlices = createSlice({
         state.loading = true;
       })
       .addCase(getAllUsers.fulfilled, (state, action) => {
-        console.log("action.payload from createAccount", action.payload);
         state.loading = false;
         state.allUsers = action.payload;
       })

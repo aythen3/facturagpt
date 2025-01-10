@@ -11,6 +11,7 @@ import PaymentSingleOption from "../../components/PaymentSingleOption/PaymentSin
 import SelectPlanModal from "./SelectPlanModal/SelectPlanModal";
 import uncheckedCircle from "../../assets/uncheckedCircle.svg";
 import checkedCircle from "../../assets/checkedCircle.svg";
+import PlanUpdatedModal from "../../components/PlanUpdatedModal/PlanUpdatedModal";
 
 const UpgradePlan = ({ onClose }) => {
   const [selectedModal, setSelectedModal] = useState("upgradePlan");
@@ -25,6 +26,7 @@ const UpgradePlan = ({ onClose }) => {
   const [country, setCountry] = useState("");
   const [savePaymentInfo, setSavePaymentInfo] = useState(true);
   const [afiliatedCode, setAfiliatedCode] = useState("");
+  const [showUpdatedSuccessfully, setShowUpdatedSuccessfully] = useState(false);
   const [selectedPaymentOption, setSelectedPaymentOption] =
     useState("visaMasterAmerican");
   const [selectedCurrentPaymentMethond, setSelectedCurrentPaymentMethod] =
@@ -171,10 +173,22 @@ const UpgradePlan = ({ onClose }) => {
             <div className={styles.validateContainer}>
               <input
                 className={styles.validateInput}
+                type="number"
                 value={afiliatedCode}
                 placeholder="0000"
-                onChange={(e) => setAfiliatedCode(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value.length <= 4) {
+                    setAfiliatedCode(value);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "e" || e.key === "+" || e.key === "-") {
+                    e.preventDefault();
+                  }
+                }}
               />
+
               <span className={styles.validateButton}>Validar</span>
             </div>
             <div className={styles.spacedBetween}>
@@ -182,7 +196,13 @@ const UpgradePlan = ({ onClose }) => {
               <span style={{ color: "#929598" }}>10 %</span>
             </div>
             <div className={styles.separator} />
-            <button className={styles.upgradePlanButton}>
+            <button
+              onClick={() => {
+                console.log("showing modal..");
+                setShowUpdatedSuccessfully(true);
+              }}
+              className={styles.upgradePlanButton}
+            >
               <span>
                 Mejorar a plan
                 <strong> {selectedPlan}</strong>
@@ -225,7 +245,17 @@ const UpgradePlan = ({ onClose }) => {
             <InputWithTitle
               title={"Número de tarjeta"}
               value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value.length <= 16) {
+                  setCardNumber(value);
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "e" || e.key === "+" || e.key === "-") {
+                  e.preventDefault();
+                }
+              }}
               placeholder="1234 1234 1234 1234"
               type="number"
               rightElement={
@@ -247,8 +277,18 @@ const UpgradePlan = ({ onClose }) => {
                 title={"Codigo de seguridad"}
                 value={securityCode}
                 type="number"
-                onChange={(e) => setSecurityCode(e.target.value)}
                 placeholder="CVC"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value.length <= 3) {
+                    setSecurityCode(value);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "e" || e.key === "+" || e.key === "-") {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
             <CheckboxWithText
@@ -346,9 +386,20 @@ const UpgradePlan = ({ onClose }) => {
             <div className={styles.validateContainer}>
               <input
                 className={styles.validateInput}
+                type="number"
                 value={afiliatedCode}
                 placeholder="0000"
-                onChange={(e) => setAfiliatedCode(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value.length <= 4) {
+                    setAfiliatedCode(value);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "e" || e.key === "+" || e.key === "-") {
+                    e.preventDefault();
+                  }
+                }}
               />
               <span className={styles.validateButton}>Validar</span>
             </div>
@@ -357,7 +408,13 @@ const UpgradePlan = ({ onClose }) => {
               <span style={{ color: "#929598" }}>10 %</span>
             </div>
             <div className={styles.separator} />
-            <button className={styles.upgradePlanButton}>
+            <button
+              onClick={() => {
+                console.log("showing modal..");
+                setShowUpdatedSuccessfully(true);
+              }}
+              className={styles.upgradePlanButton}
+            >
               <span>
                 Mejorar a plan
                 <strong> {selectedPlan}</strong>
@@ -389,6 +446,16 @@ const UpgradePlan = ({ onClose }) => {
         <SelectPlanModal
           setSelectedPlan={setSelectedPlan}
           onClose={() => setShowPlansModal(false)}
+        />
+      )}
+      {showUpdatedSuccessfully && (
+        <PlanUpdatedModal
+          onClose={async () => {
+            setShowUpdatedSuccessfully(false);
+            setTimeout(() => {
+              handleClose();
+            }, 80);
+          }}
         />
       )}
     </div>

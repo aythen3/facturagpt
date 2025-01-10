@@ -123,10 +123,10 @@
   background: linear-gradient(90deg, #11a380 0%, #0c6d56 100%);
   color: #ffffff;
   outline: none;
-  padding: 0px 8px;
   height: 20px;
   border: none;
   border-radius: 7px;
+  min-width: 90px;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   -ms-border-radius: 7px;
@@ -151,6 +151,7 @@
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .filterItem {

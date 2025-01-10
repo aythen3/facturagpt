@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./PaymentSingleOption.module.css";
 import checkedCircle from "../../assets/checkedCircle.svg";
 import uncheckedCircle from "../../assets/uncheckedCircle.svg";
@@ -12,6 +12,7 @@ const PaymentSingleOption = ({
   description,
   cvc = false,
 }) => {
+  const [cvcNumber, setCvcNumber] = useState("");
   return (
     <div className={styles.paymentSingleOptionContainer}>
       {paymentMethod === name ? (
@@ -42,7 +43,23 @@ const PaymentSingleOption = ({
         </div>
       )}
       {cvc && (
-        <input className={styles.cvcInput} type="password" placeholder="CVC" />
+        <input
+          className={styles.cvcInput}
+          value={cvcNumber}
+          type="number"
+          placeholder="CVC"
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value.length <= 3) {
+              setCvcNumber(value);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "e" || e.key === "+" || e.key === "-") {
+              e.preventDefault();
+            }
+          }}
+        />
       )}
     </div>
   );
