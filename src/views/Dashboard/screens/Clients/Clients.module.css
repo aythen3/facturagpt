@@ -167,7 +167,7 @@ td p:first-of-type {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   img {
     cursor: pointer;
   }
@@ -186,7 +186,7 @@ td p:first-of-type {
   }
 }
 
-input[type='checkbox'] {
+input[type="checkbox"] {
   width: 15px;
   height: 15px;
 }

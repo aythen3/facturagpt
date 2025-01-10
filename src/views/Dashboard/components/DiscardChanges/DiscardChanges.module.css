@@ -1,0 +1,41 @@
+.discardChangesContainer {
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 1px 3px 20px black;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.discardChangesText {
+  color: #38343d;
+  width: 90%;
+  margin: 0 auto;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 10px 0;
+}
+
+.discardChangesBtnContainer {
+  padding: 10px;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  button {
+    background-color: white;
+    border: 1px solid #e3e3e3;
+    padding: 10px 13px;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
+    cursor: pointer;
+  }
+
+  .discardBtn {
+    background-color: #b30634;
+    color: white;
+  }
+}
