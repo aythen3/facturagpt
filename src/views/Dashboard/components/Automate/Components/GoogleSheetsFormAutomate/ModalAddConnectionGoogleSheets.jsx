@@ -1,12 +1,17 @@
 import React from "react";
 import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import { ReactComponent as DriveIcon } from "../../../../assets/drive.svg";
+import { ReactComponent as GoogleSheetsIcon } from "../../../../assets/excel.svg";
 import { ReactComponent as GoogleIcon } from "../../../../assets/googleLogo.svg";
 
-const ModalAddConnectionGoogleDrive = ({ close }) => {
+const ModalAddConnectionGoogleSheets = ({ close }) => {
   return (
-    <AddConnectionModal close={close} type="Drive" icon={<DriveIcon />}>
+    <AddConnectionModal
+      headerColor={["#59BA62", "#74EF5F"]}
+      close={close}
+      type="Google Sheets"
+      icon={<GoogleSheetsIcon width={30} height={30} />}
+    >
       <div
         style={{
           display: "grid",
@@ -26,6 +31,8 @@ const ModalAddConnectionGoogleDrive = ({ close }) => {
         />
         <button
           style={{
+            backgroundColor: "#59BA62",
+            color: "white",
             display: "flex",
             justifyContent: "flex-start",
             gap: "24px",
@@ -38,7 +45,7 @@ const ModalAddConnectionGoogleDrive = ({ close }) => {
             width: "100%",
           }}
         >
-          <DriveIcon width={25} height={25} />
+          <GoogleSheetsIcon width={25} height={25} />
           <span>Add Connection</span>
         </button>
 
@@ -71,4 +78,4 @@ const ModalAddConnectionGoogleDrive = ({ close }) => {
   );
 };
 
-export default ModalAddConnectionGoogleDrive;
+export default ModalAddConnectionGoogleSheets;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
 import { ReactComponent as GoogleSheetsIcon } from "../../../../assets/excel.svg";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
@@ -9,7 +9,18 @@ import OptionsSwitchComponent from "../../shared/OptionsSwitchComponent";
 import NotificationsSVG from "../../svgs/NotificationsSVG";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
+import ModalAddConnectionGoogleSheets from "./ModalAddConnectionGoogleSheets";
 const GoogleSheetsFormAutomate = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
+
   const facturas = [
     "Id Factura/ Nº Factura",
     "Fecha",
@@ -45,7 +56,10 @@ const GoogleSheetsFormAutomate = ({ type }) => {
 
   return (
     <div>
-      <HeaderFormsComponent icon={<GoogleSheetsIcon />} />
+      <HeaderFormsComponent
+        action={openAddConnection}
+        icon={<GoogleSheetsIcon />}
+      />
       <TitleFormsComponent title="Actualiza tu" type={type} />
 
       <div className={styles.content_input}>
@@ -257,6 +271,9 @@ const GoogleSheetsFormAutomate = ({ type }) => {
           <InputComponent placeholder="[00000000],..." typeInput="text" />
         </div>
       </div>
+      {isAddConnection && (
+        <ModalAddConnectionGoogleSheets close={closeAddConnection} />
+      )}
     </div>
   );
 };
