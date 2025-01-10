@@ -7,6 +7,8 @@ import esPublico from "../../../assets/espublicogestionaLogo.svg";
 import googleSheets from "../../../assets/excel.svg";
 import xml from "../../../assets/xmlIcon.svg";
 import odoo from "../../../assets/odoo.svg";
+import wolters from "../../../assets/wolters-icon.svg";
+import agencyTribut from "../../../assets/agenciatributariaLogo.svg";
 
 export const data = [
   {
@@ -85,29 +87,30 @@ export const data = [
   },
 
   {
-    id: 7,
-    automateName: "Actualiza tu Google Sheets",
-    image: googleSheets,
-    contactType: "Título de la hoja.xls",
-    type: "Google Sheets",
+    id: 10,
+    automateName: "Exporta Facturas a Wolters Kluwer A3",
+    image: wolters,
+    contactType: "example@gmail.com ",
+    type: "Wolters Kluwer A3",
     role: "output",
   },
 
   {
-    id: 8,
-    automateName: "Genera Archivos XML para Declaraciones Físcales",
-    image: xml,
+    id: 11,
+    automateName:
+      "Envía Facturas automáticamente a tu portal de la Agencia Tributaria",
+    image: agencyTribut,
     contactType: "example@gmail.com ",
-    type: "XML para Declaciones Físcales",
+    type: "Facturas automáticamente a tu portal de la Agencia Tributaria",
     role: "output",
   },
 
   {
-    id: 9,
-    automateName: "Sincroniza Facturas con Odoo",
-    image: odoo,
-    contactType: "example@gmail.com ",
-    type: "Odoo",
+    id: 12,
+    automateName: "Envía Notificaciónes por WhatApp",
+    image: whatsApp,
+    contactType: "+00000000",
+    type: "whatsApp notifications",
     role: "output",
   },
 ];
