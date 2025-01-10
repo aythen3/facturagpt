@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./gmailAndOutlook.module.css";
 import SearchSVG from "../../svgs/SearchSVG";
 import WarningSVG from "../../svgs/WarningSVG";
@@ -14,11 +14,24 @@ import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../shared/InputComponent";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
+import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
+import ModalAddConnectionGmailAndOutlook from "./ModalAddConnectionGmailAndOutlook";
 
 const GmailAndOutlook = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
   return (
     <div>
       <HeaderFormsComponent
+        action={openAddConnection}
         icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
       />
       <TitleFormsComponent type={type} title="Sube tus facturas de" />
@@ -163,6 +176,9 @@ const GmailAndOutlook = ({ type }) => {
           </div>
         </div>
       </div>
+      {isAddConnection && (
+        <ModalAddConnectionGmailAndOutlook close={closeAddConnection} />
+      )}
     </div>
   );
 };
