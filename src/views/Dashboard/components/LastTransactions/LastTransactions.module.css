@@ -1,0 +1,197 @@
+.LastTransactionsContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  overflow-y: scroll;
+  height: 70vh;
+  width: 70%;
+  z-index: 999;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e3e3e3;
+
+    .name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+    }
+    .closeMenu {
+      height: 15px;
+      cursor: pointer;
+    }
+  }
+}
+.inputIconOutsideContainer {
+  height: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  background-color: #233f39;
+  position: absolute;
+  right: 0px;
+  border-radius: 0 10px 10px 0;
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+  -ms-border-radius: 0 10px 10px 0;
+  -o-border-radius: 0 10px 10px 0;
+}
+
+/* Agregar un overlay para el fondo oscuro */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  padding: 20px;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIconInside {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  pointer-events: none;
+}
+
+.searchInput {
+  padding: 8px 8px 8px 35px;
+  border: 1px solid #e9e9e9;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  width: 250px;
+}
+
+.searchInput::placeholder {
+  color: #999;
+}
+
+.content {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.content p {
+  margin: 0;
+}
+
+.content span {
+  color: #71717a;
+  font-size: 13px;
+}
+
+.status {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .statusText {
+      span {
+        color: #ffb200;
+        font-size: 20px;
+      }
+      color: #ffb200;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    a {
+      color: #666666;
+      font-size: 13px;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+  }
+}
+
+.content .transaction {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #666666;
+  .name {
+    font-weight: bold;
+    color: #222222;
+  }
+}
+
+.content .prices {
+  display: flex;
+  justify-content: space-between;
+  div {
+    display: flex;
+    flex-direction: column;
+    span:last-child {
+      color: black;
+    }
+  }
+}

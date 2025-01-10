@@ -89,6 +89,9 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
+  div {
+    cursor: pointer;
+  }
 }
 @media (max-width: 1000px) {
   .buttonLogIn {
@@ -162,7 +165,9 @@
     background-color: #0d8b6d;
   }
 }
-
-.disabledBtn {
-  opacity: 0.5;
+.navFlex {
+  .disabledBtn {
+    opacity: 0.5;
+    /* cursor: not-allowed; */
+  }
 }

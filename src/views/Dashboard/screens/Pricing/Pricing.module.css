@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 .pricingContainer {
   display: flex;
   flex-direction: column;
@@ -10,7 +8,7 @@
   background: #fff;
   overflow-x: hidden;
   font-family: 'Inter', sans-serif;
-  padding: 70px 0 0;
+  padding: 50px 0 0;
 }
 
 .plansHeader {
@@ -27,7 +25,7 @@
 
 .plansTitle {
   font-weight: 800;
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(28px, 5vw, 40px);
   color: #18181b;
   margin: 0;
 }
@@ -120,7 +118,6 @@
 }
 
 .plansCardsContainer {
-  margin-top: 70px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -385,5 +382,154 @@
 
   .cardContainer {
     gap: 1.5rem;
+  }
+}
+
+/* Grid original para pantallas grandes */
+.parent {
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(9, auto);
+  grid-template-rows: auto;
+  gap: 10px;
+  width: auto;
+  margin-top: 40px;
+  row-gap: 20px;
+}
+
+/* Orden visual de menor a mayor (1 -> 11) */
+.div1 {
+  grid-area: 1 / 1 / 2 / 3;
+}
+.div2 {
+  grid-area: 1 / 3 / 2 / 5;
+}
+.div3 {
+  grid-area: 1 / 6 / 2 / 8;
+}
+.div4 {
+  grid-area: 1 / 8 / 2 / 10;
+}
+.div5 {
+  grid-area: 2 / 1 / 3 / 3;
+  margin-left: -40px;
+  margin-right: 40px;
+}
+.div6 {
+  grid-area: 2 / 3 / 3 / 5;
+  margin-left: -40px;
+  margin-right: 40px;
+}
+.div7 {
+  grid-area: 2 / 6 / 3 / 8;
+  margin-left: 40px;
+  margin-right: -40px;
+}
+.div8 {
+  grid-area: 2 / 8 / 3 / 10;
+  margin-left: 40px;
+  margin-right: -40px;
+}
+.div9 {
+  grid-area: 3 / 2 / 4 / 4;
+}
+.div10 {
+  grid-area: 3 / 4 / 4 / 7;
+}
+.div11 {
+  grid-area: 3 / 7 / 4 / 9;
+}
+
+/* Media query 768px */
+@media (max-width: 935px) {
+  .parent {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .div1,
+  .div2,
+  .div3,
+  .div4,
+  .div5,
+  .div6,
+  .div7,
+  .div8,
+  .div9,
+  .div10,
+  .div11 {
+    margin: 0;
+  }
+  .div1 {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+  .div2 {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+  .div3 {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+  .div4 {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+  .div5 {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+  .div6 {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+  .div7 {
+    grid-area: 4 / 1 / 5 / 2;
+  }
+  .div8 {
+    grid-area: 4 / 2 / 5 / 3;
+  }
+  .div9 {
+    grid-area: 5 / 1 / 6 / 2;
+  }
+  .div10 {
+    grid-area: 5 / 2 / 6 / 3;
+  }
+  .div11 {
+    grid-area: 6 / 1 / 7 / 2;
+  }
+}
+
+/* Media query 480px */
+@media (max-width: 480px) {
+  .parent {
+    grid-template-columns: 1fr;
+  }
+  .div1 {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+  .div2 {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+  .div3 {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+  .div4 {
+    grid-area: 4 / 1 / 5 / 2;
+  }
+  .div5 {
+    grid-area: 5 / 1 / 6 / 2;
+  }
+  .div6 {
+    grid-area: 6 / 1 / 7 / 2;
+  }
+  .div7 {
+    grid-area: 7 / 1 / 8 / 2;
+  }
+  .div8 {
+    grid-area: 8 / 1 / 9 / 2;
+  }
+  .div9 {
+    grid-area: 9 / 1 / 10 / 2;
+  }
+  .div10 {
+    grid-area: 10 / 1 / 11 / 2;
+  }
+  .div11 {
+    grid-area: 11 / 1 / 12 / 2;
   }
 }

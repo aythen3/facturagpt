@@ -7,6 +7,7 @@ import newClientIcon from '../../assets/newClientIcon.svg';
 import clock from '../../assets/clock.png';
 import edit from '../../assets/edit.png';
 import plusIcon from '../../assets/Plus Icon.png';
+import optionDots from '../../assets/optionDots.svg';
 import filterSearch from '../../assets/Filters Search.png';
 import { useTranslation } from 'react-i18next';
 const Clients = () => {
@@ -104,7 +105,7 @@ const Clients = () => {
           <h2>{t('title')}</h2>
           <div className={styles.searchContainer}>
             <button className={styles.addButton}>
-              <img src={plusIcon} alt="Nuevo cliente" />
+              <img src={plusIcon} alt='Nuevo cliente' />
               {t('buttonNewClient')}
             </button>
             <button className={styles.infoBtn}>Analíticas</button>
@@ -112,7 +113,7 @@ const Clients = () => {
             <div className={styles.inputWrapper}>
               <img src={searchGray} className={styles.inputIconInside} />
               <input
-                type="text"
+                type='text'
                 placeholder={t('placeholderSearch')}
                 value={search}
                 onChange={handleSearchChange}
@@ -134,8 +135,8 @@ const Clients = () => {
               <tr>
                 <th className={styles.small}>
                   <input
-                    type="checkbox"
-                    name="clientSelected"
+                    type='checkbox'
+                    name='clientSelected'
                     checked={
                       clientSelected.length == tableData.length ? true : false
                     }
@@ -154,8 +155,8 @@ const Clients = () => {
                 <tr key={rowIndex}>
                   <td>
                     <input
-                      type="checkbox"
-                      name="clientSelected"
+                      type='checkbox'
+                      name='clientSelected'
                       onClick={() => selectClient(rowIndex)}
                       checked={clientSelected.includes(rowIndex) ? true : false}
                     />
@@ -181,11 +182,11 @@ const Clients = () => {
                   <td>{row.moneda}</td>
                   <td className={styles.actions}>
                     <div className={styles.transacciones}>
-                      <a href="#">Ver</a>
+                      <a href='#'>Ver</a>
                       <span>(2.345)</span>
                     </div>
                     <div>
-                      <img src={optionDots} />
+                      {/* <img src={optionDots} /> */}
                     </div>
                   </td>
                 </tr>
@@ -212,12 +213,12 @@ const Clients = () => {
               <label>
                 <div className={styles.row}>
                   <p>Nombre completo</p>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
                 John Doe
                 <input
-                  type="text"
-                  placeholder="John Doe"
+                  type='text'
+                  placeholder='John Doe'
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                 />
@@ -226,12 +227,12 @@ const Clients = () => {
               <label>
                 <div className={styles.row}>
                   <p>Email</p>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
                 j***e@gmail.com
                 <input
-                  type="email"
-                  placeholder="john.doe@gmail.com"
+                  type='email'
+                  placeholder='john.doe@gmail.com'
                   value={email}
                   onChange={handleEmailChange}
                 />
@@ -243,7 +244,7 @@ const Clients = () => {
               <label className={styles.label}>
                 <div className={styles.row}>
                   <p>Teléfono</p>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
                 +34 000 000 000
                 <div className={styles.phoneInputs}>
@@ -252,16 +253,16 @@ const Clients = () => {
                     value={countryCode}
                     onChange={(e) => setCountryCode(e.target.value)}
                   >
-                    <option value="+34">España (+34)</option>
-                    <option value="+1">Estados Unidos (+1)</option>
-                    <option value="+44">Reino Unido (+44)</option>
-                    <option value="+52">México (+52)</option>
-                    <option value="+91">India (+91)</option>
+                    <option value='+34'>España (+34)</option>
+                    <option value='+1'>Estados Unidos (+1)</option>
+                    <option value='+44'>Reino Unido (+44)</option>
+                    <option value='+52'>México (+52)</option>
+                    <option value='+91'>India (+91)</option>
                     {/* Agrega más países según sea necesario */}
                   </select>
                   <input
-                    type="text"
-                    placeholder="000 000 000"
+                    type='text'
+                    placeholder='000 000 000'
                     className={styles.numberInput}
                     value={formatPhoneNumber(phone)}
                     onChange={(e) => setPhone(e.target.value)}
@@ -272,12 +273,12 @@ const Clients = () => {
               <label>
                 <div className={styles.row}>
                   <p>Web o dominio corporativo</p>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
                 www.web.com
                 <input
-                  type="text"
-                  placeholder="www.web.com"
+                  type='text'
+                  placeholder='www.web.com'
                   value={web}
                   onChange={(e) => setWeb(e.target.value)}
                 />
@@ -286,48 +287,48 @@ const Clients = () => {
               <label>
                 <div className={styles.row}>
                   <p>Detalles de Facturación</p>
-                  <button type="button">Añadir</button>
+                  <button type='button'>Añadir</button>
                 </div>
                 <div className={styles.details}>
                   <input
-                    type="text"
-                    placeholder="Email address"
+                    type='text'
+                    placeholder='Email address'
                     value={emailAddress}
                     onChange={(e) => setEmailAddress(e.target.value)}
                   />
                   <input
-                    type="text"
-                    placeholder="Zip code / Postcode"
+                    type='text'
+                    placeholder='Zip code / Postcode'
                     value={zipCode}
                     onChange={(e) => setZipCode(e.target.value)}
                   />
                 </div>
                 Country of residence
                 <input
-                  type="text"
-                  placeholder="Spain"
+                  type='text'
+                  placeholder='Spain'
                   value={residence}
                   onChange={(e) => setResidence(e.target.value)}
                 />
                 Email adress, Zip code / Postcode, Country of residence
                 <div>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
                 Email adress, Zip code / Postcode, Country of residence
                 <div>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
               </label>
 
               <label>
                 <div className={styles.row}>
                   <p>Número Fiscal</p>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
                 Desconocido
                 <input
-                  type="text"
-                  placeholder="000 000 000"
+                  type='text'
+                  placeholder='000 000 000'
                   value={fiscalNumber}
                   onChange={(e) => setFiscalNumber(e.target.value)}
                 />
@@ -336,12 +337,12 @@ const Clients = () => {
               <label>
                 <div className={styles.row}>
                   <p>Moneda Preferida</p>
-                  <button type="button">Editar</button>
+                  <button type='button'>Editar</button>
                 </div>
                 EUR
                 <input
-                  type="text"
-                  placeholder="EUR"
+                  type='text'
+                  placeholder='EUR'
                   value={preferredCurrency}
                   onChange={(e) => setPreferredCurrency(e.target.value)}
                 />
@@ -350,20 +351,20 @@ const Clients = () => {
               <label>
                 <div className={styles.row}>
                   <p>Métodos de Pago</p>
-                  <button type="button">Añadir</button>
+                  <button type='button'>Añadir</button>
                 </div>
                 <div className={styles.row}>Card number</div>
                 <div className={styles.inputContainer}>
                   <input
-                    type="text"
-                    placeholder="1234 1234 1234 1234"
+                    type='text'
+                    placeholder='1234 1234 1234 1234'
                     className={styles.input}
                     value={formatCardNumber(cardNumber)}
                     onChange={(e) => setCardNumber(e.target.value)}
                   />
                   <img
                     src={creditCard}
-                    alt="Credit Card Icon"
+                    alt='Credit Card Icon'
                     className={styles.icon}
                   />
                 </div>

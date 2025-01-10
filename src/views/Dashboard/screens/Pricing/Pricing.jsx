@@ -9,8 +9,10 @@ import topTrustpilotStar from '../../assets/topTrustpilotStar.svg';
 import bottomTrustpilotStar from '../../assets/bottomTrustpilotStar.svg';
 import googleLogo from '../../assets/googleLogo.svg';
 import googleStar from '../../assets/googleStar.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Pricing = () => {
+  const navigate = useNavigate();
   const [sliderValue, setSliderValue] = useState(20);
   const [selectedCard, setSelectedCard] = useState(9);
   const [currentPlan, setCurrentPlan] = useState({
@@ -31,7 +33,19 @@ const Pricing = () => {
     { title: '+50.000 Documentos', price: '0,09' },
     { title: '+100.000 Documentos', price: '0,05' },
   ];
-
+  const cards = [
+    'Card 1',
+    'Card 2',
+    'Card 3',
+    'Card 4',
+    'Card 5',
+    'Card 6',
+    'Card 7',
+    'Card 8',
+    'Card 9',
+    'Card 10',
+    'Card 11',
+  ];
   useEffect(() => {
     const index = Math.min(Math.floor(sliderValue / 10), cardsData.length - 1);
     const card = cardsData[index];
@@ -49,10 +63,11 @@ const Pricing = () => {
   };
 
   const getSelectedPlanIndex = () => {
+    console.log(sliderValue);
     if (sliderValue <= 10) return 0;
-    if (sliderValue <= 60) return 1;
-    if (sliderValue <= 80) return 2;
-    if (sliderValue <= 90) return 3;
+    if (sliderValue <= 50) return 1;
+    if (sliderValue <= 70) return 2;
+    if (sliderValue <= 94) return 3;
     return 4;
   };
 
@@ -75,9 +90,9 @@ const Pricing = () => {
         </p>
         <p className={styles.currentPlan}>{currentPlan.documents}/mes</p>
         <input
-          type="range"
-          min="0"
-          max="100"
+          type='range'
+          min='0'
+          max='100'
           value={sliderValue}
           onChange={handleSliderChange}
           className={styles.slider}
@@ -106,41 +121,21 @@ const Pricing = () => {
         Las empresas tardan entre 2 y 5 minutos en gestionar una factura. Con
         FacturaGPT, lo haces en segundos...
       </span>
-
-      <div className={styles.cardContainer}>
-        <div className={`${styles.row1} ${styles.rows}`}>
-          {cardsData.slice(0, 4).map((card, index) => (
+      <div className={styles.parent}>
+        {cardsData.map((card, index) => (
+          <div className={styles[`div${index + 1}`]}>
             <PricingCard
               key={index}
               title={card.title || 'Hasta 20 Documentos'}
               price={card.price || 'FREE'}
               setSelectedCard={setSelectedCard}
             />
-          ))}
-        </div>
-        <div className={`${styles.row2} ${styles.rows}`}>
-          {cardsData.slice(4, 8).map((card, index) => (
-            <PricingCard
-              key={index}
-              title={card.title || 'Hasta 20 Documentos'}
-              price={card.price || 'FREE'}
-              setSelectedCard={setSelectedCard}
-            />
-          ))}
-        </div>
-        <div className={`${styles.row3}  ${styles.rows}`}>
-          {cardsData.slice(8, 11).map((card, index) => (
-            <PricingCard
-              key={index}
-              title={card.title || 'Hasta 20 Documentos'}
-              price={card.price || 'FREE'}
-              setSelectedCard={setSelectedCard}
-            />
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
+
       <h1 className={styles.pricingStarText}>
-        <img className={styles.star} src={star} alt="star" />
+        <img className={styles.star} src={star} alt='star' />
         Valoración
       </h1>
       <span className={styles.lightTextSecondary}>
@@ -154,56 +149,56 @@ const Pricing = () => {
             <img
               className={styles.topTrustpilotStar}
               src={googleStar}
-              alt="googleStar"
+              alt='googleStar'
             />
             <img
               className={styles.topTrustpilotStar}
               src={googleStar}
-              alt="googleStar"
+              alt='googleStar'
             />
             <img
               className={styles.topTrustpilotStar}
               src={googleStar}
-              alt="googleStar"
+              alt='googleStar'
             />
             <img
               className={styles.topTrustpilotStar}
               src={googleStar}
-              alt="googleStar"
+              alt='googleStar'
             />
             <img
               className={styles.topTrustpilotStar}
               src={googleStar}
-              alt="googleStar"
+              alt='googleStar'
             />
           </div>
-          <img className={styles.googleLogo} src={googleLogo} alt="google" />
+          <img className={styles.googleLogo} src={googleLogo} alt='google' />
         </div>
         <div className={styles.trustpilotCard}>
           <div className={styles.topContainer}>
             <img
               className={styles.topTrustpilotStar}
               src={topTrustpilotStar}
-              alt="topTrustpilotStar"
+              alt='topTrustpilotStar'
             />
             Trustpilot
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.trustpilotBottomStars}>
               <div className={styles.trustStarContainer}>
-                <img src={bottomTrustpilotStar} alt="bottomTrustpilotStar" />
+                <img src={bottomTrustpilotStar} alt='bottomTrustpilotStar' />
               </div>
               <div className={styles.trustStarContainer}>
-                <img src={bottomTrustpilotStar} alt="bottomTrustpilotStar" />
+                <img src={bottomTrustpilotStar} alt='bottomTrustpilotStar' />
               </div>
               <div className={styles.trustStarContainer}>
-                <img src={bottomTrustpilotStar} alt="bottomTrustpilotStar" />
+                <img src={bottomTrustpilotStar} alt='bottomTrustpilotStar' />
               </div>
               <div className={styles.trustStarContainer}>
-                <img src={bottomTrustpilotStar} alt="bottomTrustpilotStar" />
+                <img src={bottomTrustpilotStar} alt='bottomTrustpilotStar' />
               </div>
               <div className={styles.trustStarContainer}>
-                <img src={bottomTrustpilotStar} alt="bottomTrustpilotStar" />
+                <img src={bottomTrustpilotStar} alt='bottomTrustpilotStar' />
               </div>
             </div>
           </div>
@@ -217,7 +212,12 @@ const Pricing = () => {
       <span className={styles.reviewsDescriptionLast}>
         Estás un paso más cerca de obtener el mejor servicio...
       </span>
-      <button className={styles.startButton}>Probar Gratis</button>
+      <button
+        className={styles.startButton}
+        onClick={() => navigate('/freetrial')}
+      >
+        Probar Gratis
+      </button>
     </div>
   );
 };

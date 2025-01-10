@@ -1,0 +1,99 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header_mail {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.inputs {
+  display: flex;
+  border: none;
+  justify-content: space-between;
+  justify-items: center;
+  background-color: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.title_content_input {
+  color: #1f184b;
+  font-size: 20px;
+}
+
+.input_ubication {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.input_remitente {
+  border-radius: 12px;
+  padding: 5px;
+  border: none;
+}
+
+.content_input {
+  display: flex;
+  flex-direction: column;
+  /* gap: 5px; */
+}
+
+.content_checkbox {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.check {
+  width: 25px !important;
+  height: 25px !important;
+  appearance: none;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+.check:checked {
+  background-color: #233f39;
+  border-color: #233f39;
+}
+
+.check:checked::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: white;
+}
+
+.text_checkbox {
+  color: #71717a;
+}
+
+.select_attachment {
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+}
+
+.advertency {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #f5f5f5;
+  padding: 0 10px 0 10px;
+  border-radius: 8px;
+  margin: 25px 0 25px 0;
+}

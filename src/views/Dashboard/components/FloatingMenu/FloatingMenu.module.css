@@ -21,7 +21,7 @@
 }
 
 .fab::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 52px;
   height: 52px;
@@ -49,8 +49,8 @@
 
 .menuContainer {
   position: absolute;
-  bottom: 70px;
-  left: 85px;
+  top: 50px;
+  left: 320px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -73,7 +73,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 6px 16px;
   width: 100%;
   background: none;
   border: none;
@@ -92,11 +92,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #233f39;
+  border-radius: 13px 0 0 13px;
+  -webkit-border-radius: 13px 0 0 13px;
+  -moz-border-radius: 13px 0 0 13px;
+  -ms-border-radius: 13px 0 0 13px;
+  -o-border-radius: 13px 0 0 13px;
 }
-
 .menuText {
   font-size: 1.2rem;
   font-weight: 600;
+  color: #494e54;
 }
 
 .icon {

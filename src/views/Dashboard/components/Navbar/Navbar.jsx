@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Navbar.module.css';
 import chevDown from '../../assets/chevDown.svg';
 import facturaLogo from '../../assets/facturaLogo.svg';
@@ -15,6 +15,10 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false); // Estado para el menú
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -34,11 +38,11 @@ const Navbar = () => {
       <img
         onClick={() => navigate('/landing')}
         src={facturaLogo}
-        alt="FacturaGPT"
+        alt='FacturaGPT'
         className={styles.logo}
       />
       <button className={styles.hamburger} onClick={toggleMenu}>
-        <img src={menuIcon} alt="Menu Icon" />
+        <img src={menuIcon} alt='Menu Icon' />
       </button>
       <div
         className={`${styles.navLinks} ${
@@ -59,14 +63,24 @@ const Navbar = () => {
             <img
               onClick={() => handleLanguage('en')}
               src={english_flag}
-              alt="img"
-              style={{ width: 30, height: 30, cursor: 'pointer' }}
+              alt='img'
+              style={{
+                width: 30,
+                height: 30,
+                cursor: 'pointer',
+                borderRadius: '12px',
+              }}
             />
             <img
               onClick={() => handleLanguage('es')}
               src={spain_flag}
-              alt="img"
-              style={{ width: 30, height: 30, cursor: 'pointer' }}
+              alt='img'
+              style={{
+                width: 30,
+                height: 30,
+                cursor: 'pointer',
+                borderRadius: '12px',
+              }}
             />
           </div>
         </div>

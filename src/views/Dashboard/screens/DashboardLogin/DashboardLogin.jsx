@@ -1,41 +1,43 @@
-import React, { useEffect, useState } from "react";
-import styles from "./DashboardLogin.module.css";
-import Navbar from "../../components/Navbar/Navbar";
-import { useNavigate } from "react-router-dom";
-import facturaLogo from "../../assets/logo.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { OTPInput } from "../../components/OtpInput/OtpInput";
-import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
-import { LockIcon } from "lucide-react";
-import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
+import React, { useEffect, useState } from 'react';
+import styles from './DashboardLogin.module.css';
+import Navbar from '../../components/Navbar/Navbar';
+import { useNavigate } from 'react-router-dom';
+import facturaLogo from '../../assets/logo-facturagpt.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { OTPInput } from '../../components/OtpInput/OtpInput';
+import { ReactComponent as OpenAiLogo } from '../../assets/openai.svg';
+import { LockIcon } from 'lucide-react';
+import { ReactComponent as KeyIcon } from '../../assets/key-icon.svg';
 import {
   createAccount,
   loginToManager,
   verifyOTP,
   sendOTP,
+
 } from "../../../../actions/user";
 import { useTranslation } from "react-i18next";
 import { useAuth0 } from "@auth0/auth0-react";
 import { setUser } from "../../../../slices/emailManagerSlices";
 
+
 const DashboardLogin = () => {
-  const { t } = useTranslation("dahsboardLogin");
+  const { t } = useTranslation('dahsboardLogin');
   const { loginWithRedirect, isAuthenticated } = useAuth0();
 
   const { user } = useSelector((state) => state.emailManager);
   const dispatch = useDispatch();
-  const [mode, setMode] = useState("signin");
-  const [email, setEmail] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const [otp, setOtp] = useState("");
+  const [mode, setMode] = useState('signin');
+  const [email, setEmail] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [otp, setOtp] = useState('');
   const [resendTimer, setResendTimer] = useState(45);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [storedEmail, setStoredEmail] = useState("");
-  const [storedPassword, setStoredPassword] = useState("");
-  const [recaptchaValue, setRecaptchaValue] = useState("");
+  const [error, setError] = useState('');
+  const [storedEmail, setStoredEmail] = useState('');
+  const [storedPassword, setStoredPassword] = useState('');
+  const [recaptchaValue, setRecaptchaValue] = useState('');
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
@@ -72,19 +74,19 @@ const DashboardLogin = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [isAuthenticated]);
 
   useEffect(() => {
     if (user?.email && user?.id && user?.role) {
-      localStorage.setItem("emailManagerAccount", JSON.stringify(user));
-      navigate("/home");
+      localStorage.setItem('emailManagerAccount', JSON.stringify(user));
+      navigate('/home');
     }
   }, [user, navigate]);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("emailManagerAccount");
+    const storedUser = localStorage.getItem('emailManagerAccount');
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
@@ -92,14 +94,14 @@ const DashboardLogin = () => {
           dispatch(setUser(parsedUser));
         }
       } catch (error) {
-        console.error("Error parsing stored user data:", error);
+        console.error('Error parsing stored user data:', error);
       }
     }
   }, [dispatch]);
 
   useEffect(() => {
     let timer;
-    if (mode === "otp" && resendTimer > 0) {
+    if (mode === 'otp' && resendTimer > 0) {
       timer = setInterval(() => {
         setResendTimer((prev) => prev - 1);
       }, 1000);
@@ -108,18 +110,18 @@ const DashboardLogin = () => {
   }, [mode, resendTimer]);
 
   const clearStates = () => {
-    setNombre("");
-    setEmail("");
-    setPassword("");
-    setRepeatPassword("");
-    setOtp("");
-    setError("");
-    setStoredEmail("");
-    setStoredPassword("");
+    setNombre('');
+    setEmail('');
+    setPassword('');
+    setRepeatPassword('');
+    setOtp('');
+    setError('');
+    setStoredEmail('');
+    setStoredPassword('');
   };
 
   useEffect(() => {
-    if (mode !== "otp") {
+    if (mode !== 'otp') {
       setStoredEmail(email);
       setStoredPassword(password);
     }
@@ -135,10 +137,14 @@ const DashboardLogin = () => {
         .unwrap()
         .then(() => {
           clearStates();
-          navigate("/home");
+          navigate('/home');
         })
         .catch((error) => {
+
+          setError(error.message || 'Failed to sign in');
+
           setError(error.message || "Error al iniciar sesión");
+
         })
         .finally(() => {
           setIsLoading(false);
@@ -152,11 +158,13 @@ const DashboardLogin = () => {
       dispatch(sendOTP({ email: storedEmail }))
         .unwrap()
         .then(() => {
-          setMode("otp");
+          setMode('otp');
           setResendTimer(45);
         })
         .catch((error) => {
+
           setError(error.message || "Error al enviar código de verificación");
+
         })
         .finally(() => {
           setIsLoading(false);
@@ -181,14 +189,16 @@ const DashboardLogin = () => {
             .unwrap()
             .then(() => {
               clearStates();
-              setMode("signin");
+              setMode('signin');
             })
             .catch((error) => {
+
               setError(error.message || "Error al crear cuenta");
             });
         })
         .catch((error) => {
           setError(error.message || "Error al verificar código");
+
         })
         .finally(() => {
           setIsLoading(false);
@@ -204,7 +214,9 @@ const DashboardLogin = () => {
         setResendTimer(45);
       })
       .catch((error) => {
+
         setError(error.message || "Error al reenviar código de verificación");
+
       })
       .finally(() => {
         setIsLoading(false);
@@ -223,23 +235,23 @@ const DashboardLogin = () => {
 
   const renderTitle = () => {
     switch (mode) {
-      case "signup":
-        return t("title1");
-      case "otp":
-        return t("title2");
+      case 'signup':
+        return t('title1');
+      case 'otp':
+        return t('title2');
 
-      case "forgot-password":
-        return t("title3");
+      case 'forgot-password':
+        return t('title3');
 
       default:
-        return t("title4");
+        return t('title4');
     }
   };
 
   const renderLogo = () => (
     <div className={styles.logoContainer}>
       <img
-        onClick={() => navigate("/landing")}
+        onClick={() => navigate('/landing')}
         src={facturaLogo}
         alt="FacturaGPT"
         className={styles.logo}
@@ -252,7 +264,7 @@ const DashboardLogin = () => {
 
   const renderForm = () => (
     <form className={styles.form}>
-      {mode === "signup" && (
+      {mode === 'signup' && (
         <label className={styles.label}>
           Nombre Completo*
           <input
@@ -265,65 +277,65 @@ const DashboardLogin = () => {
         </label>
       )}
       <label className={styles.label}>
-        {t("label1")}
+        {t('label1')}
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          placeholder={t("placeholder1")}
+          placeholder={t('placeholder1')}
           className={styles.input}
         />
       </label>
       <label className={styles.label}>
-        {t("label2")}
+        {t('label2')}
         <input
           value={password}
           onChange={handlePasswordChange}
           type="password"
-          placeholder={t("placeholder2")}
+          placeholder={t('placeholder2')}
           className={styles.input}
         />
         <span className={styles.passwordRequirements}>
-          {t("conditionPassword")}
+          {t('conditionPassword')}
         </span>
       </label>
-      {mode === "signin" && (
+      {mode === 'signin' && (
         <div className={styles.forgotPasswordContainer}>
           <div className={styles.rememberMe}>
             <input type="checkbox" />
-            <span>{t("remember")}</span>
+            <span>{t('remember')}</span>
           </div>
           <a
             href="#"
             className={styles.forgotPassword}
             onClick={(e) => {
               e.preventDefault();
-              setMode("forgot-password");
+              setMode('forgot-password');
             }}
           >
-            {t("forgot")}
+            {t('forgot')}
           </a>
         </div>
       )}
       <div
-        onClick={() => (mode === "signin" ? handleSignin() : handleSignup())}
-        className={`${styles.signInButton} ${isLoading ? styles.loading : ""}`}
+        onClick={() => (mode === 'signin' ? handleSignin() : handleSignup())}
+        className={`${styles.signInButton} ${isLoading ? styles.loading : ''}`}
       >
         {isLoading
-          ? mode === "signin"
-            ? "Signing in..."
-            : "Signing up..."
-          : mode === "signin"
-            ? t("buttonRegister1")
-            : t("buttonRegister2")}
+          ? mode === 'signin'
+            ? 'Signing in...'
+            : 'Signing up...'
+          : mode === 'signin'
+            ? t('buttonRegister1')
+            : t('buttonRegister2')}
       </div>
-      {mode === "signin" && (
+      {mode === 'signin' && (
         <button
           onClick={() => loginWithRedirect()}
           className={styles.buttonOpenAi}
         >
           <OpenAiLogo />
-          <span>{t("loginIAButton")}</span>
+          <span>{t('loginIAButton')}</span>
         </button>
       )}
     </form>
@@ -334,16 +346,16 @@ const DashboardLogin = () => {
       <div className={styles.forgotPasswordIcon}>
         <KeyIcon />
       </div>
-      <h1 className={styles.forgotPasswordTitle}>{t("title3")}</h1>
-      <p className={styles.forgotPasswordSubtitle}>{t("solution")}</p>
+      <h1 className={styles.forgotPasswordTitle}>{t('title3')}</h1>
+      <p className={styles.forgotPasswordSubtitle}>{t('solution')}</p>
       <form className={styles.form}>
         <label className={styles.label}>
-          {t("label1")}
+          {t('label1')}
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
-            placeholder={t("placeholder1")}
+            placeholder={t('placeholder1')}
             className={styles.input}
           />
         </label>
@@ -356,19 +368,19 @@ const DashboardLogin = () => {
           className={styles.continueButton}
           disabled={isLoading}
         >
-          {isLoading ? t("buttonContinue2") : t("buttonContinue1")}
+          {isLoading ? t('buttonContinue2') : t('buttonContinue1')}
         </button>
       </form>
       <p className={styles.securityNote}>
         <span className={styles.lockIcon}>
           <LockIcon size={14} />
         </span>
-        {t("security")}
+        {t('security')}
       </p>
     </div>
   );
 
-  if (mode === "otp") {
+  if (mode === 'otp') {
     return (
       <div className={styles.container}>
         <Navbar />
@@ -401,16 +413,16 @@ const DashboardLogin = () => {
             <div
               onClick={handleVerifyOTP}
               className={`${styles.signInButton} ${
-                isLoading ? styles.loading : ""
+                isLoading ? styles.loading : ''
               }`}
             >
-              {isLoading ? "Verifying..." : "Next"}
+              {isLoading ? 'Verifying...' : 'Next'}
             </div>
             <p className={styles.error}>{error}</p>
             <p className={styles.securityNote}>
               <span className={styles.lockIcon}>
                 <LockIcon />
-              </span>{" "}
+              </span>{' '}
               Tu seguridad nos importa
             </p>
           </div>
@@ -419,7 +431,7 @@ const DashboardLogin = () => {
     );
   }
 
-  if (mode === "forgot-password") {
+  if (mode === 'forgot-password') {
     return (
       <div className={styles.container}>
         <Navbar />
@@ -438,20 +450,20 @@ const DashboardLogin = () => {
         <div className={styles.leftContainer}>{renderLogo()}</div>
         <div className={styles.rightContainer}>
           <h1 className={styles.title}>{renderTitle()}</h1>
-          <p className={styles.subtitle}>{t("subTitle")}</p>
+          <p className={styles.subtitle}>{t('subTitle')}</p>
           {renderForm()}
           {error && <p className={styles.error}>{error}</p>}
           <p className={styles.footerText}>
-            {mode === "signin" ? t("notAccount1") : t("yesAccount1")}{" "}
-            {t("notAccount2")}{" "}
+            {mode === 'signin' ? t('notAccount1') : t('yesAccount1')}{' '}
+            {t('notAccount2')}{' '}
             <a
-              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+              onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
               className={styles.signUp}
             >
-              {mode === "signin" ? t("register") : t("login")}
+              {mode === 'signin' ? t('register') : t('login')}
             </a>
           </p>
-          <p className={styles.footer}>© {t("copyright")}</p>
+          <p className={styles.footer}>© {t('copyright')}</p>
         </div>
       </div>
     </div>

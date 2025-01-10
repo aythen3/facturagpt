@@ -11,7 +11,7 @@ import store from "./utils/store";
 
 import Transactions from "./views/Dashboard/screens/Transactions/Transactions.jsx";
 import ArticlesTransactions from "./views/Dashboard/screens/ArticlesTransactions/ArticlesTransactions.jsx";
-
+import AllProducts from "./views/Dashboard/screens/AllProducts/AllProducts.jsx";
 import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
 import Dashboard from "./views/Dashboard/Dashboard.jsx";
 import UserSettings from "./views/Dashboard/screens/UserSettings/UserSettings.jsx";
@@ -25,9 +25,7 @@ import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
-import Automate from "./views/Dashboard/screens/Automate/Automate.jsx";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
-import UpgradePlan from "./views/Dashboard/screens/UpgradePlan/UpgradePlan.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -76,11 +74,15 @@ const Layout = () => {
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/freetrial" element={<FreeTrial />} />
-                  <Route path="/upgradePlan" element={<UpgradePlan />} />
-                  <Route path="/automate" element={<Automate />} />
                   <Route path="/users" element={<UsersDashboard />} />
                   <Route path="/userSettings" element={<UserSettings />} />
                   <Route path="/clients" element={<Clients />} />
+                  <Route path="/allproducts" element={<AllProducts />} />
+                  <Route path="/transactions" element={<Transactions />} />
+                  <Route
+                    path="/articlestransactions"
+                    element={<ArticlesTransactions />}
+                  />
                   <Route path="/contact" element={<ContactForm />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="*" element={<LandingPage />} />
