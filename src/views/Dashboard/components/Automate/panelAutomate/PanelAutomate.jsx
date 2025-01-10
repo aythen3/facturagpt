@@ -13,6 +13,7 @@ import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAu
 import GoogleSheetsFormAutomate from "../Components/GoogleSheetsFormAutomate/GoogleSheetsFormAutomate";
 import XmlFormAutomate from "../Components/XmlFormAutomate/XmlFormAutomate";
 import OdooFormAutomate from "../Components/OdooFormAutomate/OdooFormAutomate";
+import WoltersKluwerA3FormAutomate from "../Components/WoltersKluwerA3/WoltersKluwerA3FormAutomate";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -100,6 +101,8 @@ const PanelAutomate = ({ type, close, typeContent }) => {
                   return <XmlFormAutomate type={type} />;
                 case "Odoo":
                   return <OdooFormAutomate type={type} />;
+                case "Wolters Kluwer A3":
+                  return <WoltersKluwerA3FormAutomate type={type} />;
                 default:
                   return <div>OTRO</div>;
               }

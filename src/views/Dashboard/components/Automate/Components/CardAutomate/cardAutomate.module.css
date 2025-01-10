@@ -38,7 +38,7 @@
 
 .button_edit {
   border: none;
-  background-color: white;
+  background-color: transparent;
   text-decoration: underline;
   font-weight: 700;
   font-size: 16px;

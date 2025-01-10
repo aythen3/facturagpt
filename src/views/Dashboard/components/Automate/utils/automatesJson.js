@@ -7,6 +7,7 @@ import esPublico from "../../../assets/espublicogestionaLogo.svg";
 import googleSheets from "../../../assets/excel.svg";
 import xml from "../../../assets/xmlIcon.svg";
 import odoo from "../../../assets/odoo.svg";
+import wolters from "../../../assets/wolters-icon.svg";
 
 export const data = [
   {
@@ -85,29 +86,11 @@ export const data = [
   },
 
   {
-    id: 7,
-    automateName: "Actualiza tu Google Sheets",
-    image: googleSheets,
-    contactType: "Título de la hoja.xls",
-    type: "Google Sheets",
-    role: "output",
-  },
-
-  {
-    id: 8,
-    automateName: "Genera Archivos XML para Declaraciones Físcales",
-    image: xml,
+    id: 10,
+    automateName: "Exporta Facturas a Wolters Kluwer A3",
+    image: wolters,
     contactType: "example@gmail.com ",
-    type: "XML para Declaciones Físcales",
-    role: "output",
-  },
-
-  {
-    id: 9,
-    automateName: "Sincroniza Facturas con Odoo",
-    image: odoo,
-    contactType: "example@gmail.com ",
-    type: "Odoo",
+    type: "Wolters Kluwer A3",
     role: "output",
   },
 ];
