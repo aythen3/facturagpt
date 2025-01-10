@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactComponent as WoltersIcon } from "../../../../assets/wolters-icon.svg";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
@@ -11,16 +11,23 @@ import SelectComponent from "../../shared/SelectComponent";
 import OptionsSwitchComponent from "../../shared/OptionsSwitchComponent";
 import TextSVG from "../../svgs/TextSVG";
 import LabelSVG from "../../svgs/LabelSVG";
-import NotificationsSVG from "../../svgs/NotificationsSVG";
-import CheckboxComponent from "../../shared/CheckboxComponent";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
+import ModalAddConnectionWoltersKluwerA3 from "./ModalAddConnectionWoltersKluwerA3";
+
 const WoltersKluwerA3FormAutomate = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
+
   return (
     <div>
-      <HeaderFormsComponent
-        // action={openAddConnection}
-        icon={<WoltersIcon />}
-      />
+      <HeaderFormsComponent action={openAddConnection} icon={<WoltersIcon />} />
 
       <TitleFormsComponent title="Exporta Facturas a" type={type} />
       <TitleFormsComponent title="Input" />
@@ -102,6 +109,9 @@ const WoltersKluwerA3FormAutomate = ({ type }) => {
           ]}
         />
       </div>
+      {isAddConnection && (
+        <ModalAddConnectionWoltersKluwerA3 close={closeAddConnection} />
+      )}
     </div>
   );
 };
