@@ -9,15 +9,15 @@ const CardAutomate = ({
   typeContent,
   type,
   fullContent,
-  isBorders,
+  isActive,
+  onCardClick,
 }) => {
-  console.log("TYPE BY CARD", type);
-
   return (
     <>
       <div
-        style={{ borderBottom: isBorders ? "3px solid #e2f4f0" : "" }}
-        className={styles.content}
+        onClick={onCardClick}
+        className={`${styles.content} ${isActive ? styles.content_active : ""}`}
+        style={{ borderBottom: isActive ? "3px solid #e2f4f0" : "" }}
       >
         <div onClick={() => typeContent(type)} className={styles.data_contain}>
           <div>

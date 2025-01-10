@@ -11,6 +11,7 @@
   justify-content: flex-start;
   align-items: center;
   backdrop-filter: blur(1px);
+  z-index: 1000;
 }
 
 .content {
@@ -63,7 +64,7 @@
   cursor: pointer;
 }
 
-.button_header_all {
+.button_header_active {
   background-color: #233f39;
   color: white;
 }

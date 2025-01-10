@@ -9,6 +9,10 @@
   background-color: #eeeeef;
 }
 
+.content_active {
+  background-color: #eeeeef;
+}
+
 .data_contain {
   display: flex;
   align-items: center;
