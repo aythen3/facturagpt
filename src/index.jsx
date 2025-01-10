@@ -27,6 +27,7 @@ import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
 import Automate from "./views/Dashboard/screens/Automate/Automate.jsx";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
+import UpgradePlan from "./views/Dashboard/screens/UpgradePlan/UpgradePlan.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -75,6 +76,7 @@ const Layout = () => {
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/freetrial" element={<FreeTrial />} />
+                  <Route path="/upgradePlan" element={<UpgradePlan />} />
                   <Route path="/automate" element={<Automate />} />
                   <Route path="/users" element={<UsersDashboard />} />
                   <Route path="/userSettings" element={<UserSettings />} />

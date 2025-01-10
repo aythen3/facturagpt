@@ -8,8 +8,12 @@ import headphonesIcon from "../../assets/headphonesIcon.svg";
 import AccountSettings from "../AccountSettings/AccountSettings";
 import i18n from "../../../../i18";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import UpgradePlan from "../../screens/UpgradePlan/UpgradePlan";
 
 const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
+  const [showPlusModal, setShowPlusModal] = useState(false);
+  const navigate = useNavigate();
   const { t } = useTranslation("navbarAdmin");
 
   const handleProfileClick = () => {
@@ -55,7 +59,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
         </a> */}
       </div>
 
-      <button className={styles.plus}>
+      <button onClick={() => setShowPlusModal(true)} className={styles.plus}>
         {t("buttonGetPlus")} <img src={star} alt="" />
       </button>
       <div className={styles.profile} onClick={handleProfileClick}>
@@ -72,6 +76,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
       <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
         <AccountSettings />
       </div>
+      {showPlusModal && <UpgradePlan onClose={() => setShowPlusModal(false)} />}
     </div>
   );
 };

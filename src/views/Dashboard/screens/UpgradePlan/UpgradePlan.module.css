@@ -1,0 +1,325 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+.modalContainer {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 300ms ease-in-out;
+}
+.upgradePlanContainer {
+  background: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 90vh;
+  max-width: 948px;
+  font-family: "Inter", sans-serif;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
+  animation: scaleUp 300ms ease-out forwards;
+}
+
+.scaleDown {
+  animation: scaleDown 300ms ease-in forwards;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleDown {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+.upgradePlanHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 64px;
+  border-bottom: 1px solid #e3e3e3;
+}
+.headerLeft {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #222222;
+  font-size: 20px;
+  font-weight: 600;
+  gap: 10px;
+}
+.closeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #f6f6f6;
+  user-select: none;
+}
+.upgradePlanTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #e2e2e2;
+  border-radius: 12px;
+}
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ==================================================================================== */
+/* =================================== LEFT CONTAINER ================================= */
+/* ==================================================================================== */
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 16px;
+  width: 50%;
+  padding: 10px 24px;
+}
+.fullWidth {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 16px;
+}
+.emailContainer {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  span {
+    color: #27272a;
+    font-size: 15px;
+    font-weight: 400;
+  }
+}
+.changeEmail {
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  color: #222222;
+  cursor: pointer;
+  user-select: none;
+}
+/* ==================================================================================== */
+/* =================================== RIGHT CONTAINER ================================ */
+/* ==================================================================================== */
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-left: 1px solid #e3e3e3;
+  gap: 12px;
+  width: 50%;
+  padding: 10px 24px;
+}
+
+.lightText {
+  color: #595959;
+  line-height: 18px;
+  max-width: 362px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.paymentMethodsContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 25px;
+  margin-top: -12px;
+  flex-direction: column;
+}
+
+.planPlusTitle {
+  color: #222222;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.spacedBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: #222222;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.lightTextRight {
+  text-align: right;
+  font-size: 13px;
+  font-weight: 400;
+  color: #595959;
+}
+
+.greenTag {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.greenText {
+  font-size: 13px;
+  font-weight: 500;
+  color: #16c098;
+  user-select: none;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background: #e3e3e3;
+  min-height: 1px;
+}
+
+.validateContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+  background: #f5f5f5;
+  padding: 0px 24px;
+  height: 31px;
+  min-height: 31px;
+}
+
+.validateInput {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #71717a;
+  background-color: transparent;
+  font-weight: 400;
+}
+.validateButton {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222222;
+  cursor: pointer;
+  user-select: none;
+}
+
+.upgradePlanButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  background: #222222;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  height: 44px;
+  min-height: 44px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  strong {
+    font-weight: 600;
+  }
+}
+
+.currencyContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6d6d6d;
+  font-size: 12px;
+  font-weight: 400;
+  gap: 4px;
+  span {
+    cursor: pointer;
+    user-select: none;
+    color: #622fae;
+  }
+}
+.bottomText {
+  width: 100%;
+  margin-top: 5px;
+  justify-self: center;
+  max-width: 362px;
+  color: #595959;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.link {
+  text-decoration: underline;
+  color: inherit;
+  cursor: pointer;
+}
+
+.addPaymentMethod {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222222;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: underline;
+  margin-top: 5px;
+}
+
+.paymentDetailsItem {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 33px;
+}
+.paymentDetailsContainer {
+  max-height: 45px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  div {
+    color: #27272a;
+    font-size: 15px;
+    font-weight: 400;
+  }
+}
