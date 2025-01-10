@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import { ReactComponent as DriveIcon } from "../../../../assets/drive.svg";
@@ -13,11 +13,21 @@ import TextSVG from "../../svgs/TextSVG";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import ModalAddConnectionGoogleDrive from "./ModalAddConnectionGoogleDrive";
 
 const GoogleDriveFormCreateAutomate = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
   return (
     <div>
-      <HeaderFormsComponent icon={<DriveIcon />} />
+      <HeaderFormsComponent action={openAddConnection} icon={<DriveIcon />} />
       <TitleFormsComponent title="Sube tus facturas de" type={type} />
 
       <div>
@@ -124,6 +134,9 @@ const GoogleDriveFormCreateAutomate = ({ type }) => {
           <InputComponent placeholder="[00000000],..." typeInput="text" />
         </div>
       </div>
+      {isAddConnection && (
+        <ModalAddConnectionGoogleDrive close={closeAddConnection} />
+      )}
     </div>
   );
 };
