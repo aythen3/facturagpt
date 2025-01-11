@@ -79,7 +79,7 @@ const openInbox = (imap) => {
 };
 
 const searchEmails = (imap, searchStrings, logs, clientId) => {
-  console.log("clientId from searchEmails", clientId);
+  // console.log("clientId from searchEmails", clientId);
   return new Promise((resolve, reject) => {
     // Dynamically build the search query for multiple strings
     const searchQuery = ["ALL"];
@@ -137,8 +137,8 @@ const searchEmails = (imap, searchStrings, logs, clientId) => {
             stream.once("end", async () => {
               try {
                 const parsed = await simpleParser(rawMessage);
-                console.log("parsed email", parsed);
-                console.log("parsedMessageId", parsed.messageId);
+                // console.log("parsed email", parsed);
+                // console.log("parsedMessageId", parsed.messageId);
 
                 if (logs && logs.includes(parsed.messageId)) {
                   console.log("Email already processed");
@@ -163,7 +163,7 @@ const searchEmails = (imap, searchStrings, logs, clientId) => {
                     )
                   )
                   .map((att) => {
-                    console.log("ATTACHMENT DATA", att);
+                    // console.log("ATTACHMENT DATA", att);
                     return {
                       mimeType: att.contentType,
                       filename: att.filename,
@@ -315,7 +315,9 @@ function processItems(obj, gpt) {
         modifiedObj[key]._attributes &&
         modifiedObj[key]._attributes["for-data"]
       ) {
+        // console.log("key===", key);
         const variable = modifiedObj[key]._attributes["for-data"];
+        // console.log("VARIABLE===", variable);
 
         if (!forLines[variable]) {
           forLines[variable] = { n: 0 };
@@ -385,7 +387,7 @@ function processItems(obj, gpt) {
     return modifiedObj;
   }
 
-  console.log("obj", obj);
+  // console.log("obj", obj);
 
   return searchRecursive(obj);
 }
@@ -500,8 +502,8 @@ const prepareValuesForGoogleSheet = (data) => {
 };
 
 const appendDataToGoogleSheet = async (spreadsheetId, data) => {
-  console.log("spreadsheetId =============", spreadsheetId);
-  console.log("data =============", data);
+  // console.log("spreadsheetId =============", spreadsheetId);
+  // console.log("data =============", data);
   const headers = [
     "Document Type",
     "Invoice Date",
@@ -560,7 +562,7 @@ const appendDataToGoogleSheet = async (spreadsheetId, data) => {
 
   try {
     const response = await sheetsInstance.spreadsheets.values.append(request);
-    console.log("Data appended:", response.data);
+    // console.log("Data appended:", response.data);
   } catch (err) {
     console.error("API returned an error during append:", err);
   }
@@ -575,7 +577,42 @@ const processDataAndAppend = async (spreadsheetId, items) => {
   }
 };
 
-// Fetch Emails Controller
+const calculateTaxesAndDiscounts = (products) => {
+  return products.map((product) => {
+    let {
+      productQuantity,
+      productPartial,
+      productDiscountRate,
+      productImport,
+    } = product;
+
+    productQuantity = Number(productQuantity) || 0;
+    productPartial = Number(productPartial) || 0;
+    productDiscountRate = Number(productDiscountRate) || 0;
+    productImport = Number(productImport) || 0;
+
+    const productImportWithoutDiscount = parseFloat(
+      (productQuantity * productPartial).toFixed(2)
+    );
+    const productDiscountAmount = parseFloat(
+      (
+        productImport -
+        (productImport - (productImport * productDiscountRate) / 100)
+      ).toFixed(2)
+    );
+    const productImportWithTaxes = parseFloat(
+      (productImport * 1.21).toFixed(2)
+    );
+
+    return {
+      ...product,
+      productImportWithoutDiscount: productImportWithoutDiscount.toFixed(2),
+      productDiscountAmount: productDiscountAmount.toFixed(2),
+      productImportWithTaxes: productImportWithTaxes.toFixed(2),
+    };
+  });
+};
+
 const fetchEmailsByQuery = async (req, res) => {
   try {
     const { userId, email, password, query, tokenGpt, logs, ftpData } =
@@ -585,25 +622,25 @@ const fetchEmailsByQuery = async (req, res) => {
       return res.status(400).json({ message: "Missing required parameters" });
     }
 
-    console.log("EMAIL FETCH REQUEST BACK:", {
-      userId,
-      email,
-      query,
-      password,
-    });
+    // console.log("EMAIL FETCH REQUEST BACK:", {
+    //   userId,
+    //   email,
+    //   query,
+    //   password,
+    // });
 
     const imapConfig = getImapConfig(email, password);
-    console.log("imapConfig", imapConfig);
+    // console.log("imapConfig", imapConfig);
 
     try {
       const imap = await connectToImap(imapConfig);
       await openInbox(imap);
 
       const emails = await searchEmails(imap, query, logs, userId);
-      console.log(
-        `Found ${emails.length} emails matching query: ${query}`,
-        emails
-      );
+      // console.log(
+      //   `Found ${emails.length} emails matching query: ${query}`,
+      //   emails
+      // );
 
       const filteredEmails = [];
       const processedAttachments = [];
@@ -614,6 +651,24 @@ const fetchEmailsByQuery = async (req, res) => {
 
           for (const attachment of email.attachments) {
             let processedData = await getAttachmentData(attachment);
+            console.log(
+              "PRODUCT LIST BEFORE CALCULATING TAXES/DISCOUNTS",
+              processedData.productList
+            );
+
+            let newProcessedData = await calculateTaxesAndDiscounts(
+              processedData.productList
+            );
+            console.log(
+              "PRODUCT LIST AFTER CALCULATING TAXES/DISCOUNTS",
+              newProcessedData
+            );
+            processedData.partialAmount =
+              processedData.partialAmount.toFixed(2);
+            processedData.productList = newProcessedData;
+
+            processedData.taxesFromPartialAmount =
+              Number(processedData.partialAmount) || 0 * 0.21;
 
             processedData = replaceNotFoundWithEmptyString(processedData);
             console.log("clientCif", processedData.clientCif);
@@ -632,7 +687,7 @@ const fetchEmailsByQuery = async (req, res) => {
               xmlFile = albaranXML;
               uploadType = "notificacion_albC";
             }
-            console.log("xmlFile", typeof xmlFile);
+            // console.log("xmlFile", typeof xmlFile);
             if (processedData?.documentType && xmlFile) {
               const json = convert.xml2json(xmlFile, {
                 compact: true,
@@ -642,7 +697,7 @@ const fetchEmailsByQuery = async (req, res) => {
               xmlData = JSON.parse(json);
             }
 
-            console.log("processedData", processedData);
+            // console.log("processedData", processedData);
 
             const obj = processItems(xmlData, processedData);
 
@@ -751,7 +806,7 @@ const fetchEmailsByQuery = async (req, res) => {
       };
 
       let dataByEmails = processEmailsDetailedData(processedAttachments);
-      console.log("dataByEmails:", dataByEmails);
+      // console.log("dataByEmails:", dataByEmails);
       updateClientService({
         clientId: userId,
         toUpdate: { detailedTokenConsumption: dataByEmails },
@@ -825,7 +880,7 @@ async function extractCodeBlocks(fullCode) {
 }
 
 const mergeResults = (resultsArray) => {
-  console.log("resultsArray from mergeResults", resultsArray);
+  // console.log("resultsArray from mergeResults", resultsArray);
   const mergedResult = {};
 
   resultsArray.forEach((result) => {
@@ -876,7 +931,7 @@ const processImageSections = async (
 
     const { width, height } = metadata;
 
-    console.log("Image dimensions", width, height);
+    // console.log("Image dimensions", width, height);
 
     const sections = [
       {
@@ -1140,7 +1195,7 @@ const documentGPT = async ({
     );
 
     const result = response.data.choices[0].message.content;
-    console.log("result", result);
+    // console.log("result", result);
 
     // Calculate token usage for text (input + output)
     const inputTokens = systemPrompt.split(/\s+/).length;
@@ -1190,14 +1245,14 @@ const documentGPT = async ({
       // return { error: 'Failed to parse JSON response', totalTokens, totalPrice: finalPrice };
     }
 
-    console.log(
-      "TOTAL TOKENS CONSUMED:",
-      totalTokens,
-      "FINAL REQUEST PRICE:",
-      finalPrice,
-      "IMG SIZE:",
-      imageSize
-    );
+    // console.log(
+    //   "TOTAL TOKENS CONSUMED:",
+    //   totalTokens,
+    //   "FINAL REQUEST PRICE:",
+    //   finalPrice,
+    //   "IMG SIZE:",
+    //   imageSize
+    // );
     if (parsedResponse.error) {
       return {
         error: parsedResponse?.error,
@@ -1247,7 +1302,7 @@ Propiedades a extraer para cada producto:
 - "productDiscount": Valor absoluto del descuento (si puede inferirse o se muestra, en caso contrario "").
 - "productImport": Importe final del producto tras aplicar descuentos (si se identifica, caso contrario "").
 - "productAlbaranDate": Fecha del albarán (si existe alguna referencia previa a un albarán con fecha arriba de los productos, extraer esa fecha; si no se encuentra, dejar "").
-- "productAlbaranRef": Referencia del albarán (si existe alguna referencia previa del tipo "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto; si no se encuentra, dejar "").
+- "productAlbaranRef": Referencia del albarán (si existe alguna referencia previa del tipo "R-XXXXXXXXXX" u "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto (PRIORIZAR EL NUMERO DEL ALBARAN), si no se encuentra, dejar "").
 
 Reglas:
 - Todas las referencias deberian aparecer en la misma columna en cada producto. Si encontramos una, la referencia del producto siguiente, debe estar justo debajo de la anterior.
@@ -1271,10 +1326,11 @@ Devuelve la respuesta en el siguiente formato (ejemplo con posibles datos, pero 
     "productDiscount": "2.50",
     "productImport": "22.50",
     "productAlbaranDate": "16/12/2024",
-    "productAlbaranRef": "OBRA 289"
+    "productAlbaranRef": "R-12345678"
   }
 ]
-
+* IMPORTANTE *
+Convierte TODOS los numeros a numeros con 2 decimales, por mas que sea entero. Eliminar tipo de moneda y simbolo. (2,000.24€ -> 2000.24, 12.770 -> 12.77)
 No incluyas explicación ni texto adicional afuera del array.
 `;
   } else {
@@ -1297,7 +1353,7 @@ No incluyas explicación ni texto adicional afuera del array.
     - "productDiscount": Valor absoluto del descuento (si puede inferirse o se muestra, en caso contrario "").
     - "productImport": Importe final del producto tras aplicar descuentos (si se identifica, caso contrario "").
     - "productAlbaranDate": Fecha del albarán (si existe alguna referencia previa a un albarán con fecha arriba de los productos, extraer esa fecha; si no se encuentra, dejar "").
-    - "productAlbaranRef": Referencia del albarán (si existe alguna referencia previa del tipo "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto; si no se encuentra, dejar "").
+    - "productAlbaranRef": Referencia del albarán (si existe alguna referencia previa del tipo "R-XXXXXXXXXX" u "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto (PRIORIZAR EL NUMERO DEL ALBARAN), si no se encuentra, dejar "").
     
     Reglas:
     - Todas las referencias deberian aparecer en la misma columna en cada producto. Si encontramos una, la referencia del producto siguiente, debe estar justo debajo de la anterior.
@@ -1321,7 +1377,7 @@ No incluyas explicación ni texto adicional afuera del array.
         "productDiscount": "2.50",
         "productImport": "22.50",
         "productAlbaranDate": "16/12/2024",
-        "productAlbaranRef": "OBRA 289"
+        "productAlbaranRef": "R-12345678"
       }
     ]
     
@@ -1369,7 +1425,7 @@ No incluyas explicación ni texto adicional afuera del array.
     );
 
     const result = response.data.choices[0].message.content;
-    console.log("result", result);
+    // console.log("result", result);
     return result;
   } catch (e) {
     console.error("Error in documentGPT:", e);
@@ -1391,7 +1447,7 @@ const processProductsSection = async (imageBuffer, token) => {
     }
 
     const { width, height } = metadata;
-    console.log("Image dimensions", width, height);
+    // console.log("Image dimensions", width, height);
 
     const sectionImage = sharp(imageBuffer);
     const validSection = {
@@ -1424,7 +1480,7 @@ const processProductsSection = async (imageBuffer, token) => {
         image: sectionImageUrl,
         imageSize,
       });
-      console.log("First pass result:", firstPassResult);
+      // console.log("First pass result:", firstPassResult);
 
       let firstPassProducts = [];
       try {
@@ -1441,10 +1497,10 @@ const processProductsSection = async (imageBuffer, token) => {
         imageSize,
         previousData: firstPassProducts,
       });
-      console.log(
-        "RETURNING DATA FROM PRODUCTS SECTION (Refined):",
-        secondPassResult
-      );
+      // console.log(
+      //   "RETURNING DATA FROM PRODUCTS SECTION (Refined):",
+      //   secondPassResult
+      // );
       return secondPassResult;
     } catch (sectionError) {
       console.error("Error processing document:", sectionError);
@@ -1516,12 +1572,19 @@ Si no encuentras ningún NIF del cliente, devuelve: {"clientNif": "NOT FOUND"}.
 	   - "clientCif": CIF del cliente.
 	   - "clientNif": NIF del cliente.
      - "clientPhoneNumber": Número de telefono del cliente.
-     - "clientEmail": Correo electrónica del cliente.
+     - "clientEmail": Correo electrónico del cliente.
 	   - "clientName": Nombre del cliente.
 	   - "clientAddress": Dirección completa del cliente.
 	   - "clientCity": Ciudad del cliente.
      - "clientProvice": Provincia del cliente.
 	   - "clientZip": Código postal del cliente.
+     - "companyPhoneNumber": Número de telefono de la empresa.
+     - "companyEmail": Correo electrónico de la empresa.
+	   - "companyName": Nombre de la empresa.
+	   - "companyAddress": Dirección completa de la empresa.
+	   - "companyCity": Ciudad de la empresa.
+     - "companyProvice": Provincia de la empresa.
+	   - "companyZip": Código postal de la empresa.
 	   - "conditionPay": Condición de pago.
 	   - Totales:
 		 - "totalAmount": Importe total de la factura.
@@ -1541,6 +1604,8 @@ Si no encuentras ningún NIF del cliente, devuelve: {"clientNif": "NOT FOUND"}.
   }
   
   Consideraciones Finales:
+  Intentar buscar clientAddress, clientCity, clientProvice, clientZip, companyAddress, companyCity, companyProvice, companyZip. (Los del cliente suelen estar en la parte inferior del documento, mientras que los de la empresa en la parte superior).
+  Convierte TODOS los numeros a numeros con 2 decimales, por mas que sea entero. Eliminar tipo de moneda y simbolo. (2,000.24€ -> 2000.24, 20€ -> 20.00)
   Evita confusiones entre el número de pedido, número de factura, y número de albarán.
   No incluyas datos confidenciales, como el número de cliente, más allá de lo especificado.
   `,
@@ -1548,7 +1613,7 @@ Si no encuentras ningún NIF del cliente, devuelve: {"clientNif": "NOT FOUND"}.
 };
 
 const getAttachmentData = async (attach) => {
-  console.log("ATTACH RECEIVED", attach);
+  // console.log("ATTACH RECEIVED", attach);
   try {
     const fileBuffer = attach.buffer;
     let imageBuffers = [];
@@ -1611,7 +1676,7 @@ const getAttachmentData = async (attach) => {
             searchCif: true,
           });
         } else {
-          console.log("FALLS HERE ");
+          // console.log("FALLS HERE ");
 
           attemptResult = await documentGPT({
             token,

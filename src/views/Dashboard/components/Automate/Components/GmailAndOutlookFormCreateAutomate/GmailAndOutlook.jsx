@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./gmailAndOutlook.module.css";
 import SearchSVG from "../../svgs/SearchSVG";
 import WarningSVG from "../../svgs/WarningSVG";
@@ -14,11 +14,25 @@ import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../shared/InputComponent";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
+import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
+import ModalAddConnectionGmailAndOutlook from "./ModalAddConnectionGmailAndOutlook";
+import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 
 const GmailAndOutlook = ({ type }) => {
+  const [isAddConnection, setIsAddConnection] = useState(false);
+
+  const openAddConnection = () => {
+    setIsAddConnection(true);
+  };
+
+  const closeAddConnection = () => {
+    setIsAddConnection(false);
+  };
   return (
     <div>
       <HeaderFormsComponent
+        action={openAddConnection}
         icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
       />
       <TitleFormsComponent type={type} title="Sube tus facturas de" />
@@ -111,58 +125,23 @@ const GmailAndOutlook = ({ type }) => {
               textButton="Crear"
             />
           </div>
-          <div style={{ marginTop: "10px" }}>
-            <OptionsSwitchComponent
-              icon={<NotificationsSVG />}
-              text="Notificar tras la exportacion"
-            />
-          </div>
-          <div
-            style={{
-              marginTop: "24px",
 
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              height: 46,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <CheckboxComponent />
-              <GmailIcon style={{ width: 25 }} />
-              <p>{type}</p>
-            </div>
-            <InputComponent placeholder="[email],..." typeInput="text" />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              height: 46,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <CheckboxComponent />
-              <WhatsAppIcon style={{ width: 25 }} />
-              <p>{type}</p>
-            </div>
-            <InputComponent placeholder="[00000000],..." typeInput="text" />
-          </div>
+          <NotificationsConfirmComponent
+            placeholder1="[email],..."
+            placeholder2="[00000000],..."
+            type1="Gmail"
+            type2="WhatsApp"
+            title="Notificar tras la exportación"
+            icons={[
+              <GmailIcon style={{ width: 25 }} />,
+              <WhatsAppIcon style={{ width: 25 }} />,
+            ]}
+          />
         </div>
       </div>
+      {isAddConnection && (
+        <ModalAddConnectionGmailAndOutlook close={closeAddConnection} />
+      )}
     </div>
   );
 };

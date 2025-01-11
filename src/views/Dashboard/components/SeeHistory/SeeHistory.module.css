@@ -1,0 +1,123 @@
+.historyContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 80%;
+
+  overflow-y: scroll;
+  background-color: white;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 999;
+}
+
+.headerHistory {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  img {
+    transform: rotate(90deg);
+    width: 20px;
+    height: 20px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    cursor: pointer;
+  }
+
+  p {
+    margin: 0;
+    font-weight: 500;
+  }
+  button {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+  }
+}
+.contentHistory {
+  .content {
+    margin: 20px 0;
+  }
+  .docs {
+    color: #595959;
+    margin: 5px 0;
+  }
+  .payAt {
+    color: #595959;
+  }
+  .title {
+    font-weight: 500;
+  }
+  .totalIVA {
+    font-weight: 700;
+  }
+  .planType {
+    font-weight: 600;
+    font-size: 20px;
+    strong {
+      font-weight: 800;
+    }
+  }
+  .txtTransparent {
+    color: #00000054;
+  }
+  .price {
+    font-weight: 500;
+  }
+  .priceTotal {
+    font-weight: 700;
+  }
+}
+.contentHistory p {
+  margin: 0;
+}
+
+.contentHistory .plan {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background-color: #ececec;
+    border: none;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    cursor: pointer;
+    color: #222222;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: 2px 10px;
+  }
+  .btns {
+    display: flex;
+    gap: 10px;
+  }
+  img {
+    cursor: pointer;
+  }
+}
+
+.contentHistory .section {
+  border-bottom: 1px solid #0e0e0e1c;
+  padding: 10px 0;
+}
+
+.contentHistory .section:last-of-type {
+  border-bottom: 3px solid #0e0e0e1c;
+  padding: 10px 0 25px 0;
+}
+
+.contentHistory .section .row {
+  display: flex;
+  justify-content: space-between;
+}

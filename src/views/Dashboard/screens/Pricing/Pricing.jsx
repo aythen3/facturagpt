@@ -83,35 +83,37 @@ const Pricing = () => {
   return (
     <div className={styles.pricingContainer}>
       <Navbar />
-      <div className={styles.plansHeader}>
-        <h1 className={styles.plansTitle}>Planes de precios</h1>
-        <p className={styles.plansSubtitle}>
-          Elige el mejor plan que se adapte a tus necesidades.
-        </p>
-        <p className={styles.currentPlan}>{currentPlan.documents}/mes</p>
-        <input
-          type='range'
-          min='0'
-          max='100'
-          value={sliderValue}
-          onChange={handleSliderChange}
-          className={styles.slider}
-          style={{
-            background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
-          }}
-        />
-      </div>
-      <div className={styles.plansCardsContainer}>
-        <PricingPlanCard
-          key={selectedPlanIndex}
-          title={selectedPlan.title}
-          price={selectedPlan.price}
-          priceTag={selectedPlan.priceTag}
-          documentPrices={selectedPlan.documentPrices}
-          features={selectedPlan.features}
-          isSelected={true}
-          sliderValue={sliderValue}
-        />
+      <div className={styles.test}>
+        <div className={styles.plansHeader}>
+          <h1 className={styles.plansTitle}>Planes de precios</h1>
+          <p className={styles.plansSubtitle}>
+            Elige el mejor plan que se adapte a tus necesidades.
+          </p>
+          <p className={styles.currentPlan}>{currentPlan.documents}/mes</p>
+          <input
+            type='range'
+            min='0'
+            max='100'
+            value={sliderValue}
+            onChange={handleSliderChange}
+            className={styles.slider}
+            style={{
+              background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
+            }}
+          />
+        </div>
+        <div className={styles.plansCardsContainer}>
+          <PricingPlanCard
+            key={selectedPlanIndex}
+            title={selectedPlan.title}
+            price={selectedPlan.price}
+            priceTag={selectedPlan.priceTag}
+            documentPrices={selectedPlan.documentPrices}
+            features={selectedPlan.features}
+            isSelected={true}
+            sliderValue={sliderValue}
+          />
+        </div>
       </div>
       <span className={styles.microText}>
         Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en

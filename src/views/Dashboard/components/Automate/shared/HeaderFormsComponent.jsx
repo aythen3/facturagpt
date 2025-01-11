@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../Components/GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import SelectComponent from "./SelectComponent";
 
-const HeaderFormsComponent = ({ icon }) => {
+const HeaderFormsComponent = ({ icon, action }) => {
   return (
     <div className={styles.header}>
       <div className={styles.header_mail}>
@@ -33,7 +33,9 @@ const HeaderFormsComponent = ({ icon }) => {
           isEmail={true}
         />
       </div>
-      <p style={{ color: "#159B7C" }}>Añadir conexion</p>
+      <p onClick={action} style={{ color: "#159B7C", cursor: "pointer" }}>
+        Añadir conexion
+      </p>
     </div>
   );
 };

@@ -97,7 +97,6 @@
   background-color: #233f39;
   color: white;
   border: none;
-  /* padding: 12px; */
   cursor: pointer;
   font-size: 16px;
   border-radius: 7px;
@@ -110,6 +109,11 @@
     height: 15px;
   }
 }
+
+.btnNewClient {
+  width: auto;
+}
+
 .addButton:hover {
   background-color: #122521;
 }
@@ -163,7 +167,7 @@ td p:first-of-type {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   img {
     cursor: pointer;
   }
@@ -182,7 +186,7 @@ td p:first-of-type {
   }
 }
 
-input[type='checkbox'] {
+input[type="checkbox"] {
   width: 15px;
   height: 15px;
 }

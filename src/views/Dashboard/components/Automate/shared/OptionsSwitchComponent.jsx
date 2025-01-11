@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./optionsSwitch.module.css";
 
-const OptionsSwitchComponent = ({ text, icon }) => {
+const OptionsSwitchComponent = ({ text, icon, notSwitch }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
@@ -33,10 +33,12 @@ const OptionsSwitchComponent = ({ text, icon }) => {
 
         <p>{text}</p>
       </div>
-      <label className={styles.switch}>
-        <input type="checkbox" checked={isChecked} onChange={handleToggle} />
-        <span className={styles.slider}></span>
-      </label>
+      {!notSwitch && (
+        <label className={styles.switch}>
+          <input type="checkbox" checked={isChecked} onChange={handleToggle} />
+          <span className={styles.slider}></span>
+        </label>
+      )}
     </div>
   );
 };
