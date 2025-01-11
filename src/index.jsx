@@ -78,6 +78,7 @@ const Layout = () => {
                   <Route path="/users" element={<UsersDashboard />} />
                   <Route path="/userSettings" element={<UserSettings />} />
                   <Route path="/clients" element={<Clients />} />
+
                   <Route path="/allproducts" element={<AllProducts />} />
                   <Route path="/transactions" element={<Transactions />} />
                   <Route path="/test" element={<Test />} />
@@ -85,6 +86,7 @@ const Layout = () => {
                     path="/articlestransactions"
                     element={<ArticlesTransactions />}
                   />
+
                   <Route path="/contact" element={<ContactForm />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="*" element={<LandingPage />} />
