@@ -1,0 +1,101 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 300ms ease-in-out;
+}
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: scale(1);
+  animation: scaleUp 300ms ease-out forwards;
+}
+
+.scaleDown {
+  animation: scaleDown 300ms ease-in forwards;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleDown {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+.upgradePlanButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  background: #222222;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  height: 44px;
+  min-height: 44px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  strong {
+    font-weight: 600;
+  }
+}
+
+.upgradePlanHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  margin-bottom: 12px;
+}
+.headerLeft {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #222222;
+  font-size: 16px;
+  font-weight: 600;
+  gap: 10px;
+}
+.closeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #f6f6f6;
+  user-select: none;
+}

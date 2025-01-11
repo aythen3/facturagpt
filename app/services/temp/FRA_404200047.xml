@@ -8,13 +8,13 @@
             <BatchIdentifier>--</BatchIdentifier>
             <InvoicesCount>1</InvoicesCount>
             <TotalInvoicesAmount>
-                <TotalAmount>2.121,61€</TotalAmount>
+                <TotalAmount>2121.61</TotalAmount>
             </TotalInvoicesAmount>
             <TotalOutstandingAmount>
-                <TotalAmount>2.121,61€</TotalAmount>
+                <TotalAmount>2121.61</TotalAmount>
             </TotalOutstandingAmount>
             <TotalExecutableAmount>
-                <TotalAmount>2.121,61€</TotalAmount>
+                <TotalAmount>2121.61</TotalAmount>
             </TotalExecutableAmount>
             <InvoiceCurrencyCode>EUR</InvoiceCurrencyCode>
         </Batch>
@@ -36,16 +36,16 @@
                     <Volume/>
                 </RegistrationData>
                 <AddressInSpain>
-                    <Address>. BDA DE LA COMA, 121 </Address>
-                    <PostCode>17244</PostCode>
-                    <Town>CASSA DE LA SELVA</Town>
-                    <Province>GIRONA</Province>
+                    <Address>AV Cardenal Reig, 32</Address>
+                    <PostCode></PostCode>
+                    <Town>Barcelona</Town>
+                    <Province></Province>
                     <CountryCode>ESP</CountryCode>
                 </AddressInSpain>
                 <ContactDetails>
-                    <Telephone>93 440 04 05</Telephone>
+                    <Telephone></Telephone>
                     <TeleFax/>
-                    <ElectronicMail>EMAIJ@WEBDEMO.ES</ElectronicMail>
+                    <ElectronicMail></ElectronicMail>
                 </ContactDetails>
             </LegalEntity>
         </SellerParty>
@@ -53,7 +53,7 @@
             <TaxIdentification>
                 <PersonTypeCode>J</PersonTypeCode>
                 <ResidenceTypeCode>R</ResidenceTypeCode>
-                <TaxIdentificationNumber>A58580629</TaxIdentificationNumber>
+                <TaxIdentificationNumber>A58580626</TaxIdentificationNumber>
             </TaxIdentification>
             <LegalEntity>
                 <CorporateName>HSB S.A.</CorporateName>
@@ -74,7 +74,7 @@
     <Invoices>
         <Invoice>
             <InvoiceHeader>
-                <InvoiceNumber></InvoiceNumber>
+                <InvoiceNumber>404200047</InvoiceNumber>
                 <InvoiceDocumentType>FC</InvoiceDocumentType>
                 <InvoiceClass>OO</InvoiceClass>
             </InvoiceHeader>
@@ -89,62 +89,62 @@
                     <TaxTypeCode>01</TaxTypeCode>
                     <TaxRate>21.00</TaxRate>
                     <TaxableBase>
-                        <TotalAmount></TotalAmount>
+                        <TotalAmount>1753.40</TotalAmount>
                     </TaxableBase>
                     <TaxAmount>
-                        <TotalAmount></TotalAmount>
+                        <TotalAmount>1753.4</TotalAmount>
                     </TaxAmount>
                 </Tax>
             </TaxesOutputs>
             <InvoiceTotals>
-                <TotalGrossAmount></TotalGrossAmount>
+                <TotalGrossAmount>1753.40</TotalGrossAmount>
                 <GeneralDiscounts>
                     <Discount>
-                        <DiscountReason>Descuento</DiscountReason>
+                        <DiscountReason>Dto</DiscountReason>
                         <DiscountRate>0.00</DiscountRate>
-                        <DiscountAmount></DiscountAmount>
+                        <DiscountAmount>0.00</DiscountAmount>
                     </Discount>
                 </GeneralDiscounts>
-                <TotalGeneralDiscounts></TotalGeneralDiscounts>
+                <TotalGeneralDiscounts>0.00</TotalGeneralDiscounts>
                 <TotalGeneralSurcharges>0.00</TotalGeneralSurcharges>
-                <TotalGrossAmountBeforeTaxes></TotalGrossAmountBeforeTaxes>
-                <TotalTaxOutputs></TotalTaxOutputs>
+                <TotalGrossAmountBeforeTaxes>1753.40</TotalGrossAmountBeforeTaxes>
+                <TotalTaxOutputs>1753.4</TotalTaxOutputs>
                 <TotalTaxesWithheld>0.00</TotalTaxesWithheld>
-                <InvoiceTotal></InvoiceTotal>
-                <TotalOutstandingAmount></TotalOutstandingAmount>
-                <TotalExecutableAmount></TotalExecutableAmount>
+                <InvoiceTotal>2121.61</InvoiceTotal>
+                <TotalOutstandingAmount>2121.61</TotalOutstandingAmount>
+                <TotalExecutableAmount>2121.61</TotalExecutableAmount>
             </InvoiceTotals>
             <Items>
                 <InvoiceLine id="1">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
                     <SequenceNumber>1</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000057</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>TERMINAL CURV.403F 22-3/4 C/ARAND.LT.</ItemDescription>
+                    <ItemDescription>TERMINAL CURV.403SF 22-3/4 CI/ARAND.LT.</ItemDescription>
                     <Quantity>50</Quantity>
-                    <UnitPriceWithoutTax>478,88</UnitPriceWithoutTax>
-                    <TotalCost>478,88</TotalCost>
+                    <UnitPriceWithoutTax>12.77</UnitPriceWithoutTax>
+                    <TotalCost>638.50</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
                             <DiscountRate>25</DiscountRate>
-                            <DiscountAmount>478,88</DiscountAmount>
+                            <DiscountAmount>119.72</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>478,88</GrossAmount>
+                    <GrossAmount>478.88</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>478,88</TotalAmount>
+                                <TotalAmount>478.88</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>478,88</TotalAmount>
+                                <TotalAmount>579.44</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>
@@ -154,35 +154,35 @@
                     </TaxesOutputs>
                 </InvoiceLine>
                 <InvoiceLine id="2">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
                     <SequenceNumber>2</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000058</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>TERMINALS CU 16MM</ItemDescription>
-                    <Quantity>60</Quantity>
-                    <UnitPriceWithoutTax>56,70</UnitPriceWithoutTax>
-                    <TotalCost>56,70</TotalCost>
+                    <ItemDescription>Bandeja 66 perforada PVC-M1 U23X 60x200 gris</ItemDescription>
+                    <Quantity>50</Quantity>
+                    <UnitPriceWithoutTax>18.38</UnitPriceWithoutTax>
+                    <TotalCost>919.00</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
-                            <DiscountRate>30</DiscountRate>
-                            <DiscountAmount>56,70</DiscountAmount>
+                            <DiscountRate>35</DiscountRate>
+                            <DiscountAmount>209.07</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>56,70</GrossAmount>
+                    <GrossAmount>597.35</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>56,70</TotalAmount>
+                                <TotalAmount>597.35</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>56,70</TotalAmount>
+                                <TotalAmount>722.79</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>
@@ -192,35 +192,35 @@
                     </TaxesOutputs>
                 </InvoiceLine>
                 <InvoiceLine id="3">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
                     <SequenceNumber>3</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000059</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
                     <ItemDescription>CURVA FIG.2agCu 15x1/2</ItemDescription>
                     <Quantity>50</Quantity>
-                    <UnitPriceWithoutTax>14,85</UnitPriceWithoutTax>
-                    <TotalCost>14,85</TotalCost>
+                    <UnitPriceWithoutTax>0.54</UnitPriceWithoutTax>
+                    <TotalCost>27.00</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
                             <DiscountRate>45</DiscountRate>
-                            <DiscountAmount>14,85</DiscountAmount>
+                            <DiscountAmount>6.68</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>14,85</GrossAmount>
+                    <GrossAmount>14.85</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>14,85</TotalAmount>
+                                <TotalAmount>14.85</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>14,85</TotalAmount>
+                                <TotalAmount>17.97</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>
@@ -230,35 +230,35 @@
                     </TaxesOutputs>
                 </InvoiceLine>
                 <InvoiceLine id="4">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
                     <SequenceNumber>4</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000060</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
                     <ItemDescription>CAJA EMPOTRAR UNIVERSAL ENLAZABLE</ItemDescription>
                     <Quantity>300</Quantity>
-                    <UnitPriceWithoutTax>170,10</UnitPriceWithoutTax>
-                    <TotalCost>170,10</TotalCost>
+                    <UnitPriceWithoutTax>0.81</UnitPriceWithoutTax>
+                    <TotalCost>243.00</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
                             <DiscountRate>30</DiscountRate>
-                            <DiscountAmount>170,10</DiscountAmount>
+                            <DiscountAmount>51.03</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>170,10</GrossAmount>
+                    <GrossAmount>170.10</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>170,10</TotalAmount>
+                                <TotalAmount>170.10</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>170,10</TotalAmount>
+                                <TotalAmount>205.82</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>
@@ -268,35 +268,35 @@
                     </TaxesOutputs>
                 </InvoiceLine>
                 <InvoiceLine id="5">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
                     <SequenceNumber>5</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000060</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>CAJA EMPOTRAR UNIVERSAL ENLAZABLE</ItemDescription>
-                    <Quantity>200</Quantity>
-                    <UnitPriceWithoutTax>113,40</UnitPriceWithoutTax>
-                    <TotalCost>113,40</TotalCost>
+                    <ItemDescription>CURVA 90 H-H 2Acu 15</ItemDescription>
+                    <Quantity>25</Quantity>
+                    <UnitPriceWithoutTax>0.90</UnitPriceWithoutTax>
+                    <TotalCost>22.50</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
-                            <DiscountRate>30</DiscountRate>
-                            <DiscountAmount>113,40</DiscountAmount>
+                            <DiscountRate>45</DiscountRate>
+                            <DiscountAmount>5.57</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>113,40</GrossAmount>
+                    <GrossAmount>12.38</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>113,40</TotalAmount>
+                                <TotalAmount>12.38</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>113,40</TotalAmount>
+                                <TotalAmount>14.98</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>
@@ -306,35 +306,35 @@
                     </TaxesOutputs>
                 </InvoiceLine>
                 <InvoiceLine id="6">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
                     <SequenceNumber>6</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000061</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>CURVA 90 H-H 2Ac 15</ItemDescription>
-                    <Quantity>25</Quantity>
-                    <UnitPriceWithoutTax>12,38</UnitPriceWithoutTax>
-                    <TotalCost>12,38</TotalCost>
+                    <ItemDescription>Soporte horizontal PVC-M1 P/66200/1 U23X gris</ItemDescription>
+                    <Quantity>20</Quantity>
+                    <UnitPriceWithoutTax>9.48</UnitPriceWithoutTax>
+                    <TotalCost>189.60</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
-                            <DiscountRate>45</DiscountRate>
-                            <DiscountAmount>12,38</DiscountAmount>
+                            <DiscountRate>35</DiscountRate>
+                            <DiscountAmount>43.13</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>12,38</GrossAmount>
+                    <GrossAmount>123.24</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>12,38</TotalAmount>
+                                <TotalAmount>123.24</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>12,38</TotalAmount>
+                                <TotalAmount>149.12</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>
@@ -344,73 +344,35 @@
                     </TaxesOutputs>
                 </InvoiceLine>
                 <InvoiceLine id="7">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
                     <SequenceNumber>7</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
-                        </DeliveryNote>
-                    </DeliveryNotesReferences>
-                    <ItemDescription>Soporte horizontal PVC-M1 P/66200/1 U23X gris</ItemDescription>
-                    <Quantity>20</Quantity>
-                    <UnitPriceWithoutTax>123,24</UnitPriceWithoutTax>
-                    <TotalCost>123,24</TotalCost>
-                    <DiscountsAndRebates>
-                        <Discount>
-                            <DiscountReason>Dto</DiscountReason>
-                            <DiscountRate>35</DiscountRate>
-                            <DiscountAmount>123,24</DiscountAmount>
-                        </Discount>
-                    </DiscountsAndRebates>
-                    <GrossAmount>123,24</GrossAmount>
-                    <TaxesOutputs>
-                        <Tax>
-                            <TaxTypeCode>01</TaxTypeCode>
-                            <TaxRate>21.00</TaxRate>
-                            <TaxableBase>
-                                <TotalAmount>123,24</TotalAmount>
-                            </TaxableBase>
-                            <TaxAmount>
-                                <TotalAmount>123,24</TotalAmount>
-                            </TaxAmount>
-                            <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
-                            <EquivalenceSurchargeAmount>
-                                <TotalAmount>0.00</TotalAmount>
-                            </EquivalenceSurchargeAmount>
-                        </Tax>
-                    </TaxesOutputs>
-                </InvoiceLine>
-                <InvoiceLine id="8">
-                    <IssuerTransactionReference></IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
-                    <SequenceNumber>8</SequenceNumber>
-                    <DeliveryNotesReferences>
-                        <DeliveryNote>
-                            <DeliveryNoteNumber></DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000061</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
                     <ItemDescription>ESCUADRA 300-150</ItemDescription>
                     <Quantity>10</Quantity>
-                    <UnitPriceWithoutTax>148,70</UnitPriceWithoutTax>
-                    <TotalCost>148,70</TotalCost>
+                    <UnitPriceWithoutTax>14.87</UnitPriceWithoutTax>
+                    <TotalCost>148.70</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
                             <DiscountRate></DiscountRate>
-                            <DiscountAmount></DiscountAmount>
+                            <DiscountAmount>0.00</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>148,70</GrossAmount>
+                    <GrossAmount>148.70</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>148,70</TotalAmount>
+                                <TotalAmount>148.70</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>148,70</TotalAmount>
+                                <TotalAmount>179.93</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>

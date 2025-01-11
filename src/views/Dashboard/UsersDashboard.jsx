@@ -50,6 +50,10 @@ import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
 import { setUser } from "../../slices/emailManagerSlices";
 import AddAdminModal from "./components/AddAdminModal/AddAdminModal";
+import {
+  createAutomation,
+  getAllUserAutomations,
+} from "../../actions/automations";
 
 const UsersDashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -63,6 +67,7 @@ const UsersDashboard = () => {
     allUsers,
     user: userData,
   } = useSelector((state) => state.emailManager);
+  const { userAutomations } = useSelector((state) => state.automations);
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 
@@ -73,8 +78,11 @@ const UsersDashboard = () => {
 
   const options = ["Todos", "Email A-Z", "Rol", "Pin"];
 
+  //
+
   const stats = [
     {
+      key: "users",
       icon: profiles,
       title: "# Usuarios",
       value: allUsers?.length,
@@ -84,6 +92,7 @@ const UsersDashboard = () => {
       toUserPermission: true,
     },
     {
+      key: "usersStatistics",
       icon: profilePlus,
       multiple: [
         {
@@ -107,6 +116,7 @@ const UsersDashboard = () => {
       ],
     },
     {
+      key: "recognitions",
       icon: monitorIcon,
       title: "# Reconocimientos",
       value: 0,
@@ -114,6 +124,7 @@ const UsersDashboard = () => {
       isPositive: false,
     },
     {
+      key: "income",
       icon: analyticsIcon,
       title: "EUR Generado",
       change: "16%",
@@ -122,6 +133,7 @@ const UsersDashboard = () => {
       currency: "EUR",
     },
     {
+      key: "storage",
       icon: dbIcon,
       title: "# GB",
       change: "16%",
@@ -130,6 +142,32 @@ const UsersDashboard = () => {
       currency: "TB",
     },
   ];
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(getAllUserAutomations({ userId: userData.id }));
+    }
+  }, [userData]);
+
+  // useEffect(() => {
+  //   if (userData) {
+  //     dispatch(
+  //       createAutomation({
+  //         userId: userData.id,
+  //         email: userData.email,
+  //         automationData: {
+  //           name: "New Automation",
+  //           description: "This is a new automation",
+  //           type: "gmail",
+  //         },
+  //       })
+  //     );
+  //   }
+  // }, [userData]);
+
+  useEffect(() => {
+    console.log("userAutomations", userAutomations);
+  }, [userAutomations]);
 
   useEffect(() => {
     dispatch(getAllClients());
@@ -416,8 +454,8 @@ const UsersDashboard = () => {
           />
         )}
         <div className={styles.statsContainer}>
-          {stats.map((stat, index) => (
-            <div key={index} className={styles.statCard}>
+          {stats.map((stat) => (
+            <div key={stat.key} className={styles.statCard}>
               <div
                 onClick={() =>
                   stat.toUserPermission && navigate("/usersPermissions")

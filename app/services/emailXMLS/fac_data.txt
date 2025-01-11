@@ -36,17 +36,17 @@
 <Volume/>
 </RegistrationData>
 <AddressInSpain>
-<Address>. BDA DE LA COMA, 121 </Address>
-<PostCode>17244</PostCode>
-<Town>CASSA DE LA SELVA</Town>
-<Province>GIRONA</Province>
+<Address>%companyAddress%</Address>
+<PostCode>%companyPostCode%</PostCode>
+<Town>%companyCity%</Town>
+<Province>%companyProvince%</Province>
 <CountryCode>ESP</CountryCode>
 </AddressInSpain>
 <ContactDetails>
-<Telephone>93 440 04 05</Telephone>
+<Telephone>%companyPhone%</Telephone>
 <TeleFax/>
-<ElectronicMail>EMAIJ@WEBDEMO.ES</ElectronicMail>
-    </ContactDetails>
+<ElectronicMail>%companyEmail%</ElectronicMail>
+</ContactDetails>
 </LegalEntity>
     </SellerParty>  
         <BuyerParty>
@@ -56,7 +56,7 @@
                 <TaxIdentificationNumber>%clientCif%</TaxIdentificationNumber>
             </TaxIdentification>
             <LegalEntity>
-                <CorporateName>%clientName%</CorporateName>
+                <CorporateName>%companyName%</CorporateName>
                 <AddressInSpain>
                     <Address>%clientAddress%</Address>
                     <PostCode>%clientPostCode%</PostCode>
@@ -75,7 +75,7 @@
     <Invoices>
         <Invoice>
             <InvoiceHeader>
-                <InvoiceNumber>%numberInvoice%</InvoiceNumber>
+                <InvoiceNumber>%numberDocument%</InvoiceNumber>
                 <InvoiceDocumentType>FC</InvoiceDocumentType>
                 <InvoiceClass>OO</InvoiceClass>
             </InvoiceHeader>
@@ -91,52 +91,52 @@
                     <TaxTypeCode>01</TaxTypeCode>
                     <TaxRate>21.00</TaxRate>
                     <TaxableBase>
-                        <TotalAmount>%invoiceTotal::/1.21%</TotalAmount>
+                        <TotalAmount>%partialAmount%</TotalAmount>
                     </TaxableBase>
                     <TaxAmount>
-                        <TotalAmount>%invoiceTotal::/0.21%</TotalAmount>
+                        <TotalAmount>%taxesFromPartialAmount%</TotalAmount>
                     </TaxAmount>
                 </Tax>
             </TaxesOutputs>
 
             <InvoiceTotals>
-                <TotalGrossAmount>%invoiceTotal::/1.21%</TotalGrossAmount>
+                <TotalGrossAmount>%partialAmount%</TotalGrossAmount>
                 <GeneralDiscounts>
                     <Discount>
-                        <DiscountReason>Descuento</DiscountReason>
+                        <DiscountReason>Dto</DiscountReason>
                         <DiscountRate>0.00</DiscountRate>
-                        <DiscountAmount>%invoiceDiscount%</DiscountAmount>
+                        <DiscountAmount>0.00</DiscountAmount>
                     </Discount>
                 </GeneralDiscounts>
-                <TotalGeneralDiscounts>%invoiceDiscount%</TotalGeneralDiscounts>
+                <TotalGeneralDiscounts>0.00</TotalGeneralDiscounts>
                 <TotalGeneralSurcharges>0.00</TotalGeneralSurcharges>
-                <TotalGrossAmountBeforeTaxes>%invoiceTotal::/1.21%</TotalGrossAmountBeforeTaxes>
-                <TotalTaxOutputs>%invoiceTotal::/0.21%</TotalTaxOutputs>
+                <TotalGrossAmountBeforeTaxes>%partialAmount%</TotalGrossAmountBeforeTaxes>
+                <TotalTaxOutputs>%taxesFromPartialAmount%</TotalTaxOutputs>
                 <TotalTaxesWithheld>0.00</TotalTaxesWithheld>
-                <InvoiceTotal>%invoiceTotal%</InvoiceTotal>
-                <TotalOutstandingAmount>%invoiceTotal%</TotalOutstandingAmount>
-                <TotalExecutableAmount>%invoiceTotal%</TotalExecutableAmount>
+                <InvoiceTotal>%totalAmount%</InvoiceTotal>
+                <TotalOutstandingAmount>%totalAmount%</TotalOutstandingAmount>
+                <TotalExecutableAmount>%totalAmount%</TotalExecutableAmount>
             </InvoiceTotals>
 
             <Items>
                 <InvoiceLine for-data="productList">
-                    <IssuerTransactionReference>%numberInvoice%</IssuerTransactionReference>
-                    <ReceiverTransactionReference>%itemAlbaranRef%</ReceiverTransactionReference>
+                    <IssuerTransactionReference>%numberDocument%</IssuerTransactionReference>
+                    <ReceiverTransactionReference></ReceiverTransactionReference>
                     <SequenceNumber>%n%</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber>%itemAlbaranRef%</DeliveryNoteNumber>
+                            <DeliveryNoteNumber>%productAlbaranRef%</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
                     <ItemDescription>%productDescription%</ItemDescription>
                     <Quantity>%productQuantity%</Quantity>
-                    <UnitPriceWithoutTax>%productImport%</UnitPriceWithoutTax>
-                    <TotalCost>%productImport%</TotalCost>
+                    <UnitPriceWithoutTax>%productPartial%</UnitPriceWithoutTax>
+                    <TotalCost>%productImportWithoutDiscount%</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
                             <DiscountRate>%productDiscountRate%</DiscountRate>
-                            <DiscountAmount>%productDiscount%</DiscountAmount>
+                            <DiscountAmount>%productDiscountAmount%</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
                     <GrossAmount>%productImport%</GrossAmount>
@@ -148,7 +148,7 @@
                                 <TotalAmount>%productImport%</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>%productImport%</TotalAmount>
+                                <TotalAmount>%productImportWithTaxes%</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>

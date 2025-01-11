@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import styles from './NavbarAdmin.module.css';
-import star from '../../assets/starPlus.svg';
-import facturaGPT from '../../assets/FacturaGPTW.svg';
-import bookIcon from '../../assets/bookIcon.svg';
-import clientIcon from '../../assets/client.png';
-import spanish_flag from '../../assets/spain_flag.svg';
-import english_flag from '../../assets/english_flag.svg';
-import time from '../../assets/time.svg';
-import headphonesIcon from '../../assets/headphonesIcon.svg';
-import AccountSettings from '../AccountSettings/AccountSettings';
-import i18n from '../../../../i18';
-import { useTranslation } from 'react-i18next';
+
+import React, { useState } from "react";
+import styles from "./NavbarAdmin.module.css";
+import star from "../../assets/starPlus.svg";
+import facturaGPT from "../../assets/FacturaGPTIcon.svg";
+import bookIcon from "../../assets/bookIcon.svg";
+import clientIcon from "../../assets/client.png";
+import headphonesIcon from "../../assets/headphonesIcon.svg";
+import AccountSettings from "../AccountSettings/AccountSettings";
+import i18n from "../../../../i18";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import UpgradePlan from "../../screens/UpgradePlan/UpgradePlan";
 
 const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
-  const { t } = useTranslation('navbarAdmin');
+  const [showPlusModal, setShowPlusModal] = useState(false);
+  const navigate = useNavigate();
+  const { t } = useTranslation("navbarAdmin");
+
 
   const handleProfileClick = () => {
     setShowSidebar(!showSidebar);
@@ -59,8 +62,9 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
         </a> */}
       </div>
 
-      <button className={styles.plus}>
-        {t('buttonGetPlus')} <img src={star} alt='' />
+      <button onClick={() => setShowPlusModal(true)} className={styles.plus}>
+        {t("buttonGetPlus")} <img src={star} alt="" />
+
       </button>
       <div className={styles.profile}>
         <a href='#' className={styles.number}>
@@ -88,6 +92,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
       <div className={`${styles.sidebar} ${showSidebar ? styles.show : ''}`}>
         <AccountSettings />
       </div>
+      {showPlusModal && <UpgradePlan onClose={() => setShowPlusModal(false)} />}
     </div>
   );
 };
