@@ -15,7 +15,6 @@ import ArticlesTransactions from './views/Dashboard/screens/ArticlesTransactions
 
 import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
 import Dashboard from "./views/Dashboard/Dashboard.jsx";
-import UsersPermissions from './views/Dashboard/screens/UsersPermissions/UsersPermissions.jsx';
 import UserSettings from "./views/Dashboard/screens/UserSettings/UserSettings.jsx";
 import LandingPage from "./views/Dashboard/screens/Landing/Landing.jsx";
 import Pricing from "./views/Dashboard/screens/Pricing/Pricing.jsx";
@@ -78,10 +77,8 @@ const Layout = () => {
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/freetrial" element={<FreeTrial />} />
                   <Route path="/users" element={<UsersDashboard />} />
-                   <Route path='/usersPermissions' element={<UsersPermissions />}/>
                   <Route path="/userSettings" element={<UserSettings />} />
                   <Route path="/clients" element={<Clients />} />
-                      <Route path='/allproducts' element={<AllProducts />} />
                   <Route path="/contact" element={<ContactForm />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="*" element={<LandingPage />} />
