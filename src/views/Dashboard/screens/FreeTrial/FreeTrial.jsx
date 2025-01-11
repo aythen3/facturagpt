@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
-import facturaLogo from "../../assets/FacturaLogoGreen.svg";
-import styles from "./FreeTrial.module.css";
-import openai from "../../assets/openaiIcon.svg";
-import mail from "../../assets/emailIcon.svg";
-import lock from "../../assets/lock.svg";
-import { useTranslation } from "react-i18next";
-import { useAuth0 } from "@auth0/auth0-react";
+
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
+import facturaLogo from '../../assets/FacturaLogoGreen.svg';
+import styles from './FreeTrial.module.css';
+import openai from '../../assets/openaiIcon.svg';
+import mail from '../../assets/emailIcon.svg';
+import lock from '../../assets/LockIcon.svg';
+import { useTranslation } from 'react-i18next';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const FreeTrial = () => {
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();

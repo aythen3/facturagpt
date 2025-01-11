@@ -27,6 +27,7 @@ import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 
+
 const Layout = () => {
   const { pathname } = window.location;
 
@@ -79,6 +80,7 @@ const Layout = () => {
                   <Route path="/clients" element={<Clients />} />
                   <Route path="/allproducts" element={<AllProducts />} />
                   <Route path="/transactions" element={<Transactions />} />
+                  <Route path="/test" element={<Test />} />
                   <Route
                     path="/articlestransactions"
                     element={<ArticlesTransactions />}

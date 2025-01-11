@@ -20,24 +20,11 @@
 }
 
 .iconfloat {
-  background-color: white;
   position: absolute;
-  height: 30px; /* Responsive height */
-  width: 30px; /* Responsive width */
-}
-
-.starIconR {
-  top: 23%;
-  right: 15%;
-  height: 30px;
-  width: 30px;
-  border: 1px solid #16c098;
-  padding: 10px;
-  border-radius: 100%;
-  -webkit-border-radius: 100%;
-  -moz-border-radius: 100%;
-  -ms-border-radius: 100%;
-  -o-border-radius: 100%;
+  top: 22%;
+  right: 17%;
+  height: 80px;
+  width: 80px;
 }
 
 @media (max-width: 900px) {

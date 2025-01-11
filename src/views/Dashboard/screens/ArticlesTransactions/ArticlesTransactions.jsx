@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import styles from './ArticlesTransactions.module.css';
-import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
-import searchGray from '../../assets/searchGray.png';
-import optionDots from '../../assets/optionDots.svg';
-import plusIcon from '../../assets/Plus Icon.png';
-import filterSearch from '../../assets/Filters Search.png';
-import creditCard from '../../assets/creditCardIcon.png';
-import closeIcon from '../../assets/closeMenu.svg';
-import pdf from '../../assets/pdfIcon.png';
+import React, { useState } from "react";
+import styles from "./ArticlesTransactions.module.css";
+import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
+import searchGray from "../../assets/searchGray.png";
+import optionDots from "../../assets/optionDots.svg";
+import plusIcon from "../../assets/Plus Icon.png";
+import filterSearch from "../../assets/Filters Search.png";
+import creditCard from "../../assets/creditCardIcon.png";
+import closeIcon from "../../assets/closeMenu.svg";
+import pdf from "../../assets/pdfIcon.png";
 
 const ArticlesTransactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [web, setWeb] = useState('');
-  const [countryCode, setCountryCode] = useState('+34');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [zipCode, setZipCode] = useState('');
-  const [residence, setResidence] = useState('');
-  const [fiscalNumber, setFiscalNumber] = useState('');
-  const [preferredCurrency, setPreferredCurrency] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [web, setWeb] = useState("");
+  const [countryCode, setCountryCode] = useState("+34");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [residence, setResidence] = useState("");
+  const [fiscalNumber, setFiscalNumber] = useState("");
+  const [preferredCurrency, setPreferredCurrency] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -57,62 +57,62 @@ const ArticlesTransactions = () => {
 
   const getStateClass = (state) => {
     switch (state.toLowerCase()) {
-      case 'pagada':
+      case "pagada":
         return styles.pagada;
-      case 'pendiente':
+      case "pendiente":
         return styles.pendiente;
-      case 'incumplida':
+      case "incumplida":
         return styles.incumplida;
-      case 'vencida':
+      case "vencida":
         return styles.vencida;
-      case 'anulada':
+      case "anulada":
         return styles.anulada;
       default:
-        return '';
+        return "";
     }
   };
 
   const tableHeaders = [
-    'Nombre o Descripción',
-    'Fecha',
-    'Cantidad',
-    'Precio Unit',
-    'Subtotal',
-    'Impuesto',
-    'Pagado',
-    'Método de Pago',
+    "Nombre o Descripción",
+    "Fecha",
+    "Cantidad",
+    "Precio Unit",
+    "Subtotal",
+    "Impuesto",
+    "Pagado",
+    "Método de Pago",
   ];
 
   const tableData = [
     {
-      img: 'https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc',
-      name: 'Nombre o Descripcion',
-      date: '25 Dec 2025',
+      img: "https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc",
+      name: "Nombre o Descripcion",
+      date: "25 Dec 2025",
       quantity: 1,
-      priceUnit: '00,00EUR',
-      tax: ['No', 'Sí,21%'],
-      state: 'Pagado',
-      payMethod: 'Mastercard ****5678',
+      priceUnit: "00,00EUR",
+      tax: ["No", "Sí,21%"],
+      state: "Pagado",
+      payMethod: "Mastercard ****5678",
     },
     {
-      img: 'https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc',
-      name: 'Nombre o Descripcion',
-      date: '25 Dec 2025',
+      img: "https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc",
+      name: "Nombre o Descripcion",
+      date: "25 Dec 2025",
       quantity: 1,
-      priceUnit: '00,00EUR',
-      tax: ['No', 'Sí,21%'],
-      state: 'Pagado',
-      payMethod: 'Mastercard ****5678',
+      priceUnit: "00,00EUR",
+      tax: ["No", "Sí,21%"],
+      state: ["stripe", "rembolsado"],
+      payMethod: "Mastercard ****5678",
     },
     {
-      img: 'https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc',
-      name: 'Nombre o Descripcion',
-      date: '25 Dec 2025',
+      img: "https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc",
+      name: "Nombre o Descripcion",
+      date: "25 Dec 2025",
       quantity: 1,
-      priceUnit: '00,00EUR',
-      tax: ['No', 'Sí,21%'],
-      state: 'Pagado',
-      payMethod: 'Mastercard ****5678',
+      priceUnit: "00,00EUR",
+      tax: ["No", "Sí,21%"],
+      state: "Pagado",
+      payMethod: "Mastercard ****5678",
     },
   ];
 
@@ -121,7 +121,7 @@ const ArticlesTransactions = () => {
   //   };
 
   const formatPhoneNumber = (phoneNumber) => {
-    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
+    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
   };
 
   const handleEmailChange = (e) => {
@@ -185,7 +185,7 @@ const ArticlesTransactions = () => {
                   />
                 </th>
                 {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 2 ? styles.small : ''}>
+                  <th key={index} className={index == 2 ? styles.small : ""}>
                     {header}
                   </th>
                 ))}
@@ -210,6 +210,7 @@ const ArticlesTransactions = () => {
                   <td>{row.date}</td>
                   <td>{row.quantity}</td>
                   <td>{row.priceUnit}</td>
+                  <td>{row.priceUnit}</td>
                   <td>
                     {Array.isArray(row.tax)
                       ? row.tax.map((item, itemIndex) => (
@@ -217,10 +218,27 @@ const ArticlesTransactions = () => {
                         ))
                       : row.tax}
                   </td>
-                  <td>{row.state}</td>
+
                   <td className={styles.rowState}>
-                    <span>&bull;</span>
-                    {row.state}
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <span>&bull;</span>
+                      <div>
+                        {Array.isArray(row.state)
+                          ? row.state.map((item, itemIndex) => (
+                              <p
+                                key={itemIndex}
+                                style={{
+                                  color: itemIndex === 0 ? "blue" : "inherit",
+                                  fontWeight:
+                                    itemIndex === 0 ? "600" : "inherit",
+                                }}
+                              >
+                                {item}
+                              </p>
+                            ))
+                          : row.state}
+                      </div>
+                    </div>
                   </td>
                   <td>{row.payMethod}</td>
                   <td className={styles.actions}>
@@ -238,188 +256,6 @@ const ArticlesTransactions = () => {
           </table>
         </div>
       </div>
-      {showNewClient && (
-        <>
-          <div
-            className={styles.bg}
-            onClick={() => setShowNewClient(false)}
-          ></div>
-          <div className={styles.newClientContainer}>
-            <div className={styles.containerHeader}>
-              <h3>John Doe</h3>
-              <span onClick={() => setShowNewClient(false)}>
-                <img src={closeIcon} />
-              </span>
-            </div>
-
-            <form className={styles.newClientForm}>
-              <label>
-                <div className={styles.row}>
-                  <p>Nombre completo</p>
-                  <button type="button">Editar</button>
-                </div>
-                John Doe
-                <input
-                  type="text"
-                  placeholder="John Doe"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Email</p>
-                  <button type="button">Editar</button>
-                </div>
-                j***e@gmail.com
-                <input
-                  type="email"
-                  placeholder="john.doe@gmail.com"
-                  value={email}
-                  onChange={handleEmailChange}
-                />
-                {emailError && (
-                  <span className={styles.error}>{emailError}</span>
-                )}
-              </label>
-
-              <label className={styles.label}>
-                <div className={styles.row}>
-                  <p>Teléfono</p>
-                  <button type="button">Editar</button>
-                </div>
-                +34 000 000 000
-                <div className={styles.phoneInputs}>
-                  <select
-                    className={styles.countrySelect}
-                    value={countryCode}
-                    onChange={(e) => setCountryCode(e.target.value)}
-                  >
-                    <option value="+34">España (+34)</option>
-                    <option value="+1">Estados Unidos (+1)</option>
-                    <option value="+44">Reino Unido (+44)</option>
-                    <option value="+52">México (+52)</option>
-                    <option value="+91">India (+91)</option>
-                    {/* Agrega más países según sea necesario */}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="000 000 000"
-                    className={styles.numberInput}
-                    value={formatPhoneNumber(phone)}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Web o dominio corporativo</p>
-                  <button type="button">Editar</button>
-                </div>
-                www.web.com
-                <input
-                  type="text"
-                  placeholder="www.web.com"
-                  value={web}
-                  onChange={(e) => setWeb(e.target.value)}
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Detalles de Facturación</p>
-                  <button type="button">Añadir</button>
-                </div>
-                <div className={styles.details}>
-                  <input
-                    type="text"
-                    placeholder="Email address"
-                    value={emailAddress}
-                    onChange={(e) => setEmailAddress(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Zip code / Postcode"
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
-                  />
-                </div>
-                Country of residence
-                <input
-                  type="text"
-                  placeholder="Spain"
-                  value={residence}
-                  onChange={(e) => setResidence(e.target.value)}
-                />
-                Email adress, Zip code / Postcode, Country of residence
-                <div>
-                  <button type="button">Editar</button>
-                </div>
-                Email adress, Zip code / Postcode, Country of residence
-                <div>
-                  <button type="button">Editar</button>
-                </div>
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Número Fiscal</p>
-                  <button type="button">Editar</button>
-                </div>
-                Desconocido
-                <input
-                  type="text"
-                  placeholder="000 000 000"
-                  value={fiscalNumber}
-                  onChange={(e) => setFiscalNumber(e.target.value)}
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Moneda Preferida</p>
-                  <button type="button">Editar</button>
-                </div>
-                EUR
-                <input
-                  type="text"
-                  placeholder="EUR"
-                  value={preferredCurrency}
-                  onChange={(e) => setPreferredCurrency(e.target.value)}
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Métodos de Pago</p>
-                  <button type="button">Añadir</button>
-                </div>
-                <div className={styles.row}>Card number</div>
-                <div className={styles.inputContainer}>
-                  <input
-                    type="text"
-                    placeholder="1234 1234 1234 1234"
-                    className={styles.input}
-                    value={formatCardNumber(cardNumber)}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                  />
-                  <img
-                    src={creditCard}
-                    alt="Credit Card Icon"
-                    className={styles.icon}
-                  />
-                </div>
-              </label>
-              <div className={styles.btnOptionsContainer}>
-                <button className={styles.view}>Ver Transacciones</button>
-                <button className={styles.new}>Nueva Factura</button>
-              </div>
-            </form>
-          </div>
-        </>
-      )}
     </div>
   );
 };

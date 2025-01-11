@@ -1,5 +1,5 @@
 import React from 'react';
-import starIcon from '../../assets/starIcon.svg';
+import starIcon from '../../assets/starGroup.svg';
 import logo from '../../assets/facturaLogoIcon.svg';
 import styles from './NavHeader.module.css';
 import ArrowDown from '../../assets/ArrowDown.svg';
@@ -25,7 +25,7 @@ const NavHeader = () => {
   };
   return (
     <div className={styles.navHeaderContainer}>
-      <img src={logo} alt="FacturaGPT Logo" />
+      <img src={logo} alt='FacturaGPT Logo' />
       <div className={styles.navHeaderTitle}>{t('publicity')}</div>
       <div className={styles.navHeaderSubtitle}>
         <span className={styles.factura}>Factura</span>
@@ -45,7 +45,7 @@ const NavHeader = () => {
       >
         {t('invitation')}
         <span>
-          <img src={ArrowDown} alt="" />
+          <img src={ArrowDown} alt='' />
         </span>
       </div>
     </div>

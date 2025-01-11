@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import styles from './AllProducts.module.css';
-import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
-import searchGray from '../../assets/searchGray.svg';
-import searchWhite from '../../assets/searchWhite.png';
-import newClientIcon from '../../assets/newClientIcon.svg';
-import clock from '../../assets/clock.png';
-import edit from '../../assets/edit.png';
-import plusIcon from '../../assets/Plus Icon.png';
-import optionDots from '../../assets/optionDots.svg';
-import filterSearch from '../../assets/Filters Search.png';
-import { useTranslation } from 'react-i18next';
-import LastTransactions from '../../components/LastTransactions/LastTransactions';
+import React, { useState } from "react";
+import styles from "./AllProducts.module.css";
+import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
+import searchGray from "../../assets/searchGray.svg";
+import searchWhite from "../../assets/searchWhite.png";
+import newClientIcon from "../../assets/newClientIcon.svg";
+import clock from "../../assets/clock.png";
+import edit from "../../assets/edit.png";
+import plusIcon from "../../assets/Plus Icon.png";
+import optionDots from "../../assets/optionDots.svg";
+import filterSearch from "../../assets/Filters Search.png";
+import { useTranslation } from "react-i18next";
+import LastTransactions from "../../components/LastTransactions/LastTransactions";
 
 const AllProducts = () => {
-  const { t } = useTranslation('clients');
+  const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -45,52 +45,52 @@ const AllProducts = () => {
   };
 
   const tableHeaders = [
-    'Nombre o Descripción',
-    ['Precio unitario', '(PVP)'],
-    ['Qty', '(Último mes)'],
-    'Precio máximo',
-    'Precio mínimo',
-    'Precio medio',
-    'Transacciones',
-    'Editar',
+    "Nombre o Descripción",
+    ["Precio unitario", "(PVP)"],
+    ["Qty", "(Último mes)"],
+    "Precio máximo",
+    "Precio mínimo",
+    "Precio medio",
+    "Transacciones",
+    "Editar",
   ];
 
   const tableData = [
     {
-      url: 'https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid',
-      name: 'Articulo 1',
-      price: '00,00 EUR',
-      quantity: '1.0 Qty',
-      maxPrice: '00,00 EUR',
-      minPrice: '00,00 EUR',
-      priceEn: '00,00 EUR',
+      url: "https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid",
+      name: "Articulo 1",
+      price: "00,00 EUR",
+      quantity: "1.0 Qty",
+      maxPrice: "00,00 EUR",
+      minPrice: "00,00 EUR",
+      priceEn: "00,00 EUR",
     },
     {
-      url: 'https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid',
-      name: 'Articulo 1',
-      price: '00,00 EUR',
-      quantity: '1.0 Qty',
-      maxPrice: '00,00 EUR',
-      minPrice: '00,00 EUR',
-      priceEn: '00,00 EUR',
+      url: "https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid",
+      name: "Articulo 1",
+      price: "00,00 EUR",
+      quantity: "1.0 Qty",
+      maxPrice: "00,00 EUR",
+      minPrice: "00,00 EUR",
+      priceEn: "00,00 EUR",
     },
     {
-      url: 'https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid',
-      name: 'Articulo 1',
-      price: '00,00 EUR',
-      quantity: '1.0 Qty',
-      maxPrice: '00,00 EUR',
-      minPrice: '00,00 EUR',
-      priceEn: '00,00 EUR',
+      url: "https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid",
+      name: "Articulo 1",
+      price: "00,00 EUR",
+      quantity: "1.0 Qty",
+      maxPrice: "00,00 EUR",
+      minPrice: "00,00 EUR",
+      priceEn: "00,00 EUR",
     },
   ];
 
   const formatCardNumber = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
   };
 
   const formatPhoneNumber = (phoneNumber) => {
-    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
+    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
   };
 
   return (
@@ -111,8 +111,8 @@ const AllProducts = () => {
             <div className={styles.inputWrapper}>
               <img src={searchGray} className={styles.inputIconInside} />
               <input
-                type='text'
-                placeholder={t('placeholderSearch')}
+                type="text"
+                placeholder={t("placeholderSearch")}
                 value={search}
                 onChange={handleSearchChange}
                 className={styles.searchInput}
@@ -128,14 +128,14 @@ const AllProducts = () => {
           </div>
         </div>
 
-        <div className={styles.clientsTable}>
+        <div className={styles.clientsTable} style={{ overflow: "auto" }}>
           <table className={styles.table}>
             <thead>
               <tr>
                 <th className={styles.small}>
                   <input
-                    type='checkbox'
-                    name='clientSelected'
+                    type="checkbox"
+                    name="clientSelected"
                     checked={
                       clientSelected.length == tableData.length ? true : false
                     }
@@ -148,13 +148,13 @@ const AllProducts = () => {
                     className={
                       index == 7
                         ? styles.small
-                        : '' || index == 6
+                        : "" || index == 6
                           ? styles.small
-                          : '' || index == 0
+                          : "" || index == 0
                             ? styles.big
-                            : '' || index == 1
+                            : "" || index == 1
                               ? styles.big
-                              : ''
+                              : ""
                     }
                   >
                     {Array.isArray(header) ? (
@@ -174,14 +174,14 @@ const AllProducts = () => {
                 <tr key={rowIndex}>
                   <td>
                     <input
-                      type='checkbox'
-                      name='clientSelected'
+                      type="checkbox"
+                      name="clientSelected"
                       onClick={() => selectClient(rowIndex)}
                       checked={clientSelected.includes(rowIndex) ? true : false}
                     />
                   </td>
                   <td className={styles.name}>
-                    <img src={row.url} alt='' />
+                    <img src={row.url} alt="" />
                     {row.name}
                   </td>
                   <td>{row.price}</td>
@@ -191,14 +191,14 @@ const AllProducts = () => {
                   <td>{row.priceEn}</td>
                   <td className={styles.actions}>
                     <div className={styles.transacciones}>
-                      <a href='#'>Ver</a>
+                      <a href="#">Ver</a>
                     </div>
                   </td>
                   <td>
                     <div className={styles.edit}>
-                      <a href='#'>Editar</a>
+                      <a href="#">Editar</a>
                       <div>
-                        <img src={optionDots} alt='options' />
+                        <img src={optionDots} alt="options" />
                       </div>
                     </div>
                   </td>

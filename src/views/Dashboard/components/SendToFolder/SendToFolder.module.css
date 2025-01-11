@@ -1,0 +1,69 @@
+.sendToFolderContainer {
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 1px 3px 20px black;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.sendToFolderText {
+  color: #38343d;
+  width: 90%;
+  margin: 0 auto;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 10px 0;
+}
+
+.sendToFolderBtnContainer {
+  padding: 10px;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  button {
+    background-color: white;
+    border: 1px solid #e3e3e3;
+    padding: 10px 13px;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
+    cursor: pointer;
+  }
+
+  .sendToFolderBtn {
+    background-color: #233f39;
+    color: white;
+  }
+}
+
+.iconIntoInput {
+  position: relative;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  img {
+    position: absolute;
+    top: 15%;
+    left: 5px;
+    width: 20px;
+  }
+  input {
+    padding: 7px;
+    padding-left: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+  button {
+    background-color: transparent;
+    color: black;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+}
