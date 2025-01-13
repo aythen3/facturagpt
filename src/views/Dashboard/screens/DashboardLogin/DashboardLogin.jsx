@@ -3,10 +3,11 @@ import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import facturaLogo from "../../assets/logo-facturagpt.svg";
+import LockIcon from "../../assets/LockIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
-import { LockIcon } from "lucide-react";
+
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
 import {
   createAccount,
@@ -239,16 +240,12 @@ const DashboardLogin = () => {
   };
 
   const renderLogo = () => (
-    <div className={styles.logoContainer}>
-      <img
-        onClick={() => navigate("/landing")}
-        src={facturaLogo}
-        alt="FacturaGPT"
-        className={styles.logo}
-      />
-      <span className={styles.logoText}>
-        Factura<strong>GPT</strong>
-      </span>
+    <div id={styles.logo}>
+      <img src={facturaLogo} alt="FacturaGPT" id={styles.LogoGPT} />
+      {/* <img src={facturaText} alt="FacturaGPT" /> */}
+      <p>
+        Factura<span>GPT</span>
+      </p>
     </div>
   );
 
@@ -363,7 +360,7 @@ const DashboardLogin = () => {
       </form>
       <p className={styles.securityNote}>
         <span className={styles.lockIcon}>
-          <LockIcon size={14} />
+          <img src={LockIcon} />
         </span>
         {t("security")}
       </p>

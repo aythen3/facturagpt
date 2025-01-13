@@ -1,47 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import styles from './Clients.module.css';
-import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
-import searchGray from '../../assets/searchGray.png';
-import searchWhite from '../../assets/searchWhite.png';
-import newClientIcon from '../../assets/newClientIcon.svg';
-import clock from '../../assets/clock.png';
-import edit from '../../assets/edit.png';
-import plusIcon from '../../assets/Plus Icon.png';
-import optionDots from '../../assets/optionDots.svg';
-import creditCard from '../../assets/creditCardIcon.png';
-import closeIcon from '../../assets/closeMenu.svg';
-import filterSearch from '../../assets/Filters Search.png';
-import { useTranslation } from 'react-i18next';
-import SeeHistory from '../../components/SeeHistory/SeeHistory';
-import SendEmailModal from '../../components/SendEmailModal/SendEmailModal';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import styles from "./Clients.module.css";
+import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
+import searchGray from "../../assets/searchGray.png";
+import searchWhite from "../../assets/searchWhite.png";
+import newClientIcon from "../../assets/newClientIcon.svg";
+import clock from "../../assets/clock.png";
+import edit from "../../assets/edit.png";
+import plusIcon from "../../assets/Plus Icon.png";
+import optionDots from "../../assets/optionDots.svg";
+import creditCard from "../../assets/creditCardIcon.png";
+import closeIcon from "../../assets/closeMenu.svg";
+import filterSearch from "../../assets/Filters Search.png";
+import { useTranslation } from "react-i18next";
+import SeeHistory from "../../components/SeeHistory/SeeHistory";
+import SendEmailModal from "../../components/SendEmailModal/SendEmailModal";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createClient,
   deleteClients,
   getAllUserClients,
-} from '../../../../actions/clients';
+} from "../../../../actions/clients";
 
 const Clients = () => {
-  const { t } = useTranslation('clients');
+  const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [web, setWeb] = useState('');
-  const [countryCode, setCountryCode] = useState('+34');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [zipCode, setZipCode] = useState('');
-  const [residence, setResidence] = useState('');
-  const [fiscalNumber, setFiscalNumber] = useState('');
-  const [preferredCurrency, setPreferredCurrency] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [web, setWeb] = useState("");
+  const [countryCode, setCountryCode] = useState("+34");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [residence, setResidence] = useState("");
+  const [fiscalNumber, setFiscalNumber] = useState("");
+  const [preferredCurrency, setPreferredCurrency] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -69,43 +69,43 @@ const Clients = () => {
   };
 
   const tableHeaders = [
-    t('tableCol1'),
-    t('tableCol2'),
-    t('tableCol3'),
-    t('tableCol4'),
-    t('tableCol5'),
-    t('tableCol6'),
-    t('tableCol7'),
-    t('tableCol8'),
+    t("tableCol1"),
+    t("tableCol2"),
+    t("tableCol3"),
+    t("tableCol4"),
+    t("tableCol5"),
+    t("tableCol6"),
+    t("tableCol7"),
+    t("tableCol8"),
   ];
 
   const tableData = [
     {
-      nombre: 'Aythen',
-      email: ['info@aythen.com', 'support@aythen.com'],
-      telefono: '+34600789012',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      nombre: "Aythen",
+      email: ["info@aythen.com", "support@aythen.com"],
+      telefono: "+34600789012",
+      direccion: "Calle A, Barcelona",
+      numeroFiscal: "ES123456789",
+      metodosPago: ["Visa ****1234", "Paypal: juan@gmail.com"],
+      moneda: "EUR",
     },
     {
-      nombre: 'Aythen',
-      email: 'info@aythen.com',
-      telefono: '+584243356112',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      nombre: "Aythen",
+      email: "info@aythen.com",
+      telefono: "+584243356112",
+      direccion: "Calle A, Barcelona",
+      numeroFiscal: "ES123456789",
+      metodosPago: ["Visa ****1234", "Paypal: juan@gmail.com"],
+      moneda: "EUR",
     },
   ];
 
   const formatCardNumber = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
   };
 
   const formatPhoneNumber = (phoneNumber) => {
-    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
+    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
   };
 
   const handleCreateClient = (e) => {
@@ -115,14 +115,14 @@ const Clients = () => {
 
     dispatch(createClient({ userId, email, clientData }))
       .then((result) => {
-        if (result.meta.requestStatus === 'fulfilled') {
+        if (result.meta.requestStatus === "fulfilled") {
           setShowNewClient(false);
         } else {
-          console.error('Error creating client:', result.error);
+          console.error("Error creating client:", result.error);
         }
       })
       .catch((error) => {
-        console.error('Unexpected error:', error); // Manejar errores inesperados
+        console.error("Unexpected error:", error); // Manejar errores inesperados
       });
   };
 
@@ -139,7 +139,7 @@ const Clients = () => {
   const handleDeleteClient = (e) => {
     e.preventDefault();
     if (selectedClientIds.length === 0) {
-      console.error('No clients selected for deletion');
+      console.error("No clients selected for deletion");
       return;
     }
 
@@ -147,18 +147,18 @@ const Clients = () => {
       deleteClients({ clientIds: selectedClientIds, userId: dataUser.id })
     )
       .then((result) => {
-        if (result.meta.requestStatus === 'fulfilled') {
-          console.log('Clients deleted successfully');
+        if (result.meta.requestStatus === "fulfilled") {
+          console.log("Clients deleted successfully");
           setSelectedClientIds([]);
         } else {
-          console.error('Error deleting clients:', result.error);
+          console.error("Error deleting clients:", result.error);
         }
       })
       .catch((error) => {
-        console.error('Unexpected error:', error);
+        console.error("Unexpected error:", error);
       });
   };
-  console.log('SSSSSSS', selectedClientIds);
+  console.log("SSSSSSS", selectedClientIds);
 
   return (
     <div>
@@ -167,14 +167,14 @@ const Clients = () => {
         <div className={styles.clientsHeader}>
           {/* <SeeHistory /> */}
           {/* <SendEmailModal /> */}
-          <h2>{t('title')}</h2>
+          <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
             <button
               className={`${styles.addButton} ${styles.btnNewClient}`}
               onClick={() => setShowNewClient(true)}
             >
               <img src={plusIcon} alt="Nuevo cliente" />
-              {t('buttonNewClient')}
+              {t("buttonNewClient")}
             </button>
             <button className={styles.infoBtn}>Analíticas</button>
 
@@ -182,7 +182,7 @@ const Clients = () => {
               <img src={searchGray} className={styles.inputIconInside} />
               <input
                 type="text"
-                placeholder={t('placeholderSearch')}
+                placeholder={t("placeholderSearch")}
                 value={search}
                 onChange={handleSearchChange}
                 className={styles.searchInput}
@@ -197,7 +197,7 @@ const Clients = () => {
           </div>
         </div>
 
-        <div className={styles.clientsTable} style={{ overflow: 'auto' }}>
+        <div className={styles.clientsTable} style={{ overflow: "auto" }}>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -212,7 +212,7 @@ const Clients = () => {
                   />
                 </th>
                 {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 7 ? styles.hola : ''}>
+                  <th key={index} className={index == 7 ? styles.hola : ""}>
                     {header}
                   </th>
                 ))}
@@ -293,7 +293,7 @@ const Clients = () => {
                   placeholder="John Doe"
                   value={clientData.fullName}
                   // onChange={(e) => setFullName(e.target.value)}
-                  onChange={(e) => handleClientData('fullName', e.target.value)}
+                  onChange={(e) => handleClientData("fullName", e.target.value)}
                 />
               </label>
 
@@ -307,7 +307,7 @@ const Clients = () => {
                   type="email"
                   placeholder="john.doe@gmail.com"
                   value={clientData.email}
-                  onChange={(e) => handleClientData('email', e.target.value)}
+                  onChange={(e) => handleClientData("email", e.target.value)}
                 />
                 {emailError && (
                   <span className={styles.error}>{emailError}</span>
@@ -326,7 +326,7 @@ const Clients = () => {
                     value={clientData.codeCountry}
                     // onChange={(e) => setCountryCode(e.target.value)}
                     onChange={(e) =>
-                      handleClientData('codeCountry', e.target.value)
+                      handleClientData("codeCountry", e.target.value)
                     }
                   >
                     <option value="+34">España (+34)</option>
@@ -344,7 +344,7 @@ const Clients = () => {
                     value={clientData.numberPhone}
                     // onChange={(e) => setPhone(e.target.value)}
                     onChange={(e) =>
-                      handleClientData('numberPhone', e.target.value)
+                      handleClientData("numberPhone", e.target.value)
                     }
                   />
                 </div>
@@ -361,7 +361,7 @@ const Clients = () => {
                   placeholder="www.web.com"
                   value={clientData.webSite}
                   // onChange={(e) => setWeb(e.target.value)}
-                  onChange={(e) => handleClientData('webSite', e.target.value)}
+                  onChange={(e) => handleClientData("webSite", e.target.value)}
                 />
               </label>
 
@@ -376,7 +376,7 @@ const Clients = () => {
                     placeholder="Email address"
                     value={clientData.billingEmail}
                     onChange={(e) =>
-                      handleClientData('billingEmail', e.target.value)
+                      handleClientData("billingEmail", e.target.value)
                     }
                   />
                   <input
@@ -384,7 +384,7 @@ const Clients = () => {
                     placeholder="Zip code / Postcode"
                     value={clientData.zipCode}
                     onChange={(e) =>
-                      handleClientData('zipCode', e.target.value)
+                      handleClientData("zipCode", e.target.value)
                     }
                   />
                 </div>
@@ -393,7 +393,7 @@ const Clients = () => {
                   type="text"
                   placeholder="Spain"
                   value={clientData.country}
-                  onChange={(e) => handleClientData('country', e.target.value)}
+                  onChange={(e) => handleClientData("country", e.target.value)}
                 />
                 Email adress, Zip code / Postcode, Country of residence
                 <div>
@@ -416,7 +416,7 @@ const Clients = () => {
                   placeholder="000 000 000"
                   value={clientData.taxNumber}
                   onChange={(e) =>
-                    handleClientData('taxNumber', e.target.value)
+                    handleClientData("taxNumber", e.target.value)
                   }
                 />
               </label>
@@ -432,7 +432,7 @@ const Clients = () => {
                   placeholder="EUR"
                   value={clientData.preferredCurrency}
                   onChange={(e) =>
-                    handleClientData('preferredCurrency', e.target.value)
+                    handleClientData("preferredCurrency", e.target.value)
                   }
                 />
               </label>
@@ -450,7 +450,7 @@ const Clients = () => {
                     className={styles.input}
                     value={clientData.cardNumber}
                     onChange={(e) =>
-                      handleClientData('cardNumber', e.target.value)
+                      handleClientData("cardNumber", e.target.value)
                     }
                   />
                   <img

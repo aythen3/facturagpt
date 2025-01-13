@@ -1,42 +1,43 @@
-import React from 'react';
-import styles from './Reviews.module.css';
-import Carousel from '../Carousel/Carousel';
-import ContactForm from '../ContactForm/ContactForm';
-import FAQ from '../Faqs/Faqs';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import styles from "./Reviews.module.css";
+import Carousel from "../Carousel/Carousel";
+import ContactForm from "../ContactForm/ContactForm";
+import FAQ from "../Faqs/Faqs";
+import diagonalArrow from "../../assets/diagonalArrow.svg";
+import { useTranslation } from "react-i18next";
 
 const Reviews = () => {
-  const { t } = useTranslation('reviews');
+  const { t } = useTranslation("reviews");
   return (
     <div className={styles.reviewsContainer}>
-      <h2 className={styles.reviewsTitle}>{t('title')}</h2>
-      <span className={styles.reviewsDescription}>{t('subTitle')}</span>
+      <h2 className={styles.reviewsTitle}>{t("title")}</h2>
+      <span className={styles.reviewsDescription}>{t("subTitle")}</span>
       <Carousel />
       <section className={styles.reviewsSection}>
-        <h2 className={styles.reviewsTitle}>{t('priceTitle')}</h2>
+        <h2 className={styles.reviewsTitle}>{t("priceTitle")}</h2>
         {/* <span className={styles.reviewsDescriptionSecondary}>
         Nuestros precios están diseño para brindar un valor excepcional para el
         mejor servicio de impuestos.
       </span> */}
         <p className={styles.startsFrom}>
-          <span>{t('plan')}</span>
-          <span>{t('planType')}</span>
-          {t('priceSubTitle')}
+          <span>{t("plan")}</span>
+          <span>{t("planType")}</span>
+          {t("priceSubTitle")}
         </p>
         <div className={styles.price}>
-          €3’99 <span>/{t('priceTime')}</span>
+          €3’99 <span>/{t("priceTime")}</span>
         </div>
-        <span className={styles.thinSubtitle}>{t('priceFooter')}</span>
+        <span className={styles.thinSubtitle}>{t("priceFooter")}</span>
       </section>
       {/* <ContactForm /> */}
       <FAQ />
       <section className={styles.startNowSection}>
-        <h2 className={styles.reviewsTitle}>{t('joinUsTitle')}</h2>
+        <h2 className={styles.reviewsTitle}>{t("joinUsTitle")}</h2>
         <span className={styles.reviewsDescriptionLast}>
-          {t('joinUsSubTitle')}
+          {t("joinUsSubTitle")}
         </span>
         <a href="/login" className={styles.startButton}>
-          {t('joinUsButton')}
+          {t("joinUsButton")} <img src={diagonalArrow} />
         </a>
       </section>
     </div>
