@@ -37,25 +37,9 @@ const getAllUserClientsController = async (req, res) => {
   }
 };
 
-// const deleteClientController = async (req, res) => {
-//   try {
-//     const { clientId } = req.params;
-//     const { userId } = req.body;
-
-//     console.log("Deleting client with ID:", clientId, "for userId:", userId);
-
-//     const resp = await deleteClient({ clientId, userId });
-
-//     return res.status(200).send(resp);
-//   } catch (err) {
-//     console.error("Error on deleteClientController:", err);
-//     return res.status(500).send("Error on deleteClientController");
-//   }
-// };
-
 const deleteClientController = async (req, res) => {
   try {
-    const { clientIds } = req.body; // Ahora esperamos un array de IDs
+    const { clientIds } = req.body;
     const { userId } = req.body;
 
     console.log("Deleting clients with IDs:", clientIds, "for userId:", userId);

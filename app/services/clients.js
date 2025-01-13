@@ -86,39 +86,6 @@ const getAllUserClients = async ({ userId }) => {
   }
 };
 
-// const deleteClient = async ({ clientId, userId }) => {
-//   console.log("Deleting automation with ID:", clientId);
-
-//   const dbClientsName = "db_emailmanager_clients";
-
-//   const dbAccountsName = "db_emailmanager_accounts";
-//   let dbClients, dbAccounts;
-
-//   try {
-//     dbClients = nano.use(dbClientsName);
-//     dbAccounts = nano.use(dbAccountsName);
-
-//     const clientDoc = await dbClients.get(clientId);
-
-//     await dbClients.destroy(clientDoc._id, clientDoc._rev);
-//     console.log(`Client ${clientId} deleted successfully.`);
-
-//     let userDoc = await dbAccounts.get(clientDoc.userId);
-//     userDoc.clients = userDoc.clients.filter((id) => id !== clientId);
-
-//     await dbAccounts.insert(userDoc);
-
-//     const clients = await dbClients.find({
-//       selector: { userId },
-//     });
-
-//     return clients.docs;
-//   } catch (error) {
-//     console.error("Error deleting client:", error);
-//     throw new Error("Failed to delete client");
-//   }
-// };
-
 const deleteClient = async ({ clientIds, userId }) => {
   const dbClientsName = "db_emailmanager_clients";
   const dbAccountsName = "db_emailmanager_accounts";
@@ -136,13 +103,11 @@ const deleteClient = async ({ clientIds, userId }) => {
       await dbClients.destroy(clientDoc._id, clientDoc._rev);
       console.log(`Client ${clientId} deleted successfully.`);
 
-      // Elimina el ID del cliente del documento del usuario
       userDoc.clients = userDoc.clients.filter((id) => id !== clientId);
     }
 
     await dbAccounts.insert(userDoc);
 
-    // Retorna la lista actualizada de clientes
     const clients = await dbClients.find({
       selector: { userId },
     });
