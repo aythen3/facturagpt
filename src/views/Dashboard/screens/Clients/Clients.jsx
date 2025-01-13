@@ -164,14 +164,8 @@ const Clients = () => {
       });
   };
 
-  // const handleDeleteClient = (e) => {
-  //   e.preventDefault();
-  //   dispatch(deleteClient({ clientId, userId: dataUser.id }));
-  // };
-
   const [selectedClientIds, setSelectedClientIds] = useState([]);
 
-  // Función para agregar o eliminar IDs del estado
   const toggleClientSelection = (clientId) => {
     setSelectedClientIds((prev) =>
       prev.includes(clientId)
@@ -193,7 +187,7 @@ const Clients = () => {
       .then((result) => {
         if (result.meta.requestStatus === "fulfilled") {
           console.log("Clients deleted successfully");
-          setSelectedClientIds([]); // Limpia los seleccionados tras eliminar
+          setSelectedClientIds([]);
         } else {
           console.error("Error deleting clients:", result.error);
         }
@@ -211,9 +205,7 @@ const Clients = () => {
         <div className={styles.clientsHeader}>
           {/* <SeeHistory /> */}
           {/* <SendEmailModal /> */}
-          {selectedClientIds.length > 0 && (
-            <button onClick={(e) => handleDeleteClient(e)}>Borrar</button>
-          )}
+
           <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
             <button
@@ -243,7 +235,9 @@ const Clients = () => {
             </button>
           </div>
         </div>
-
+        {selectedClientIds.length > 0 && (
+          <button onClick={(e) => handleDeleteClient(e)}>Borrar</button>
+        )}
         <div className={styles.clientsTable} style={{ overflow: "auto" }}>
           <table className={styles.table}>
             <thead>
