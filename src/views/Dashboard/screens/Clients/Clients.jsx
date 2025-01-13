@@ -14,6 +14,9 @@ import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
 import SeeHistory from "../../components/SeeHistory/SeeHistory";
 import SendEmailModal from "../../components/SendEmailModal/SendEmailModal";
+import { useDispatch, useSelector } from "react-redux";
+import { createClient } from "../../../../actions/clients";
+
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -35,6 +38,33 @@ const Clients = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const dispatch = useDispatch();
+  const userStorage = localStorage.getItem("emailManagerAccount");
+  const dataUser = JSON.parse(userStorage);
+
+  const [clientData, setClientData] = useState({
+    fullName: "",
+    email: "",
+    numberPhone: "",
+    codeCountry: "",
+    webSite: "",
+    billingEmail: "",
+    zipCode: "",
+    country: "",
+    taxNumber: "",
+    preferredCurrency: "",
+    cardNumber: "",
+  });
+
+  const handleClientData = (field, value) => {
+    const formattedValue =
+      field === "cardNumber" ? formatCardNumber(value) : value;
+
+    setClientData((prev) => ({
+      ...prev,
+      [field]: formattedValue,
+    }));
+  };
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -99,6 +129,14 @@ const Clients = () => {
 
   const formatPhoneNumber = (phoneNumber) => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
+  };
+
+  const handleCreateClient = (e) => {
+    e.preventDefault();
+    const userId = dataUser.id;
+    const email = dataUser.email;
+
+    dispatch(createClient({ userId, email, clientData }));
   };
 
   return (
@@ -228,8 +266,9 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={clientData.fullName}
+                  // onChange={(e) => setFullName(e.target.value)}
+                  onChange={(e) => handleClientData("fullName", e.target.value)}
                 />
               </label>
 
@@ -242,7 +281,8 @@ const Clients = () => {
                 <input
                   type="email"
                   placeholder="john.doe@gmail.com"
-                  value={email}
+                  value={clientData.email}
+                  onChange={(e) => handleClientData("email", e.target.value)}
                 />
                 {emailError && (
                   <span className={styles.error}>{emailError}</span>
@@ -258,8 +298,11 @@ const Clients = () => {
                 <div className={styles.phoneInputs}>
                   <select
                     className={styles.countrySelect}
-                    value={countryCode}
-                    onChange={(e) => setCountryCode(e.target.value)}
+                    value={clientData.codeCountry}
+                    // onChange={(e) => setCountryCode(e.target.value)}
+                    onChange={(e) =>
+                      handleClientData("codeCountry", e.target.value)
+                    }
                   >
                     <option value="+34">España (+34)</option>
                     <option value="+1">Estados Unidos (+1)</option>
@@ -272,8 +315,12 @@ const Clients = () => {
                     type="text"
                     placeholder="000 000 000"
                     className={styles.numberInput}
-                    value={formatPhoneNumber(phone)}
-                    onChange={(e) => setPhone(e.target.value)}
+                    // value={formatPhoneNumber(phone)}
+                    value={clientData.numberPhone}
+                    // onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) =>
+                      handleClientData("numberPhone", e.target.value)
+                    }
                   />
                 </div>
               </label>
@@ -287,8 +334,9 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="www.web.com"
-                  value={web}
-                  onChange={(e) => setWeb(e.target.value)}
+                  value={clientData.webSite}
+                  // onChange={(e) => setWeb(e.target.value)}
+                  onChange={(e) => handleClientData("webSite", e.target.value)}
                 />
               </label>
 
@@ -301,22 +349,26 @@ const Clients = () => {
                   <input
                     type="text"
                     placeholder="Email address"
-                    value={emailAddress}
-                    onChange={(e) => setEmailAddress(e.target.value)}
+                    value={clientData.billingEmail}
+                    onChange={(e) =>
+                      handleClientData("billingEmail", e.target.value)
+                    }
                   />
                   <input
                     type="text"
                     placeholder="Zip code / Postcode"
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
+                    value={clientData.zipCode}
+                    onChange={(e) =>
+                      handleClientData("zipCode", e.target.value)
+                    }
                   />
                 </div>
                 Country of residence
                 <input
                   type="text"
                   placeholder="Spain"
-                  value={residence}
-                  onChange={(e) => setResidence(e.target.value)}
+                  value={clientData.country}
+                  onChange={(e) => handleClientData("country", e.target.value)}
                 />
                 Email adress, Zip code / Postcode, Country of residence
                 <div>
@@ -337,8 +389,10 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="000 000 000"
-                  value={fiscalNumber}
-                  onChange={(e) => setFiscalNumber(e.target.value)}
+                  value={clientData.taxNumber}
+                  onChange={(e) =>
+                    handleClientData("taxNumber", e.target.value)
+                  }
                 />
               </label>
 
@@ -351,8 +405,10 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="EUR"
-                  value={preferredCurrency}
-                  onChange={(e) => setPreferredCurrency(e.target.value)}
+                  value={clientData.preferredCurrency}
+                  onChange={(e) =>
+                    handleClientData("preferredCurrency", e.target.value)
+                  }
                 />
               </label>
 
@@ -367,8 +423,10 @@ const Clients = () => {
                     type="text"
                     placeholder="1234 1234 1234 1234"
                     className={styles.input}
-                    value={formatCardNumber(cardNumber)}
-                    onChange={(e) => setCardNumber(e.target.value)}
+                    value={clientData.cardNumber}
+                    onChange={(e) =>
+                      handleClientData("cardNumber", e.target.value)
+                    }
                   />
                   <img
                     src={creditCard}
@@ -379,7 +437,12 @@ const Clients = () => {
               </label>
               <div className={styles.btnOptionsContainer}>
                 <button className={styles.view}>Ver Transacciones</button>
-                <button className={styles.new}>Nueva Factura</button>
+                <button
+                  onClick={(e) => handleCreateClient(e)}
+                  className={styles.new}
+                >
+                  Crear Cliente
+                </button>
               </div>
             </form>
           </div>
