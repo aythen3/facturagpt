@@ -26,7 +26,6 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
-import Test from "./views/Dashboard/screens/Test/Test.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -78,13 +77,15 @@ const Layout = () => {
                   <Route path="/users" element={<UsersDashboard />} />
                   <Route path="/userSettings" element={<UserSettings />} />
                   <Route path="/clients" element={<Clients />} />
+
                   <Route path="/allproducts" element={<AllProducts />} />
                   <Route path="/transactions" element={<Transactions />} />
-                  <Route path="/test" element={<Test />} />
+                  {/* <Route path="/test" element={<Test />} /> */}
                   <Route
                     path="/articlestransactions"
                     element={<ArticlesTransactions />}
                   />
+
                   <Route path="/contact" element={<ContactForm />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="*" element={<LandingPage />} />

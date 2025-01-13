@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./panelAutomate.module.css";
 import CloseSVG from "../svgs/CloseSVG";
 import TitleComponent from "../Components/TitleComponent";
@@ -15,8 +15,18 @@ import OdooFormAutomate from "../Components/OdooFormAutomate/OdooFormAutomate";
 import WoltersKluwerA3FormAutomate from "../Components/WoltersKluwerA3/WoltersKluwerA3FormAutomate";
 import AgencyTributFormAutomate from "../Components/AgencyTributFormAutomate/AgencyTributFormAutomate";
 import WhatsAppSendNotificationsFormAutomate from "../Components/WhatsAppSendNotificationsFormAutomate/WhatsAppSendNotificationsFormAutomate";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createAutomation,
+  getAllUserAutomations,
+} from "../../../../../actions/automations";
+import { setUser } from "../../../../../slices/emailManagerSlices";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
+  const { user } = useSelector((state) => state.emailManager);
+
+  const { userAutomations } = useSelector((state) => state.automations); // Aca tenemos el array de automates del user (con toda la info dentro, no solo ids)
+  const dispatch = useDispatch();
   const [dataFilter, setDataFilter] = useState(data || newData);
   const [filterType, setfilterType] = useState("Todas");
   const handleDataFilter = (searchTerm) => {
@@ -31,8 +41,62 @@ const PanelAutomate = ({ type, close, typeContent }) => {
 
   const [activeCard, setActiveCard] = useState(null);
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("emailManagerAccount");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        if (parsedUser?.email && parsedUser?.id && parsedUser?.role) {
+          dispatch(setUser(parsedUser));
+          console.log(
+            "Logged-in account restored from localStorage:",
+            parsedUser
+          );
+        }
+      } catch (error) {
+        console.error("Error parsing stored user data:", error);
+      }
+    } else {
+      navigate("/login");
+    }
+  }, []);
+
   const handleCardClick = (id) => {
     setActiveCard(id);
+  };
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getAllUserAutomations({ userId: user?.id }));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
+
+  useEffect(() => {
+    console.log("userAutomations", userAutomations);
+  }, [userAutomations]);
+
+  const handleAddAutomation = () => {
+    console.log("Adding automation...", type);
+
+    // Aca podes agregar la data hardcodeada por el momento para poder testear, te dejo la action comentada para que puedas probar
+
+    if (user) {
+      dispatch(
+        createAutomation({
+          userId: user?.id,
+          email: user?.email,
+          automationData: {
+            name: `New ${type} Automation`,
+            description: "Automation test...",
+            type, // esto es lo unico que tenemos de estados por el momento...
+          },
+        })
+      );
+    }
   };
 
   return (
@@ -163,7 +227,10 @@ const PanelAutomate = ({ type, close, typeContent }) => {
             {" "}
             Atrás
           </button>
-          <button className={`${styles.buttons_footer} ${styles.button_add}`}>
+          <button
+            onClick={handleAddAutomation}
+            className={`${styles.buttons_footer} ${styles.button_add}`}
+          >
             Añadir{" "}
           </button>
         </div>
