@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Clients.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.png";
@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import SeeHistory from "../../components/SeeHistory/SeeHistory";
 import SendEmailModal from "../../components/SendEmailModal/SendEmailModal";
 import { useDispatch, useSelector } from "react-redux";
-import { createClient } from "../../../../actions/clients";
+import { createClient, getAllUserClients } from "../../../../actions/clients";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -42,6 +42,8 @@ const Clients = () => {
   const userStorage = localStorage.getItem("emailManagerAccount");
   const dataUser = JSON.parse(userStorage);
 
+  const { clients, loading } = useSelector((state) => state.clients);
+
   const [clientData, setClientData] = useState({
     fullName: "",
     email: "",
@@ -55,6 +57,10 @@ const Clients = () => {
     preferredCurrency: "",
     cardNumber: "",
   });
+
+  useEffect(() => {
+    dispatch(getAllUserClients({ userId: dataUser.id }));
+  }, [loading]);
 
   const handleClientData = (field, value) => {
     const formattedValue =
@@ -136,7 +142,17 @@ const Clients = () => {
     const userId = dataUser.id;
     const email = dataUser.email;
 
-    dispatch(createClient({ userId, email, clientData }));
+    dispatch(createClient({ userId, email, clientData }))
+      .then((result) => {
+        if (result.meta.requestStatus === "fulfilled") {
+          setShowNewClient(false);
+        } else {
+          console.error("Error creating client:", result.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Unexpected error:", error);
+      });
   };
 
   return (
@@ -198,7 +214,7 @@ const Clients = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((row, rowIndex) => (
+              {clients.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   <td>
                     <input
@@ -208,25 +224,28 @@ const Clients = () => {
                       checked={clientSelected.includes(rowIndex) ? true : false}
                     />
                   </td>
-                  <td className={styles.name}>{row.nombre}</td>
-                  <td>
+                  <td className={styles.name}>{row.clientData.fullName}</td>
+                  <td>{row.clientData.email}</td>
+
+                  {/* <td>
                     {Array.isArray(row.email)
                       ? row.email.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.email}
-                  </td>
-                  <td>{formatPhoneNumber(row.telefono)}</td>
-                  <td>{row.direccion}</td>
-                  <td>{row.numeroFiscal}</td>
-                  <td>
+                  </td> */}
+                  <td>{formatPhoneNumber(row.clientData.numberPhone)}</td>
+                  <td>{row.clientData.country}/agregar a modal de crear</td>
+                  <td>{row.clientData.taxNumber}</td>
+                  <td>{row.clientData.cardNumber}</td>
+                  {/* <td>
                     {Array.isArray(row.metodosPago)
                       ? row.metodosPago.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.metodosPago}
-                  </td>
-                  <td>{row.moneda}</td>
+                  </td> */}
+                  <td>{row.clientData.preferredCurrency}</td>
                   <td className={styles.actions}>
                     <div className={styles.transacciones}>
                       <a href="#">Ver</a>

@@ -58,6 +58,39 @@ const createClient = async ({ email, userId, clientData }) => {
   }
 };
 
+const getAllUserClients = async ({ userId }) => {
+  // console.log("Fetching automations for userId (SERVICE):", userId);
+
+  const dbClientsName = "db_emailmanager_clients";
+
+  let dbClients;
+
+  try {
+    const dbs = await nano.db.list();
+    if (!dbs.includes(dbClientsName)) {
+      console.log(`Database ${dbClientsName} does not exist. Creating...`);
+      await nano.db.create(dbClientsName);
+    }
+    dbClients = nano.use(dbClientsName);
+
+    const clients = await dbClients.find({
+      selector: { userId },
+    });
+
+    console.log("CLCLCLCLC", clients);
+
+    console.log(
+      `Found ${clients.docs.length} automations for userId ${userId}`
+    );
+
+    return clients.docs.length > 0 ? clients.docs : [];
+  } catch (error) {
+    console.error("Error fetching clients:", error);
+    throw new Error("Failed to fetch clients");
+  }
+};
+
 module.exports = {
   createClient,
+  getAllUserClients,
 };

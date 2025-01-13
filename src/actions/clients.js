@@ -26,3 +26,21 @@ export const createClient = createAsyncThunk(
     }
   }
 );
+
+export const getAllUserClients = createAsyncThunk(
+  "clients/getAllUserClients",
+  async ({ userId }) => {
+    console.log("Fetching automations for userId (REDUX):", userId);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.get(`/clients/getAllUserClients/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.log("Error fetching user automations:", error);
+      throw error;
+    }
+  }
+);
