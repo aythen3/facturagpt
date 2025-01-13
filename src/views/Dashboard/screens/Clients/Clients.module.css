@@ -164,6 +164,7 @@ td p:first-of-type {
 }
 
 .actions {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,6 +172,26 @@ td p:first-of-type {
   img {
     cursor: pointer;
   }
+}
+
+.content_menu_actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #073f31;
+  position: absolute;
+  padding: 15px;
+  bottom: 20px;
+  right: 0;
+}
+
+.item_menu_actions {
+  list-style-type: none;
+  color: white;
+  cursor: pointer;
 }
 
 .transacciones {

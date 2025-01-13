@@ -3,22 +3,25 @@ import {
   createClient,
   deleteClients,
   getAllUserClients,
+  updateClient,
 } from "../actions/clients";
-// import {
-//   createAutomation,
-//   deleteAutomation,
-//   getAllUserAutomations,
-//   updateAutomation,
-// } from "../actions/automations";
 
 const clientsSlices = createSlice({
   name: "clients",
   initialState: {
     clients: [],
+    client: null,
     loading: false,
     error: false,
   },
-  reducers: {},
+  reducers: {
+    setClient: (state, action) => {
+      state.client = action.payload;
+    },
+    clearClient: (state) => {
+      state.client = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
 
@@ -50,18 +53,16 @@ const clientsSlices = createSlice({
       })
 
       // UPDATE USER AUTOMATION
-      //   .addCase(updateAutomation.pending, (state) => {
-      //     state.loading = true;
-      //   })
-      //   .addCase(updateAutomation.fulfilled, (state, action) => {
-      //     console.log("action.payload from updateAutomation", action.payload);
-      //     state.loading = false;
-      //     state.userAutomations = action.payload;
-      //   })
-      //   .addCase(updateAutomation.rejected, (state, action) => {
-      //     state.error = action.payload;
-      //     state.loading = false;
-      //   })
+      .addCase(updateClient.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateClient.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateClient.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
 
       // DELETE USER CLIENT
       .addCase(deleteClients.pending, (state) => {
@@ -77,6 +78,6 @@ const clientsSlices = createSlice({
   },
 });
 
-export const {} = clientsSlices.actions;
+export const { setClient, clearClient } = clientsSlices.actions;
 
 export default clientsSlices.reducer;

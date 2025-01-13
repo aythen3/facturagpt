@@ -19,7 +19,9 @@ import {
   createClient,
   deleteClients,
   getAllUserClients,
+  updateClient,
 } from "../../../../actions/clients";
+import { clearClient, setClient } from "../../../../slices/clientsSlices";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -27,26 +29,15 @@ const Clients = () => {
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [web, setWeb] = useState("");
-  const [countryCode, setCountryCode] = useState("+34");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [residence, setResidence] = useState("");
-  const [fiscalNumber, setFiscalNumber] = useState("");
-  const [preferredCurrency, setPreferredCurrency] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [selectedClientIds, setSelectedClientIds] = useState([]);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+
   const dispatch = useDispatch();
   const userStorage = localStorage.getItem("emailManagerAccount");
   const dataUser = JSON.parse(userStorage);
 
-  const { clients, loading } = useSelector((state) => state.clients);
+  const { clients, loading, client } = useSelector((state) => state.clients);
 
   const [clientData, setClientData] = useState({
     fullName: "",
@@ -61,6 +52,38 @@ const Clients = () => {
     preferredCurrency: "",
     cardNumber: "",
   });
+
+  useEffect(() => {
+    if (client?.clientData) {
+      setClientData({
+        fullName: client.clientData.fullName || "",
+        email: client.clientData.email || "",
+        numberPhone: client.clientData.numberPhone || "",
+        codeCountry: client.clientData.codeCountry || "",
+        webSite: client.clientData.webSite || "",
+        billingEmail: client.clientData.billingEmail || "",
+        zipCode: client.clientData.zipCode || "",
+        country: client.clientData.country || "",
+        taxNumber: client.clientData.taxNumber || "",
+        preferredCurrency: client.clientData.preferredCurrency || "",
+        cardNumber: client.clientData.cardNumber || "",
+      });
+    } else {
+      setClientData({
+        fullName: "",
+        email: "",
+        numberPhone: "",
+        codeCountry: "",
+        webSite: "",
+        billingEmail: "",
+        zipCode: "",
+        country: "",
+        taxNumber: "",
+        preferredCurrency: "",
+        cardNumber: "",
+      });
+    }
+  }, [client]);
 
   useEffect(() => {
     dispatch(getAllUserClients({ userId: dataUser?.id }));
@@ -149,20 +172,40 @@ const Clients = () => {
     const userId = dataUser?.id;
     const email = dataUser?.email;
 
-    dispatch(createClient({ userId, email, clientData }))
-      .then((result) => {
-        if (result.meta.requestStatus === "fulfilled") {
-          setShowNewClient(false);
-        } else {
-          console.error("Error creating client:", result.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Unexpected error:", error); // Manejar errores inesperados
-      });
-  };
+    if (client && client.clientData) {
+      alert("UPDATEd");
 
-  const [selectedClientIds, setSelectedClientIds] = useState([]);
+      dispatch(
+        updateClient({
+          clientId: client?.id,
+          toUpdate: clientData,
+          userId: userId,
+        })
+      )
+        .then((result) => {
+          if (result.meta.requestStatus === "fulfilled") {
+            setShowNewClient(false);
+          } else {
+            console.error("Error creating client:", result.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Unexpected error:", error);
+        });
+    } else {
+      dispatch(createClient({ userId, email, clientData }))
+        .then((result) => {
+          if (result.meta.requestStatus === "fulfilled") {
+            setShowNewClient(false);
+          } else {
+            console.error("Error creating client:", result.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Unexpected error:", error);
+        });
+    }
+  };
 
   const toggleClientSelection = (clientId) => {
     setSelectedClientIds((prev) =>
@@ -172,15 +215,14 @@ const Clients = () => {
     );
   };
 
-  const handleDeleteClient = (e) => {
+  const handleDeleteClient = (e, clientID) => {
     e.preventDefault();
-    if (selectedClientIds.length === 0) {
-      console.error("No clients selected for deletion");
-      return;
-    }
 
     dispatch(
-      deleteClients({ clientIds: selectedClientIds, userId: dataUser?.id })
+      deleteClients({
+        clientIds: clientID ? [clientID] : selectedClientIds,
+        userId: dataUser?.id,
+      })
     )
       .then((result) => {
         if (result.meta.requestStatus === "fulfilled") {
@@ -194,6 +236,17 @@ const Clients = () => {
         console.error("Unexpected error:", error);
       });
   };
+
+  const handleActions = (rowIndex, client) => {
+    dispatch(setClient(client));
+    setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex); // Alterna el estado
+  };
+
+  const handleEditClient = () => {
+    setShowNewClient(true);
+  };
+  console.log("CLIENT REDUX", client);
+  console.log("DATAAAAAAA", clientData);
 
   return (
     <div>
@@ -260,21 +313,23 @@ const Clients = () => {
             </thead>
             <tbody>
               {clients &&
-                clients.map((row, rowIndex) => (
+                clients.map((client, rowIndex) => (
                   <tr key={rowIndex}>
                     <td>
                       <input
                         type="checkbox"
                         name="clientSelected"
                         // onClick={() => selectClient(rowIndex, row)}
-                        onChange={() => toggleClientSelection(row?.id)}
+                        onChange={() => toggleClientSelection(client?.id)}
                         // checked={
                         //   clientSelected.includes(rowIndex) ? true : false
                         // }
                       />
                     </td>
-                    <td className={styles.name}>{row.clientData.fullName}</td>
-                    <td>{row.clientData.email}</td>
+                    <td className={styles.name}>
+                      {client.clientData.fullName}
+                    </td>
+                    <td>{client.clientData.email}</td>
 
                     {/* <td>
                     {Array.isArray(row.email)
@@ -283,10 +338,12 @@ const Clients = () => {
                         ))
                       : row.email}
                   </td> */}
-                    <td>{formatPhoneNumber(row.clientData.numberPhone)}</td>
-                    <td>{row.clientData.country}/agregar a modal de crear</td>
-                    <td>{row.clientData.taxNumber}</td>
-                    <td>{row.clientData.cardNumber}</td>
+                    <td>{formatPhoneNumber(client.clientData.numberPhone)}</td>
+                    <td>
+                      {client.clientData.country}/agregar a modal de crear
+                    </td>
+                    <td>{client.clientData.taxNumber}</td>
+                    <td>{client.clientData.cardNumber}</td>
                     {/* <td>
                     {Array.isArray(row.metodosPago)
                       ? row.metodosPago.map((item, itemIndex) => (
@@ -294,15 +351,37 @@ const Clients = () => {
                         ))
                       : row.metodosPago}
                   </td> */}
-                    <td>{row.clientData.preferredCurrency}</td>
+                    <td>{client.clientData.preferredCurrency}</td>
                     <td className={styles.actions}>
                       <div className={styles.transacciones}>
                         <a href="#">Ver</a>
                         <span>(2.345)</span>
                       </div>
-                      <div>
+                      <div onClick={() => handleActions(rowIndex, client)}>
                         <img src={optionDots} />
                       </div>
+                      {selectedRowIndex === rowIndex && (
+                        <ul className={styles.content_menu_actions}>
+                          <li
+                            onClick={() => {
+                              handleEditClient();
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Editar
+                          </li>
+                          <li
+                            onClick={(e) => {
+                              handleDeleteClient(e, client?.id);
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Eliminar
+                          </li>
+                        </ul>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -314,12 +393,21 @@ const Clients = () => {
         <>
           <div
             className={styles.bg}
-            onClick={() => setShowNewClient(false)}
+            onClick={() => {
+              dispatch(clearClient());
+              setShowNewClient(false);
+            }}
           ></div>
           <div className={styles.newClientContainer}>
             <div className={styles.containerHeader}>
               <h3>John Doe</h3>
-              <span onClick={() => setShowNewClient(false)}>
+              <span
+                onClick={() => {
+                  dispatch(clearClient());
+
+                  setShowNewClient(false);
+                }}
+              >
                 <img src={closeIcon} />
               </span>
             </div>
@@ -509,7 +597,9 @@ const Clients = () => {
                   onClick={(e) => handleCreateClient(e)}
                   className={styles.new}
                 >
-                  Crear Cliente
+                  {client && client.clientData
+                    ? "Editar Cliente"
+                    : "Crear Cliente"}
                 </button>
               </div>
             </form>
