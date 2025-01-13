@@ -196,7 +196,6 @@ const Clients = () => {
         console.error("Unexpected error:", error);
       });
   };
-  console.log("SSSSSSS", selectedClientIds);
 
   return (
     <div>
@@ -247,7 +246,9 @@ const Clients = () => {
                     type="checkbox"
                     name="clientSelected"
                     checked={
-                      clientSelected.length == tableData.length ? true : false
+                      selectedClientIds.length == tableData.length
+                        ? true
+                        : false
                     }
                     onClick={selectAllClients}
                   />
@@ -260,50 +261,53 @@ const Clients = () => {
               </tr>
             </thead>
             <tbody>
-              {clients.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="clientSelected"
-                      // onClick={() => selectClient(rowIndex, row)}
-                      onChange={() => toggleClientSelection(row.id)}
-                      checked={clientSelected.includes(rowIndex) ? true : false}
-                    />
-                  </td>
-                  <td className={styles.name}>{row.clientData.fullName}</td>
-                  <td>{row.clientData.email}</td>
+              {clients &&
+                clients.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="clientSelected"
+                        // onClick={() => selectClient(rowIndex, row)}
+                        onChange={() => toggleClientSelection(row.id)}
+                        // checked={
+                        //   clientSelected.includes(rowIndex) ? true : false
+                        // }
+                      />
+                    </td>
+                    <td className={styles.name}>{row.clientData.fullName}</td>
+                    <td>{row.clientData.email}</td>
 
-                  {/* <td>
+                    {/* <td>
                     {Array.isArray(row.email)
                       ? row.email.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.email}
                   </td> */}
-                  <td>{formatPhoneNumber(row.clientData.numberPhone)}</td>
-                  <td>{row.clientData.country}/agregar a modal de crear</td>
-                  <td>{row.clientData.taxNumber}</td>
-                  <td>{row.clientData.cardNumber}</td>
-                  {/* <td>
+                    <td>{formatPhoneNumber(row.clientData.numberPhone)}</td>
+                    <td>{row.clientData.country}/agregar a modal de crear</td>
+                    <td>{row.clientData.taxNumber}</td>
+                    <td>{row.clientData.cardNumber}</td>
+                    {/* <td>
                     {Array.isArray(row.metodosPago)
                       ? row.metodosPago.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.metodosPago}
                   </td> */}
-                  <td>{row.clientData.preferredCurrency}</td>
-                  <td className={styles.actions}>
-                    <div className={styles.transacciones}>
-                      <a href="#">Ver</a>
-                      <span>(2.345)</span>
-                    </div>
-                    <div>
-                      <img src={optionDots} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    <td>{row.clientData.preferredCurrency}</td>
+                    <td className={styles.actions}>
+                      <div className={styles.transacciones}>
+                        <a href="#">Ver</a>
+                        <span>(2.345)</span>
+                      </div>
+                      <div>
+                        <img src={optionDots} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
