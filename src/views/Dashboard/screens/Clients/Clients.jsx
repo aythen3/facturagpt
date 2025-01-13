@@ -15,7 +15,11 @@ import { useTranslation } from "react-i18next";
 import SeeHistory from "../../components/SeeHistory/SeeHistory";
 import SendEmailModal from "../../components/SendEmailModal/SendEmailModal";
 import { useDispatch, useSelector } from "react-redux";
-import { createClient, getAllUserClients } from "../../../../actions/clients";
+import {
+  createClient,
+  deleteClients,
+  getAllUserClients,
+} from "../../../../actions/clients";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -72,7 +76,12 @@ const Clients = () => {
     }));
   };
 
-  const selectClient = (rowIndex) => {
+  const [clientId, setClientId] = useState();
+
+  const selectClient = (rowIndex, client) => {
+    console.log("ROWWWW", client.id);
+
+    setClientId(client.id);
     setClientSelected((prevItem) => {
       if (prevItem.includes(rowIndex)) {
         return prevItem.filter((i) => i !== rowIndex);
@@ -151,9 +160,49 @@ const Clients = () => {
         }
       })
       .catch((error) => {
+        console.error("Unexpected error:", error); // Manejar errores inesperados
+      });
+  };
+
+  // const handleDeleteClient = (e) => {
+  //   e.preventDefault();
+  //   dispatch(deleteClient({ clientId, userId: dataUser.id }));
+  // };
+
+  const [selectedClientIds, setSelectedClientIds] = useState([]);
+
+  // Función para agregar o eliminar IDs del estado
+  const toggleClientSelection = (clientId) => {
+    setSelectedClientIds((prev) =>
+      prev.includes(clientId)
+        ? prev.filter((id) => id !== clientId)
+        : [...prev, clientId]
+    );
+  };
+
+  const handleDeleteClient = (e) => {
+    e.preventDefault();
+    if (selectedClientIds.length === 0) {
+      console.error("No clients selected for deletion");
+      return;
+    }
+
+    dispatch(
+      deleteClients({ clientIds: selectedClientIds, userId: dataUser.id })
+    )
+      .then((result) => {
+        if (result.meta.requestStatus === "fulfilled") {
+          console.log("Clients deleted successfully");
+          setSelectedClientIds([]); // Limpia los seleccionados tras eliminar
+        } else {
+          console.error("Error deleting clients:", result.error);
+        }
+      })
+      .catch((error) => {
         console.error("Unexpected error:", error);
       });
   };
+  console.log("SSSSSSS", selectedClientIds);
 
   return (
     <div>
@@ -162,6 +211,9 @@ const Clients = () => {
         <div className={styles.clientsHeader}>
           {/* <SeeHistory /> */}
           {/* <SendEmailModal /> */}
+          {selectedClientIds.length > 0 && (
+            <button onClick={(e) => handleDeleteClient(e)}>Borrar</button>
+          )}
           <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
             <button
@@ -220,7 +272,8 @@ const Clients = () => {
                     <input
                       type="checkbox"
                       name="clientSelected"
-                      onClick={() => selectClient(rowIndex)}
+                      // onClick={() => selectClient(rowIndex, row)}
+                      onChange={() => toggleClientSelection(row.id)}
                       checked={clientSelected.includes(rowIndex) ? true : false}
                     />
                   </td>

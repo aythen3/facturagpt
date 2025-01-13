@@ -1,4 +1,8 @@
-const { createClient, getAllUserClients } = require("../services/clients");
+const {
+  createClient,
+  getAllUserClients,
+  deleteClient,
+} = require("../services/clients");
 const { catchedAsync } = require("../utils/err");
 
 const createClientController = async (req, res) => {
@@ -33,7 +37,40 @@ const getAllUserClientsController = async (req, res) => {
   }
 };
 
+// const deleteClientController = async (req, res) => {
+//   try {
+//     const { clientId } = req.params;
+//     const { userId } = req.body;
+
+//     console.log("Deleting client with ID:", clientId, "for userId:", userId);
+
+//     const resp = await deleteClient({ clientId, userId });
+
+//     return res.status(200).send(resp);
+//   } catch (err) {
+//     console.error("Error on deleteClientController:", err);
+//     return res.status(500).send("Error on deleteClientController");
+//   }
+// };
+
+const deleteClientController = async (req, res) => {
+  try {
+    const { clientIds } = req.body; // Ahora esperamos un array de IDs
+    const { userId } = req.body;
+
+    console.log("Deleting clients with IDs:", clientIds, "for userId:", userId);
+
+    const resp = await deleteClient({ clientIds, userId });
+
+    return res.status(200).send(resp);
+  } catch (err) {
+    console.error("Error on deleteClientsController:", err);
+    return res.status(500).send("Error on deleteClientsController");
+  }
+};
+
 module.exports = {
   createClientController: catchedAsync(createClientController),
   getAllUserClientsController: catchedAsync(getAllUserClientsController),
+  deleteClientController: catchedAsync(deleteClientController),
 };

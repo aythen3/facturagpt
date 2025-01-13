@@ -44,3 +44,23 @@ export const getAllUserClients = createAsyncThunk(
     }
   }
 );
+
+export const deleteClients = createAsyncThunk(
+  "clients/deleteClients",
+  async ({ clientIds, userId }) => {
+    console.log("Deleting clients with IDs:", clientIds);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.delete(`/clients/deleteClients`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: { clientIds, userId },
+      });
+      return res.data;
+    } catch (error) {
+      console.error("Error deleting clients:", error);
+      throw error;
+    }
+  }
+);
