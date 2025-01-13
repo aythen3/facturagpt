@@ -81,7 +81,7 @@ const Layout = () => {
 
                   <Route path="/allproducts" element={<AllProducts />} />
                   <Route path="/transactions" element={<Transactions />} />
-                  <Route path="/test" element={<Test />} />
+                  {/* <Route path="/test" element={<Test />} /> */}
                   <Route
                     path="/articlestransactions"
                     element={<ArticlesTransactions />}

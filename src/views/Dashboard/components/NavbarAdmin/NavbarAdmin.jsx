@@ -34,7 +34,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
           <img src={facturaGPT} alt='' />
         </a>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <img
+          {/* <img
             onClick={() => handleLanguage('es')}
             src={spanish_flag}
             alt='img'
@@ -44,8 +44,8 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
               cursor: 'pointer',
               borderRadius: '12px',
             }}
-          />
-          <img
+          /> */}
+          {/* <img
             onClick={() => handleLanguage('en')}
             src={english_flag}
             alt='img'
@@ -55,7 +55,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
               cursor: 'pointer',
               borderRadius: '12px',
             }}
-          />
+          /> */}
         </div>
         {/* <a href="#">
           <img src={headphonesIcon} alt="" />
@@ -68,7 +68,8 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
       </button>
       <div className={styles.profile}>
         <a href='#' className={styles.number}>
-          <img src={time} alt='' />
+          time
+          {/* <img src={time} alt='' /> */}
           <span>234</span>
         </a>
         {/* <a href="#">
