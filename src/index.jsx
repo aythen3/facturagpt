@@ -27,7 +27,6 @@ import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 
-
 const Layout = () => {
   const { pathname } = window.location;
 
