@@ -63,7 +63,7 @@ const Clients = () => {
   });
 
   useEffect(() => {
-    dispatch(getAllUserClients({ userId: dataUser.id }));
+    dispatch(getAllUserClients({ userId: dataUser?.id }));
   }, [loading]);
 
   const handleClientData = (field, value) => {
@@ -79,9 +79,7 @@ const Clients = () => {
   const [clientId, setClientId] = useState();
 
   const selectClient = (rowIndex, client) => {
-    console.log("ROWWWW", client.id);
-
-    setClientId(client.id);
+    setClientId(client?.id);
     setClientSelected((prevItem) => {
       if (prevItem.includes(rowIndex)) {
         return prevItem.filter((i) => i !== rowIndex);
@@ -148,8 +146,8 @@ const Clients = () => {
 
   const handleCreateClient = (e) => {
     e.preventDefault();
-    const userId = dataUser.id;
-    const email = dataUser.email;
+    const userId = dataUser?.id;
+    const email = dataUser?.email;
 
     dispatch(createClient({ userId, email, clientData }))
       .then((result) => {
@@ -182,7 +180,7 @@ const Clients = () => {
     }
 
     dispatch(
-      deleteClients({ clientIds: selectedClientIds, userId: dataUser.id })
+      deleteClients({ clientIds: selectedClientIds, userId: dataUser?.id })
     )
       .then((result) => {
         if (result.meta.requestStatus === "fulfilled") {
@@ -269,7 +267,7 @@ const Clients = () => {
                         type="checkbox"
                         name="clientSelected"
                         // onClick={() => selectClient(rowIndex, row)}
-                        onChange={() => toggleClientSelection(row.id)}
+                        onChange={() => toggleClientSelection(row?.id)}
                         // checked={
                         //   clientSelected.includes(rowIndex) ? true : false
                         // }
