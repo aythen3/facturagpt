@@ -37,7 +37,6 @@ const createClient = async ({ email, userId, clientData }) => {
     };
 
     await dbClients.insert(clientDoc);
-    console.log(`Client created successfully: ${clientId}`);
 
     const userDoc = await dbAccounts.get(userId);
     if (!userDoc.clients) {
@@ -119,8 +118,40 @@ const deleteClient = async ({ clientIds, userId }) => {
   }
 };
 
+const updateClient = async ({ clientId, userId, toUpdate }) => {
+  const dbClientsName = "db_emailmanager_clients";
+  let dbClients;
+
+  try {
+    dbClients = nano.use(dbClientsName);
+
+    const clientDoc = await dbClients.get(clientId);
+
+    const updatedDoc = {
+      ...clientDoc,
+      clientData: {
+        ...clientDoc.clientData,
+        ...toUpdate,
+      },
+    };
+
+    await dbClients.insert(updatedDoc);
+    console.log(`Client ${clientId} updated successfully`);
+
+    const clients = await dbClients.find({
+      selector: { userId },
+    });
+
+    return clients.docs;
+  } catch (error) {
+    console.error("Error updating client:", error);
+    throw new Error("Failed to update client");
+  }
+};
+
 module.exports = {
   createClient,
   getAllUserClients,
   deleteClient,
+  updateClient,
 };
