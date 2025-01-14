@@ -62,11 +62,8 @@ const UsersDashboard = () => {
   const navigate = useNavigate();
   const [showUserSettings, setShowUserSettings] = useState(false);
 
-  const {
-    allClients,
-    allUsers,
-    user: userData,
-  } = useSelector((state) => state.emailManager);
+  const { allClients, allUsers } = useSelector((state) => state.emailManager);
+  const { user: userData } = useSelector((state) => state.user);
   const { userAutomations } = useSelector((state) => state.automations);
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
@@ -413,26 +410,6 @@ const UsersDashboard = () => {
     console.log(`Updated role for user ${userId}: ${option}`);
     dispatch(updateUser({ userId, toUpdate: { role: option } }));
   };
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("emailManagerAccount");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        if (parsedUser?.email && parsedUser?.id && parsedUser?.role) {
-          dispatch(setUser(parsedUser));
-          console.log(
-            "Logged-in account restored from localStorage:",
-            parsedUser
-          );
-        }
-      } catch (error) {
-        console.error("Error parsing stored user data:", error);
-      }
-    } else {
-      navigate("/login");
-    }
-  }, []);
 
   if (!userData) return null;
 

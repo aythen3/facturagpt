@@ -9,14 +9,14 @@ const {
   generateAndSendOtp,
   verifyOTP,
   newsletter,
-} = require('../services/user');
-const { catchedAsync } = require('../utils/err');
-const { updateClientService } = require('../services/stripe');
+} = require("../services/user");
+const { catchedAsync } = require("../utils/err");
+const { updateClientService } = require("../services/stripe");
 
 const createAccountController = async (req, res) => {
   try {
     const { nombre, email, password } = req.body;
-    console.log('data from createAccountController', {
+    console.log("data from createAccountController", {
       nombre,
       email,
       password,
@@ -26,40 +26,36 @@ const createAccountController = async (req, res) => {
 
     return res.status(200).send(resp);
   } catch (err) {
-    console.log('err', err);
-    return res.status(500).send('Error on createAccountController');
+    console.log("err", err);
+    return res.status(500).send("Error on createAccountController");
   }
 };
 
 const updateAccountController = async (req, res) => {
   try {
     const { userId, toUpdate } = req.body;
-    console.log('User update data received:', { userId, toUpdate });
+    console.log("User update data received:", { userId, toUpdate });
 
     const response = await updateAccount({ userId, toUpdate });
 
     return res.status(200).send(response);
   } catch (err) {
-    console.log('Error in updateAccountController:', err);
-    return res.status(500).send('Error updating user');
+    console.log("Error in updateAccountController:", err);
+    return res.status(500).send("Error updating user");
   }
 };
 
 const loginToManagerController = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log('Data from loginToManagerController:', { email, password });
+    console.log("Data from loginToManagerController:", { email, password });
 
     const response = await loginToManagerService({ email, password });
 
-    if (response.success) {
-      return res.status(200).send(response);
-    } else {
-      return res.status(401).send(response);
-    }
+    return res.status(200).send(response);
   } catch (err) {
-    console.log('Error in loginToManagerController:', err);
-    return res.status(500).send('Error during login process');
+    console.log("Error in loginToManagerController:", err);
+    return res.status(500).send("Error during login process");
   }
 };
 
@@ -68,8 +64,8 @@ const getAllClientsController = async (req, res) => {
     const clients = await getAllClientsService();
     return res.status(200).send(clients);
   } catch (err) {
-    console.log('Error in getAllClientsController:', err);
-    return res.status(500).send('Error fetching clients');
+    console.log("Error in getAllClientsController:", err);
+    return res.status(500).send("Error fetching clients");
   }
 };
 
@@ -78,70 +74,70 @@ const getAllUsersController = async (req, res) => {
     const users = await getAllUsers();
     return res.status(200).send(users);
   } catch (err) {
-    console.log('Error in getAllUsersController:', err);
-    return res.status(500).send('Error fetching clients');
+    console.log("Error in getAllUsersController:", err);
+    return res.status(500).send("Error fetching clients");
   }
 };
 
 const addNewClientController = async (req, res) => {
   try {
     const { clientData } = req.body;
-    console.log('Client data received:', clientData);
+    console.log("Client data received:", clientData);
 
     const response = await addNewClientService({ clientData });
     return res.status(200).send(response);
   } catch (err) {
-    console.log('Error in addNewClientController:', err);
-    return res.status(500).send('Error adding new client');
+    console.log("Error in addNewClientController:", err);
+    return res.status(500).send("Error adding new client");
   }
 };
 
 const deleteClientController = async (req, res) => {
   try {
     const { clientId } = req.body;
-    console.log('Client ID received for deletion:', clientId);
+    console.log("Client ID received for deletion:", clientId);
 
     const response = await deleteClientService({ clientId });
 
     return res.status(200).send(response);
   } catch (err) {
-    console.log('Error in deleteClientController:', err);
-    return res.status(500).send('Error deleting client');
+    console.log("Error in deleteClientController:", err);
+    return res.status(500).send("Error deleting client");
   }
 };
 
 const updateClientController = async (req, res) => {
   try {
     const { clientId, toUpdate } = req.body;
-    console.log('Client update data received:', { clientId, toUpdate });
+    console.log("Client update data received:", { clientId, toUpdate });
 
     const response = await updateClientService({ clientId, toUpdate });
 
     return res.status(200).send(response);
   } catch (err) {
-    console.log('Error in updateClientController:', err);
-    return res.status(500).send('Error updating client');
+    console.log("Error in updateClientController:", err);
+    return res.status(500).send("Error updating client");
   }
 };
 
 const generateAndSendOtpController = async (req, res) => {
   try {
-    const { email } = req.body;
-    console.log('Generating OTP for email:', email);
+    const { email, language } = req.body;
+    console.log("Generating OTP for email:", email);
 
-    const response = await generateAndSendOtp({ email });
+    const response = await generateAndSendOtp({ email, language });
 
     return res.status(200).send(response);
   } catch (err) {
-    console.log('Error in generateAndSendOtpController:', err);
-    return res.status(500).send('Error generating OTP');
+    console.log("Error in generateAndSendOtpController:", err);
+    return res.status(500).send("Error generating OTP");
   }
 };
 
 const verifyOTPController = async (req, res) => {
   try {
     const { email, otp } = req.body;
-    console.log('Verifying OTP for email:', email);
+    console.log("Verifying OTP for email:", email);
 
     const response = await verifyOTP({ email, otp });
 
@@ -150,8 +146,8 @@ const verifyOTPController = async (req, res) => {
     }
     return res.status(401).send(response);
   } catch (err) {
-    console.log('Error in verifyOTPController:', err);
-    return res.status(500).send('Error verifying OTP');
+    console.log("Error in verifyOTPController:", err);
+    return res.status(500).send("Error verifying OTP");
   }
 };
 
@@ -173,8 +169,8 @@ const sendNewsletter = async (req, res) => {
     }
     return res.status(401).send(response);
   } catch (err) {
-    console.log('Error in verifyOTPController:', err);
-    return res.status(500).send('Error verifying OTP');
+    console.log("Error in verifyOTPController:", err);
+    return res.status(500).send("Error verifying OTP");
   }
 };
 

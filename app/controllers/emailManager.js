@@ -130,10 +130,10 @@ const updateClientController = async (req, res) => {
 
 const generateAndSendOtpController = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, language } = req.body;
     console.log("Generating OTP for email:", email);
 
-    const response = await generateAndSendOtp({ email });
+    const response = await generateAndSendOtp({ email, language });
 
     return res.status(200).send(response);
   } catch (err) {
