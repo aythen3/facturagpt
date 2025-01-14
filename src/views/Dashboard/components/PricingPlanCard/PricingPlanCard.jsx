@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './PricingPlanCard.module.css';
-import tick from '../../assets/pricingCardTick.svg';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import styles from "./PricingPlanCard.module.css";
+import tick from "../../assets/pricingCardTick.svg";
+import { useNavigate } from "react-router-dom";
 const PricingPlanCard = ({
   title,
   price,
@@ -25,10 +25,9 @@ const PricingPlanCard = ({
     return 0.05;
   };
   const documentPrice = getDocumentPrice();
-  console.log(documentPrice);
   const calculatePrice = () => {
-    if (sliderValue <= 10) return '0,00';
-    if (sliderValue > 94) return '¿Aún más?';
+    if (sliderValue <= 10) return "0,00";
+    if (sliderValue > 94) return "¿Aún más?";
 
     // console.log((documentos * documentPrice).toFixed(2).replace('.', ','));
     // return (documentos * documentPrice).toFixed(2).replace('.', ',');
@@ -42,11 +41,11 @@ const PricingPlanCard = ({
       <div className={styles.pricingBox}>
         <p className={styles.price}>
           <strong>
-            {calculatedPrice === '¿Aún más?'
+            {calculatedPrice === "¿Aún más?"
               ? calculatedPrice
-              : `${calculatedPrice}€`}{' '}
+              : `${calculatedPrice}€`}{" "}
           </strong>
-          {calculatedPrice !== '¿Aún más?' && (
+          {calculatedPrice !== "¿Aún más?" && (
             <span className={styles.perMonth}>/mes</span>
           )}
         </p>
@@ -58,24 +57,24 @@ const PricingPlanCard = ({
         )}
       </div>
       <div className={styles.planDetails}>
-        {title !== '¿Aún más?' ? (
+        {title !== "¿Aún más?" ? (
           <h2 className={styles.planTitle}>
             Plan <strong>{title}</strong>
           </h2>
         ) : (
-          ''
+          ""
         )}
         <ul className={styles.featuresList}>
           {features.map((feature, index) => (
             <li key={index} className={styles.featureItem}>
-              <img src={tick} alt='tick' />
+              <img src={tick} alt="tick" />
               {feature}
             </li>
           ))}
         </ul>
         <button
           className={styles.button}
-          onClick={() => navigate('/freetrial')}
+          onClick={() => navigate("/freetrial")}
         >
           Comience su prueba gratuita
         </button>

@@ -56,7 +56,7 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
               cursor: "pointer",
               borderRadius: "12px",
             }}
-          />
+          /> */}
         </div>
         {/* <a href="#">
           <img src={headphonesIcon} alt="" />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Clients.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.png";
@@ -14,29 +14,98 @@ import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
 import SeeHistory from "../../components/SeeHistory/SeeHistory";
 import SendEmailModal from "../../components/SendEmailModal/SendEmailModal";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createClient,
+  deleteClients,
+  getAllUserClients,
+  updateClient,
+} from "../../../../actions/clients";
+import { clearClient, setClient } from "../../../../slices/clientsSlices";
+
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [web, setWeb] = useState("");
-  const [countryCode, setCountryCode] = useState("+34");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [residence, setResidence] = useState("");
-  const [fiscalNumber, setFiscalNumber] = useState("");
-  const [preferredCurrency, setPreferredCurrency] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [selectedClientIds, setSelectedClientIds] = useState([]);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
-  const selectClient = (rowIndex) => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+
+  const dispatch = useDispatch();
+  const userStorage = localStorage.getItem("emailManagerAccount");
+  const dataUser = JSON.parse(userStorage);
+
+  const { clients, loading, client } = useSelector((state) => state.clients);
+
+  const [clientData, setClientData] = useState({
+    fullName: "",
+    email: "",
+    numberPhone: "",
+    codeCountry: "",
+    webSite: "",
+    billingEmail: "",
+    zipCode: "",
+    country: "",
+    taxNumber: "",
+    preferredCurrency: "",
+    cardNumber: "",
+  });
+
+  useEffect(() => {
+    if (client?.clientData) {
+      setClientData({
+        fullName: client.clientData.fullName || "",
+        email: client.clientData.email || "",
+        numberPhone: client.clientData.numberPhone || "",
+        codeCountry: client.clientData.codeCountry || "",
+        webSite: client.clientData.webSite || "",
+        billingEmail: client.clientData.billingEmail || "",
+        zipCode: client.clientData.zipCode || "",
+        country: client.clientData.country || "",
+        taxNumber: client.clientData.taxNumber || "",
+        preferredCurrency: client.clientData.preferredCurrency || "",
+        cardNumber: client.clientData.cardNumber || "",
+      });
+    } else {
+      setClientData({
+        fullName: "",
+        email: "",
+        numberPhone: "",
+        codeCountry: "",
+        webSite: "",
+        billingEmail: "",
+        zipCode: "",
+        country: "",
+        taxNumber: "",
+        preferredCurrency: "",
+        cardNumber: "",
+      });
+    }
+  }, [client]);
+
+  useEffect(() => {
+    dispatch(getAllUserClients({ userId: dataUser?.id }));
+  }, [loading]);
+
+  const handleClientData = (field, value) => {
+    const formattedValue =
+      field === "cardNumber" ? formatCardNumber(value) : value;
+
+    setClientData((prev) => ({
+      ...prev,
+      [field]: formattedValue,
+    }));
+  };
+
+  const [clientId, setClientId] = useState();
+
+  const selectClient = (rowIndex, client) => {
+    setClientId(client?.id);
     setClientSelected((prevItem) => {
       if (prevItem.includes(rowIndex)) {
         return prevItem.filter((i) => i !== rowIndex);
@@ -101,12 +170,122 @@ const Clients = () => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
   };
 
+  const handleCreateClient = (e) => {
+    e.preventDefault();
+    const userId = dataUser?.id;
+    const email = dataUser?.email;
+
+    if (client && client.clientData) {
+      alert("UPDATEd");
+
+      dispatch(
+        updateClient({
+          clientId: client?.id,
+          toUpdate: clientData,
+          userId: userId,
+        })
+      )
+        .then((result) => {
+          if (result.meta.requestStatus === "fulfilled") {
+            setShowNewClient(false);
+          } else {
+            console.error("Error creating client:", result.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Unexpected error:", error);
+        });
+    } else {
+      dispatch(createClient({ userId, email, clientData }))
+        .then((result) => {
+          if (result.meta.requestStatus === "fulfilled") {
+            setShowNewClient(false);
+          } else {
+            console.error("Error creating client:", result.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Unexpected error:", error);
+        });
+    }
+  };
+
+  const toggleClientSelection = (clientId) => {
+    setSelectedClientIds((prev) =>
+      prev.includes(clientId)
+        ? prev.filter((id) => id !== clientId)
+        : [...prev, clientId]
+    );
+  };
+
+  const handleDeleteClient = (e, clientID) => {
+    e.preventDefault();
+
+    dispatch(
+      deleteClients({
+        clientIds: clientID ? [clientID] : selectedClientIds,
+        userId: dataUser?.id,
+      })
+    )
+      .then((result) => {
+        if (result.meta.requestStatus === "fulfilled") {
+          console.log("Clients deleted successfully");
+          setSelectedClientIds([]);
+        } else {
+          console.error("Error deleting clients:", result.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Unexpected error:", error);
+      });
+  };
+
+  const handleActions = (rowIndex, client) => {
+    dispatch(setClient(client));
+    setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex); // Alterna el estado
+  };
+
+  const handleEditClient = () => {
+    setShowNewClient(true);
+  };
+  console.log("CLIENT REDUX", client);
+  console.log("DATAAAAAAA", clientData);
+
+
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      dispatch(clearClient());
+      setShowNewClient(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && showNewClient) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          dispatch(clearClient());
+          setShowNewClient(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showNewClient]);
+
+
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          {/* <SeeHistory /> */}
           {/* <SendEmailModal /> */}
           <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
@@ -147,7 +326,9 @@ const Clients = () => {
                     type="checkbox"
                     name="clientSelected"
                     checked={
-                      clientSelected.length == tableData.length ? true : false
+                      selectedClientIds.length == tableData.length
+                        ? true
+                        : false
                     }
                     onClick={selectAllClients}
                   />
@@ -160,60 +341,94 @@ const Clients = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="clientSelected"
-                      onClick={() => selectClient(rowIndex)}
-                      checked={clientSelected.includes(rowIndex) ? true : false}
-                    />
-                  </td>
-                  <td className={styles.name}>{row.nombre}</td>
-                  <td>
+              {clients &&
+                clients.map((client, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="clientSelected"
+                        // onClick={() => selectClient(rowIndex, row)}
+                        onChange={() => toggleClientSelection(client?.id)}
+                        // checked={
+                        //   clientSelected.includes(rowIndex) ? true : false
+                        // }
+                      />
+                    </td>
+                    <td className={styles.name}>
+                      {client.clientData.fullName}
+                    </td>
+                    <td>{client.clientData.email}</td>
+
+                    {/* <td>
                     {Array.isArray(row.email)
                       ? row.email.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.email}
-                  </td>
-                  <td>{formatPhoneNumber(row.telefono)}</td>
-                  <td>{row.direccion}</td>
-                  <td>{row.numeroFiscal}</td>
-                  <td>
+                  </td> */}
+                    <td>{formatPhoneNumber(client.clientData.numberPhone)}</td>
+                    <td>
+                      {client.clientData.country}/agregar a modal de crear
+                    </td>
+                    <td>{client.clientData.taxNumber}</td>
+                    <td>{client.clientData.cardNumber}</td>
+                    {/* <td>
                     {Array.isArray(row.metodosPago)
                       ? row.metodosPago.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.metodosPago}
-                  </td>
-                  <td>{row.moneda}</td>
-                  <td className={styles.actions}>
-                    <div className={styles.transacciones}>
-                      <a href="#">Ver</a>
-                      <span>(2.345)</span>
-                    </div>
-                    <div>
-                      <img src={optionDots} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                  </td> */}
+                    <td>{client.clientData.preferredCurrency}</td>
+                    <td className={styles.actions}>
+                      <div className={styles.transacciones}>
+                        <a href="#">Ver</a>
+                        <span>(2.345)</span>
+                      </div>
+                      <div onClick={() => handleActions(rowIndex, client)}>
+                        <img src={optionDots} />
+                      </div>
+                      {selectedRowIndex === rowIndex && (
+                        <ul className={styles.content_menu_actions}>
+                          <li
+                            onClick={() => {
+                              handleEditClient();
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Editar
+                          </li>
+                          <li
+                            onClick={(e) => {
+                              handleDeleteClient(e, client?.id);
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Eliminar
+                          </li>
+                        </ul>
+                      )}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
       </div>
       {showNewClient && (
         <>
+          <div className={styles.bg} onClick={handleCloseNewClient}></div>
           <div
-            className={styles.bg}
-            onClick={() => setShowNewClient(false)}
-          ></div>
-          <div className={styles.newClientContainer}>
+
+            className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+          >
             <div className={styles.containerHeader}>
               <h3>John Doe</h3>
-              <span onClick={() => setShowNewClient(false)}>
+              <span onClick={handleCloseNewClient}>
+
                 <img src={closeIcon} />
               </span>
             </div>
@@ -228,8 +443,9 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={clientData.fullName}
+                  // onChange={(e) => setFullName(e.target.value)}
+                  onChange={(e) => handleClientData("fullName", e.target.value)}
                 />
               </label>
 
@@ -242,7 +458,8 @@ const Clients = () => {
                 <input
                   type="email"
                   placeholder="john.doe@gmail.com"
-                  value={email}
+                  value={clientData.email}
+                  onChange={(e) => handleClientData("email", e.target.value)}
                 />
                 {emailError && (
                   <span className={styles.error}>{emailError}</span>
@@ -258,8 +475,11 @@ const Clients = () => {
                 <div className={styles.phoneInputs}>
                   <select
                     className={styles.countrySelect}
-                    value={countryCode}
-                    onChange={(e) => setCountryCode(e.target.value)}
+                    value={clientData.codeCountry}
+                    // onChange={(e) => setCountryCode(e.target.value)}
+                    onChange={(e) =>
+                      handleClientData("codeCountry", e.target.value)
+                    }
                   >
                     <option value="+34">España (+34)</option>
                     <option value="+1">Estados Unidos (+1)</option>
@@ -272,8 +492,12 @@ const Clients = () => {
                     type="text"
                     placeholder="000 000 000"
                     className={styles.numberInput}
-                    value={formatPhoneNumber(phone)}
-                    onChange={(e) => setPhone(e.target.value)}
+                    // value={formatPhoneNumber(phone)}
+                    value={clientData.numberPhone}
+                    // onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) =>
+                      handleClientData("numberPhone", e.target.value)
+                    }
                   />
                 </div>
               </label>
@@ -287,8 +511,9 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="www.web.com"
-                  value={web}
-                  onChange={(e) => setWeb(e.target.value)}
+                  value={clientData.webSite}
+                  // onChange={(e) => setWeb(e.target.value)}
+                  onChange={(e) => handleClientData("webSite", e.target.value)}
                 />
               </label>
 
@@ -301,22 +526,26 @@ const Clients = () => {
                   <input
                     type="text"
                     placeholder="Email address"
-                    value={emailAddress}
-                    onChange={(e) => setEmailAddress(e.target.value)}
+                    value={clientData.billingEmail}
+                    onChange={(e) =>
+                      handleClientData("billingEmail", e.target.value)
+                    }
                   />
                   <input
                     type="text"
                     placeholder="Zip code / Postcode"
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
+                    value={clientData.zipCode}
+                    onChange={(e) =>
+                      handleClientData("zipCode", e.target.value)
+                    }
                   />
                 </div>
                 Country of residence
                 <input
                   type="text"
                   placeholder="Spain"
-                  value={residence}
-                  onChange={(e) => setResidence(e.target.value)}
+                  value={clientData.country}
+                  onChange={(e) => handleClientData("country", e.target.value)}
                 />
                 Email adress, Zip code / Postcode, Country of residence
                 <div>
@@ -337,8 +566,10 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="000 000 000"
-                  value={fiscalNumber}
-                  onChange={(e) => setFiscalNumber(e.target.value)}
+                  value={clientData.taxNumber}
+                  onChange={(e) =>
+                    handleClientData("taxNumber", e.target.value)
+                  }
                 />
               </label>
 
@@ -351,8 +582,10 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="EUR"
-                  value={preferredCurrency}
-                  onChange={(e) => setPreferredCurrency(e.target.value)}
+                  value={clientData.preferredCurrency}
+                  onChange={(e) =>
+                    handleClientData("preferredCurrency", e.target.value)
+                  }
                 />
               </label>
 
@@ -367,8 +600,10 @@ const Clients = () => {
                     type="text"
                     placeholder="1234 1234 1234 1234"
                     className={styles.input}
-                    value={formatCardNumber(cardNumber)}
-                    onChange={(e) => setCardNumber(e.target.value)}
+                    value={clientData.cardNumber}
+                    onChange={(e) =>
+                      handleClientData("cardNumber", e.target.value)
+                    }
                   />
                   <img
                     src={creditCard}
@@ -379,7 +614,14 @@ const Clients = () => {
               </label>
               <div className={styles.btnOptionsContainer}>
                 <button className={styles.view}>Ver Transacciones</button>
-                <button className={styles.new}>Nueva Factura</button>
+                <button
+                  onClick={(e) => handleCreateClient(e)}
+                  className={styles.new}
+                >
+                  {client && client.clientData
+                    ? "Editar Cliente"
+                    : "Crear Cliente"}
+                </button>
               </div>
             </form>
           </div>

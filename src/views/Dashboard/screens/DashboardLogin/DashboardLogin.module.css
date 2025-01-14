@@ -38,31 +38,27 @@
   justify-content: center;
   width: 50%;
   max-width: 500px;
+  padding: 20px 0;
 }
 
-.logoContainer {
+#logo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 20px 0;
-  background-color: #fff;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.logo {
-  width: 106px;
-  height: 94px;
-  margin-right: 10px;
-}
-
-.logoText {
-  font-size: 55px;
-  font-weight: 600;
-  color: #162d3a;
-  strong {
-    font-size: 58px;
+  /* flex-direction: column; */
+  gap: 10px;
+  margin-bottom: 30px;
+  P {
+    font-size: clamp(30px, 12vw, 60px);
+    color: #222222;
+    margin: 0;
+    /* font-weight: bold; */
+    span {
+      font-weight: bolder;
+    }
   }
+}
+#LogoGPT {
+  width: 30%;
 }
 
 .title {
@@ -82,7 +78,7 @@
 
 .subtitle {
   font-size: 18px;
-  color: #292d32;
+  color: #313957;
   font-weight: 400;
   line-height: 1.5;
   margin-bottom: 20px;
@@ -100,7 +96,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
 }
 
 .label {
@@ -142,7 +138,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  max-width: 388px;
+  /* max-width: 388px; */
 }
 
 .rememberMe {
@@ -162,8 +158,8 @@
 
 .signInButton {
   width: 100%;
-  max-width: 388px;
-  background-color: #162d3a;
+  /* max-width: 388px; */
+  background-color: #222222;
   color: #ffffff;
   font-size: 18px;
   height: 48px;
@@ -184,7 +180,7 @@
   text-align: center;
   font-weight: 400;
   color: #313957;
-  max-width: 388px;
+  /* max-width: 388px; */
 }
 
 .footerText a {
@@ -202,7 +198,7 @@
   font-size: 14px;
   text-align: center;
   color: #959cb6;
-  max-width: 388px;
+  /* max-width: 388px; */
   font-weight: 400;
   margin-top: 20px;
 }
@@ -290,7 +286,7 @@
   width: 100%;
   gap: 8px;
   height: 48px;
-  max-width: 388px;
+  /* max-width: 388px; */
 }
 
 .forgotPasswordIcon {

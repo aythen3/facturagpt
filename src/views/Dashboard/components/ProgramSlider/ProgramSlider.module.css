@@ -15,7 +15,7 @@
 }
 
 .button {
-  background-color: #115c4a;
+  background-color: #10a37f;
   color: #fff;
   border: none;
   min-height: 56px;
@@ -123,8 +123,8 @@
 
 .program .description {
   font-size: 14px;
-  color: #2d8772;
-  background-color: #70d8c064;
+  color: #b8b8b8;
+  /* background-color: #70d8c064; */
   width: fit-content;
   margin: 0 auto;
   padding: 5px 10px;

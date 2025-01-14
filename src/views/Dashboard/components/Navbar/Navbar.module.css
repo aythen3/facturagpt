@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 .navbar {
-  background: linear-gradient(to right, #12a380 0%, #073d30 100%);
-  color: #fff;
+  /* background: linear-gradient(to right, #12a380 0%, #073d30 100%); */
+  background: white;
+  color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 70px;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   position: fixed; /* Fijar el menú en la parte superior */
   height: 50px;
   top: 0;
@@ -19,7 +20,7 @@
 
   .logo {
     cursor: pointer;
-    height: 25px;
+    height: 30px;
   }
 }
 
@@ -31,8 +32,8 @@
 }
 
 .hamburger img {
-  width: 33px;
-  height: 33px;
+  width: 25px;
+  height: 25px;
 }
 
 .navLinks {
@@ -56,20 +57,20 @@
 }
 
 .button {
-  background-color: #fff;
-  color: #001b38;
+  background-color: #10a37f;
+  color: white;
   font-weight: 600;
   width: 143px;
   height: 30px;
   font-size: 16px;
   border: none;
-  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
 }
 
 .button:hover {
@@ -77,7 +78,7 @@
 }
 
 .buttonLogIn {
-  background-color: #1a6555;
+  background-color: #6e6e80;
   color: white;
   font-weight: 500;
 }
@@ -89,45 +90,45 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
-  div {
+  .nav {
     cursor: pointer;
+    display: flex;
+
+    gap: 30px;
   }
 }
 
-/* Media Queries */
 @media (max-width: 1000px) {
   .navFlex {
     flex-direction: column-reverse;
     align-items: start;
+    margin-bottom: 20px;
+    .nav {
+      flex-direction: column;
+    }
   }
   .navbar {
     padding: 0 20px;
   }
   .hamburger {
-    display: block; /* Mostrar el botón hamburguesa */
+    display: block;
   }
 
   .navLinks {
     position: fixed;
-    /*Fijaelmenúenlapantalla*/
     top: 0;
     left: -100%;
-    /*Comienzafueradelapantalla*/
     width: 70%;
     height: 100vh;
-    background-color: #073f32;
-    color: white;
+    background-color: white;
     flex-direction: column;
-    /*justify-content: center;
-    */
+
     align-items: start;
-    gap: 40px;
+    gap: 15px;
     padding: 50px 30px;
     box-sizing: border-box;
     transition: left 0.3s ease-in-out;
-    /*Animaciónsuave*/
     z-index: 999;
-    /*Aseguraqueelmenúestéencimadeotroselementos*/
     -webkit-transition: left 0.3s ease-in-out;
     -moz-transition: left 0.3s ease-in-out;
     -ms-transition: left 0.3s ease-in-out;
@@ -141,21 +142,20 @@
     -webkit-filter: brightness(100%);
   }
   .navLinksOpen {
-    left: 0; /* Mueve el menú al centro */
+    left: 0;
     top: 0;
     height: 100vh;
     z-index: 9999;
   }
 
   .navLinksClosed {
-    left: -100%; /* Oculta el menú fuera de la pantalla */
+    left: -100%;
   }
 
   .button {
-    /* background-color: #11a380;
-    color: white; */
-    width: 160px;
-    height: 40px;
+    width: 100%;
+    max-width: 160px;
+    height: 35px;
   }
   .button:hover {
     background-color: #0d8b6d;
@@ -163,7 +163,13 @@
 }
 .navFlex {
   .disabledBtn {
-    opacity: 0.5;
+    color: #6e6e80;
     /* cursor: not-allowed; */
+  }
+}
+
+@media (max-width: 300px) {
+  .navLinksOpen {
+    padding: 50px 10px;
   }
 }

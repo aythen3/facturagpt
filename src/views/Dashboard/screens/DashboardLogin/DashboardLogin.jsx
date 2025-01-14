@@ -379,7 +379,7 @@ const DashboardLogin = () => {
       </form>
       <p className={styles.securityNote}>
         <span className={styles.lockIcon}>
-          <LockIcon size={14} />
+          <img src={LockIcon} />
         </span>
         {t("security")}
       </p>

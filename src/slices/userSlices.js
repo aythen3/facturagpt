@@ -13,7 +13,6 @@ const userSlices = createSlice({
   },
   extraReducers: (builder) => {
     builder
-
       // LOGIN
       .addCase(loginToManager.pending, (state) => {
         state.loading = true;

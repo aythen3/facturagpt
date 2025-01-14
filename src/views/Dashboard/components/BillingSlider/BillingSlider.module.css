@@ -6,12 +6,13 @@
 }
 
 .title {
-  font-size: clamp(20px, 5vw, 32px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(20px, 5vw, 40px) !important; /* Ajuste dinámico con clamp */
   color: #18181b;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 .star {
@@ -21,8 +22,8 @@
 }
 
 .subtitle {
-  font-size: clamp(25px, 3vw, 30px) !important; /* Ajuste dinámico con clamp */
-  color: #256355 !important;
+  font-size: clamp(15px, 3vw, 21px) !important; /* Ajuste dinámico con clamp */
+  color: #222222 !important;
   font-weight: 600;
   margin-bottom: 20px;
 }

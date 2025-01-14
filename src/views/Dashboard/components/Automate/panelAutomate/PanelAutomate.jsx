@@ -21,10 +21,12 @@ import {
   getAllUserAutomations,
 } from "../../../../../actions/automations";
 import { setUser } from "../../../../../slices/emailManagerSlices";
+import { useNavigate } from 'react-router-dom'
+
 
 const PanelAutomate = ({ type, close, typeContent }) => {
   const { user } = useSelector((state) => state.user);
-
+  const navigate = useNavigate()
   const { userAutomations } = useSelector((state) => state.automations); // Aca tenemos el array de automates del user (con toda la info dentro, no solo ids)
   const dispatch = useDispatch();
   const [dataFilter, setDataFilter] = useState(data || newData);

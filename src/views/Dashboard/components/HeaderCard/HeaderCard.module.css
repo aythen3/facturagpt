@@ -5,8 +5,8 @@
   border-bottom: 1px solid #e3e3e3;
   padding: 15px;
   padding-right: 25px;
-}
-img {
-  width: 15px;
-  cursor: pointer;
+  img {
+    width: 15px;
+    cursor: pointer;
+  }
 }
