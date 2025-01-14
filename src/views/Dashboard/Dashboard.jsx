@@ -55,9 +55,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [showUserSettings, setShowUserSettings] = useState(false);
 
-  const { allClients, allUsers, user } = useSelector(
-    (state) => state.emailManager
-  );
+  const { allClients, allUsers } = useSelector((state) => state.emailManager);
+  const { user } = useSelector((state) => state.user);
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 

@@ -256,10 +256,13 @@ export const createSetupIntent = createAsyncThunk(
 
 export const sendOTP = createAsyncThunk(
   "emailManager/send-otp",
-  async ({ email }, { rejectWithValue }) => {
+  async ({ email, language }, { rejectWithValue }) => {
     console.log("Sending OTP to:", email);
     try {
-      const res = await apiBackend.post(`/emailManager/send-otp`, { email });
+      const res = await apiBackend.post(`/emailManager/send-otp`, {
+        email,
+        language,
+      });
       return res.data;
     } catch (error) {
       console.error(

@@ -170,6 +170,7 @@
   margin-bottom: 28px;
   display: flex;
   height: 48px;
+  align-self: center;
   align-items: center;
   justify-content: center;
 }

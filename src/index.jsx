@@ -26,6 +26,9 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
+import { AppProvider } from "./context/AppContext.js";
+
+
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -67,16 +70,28 @@ const Layout = () => {
         <I18nextProvider i18n={i18n}>
           <DndProvider backend={HTML5Backend}>
             <Provider store={store}>
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/login" element={<DashboardLogin />} />
-                  <Route path="/landing" element={<LandingPage />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  <Route path="/home" element={<Dashboard />} />
-                  <Route path="/freetrial" element={<FreeTrial />} />
-                  <Route path="/users" element={<UsersDashboard />} />
-                  <Route path="/userSettings" element={<UserSettings />} />
-                  <Route path="/clients" element={<Clients />} />
+              <AppProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/login" element={<DashboardLogin />} />
+                    <Route path="/register" element={<DashboardLogin />} />
+                    <Route path="/recover" element={<DashboardLogin />} />
+                    <Route path="/otp" element={<DashboardLogin />} />
+                    <Route path="/landing" element={<LandingPage />} />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/home" element={<Dashboard />} />
+                    <Route path="/freetrial" element={<FreeTrial />} />
+                    <Route path="/users" element={<UsersDashboard />} />
+                    <Route path="/userSettings" element={<UserSettings />} />
+                    <Route path="/clients" element={<Clients />} />
+
+                    <Route path="/allproducts" element={<AllProducts />} />
+                    <Route path="/transactions" element={<Transactions />} />
+                    {/* <Route path="/test" element={<Test />} /> */}
+                    <Route
+                      path="/articlestransactions"
+                      element={<ArticlesTransactions />}
+                    />
 
                   <Route path="/allproducts" element={<AllProducts />} />
                   <Route path="/transactions" element={<Transactions />} />
@@ -85,12 +100,13 @@ const Layout = () => {
                     element={<ArticlesTransactions />}
                   />
 
-                  <Route path="/contact" element={<ContactForm />} />
-                  <Route path="/terms" element={<Terms />} />
-                  <Route path="*" element={<LandingPage />} />
-                  <Route path="/Panel" element={<InvoicePanel />} />
-                </Routes>
-              </BrowserRouter>
+                    <Route path="/contact" element={<ContactForm />} />
+                    <Route path="/terms" element={<Terms />} />
+                    <Route path="*" element={<LandingPage />} />
+                    <Route path="/panel" element={<InvoicePanel />} />
+                  </Routes>
+                </BrowserRouter>
+              </AppProvider>
             </Provider>
           </DndProvider>
         </I18nextProvider>
