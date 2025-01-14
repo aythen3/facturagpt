@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import { loginToManager } from "../actions/user";
 
 const userSlices = createSlice({
@@ -7,7 +6,11 @@ const userSlices = createSlice({
   initialState: {
     user: null,
   },
-  reducers: {},
+  reducers: {
+    setuser: (state, action) => {
+      state.user = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // LOGIN
@@ -15,11 +18,10 @@ const userSlices = createSlice({
         state.loading = true;
       })
       .addCase(loginToManager.fulfilled, (state, action) => {
+        console.log("action.payload from loginToManager", action.payload);
         state.loading = false;
         if (action.payload.success && action.payload.account) {
           const { id, email, role } = action.payload.account;
-          console.log("USUARIO LOGINNNNNN", action.payload);
-
           state.user = { id, email, role };
         }
       })
@@ -30,6 +32,6 @@ const userSlices = createSlice({
   },
 });
 
-export const {} = userSlices.actions;
+export const { setuser } = userSlices.actions;
 
 export default userSlices.reducer;

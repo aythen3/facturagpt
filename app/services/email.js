@@ -177,7 +177,7 @@ const getEmail = async (req, res) => {
   return res.send(html);
 };
 
-const sendOtpEmail = async (email, otp) => {
+const sendOtpEmail = async (email, otp, language = "es") => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -186,21 +186,41 @@ const sendOtpEmail = async (email, otp) => {
     },
   });
 
-  const htmlContent = `
-    <div style="font-family: Arial, sans-serif; color: #333;">
-      <h1>Tu código OTP</h1>
-      <p>Hola,</p>
-      <p>Tu código OTP para acceder al sistema es:</p>
-      <h2 style="color: #4CAF50;">${otp}</h2>
-      <p>Este código expirará en 5 minutos. Si no solicitaste este código, por favor ignora este mensaje.</p>
-      <p>Atentamente,<br>El equipo de Aythen</p>
-    </div>
+  let htmlContent;
+
+  if (language === "es") {
+    htmlContent = `
+    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+  <h1 style="color: #4CAF50; text-align: center; font-size: 24px;">Tu Código OTP</h1>
+  <p style="font-size: 16px; line-height: 1.5;">Hola,</p>
+  <p style="font-size: 16px; line-height: 1.5;">Tu código OTP para acceder al sistema es:</p>
+  <div style="text-align: center; margin: 20px 0;">
+    <h2 style="color: #4CAF50; font-size: 32px; letter-spacing: 4px; background-color: #e8f5e9; padding: 10px; border-radius: 8px; display: inline-block;">${otp}</h2>
+  </div>
+  <p style="font-size: 16px; line-height: 1.5; color: #555;">Este código expirará en <strong>5 minutos</strong>. Si no solicitaste este código, por favor ignora este mensaje.</p>
+  <p style="font-size: 16px; line-height: 1.5;">Atentamente,<br><strong>El equipo de Aythen</strong></p>
+</div>
   `;
+  } else {
+    htmlContent = `
+   <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+  <h1 style="color: #4CAF50; text-align: center; font-size: 24px;">Your OTP Code</h1>
+  <p style="font-size: 16px; line-height: 1.5;">Hello,</p>
+  <p style="font-size: 16px; line-height: 1.5;">Your OTP code to access the system is:</p>
+  <div style="text-align: center; margin: 20px 0;">
+    <h2 style="color: #4CAF50; font-size: 32px; letter-spacing: 4px; background-color: #e8f5e9; padding: 10px; border-radius: 8px; display: inline-block;">${otp}</h2>
+  </div>
+  <p style="font-size: 16px; line-height: 1.5; color: #555;">This code will expire in <strong>5 minutes</strong>. If you did not request this code, please ignore this message.</p>
+  <p style="font-size: 16px; line-height: 1.5;">Best regards,<br><strong>The Aythen Team</strong></p>
+</div>
+
+  `;
+  }
 
   const mailOptions = {
     from: "info@aythen.com",
     to: email,
-    subject: "Tu código OTP",
+    subject: language === "es" ? "Tu código OTP" : "Your OTP Code",
     html: htmlContent,
   };
 

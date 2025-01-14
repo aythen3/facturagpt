@@ -712,7 +712,7 @@ const getPaymentMethodService = async ({ clientId }) => {
   }
 };
 
-const generateAndSendOtpService = async ({ email }) => {
+const generateAndSendOtpService = async ({ email, language }) => {
   const dbName = "db_emailmanager_otp";
   let db;
 
@@ -750,7 +750,7 @@ const generateAndSendOtpService = async ({ email }) => {
     console.log(`OTP generado y guardado para ${email}:`, otp);
 
     // Enviar el correo electrónico con el OTP
-    await sendOtpEmail(email, otp);
+    await sendOtpEmail(email, otp, language);
 
     return { success: true, message: "OTP generado y enviado exitosamente." };
   } catch (error) {

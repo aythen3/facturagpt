@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
-import { useNavigate } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useRoutes,
+} from "react-router-dom";
 import facturaLogo from "../../assets/logo-facturagpt.svg";
-import LockIcon from "../../assets/LockIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
-
+import { LockIcon, Mail } from "lucide-react";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
 import {
   createAccount,
@@ -18,12 +22,15 @@ import {
 import { useTranslation } from "react-i18next";
 import { useAuth0 } from "@auth0/auth0-react";
 import { setUser } from "../../../../slices/emailManagerSlices";
+import sentEmail from "../../assets/sentEmail.svg";
+import i18n from "../../../../i18";
 
 const DashboardLogin = () => {
   const { t } = useTranslation("dahsboardLogin");
   const { loginWithRedirect, isAuthenticated } = useAuth0();
 
-  const { user } = useSelector((state) => state.emailManager);
+  const { user } = useSelector((state) => state.user);
+  const location = useLocation();
   const dispatch = useDispatch();
   const [mode, setMode] = useState("signin");
   const [email, setEmail] = useState("");
@@ -65,6 +72,16 @@ const DashboardLogin = () => {
     return true;
   };
 
+  useEffect(() => {
+    console.log("location", location);
+    if (location?.pathname === "/login" && mode !== "signin") setMode("signin");
+    if (location?.pathname === "/register" && mode !== "signup")
+      setMode("signup");
+    if (location?.pathname === "/recover" && mode !== "forgot-password")
+      setMode("forgot-password");
+    if (location?.pathname === "/otp" && mode !== "otp") setMode("otp");
+  }, [location]);
+
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -76,27 +93,6 @@ const DashboardLogin = () => {
       navigate("/home");
     }
   }, [isAuthenticated]);
-
-  useEffect(() => {
-    if (user?.email && user?.id && user?.role) {
-      localStorage.setItem("emailManagerAccount", JSON.stringify(user));
-      navigate("/home");
-    }
-  }, [user, navigate]);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("emailManagerAccount");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        if (parsedUser?.email && parsedUser?.id && parsedUser?.role) {
-          dispatch(setUser(parsedUser));
-        }
-      } catch (error) {
-        console.error("Error parsing stored user data:", error);
-      }
-    }
-  }, [dispatch]);
 
   useEffect(() => {
     let timer;
@@ -134,9 +130,20 @@ const DashboardLogin = () => {
       setIsLoading(true);
       dispatch(loginToManager({ email, password }))
         .unwrap()
-        .then(() => {
+        .then((response) => {
+          let accountData = {
+            email,
+            role: response?.role,
+            accessToken: response?.password,
+            id: response?.id,
+          };
+          localStorage.setItem("user", JSON.stringify(accountData));
           clearStates();
-          navigate("/home");
+          if (response.role !== "user") {
+            navigate("/home");
+          } else {
+            navigate("/panel");
+          }
         })
         .catch((error) => {
           setError(error.message || "Failed to sign in");
@@ -149,13 +156,16 @@ const DashboardLogin = () => {
     }
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (storedEmail.length > 1 && storedPassword.length > 1) {
       setIsLoading(true);
-      dispatch(sendOTP({ email: storedEmail }))
+      const language = await localStorage.getItem("language");
+      console.log("language", language);
+      dispatch(sendOTP({ email: storedEmail, language }))
         .unwrap()
         .then(() => {
           setMode("otp");
+          navigate("/otp");
           setResendTimer(45);
         })
         .catch((error) => {
@@ -167,11 +177,12 @@ const DashboardLogin = () => {
     }
   };
 
-  const handleVerifyOTP = () => {
-    if (otp.length === 6) {
+  const handleVerifyOTP = (receivedOtp) => {
+    console.log("on handleVerifyOTP", receivedOtp);
+    if (receivedOtp.length === 6) {
       setIsLoading(true);
-      console.log({ email: storedEmail, otp });
-      dispatch(verifyOTP({ email: storedEmail, otp }))
+      console.log({ email: storedEmail, otp: receivedOtp });
+      dispatch(verifyOTP({ email: storedEmail, otp: receivedOtp }))
         .unwrap()
         .then(() => {
           dispatch(
@@ -185,6 +196,7 @@ const DashboardLogin = () => {
             .then(() => {
               clearStates();
               setMode("signin");
+              navigate("/login");
             })
             .catch((error) => {
               setError(error.message || "Error al crear cuenta");
@@ -194,7 +206,9 @@ const DashboardLogin = () => {
           setError(error.message || "Error al verificar código");
         })
         .finally(() => {
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1000);
         });
     }
   };
@@ -240,12 +254,16 @@ const DashboardLogin = () => {
   };
 
   const renderLogo = () => (
-    <div id={styles.logo}>
-      <img src={facturaLogo} alt="FacturaGPT" id={styles.LogoGPT} />
-      {/* <img src={facturaText} alt="FacturaGPT" /> */}
-      <p>
-        Factura<span>GPT</span>
-      </p>
+    <div className={styles.logoContainer}>
+      <img
+        onClick={() => navigate("/landing")}
+        src={facturaLogo}
+        alt="FacturaGPT"
+        className={styles.logo}
+      />
+      <span className={styles.logoText}>
+        Factura<strong>GPT</strong>
+      </span>
     </div>
   );
 
@@ -298,6 +316,7 @@ const DashboardLogin = () => {
             onClick={(e) => {
               e.preventDefault();
               setMode("forgot-password");
+              navigate("/recover");
             }}
           >
             {t("forgot")}
@@ -374,15 +393,14 @@ const DashboardLogin = () => {
         <div className={styles.content}>
           <div className={styles.rightContainer}>
             <div className={styles.mailIconContainer}>
-              {/* <Mail size={32} className={styles.mailIcon} /> */}
-              icon
+              <img src={sentEmail} alt="sentEmail" />
             </div>
             <h1 className={styles.titleOtp}>{renderTitle()}</h1>
             <p className={styles.subtitleOtp}>
               Enviamos un código para que puedas continuar.
             </p>
             <p className={styles.emailDisplay}>{storedEmail}</p>
-            <OTPInput onChange={setOtp} />
+            <OTPInput onChange={setOtp} handleVerifyOTP={handleVerifyOTP} />
             <div className={styles.resendContainer}>
               <span>Didn't get the code? </span>
               {resendTimer > 0 ? (
@@ -398,7 +416,7 @@ const DashboardLogin = () => {
               )}
             </div>
             <div
-              onClick={handleVerifyOTP}
+              onClick={() => handleVerifyOTP(otp)}
               className={`${styles.signInButton} ${
                 isLoading ? styles.loading : ""
               }`}
@@ -444,7 +462,10 @@ const DashboardLogin = () => {
             {mode === "signin" ? t("notAccount1") : t("yesAccount1")}{" "}
             {t("notAccount2")}{" "}
             <a
-              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+              onClick={() => {
+                setMode(mode === "signin" ? "signup" : "signin");
+                navigate(mode === "signin" ? "/register" : "/login");
+              }}
               className={styles.signUp}
             >
               {mode === "signin" ? t("register") : t("login")}
