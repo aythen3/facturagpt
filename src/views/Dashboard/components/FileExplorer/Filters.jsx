@@ -1,64 +1,87 @@
-import { X } from 'lucide-react';
-import styles from './Filters.module.css';
-import graySearch from '../../assets/searchGray.svg';
-import { useState } from 'react';
+import { X } from "lucide-react";
+import styles from "./Filters.module.css";
+import graySearch from "../../assets/searchGray.svg";
+import { useEffect, useState } from "react";
 
 // Importar los íconos de redes sociales
-import gmailIcon from '../../assets/gmail-icon.svg';
-import outlook from '../../assets/outlook-icon.svg';
-import drive from '../../assets/drive-icon.svg';
-import onedrive from '../../assets/onedrive-icon.svg';
-import dropbox from '../../assets/dropbox-icon.svg';
-import whatsapp from '../../assets/whatsapp-icon-green.svg';
+import gmailIcon from "../../assets/gmail-icon.svg";
+import outlook from "../../assets/outlook-icon.svg";
+import drive from "../../assets/drive-icon.svg";
+import onedrive from "../../assets/onedrive-icon.svg";
+import dropbox from "../../assets/dropbox-icon.svg";
+import whatsapp from "../../assets/whatsapp-icon-green.svg";
 
 const documentTypes = [
-  'Factura',
-  'Factura de impuestos',
-  'Recibo',
-  'Recibo de la venta',
-  'Recibo de efectivo',
-  'Oferta',
-  'Cotización',
-  'Abono',
-  'Pedido',
-  'Nota de Entrega',
+  "Factura",
+  "Factura de impuestos",
+  "Recibo",
+  "Recibo de la venta",
+  "Recibo de efectivo",
+  "Oferta",
+  "Cotización",
+  "Abono",
+  "Pedido",
+  "Nota de Entrega",
 ];
 
 const SOCIAL_NETWORKS = [
   {
-    id: 'gmail',
-    name: 'Gmail',
+    id: "gmail",
+    name: "Gmail",
     icon: gmailIcon,
   },
   {
-    id: 'outlook',
-    name: 'Outlook',
+    id: "outlook",
+    name: "Outlook",
     icon: outlook,
   },
   {
-    id: 'drive',
-    name: 'Drive',
+    id: "drive",
+    name: "Drive",
     icon: drive,
   },
   {
-    id: 'onedrive',
-    name: 'One Drive',
+    id: "onedrive",
+    name: "One Drive",
     icon: onedrive,
   },
   {
-    id: 'dropbox',
-    name: 'Dropbox',
+    id: "dropbox",
+    name: "Dropbox",
     icon: dropbox,
   },
   {
-    id: 'whatsapp',
-    name: 'WhatsApp',
+    id: "whatsapp",
+    name: "WhatsApp",
     icon: whatsapp,
   },
 ];
 
-export default function Filter({ isOpen, onClose }) {
+export default function Filter({ isOpen, onClose, setIsFilterOpen }) {
   const [selectedNetworks, setSelectedNetworks] = useState([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && isOpen) {
+        handleCloseNewClient();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsFilterOpen(false);
+      setIsAnimating(false);
+    }, 300);
+  };
 
   const handleNetworkChange = (network) => {
     setSelectedNetworks((prev) => {
@@ -81,11 +104,14 @@ export default function Filter({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <>
+      <div className={styles.overlay} onClick={handleCloseNewClient}></div>
+      <div
+        className={`${styles.modal} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+      >
         <div className={styles.header}>
           <h2>Filtrar</h2>
-          <button onClick={onClose} className={styles.closeButton}>
+          <button onClick={handleCloseNewClient} className={styles.closeButton}>
             <X size={20} />
           </button>
         </div>
@@ -93,14 +119,14 @@ export default function Filter({ isOpen, onClose }) {
         <div className={styles.content}>
           <div className={styles.filterSection}>
             <label>Search by document title</label>
-            <input type='text' placeholder='Text' className={styles.input} />
+            <input type="text" placeholder="Text" className={styles.input} />
           </div>
 
           <div className={styles.filterSection}>
             <label>Search by email</label>
             <input
-              type='email'
-              placeholder='example@email.com'
+              type="email"
+              placeholder="example@email.com"
               className={styles.input}
             />
           </div>
@@ -117,7 +143,7 @@ export default function Filter({ isOpen, onClose }) {
           <div className={styles.filterSection}>
             <label>Search by type</label>
             <span className={styles.checktypes}>
-              <input type='checkbox' />
+              <input type="checkbox" />
               Permitir todos los tipos de archivo
             </span>
             <select className={styles.select}>
@@ -140,12 +166,12 @@ export default function Filter({ isOpen, onClose }) {
             <div className={styles.amountContainer}>
               <div className={styles.amountInput}>
                 <span>$</span>
-                <input type='text' placeholder='Min' />
+                <input type="text" placeholder="Min" />
               </div>
               <span>-</span>
               <div className={styles.amountInput}>
                 <span>$</span>
-                <input type='text' placeholder='Max' />
+                <input type="text" placeholder="Max" />
               </div>
             </div>
           </div>
@@ -153,71 +179,71 @@ export default function Filter({ isOpen, onClose }) {
           <div className={styles.filterSection}>
             <label>Search by Tag</label>
             <div className={styles.searchContainer}>
-              <img src={graySearch} alt='search icon' />
+              <img src={graySearch} alt="search icon" />
               <input
-                type='text'
-                placeholder='Search tag'
+                type="text"
+                placeholder="Search tag"
                 className={styles.input}
               />
             </div>
             <div className={styles.tags}>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#222222' }}
+                style={{ backgroundColor: "#222222" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#0B06FF' }}
+                style={{ backgroundColor: "#0B06FF" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#FF0000' }}
+                style={{ backgroundColor: "#FF0000" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#12A27F' }}
+                style={{ backgroundColor: "#12A27F" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#7329A5' }}
+                style={{ backgroundColor: "#7329A5" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#7086FD' }}
+                style={{ backgroundColor: "#7086FD" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#FF8C00' }}
+                style={{ backgroundColor: "#FF8C00" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#16C098' }}
+                style={{ backgroundColor: "#16C098" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#C075EE' }}
+                style={{ backgroundColor: "#C075EE" }}
               >
                 Etiqueta
               </span>
               <span
                 className={styles.tag}
-                style={{ backgroundColor: '#EEFF00', color: '#333333' }}
+                style={{ backgroundColor: "#EEFF00", color: "#333333" }}
               >
                 Etiqueta
               </span>
@@ -231,19 +257,19 @@ export default function Filter({ isOpen, onClose }) {
             <div className={styles.socialNetworks}>
               <div className={styles.checkboxContainer}>
                 <input
-                  type='checkbox'
-                  id='allNetworks'
+                  type="checkbox"
+                  id="allNetworks"
                   checked={selectedNetworks.length === SOCIAL_NETWORKS.length}
                   onChange={handleSelectAll}
                 />
-                <label htmlFor='allNetworks'>Seleccionar todas las redes</label>
+                <label htmlFor="allNetworks">Seleccionar todas las redes</label>
               </div>
 
               <div className={styles.networksGrid}>
                 {SOCIAL_NETWORKS.map((network) => (
                   <div key={network.id} className={styles.checkboxContainer}>
                     <input
-                      type='checkbox'
+                      type="checkbox"
                       id={network.id}
                       checked={selectedNetworks.includes(network.id)}
                       onChange={() => handleNetworkChange(network.id)}
@@ -261,6 +287,6 @@ export default function Filter({ isOpen, onClose }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -207,7 +207,9 @@ const AllProducts = () => {
             </tbody>
           </table>
         </div>
-        {showModal && <LastTransactions setShowModal={setShowModal} />}
+        {showModal && (
+          <LastTransactions setShowModal={setShowModal} showModal={showModal} />
+        )}
       </div>
     </div>
   );

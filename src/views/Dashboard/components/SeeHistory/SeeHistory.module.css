@@ -1,22 +1,40 @@
+.historyContainer::-webkit-scrollbar {
+  display: none;
+}
 .historyContainer {
   position: fixed;
   top: 50%;
   left: 50%;
   width: 50%;
-  height: 80%;
+  height: 80vh;
 
   overflow-y: scroll;
   background-color: white;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  box-sizing: border-box;
-  z-index: 999;
-}
+  transform: translate(-50%, -50%) scale(1);
+  animation: scaleUp 300ms ease-out forwards;
+  padding-bottom: 20px;
 
+  z-index: 999;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.bg {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  /* z-index: 100; */
+}
 .headerHistory {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  padding: 20px;
   img {
     transform: rotate(90deg);
     width: 20px;
@@ -41,6 +59,7 @@
   }
 }
 .contentHistory {
+  padding: 20px;
   .content {
     margin: 20px 0;
   }
@@ -120,4 +139,47 @@
 .contentHistory .section .row {
   display: flex;
   justify-content: space-between;
+}
+
+.scaleDown {
+  animation: scaleDown 300ms ease-in forwards;
+  -webkit-animation: scaleDown 300ms ease-in forwards;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    -webkit-transform: translate(-50%, -50%) scale(0);
+    -moz-transform: translate(-50%, -50%) scale(0);
+    -ms-transform: translate(-50%, -50%) scale(0);
+    -o-transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    -moz-transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+    -o-transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes scaleDown {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    -moz-transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+    -o-transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(0);
+    -webkit-transform: translate(-50%, -50%) scale(0);
+    -moz-transform: translate(-50%, -50%) scale(0);
+    -ms-transform: translate(-50%, -50%) scale(0);
+    -o-transform: translate(-50%, -50%) scale(0);
+  }
+}
+
+.fadeOut {
+  opacity: 0;
 }

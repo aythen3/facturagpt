@@ -45,6 +45,29 @@ export const getAllUserClients = createAsyncThunk(
   }
 );
 
+export const updateClient = createAsyncThunk(
+  "clients/updateClient",
+  async ({ clientId, toUpdate, userId }) => {
+    console.log("Updating client with ID:", clientId, "with data:", toUpdate);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.put(
+        `/clients/updateClient/${clientId}`,
+        { ...toUpdate, userId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error updating automation:", error);
+      throw error;
+    }
+  }
+);
+
 export const deleteClients = createAsyncThunk(
   "clients/deleteClients",
   async ({ clientIds, userId }) => {

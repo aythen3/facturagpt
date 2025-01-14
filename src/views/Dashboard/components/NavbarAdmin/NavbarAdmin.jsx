@@ -31,8 +31,8 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
         <a href="/">
           <img src={facturaGPT} alt="" />
         </a>
-        {/* <div style={{ display: 'flex', gap: '10px' }}>
-          <img
+        <div style={{ display: 'flex', gap: '10px' }}>
+          {/* <img
             onClick={() => handleLanguage('es')}
             src={spanish_flag}
             alt='img'
@@ -42,8 +42,8 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
               cursor: 'pointer',
               borderRadius: '12px',
             }}
-          />
-          <img
+          /> */}
+          {/* <img
             onClick={() => handleLanguage('en')}
             src={english_flag}
             alt='img'
@@ -53,16 +53,20 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
               cursor: 'pointer',
               borderRadius: '12px',
             }}
-          />
-        </div> */}
+          /> */}
+        </div>
+        {/* <a href="#">
+          <img src={headphonesIcon} alt="" />
+        </a> */}
       </div>
 
       <button onClick={() => setShowPlusModal(true)} className={styles.plus}>
         {t("buttonGetPlus")} <img src={star} alt="" />
       </button>
       <div className={styles.profile}>
-        <a href="#" className={styles.number}>
-          <img /*src={time}*/ alt="" />
+        <a href='#' className={styles.number}>
+          time
+          {/* <img src={time} alt='' /> */}
           <span>234</span>
         </a>
         {/* <a href="#">

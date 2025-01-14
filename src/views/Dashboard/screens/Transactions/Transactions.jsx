@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Transactions.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.svg";
@@ -9,6 +9,7 @@ import creditCard from "../../assets/creditCardIcon.png";
 import closeIcon from "../../assets/closeMenu.svg";
 import pdf from "../../assets/pdfIcon.png";
 import arrow from "../../assets/arrow.svg";
+import { useDispatch, useSelector } from "react-redux";
 
 const Transactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -31,6 +32,9 @@ const Transactions = () => {
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const dispatch = useDispatch();
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -151,6 +155,32 @@ const Transactions = () => {
     // } else {
     //   setEmailError('');
     // }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && showNewClient) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setShowNewClient(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showNewClient]);
+
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setShowNewClient(false);
+      setIsAnimating(false);
+    }, 300);
   };
 
   return (
@@ -315,14 +345,13 @@ const Transactions = () => {
       </div>
       {showNewClient && (
         <>
+          <div className={styles.bg} onClick={handleCloseNewClient}></div>
           <div
-            className={styles.bg}
-            onClick={() => setShowNewClient(false)}
-          ></div>
-          <div className={styles.billContainer}>
+            className={`${styles.billContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+          >
             <div className={styles.billHeader}>
               <h3>Nueva Factura</h3>
-              <span>
+              <span onClick={handleCloseNewClient}>
                 <img src="/static/media/closeMenu.3c187347ca475028b4f31ab3e491fb44.svg" />
               </span>
             </div>
