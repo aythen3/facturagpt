@@ -35,6 +35,8 @@ const Transactions = () => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const dispatch = useDispatch();
+  const { client } = useSelector((state) => state.clients);
+  console.log("CLIENTE EN TRANSACTIONS", client);
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {

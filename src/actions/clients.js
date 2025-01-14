@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const createClient = createAsyncThunk(
   "clients/createClient",
   async ({ userId, email, clientData }) => {
-    console.log("data from createAutomation", {
+    console.log("data from createClient", {
       userId,
       email,
       clientData,
@@ -30,7 +30,7 @@ export const createClient = createAsyncThunk(
 export const getAllUserClients = createAsyncThunk(
   "clients/getAllUserClients",
   async ({ userId }) => {
-    console.log("Fetching automations for userId (REDUX):", userId);
+    console.log("Fetching clients for userId (REDUX):", userId);
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.get(`/clients/getAllUserClients/${userId}`, {
@@ -62,7 +62,31 @@ export const updateClient = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      console.log("Error updating automation:", error);
+      console.log("Error updating client:", error);
+      throw error;
+    }
+  }
+);
+
+export const getOneClient = createAsyncThunk(
+  "/getClient/client",
+  async (clientId) => {
+    console.log("CLIENTID EN ACTION", clientId);
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.get(
+        `/clients/getClient/${clientId}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error get client:", error);
       throw error;
     }
   }
