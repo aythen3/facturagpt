@@ -32,7 +32,9 @@ const Clients = () => {
   const [emailError, setEmailError] = useState("");
   const [selectedClientIds, setSelectedClientIds] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+
   const [isAnimating, setIsAnimating] = useState(false);
+
 
   const dispatch = useDispatch();
   const userStorage = localStorage.getItem("emailManagerAccount");
@@ -249,6 +251,7 @@ const Clients = () => {
   console.log("CLIENT REDUX", client);
   console.log("DATAAAAAAA", clientData);
 
+
   const handleCloseNewClient = () => {
     setIsAnimating(true);
     setTimeout(() => {
@@ -276,6 +279,7 @@ const Clients = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [showNewClient]);
+
 
   return (
     <div>
@@ -418,11 +422,13 @@ const Clients = () => {
         <>
           <div className={styles.bg} onClick={handleCloseNewClient}></div>
           <div
+
             className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
           >
             <div className={styles.containerHeader}>
               <h3>John Doe</h3>
               <span onClick={handleCloseNewClient}>
+
                 <img src={closeIcon} />
               </span>
             </div>
