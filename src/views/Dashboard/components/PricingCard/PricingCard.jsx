@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './PricingCard.module.css';
-import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./PricingCard.module.css";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export const PricingCard = ({
   title,
@@ -14,10 +14,13 @@ export const PricingCard = ({
   setSliderValue,
   setFacturasTotales,
   sliding,
+  buyBtn = true,
+  compareSelected = false,
 }) => {
-  const { t } = useTranslation('pricingCard');
+  const { t } = useTranslation("pricingCard");
   const handleClick = () => {
     setSelectedCard(index);
+    console.log(index);
     const validSlidingValue = Number(sliding);
     if (!isNaN(validSlidingValue)) {
       setSliderValue(validSlidingValue);
@@ -27,26 +30,28 @@ export const PricingCard = ({
   return (
     <div
       onClick={handleClick}
-      className={`${styles.card} ${selectedCard ? styles.selectedCard : ''}`}
+      className={`${styles.card} ${styles.cardsPricing} ${compareSelected ? (selectedCard === index ? `${styles.selectedCard} ` : "") : selectedCard ? styles.selectedCard : ""}`}
     >
       <div
-        className={`${styles.cardHeader} ${selectedCard ? styles.selectedCardHeader : ''}`}
+        className={`${styles.cardHeader} ${compareSelected ? (selectedCard === index ? styles.selectedCardHeader : "") : selectedCard ? styles.selectedCardHeader : ""}`}
       >
         {title}
       </div>
       <div className={styles.cardBody}>
         <p
-          className={`${styles.price} ${selectedCard ? styles.selectedPrice : ''}`}
+          className={`${styles.price} ${compareSelected ? (selectedCard === index ? styles.selectedPrice : "") : selectedCard ? styles.selectedPrice : ""}`}
         >
           {price}
-          {price !== 'FREE' ? '€' : ''}
+          {price !== "FREE" && price !== "GRATIS" && "€"}
         </p>
-        <span className={styles.subText}>{t('items')}</span>
-        <button
-          className={`${styles.button} ${selectedCard ? styles.selectedButton : ''}`}
-        >
-          {t('purchase')}
-        </button>
+        <span className={styles.subText}>{t("items")}</span>
+        {buyBtn && (
+          <button
+            className={`${styles.button} ${compareSelected ? (selectedCard === index ? styles.selectedButton : "") : selectedCard ? styles.selectedButton : ""}`}
+          >
+            {t("purchase")}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -58,7 +63,7 @@ const PricingCards = ({
   sliderValue,
   setFacturasTotales,
 }) => {
-  const { t } = useTranslation('pricingCard');
+  const { t } = useTranslation("pricingCard");
   const [selectedCard, setSelectedCard] = useState(null);
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -67,46 +72,81 @@ const PricingCards = ({
 
   const cardsData = [
     {
-      title: t('title1'),
-      price: t('price1'),
+      title: t("title1"),
+      price: t("price1"),
       min: 0,
       max: 0,
       sliding: 0,
     },
     {
-      title: t('title2'),
-      price: t('price2'),
+      title: t("title2"),
+      price: t("price2"),
       min: 20,
       max: 199,
       sliding: 20,
     },
     {
-      title: t('title3'),
-      price: t('price3'),
+      title: t("title3"),
+      price: t("price3"),
       min: 200,
       max: 499,
       sliding: 200,
     },
     {
-      title: t('title4'),
-      price: t('price4'),
+      title: t("title4"),
+      price: t("price4"),
       min: 500,
       max: 999,
       sliding: 500,
     },
     {
-      title: t('title5'),
-      price: t('price5'),
+      title: t("title5"),
+      price: t("price5"),
       min: 1000,
       max: 1999,
       sliding: 1000,
     },
     {
-      title: t('title6'),
-      price: t('price6'),
+      title: t("title6"),
+      price: t("price6"),
       min: 2000,
-      max: 5000000,
+      max: 4999,
       sliding: 2000,
+    },
+    {
+      title: t("title7"),
+      price: t("price7"),
+      min: 5000,
+      max: 9999,
+      sliding: 5000,
+    },
+    {
+      title: t("title8"),
+      price: t("price8"),
+      min: 10000,
+      max: 19999,
+      sliding: 10000,
+    },
+    {
+      title: t("title9"),
+      price: t("price9"),
+      min: 20000,
+      max: 49999,
+      sliding: 20000,
+    },
+    {
+      title: t("title10"),
+      price: t("price10"),
+      min: 50000,
+      max: 99999,
+      sliding: 50000,
+    },
+    {
+      title: t("title11"),
+      price: t("price11"),
+      min: 100000,
+      max: 5000000,
+      sliding: 100000,
     },
   ];
 
@@ -126,7 +166,7 @@ const PricingCards = ({
           left:
             selectedCardElement.offsetLeft -
             containerRef.current.offsetWidth / 2,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       }
     }
@@ -162,7 +202,7 @@ const PricingCards = ({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      style={{ overflowX: 'auto', cursor: isDragging ? 'grabbing' : 'grab' }}
+      style={{ overflowX: "auto", cursor: isDragging ? "grabbing" : "grab" }}
     >
       {cardsData.map((card, index) => (
         <PricingCard
@@ -177,6 +217,7 @@ const PricingCards = ({
           setFacturasTotales={setFacturasTotales}
           setSliderValue={setSliderValue}
           sliding={card.sliding}
+          compareSelected={false}
         />
       ))}
     </div>

@@ -33,6 +33,9 @@ const Clients = () => {
   const [selectedClientIds, setSelectedClientIds] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
+  const [isAnimating, setIsAnimating] = useState(false);
+
+
   const dispatch = useDispatch();
   const userStorage = localStorage.getItem("emailManagerAccount");
   const dataUser = JSON.parse(userStorage);
@@ -248,14 +251,42 @@ const Clients = () => {
   console.log("CLIENT REDUX", client);
   console.log("DATAAAAAAA", clientData);
 
+
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      dispatch(clearClient());
+      setShowNewClient(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && showNewClient) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          dispatch(clearClient());
+          setShowNewClient(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showNewClient]);
+
+
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          {/* <SeeHistory /> */}
           {/* <SendEmailModal /> */}
-
           <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
             <button
@@ -285,9 +316,7 @@ const Clients = () => {
             </button>
           </div>
         </div>
-        {selectedClientIds.length > 0 && (
-          <button onClick={(e) => handleDeleteClient(e)}>Borrar</button>
-        )}
+
         <div className={styles.clientsTable} style={{ overflow: "auto" }}>
           <table className={styles.table}>
             <thead>
@@ -391,23 +420,15 @@ const Clients = () => {
       </div>
       {showNewClient && (
         <>
+          <div className={styles.bg} onClick={handleCloseNewClient}></div>
           <div
-            className={styles.bg}
-            onClick={() => {
-              dispatch(clearClient());
-              setShowNewClient(false);
-            }}
-          ></div>
-          <div className={styles.newClientContainer}>
+
+            className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+          >
             <div className={styles.containerHeader}>
               <h3>John Doe</h3>
-              <span
-                onClick={() => {
-                  dispatch(clearClient());
+              <span onClick={handleCloseNewClient}>
 
-                  setShowNewClient(false);
-                }}
-              >
                 <img src={closeIcon} />
               </span>
             </div>

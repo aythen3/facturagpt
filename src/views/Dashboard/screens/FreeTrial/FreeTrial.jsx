@@ -1,16 +1,16 @@
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
+import facturaLogo from "../../assets/FacturaLogoIconGreen.svg";
+import facturaText from "../../assets/FacturaGptText.svg";
+import styles from "./FreeTrial.module.css";
+import openai from "../../assets/openaiIcon.svg";
+import mail from "../../assets/emailIcon.svg";
 
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/Navbar/Navbar';
-import facturaLogo from '../../assets/FacturaLogoGreen.svg';
-import styles from './FreeTrial.module.css';
-import openai from '../../assets/openaiIcon.svg';
-import mail from '../../assets/emailIcon.svg';
+import lock from "../../assets/LockIcon.svg";
 
-import lock from '../../assets/LockIcon.svg';
-
-import { useTranslation } from 'react-i18next';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from "react-i18next";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const FreeTrial = () => {
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
@@ -27,9 +27,13 @@ const FreeTrial = () => {
     <div className={styles.container}>
       <Navbar />
       <div className={styles.content}>
-        <a href="/landing" id={styles.logo}>
-          <img src={facturaLogo} alt="FacturaGPT" />
-        </a>
+        <div id={styles.logo}>
+          <img src={facturaLogo} alt="FacturaGPT" id={styles.LogoGPT} />
+          {/* <img src={facturaText} alt="FacturaGPT" /> */}
+          <p>
+            Factura<span>GPT</span>
+          </p>
+        </div>
         <div className={styles.btnContainer}>
           <button onClick={() => navigate("/login")}>
             <img src={mail} alt="Mail Icon" />
@@ -47,7 +51,7 @@ const FreeTrial = () => {
 
         <p className={styles.policy}>
           {t("termAndCon")}
-          <a href="termsandconditions">{t("termAndConLink")}</a>
+          <a href="terms">{t("termAndConLink")}</a>
         </p>
         <p className={styles.safety}>
           <img src={lock} alt="Lock Icon" />

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
 .pricingCardContainer {
   display: flex;
@@ -6,58 +6,59 @@
   align-items: center;
   width: 100%;
   max-width: 522px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   margin: 20px auto;
   /* padding: 0 16px; */
 }
 
 /* Pricing Box */
 .pricingBox {
-  width: 100%;
-  max-width: 265px;
-  border: 1px solid rgba(11, 6, 255, 0.14);
+  /* width: 100%; */
+  width: 265px;
+  border: 1px solid #16c09832;
   border-radius: 32px 32px 0px 0px;
   text-align: center;
   padding: 24px;
   padding-bottom: 15px;
   border-bottom: none;
   margin-bottom: -1px;
+  background-color: #10a37f;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .price {
   font-size: clamp(20px, 5vw, 42px);
   font-weight: bold;
-  color: #18181b;
   margin: 0;
 }
 
 .perMonth {
   font-size: clamp(14px, 4vw, 20px);
   font-weight: 400;
-  color: #555454;
 }
 
 .docPrice {
   font-size: clamp(18px, 5vw, 22px);
   font-weight: 400;
-  color: #71717a;
   margin: 4px 0;
 }
 
 .priceTag {
   font-weight: 400;
   font-size: clamp(18px, 5vw, 22px);
-  color: #71717a;
 }
 
 .planDetails {
   padding: 24px 10px 24px 10px;
   width: 80%;
   max-width: 522px;
-  background-color: #f0f2f5;
+  background-color: #f7f7f7;
   border-radius: 32px;
   text-align: left;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 @media (min-width: 768px) {
@@ -138,6 +139,6 @@ sup {
 
   .pricingBox {
     border-radius: 24px 24px 0 0;
-    width: 90%;
+    width: 50%;
   }
 }

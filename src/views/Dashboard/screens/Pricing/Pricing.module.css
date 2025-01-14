@@ -7,8 +7,8 @@
   width: 100%;
   background: #fff;
   overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
-  padding: 50px 0 0;
+  font-family: "Inter", sans-serif;
+  padding: 50px 0;
 }
 
 .plansHeader {
@@ -16,7 +16,7 @@
   /* align-items: center;
   justify-content: flex-start; */
   flex-direction: column;
-  gap: 3px;
+  gap: 20px;
   width: 100%;
   max-width: 800px;
   text-align: center;
@@ -30,13 +30,13 @@
   }
 }
 
-.test {
-  height: 100vh;
-  max-height: 1080px;
-  min-height: 600px;
+.containerP {
+  /* height: 100vh;
+  max-height: 750px; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  /* margin-bottom: 80px; */
 }
 .plansTitle {
   font-weight: 800;
@@ -142,21 +142,24 @@
 }
 
 .microText {
-  font-size: clamp(12px, 2vw, 16px);
+  font-size: clamp(12px, 2vw, 18px);
   font-weight: 300;
-  color: #000;
+  color: #b8b8b8;
   margin-top: 10px;
   text-align: center;
 }
 
 .lightText,
 .lightTextSecondary {
-  color: #71717a;
-  font-size: clamp(18px, 5vw, 21px);
+  color: #b8b8b8;
+  font-size: clamp(18px, 5vw, 23px);
   font-weight: 400;
-  margin-top: 70px;
+  margin-top: 80px;
   max-width: 800px;
   text-align: center;
+}
+.lightText {
+  line-height: 40px;
 }
 
 .lightTextSecondary {
@@ -222,6 +225,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin-bottom: 0;
 }
 
 .pricingStarText img {
@@ -250,26 +254,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
+  border-radius: 999px;
   color: #fff;
-  font-size: clamp(14px, 2.5vw, 18px);
+  font-size: 18px;
   font-weight: 400;
   background: #16c098;
   width: 100%;
-  max-width: 360px;
+  max-width: 244px;
   height: 57px;
   min-height: 57px;
-  margin-bottom: 100px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
+  text-decoration: none;
+  gap: 15px;
+  border-radius: 999px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
 }
 
 .greenLightText {
-  color: #1b6553;
+  color: #b8b8b8;
   font-size: clamp(17px, 3vw, 18px);
   font-weight: 300;
   margin-bottom: 100px;
@@ -288,17 +292,20 @@
 
 .googleCard {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: center;
   gap: 30px;
   background: #ffffff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  padding: 32px;
+  box-shadow: 5px 0px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
   width: 100%;
   max-width: 230px;
-  /* height: 242px; */
+  height: 242px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 .starsContainer {
@@ -321,9 +328,14 @@
 .trustpilotCard {
   background: #ffffff;
   border-radius: 2px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.1);
   width: 385px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  overflow: hidden;
 }
 
 .topContainer {
@@ -340,12 +352,15 @@
 }
 
 .bottomContainer {
+  display: flex;
+  height: 100%;
   text-align: center;
   gap: 8px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding-top: 15px;
+  padding: 30px 20px;
 }
 
 .trustpilotBottomStars {
@@ -383,6 +398,9 @@
 
   .trustContainer {
     flex-direction: column;
+  }
+  .googleCard {
+    max-width: 100%;
   }
 }
 
@@ -432,12 +450,12 @@
 }
 .div6 {
   grid-area: 2 / 3 / 3 / 5;
-  margin-left: -40px;
-  margin-right: 40px;
+  margin-left: -27px;
+  /* margin-right: 40px; */
 }
 .div7 {
   grid-area: 2 / 6 / 3 / 8;
-  margin-left: 40px;
+  margin-left: 27px;
   margin-right: -40px;
 }
 .div8 {

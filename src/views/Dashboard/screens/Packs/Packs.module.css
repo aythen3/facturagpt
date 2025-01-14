@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 .packsContainer {
   display: flex;
   width: 100%;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-size: contain;
   padding: 44px 0px;
   max-width: 1440px;
@@ -33,20 +33,18 @@
 }
 
 .packsDescription {
-  color: #71717a;
+  color: #b8b8b8;
   font-size: clamp(18px, 5vw, 24px); /* Ajuste dinámico del tamaño de título */
   font-weight: 400;
-  /* height: 133px; */
-  /* display: flex; */
   align-items: center;
   justify-content: center;
   max-width: 1006px;
-  /* margin: 33px 0px; */
   text-align: center;
   padding: 0 20px;
+  text-align: center;
 
-  strong {
-    color: #71717a;
+  span {
+    color: #16c098;
     font-weight: bolder;
   }
 
@@ -114,8 +112,12 @@
 }
 
 .bannerTitle {
-  color: #406f64 !important;
-  font-size: clamp(8px, 1.5vw, 13px) !important; /* Ajuste dinámico con clamp */
+  color: #16c098 !important;
+  font-size: clamp(
+    14px,
+    1.5vw,
+    16px
+  ) !important; /* Ajuste dinámico con clamp */
   font-weight: bold;
   padding: 0 5px;
 }
@@ -128,8 +130,8 @@
 }
 
 .regular08 {
-  color: #71717a;
-  font-size: clamp(20px, 5vw, 20px) !important; /* Ajuste dinámico con clamp */
+  color: #b8b8b8;
+  font-size: clamp(17px, 5vw, 20px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   margin-top: 33px;
   max-width: 55%;
@@ -148,18 +150,19 @@
   justify-content: center;
   flex-wrap: wrap;
   div {
-    height: 80px;
-    width: 80px;
+    height: 60px;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px;
     margin: 10px;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    background-color: #16c0981b;
     img {
       width: 80%;
       height: 80%;
@@ -170,7 +173,7 @@
 
 .extensionsTitle {
   font-weight: 700;
-  gap: 10px;
+  gap: 20px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -182,7 +185,7 @@
     font-size: clamp(
       20px,
       5vw,
-      32px
+      40px
     ) !important; /* Ajuste dinámico con clamp */
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TitleComponent from "./Components/TitleComponent";
 import SearchComponent from "./Components/SearchComponent/SearchComponent";
 import CardAutomate from "./Components/CardAutomate/CardAutomate";
@@ -8,7 +8,15 @@ import CloseSVG from "./svgs/CloseSVG";
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
 import { useDispatch } from "react-redux";
 
-const Automate = ({ close, newData, typeContent }) => {
+const Automate = ({
+  close,
+  newData,
+  typeContent,
+  isModalAutomate,
+  setIsModalAutomate,
+  isAnimating,
+  setIsAnimating,
+}) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();
   const handleDataFilter = (searchTerm) => {
@@ -18,27 +26,57 @@ const Automate = ({ close, newData, typeContent }) => {
     setDataFilter(filteredData);
   };
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <div style={{ justifySelf: "end" }}>
-          <CloseSVG action={close} />
-        </div>
-        <TitleComponent title="Automatiza" />
-        <SearchComponent onSearch={handleDataFilter} />
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsModalAutomate(false);
+      setIsAnimating(false);
+    }, 300);
+  };
 
-        {dataFilter.map((card) => (
-          <CardAutomate
-            fullContent={true}
-            type={card.type}
-            typeContent={typeContent}
-            key={card.id}
-            name={card.automateName}
-            image={card.image}
-            contactType={card.contactType}
-            isBorders={true}
-          />
-        ))}
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && isModalAutomate) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setIsModalAutomate(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isModalAutomate]);
+
+  return (
+    <>
+      <div className={styles.container} onClick={handleCloseNewClient}></div>
+      <div
+        className={`${styles.content} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+      >
+        <div className={styles.automate_header}>
+          <TitleComponent title="Automatiza" />
+          <CloseSVG onClick={handleCloseNewClient} />
+        </div>
+        <div className={styles.automate_content}>
+          <SearchComponent onSearch={handleDataFilter} />
+          {dataFilter.map((card) => (
+            <CardAutomate
+              fullContent={true}
+              type={card.type}
+              typeContent={typeContent}
+              key={card.id}
+              name={card.automateName}
+              image={card.image}
+              contactType={card.contactType}
+              isBorders={true}
+            />
+          ))}
+        </div>
         <div className={styles.container_buttons_footer}>
           <button
             onClick={close}
@@ -52,7 +90,7 @@ const Automate = ({ close, newData, typeContent }) => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
