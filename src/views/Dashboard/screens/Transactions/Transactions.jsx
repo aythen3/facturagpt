@@ -192,17 +192,20 @@ const Transactions = () => {
         <div className={styles.clientsHeader}>
           <div className={styles.infoClient}>
             <div className={styles.contactInfo}>
-              <h3>Aythen</h3>
-              <span>info@aythen.com</span>
-              <span>+34 600 789 012</span>
+              <h3>{client?.clientData?.fullName}</h3>
+              <span>{client?.clientData?.email}</span>
+              <span>
+                {client?.clientData?.codeCountry}{" "}
+                {client?.clientData?.numberPhone}
+              </span>
             </div>
             <div className={styles.info}>
               <p>Número Fiscal</p>
-              <span>Desconocido</span>
+              <span>{client?.clientData?.taxNumber}</span>
             </div>
             <div className={styles.info}>
               <p>ID Cliente</p>
-              <span>C001</span>
+              <span>{client?.id.slice(-5)}</span>
             </div>
           </div>
           <div className={styles.searchContainer}>
