@@ -18,6 +18,8 @@ const userSlices = createSlice({
         state.loading = false;
         if (action.payload.success && action.payload.account) {
           const { id, email, role } = action.payload.account;
+          console.log("USUARIO LOGINNNNNN", action.payload);
+
           state.user = { id, email, role };
         }
       })
