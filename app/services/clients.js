@@ -149,9 +149,27 @@ const updateClient = async ({ clientId, userId, toUpdate }) => {
   }
 };
 
+const getOneClient = async ({ clientId }) => {
+  const dbClientsName = "db_emailmanager_clients";
+  let dbClients;
+
+  try {
+    dbClients = nano.use(dbClientsName);
+
+    const clientDoc = await dbClients.get(clientId);
+    console.log(`Client ${clientId} retrieved successfully`);
+
+    return clientDoc;
+  } catch (error) {
+    console.error("Error retrieving client:", error);
+    throw new Error("Failed to retrieve client");
+  }
+};
+
 module.exports = {
   createClient,
   getAllUserClients,
   deleteClient,
   updateClient,
+  getOneClient,
 };

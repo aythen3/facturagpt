@@ -20,7 +20,10 @@ const userSlices = createSlice({
       .addCase(loginToManager.fulfilled, (state, action) => {
         console.log("action.payload from loginToManager", action.payload);
         state.loading = false;
-        state.user = action.payload;
+        if (action.payload.success && action.payload.account) {
+          const { id, email, role } = action.payload.account;
+          state.user = { id, email, role };
+        }
       })
       .addCase(loginToManager.rejected, (state, action) => {
         state.error = action.payload;

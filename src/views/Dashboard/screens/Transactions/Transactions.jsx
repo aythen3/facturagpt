@@ -10,6 +10,9 @@ import closeIcon from "../../assets/closeMenu.svg";
 import pdf from "../../assets/pdfIcon.png";
 import arrow from "../../assets/arrow.svg";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllTransactionsByClient } from "../../../../actions/transactions";
+import { getEmailsByQuery } from "../../../../actions/emailManager";
+import { updateClient } from "../../../../actions/user";
 
 const Transactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -35,6 +38,45 @@ const Transactions = () => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const dispatch = useDispatch();
+  const { client } = useSelector((state) => state.clients);
+  const [user, setUser] = useState({
+    id: "client_norberto.cp1988@gmail.com_c54a5156-da4b-481f-919f-0c89ce2a4fd2",
+    tokenEmail: "norberto.cp1988@gmail.com",
+    tokenPassword: "diwj jvdy zzbi vqom",
+    emailQueries: ["factura, albaran"],
+    tokenGPT:
+      "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",
+    processedEmails:
+      "<SCYPR80MB7097C7DB7BD1F20A90CC06AAEF182@SCYPR80MB7097.lamprd80.prod.outlook.com>",
+
+    host: "46.183.119.66",
+    port: "21",
+    tokenUseruser: "Aythen",
+    tokenUserPassword: "Cloud@24",
+  });
+
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     const result = await dispatch(
+  //       getEmailsByQuery({
+  //         userId: user?.id || "randomId",
+  //         email: user.tokenEmail,
+  //         password: user.tokenPassword,
+  //         query: user.emailQueries,
+  //         tokenGpt: user.tokenGPT,
+  //         logs: user.processedEmails,
+  //         ftpData: {
+  //           host: user.host,
+  //           port: user.port,
+  //           user: user.tokenUser,
+  //           password: user.tokenUserPassword,
+  //         },
+  //       })
+  //     );
+  //     console.log("REULSTADO", result);
+  //   };
+
+  // }, [dispatch]);
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -190,17 +232,20 @@ const Transactions = () => {
         <div className={styles.clientsHeader}>
           <div className={styles.infoClient}>
             <div className={styles.contactInfo}>
-              <h3>Aythen</h3>
-              <span>info@aythen.com</span>
-              <span>+34 600 789 012</span>
+              <h3>{client?.clientData?.fullName}</h3>
+              <span>{client?.clientData?.email}</span>
+              <span>
+                {client?.clientData?.codeCountry}{" "}
+                {client?.clientData?.numberPhone}
+              </span>
             </div>
             <div className={styles.info}>
               <p>Número Fiscal</p>
-              <span>Desconocido</span>
+              <span>{client?.clientData?.taxNumber}</span>
             </div>
             <div className={styles.info}>
               <p>ID Cliente</p>
-              <span>C001</span>
+              <span>{client?.id.slice(-5)}</span>
             </div>
           </div>
           <div className={styles.searchContainer}>
