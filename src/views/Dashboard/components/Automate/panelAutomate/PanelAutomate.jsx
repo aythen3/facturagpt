@@ -23,7 +23,7 @@ import {
 import { setUser } from "../../../../../slices/emailManagerSlices";
 
 const PanelAutomate = ({ type, close, typeContent }) => {
-  const { user } = useSelector((state) => state.emailManager);
+  const { user } = useSelector((state) => state.user);
 
   const { userAutomations } = useSelector((state) => state.automations); // Aca tenemos el array de automates del user (con toda la info dentro, no solo ids)
   const dispatch = useDispatch();
@@ -40,26 +40,6 @@ const PanelAutomate = ({ type, close, typeContent }) => {
     filterType === "Entrada / Input" ? "input" : "output";
 
   const [activeCard, setActiveCard] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("emailManagerAccount");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        if (parsedUser?.email && parsedUser?.id && parsedUser?.role) {
-          dispatch(setUser(parsedUser));
-          console.log(
-            "Logged-in account restored from localStorage:",
-            parsedUser
-          );
-        }
-      } catch (error) {
-        console.error("Error parsing stored user data:", error);
-      }
-    } else {
-      navigate("/login");
-    }
-  }, []);
 
   const handleCardClick = (id) => {
     setActiveCard(id);
@@ -81,22 +61,21 @@ const PanelAutomate = ({ type, close, typeContent }) => {
 
   const handleAddAutomation = () => {
     console.log("Adding automation...", type);
-
     // Aca podes agregar la data hardcodeada por el momento para poder testear, te dejo la action comentada para que puedas probar
 
-    if (user) {
-      dispatch(
-        createAutomation({
-          userId: user?.id,
-          email: user?.email,
-          automationData: {
-            name: `New ${type} Automation`,
-            description: "Automation test...",
-            type, // esto es lo unico que tenemos de estados por el momento...
-          },
-        })
-      );
-    }
+    // if (user) {
+    //   dispatch(
+    //     createAutomation({
+    //       userId: user?.id,
+    //       email: user?.email,
+    //       automationData: {
+    //         name: `New ${type} Automation`,
+    //         description: "Automation test...",
+    //         type, // esto es lo unico que tenemos de estados por el momento...
+    //       },
+    //     })
+    //   );
+    // }
   };
 
   return (

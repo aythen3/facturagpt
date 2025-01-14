@@ -1,18 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import styles from './FileExplorer.module.css';
-import { ReactComponent as FolderIcon } from '../../assets/folder.svg';
-import { ReactComponent as ImageIcon } from '../../assets/image-icon.svg';
-import { ReactComponent as PdfIcon } from '../../assets/pdf-ico.svg';
-import { ReactComponent as TxtIcon } from '../../assets/txt-icon.svg';
-import { ReactComponent as CsvIcon } from '../../assets/csv-icon.svg';
-import { ReactComponent as PngIcon } from '../../assets/png-icon.svg';
-import { Search, AlignRight, MoreVertical } from 'lucide-react';
-import filterSearch from '../../assets/Filters Search.png';
+import React, { useState, useRef, useEffect } from "react";
+import ReactDOM from "react-dom";
+import styles from "./FileExplorer.module.css";
+import folderIcon from "../../assets/S3/folderIcon.svg";
+import imageIcon from "../../assets/S3/imageIcon.svg";
+import codeIcon from "../../assets/S3/codeIcon.svg";
+import fileIcon from "../../assets/S3/fileIcon.svg";
+import { Search, MoreVertical } from "lucide-react";
+import searchMenuIcon from "../../assets/searchMenuIcon.svg";
 
-import PlusIcon from '../../assets/automatizaIconBW.svg';
-
-import Filter from './Filters';
+import Filter from "./Filters";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPath } from "../../../../slices/scalewaySlices";
+import k from "../../assets/k.svg";
+import cmd from "../../assets/cmd.svg";
+import { uploadFiles } from "../../../../actions/scaleway";
 
 const FileOptionsPopup = ({ onClose, style }) => {
   const popupRef = useRef(null);
@@ -24,11 +25,11 @@ const FileOptionsPopup = ({ onClose, style }) => {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
-  const options = ['Move', 'Download', 'Share', 'Rename', 'Delete'];
+  const options = ["Move", "Download", "Share", "Rename", "Delete"];
 
   return ReactDOM.createPortal(
     <div ref={popupRef} className={styles.optionsPopup} style={style}>
@@ -43,6 +44,9 @@ const FileOptionsPopup = ({ onClose, style }) => {
 };
 
 export default function FileExplorer({ isOpen, setIsOpen }) {
+  const { user } = useSelector((state) => state.user);
+  const { currentPath, userFiles } = useSelector((state) => state.scaleway);
+  const dispatch = useDispatch();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
   const optionsButtonRefs = useRef([]);
@@ -53,90 +57,194 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
     setActivePopup(activePopup === index ? null : index);
   };
 
+  useEffect(() => {
+    if (user && !currentPath) {
+      dispatch(setCurrentPath(user.id + "/"));
+    }
+  }, [user]);
+
+  const getFileIcon = (key) => {
+    if (key.endsWith("/")) {
+      return folderIcon;
+    }
+
+    const extension = key.split(".").pop().toLowerCase();
+
+    if (["png", "jpg", "jpeg", "gif"].includes(extension)) {
+      return imageIcon;
+    }
+
+    if (["js", "html", "css", "json", "java"].includes(extension)) {
+      return codeIcon;
+    }
+
+    return fileIcon;
+  };
+
+  const renderBreadcrumbs = () => {
+    if (!currentPath) return null;
+
+    const pathSegments = currentPath.split("/").filter(Boolean);
+
+    const breadcrumbs = [
+      <span key="inicio" className={styles.breadcrumb}>
+        <div
+          onClick={() => handleBreadcrumbClick(`${user.id}/`)}
+          className={styles.breadcrumbButton}
+        >
+          Inicio
+        </div>
+        {pathSegments.length > 0 && (
+          <span className={styles.breadcrumbSeparator}> / </span>
+        )}
+      </span>,
+    ];
+
+    let accumulatedPath = `${user.id}/`;
+
+    pathSegments.forEach((segment, index) => {
+      accumulatedPath += `${segment}/`;
+      if (segment === user.id) {
+        return;
+      }
+      breadcrumbs.push(
+        <span key={accumulatedPath} className={styles.breadcrumb}>
+          <div
+            onClick={() => handleBreadcrumbClick(accumulatedPath)}
+            className={styles.breadcrumbButton}
+          >
+            {segment}
+          </div>
+          {index < pathSegments.length - 1 && (
+            <span className={styles.breadcrumbSeparator}> / </span>
+          )}
+        </span>
+      );
+    });
+
+    return <div className={styles.breadcrumbs}>{breadcrumbs}</div>;
+  };
+
+  const handleBreadcrumbClick = (path) => {
+    console.log("clicking on breadcrumb", path);
+    dispatch(setCurrentPath(path));
+  };
+
+  const filteredFiles = userFiles.filter((item) => {
+    const itemPath = item.Key;
+    const isInCurrentDirectory =
+      itemPath.startsWith(currentPath) &&
+      itemPath.split("/").length === currentPath.split("/").length + 1;
+    if (currentPath === `${user.id}/`) {
+      if (itemPath.split("/").length === 2) {
+        return true;
+      }
+    }
+    return isInCurrentDirectory;
+  });
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const files = Array.from(event.dataTransfer.files);
+    dispatch(uploadFiles({ files, currentPath }));
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <div className={styles.container} ref={fileExplorerRef}>
+    <div
+      className={styles.container}
+      ref={fileExplorerRef}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
       <div className={styles.searchContainer}>
         <div className={styles.searchInputWrapper}>
           <div className={styles.searchIcon}>
             <Search size={20} />
           </div>
           <input
-            type='text'
-            placeholder='Buscar'
+            type="text"
+            placeholder="Buscar"
             className={styles.searchInput}
           />
-          <button
-            className={styles.menuIcon}
-            onClick={() => setIsFilterOpen(true)}
+          <div className={styles.searchIconsWrappers}>
+            <img src={cmd} alt="cmdIcon" />
+          </div>
+          <div
+            style={{ marginLeft: "5px" }}
+            className={styles.searchIconsWrappers}
           >
-            <img src={filterSearch} />
-          </button>
+            <img src={k} alt="kIcon" />
+          </div>
         </div>
-        <button onClick={() => setIsOpen(true)} className={styles.openModal}>
-          <img src={PlusIcon} />
-        </button>
+        <img
+          style={{ cursor: "pointer" }}
+          onClick={() => setIsOpen(true)}
+          src={searchMenuIcon}
+          alt="searchMenuIcon"
+        />
         <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
       </div>
 
-      <div className={styles.folderSection}>
-        <div className={styles.folderHeader}>2025{'>'}Q1</div>
-        <div className={styles.folderItem}>
-          <div className={styles.itemInner}>
-            <FolderIcon />
-            <span className={styles.itemText}>Facturas</span>
-          </div>
-        </div>
-      </div>
+      {renderBreadcrumbs()}
 
       <div className={styles.fileList}>
-        {[
-          { icon: ImageIcon, text: '.jpg' },
-          { icon: ImageIcon, text: '.jpg' },
-          { icon: TxtIcon, text: '.txt' },
-          { icon: ImageIcon, text: '.jpg' },
-          { icon: PngIcon, text: '.png' },
-          { icon: PdfIcon, text: '.pdf' },
-          { icon: PngIcon, text: '.png' },
-          { icon: CsvIcon, text: '.csv' },
-          { icon: PngIcon, text: '.png' },
-          { icon: FolderIcon, text: 'Recibos', isFolder: true },
-          { icon: PdfIcon, text: '.pdf' },
-          { icon: PdfIcon, text: '.pdf' },
-          { icon: PdfIcon, text: '.pdf' },
-        ].map((item, index) => (
-          <div
-            key={index}
-            className={item.isFolder ? styles.folderItem : styles.fileItem}
-          >
-            <div className={styles.itemInner}>
-              <item.icon />
-              <span className={styles.itemText}>{item.text}</span>
-              {!item.isFolder && (
-                <button
-                  ref={(el) => (optionsButtonRefs.current[index] = el)}
-                  className={styles.moreButton}
-                  aria-label='More options'
-                  onClick={(e) => handleOptionsClick(index, e)}
-                >
-                  <MoreVertical size={16} />
-                </button>
+        {filteredFiles?.map((item, index) => {
+          const isFolder = item.Key.endsWith("/");
+
+          return (
+            <div
+              onClick={() => {
+                if (isFolder) {
+                  console.log("setting current path to", item.Key);
+                  dispatch(setCurrentPath(item.Key));
+                }
+              }}
+              key={index}
+              className={styles.fileItem}
+            >
+              <div className={styles.itemInner}>
+                <img
+                  src={getFileIcon(item.Key)}
+                  alt="file-icon"
+                  className={styles.fileIcon}
+                />
+                <span className={styles.itemText}>
+                  {isFolder
+                    ? item.Key.split("/").slice(-2, -1)[0]
+                    : item.Key.split("/").pop()}{" "}
+                </span>
+                {!isFolder && (
+                  <button
+                    ref={(el) => (optionsButtonRefs.current[index] = el)}
+                    className={styles.moreButton}
+                    aria-label="More options"
+                    onClick={(e) => handleOptionsClick(index, e)}
+                  >
+                    <MoreVertical size={16} />
+                  </button>
+                )}
+              </div>
+              {activePopup === index && !isFolder && (
+                <FileOptionsPopup
+                  onClose={() => setActivePopup(null)}
+                  style={{
+                    position: "fixed",
+                    top:
+                      optionsButtonRefs.current[index].getBoundingClientRect()
+                        .top + optionsButtonRefs.current[index].offsetHeight,
+                    left: optionsButtonRefs.current[
+                      index
+                    ].getBoundingClientRect().left,
+                  }}
+                />
               )}
             </div>
-            {activePopup === index && !item.isFolder && (
-              <FileOptionsPopup
-                onClose={() => setActivePopup(null)}
-                style={{
-                  position: 'fixed',
-                  top:
-                    optionsButtonRefs.current[index].getBoundingClientRect()
-                      .top + optionsButtonRefs.current[index].offsetHeight,
-                  left: optionsButtonRefs.current[index].getBoundingClientRect()
-                    .left,
-                }}
-              />
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
