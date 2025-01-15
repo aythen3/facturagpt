@@ -254,19 +254,17 @@ const Dashboard = () => {
       if (response.meta.requestStatus === "fulfilled") {
         console.log("ENTRE A LA CREACION DE CLIENTES");
 
-        // Excluir xmlContent y preparar los datos
         const clientsData = response.payload.processedAttachments.map(
           (attachment) => {
-            const { xmlContent, ...attachmentWithoutXml } = attachment; // Excluimos xmlContent
+            const { xmlContent, ...attachmentWithoutXml } = attachment;
             return {
               attachment: attachmentWithoutXml,
-              email: attachmentWithoutXml.email.fromEmail[0].address, // O como necesites el email
-              processedData: attachment.processedData, // Datos que se guardarán como clientData
+              email: attachmentWithoutXml.email.fromEmail[0].address,
+              processedData: attachment.processedData,
             };
           }
         );
 
-        // Llamada al servicio para crear clientes
         const createdClientsResponse = await dispatch(
           createClients({
             userId: dataUser?.id,

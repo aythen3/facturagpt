@@ -53,7 +53,7 @@
             <TaxIdentification>
                 <PersonTypeCode>J</PersonTypeCode>
                 <ResidenceTypeCode>R</ResidenceTypeCode>
-                <TaxIdentificationNumber>A58580624</TaxIdentificationNumber>
+                <TaxIdentificationNumber>A58580626</TaxIdentificationNumber>
             </TaxIdentification>
             <LegalEntity>
                 <CorporateName>HSB S.A.</CorporateName>
@@ -124,7 +124,7 @@
                             <DeliveryNoteNumber>R-4022000057</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>TERMINAL CURV.403F 22-3/4 C/ARAND.LT.</ItemDescription>
+                    <ItemDescription>TERMINAL CURV.403F 22-3/4 CI/ARAND.LT.</ItemDescription>
                     <Quantity>50</Quantity>
                     <UnitPriceWithoutTax>12.77</UnitPriceWithoutTax>
                     <TotalCost>638.50</TotalCost>
@@ -159,30 +159,30 @@
                     <SequenceNumber>2</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber>R-4022000058</DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000057</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>Bandeja 66 perforada PVC-M1 U23X 60x200 gris</ItemDescription>
-                    <Quantity>50</Quantity>
-                    <UnitPriceWithoutTax>18.38</UnitPriceWithoutTax>
-                    <TotalCost>919.00</TotalCost>
+                    <ItemDescription>TERMINALS CU 16MM</ItemDescription>
+                    <Quantity>60</Quantity>
+                    <UnitPriceWithoutTax>1.35</UnitPriceWithoutTax>
+                    <TotalCost>81.00</TotalCost>
                     <DiscountsAndRebates>
                         <Discount>
                             <DiscountReason>Dto</DiscountReason>
-                            <DiscountRate>35</DiscountRate>
-                            <DiscountAmount>209.07</DiscountAmount>
+                            <DiscountRate>30</DiscountRate>
+                            <DiscountAmount>17.01</DiscountAmount>
                         </Discount>
                     </DiscountsAndRebates>
-                    <GrossAmount>597.35</GrossAmount>
+                    <GrossAmount>56.70</GrossAmount>
                     <TaxesOutputs>
                         <Tax>
                             <TaxTypeCode>01</TaxTypeCode>
                             <TaxRate>21.00</TaxRate>
                             <TaxableBase>
-                                <TotalAmount>597.35</TotalAmount>
+                                <TotalAmount>56.70</TotalAmount>
                             </TaxableBase>
                             <TaxAmount>
-                                <TotalAmount>722.79</TotalAmount>
+                                <TotalAmount>68.61</TotalAmount>
                             </TaxAmount>
                             <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
                             <EquivalenceSurchargeAmount>
@@ -235,7 +235,7 @@
                     <SequenceNumber>4</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber>R-4022000060</DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-4022000059</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
                     <ItemDescription>CAJA EMPOTRAR UNIVERSAL ENLAZABLE</ItemDescription>
@@ -276,7 +276,45 @@
                             <DeliveryNoteNumber>R-4022000060</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>CURVA 90 H-H 2Acu 15</ItemDescription>
+                    <ItemDescription>CAJA EMPOTRAR UNIVERSAL ENLAZABLE</ItemDescription>
+                    <Quantity>200</Quantity>
+                    <UnitPriceWithoutTax>0.81</UnitPriceWithoutTax>
+                    <TotalCost>162.00</TotalCost>
+                    <DiscountsAndRebates>
+                        <Discount>
+                            <DiscountReason>Dto</DiscountReason>
+                            <DiscountRate>30</DiscountRate>
+                            <DiscountAmount>34.02</DiscountAmount>
+                        </Discount>
+                    </DiscountsAndRebates>
+                    <GrossAmount>113.40</GrossAmount>
+                    <TaxesOutputs>
+                        <Tax>
+                            <TaxTypeCode>01</TaxTypeCode>
+                            <TaxRate>21.00</TaxRate>
+                            <TaxableBase>
+                                <TotalAmount>113.40</TotalAmount>
+                            </TaxableBase>
+                            <TaxAmount>
+                                <TotalAmount>137.21</TotalAmount>
+                            </TaxAmount>
+                            <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
+                            <EquivalenceSurchargeAmount>
+                                <TotalAmount>0.00</TotalAmount>
+                            </EquivalenceSurchargeAmount>
+                        </Tax>
+                    </TaxesOutputs>
+                </InvoiceLine>
+                <InvoiceLine id="6">
+                    <IssuerTransactionReference>404200047</IssuerTransactionReference>
+                    <ReceiverTransactionReference/>
+                    <SequenceNumber>6</SequenceNumber>
+                    <DeliveryNotesReferences>
+                        <DeliveryNote>
+                            <DeliveryNoteNumber>R-4022000060</DeliveryNoteNumber>
+                        </DeliveryNote>
+                    </DeliveryNotesReferences>
+                    <ItemDescription>CURVA 90 H-H 2Cu 15</ItemDescription>
                     <Quantity>25</Quantity>
                     <UnitPriceWithoutTax>0.90</UnitPriceWithoutTax>
                     <TotalCost>22.50</TotalCost>
@@ -305,13 +343,13 @@
                         </Tax>
                     </TaxesOutputs>
                 </InvoiceLine>
-                <InvoiceLine id="6">
+                <InvoiceLine id="7">
                     <IssuerTransactionReference>404200047</IssuerTransactionReference>
                     <ReceiverTransactionReference/>
-                    <SequenceNumber>6</SequenceNumber>
+                    <SequenceNumber>7</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber>R-4022000061</DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-402200061</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
                     <ItemDescription>Soporte horizontal PVC-M1 P/66200/1 U23X gris</ItemDescription>
@@ -343,13 +381,13 @@
                         </Tax>
                     </TaxesOutputs>
                 </InvoiceLine>
-                <InvoiceLine id="7">
+                <InvoiceLine id="8">
                     <IssuerTransactionReference>404200047</IssuerTransactionReference>
                     <ReceiverTransactionReference/>
-                    <SequenceNumber>7</SequenceNumber>
+                    <SequenceNumber>8</SequenceNumber>
                     <DeliveryNotesReferences>
                         <DeliveryNote>
-                            <DeliveryNoteNumber>R-4022000061</DeliveryNoteNumber>
+                            <DeliveryNoteNumber>R-402200061</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
                     <ItemDescription>ESCUADRA 300-150</ItemDescription>
