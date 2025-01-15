@@ -47,7 +47,7 @@ const stripePromise = loadStripe(
 );
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
-import { saveTransaction } from "../../actions/transactions";
+import { createClients } from "../../actions/clients";
 
 const Dashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -223,12 +223,17 @@ const Dashboard = () => {
     setSearchQuery(event.target.value);
   };
 
+  const userStorage = localStorage.getItem("emailManagerAccount");
+  const dataUser = JSON.parse(userStorage);
+
   const toggleUserActive = async (user) => {
+    console.log("CLIENT", user);
+
     dispatch(
       updateClient({ clientId: user.id, toUpdate: { active: !user.active } })
     );
     if (!user.active) {
-      dispatch(
+      const response = await dispatch(
         getEmailsByQuery({
           userId: user?.id || "randomId",
           email: user.tokenEmail,
@@ -244,6 +249,33 @@ const Dashboard = () => {
           },
         })
       );
+      console.log("REPONSEEEE 1", response);
+
+      if (response.meta.requestStatus === "fulfilled") {
+        console.log("ENTRE A LA CREACION DE CLIENTES");
+
+        // Excluir xmlContent y preparar los datos
+        const clientsData = response.payload.processedAttachments.map(
+          (attachment) => {
+            const { xmlContent, ...attachmentWithoutXml } = attachment; // Excluimos xmlContent
+            return {
+              attachment: attachmentWithoutXml,
+              email: attachmentWithoutXml.email.fromEmail[0].address, // O como necesites el email
+              processedData: attachment.processedData, // Datos que se guardarán como clientData
+            };
+          }
+        );
+
+        // Llamada al servicio para crear clientes
+        const createdClientsResponse = await dispatch(
+          createClients({
+            userId: dataUser?.id,
+            clientsData: clientsData,
+          })
+        );
+
+        console.log("Clientes creados:", createdClientsResponse);
+      }
     }
   };
 
