@@ -1,0 +1,70 @@
+.activityContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border-top: 1px solid #11a38132;
+  padding-top: 20px;
+  gap: 20px;
+  .activity {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    height: 90px;
+    border-radius: 8px;
+    padding: 0 30px;
+    border: 1px solid #ececf1;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    p {
+      margin: 0;
+    }
+
+    .info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .date {
+      display: flex;
+      width: 100%;
+      justify-content: end;
+      position: absolute;
+      bottom: 5px;
+      right: 20px;
+      font-size: 13px;
+      color: #222222;
+      gap: 10px;
+    }
+  }
+}
+
+.activityHeader {
+  transition: height 0.3s ease;
+  overflow: hidden;
+  interpolate-size: allow-keywords;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin-bottom: 10px;
+  span {
+    font-weight: 600;
+    color: #7b7575;
+    cursor: pointer;
+  }
+  p,
+  button {
+    color: #04614b;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .seeMail {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    text-decoration: underline;
+  }
+}

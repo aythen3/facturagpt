@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import facturaLogo from "../../assets/FacturaLogoIconGreen.svg";
-import facturaText from "../../assets/FacturaGptText.svg";
 import styles from "./FreeTrial.module.css";
 import openai from "../../assets/openaiIcon.svg";
 import mail from "../../assets/emailIcon.svg";

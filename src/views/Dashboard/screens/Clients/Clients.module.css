@@ -246,6 +246,7 @@ input[type="checkbox"] {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   animation: scaleUp 300ms ease-out forwards;
+  -webkit-animation: scaleUp 300ms ease-out forwards;
   .newClientForm {
     width: 90%;
     margin: 0 auto;
@@ -430,8 +431,4 @@ input[type="checkbox"] {
     -ms-transform: translate(-50%, -50%) scale(0);
     -o-transform: translate(-50%, -50%) scale(0);
   }
-}
-
-.fadeOut {
-  opacity: 0;
 }
