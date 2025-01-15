@@ -3,18 +3,18 @@
     <info_control>
         <transaccion>
             <fecha_creacion>
-                <anyo></anyo>
-                <mes></mes>
-                <dia></dia>
+                <anyo>2024</anyo>
+                <mes>12</mes>
+                <dia>15</dia>
                 <hora>000</hora>
                 <minuto>000</minuto>
                 <segundo>000</segundo>
                 <msegundo>000</msegundo>
             </fecha_creacion>
             <fecha_modificacion>
-                <anyo></anyo>
-                <mes></mes>
-                <dia></dia>
+                <anyo>2024</anyo>
+                <mes>12</mes>
+                <dia>15</dia>
                 <hora>000</hora>
                 <minuto>000</minuto>
                 <segundo>000</segundo>
@@ -42,17 +42,17 @@
                     <cod_punto_venta/>
                     <numero_albaran>4022000061</numero_albaran>
                     <fecha_albaran>
-                        <anyo></anyo>
-                        <mes></mes>
-                        <dia></dia>
+                        <anyo>2024</anyo>
+                        <mes>12</mes>
+                        <dia>15</dia>
                         <hora>000</hora>
                         <minuto>000</minuto>
                         <segundo>000</segundo>
                     </fecha_albaran>
                     <fecha_entrega>
-                        <anyo></anyo>
-                        <mes></mes>
-                        <dia></dia>
+                        <anyo>2024</anyo>
+                        <mes>12</mes>
+                        <dia>15</dia>
                         <hora>000</hora>
                         <minuto>000</minuto>
                         <segundo>000</segundo>
@@ -66,23 +66,23 @@
                     <unidad_peso>KGM</unidad_peso>
                     <volumen/>
                     <unidad_volumen/>
-                    <centro_expedidor_nombre>HSB S.A.</centro_expedidor_nombre>
-                    <centro_expedidor_direccion>AV Cardenal Reig, 32</centro_expedidor_direccion>
-                    <centro_expedidor_poblacion>Barcelona</centro_expedidor_poblacion>
-                    <centro_expedidor_cpostal>08028</centro_expedidor_cpostal>
+                    <centro_expedidor_nombre>MEM ROCHE</centro_expedidor_nombre>
+                    <centro_expedidor_direccion></centro_expedidor_direccion>
+                    <centro_expedidor_poblacion></centro_expedidor_poblacion>
+                    <centro_expedidor_cpostal></centro_expedidor_cpostal>
                     <centro_expedidor_provincia></centro_expedidor_provincia>
                     <centro_expedidor_pais></centro_expedidor_pais>
                     <centro_expedidor_telefono></centro_expedidor_telefono>
                     <cod_fabricante_externo/>
                     <cod_fabricante_fabricante/>
                     <cliente_nif></cliente_nif>
-                    <cliente_nombre></cliente_nombre>
+                    <cliente_nombre>HSB S.A.</cliente_nombre>
                     <cliente_direccion>AV Cardenal Reig, 32</cliente_direccion>
                     <cliente_poblacion>Barcelona</cliente_poblacion>
                     <cliente_cpostal>08028</cliente_cpostal>
                     <cliente_provincia></cliente_provincia>
                     <cliente_pais>ES</cliente_pais>
-                    <destino_nombre></destino_nombre>
+                    <destino_nombre>HSB S.A.</destino_nombre>
                     <destino_direccion>AV Cardenal Reig, 32</destino_direccion>
                     <destino_poblacion>Barcelona</destino_poblacion>
                     <destino_cpostal>08028</destino_cpostal>

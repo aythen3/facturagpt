@@ -168,7 +168,10 @@ const Clients = () => {
   };
 
   const formatPhoneNumber = (phoneNumber) => {
-    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
+    return phoneNumber?.replace(
+      /(\+\d{2})(\d{3})(\d{3})(\d{3})/,
+      "$1 $2 $3 $4"
+    );
   };
 
   const handleCreateClient = (e) => {
@@ -288,6 +291,8 @@ const Clients = () => {
     };
   }, [showNewClient]);
 
+  console.log("CLIENTSSSS", clients);
+
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
@@ -363,9 +368,9 @@ const Clients = () => {
                       />
                     </td>
                     <td className={styles.name}>
-                      {client.clientData.fullName}
+                      {client.clientData.clientName}
                     </td>
-                    <td>{client.clientData.email}</td>
+                    <td>{client?.email}</td>
 
                     {/* <td>
                     {Array.isArray(row.email)
@@ -374,9 +379,12 @@ const Clients = () => {
                         ))
                       : row.email}
                   </td> */}
-                    <td>{formatPhoneNumber(client.clientData.numberPhone)}</td>
                     <td>
-                      {client.clientData.country}/agregar a modal de crear
+                      {formatPhoneNumber(client.clientData.companyPhoneNumber)}
+                    </td>
+                    <td>
+                      {client.clientData.clientAddress}{" "}
+                      {client.clientData.clientProvice}
                     </td>
                     <td>{client.clientData.taxNumber}</td>
                     <td>{client.clientData.cardNumber}</td>

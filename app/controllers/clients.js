@@ -4,6 +4,7 @@ const {
   deleteClient,
   updateClient,
   getOneClient,
+  createClients,
 } = require("../services/clients");
 const { catchedAsync } = require("../utils/err");
 
@@ -24,6 +25,46 @@ const createClientController = async (req, res) => {
     return res.status(500).send("Error on createClientController");
   }
 };
+
+const createClientsController = async (req, res) => {
+  try {
+    const { userId, clientsData } = req.body; // Ahora esperamos un array de clientsData
+    console.log("Data from createClientsController", {
+      userId,
+      clientsData,
+    });
+
+    // Llamada al servicio createClients para crear los clientes
+    const createdClients = await createClients({ userId, clientsData });
+
+    // Retornar la respuesta con los clientes creados
+    return res.status(200).send(createdClients);
+  } catch (err) {
+    console.log("Error:", err);
+    return res.status(500).send("Error on createClientsController");
+  }
+};
+
+// const createClientsController = async (req, res) => {
+//   try {
+//     const { userId, clientsData } = req.body;
+//     console.log("Data from createClientsController", {
+//       userId,
+//       clientsData,
+//     });
+
+//     if (!Array.isArray(clientsData) || clientsData.length === 0) {
+//       return res.status(400).send("clientsData debe ser un array no vacío.");
+//     }
+
+//     const clients = await createClients({ userId, clientsData });
+
+//     return res.status(200).json(clients); // Asegurar que devuelva JSON
+//   } catch (err) {
+//     console.error("Error in createClientsController:", err);
+//     return res.status(500).send("Error en createClientsController.");
+//   }
+// };
 
 const getAllUserClientsController = async (req, res) => {
   try {
@@ -89,4 +130,5 @@ module.exports = {
   deleteClientController: catchedAsync(deleteClientController),
   updateClientController: catchedAsync(updateClientController),
   getOneClientController: catchedAsync(getOneClientController),
+  createClientsController: catchedAsync(createClientsController),
 };
