@@ -13,13 +13,19 @@ export const AppProvider = ({ children }) => {
     console.log("CONTEXT RENDER");
     const checkUser = async () => {
       let user = await localStorage.getItem("user");
-      const userData = JSON.parse(user);
-      dispatch(
-        loginToManager({
-          email: userData.email,
-          password: userData.accessToken,
-        })
-      );
+
+      if (user) {
+        const userData = JSON.parse(user);
+
+        if (userData?.email && userData?.accessToken) {
+          dispatch(
+            loginToManager({
+              email: userData?.email,
+              password: userData?.accessToken,
+            })
+          );
+        }
+      }
     };
     checkUser();
   }, []);
@@ -27,9 +33,10 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     console.log("===USER===", user);
     if (user && user.id) {
-      dispatch(checkOrCreateUserBucket({ userId: user.id })).then(() =>
-        dispatch(getUserFiles({ userId: user.id }))
-      );
+      // dispatch(checkOrCreateUserBucket({ userId: user.id })).then(() =>
+      //   dispatch(getUserFiles({ userId: user.id }))
+      // );
+      dispatch(getUserFiles({ userId: user.id }));
     }
   }, [user]);
 

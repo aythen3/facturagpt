@@ -68,3 +68,25 @@ export const uploadFiles = createAsyncThunk(
     }
   }
 );
+
+export const createFolder = createAsyncThunk(
+  "scaleway/createFolder",
+  async ({ folderPath }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        "/scaleway/create-folder",
+        { folderPath },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.error("Error creating folder:", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
