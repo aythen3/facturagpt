@@ -3,6 +3,7 @@ const {
   getAllUserClients,
   deleteClient,
   updateClient,
+  getOneClient,
 } = require("../services/clients");
 const { catchedAsync } = require("../utils/err");
 
@@ -42,7 +43,6 @@ const updateClientController = async (req, res) => {
   try {
     const { clientId } = req.params;
     const { userId, ...toUpdate } = req.body;
-    console.log("Updating client with ID:", userId, "with data:", toUpdate);
 
     const resp = await updateClient({ clientId, toUpdate, userId });
 
@@ -50,6 +50,20 @@ const updateClientController = async (req, res) => {
   } catch (err) {
     console.log("err", err);
     return res.status(500).send("Error on updateClientController");
+  }
+};
+
+const getOneClientController = async (req, res) => {
+  console.log("ENTRE AL CONTROLLERRRRR");
+  try {
+    const { clientId } = req.params;
+
+    const client = await getOneClient({ clientId });
+
+    return res.status(200).send(client);
+  } catch (err) {
+    console.error("Error in getOneClientController:", err);
+    return res.status(500).send("Error on getOneClientController");
   }
 };
 
@@ -74,4 +88,5 @@ module.exports = {
   getAllUserClientsController: catchedAsync(getAllUserClientsController),
   deleteClientController: catchedAsync(deleteClientController),
   updateClientController: catchedAsync(updateClientController),
+  getOneClientController: catchedAsync(getOneClientController),
 };

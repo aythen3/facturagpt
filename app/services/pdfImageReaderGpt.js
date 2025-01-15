@@ -41,7 +41,7 @@ const connectDB = async (tableName) => {
       }
     } else {
       console.log("Error al obtener información de la base de datos:", error);
-      throw error2;
+      throw error;
     }
   }
 };

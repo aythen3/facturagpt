@@ -19,9 +19,11 @@ import {
   createClient,
   deleteClients,
   getAllUserClients,
+  getOneClient,
   updateClient,
 } from "../../../../actions/clients";
 import { clearClient, setClient } from "../../../../slices/clientsSlices";
+import { useNavigate } from "react-router-dom";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -34,8 +36,7 @@ const Clients = () => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const [isAnimating, setIsAnimating] = useState(false);
-
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userStorage = localStorage.getItem("emailManagerAccount");
   const dataUser = JSON.parse(userStorage);
@@ -248,9 +249,16 @@ const Clients = () => {
   const handleEditClient = () => {
     setShowNewClient(true);
   };
-  console.log("CLIENT REDUX", client);
-  console.log("DATAAAAAAA", clientData);
 
+  const handleGetOneClient = async (clientId) => {
+    try {
+      const response = await dispatch(getOneClient(clientId)).unwrap();
+      console.log("Cliente obtenido:", response);
+      navigate("/transactions");
+    } catch (error) {
+      console.error("Error al obtener el cliente:", error);
+    }
+  };
 
   const handleCloseNewClient = () => {
     setIsAnimating(true);
@@ -279,7 +287,6 @@ const Clients = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [showNewClient]);
-
 
   return (
     <div>
@@ -383,7 +390,12 @@ const Clients = () => {
                     <td>{client.clientData.preferredCurrency}</td>
                     <td className={styles.actions}>
                       <div className={styles.transacciones}>
-                        <a href="#">Ver</a>
+                        <a
+                          onClick={() => handleGetOneClient(client.id)}
+                          href="#"
+                        >
+                          Ver
+                        </a>
                         <span>(2.345)</span>
                       </div>
                       <div onClick={() => handleActions(rowIndex, client)}>
@@ -422,13 +434,11 @@ const Clients = () => {
         <>
           <div className={styles.bg} onClick={handleCloseNewClient}></div>
           <div
-
             className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
           >
             <div className={styles.containerHeader}>
               <h3>John Doe</h3>
               <span onClick={handleCloseNewClient}>
-
                 <img src={closeIcon} />
               </span>
             </div>

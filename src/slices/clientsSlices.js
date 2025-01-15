@@ -3,6 +3,7 @@ import {
   createClient,
   deleteClients,
   getAllUserClients,
+  getOneClient,
   updateClient,
 } from "../actions/clients";
 
@@ -52,7 +53,7 @@ const clientsSlices = createSlice({
         // state.loading = false;
       })
 
-      // UPDATE USER AUTOMATION
+      // UPDATE CLIENT
       .addCase(updateClient.pending, (state) => {
         state.loading = true;
       })
@@ -72,6 +73,19 @@ const clientsSlices = createSlice({
         state.loading = false;
       })
       .addCase(deleteClients.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
+      //GET ONE CLIENT
+      .addCase(getOneClient.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getOneClient.fulfilled, (state, action) => {
+        state.loading = false;
+        state.client = action.payload;
+      })
+      .addCase(getOneClient.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       });

@@ -3,18 +3,18 @@
     <info_control>
         <transaccion>
             <fecha_creacion>
-                <anyo>2024</anyo>
-                <mes>12</mes>
-                <dia>15</dia>
+                <anyo></anyo>
+                <mes></mes>
+                <dia></dia>
                 <hora>000</hora>
                 <minuto>000</minuto>
                 <segundo>000</segundo>
                 <msegundo>000</msegundo>
             </fecha_creacion>
             <fecha_modificacion>
-                <anyo>2024</anyo>
-                <mes>12</mes>
-                <dia>15</dia>
+                <anyo></anyo>
+                <mes></mes>
+                <dia></dia>
                 <hora>000</hora>
                 <minuto>000</minuto>
                 <segundo>000</segundo>
@@ -42,17 +42,17 @@
                     <cod_punto_venta/>
                     <numero_albaran>4022000061</numero_albaran>
                     <fecha_albaran>
-                        <anyo>2024</anyo>
-                        <mes>12</mes>
-                        <dia>15</dia>
+                        <anyo></anyo>
+                        <mes></mes>
+                        <dia></dia>
                         <hora>000</hora>
                         <minuto>000</minuto>
                         <segundo>000</segundo>
                     </fecha_albaran>
                     <fecha_entrega>
-                        <anyo>2024</anyo>
-                        <mes>12</mes>
-                        <dia>15</dia>
+                        <anyo></anyo>
+                        <mes></mes>
+                        <dia></dia>
                         <hora>000</hora>
                         <minuto>000</minuto>
                         <segundo>000</segundo>
@@ -66,10 +66,10 @@
                     <unidad_peso>KGM</unidad_peso>
                     <volumen/>
                     <unidad_volumen/>
-                    <centro_expedidor_nombre>MEM ROCHE</centro_expedidor_nombre>
-                    <centro_expedidor_direccion>Bda de la Coma, 121</centro_expedidor_direccion>
-                    <centro_expedidor_poblacion>Cassa de la Selva</centro_expedidor_poblacion>
-                    <centro_expedidor_cpostal>17224</centro_expedidor_cpostal>
+                    <centro_expedidor_nombre>HSB S.A.</centro_expedidor_nombre>
+                    <centro_expedidor_direccion>AV Cardenal Reig, 32</centro_expedidor_direccion>
+                    <centro_expedidor_poblacion>Barcelona</centro_expedidor_poblacion>
+                    <centro_expedidor_cpostal>08028</centro_expedidor_cpostal>
                     <centro_expedidor_provincia></centro_expedidor_provincia>
                     <centro_expedidor_pais></centro_expedidor_pais>
                     <centro_expedidor_telefono></centro_expedidor_telefono>

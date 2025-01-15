@@ -8,6 +8,7 @@ const routerUser = require("./user");
 const automationsRouter = require("./automations");
 const scalewayRouter = require("./scaleway");
 const clientRouter = require("./clients");
+const transactionsByClientRouter = require("./transactions");
 
 mainRouter.use("/emailManager", routerEmailManager);
 mainRouter.use("/reseller", routerReseller);
@@ -16,5 +17,6 @@ mainRouter.use("/user", routerUser);
 mainRouter.use("/automations", automationsRouter);
 mainRouter.use("/scaleway", scalewayRouter);
 mainRouter.use("/clients", clientRouter);
+mainRouter.use("/transactions", transactionsByClientRouter);
 
 module.exports = mainRouter;

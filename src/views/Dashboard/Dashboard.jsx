@@ -47,6 +47,7 @@ const stripePromise = loadStripe(
 );
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
+import { saveTransaction } from "../../actions/transactions";
 
 const Dashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -222,19 +223,11 @@ const Dashboard = () => {
     setSearchQuery(event.target.value);
   };
 
-  const toggleUserActive = (user) => {
+  const toggleUserActive = async (user) => {
     dispatch(
       updateClient({ clientId: user.id, toUpdate: { active: !user.active } })
     );
     if (!user.active) {
-      // console.log("dispatching emails by query", {
-      //   userId: user?.id || "randomId",
-      //   email: user.tokenEmail,
-      //   password: user.tokenPassword,
-      //   query: user.emailQueries,
-      //   tokenGpt: user.tokenGPT,
-      //   logs: [],
-      // });
       dispatch(
         getEmailsByQuery({
           userId: user?.id || "randomId",
