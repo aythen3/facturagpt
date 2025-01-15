@@ -7,10 +7,12 @@ const {
   updateClientController,
   deleteClientController,
   getOneClientController,
+  createClientsController,
 } = require("../controllers/clients");
 
 clientsRouter
   .post("/createClient", createClientController)
+  .post("/createClients", createClientsController)
   .get("/getAllUserClients/:userId", getAllUserClientsController)
   .put("/updateClient/:clientId", updateClientController)
   .delete("/deleteClients", deleteClientController)

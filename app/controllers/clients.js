@@ -4,6 +4,7 @@ const {
   deleteClient,
   updateClient,
   getOneClient,
+  createClients,
 } = require("../services/clients");
 const { catchedAsync } = require("../utils/err");
 
@@ -22,6 +23,23 @@ const createClientController = async (req, res) => {
   } catch (err) {
     console.log("err", err);
     return res.status(500).send("Error on createClientController");
+  }
+};
+
+const createClientsController = async (req, res) => {
+  try {
+    const { userId, clientsData } = req.body;
+    console.log("Data from createClientsController", {
+      userId,
+      clientsData,
+    });
+
+    const createdClients = await createClients({ userId, clientsData });
+
+    return res.status(200).send(createdClients);
+  } catch (err) {
+    console.log("Error:", err);
+    return res.status(500).send("Error on createClientsController");
   }
 };
 
@@ -89,4 +107,5 @@ module.exports = {
   deleteClientController: catchedAsync(deleteClientController),
   updateClientController: catchedAsync(updateClientController),
   getOneClientController: catchedAsync(getOneClientController),
+  createClientsController: catchedAsync(createClientsController),
 };

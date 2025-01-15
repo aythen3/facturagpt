@@ -57,6 +57,101 @@ const createClient = async ({ email, userId, clientData }) => {
   }
 };
 
+const createClients = async ({ userId, clientsData }) => {
+  const dbClientsName = "db_emailmanager_clients";
+  const dbAccountsName = "db_emailmanager_accounts";
+  let dbClients, dbAccounts;
+
+  try {
+    const dbs = await nano.db.list();
+
+    if (!dbs.includes(dbClientsName)) {
+      console.log(`Database ${dbClientsName} does not exist. Creating...`);
+      await nano.db.create(dbClientsName);
+    }
+    dbClients = nano.use(dbClientsName);
+
+    if (!dbs.includes(dbAccountsName)) {
+      console.log(`Database ${dbAccountsName} does not exist. Creating...`);
+      await nano.db.create(dbAccountsName);
+    }
+    dbAccounts = nano.use(dbAccountsName);
+  } catch (error) {
+    console.error("Error checking/creating databases:", error);
+    throw new Error("Database initialization failed");
+  }
+
+  try {
+    const clientDocs = [];
+
+    for (const clientData of clientsData) {
+      const { attachment, email, processedData } = clientData;
+
+      const emailId = attachment?.attachment?.emailId || "";
+
+      if (!emailId) {
+        console.log("Error: emailId no está presente en attachment");
+        continue;
+      }
+
+      const sanitizedEmailId = emailId.replace(/[^a-zA-Z0-9-_@.]+/g, "_");
+      const clientId = `client_${sanitizedEmailId}`;
+
+      console.log("Procesando cliente:", { attachment, email, processedData });
+
+      const existingClient = await dbClients.find({
+        selector: { _id: clientId },
+        limit: 1,
+      });
+
+      console.log("Existing client found:", existingClient.docs);
+
+      if (existingClient.docs.length > 0) {
+        console.log("YA EXISTE UN DOC CON ESE emailId");
+      } else {
+        console.log("CREANDO UN DOC NUEVO");
+
+        const clientDoc = {
+          _id: clientId,
+          id: clientId,
+          userId,
+          email: email,
+          emailId: attachment?.attachment?.emailId,
+          clientData: processedData,
+        };
+
+        console.log("Cliente a insertar:", clientDoc);
+
+        try {
+          const result = await dbClients.insert(clientDoc);
+          console.log(
+            `Client document with ID ${clientId} has been created in ${dbClientsName}. Result:`,
+            result
+          );
+        } catch (err) {
+          console.error("Error inserting client document:", err);
+        }
+
+        const userDoc = await dbAccounts.get(userId);
+        if (!userDoc.clients) {
+          userDoc.clients = [];
+        }
+        userDoc.clients.push(clientId);
+
+        await dbAccounts.insert(userDoc);
+
+        clientDocs.push(clientDoc);
+      }
+    }
+    console.log("Clientes creados:", clientDocs);
+
+    return clientDocs;
+  } catch (error) {
+    console.error("Error creating clients:", error);
+    throw new Error("Failed to create clients");
+  }
+};
+
 const getAllUserClients = async ({ userId }) => {
   const dbClientsName = "db_emailmanager_clients";
 
@@ -168,6 +263,7 @@ const getOneClient = async ({ clientId }) => {
 
 module.exports = {
   createClient,
+  createClients,
   getAllUserClients,
   deleteClient,
   updateClient,

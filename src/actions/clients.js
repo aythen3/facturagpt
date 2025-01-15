@@ -26,6 +26,41 @@ export const createClient = createAsyncThunk(
     }
   }
 );
+export const createClients = createAsyncThunk(
+  "clients/createClients",
+  async ({ userId, clientsData }, { rejectWithValue }) => {
+    console.log("Data from createClients Thunk", {
+      userId,
+      clientsData,
+    });
+
+    try {
+      const token = localStorage.getItem("token");
+
+      // Realiza la solicitud POST a la API
+      const res = await apiBackend.post(
+        `/clients/createClients`, // Ruta de la API en Next.js
+        { userId, clientsData },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Autenticación con el token
+          },
+        }
+      );
+
+      // Verifica que la respuesta contenga datos válidos
+      if (!res.data) {
+        throw new Error("El servidor no devolvió datos válidos.");
+      }
+
+      // Devuelve los datos recibidos como `payload`
+      return res.data;
+    } catch (error) {
+      console.error("Error creating clients:", error);
+      return rejectWithValue(error.response?.data || "Error inesperado");
+    }
+  }
+);
 
 export const getAllUserClients = createAsyncThunk(
   "clients/getAllUserClients",
