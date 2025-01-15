@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 const { sendOtpEmail } = require("./email");
 const nodemailer = require("nodemailer");
+const { checkOrCreateUserBucket } = require("./scaleway");
 
 const createAccount = async ({ nombre, email, password }) => {
   console.log("Data received in createAccount service:", {
@@ -196,6 +197,21 @@ const loginToManagerService = async ({ email, password }) => {
 
     console.log(`Login successful for account: ${account._id}`);
     const { _id, _rev, ...rest } = account;
+    if (!account.bucketCreated) {
+      try {
+        await checkOrCreateUserBucket(rest.id);
+
+        const updatedDoc = {
+          ...account,
+          bucketCreated: true,
+          _rev: account._rev,
+        };
+        const updateResponse = await db.insert(updatedDoc);
+        console.log("Bucket created and account updated:", updateResponse);
+      } catch (error) {
+        console.error("Error creating bucket:", error);
+      }
+    }
     return rest;
   } catch (error) {
     console.error("Error during login:", error);

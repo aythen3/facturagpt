@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUserFiles, uploadFiles } from "../actions/scaleway";
+import { createFolder, getUserFiles, uploadFiles } from "../actions/scaleway";
 
 const scalewaySlices = createSlice({
   name: "scaleway",
   initialState: {
+    getFilesLoading: false,
+    uploadingFilesLoading: false,
+    createFolderLoading: false,
     userFiles: [],
     currentPath: null,
   },
@@ -19,31 +22,59 @@ const scalewaySlices = createSlice({
     builder
 
       // UPLOAD FILE
-      // .addCase(uploadFiles.pending, (state) => {
-      //   state.loading = true;
-      // })
-      // .addCase(uploadFiles.fulfilled, (state, action) => {
-      //   console.log("action.payload from uploadFiles", action.payload);
-      //   state.loading = false;
-      //   state.userFiles = action.payload;
-      // })
-      // .addCase(uploadFiles.rejected, (state, action) => {
-      //   state.error = action.payload;
-      //   state.loading = false;
-      // })
+      .addCase(uploadFiles.pending, (state) => {
+        state.uploadingFilesLoading = true;
+      })
+      .addCase(uploadFiles.fulfilled, (state, action) => {
+        const newFiles = action.payload;
+        newFiles.forEach((file) => {
+          const exists = state.userFiles.some(
+            (existingFile) => existingFile.Key === file.Key
+          );
+          if (!exists) {
+            state.userFiles.push(file);
+          }
+        });
+        state.uploadingFilesLoading = false;
+      })
+      .addCase(uploadFiles.rejected, (state, action) => {
+        state.error = action.payload;
+        state.uploadingFilesLoading = false;
+      })
 
       // GET ALL USER FILES
       .addCase(getUserFiles.pending, (state) => {
-        state.loading = true;
+        state.getFilesLoading = true;
       })
       .addCase(getUserFiles.fulfilled, (state, action) => {
         console.log("action.payload from getUserFiles", action.payload);
-        state.loading = false;
+        state.getFilesLoading = false;
         state.userFiles = action.payload;
       })
       .addCase(getUserFiles.rejected, (state, action) => {
         state.error = action.payload;
-        state.loading = false;
+        state.getFilesLoading = false;
+      })
+      // CREATE FOLDER
+      .addCase(createFolder.pending, (state) => {
+        state.createFolderLoading = true;
+      })
+      .addCase(createFolder.fulfilled, (state, action) => {
+        console.log("ACTION.PAYLOAD FROM CREATE FOLDER", action.payload);
+        const newFiles = action.payload;
+        newFiles.forEach((file) => {
+          const exists = state.userFiles.some(
+            (existingFile) => existingFile.Key === file.Key
+          );
+          if (!exists) {
+            state.userFiles.push(file);
+          }
+        });
+        state.createFolderLoading = false;
+      })
+      .addCase(createFolder.rejected, (state, action) => {
+        state.error = action.payload;
+        state.createFolderLoading = false;
       });
   },
 });

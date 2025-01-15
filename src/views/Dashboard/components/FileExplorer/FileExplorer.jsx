@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import ReactDOM from "react-dom";
 import styles from "./FileExplorer.module.css";
 import folderIcon from "../../assets/S3/folderIcon.svg";
@@ -7,13 +7,14 @@ import codeIcon from "../../assets/S3/codeIcon.svg";
 import fileIcon from "../../assets/S3/fileIcon.svg";
 import { Search, MoreVertical } from "lucide-react";
 import searchMenuIcon from "../../assets/searchMenuIcon.svg";
-
+import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPath } from "../../../../slices/scalewaySlices";
 import k from "../../assets/k.svg";
 import cmd from "../../assets/cmd.svg";
 import { uploadFiles } from "../../../../actions/scaleway";
+import SelectLocation from "../SelectLocation/SelectLocation";
 
 const FileOptionsPopup = ({ onClose, style }) => {
   const popupRef = useRef(null);
@@ -29,7 +30,7 @@ const FileOptionsPopup = ({ onClose, style }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onClose]);
 
-  const options = ["Move", "Download", "Share", "Rename", "Delete"];
+  const options = ["Descargar", "Compartir", "Eliminar"];
 
   return ReactDOM.createPortal(
     <div ref={popupRef} className={styles.optionsPopup} style={style}>
@@ -44,11 +45,14 @@ const FileOptionsPopup = ({ onClose, style }) => {
 };
 
 export default function FileExplorer({ isOpen, setIsOpen }) {
-  const { user } = useSelector((state) => state.user);
-  const { currentPath, userFiles } = useSelector((state) => state.scaleway);
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const { currentPath, userFiles, getFilesLoading, uploadingFilesLoading } =
+    useSelector((state) => state.scaleway);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showLocationModal, setShowLocationModal] = useState(false);
   const optionsButtonRefs = useRef([]);
   const fileExplorerRef = useRef(null);
 
@@ -95,7 +99,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           Inicio
         </div>
         {pathSegments.length > 0 && (
-          <span className={styles.breadcrumbSeparator}> / </span>
+          <span className={styles.breadcrumbSeparator}> {`>`} </span>
         )}
       </span>,
     ];
@@ -116,7 +120,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             {segment}
           </div>
           {index < pathSegments.length - 1 && (
-            <span className={styles.breadcrumbSeparator}> / </span>
+            <span className={styles.breadcrumbSeparator}> {`>`} </span>
           )}
         </span>
       );
@@ -130,18 +134,45 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
     dispatch(setCurrentPath(path));
   };
 
-  const filteredFiles = userFiles.filter((item) => {
-    const itemPath = item.Key;
-    const isInCurrentDirectory =
-      itemPath.startsWith(currentPath) &&
-      itemPath.split("/").length === currentPath.split("/").length + 1;
-    if (currentPath === `${user.id}/`) {
-      if (itemPath.split("/").length === 2) {
-        return true;
-      }
-    }
-    return isInCurrentDirectory;
-  });
+  useEffect(() => {
+    console.log("userFiles CHANGED", userFiles);
+  }, [userFiles]);
+
+  const filteredFiles = useMemo(() => {
+    const lowerSearchTerm = searchTerm.trim().toLowerCase();
+
+    return userFiles.filter((item) => {
+      const isFolder = item.Key.endsWith("/");
+      const fileName = isFolder
+        ? item.Key.split("/").slice(-2, -1)[0]
+        : item.Key.split("/").pop();
+
+      const normalizedCurrentPath = currentPath.replace(/\/$/, "");
+      const normalizedItemPath = item.Key.replace(/\/$/, "");
+
+      const currentSegments = normalizedCurrentPath.split("/");
+      const itemSegments = normalizedItemPath.split("/");
+
+      const isChildOfCurrent =
+        itemSegments.slice(0, currentSegments.length).join("/") ===
+        currentSegments.join("/");
+
+      const isOneLevelDeeper =
+        itemSegments.length === currentSegments.length + 1;
+
+      const isNotSameAsCurrent = normalizedItemPath !== normalizedCurrentPath;
+
+      const nameMatches =
+        !lowerSearchTerm || fileName.toLowerCase().includes(lowerSearchTerm);
+
+      return (
+        isChildOfCurrent &&
+        isOneLevelDeeper &&
+        isNotSameAsCurrent &&
+        nameMatches
+      );
+    });
+  }, [userFiles, currentPath, searchTerm]);
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -169,8 +200,13 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             type="text"
             placeholder="Buscar"
             className={styles.searchInput}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className={styles.searchIconsWrappers}>
+          <div
+            onClick={() => setShowLocationModal(true)}
+            className={styles.searchIconsWrappers}
+          >
             <img src={cmd} alt="cmdIcon" />
           </div>
           <div
@@ -182,7 +218,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         </div>
         <img
           style={{ cursor: "pointer" }}
-          onClick={() => setIsOpen(true)}
+          onClick={() => setIsFilterOpen(true)}
           src={searchMenuIcon}
           alt="searchMenuIcon"
         />
@@ -192,60 +228,89 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
       {renderBreadcrumbs()}
 
       <div className={styles.fileList}>
-        {filteredFiles?.map((item, index) => {
-          const isFolder = item.Key.endsWith("/");
+        {getFilesLoading ? (
+          <div className={styles.loaderContainer}>
+            <MutatingDots
+              visible={true}
+              height="100"
+              width="100"
+              color="#000"
+              secondaryColor="#3f3f3f"
+              radius="10"
+              ariaLabel="mutating-dots-loading"
+            />
+          </div>
+        ) : (
+          filteredFiles?.map((item, index) => {
+            const isFolder = item.Key.endsWith("/");
+            const fileName = isFolder
+              ? item.Key.split("/").slice(-2, -1)[0]
+              : item.Key.split("/").pop();
 
-          return (
-            <div
-              onClick={() => {
-                if (isFolder) {
-                  console.log("setting current path to", item.Key);
-                  dispatch(setCurrentPath(item.Key));
-                }
-              }}
-              key={index}
-              className={styles.fileItem}
-            >
-              <div className={styles.itemInner}>
-                <img
-                  src={getFileIcon(item.Key)}
-                  alt="file-icon"
-                  className={styles.fileIcon}
-                />
-                <span className={styles.itemText}>
-                  {isFolder
-                    ? item.Key.split("/").slice(-2, -1)[0]
-                    : item.Key.split("/").pop()}{" "}
-                </span>
-                {!isFolder && (
-                  <button
-                    ref={(el) => (optionsButtonRefs.current[index] = el)}
-                    className={styles.moreButton}
-                    aria-label="More options"
-                    onClick={(e) => handleOptionsClick(index, e)}
-                  >
-                    <MoreVertical size={16} />
-                  </button>
+            return (
+              <div
+                onClick={() => {
+                  if (isFolder) {
+                    console.log("setting current path to", item.Key);
+                    dispatch(setCurrentPath(item.Key));
+                  }
+                }}
+                key={index}
+                className={styles.fileItem}
+              >
+                <div className={styles.itemInner}>
+                  <img
+                    src={getFileIcon(item.Key)}
+                    alt="file-icon"
+                    className={styles.fileIcon}
+                  />
+                  <span className={styles.itemText}>{fileName}</span>
+                  {!isFolder && (
+                    <button
+                      ref={(el) => (optionsButtonRefs.current[index] = el)}
+                      className={styles.moreButton}
+                      aria-label="More options"
+                      onClick={(e) => handleOptionsClick(index, e)}
+                    >
+                      <MoreVertical size={16} />
+                    </button>
+                  )}
+                </div>
+                {activePopup === index && !isFolder && (
+                  <FileOptionsPopup
+                    onClose={() => setActivePopup(null)}
+                    style={{
+                      position: "fixed",
+                      top:
+                        optionsButtonRefs.current[index].getBoundingClientRect()
+                          .top + optionsButtonRefs.current[index].offsetHeight,
+                      left: optionsButtonRefs.current[
+                        index
+                      ].getBoundingClientRect().left,
+                    }}
+                  />
                 )}
               </div>
-              {activePopup === index && !isFolder && (
-                <FileOptionsPopup
-                  onClose={() => setActivePopup(null)}
-                  style={{
-                    position: "fixed",
-                    top:
-                      optionsButtonRefs.current[index].getBoundingClientRect()
-                        .top + optionsButtonRefs.current[index].offsetHeight,
-                    left: optionsButtonRefs.current[
-                      index
-                    ].getBoundingClientRect().left,
-                  }}
-                />
-              )}
-            </div>
-          );
-        })}
+            );
+          })
+        )}
+        {uploadingFilesLoading && (
+          <div className={styles.bottomLoaderContainer}>
+            <MutatingDots
+              visible={true}
+              height="100"
+              width="100"
+              color="#000"
+              secondaryColor="#3f3f3f"
+              radius="10"
+              ariaLabel="mutating-dots-loading"
+            />
+          </div>
+        )}
       </div>
+      {showLocationModal && (
+        <SelectLocation onClose={() => setShowLocationModal(false)} />
+      )}
     </div>
   );
 }

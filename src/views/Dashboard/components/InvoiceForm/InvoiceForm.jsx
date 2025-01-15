@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 import styles from "./InvoiceForm.module.css";
-import { ReactComponent as PdfIcon } from "../../assets/pdf-ico.svg";
-
+import imageIcon from "../../assets/imageIcon.svg";
+import fileIcon from "../../assets/fileIcon.svg";
+import codeIcon from "../../assets/codeIcon.svg";
+import arrowDown from "../../assets/arrowDownBold.svg";
+import Tags from "../Tags/Tags";
+import InfoContact from "../InfoContact/InfoContact";
+import InfoBill from "../InfoBill/InfoBill";
+import InfoActivity from "../InfoActivity/InfoActivity";
 const documentTypes = [
   "Factura",
   "Factura de impuestos",
@@ -12,13 +18,13 @@ const documentTypes = [
   "Cotización",
   "Abono",
   "Pedido",
-  "Nota de Entrega"
+  "Nota de Entrega",
 ];
 
 export default function InvoiceForm() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Factura");
-
+  const [sectionSelected, setSectionSelected] = useState(0);
   const handleTypeSelect = (type) => {
     setSelectedType(type);
     setIsPopupOpen(false);
@@ -28,127 +34,54 @@ export default function InvoiceForm() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.titleWrapper}>
-          <PdfIcon className={styles.documentIcon} />
+          <img src={imageIcon} alt="icon" />
+          <img src={fileIcon} alt="icon" />
+          <img src={codeIcon} alt="icon" />
+
           <h1 className={styles.title}>Document Title</h1>
         </div>
-        <button className={styles.saveButton}>Save Changes</button>
-      </header>
-
-      <div style={{ position: 'relative' }}>
-        <div 
-          className={styles.documentType}
-          onClick={() => setIsPopupOpen(!isPopupOpen)}
-        >
-          <span>{selectedType}</span>
-          <span className={styles.arrow}>▼</span>
-        </div>
-
-        {isPopupOpen && (
-          <>
-            <div 
-              style={{ 
-                position: 'fixed', 
-                inset: 0, 
-                zIndex: 999 
-              }} 
-              onClick={() => setIsPopupOpen(false)}
-            />
-            <div className={styles.popup}>
-              {documentTypes.map((type) => (
-                <button
-                  key={type}
-                  className={`${styles.option} ${type === selectedType ? styles.selectedOption : ''}`}
-                  onClick={() => handleTypeSelect(type)}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className={styles.actions}>
-        <button className={styles.actionButton}>Print</button>
-        <button className={styles.actionButton}>Share</button>
-        <button className={styles.actionButton}>Copy</button>
-        <button className={styles.actionButton}>#id</button>
-      </div>
-
-      <div className={styles.amounts}>
-        <div className={styles.subtotal}>
-          <span>Subtotal</span>
-          <span>0,00 €</span>
-        </div>
-        <div className={styles.total}>
-          <span>Total</span>
-          <div className={styles.totalAmount}>
-            <span>0,00 €</span>
+        <div className={styles.dropdownContainer}>
+          <div className={styles.dropdown}>
+            <span>Factura emitida</span>
+            <img src={arrowDown} alt="Icon" />
+          </div>
+          <div className={styles.dropdown}>
+            <span>Ingreso - Servicios</span>
+            <img src={arrowDown} alt="Icon" />
           </div>
         </div>
-        <button className={styles.currencySelector}>
-          EUR <span className={styles.arrow}>▼</span>
+        <Tags />
+      </header>
+
+      <div className={styles.btnSectionsSelector}>
+        <button
+          className={`${sectionSelected == 0 ? styles.sectionSelect : ""}`}
+          onClick={() => setSectionSelected(0)}
+        >
+          Info Factura
+        </button>
+        <button
+          className={`${sectionSelected == 1 ? styles.sectionSelect : ""}`}
+          onClick={() => setSectionSelected(1)}
+        >
+          Info Contacto
+        </button>
+        <button
+          className={`${sectionSelected == 2 ? styles.sectionSelect : ""}`}
+          onClick={() => setSectionSelected(2)}
+        >
+          Info Actividad
         </button>
       </div>
-
-      <div className={styles.formSection}>
-        <label>De</label>
-        <textarea
-          placeholder="Su Empresa o Nombre, y Dirección"
-          className={styles.textArea}
-        />
-      </div>
-
-      <div className={styles.formSection}>
-        <label>Facturar a</label>
-        <textarea
-          placeholder="Dirección de facturación de su cliente"
-          className={styles.textArea}
-        />
-      </div>
-
-      <div className={styles.formSection}>
-        <label>Enviar a</label>
-        <textarea
-          placeholder="Dirección de envío de su cliente (opcional)"
-          className={styles.textArea}
-        />
-      </div>
-
-      <div className={styles.row}>
-        <div className={styles.formSection}>
-          <label>Nº de factura</label>
-          <input type="text" placeholder="100" className={styles.input} />
-        </div>
-        <div className={styles.formSection}>
-          <label>Nº de pedido</label>
-          <input
-            type="text"
-            placeholder="Pedido (opcional)"
-            className={styles.input}
-          />
-        </div>
-      </div>
-
-      <div className={styles.row}>
-        <div className={styles.formSection}>
-          <label>Fecha</label>
-          <input
-            type="text"
-            placeholder="15.12.2025"
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formSection}>
-          <label>Fecha vencimiento</label>
-          <input
-            type="text"
-            placeholder="15.12.2025"
-            className={styles.input}
-          />
-        </div>
-      </div>
+      {sectionSelected == 0 ? (
+        <InfoBill />
+      ) : sectionSelected == 1 ? (
+        <InfoContact />
+      ) : sectionSelected == 2 ? (
+        <InfoActivity />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
-

@@ -1,111 +1,144 @@
-import React, { useState } from 'react';
-import styles from './SendEmailModal.module.css';
-import Toolbar from '../Toolbar/Toolbar';
-import pdf from '../../assets/pdfIcon.svg';
-import jpg from '../../assets/jpgIcon.svg';
-import png from '../../assets/pngIcon.svg';
-import txt from '../../assets/txtIcon.svg';
-import csv from '../../assets/csvIcon.svg';
-import xml from '../../assets/xmlIconNew.svg';
-import html from '../../assets/htmlIcon.svg';
-import json from '../../assets/jsonIcon.svg';
-import adjuntar from '../../assets/share.svg';
-import minus from '../../assets/minus.svg';
-import closeMenu from '../../assets/closeMenu.svg';
-const SendEmailModal = () => {
+import React, { useEffect, useState } from "react";
+import styles from "./SendEmailModal.module.css";
+import Toolbar from "../Toolbar/Toolbar";
+import pdf from "../../assets/pdfIcon.svg";
+import jpg from "../../assets/jpgIcon.svg";
+import png from "../../assets/pngIcon.svg";
+import txt from "../../assets/txtIcon.svg";
+import csv from "../../assets/csvIcon.svg";
+import xml from "../../assets/xmlIconNew.svg";
+import html from "../../assets/htmlIcon.svg";
+import json from "../../assets/jsonIcon.svg";
+import adjuntar from "../../assets/share.svg";
+import minus from "../../assets/minus.svg";
+import closeMenu from "../../assets/closeMenu.svg";
+const SendEmailModal = ({
+  mailModal,
+  setMailModal,
+  isAnimating,
+  setIsAnimating,
+}) => {
   const files = [
     {
       img: pdf,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
     {
       img: jpg,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
     {
       img: png,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
     {
       img: txt,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
     {
       img: csv,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
     {
       img: xml,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
     {
       img: html,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
     {
       img: json,
-      title: 'Titulo del archivo',
-      size: '557 kb',
+      title: "Titulo del archivo",
+      size: "557 kb",
     },
   ];
 
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setMailModal(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && mailModal) {
+        handleCloseNewClient();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mailModal]);
+
   return (
-    <div className={styles.sendEmailModal}>
-      <header className={styles.sendEmailHeader}>
-        <h2>Send Email</h2>
-        <div className={styles.options}>
-          <span>coolemail@gmail.com</span>
-          <select>
-            <option value=''>Bandejas</option>
-            <option value=''>Bandejas</option>
-            <option value=''>Bandejas</option>
-          </select>
-          <img src={closeMenu} />
-        </div>
-      </header>
-      <div className={styles.sendEmailContent}>
-        <div className={styles.infOptions}>
-          <input type='text' placeholder='Para: [email], ...' />
-          <input type='text' placeholder='Asunto: [document_title]' />
-          <Toolbar />
-        </div>
-      </div>
-      <div style={{ borderBottom: '1px solid #e3e3e3' }}>
-        <div className={styles.attach}>
-          <div>
-            <img src={adjuntar} />
+    <>
+      <div className={styles.bg} onClick={handleCloseNewClient}></div>
+
+      <div
+        className={`${styles.sendEmailModal} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+      >
+        <header className={styles.sendEmailHeader}>
+          <h2>Send Email</h2>
+          <div className={styles.options}>
+            <span>coolemail@gmail.com</span>
+            <select>
+              <option value="">Bandejas</option>
+              <option value="">Bandejas</option>
+              <option value="">Bandejas</option>
+            </select>
+            <img src={closeMenu} onClick={handleCloseNewClient} />
           </div>
-          <p>Añadir Adjunto</p>
+        </header>
+        <div className={styles.sendEmailContent}>
+          <div className={styles.infOptions}>
+            <input type="text" placeholder="Para: [email], ..." />
+            <input type="text" placeholder="Asunto: [document_title]" />
+            <Toolbar />
+          </div>
         </div>
-        {files.map((file) => (
-          <div className={styles.file}>
-            <div className={styles.fileTitle}>
-              <div>
-                <img src={file.img} />
+        <div style={{ borderBottom: "1px solid #e3e3e3" }}>
+          <div className={styles.attach}>
+            <div>
+              <img src={adjuntar} />
+            </div>
+            <p>Añadir Adjunto</p>
+          </div>
+          {files.map((file) => (
+            <div className={styles.file}>
+              <div className={styles.fileTitle}>
+                <div>
+                  <img src={file.img} />
+                </div>
+                <p>{file.title}</p>
               </div>
-              <p>{file.title}</p>
+              <div className={styles.sizeFile}>
+                <p>{file.size}</p>
+                <span>
+                  <img src={minus} alt="" />
+                </span>
+              </div>
             </div>
-            <div className={styles.sizeFile}>
-              <p>{file.size}</p>
-              <span>
-                <img src={minus} alt='' />
-              </span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className={styles.btnContainerFiles}>
+          <button className={styles.btnCancel}>Cancel</button>
+          <button className={styles.btnSend}>Enviar</button>
+        </div>
       </div>
-      <div className={styles.btnContainerFiles}>
-        <button className={styles.btnCancel}>Cancel</button>
-        <button className={styles.btnSend}>Enviar</button>
-      </div>
-    </div>
+    </>
   );
 };
 

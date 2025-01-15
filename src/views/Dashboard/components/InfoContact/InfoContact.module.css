@@ -1,0 +1,124 @@
+.seeTransactions {
+  display: flex;
+  padding: 12px;
+  margin: 12px 0;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #10a37f;
+    border: 1px solid #f4f4f4;
+    background-color: white;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+    width: 100%;
+    padding: 6px;
+  }
+  button {
+    text-decoration: underline;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #073f32;
+    font-weight: bold;
+    width: 200px;
+    cursor: pointer;
+  }
+}
+.saveContact {
+  background-color: #10a37f;
+  width: 100%;
+  color: white;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  cursor: pointer;
+}
+
+.detailsContainer {
+  margin-bottom: 24px;
+}
+
+.detailItem {
+  border-bottom: 1px solid #ebebeb;
+  padding: 24px 0px;
+}
+.detailTitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #222;
+}
+.rowSpaced {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.detailEdit {
+  font-size: 16px;
+  font-weight: 400;
+  color: #222;
+  text-decoration: underline;
+  cursor: pointer;
+  user-select: none;
+}
+.fieldSpan {
+  padding: 4px 0px;
+}
+.detailContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #717171;
+  }
+}
+
+.editButton,
+.addButton {
+  font-size: 12px;
+  color: #16c098;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.inputEdit {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  width: max-content;
+  color: #717171;
+  width: 100%;
+  padding: 4px 0;
+}
+.tagInput {
+  border: none;
+  border-bottom: 1px solid #e9e9e9;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 400;
+  color: #717171;
+  padding: 4px 0;
+}
+
+.input::placeholder {
+  color: #c4c4c4;
+}
+.inputEdit::placeholder {
+  color: #c4c4c4;
+}

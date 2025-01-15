@@ -2,6 +2,7 @@ const {
   getUserFiles,
   checkOrCreateUserBucket,
   uploadFilesService,
+  createFolderService,
 } = require("../services/scaleway");
 const { catchedAsync } = require("../utils/err");
 
@@ -72,7 +73,31 @@ const uploadFilesController = async (req, res) => {
   }
 };
 
+const createFolderController = async (req, res) => {
+  try {
+    const { folderPath } = req.body;
+    console.log("Received create-folder request:", { folderPath });
+
+    if (!folderPath) {
+      return res.status(400).json({
+        success: false,
+        message: "folderPath is required",
+      });
+    }
+
+    const response = await createFolderService(folderPath);
+
+    return res.status(200).json(response);
+  } catch (err) {
+    console.error("Error in createFolderController:", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Error creating folder" });
+  }
+};
+
 module.exports = {
+  createFolderController: catchedAsync(createFolderController),
   uploadUserFileController: catchedAsync(uploadUserFileController),
   getUserFilesController: catchedAsync(getUserFilesController),
   checkOrCreateUserBucketController: catchedAsync(
