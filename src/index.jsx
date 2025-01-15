@@ -28,8 +28,6 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 import { AppProvider } from "./context/AppContext.js";
 
-
-
 const Layout = () => {
   const { pathname } = window.location;
 
@@ -93,12 +91,12 @@ const Layout = () => {
                       element={<ArticlesTransactions />}
                     />
 
-                  <Route path="/allproducts" element={<AllProducts />} />
-                  <Route path="/transactions" element={<Transactions />} />
-                  <Route
-                    path="/articlestransactions"
-                    element={<ArticlesTransactions />}
-                  />
+                    <Route path="/allproducts" element={<AllProducts />} />
+                    <Route path="/transactions" element={<Transactions />} />
+                    <Route
+                      path="/articlestransactions"
+                      element={<ArticlesTransactions />}
+                    />
 
                     <Route path="/contact" element={<ContactForm />} />
                     <Route path="/terms" element={<Terms />} />

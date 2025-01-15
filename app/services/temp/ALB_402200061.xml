@@ -76,13 +76,13 @@
                     <cod_fabricante_externo/>
                     <cod_fabricante_fabricante/>
                     <cliente_nif></cliente_nif>
-                    <cliente_nombre></cliente_nombre>
+                    <cliente_nombre>HSB S.A.</cliente_nombre>
                     <cliente_direccion>AV Cardenal Reig, 32</cliente_direccion>
                     <cliente_poblacion>Barcelona</cliente_poblacion>
                     <cliente_cpostal>08028</cliente_cpostal>
                     <cliente_provincia></cliente_provincia>
                     <cliente_pais>ES</cliente_pais>
-                    <destino_nombre></destino_nombre>
+                    <destino_nombre>HSB S.A.</destino_nombre>
                     <destino_direccion>AV Cardenal Reig, 32</destino_direccion>
                     <destino_poblacion>Barcelona</destino_poblacion>
                     <destino_cpostal>08028</destino_cpostal>
