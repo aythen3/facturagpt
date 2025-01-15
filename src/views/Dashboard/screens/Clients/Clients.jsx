@@ -179,8 +179,6 @@ const Clients = () => {
     const email = dataUser?.email;
 
     if (client && client.clientData) {
-      alert("UPDATEd");
-
       dispatch(
         updateClient({
           clientId: client?.id,
