@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styles from "./NavbarAdmin.module.css";
 import star from "../../assets/starPlus.svg";
-import facturaGPT from "../../assets/FacturaGPTIcon.svg";
-import bookIcon from "../../assets/bookIcon.svg";
-import clientIcon from "../../assets/client.png";
-import headphonesIcon from "../../assets/headphonesIcon.svg";
+import facturaGPT from "../../assets/FacturaGPTBlack.svg";
+import clientIcon from "../../assets/clientsIcon.svg";
 import spanish_flag from "../../assets/spain_flag.svg";
 import english_flag from "../../assets/english_flag.svg";
 import AccountSettings from "../AccountSettings/AccountSettings";
@@ -13,9 +11,17 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import UpgradePlan from "../../screens/UpgradePlan/UpgradePlan";
 import time from "../../assets/time.svg";
+import profileIcon from "../../assets/profileIcon.svg";
+import addBlack from "../../assets/addBlack.svg";
+import addGreen from "../../assets/addGreen.svg";
+import chatIcon from "../../assets/chatIcon.svg";
+import boxIcon from "../../assets/boxIcon.svg";
+import dotsNotification from "../../assets/dotsNotification.svg";
 
-const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
+const NavbarAdmin = ({}) => {
   const [showPlusModal, setShowPlusModal] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+
   const navigate = useNavigate();
   const { t } = useTranslation("navbarAdmin");
 
@@ -29,12 +35,13 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
   };
 
   return (
-    <div className={styles.navbarAdmin}>
-      <div className={styles.navbarAdminIcons}>
-        <a href="/">
-          <img src={facturaGPT} alt="" />
-        </a>
-        <div style={{ display: "flex", gap: "10px" }}>
+    <>
+      <div className={styles.navbarAdmin}>
+        <div className={styles.navbarAdminIcons}>
+          <a href="/">
+            <img src={facturaGPT} alt="Icon" />
+          </a>
+          {/* <div style={{ display: "flex", gap: "10px" }}>
           <img
             onClick={() => handleLanguage("es")}
             src={spanish_flag}
@@ -56,44 +63,57 @@ const NavbarAdmin = ({ showSidebar, setShowSidebar }) => {
               cursor: "pointer",
               borderRadius: "12px",
             }}
-          /> */}
-        </div>
-        {/* <a href="#">
-          <img src={headphonesIcon} alt="" />
-        </a> */}
-      </div>
-
-      <button onClick={() => setShowPlusModal(true)} className={styles.plus}>
-        {t("buttonGetPlus")} <img src={star} alt="" />
-      </button>
-      <div className={styles.profile}>
-        <a href="#" className={styles.number}>
-          <img src={time} alt="" />
-          <span>234</span>
-        </a>
-        {/* <a href="#">
-          <img src={bookIcon} alt="" />
-        </a> */}
-        <a href="/clients">
-          <img src={clientIcon} alt="" />
-        </a>
-        <div onClick={handleProfileClick} className={styles.profileContainer}>
-          <div className={styles.profileText}>
-            <p>John Doe</p>
-            <span>Admin</span>
-          </div>
-          <img
-            src="https://imgs.search.brave.com/xHfreYBWzJJzoeupLP8pjjo7wcsOpIaOMOxvEtFnX4w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuY3RmYXNzZXRz/Lm5ldC9oNmdvbzln/dzFoaDYvMnNOWnRG/QVdPZFAxbG1RMzNW/d1JOMy8yNGU5NTNi/OTIwYTljZDBmZjJl/MWQ1ODc3NDJhMjQ3/Mi8xLWludHJvLXBo/b3RvLWZpbmFsLmpw/Zz93PTEyMDAmaD05/OTImZmw9cHJvZ3Jl/c3NpdmUmcT03MCZm/bT1qcGc"
-            className={styles.imgProfile}
           />
+        </div> */}
+          {/* <a href="#">
+          <img src={headphonesIcon} alt="Icon" />
+        </a> */}
         </div>
-      </div>
 
-      <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
-        <AccountSettings />
+        <button onClick={() => setShowPlusModal(true)} className={styles.plus}>
+          {t("buttonGetPlus")} <img src={star} alt="Icon" />
+        </button>
+        <div className={styles.profile}>
+          <a href="/clients">
+            <img src={addBlack} alt="Icon" />
+          </a>
+          <a href="/clients">
+            <img src={addGreen} alt="Icon" />
+          </a>
+          <a href="/clients">
+            <img src={chatIcon} alt="Icon" />
+          </a>
+          <a href="/clients">
+            <img src={clientIcon} alt="Icon" />
+          </a>
+          <a href="/clients">
+            <img src={boxIcon} alt="Icon" />
+          </a>
+          <a href="#" className={styles.number}>
+            <img src={dotsNotification} alt="Icon" />
+            <span>234</span>
+          </a>
+
+          <div onClick={handleProfileClick} className={styles.profileContainer}>
+            <div className={styles.profileText}>
+              <p>John Doe</p>
+              <span>Admin</span>
+            </div>
+            <img src={profileIcon} className={styles.imgProfile} />
+          </div>
+        </div>
+        <div
+          className={` ${showSidebar ? styles.settingsBg : styles.none}`}
+          onClick={() => setShowSidebar(false)}
+        ></div>
+        <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
+          <AccountSettings />
+        </div>
+        {showPlusModal && (
+          <UpgradePlan onClose={() => setShowPlusModal(false)} />
+        )}
       </div>
-      {showPlusModal && <UpgradePlan onClose={() => setShowPlusModal(false)} />}
-    </div>
+    </>
   );
 };
 

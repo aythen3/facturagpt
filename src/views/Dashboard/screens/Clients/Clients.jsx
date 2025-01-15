@@ -12,8 +12,7 @@ import creditCard from "../../assets/creditCardIcon.png";
 import closeIcon from "../../assets/closeMenu.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
-import SeeHistory from "../../components/SeeHistory/SeeHistory";
-import SendEmailModal from "../../components/SendEmailModal/SendEmailModal";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   createClient,
@@ -293,7 +292,6 @@ const Clients = () => {
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          {/* <SendEmailModal /> */}
           <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
             <button
