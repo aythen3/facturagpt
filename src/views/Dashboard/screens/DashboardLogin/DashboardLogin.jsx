@@ -131,6 +131,8 @@ const DashboardLogin = () => {
       dispatch(loginToManager({ email, password }))
         .unwrap()
         .then((response) => {
+          console.log("REPONSE LOGIN", response);
+
           let accountData = {
             email,
             role: response?.role,

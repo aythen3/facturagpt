@@ -37,8 +37,10 @@ const Clients = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userStorage = localStorage.getItem("emailManagerAccount");
+  const userStorage = localStorage.getItem("user");
   const dataUser = JSON.parse(userStorage);
+
+  console.log("USSSSSSSSSS", dataUser);
 
   const { clients, loading, client } = useSelector((state) => state.clients);
 
