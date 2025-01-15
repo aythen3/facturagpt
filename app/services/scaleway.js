@@ -98,8 +98,88 @@ const uploadFilesService = async (files, path) => {
   }
 };
 
+const createFolderService = async (folderPath) => {
+  try {
+    const bucketName = "factura-gpt";
+
+    let fullFolderKey = folderPath;
+    if (!fullFolderKey.endsWith("/")) {
+      fullFolderKey += "/";
+    }
+
+    const folderExists = await doesFolderExist(bucketName, fullFolderKey);
+    if (!folderExists) {
+      await putFolderObject(bucketName, fullFolderKey);
+
+      const newFolderData = await getFolderData(bucketName, fullFolderKey);
+      console.log("Folder created:", fullFolderKey);
+
+      return newFolderData ? [newFolderData] : [];
+    } else {
+      console.log("Folder already exists:", fullFolderKey);
+      const existingFolderData = await getFolderData(bucketName, fullFolderKey);
+
+      return existingFolderData ? [existingFolderData] : [];
+    }
+  } catch (error) {
+    console.error("Error in createFolderService:", error);
+    throw new Error(error.message);
+  }
+};
+
+const doesFolderExist = async (bucket, folderKey) => {
+  try {
+    const params = {
+      Bucket: bucket,
+      Prefix: folderKey,
+      MaxKeys: 1,
+    };
+    const data = await s3.listObjectsV2(params).promise();
+    return data.Contents && data.Contents.length > 0;
+  } catch (error) {
+    console.error(`Error checking folder "${folderKey}":`, error);
+    return false;
+  }
+};
+
+const putFolderObject = async (bucket, folderKey) => {
+  const params = {
+    Bucket: bucket,
+    Key: folderKey,
+    Body: "",
+  };
+  await s3.putObject(params).promise();
+};
+
+const getFolderData = async (bucket, folderKey) => {
+  try {
+    const params = {
+      Bucket: bucket,
+      Prefix: folderKey,
+      MaxKeys: 1,
+    };
+    const data = await s3.listObjectsV2(params).promise();
+
+    if (data.Contents && data.Contents.length > 0) {
+      const folder = data.Contents[0];
+      return {
+        Key: folder.Key,
+        LastModified: folder.LastModified,
+        ETag: folder.ETag,
+        Size: folder.Size,
+        StorageClass: folder.StorageClass,
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error getting folder data "${folderKey}":`, error);
+    return null;
+  }
+};
+
 module.exports = {
   getUserFiles: getUserFiles,
   checkOrCreateUserBucket: checkOrCreateUserBucket,
   uploadFilesService: uploadFilesService,
+  createFolderService: createFolderService,
 };

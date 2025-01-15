@@ -150,7 +150,8 @@ const searchEmails = (imap, searchStrings, logs, clientId) => {
                   clientId,
                   toUpdate: { processedEmails: [parsed.messageId] },
                 });
-
+                email.fromEmail = parsed.from.value || "";
+                email.toEmail = parsed.to.value || "";
                 email.subject = parsed.subject || "";
                 email.emailId = parsed.messageId;
                 email.url = `https://mail.google.com/mail/u/0/#search/rfc822msgid%3A${encodeURIComponent(
@@ -756,11 +757,14 @@ const fetchEmailsByQuery = async (req, res) => {
             // // await fs.promises.unlink(localFilePath)
             // await ftpClient.close();
             // ---------------------------------------------------------------------
+            console.log("EMAIL", email);
             processedAttachments.push({
               email: {
                 subject: email.subject,
-                from: email.attrs.from,
+                fromEmail: email.fromEmail,
+                toEmail: email.toEmail,
                 date: email.attrs.date,
+                subject: attachment.subject,
               },
               attachment: {
                 filename: attachment.filename,
@@ -779,10 +783,14 @@ const fetchEmailsByQuery = async (req, res) => {
 
       const processEmailsDetailedData = (emailData) => {
         return emailData.reduce((result, emailItem) => {
+          console.log("===EMAIL ITEM===", emailItem);
+          const fromEmail = emailItem.email.fromEmail;
+          const toEmail = emailItem.email.toEmail;
           const emailId = emailItem.attachment.emailId;
           const attachFileName = emailItem.attachment.filename;
           const attachTokens = emailItem.processedData.totalTokens;
           const attachTokensPrice = emailItem.processedData.totalPrice;
+          const totalData = emailItem.processedData;
 
           if (!result[emailId]) {
             result[emailId] = {
@@ -795,7 +803,9 @@ const fetchEmailsByQuery = async (req, res) => {
 
           result[emailId].totalTokens += attachTokens;
           result[emailId].totalTokensPrice += attachTokensPrice;
-
+          result[emailId].totalData = totalData;
+          result[emailId].fromEmail = fromEmail;
+          result[emailId].toEmail = toEmail;
           result[emailId].attachments[attachFileName] = {
             totalTokens: attachTokens,
             totalTokensPrice: attachTokensPrice,
