@@ -126,6 +126,7 @@ const DashboardLogin = () => {
     if (error !== "") {
       return;
     }
+
     if (email.length > 1 && password.length > 1) {
       setIsLoading(true);
       dispatch(loginToManager({ email, password }))
@@ -152,6 +153,13 @@ const DashboardLogin = () => {
         .finally(() => {
           setIsLoading(false);
         });
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSignin();
     }
   };
 
@@ -287,6 +295,7 @@ const DashboardLogin = () => {
           onChange={(e) => setEmail(e.target.value)}
           type="email"
           placeholder={t("placeholder1")}
+          onKeyDown={handleKeyDown}
           className={styles.input}
         />
       </label>
@@ -297,6 +306,7 @@ const DashboardLogin = () => {
           onChange={handlePasswordChange}
           type="password"
           placeholder={t("placeholder2")}
+          onKeyDown={handleKeyDown}
           className={styles.input}
         />
         <span className={styles.passwordRequirements}>
@@ -336,7 +346,9 @@ const DashboardLogin = () => {
       </div>
       {mode === "signin" && (
         <button
-          onClick={() => loginWithRedirect()}
+          onClick={() => {
+            loginWithRedirect();
+          }}
           className={styles.buttonOpenAi}
         >
           <OpenAiLogo />
@@ -345,6 +357,8 @@ const DashboardLogin = () => {
       )}
     </form>
   );
+
+  console.log("MODE", mode);
 
   const renderForgotPasswordForm = () => (
     <div className={styles.rightContainer}>
