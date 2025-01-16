@@ -33,7 +33,25 @@
 .titleWrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    text-decoration: underline;
+    color: #222222;
+    font-weight: bold;
+  }
+  button:disabled {
+    color: #b4b4b4;
+  }
 }
 
 .dropdownContainer {

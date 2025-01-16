@@ -146,7 +146,7 @@ const PricingCards = ({
       price: t("price11"),
       min: 100000,
       max: 5000000,
-      sliding: 100000,
+      sliding: 4000000,
     },
   ];
 
@@ -165,7 +165,7 @@ const PricingCards = ({
         containerRef.current.scrollTo({
           left:
             selectedCardElement.offsetLeft -
-            containerRef.current.offsetWidth / 2,
+            containerRef.current.offsetWidth / 2.35,
           behavior: "smooth",
         });
       }

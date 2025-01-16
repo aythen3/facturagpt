@@ -40,10 +40,10 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
 
   const marks = [
     { value: 1000, label: "1k", position: "calc(1% + 4px)" }, // Mover la primera marca un poco más a la derecha
-    { value: 10000, label: "10k", position: "calc(19% + 2px)" },
-    { value: 100000, label: "100k", position: "calc(39% + 1px)" },
-    { value: 1000000, label: "1M", position: "calc(58% + 5px)" },
-    { value: 2000000, label: "2M", position: "calc(78% + 4px)" },
+    { value: 10000, label: "900k", position: "calc(19% + 2px)" },
+    { value: 2000000, label: "2M", position: "calc(39% + 1px)" },
+    { value: 3000000, label: "3M", position: "calc(58% + 5px)" },
+    { value: 4000000, label: "4M", position: "calc(78% + 4px)" },
     { value: 5000000, label: "+5M", position: "calc(100% - 10px)" }, // Mover la última marca más a la izquierda
   ];
 

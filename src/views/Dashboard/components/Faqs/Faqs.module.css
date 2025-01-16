@@ -6,7 +6,7 @@
   margin: 60px 0;
   width: 90%;
   h2 {
-    font-size: clamp(30px, 5vw, 40px) !important;
+    font-size: clamp(30px, 5vw, 50px) !important;
     font-weight: 700;
     color: #18181b;
     text-align: center;

@@ -133,7 +133,7 @@
   color: #b8b8b8;
   font-size: clamp(17px, 5vw, 20px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
-  margin-top: 33px;
+  /* margin-top: 33px; */
   max-width: 55%;
   text-align: center;
   padding: 0 20px;
@@ -185,7 +185,7 @@
     font-size: clamp(
       20px,
       5vw,
-      40px
+      50px
     ) !important; /* Ajuste dinámico con clamp */
   }
 }
@@ -205,7 +205,7 @@
   flex-wrap: wrap;
   border-radius: 9px;
   /* height: clamp(180px, 20vw, 223px); Ajuste dinámico de la altura */
-  margin-top: 22px;
+  margin-top: 10px;
   width: 90%; /* Asegura que el contenedor ocupe todo el ancho disponible */
   max-width: 1194px; /* Límite máximo para evitar que se expanda demasiado */
   align-items: center;

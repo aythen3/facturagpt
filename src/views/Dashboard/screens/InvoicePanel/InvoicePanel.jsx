@@ -3,12 +3,10 @@ import FileExplorer from "../../components/FileExplorer/FileExplorer.jsx";
 import InvoiceForm from "../../components/InvoiceForm/InvoiceForm.jsx";
 import Preview from "../../components/Preview/Preview.jsx";
 import FloatingMenu from "../../components/FloatingMenu/FloatingMenu.jsx";
-import Navbar from "../../components/Navbar/Navbar";
+import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin.jsx";
 import { useState } from "react";
 import Automate from "../../components/Automate/Automate.jsx";
-import { useSelector } from "react-redux";
 import PanelAutomate from "../../components/Automate/panelAutomate/PanelAutomate.jsx";
-import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin.jsx";
 
 const company = {
   email: "coolmail@mail.com",
@@ -24,6 +22,7 @@ export default function InvoicePanel() {
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [fileUploaded, setFileUploaded] = useState(false);
 
   const openModalAutomate = () => {
     setIsModalAutomate(true);
@@ -43,13 +42,54 @@ export default function InvoicePanel() {
     setTypeContentAutomate("");
   };
 
+  const handleFileChange = (event) => {
+    if (event.target.files.length > 0) {
+      setFileUploaded(true);
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    if (event.dataTransfer.files.length > 0) {
+      setFileUploaded(true);
+    }
+  };
+
   return (
     <>
       <NavbarAdmin />
       <div className={styles.container}>
         <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
-        <InvoiceForm />
-        <Preview companyInfo={company} />
+        {!fileUploaded ? (
+          <div
+            className={styles.inputContainer}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
+            <input
+              type="file"
+              onChange={handleFileChange}
+              placeholder="Selecciona una factura o arrastra"
+            />
+            <label
+              onClick={() =>
+                document.querySelector('input[type="file"]').click()
+              }
+            >
+              Selecciona una factura o arrastra y suelta <br /> Digitaliza y
+              gestiona todos tus documentos con FacturaGPT.
+            </label>
+          </div>
+        ) : (
+          <>
+            <InvoiceForm />
+            <Preview companyInfo={company} />
+          </>
+        )}
         <FloatingMenu
           isOpen={isOpen}
           setIsOpen={setIsOpen}

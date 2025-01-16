@@ -1,41 +1,33 @@
 import React from "react";
 import styles from "./Tags.module.css";
-const Tags = () => {
+
+const Tags = ({ onTagClick }) => {
+  const tagList = [
+    { bgColor: "#222222", label: "1", text: "Etiqueta" },
+    { bgColor: "#0B06FF", label: "2", text: "Etiqueta" },
+    { bgColor: "#FF0000", label: "3", text: "Etiqueta" },
+    { bgColor: "#12A27F", label: "4", text: "Etiqueta" },
+    { bgColor: "#7329A5", label: "5", text: "Etiqueta" },
+    { bgColor: "#7086FD", label: "6", text: "Etiqueta" },
+    { bgColor: "#FF8C00", label: "7", text: "Etiqueta" },
+    { bgColor: "#16C098", label: "8", text: "Etiqueta" },
+    { bgColor: "#C075EE", label: "9", text: "Etiqueta" },
+    { bgColor: "#EEFF00", label: "10", text: "Etiqueta", color: "#222" },
+    // ... otras etiquetas
+  ];
+
   return (
     <div className={styles.tags}>
-      <span className={styles.tag} style={{ backgroundColor: "#222222" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#0B06FF" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#FF0000" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#12A27F" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#7329A5" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#7086FD" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#FF8C00" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#16C098" }}>
-        Etiqueta
-      </span>
-      <span className={styles.tag} style={{ backgroundColor: "#C075EE" }}>
-        Etiqueta
-      </span>
-      <span
-        className={styles.tag}
-        style={{ backgroundColor: "#EEFF00", color: "#333333" }}
-      >
-        Etiqueta
-      </span>
+      {tagList.map((tag, index) => (
+        <span
+          key={index}
+          className={styles.tag}
+          style={{ backgroundColor: tag.bgColor, color: tag.color }}
+          onClick={() => onTagClick(tag.label)}
+        >
+          {tag.text}
+        </span>
+      ))}
     </div>
   );
 };

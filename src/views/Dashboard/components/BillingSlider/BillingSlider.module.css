@@ -1,12 +1,12 @@
 .container {
   width: 90%;
-  max-width: 600px;
+  /* max-width: 600px; */
   margin: 20px auto;
   text-align: center;
 }
 
 .title {
-  font-size: clamp(20px, 5vw, 40px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(20px, 5vw, 50px) !important; /* Ajuste dinámico con clamp */
   color: #18181b;
   margin-bottom: 20px;
   display: flex;
@@ -30,7 +30,8 @@
 
 .sliderWrapper {
   position: relative;
-  width: 100%;
+  width: 50%;
+  margin: 0 auto;
 }
 .slider {
   -webkit-appearance: none;

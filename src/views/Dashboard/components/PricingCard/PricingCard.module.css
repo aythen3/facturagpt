@@ -23,7 +23,7 @@
 
 .card {
   display: inline-block; /* Asegurar que las tarjetas estén en una sola línea */
-  min-width: 200px;
+  /* min-width: 200px; */
   gap: 5px;
   display: flex;
   flex-direction: column;
