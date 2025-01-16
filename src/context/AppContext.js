@@ -17,11 +17,10 @@ export const AppProvider = ({ children }) => {
       if (user) {
         const userData = JSON.parse(user);
 
-        if (userData?.email && userData?.accessToken) {
+        if (userData?.accessToken) {
           dispatch(
             loginToManager({
-              email: userData?.email,
-              password: userData?.accessToken,
+              accessToken: userData?.accessToken,
             })
           );
         }

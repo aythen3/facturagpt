@@ -78,7 +78,7 @@ export default function Filter({ isOpen, onClose, setIsFilterOpen }) {
   const handleCloseNewClient = () => {
     setIsAnimating(true);
     setTimeout(() => {
-      setIsFilterOpen(false);
+      onClose();
       setIsAnimating(false);
     }, 300);
   };

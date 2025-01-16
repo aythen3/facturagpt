@@ -110,13 +110,13 @@ const updateAccount = async ({ userId, toUpdate }) => {
     console.log(`User with ID ${userId} updated successfully.`);
 
     // Fetch all users and sanitize the response
-    const allUsersResponse = await db.list({ include_docs: true });
-    const allUsers = allUsersResponse.rows.map((row) => {
-      const { _id, _rev, ...rest } = row.doc;
-      return rest; // Remove internal CouchDB fields (_id and _rev)
-    });
+    // const allUsersResponse = await db.list({ include_docs: true });
+    // const allUsers = allUsersResponse.rows.map((row) => {
+    //   const { _id, _rev, ...rest } = row.doc;
+    //   return rest; // Remove internal CouchDB fields (_id and _rev)
+    // });
 
-    return allUsers;
+    return updatedDoc;
   } catch (error) {
     if (error.statusCode === 404) {
       console.error(`User with ID ${userId} not found.`);
@@ -158,8 +158,12 @@ const getAllUsers = async () => {
   }
 };
 
-const loginToManagerService = async ({ email, password }) => {
-  console.log("Data received in loginToManagerService:", { email, password });
+const loginToManagerService = async ({ email, password, accessToken }) => {
+  console.log("Data received in loginToManagerService:", {
+    email,
+    password,
+    accessToken,
+  });
 
   const dbName = "db_emailmanager_accounts";
   let db;
@@ -170,7 +174,6 @@ const loginToManagerService = async ({ email, password }) => {
       console.log(`Database ${dbName} does not exist.`);
       return { success: false, message: "Account database does not exist." };
     }
-
     db = nano.use(dbName);
   } catch (error) {
     console.error("Error accessing database:", error);
@@ -178,24 +181,44 @@ const loginToManagerService = async ({ email, password }) => {
   }
 
   try {
-    const queryResponse = await db.find({
-      selector: { email },
-    });
+    let account;
 
-    if (queryResponse.docs.length === 0) {
-      console.log(`No account found for email: ${email}`);
-      return { success: false, message: "Invalid email or password." };
+    if (accessToken) {
+      console.log("Attempting login with accessToken");
+      const tokenQuery = await db.find({
+        selector: { password: accessToken },
+      });
+
+      if (tokenQuery.docs.length === 0) {
+        console.log("Invalid access token or account not found.");
+        return { success: false, message: "Invalid access token." };
+      }
+      account = tokenQuery.docs[0];
+      console.log(`Login successful for account via token: ${account._id}`);
+    } else {
+      console.log("Attempting login with email/password");
+      const queryResponse = await db.find({
+        selector: { email },
+      });
+
+      if (queryResponse.docs.length === 0) {
+        console.log(`No account found for email: ${email}`);
+        return { success: false, message: "Invalid email or password." };
+      }
+
+      account = queryResponse.docs[0];
+      const hashedPassword = Buffer.from(password).toString("base64");
+
+      if (
+        account.password !== hashedPassword &&
+        account.password !== password
+      ) {
+        console.log("Invalid password provided.");
+        return { success: false, message: "Invalid email or password." };
+      }
+      console.log(`Login successful for account: ${account._id}`);
     }
 
-    const account = queryResponse.docs[0];
-    const hashedPassword = Buffer.from(password).toString("base64");
-
-    if (account.password !== hashedPassword && account.password !== password) {
-      console.log("Invalid password provided.");
-      return { success: false, message: "Invalid email or password." };
-    }
-
-    console.log(`Login successful for account: ${account._id}`);
     const { _id, _rev, ...rest } = account;
     if (!account.bucketCreated) {
       try {
@@ -212,6 +235,7 @@ const loginToManagerService = async ({ email, password }) => {
         console.error("Error creating bucket:", error);
       }
     }
+
     return rest;
   } catch (error) {
     console.error("Error during login:", error);

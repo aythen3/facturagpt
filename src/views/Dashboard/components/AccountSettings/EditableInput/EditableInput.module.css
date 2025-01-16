@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+.editableInputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  gap: 8.5px;
+  border-bottom: 1px solid #ebebeb;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.editableInputHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    user-select: none;
+    color: #222222;
+  }
+  div {
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #222222;
+  }
+}
+
+.editableInput {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  gap: 8.5px;
+  span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #717171;
+  }
+  input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #757575;
+    height: 31px;
+    min-height: 31px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    padding: 0px 9px;
+  }
+}
+
+.verify {
+  position: absolute;
+  right: 10px;
+  top: 31px;
+  font-weight: 600 !important;
+  font-size: 14px;
+  color: #000 !important;
+  cursor: pointer;
+}
+
+.verify:hover {
+  text-decoration: underline;
+}
+
+.error {
+  font-size: 9px;
+  font-weight: 400;
+  color: #b40e1b;
+}
