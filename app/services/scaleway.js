@@ -177,9 +177,145 @@ const getFolderData = async (bucket, folderKey) => {
   }
 };
 
+const moveObjectService = async (sourceKey, destinationKey, isFolder) => {
+  const bucketName = "factura-gpt";
+
+  if (!destinationKey.endsWith("/")) {
+    destinationKey += "/";
+  }
+
+  if (!isFolder) {
+    const fileName = sourceKey.split("/").pop();
+    const newKey = `${destinationKey}${fileName}`;
+
+    console.log("Moving single file:", sourceKey, "->", newKey);
+
+    await copyObject(bucketName, sourceKey, newKey);
+    await deleteObject(bucketName, sourceKey);
+
+    return { success: true, message: "File moved", newKey };
+  } else {
+    if (!sourceKey.endsWith("/")) {
+      sourceKey += "/";
+    }
+
+    console.log("Moving folder:", sourceKey, "->", destinationKey);
+
+    const folderSegments = sourceKey.split("/").filter(Boolean);
+    const folderName = folderSegments[folderSegments.length - 1];
+
+    const targetFolderKey = `${destinationKey}${folderName}/`;
+    console.log("Creating new folder object:", targetFolderKey);
+    await putFolderObject(bucketName, targetFolderKey);
+
+    const data = await s3
+      .listObjectsV2({
+        Bucket: bucketName,
+        Prefix: sourceKey,
+      })
+      .promise();
+
+    if (!data.Contents || data.Contents.length === 0) {
+      console.log("Source folder is empty, nothing to move.");
+      await deleteObject(bucketName, sourceKey);
+      return { success: true, message: "Empty folder moved" };
+    }
+
+    const itemsMoved = [];
+    for (const obj of data.Contents) {
+      const oldKey = obj.Key;
+      const relativePath = oldKey.slice(sourceKey.length);
+
+      const newKey = `${targetFolderKey}${relativePath}`;
+
+      if (oldKey === sourceKey) {
+        continue;
+      }
+
+      console.log(`Copying ${oldKey} to ${newKey}`);
+      await copyObject(bucketName, oldKey, newKey);
+      await deleteObject(bucketName, oldKey);
+
+      itemsMoved.push({ oldKey, newKey });
+    }
+
+    console.log("Removing old folder object:", sourceKey);
+    await deleteObject(bucketName, sourceKey);
+
+    return {
+      success: true,
+      message: "Folder moved",
+      targetFolderKey,
+      itemsMoved,
+    };
+  }
+};
+
+async function copyObject(bucket, sourceKey, destinationKey) {
+  const params = {
+    Bucket: bucket,
+    CopySource: `/${bucket}/${sourceKey}`,
+    Key: destinationKey,
+  };
+  console.log("Params to copyObject:", params);
+  await s3.copyObject(params).promise();
+}
+
+async function deleteObject(bucket, objectKey) {
+  const params = {
+    Bucket: bucket,
+    Key: objectKey,
+  };
+  await s3.deleteObject(params).promise();
+}
+
+async function deleteObjectService(key, isFolder) {
+  const bucketName = "factura-gpt";
+
+  if (!isFolder) {
+    console.log("Deleting single file:", key);
+    await deleteObject(bucketName, key);
+    return { success: true, message: "File deleted", deletedKey: key };
+  } else {
+    let folderKey = key;
+    if (!folderKey.endsWith("/")) {
+      folderKey += "/";
+    }
+
+    console.log("Deleting folder:", folderKey);
+
+    const listParams = {
+      Bucket: bucketName,
+      Prefix: folderKey,
+    };
+    const data = await s3.listObjectsV2(listParams).promise();
+    if (!data.Contents || data.Contents.length === 0) {
+      console.log("Folder is empty or doesn't exist:", folderKey);
+      await deleteObject(bucketName, folderKey);
+      return { success: true, message: "Folder was empty or not found" };
+    }
+
+    const deletedItems = [];
+    for (const obj of data.Contents) {
+      console.log("Deleting:", obj.Key);
+      await deleteObject(bucketName, obj.Key);
+      deletedItems.push(obj.Key);
+    }
+
+    return {
+      success: true,
+      message: "Folder and all nested objects deleted",
+      folderKey,
+      deletedItems,
+    };
+  }
+}
+
 module.exports = {
   getUserFiles: getUserFiles,
   checkOrCreateUserBucket: checkOrCreateUserBucket,
   uploadFilesService: uploadFilesService,
   createFolderService: createFolderService,
+  moveObjectService: moveObjectService,
+  deleteObjectService: deleteObjectService,
 };

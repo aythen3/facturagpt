@@ -3,6 +3,8 @@ const {
   checkOrCreateUserBucket,
   uploadFilesService,
   createFolderService,
+  moveObjectService,
+  deleteObjectService,
 } = require("../services/scaleway");
 const { catchedAsync } = require("../utils/err");
 
@@ -37,7 +39,7 @@ const getUserFilesController = async (req, res) => {
 const uploadUserFileController = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { folder } = req.body; // "facturas" o "recibos"
+    const { folder } = req.body;
     const file = req.file;
 
     if (!file) {
@@ -96,7 +98,56 @@ const createFolderController = async (req, res) => {
   }
 };
 
+const moveObjectController = async (req, res) => {
+  try {
+    const { sourceKey, destinationKey, isFolder } = req.body;
+    console.log("Received move-object request:", {
+      sourceKey,
+      destinationKey,
+      isFolder,
+    });
+
+    if (!sourceKey || !destinationKey) {
+      return res.status(400).json({
+        success: false,
+        message: "sourceKey and destinationKey are required",
+      });
+    }
+
+    const result = await moveObjectService(sourceKey, destinationKey, isFolder);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error("Error in moveObjectController:", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Error moving object" });
+  }
+};
+
+const deleteObjectController = async (req, res) => {
+  try {
+    const { key, isFolder } = req.body;
+    console.log("Received delete-object request:", { key, isFolder });
+
+    if (!key) {
+      return res
+        .status(400)
+        .json({ success: false, message: "key is required" });
+    }
+
+    const result = await deleteObjectService(key, isFolder);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error("Error in deleteObjectController:", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Error deleting object" });
+  }
+};
+
 module.exports = {
+  deleteObjectController: catchedAsync(deleteObjectController),
+  moveObjectController: catchedAsync(moveObjectController),
   createFolderController: catchedAsync(createFolderController),
   uploadUserFileController: catchedAsync(uploadUserFileController),
   getUserFilesController: catchedAsync(getUserFilesController),
