@@ -18,7 +18,7 @@ import chatIcon from "../../assets/chatIcon.svg";
 import boxIcon from "../../assets/boxIcon.svg";
 import dotsNotification from "../../assets/dotsNotification.svg";
 
-const NavbarAdmin = ({}) => {
+const NavbarAdmin = ({ setActivateChat }) => {
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -41,33 +41,6 @@ const NavbarAdmin = ({}) => {
           <a href="/">
             <img src={facturaGPT} alt="Icon" />
           </a>
-          {/* <div style={{ display: "flex", gap: "10px" }}>
-          <img
-            onClick={() => handleLanguage("es")}
-            src={spanish_flag}
-            alt="img"
-            style={{
-              width: 30,
-              height: 30,
-              cursor: "pointer",
-              borderRadius: "12px",
-            }}
-          />
-          <img
-            onClick={() => handleLanguage("en")}
-            src={english_flag}
-            alt="img"
-            style={{
-              width: 30,
-              height: 30,
-              cursor: "pointer",
-              borderRadius: "12px",
-            }}
-          />
-        </div> */}
-          {/* <a href="#">
-          <img src={headphonesIcon} alt="Icon" />
-        </a> */}
         </div>
 
         <button onClick={() => setShowPlusModal(true)} className={styles.plus}>
@@ -80,8 +53,17 @@ const NavbarAdmin = ({}) => {
           <a href="/clients">
             <img src={addGreen} alt="Icon" />
           </a>
-          <a href="/clients">
-            <img src={chatIcon} alt="Icon" />
+          <a
+            onClick={() => {
+              navigate("/panel");
+              setActivateChat(true);
+            }}
+          >
+            <img
+              src={chatIcon}
+              alt="Icon"
+              // onClick={() => setActivateChat(true)}
+            />
           </a>
           <a href="/clients">
             <img src={clientIcon} alt="Icon" />

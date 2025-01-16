@@ -36,7 +36,7 @@ const Reviews = () => {
         <span className={styles.reviewsDescriptionLast}>
           {t("joinUsSubTitle")}
         </span>
-        <a href="/login" className={styles.startButton}>
+        <a href="/freetrial" className={styles.startButton}>
           {t("joinUsButton")} <img src={diagonalArrow} />
         </a>
       </section>

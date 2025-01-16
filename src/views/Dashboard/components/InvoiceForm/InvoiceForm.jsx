@@ -25,6 +25,7 @@ export default function InvoiceForm() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Factura");
   const [sectionSelected, setSectionSelected] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
   const handleTypeSelect = (type) => {
     setSelectedType(type);
     setIsPopupOpen(false);
@@ -34,11 +35,18 @@ export default function InvoiceForm() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.titleWrapper}>
-          <img src={imageIcon} alt="icon" />
-          <img src={fileIcon} alt="icon" />
-          <img src={codeIcon} alt="icon" />
+          <div>
+            <img src={imageIcon} alt="icon" />
+            <img src={fileIcon} alt="icon" />
+            <img src={codeIcon} alt="icon" />
 
-          <h1 className={styles.title}>Document Title</h1>
+            <h1 className={styles.title}>Document Title</h1>
+          </div>
+          {sectionSelected == 0 && (
+            <button onClick={() => setIsEditing(true)} disabled={isEditing}>
+              Editar
+            </button>
+          )}
         </div>
         <div className={styles.dropdownContainer}>
           <div className={styles.dropdown}>
@@ -52,7 +60,6 @@ export default function InvoiceForm() {
         </div>
         <Tags />
       </header>
-
       <div className={styles.btnSectionsSelector}>
         <button
           className={`${sectionSelected == 0 ? styles.sectionSelect : ""}`}
@@ -74,7 +81,7 @@ export default function InvoiceForm() {
         </button>
       </div>
       {sectionSelected == 0 ? (
-        <InfoBill />
+        <InfoBill isEditing={isEditing} setIsEditing={setIsEditing} />
       ) : sectionSelected == 1 ? (
         <InfoContact />
       ) : sectionSelected == 2 ? (

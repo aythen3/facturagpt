@@ -121,7 +121,6 @@ const DocumentPreview = ({ document, companyInfo }) => {
           </div>
         )}
       </div>
-
       <div className={styles.actionsSection}>
         <div className={styles.actionsContainer}>
           <button

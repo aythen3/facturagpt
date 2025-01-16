@@ -54,7 +54,7 @@ body {
   }
 
   button {
-    background-color: #fafafa;
+    background-color: white;
     border: 1px solid #d9d9d9;
     border-radius: 5px;
     cursor: pointer;
@@ -70,7 +70,9 @@ body {
       height: 30px;
     }
   }
-
+  button:hover {
+    background-color: #fafafa;
+  }
   .safety,
   button {
     display: flex;

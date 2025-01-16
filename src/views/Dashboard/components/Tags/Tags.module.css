@@ -1,14 +1,18 @@
 .tags {
   display: flex;
   gap: 5px;
+  flex-wrap: wrap;
+  flex-direction: row !important;
+  width: 100%;
   .tag {
     color: white;
-    padding: 4px;
+    padding: 0px 4px;
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     cursor: pointer;
+    width: fit-content;
   }
 }

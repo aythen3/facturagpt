@@ -39,77 +39,77 @@ const Pricing = () => {
 
   const cardsData = [
     {
-      title: t("title1"),
+      title: t("title1") + " /mes",
       price: t("price1"),
       min: 0,
       max: 0,
       sliding: 0,
     },
     {
-      title: t("title2"),
+      title: "20 Documentos",
       price: t("price2"),
       min: 20,
       max: 199,
       sliding: 20,
     },
     {
-      title: t("title3"),
+      title: t("title3") + " /mes",
       price: t("price3"),
       min: 200,
       max: 499,
       sliding: 200,
     },
     {
-      title: t("title4"),
+      title: t("title4") + " /mes",
       price: t("price4"),
       min: 500,
       max: 999,
       sliding: 500,
     },
     {
-      title: t("title5"),
+      title: t("title5") + " /mes",
       price: t("price5"),
       min: 1000,
       max: 1999,
       sliding: 1000,
     },
     {
-      title: t("title6"),
+      title: t("title6") + " /mes",
       price: t("price6"),
       min: 2000,
       max: 4999,
       sliding: 2000,
     },
     {
-      title: t("title7"),
+      title: t("title7") + " /mes",
       price: t("price7"),
       min: 5000,
       max: 9999,
       sliding: 5000,
     },
     {
-      title: t("title8"),
+      title: t("title8") + " /mes",
       price: t("price8"),
       min: 10000,
       max: 19999,
       sliding: 10000,
     },
     {
-      title: t("title9"),
+      title: t("title9") + " /mes",
       price: t("price9"),
       min: 20000,
       max: 49999,
       sliding: 20000,
     },
     {
-      title: t("title10"),
+      title: t("title10") + " /mes",
       price: t("price10"),
       min: 50000,
       max: 99999,
       sliding: 50000,
     },
     {
-      title: t("title11"),
+      title: t("title11") + " /mes",
       price: t("price11"),
       min: 100000,
       max: 5000000,
@@ -159,7 +159,7 @@ const Pricing = () => {
           <p className={styles.plansSubtitle}>
             Elige el mejor plan que se adapte a tus necesidades.
           </p>
-          <p className={styles.currentPlan}>{currentPlan.documents}/mes</p>
+          <p className={styles.currentPlan}>{currentPlan.documents}</p>
           <input
             type="range"
             min="0"
@@ -286,7 +286,7 @@ const Pricing = () => {
       <span className={styles.reviewsDescriptionLast}>
         Estás un paso más cerca de obtener el mejor servicio...
       </span>
-      <a href="/login" className={styles.startButton}>
+      <a href="/freetrial" className={styles.startButton}>
         Probar Gratis <img src={diagonalArrow} />
       </a>
     </div>

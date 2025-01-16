@@ -5,9 +5,11 @@ import handPointer from "../../assets/handPointer.svg";
 import Navbar from "../Navbar/Navbar";
 import wsIcon from "../../assets/whatsappIcon.svg";
 import { useTranslation } from "react-i18next";
+import diagonalArrow from "../../assets/diagonalArrow.svg";
 
 const ContactForm = () => {
   const { t } = useTranslation("contactForm");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -74,7 +76,7 @@ const ContactForm = () => {
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = "584243356112"; // Replace with your WhatsApp number
+    const phoneNumber = "34629571058"; // Replace with your WhatsApp number
     const message = `Hola, mi nombre es ${formData.name}. ${formData.message}`;
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
@@ -221,6 +223,15 @@ const ContactForm = () => {
             {statusMessage}
           </div>
         )}
+        <section className={styles.startNowSection}>
+          <h2 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h2>
+          <span className={styles.reviewsDescriptionLast}>
+            ¡Estás un paso más cerca de obtener el mejor servicio!
+          </span>
+          <a href="/freetrial" className={styles.startButton}>
+            Probar Gratis <img src={diagonalArrow} />
+          </a>
+        </section>
       </div>
     </>
   );
