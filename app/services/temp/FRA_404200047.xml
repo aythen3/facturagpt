@@ -53,7 +53,7 @@
             <TaxIdentification>
                 <PersonTypeCode>J</PersonTypeCode>
                 <ResidenceTypeCode>R</ResidenceTypeCode>
-                <TaxIdentificationNumber>A58580621</TaxIdentificationNumber>
+                <TaxIdentificationNumber>A58580626</TaxIdentificationNumber>
             </TaxIdentification>
             <LegalEntity>
                 <CorporateName>HSB S.A.</CorporateName>
@@ -124,7 +124,7 @@
                             <DeliveryNoteNumber>R-4022000057</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>TERMINAL CURV.403F 22-3/4 CI/ARAND.LT.</ItemDescription>
+                    <ItemDescription>TERMINAL CURV.403F 22-3/4 C/ARAND.LT.</ItemDescription>
                     <Quantity>50</Quantity>
                     <UnitPriceWithoutTax>12.77</UnitPriceWithoutTax>
                     <TotalCost>638.50</TotalCost>

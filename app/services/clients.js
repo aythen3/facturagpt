@@ -116,7 +116,7 @@ const createClients = async ({ userId, clientsData }) => {
     const clientDocs = [];
 
     for (const clientData of clientsData) {
-      const { attachment, email, processedData } = clientData;
+      const { attachment, email, processedData, processedemails } = clientData;
 
       const emailId = attachment?.attachment?.emailId || "";
 
@@ -128,10 +128,15 @@ const createClients = async ({ userId, clientsData }) => {
       const sanitizedEmailId = emailId.replace(/[^a-zA-Z0-9-_@.]+/g, "_");
       const clientId = `client_${sanitizedEmailId}`;
 
-      console.log("Procesando cliente:", { attachment, email, processedData });
+      console.log("Procesando cliente:", {
+        attachment,
+        email,
+        processedData,
+        processedemails,
+      });
 
       const existingClient = await dbClients.find({
-        selector: { _id: clientId },
+        selector: { email: email },
         limit: 1,
       });
 
@@ -148,6 +153,7 @@ const createClients = async ({ userId, clientsData }) => {
           userId,
           email: email,
           emailId: attachment?.attachment?.emailId,
+          processedemails,
           clientData: processedData,
         };
 

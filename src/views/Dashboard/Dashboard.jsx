@@ -252,10 +252,21 @@ const Dashboard = () => {
         const clientsData = response.payload.processedAttachments.map(
           (attachment) => {
             const { xmlContent, ...attachmentWithoutXml } = attachment;
+
+            const emailFromAttachment =
+              attachmentWithoutXml.email.fromEmail[0].address;
+
+            const emailIds = response.payload.filteredEmails
+              .filter(
+                (email) => email.fromEmail[0].address === emailFromAttachment
+              )
+              .map((email) => email.emailId);
+
             return {
               attachment: attachmentWithoutXml,
-              email: attachmentWithoutXml.email.fromEmail[0].address,
+              email: emailFromAttachment,
               processedData: attachment.processedData,
+              processedemails: emailIds,
             };
           }
         );
