@@ -482,13 +482,12 @@ const Dashboard = () => {
               <span className={styles.tableSpan}>Asocidos y sus cuentas</span>
             </div>
             <div className={styles.filters}>
-              <button
-                // onClick={() => setShowUserSettings(true)}
-                className={styles.addClientButton}
-              >
-                <img src={plus} alt="Add client" />
-                Nuevo Admin
-              </button>
+              {user?.role === "superadmin" && (
+                <button className={styles.addClientButton}>
+                  <img src={plus} alt="Add admin" />
+                  Nuevo Admin
+                </button>
+              )}
               <button
                 // onClick={() => navigate("/userSettings")}
                 onClick={() => setShowUserSettings(true)}

@@ -90,6 +90,7 @@
 
 .form {
   .row {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -117,9 +118,9 @@
     flex-direction: column;
     color: #717171;
     gap: 5px;
-    margin-bottom: 40px;
     border-bottom: 1px solid #ebebeb;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
     input,
     select,
     option {
@@ -172,9 +173,15 @@
   }
 
   .phoneInputs {
+    margin-top: 8px;
     display: flex;
     gap: 10px;
     align-items: center;
+  }
+
+  .flagItem {
+    cursor: pointer;
+    user-select: none;
   }
 
   .countrySelect {
@@ -184,7 +191,9 @@
 
   .numberInput {
     flex-grow: 1; /* Se ajusta al espacio restante */
+    border-radius: 4px;
     box-sizing: border-box;
+    max-height: 31px;
   }
 
   .error {
@@ -223,6 +232,7 @@
     align-items: center;
     .paymentContainer {
       display: flex;
+      gap: 4px;
     }
 
     .paymentImage {
@@ -246,11 +256,13 @@
   .inputContainer {
     position: relative;
     display: flex;
+    margin-top: 8px;
     align-items: center;
   }
 
   .input {
     width: 100%;
+    max-height: 31px;
     padding-right: 40px; /* Espacio para la imagen */
     box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
   }
@@ -277,15 +289,18 @@
   .save {
     width: 100%;
     background-color: #233f39;
-    padding: 8px;
+    padding: 0px 8px;
     margin-top: 10px;
     color: white;
     text-decoration: none;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
+    cursor: pointer;
+    user-select: none;
+    height: 40px;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+    &:hover {
+      background-color: #196353;
+    }
   }
 
   .facturacion {
@@ -348,15 +363,12 @@
 
   .flagContainers {
     background-color: #f5f5f5;
-    width: 100%;
-    padding: 10px;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
+    border-radius: 4px;
+    height: 35px;
+    max-height: 35px;
+    padding: 0 20px;
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
     img {
       border-radius: 5px;
@@ -366,4 +378,13 @@
       -o-border-radius: 5px;
     }
   }
+}
+
+.editButton {
+  text-decoration: underline;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222222;
 }

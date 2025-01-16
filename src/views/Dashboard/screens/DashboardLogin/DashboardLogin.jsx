@@ -134,10 +134,7 @@ const DashboardLogin = () => {
           console.log("REPONSE LOGIN", response);
 
           let accountData = {
-            email,
-            role: response?.role,
             accessToken: response?.password,
-            id: response?.id,
           };
           localStorage.setItem("user", JSON.stringify(accountData));
           clearStates();

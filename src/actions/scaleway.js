@@ -90,3 +90,47 @@ export const createFolder = createAsyncThunk(
     }
   }
 );
+
+export const moveObject = createAsyncThunk(
+  "scaleway/moveObject",
+  async ({ sourceKey, destinationKey, isFolder }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        "/scaleway/move-object",
+        { sourceKey, destinationKey, isFolder },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.error("Error moving object:", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const deleteObject = createAsyncThunk(
+  "scaleway/deleteObject",
+  async ({ key, isFolder }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        "/scaleway/delete-object",
+        { key, isFolder },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.error("Error deleting object:", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
