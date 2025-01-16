@@ -37,10 +37,7 @@ const Clients = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userStorage = localStorage.getItem("user");
-  const dataUser = JSON.parse(userStorage);
-
-  console.log("USSSSSSSSSS", dataUser);
+  const { user } = useSelector((state) => state.user);
 
   const { clients, loading, client } = useSelector((state) => state.clients);
 
@@ -57,6 +54,10 @@ const Clients = () => {
     preferredCurrency: "",
     cardNumber: "",
   });
+
+  useEffect(() => {
+    dispatch(getAllUserClients({ userId: user?.id }));
+  }, [loading, user]);
 
   useEffect(() => {
     if (client?.clientData) {
@@ -89,10 +90,6 @@ const Clients = () => {
       });
     }
   }, [client]);
-
-  useEffect(() => {
-    dispatch(getAllUserClients({ userId: dataUser?.id }));
-  }, [loading]);
 
   const handleClientData = (field, value) => {
     const formattedValue =
@@ -177,8 +174,8 @@ const Clients = () => {
 
   const handleCreateClient = (e) => {
     e.preventDefault();
-    const userId = dataUser?.id;
-    const email = dataUser?.email;
+    const userId = user?.id;
+    const email = user?.email;
 
     if (client && client.clientData) {
       dispatch(
@@ -227,7 +224,7 @@ const Clients = () => {
     dispatch(
       deleteClients({
         clientIds: clientID ? [clientID] : selectedClientIds,
-        userId: dataUser?.id,
+        userId: user?.id,
       })
     )
       .then((result) => {
@@ -253,8 +250,12 @@ const Clients = () => {
   };
 
   const handleGetOneClient = async (clientId) => {
+    console.log("CLIENTIDDD", clientId);
+
     try {
-      const response = await dispatch(getOneClient(clientId)).unwrap();
+      const response = await dispatch(
+        getOneClient({ userId: user?.id, clientId })
+      ).unwrap();
       console.log("Cliente obtenido:", response);
       navigate("/transactions");
     } catch (error) {

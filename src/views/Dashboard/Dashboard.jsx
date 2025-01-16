@@ -57,7 +57,7 @@ const Dashboard = () => {
   const [showUserSettings, setShowUserSettings] = useState(false);
 
   const { allClients, allUsers } = useSelector((state) => state.emailManager);
-  const { user } = useSelector((state) => state.user);
+  const { user: userRedux } = useSelector((state) => state.user);
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 
@@ -223,12 +223,7 @@ const Dashboard = () => {
     setSearchQuery(event.target.value);
   };
 
-  const userStorage = localStorage.getItem("emailManagerAccount");
-  const dataUser = JSON.parse(userStorage);
-
   const toggleUserActive = async (user) => {
-    console.log("CLIENT", user);
-
     dispatch(
       updateClient({ clientId: user.id, toUpdate: { active: !user.active } })
     );
@@ -267,7 +262,7 @@ const Dashboard = () => {
 
         const createdClientsResponse = await dispatch(
           createClients({
-            userId: dataUser?.id,
+            userId: userRedux?.id,
             clientsData: clientsData,
           })
         );
@@ -482,7 +477,7 @@ const Dashboard = () => {
               <span className={styles.tableSpan}>Asocidos y sus cuentas</span>
             </div>
             <div className={styles.filters}>
-              {user?.role === "superadmin" && (
+              {userRedux?.role === "superadmin" && (
                 <button className={styles.addClientButton}>
                   <img src={plus} alt="Add admin" />
                   Nuevo Admin

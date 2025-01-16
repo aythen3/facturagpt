@@ -290,7 +290,7 @@ const loginToManagerService = async ({ email, password }) => {
 };
 
 const getAllClientsService = async () => {
-  const mainDbName = "db_emailmanager_clients";
+  const mainDbName = "db_emailmanager_users";
   let mainDb;
 
   try {
@@ -364,7 +364,7 @@ const getAllClientsService = async () => {
 };
 
 const addNewClientService = async ({ clientData }) => {
-  const dbName = "db_emailmanager_clients";
+  const dbName = "db_emailmanager_users";
   let db;
 
   try {
@@ -429,7 +429,7 @@ const addNewClientService = async ({ clientData }) => {
 };
 
 const deleteClientService = async ({ clientId }) => {
-  const dbName = "db_emailmanager_clients";
+  const dbName = "db_emailmanager_users";
   let db;
 
   try {
@@ -473,7 +473,7 @@ const deleteClientService = async ({ clientId }) => {
 };
 
 const updateClientService = async ({ clientId, toUpdate }) => {
-  const mainDbName = "db_emailmanager_clients";
+  const mainDbName = "db_emailmanager_users";
   const clientUid = clientId.split("_")[2];
   const processedEmailsDbName = `db_${clientUid}_processedemails`;
   let mainDb, processedEmailsDb;
@@ -659,7 +659,7 @@ const updateClientService = async ({ clientId, toUpdate }) => {
 };
 
 const getPaymentMethodService = async ({ clientId }) => {
-  const dbName = "db_emailmanager_clients";
+  const dbName = "db_emailmanager_users";
   let db;
 
   try {

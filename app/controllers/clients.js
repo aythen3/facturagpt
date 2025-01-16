@@ -72,11 +72,10 @@ const updateClientController = async (req, res) => {
 };
 
 const getOneClientController = async (req, res) => {
-  console.log("ENTRE AL CONTROLLERRRRR");
   try {
-    const { clientId } = req.params;
+    const { clientId, userId } = req.params;
 
-    const client = await getOneClient({ clientId });
+    const client = await getOneClient({ userId, clientId });
 
     return res.status(200).send(client);
   } catch (err) {
