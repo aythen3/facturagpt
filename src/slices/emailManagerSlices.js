@@ -53,7 +53,12 @@ const emailManagerSlices = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         console.log("action.payload from updateUser", action.payload);
         state.loading = false;
-        state.allUsers = action.payload;
+        state.allUsers = state.allUsers.map((user) => {
+          if (user.id === action.payload.id) {
+            return action.payload;
+          }
+          return user;
+        });
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.error = action.payload;
