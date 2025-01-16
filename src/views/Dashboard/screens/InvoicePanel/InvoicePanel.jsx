@@ -7,7 +7,8 @@ import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin.jsx";
 import { useState } from "react";
 import Automate from "../../components/Automate/Automate.jsx";
 import PanelAutomate from "../../components/Automate/panelAutomate/PanelAutomate.jsx";
-
+import { useDispatch, useSelector } from "react-redux";
+import Chat from "../../components/Chat/Chat.jsx";
 const company = {
   email: "coolmail@mail.com",
   phone: "341-59-15",
@@ -23,7 +24,9 @@ export default function InvoicePanel() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [fileUploaded, setFileUploaded] = useState(false);
-
+  const [activateChat, setActivateChat] = useState(false);
+  const { user, updatingUserLoading } = useSelector((state) => state.user);
+  console.log(`usuario: ${user}`);
   const openModalAutomate = () => {
     setIsModalAutomate(true);
   };
@@ -61,10 +64,17 @@ export default function InvoicePanel() {
 
   return (
     <>
-      <NavbarAdmin />
+      <NavbarAdmin setActivateChat={setActivateChat} />
       <div className={styles.container}>
-        <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
-        {!fileUploaded ? (
+        <FileExplorer
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setActivateChat={setActivateChat}
+        />
+
+        {activateChat ? (
+          <Chat />
+        ) : !fileUploaded ? (
           <div
             className={styles.inputContainer}
             onDragOver={handleDragOver}

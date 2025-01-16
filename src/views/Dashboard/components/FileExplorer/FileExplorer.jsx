@@ -24,7 +24,7 @@ import {
 import SelectLocation from "../SelectLocation/SelectLocation";
 import FileOptionsPopup from "./FileOptionsPopup";
 
-export default function FileExplorer({ isOpen, setIsOpen }) {
+export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { currentPath, userFiles, getFilesLoading, uploadingFilesLoading } =
@@ -395,9 +395,9 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         />
         <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
       </div>
+      <div onClick={() => setActivateChat(true)}>Chat</div>
 
       {renderBreadcrumbs()}
-
       <div className={styles.fileList}>
         {getFilesLoading ? (
           <div className={styles.loaderContainer}>
