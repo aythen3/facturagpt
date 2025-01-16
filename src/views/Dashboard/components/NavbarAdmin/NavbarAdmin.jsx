@@ -18,7 +18,7 @@ import chatIcon from "../../assets/chatIcon.svg";
 import boxIcon from "../../assets/boxIcon.svg";
 import dotsNotification from "../../assets/dotsNotification.svg";
 
-const NavbarAdmin = ({ setActivateChat }) => {
+const NavbarAdmin = ({}) => {
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -53,17 +53,8 @@ const NavbarAdmin = ({ setActivateChat }) => {
           <a href="/clients">
             <img src={addGreen} alt="Icon" />
           </a>
-          <a
-            onClick={() => {
-              navigate("/panel");
-              setActivateChat(true);
-            }}
-          >
-            <img
-              src={chatIcon}
-              alt="Icon"
-              // onClick={() => setActivateChat(true)}
-            />
+          <a href="/chat">
+            <img src={chatIcon} alt="Icon" />
           </a>
           <a href="/clients">
             <img src={clientIcon} alt="Icon" />

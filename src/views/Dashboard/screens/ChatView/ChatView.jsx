@@ -1,4 +1,4 @@
-import styles from "./InvoicePanel.module.css";
+import styles from "./ChatView.module.css";
 import FileExplorer from "../../components/FileExplorer/FileExplorer.jsx";
 import InvoiceForm from "../../components/InvoiceForm/InvoiceForm.jsx";
 import Preview from "../../components/Preview/Preview.jsx";
@@ -18,7 +18,7 @@ const company = {
   cnae: "1234",
 };
 
-export default function InvoicePanel() {
+export default function ChatView() {
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -64,42 +64,15 @@ export default function InvoicePanel() {
 
   return (
     <>
-      <NavbarAdmin />
+      <NavbarAdmin setActivateChat={setActivateChat} />
       <div className={styles.container}>
-        <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
-
-        {!fileUploaded ? (
-          <div
-            className={styles.inputContainer}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            <input
-              type="file"
-              onChange={handleFileChange}
-              placeholder="Selecciona una factura o arrastra"
-            />
-            <label
-              onClick={() =>
-                document.querySelector('input[type="file"]').click()
-              }
-            >
-              Selecciona una factura o arrastra y suelta <br /> Digitaliza y
-              gestiona todos tus documentos con FacturaGPT.
-            </label>
-          </div>
-        ) : (
-          <>
-            <InvoiceForm />
-            <Preview companyInfo={company} />
-          </>
-        )}
-        <FloatingMenu
+        <FileExplorer
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          openModalAutomate={openModalAutomate}
-          closeModalAutomate={closeModalAutomate}
+          setActivateChat={setActivateChat}
         />
+
+        <Chat />
       </div>
 
       {isModalAutomate && (

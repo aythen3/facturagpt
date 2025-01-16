@@ -27,6 +27,7 @@ import i18n from "./i18.js";
 import { Auth0Provider } from "@auth0/auth0-react";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 import { AppProvider } from "./context/AppContext.js";
+import ChatView from "./views/Dashboard/screens/ChatView/ChatView.jsx";
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -101,6 +102,7 @@ const Layout = () => {
                     <Route path="/terms" element={<Terms />} />
                     <Route path="*" element={<LandingPage />} />
                     <Route path="/panel" element={<InvoicePanel />} />
+                    <Route path="/chat" element={<ChatView />} />
                   </Routes>
                 </BrowserRouter>
               </AppProvider>
