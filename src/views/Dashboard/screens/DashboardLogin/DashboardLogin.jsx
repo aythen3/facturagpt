@@ -132,10 +132,7 @@ const DashboardLogin = () => {
         .unwrap()
         .then((response) => {
           let accountData = {
-            email,
-            role: response?.role,
             accessToken: response?.password,
-            id: response?.id,
           };
           localStorage.setItem("user", JSON.stringify(accountData));
           clearStates();

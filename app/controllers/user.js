@@ -47,10 +47,18 @@ const updateAccountController = async (req, res) => {
 
 const loginToManagerController = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    console.log("Data from loginToManagerController:", { email, password });
+    const { email, password, accessToken } = req.body;
+    console.log("Data from loginToManagerController:", {
+      email,
+      password,
+      accessToken,
+    });
 
-    const response = await loginToManagerService({ email, password });
+    const response = await loginToManagerService({
+      email,
+      password,
+      accessToken,
+    });
 
     return res.status(200).send(response);
   } catch (err) {

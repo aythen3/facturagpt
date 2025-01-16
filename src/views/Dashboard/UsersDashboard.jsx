@@ -521,13 +521,15 @@ const UsersDashboard = () => {
               <span className={styles.tableSpan}>Todos los usuarios</span>
             </div>
             <div className={styles.filters}>
-              <button
-                onClick={() => setShowAddAdminModal(true)}
-                className={styles.addClientButton}
-              >
-                <img src={plus} alt="Add client" />
-                Nuevo Admin
-              </button>
+              {userData?.role === "superadmin" && (
+                <button
+                  onClick={() => setShowAddAdminModal(true)}
+                  className={styles.addClientButton}
+                >
+                  <img src={plus} alt="Add admin" />
+                  Nuevo Admin
+                </button>
+              )}
               <button
                 // onClick={() => navigate("/userSettings")}
                 onClick={() => setShowUserSettings(true)}
