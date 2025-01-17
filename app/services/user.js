@@ -127,6 +127,66 @@ const updateAccount = async ({ userId, toUpdate }) => {
   }
 };
 
+const updateUserPassword = async ({ email, newPassword }) => {
+  console.log("Data received in updateUserPassword service:", { email });
+
+  const dbName = "db_emailmanager_accounts";
+  let db;
+
+  try {
+    // Ensure the database exists
+    const dbs = await nano.db.list();
+    if (!dbs.includes(dbName)) {
+      console.log(`Database ${dbName} does not exist.`);
+      return { success: false, message: "Database does not exist." };
+    }
+    db = nano.use(dbName);
+  } catch (error) {
+    console.error("Error checking database:", error);
+    throw new Error("Database initialization failed");
+  }
+
+  try {
+    // Fetch the user document by email
+    const queryResponse = await db.find({
+      selector: { email },
+    });
+
+    if (queryResponse.docs.length === 0) {
+      console.log(`No user found with email: ${email}`);
+      return { success: false, message: "User not found." };
+    }
+
+    const userDoc = queryResponse.docs[0];
+
+    // Hash the new password
+    const hashedPassword = Buffer.from(newPassword).toString("base64");
+
+    // Update the user document
+    const updatedDoc = {
+      ...userDoc,
+      password: hashedPassword,
+      _rev: userDoc._rev, // Ensure the correct revision is used
+    };
+
+    // Insert the updated document back into the database
+    await db.insert(updatedDoc);
+    console.log(`Password updated successfully for user with email: ${email}`);
+
+    return {
+      success: true,
+      message: "Password updated successfully.",
+    };
+  } catch (error) {
+    if (error.statusCode === 404) {
+      console.error(`User with email ${email} not found.`);
+      return { success: false, message: "User not found." };
+    }
+    console.error("Error updating password:", error);
+    throw new Error("Failed to update password");
+  }
+};
+
 const getAllUsers = async () => {
   const dbName = "db_emailmanager_accounts";
   let db;
@@ -568,4 +628,5 @@ module.exports = {
   generateAndSendOtp: generateAndSendOtpService,
   verifyOTP: verifyOTPService,
   newsletter: newsletter,
+  updateUserPassword: updateUserPassword,
 };

@@ -233,10 +233,67 @@ const sendOtpEmail = async (email, otp, language = "es") => {
   }
 };
 
+const sendRecoveryCode = async (email, recoveryCode, language = "es") => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "info@aythen.com",
+      pass: "azyx mpfz fveg bqlr",
+    },
+  });
+
+  let htmlContent;
+
+  if (language === "es") {
+    htmlContent = `
+    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+      <h1 style="color: #4CAF50; text-align: center; font-size: 24px;">Tu Código de Recuperación</h1>
+      <p style="font-size: 16px; line-height: 1.5;">Hola,</p>
+      <p style="font-size: 16px; line-height: 1.5;">Tu código de recuperación para restablecer tu contraseña es:</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <h2 style="color: #4CAF50; font-size: 32px; letter-spacing: 4px; background-color: #e8f5e9; padding: 10px; border-radius: 8px; display: inline-block;">${recoveryCode}</h2>
+      </div>
+      <p style="font-size: 16px; line-height: 1.5; color: #555;">Este código expirará en <strong>5 minutos</strong>. Si no solicitaste restablecer tu contraseña, por favor ignora este mensaje.</p>
+      <p style="font-size: 16px; line-height: 1.5;">Atentamente,<br><strong>El equipo de Aythen</strong></p>
+    </div>
+    `;
+  } else {
+    htmlContent = `
+    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+      <h1 style="color: #4CAF50; text-align: center; font-size: 24px;">Your Recovery Code</h1>
+      <p style="font-size: 16px; line-height: 1.5;">Hello,</p>
+      <p style="font-size: 16px; line-height: 1.5;">Your recovery code to reset your password is:</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <h2 style="color: #4CAF50; font-size: 32px; letter-spacing: 4px; background-color: #e8f5e9; padding: 10px; border-radius: 8px; display: inline-block;">${recoveryCode}</h2>
+      </div>
+      <p style="font-size: 16px; line-height: 1.5; color: #555;">This code will expire in <strong>5 minutes</strong>. If you did not request to reset your password, please ignore this message.</p>
+      <p style="font-size: 16px; line-height: 1.5;">Best regards,<br><strong>The Aythen Team</strong></p>
+    </div>
+    `;
+  }
+
+  const mailOptions = {
+    from: "info@aythen.com",
+    to: email,
+    subject:
+      language === "es" ? "Tu Código de Recuperación" : "Your Recovery Code",
+    html: htmlContent,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Código de recuperación enviado exitosamente a:", email);
+  } catch (error) {
+    console.error("Error al enviar el código de recuperación:", error);
+    throw new Error("No se pudo enviar el código de recuperación.");
+  }
+};
+
 module.exports = {
   getEmail: getEmail,
   sendGoEmail: sendGoEmail,
   sendEmail: sendEmail,
   sendInvitationEmail: sendInvitationEmail,
   sendOtpEmail: sendOtpEmail,
+  sendRecoveryCode: sendRecoveryCode,
 };
