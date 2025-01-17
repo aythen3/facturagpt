@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./AccountSettings.module.css";
 import editProfile from "../../assets/editProfile.svg";
 import visa from "../../assets/visaPayment.png";
@@ -18,14 +18,68 @@ import { useDispatch, useSelector } from "react-redux";
 import EditableInput from "./EditableInput/EditableInput";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { updateUser } from "../../../../actions/user";
+import { uploadFiles } from "../../../../actions/scaleway";
 
 const AccountSettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation("accountSetting");
   const { user, updatingUserLoading } = useSelector((state) => state.user);
   const { logout } = useAuth0();
-
   const [userData, setUserData] = useState();
+
+  const corporativeFileInputRef = useRef(null);
+  const signatureFileInputRef = useRef(null);
+  const profileFileInputRef = useRef(null);
+
+  const handleAddImageClick = (type) => {
+    if (type === "corporativeLogos" && corporativeFileInputRef.current) {
+      corporativeFileInputRef.current.click();
+    }
+    if (type === "signatureImages" && signatureFileInputRef.current) {
+      signatureFileInputRef.current.click();
+    }
+    if (type === "profileImage" && profileFileInputRef.current) {
+      profileFileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e, type) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const currentPath =
+      type === "corporativeLogos"
+        ? "corporativeLogos/"
+        : type === "signatureImages"
+          ? "signatureImages/"
+          : "profileImages/";
+
+    dispatch(uploadFiles({ files: [file], currentPath }))
+      .unwrap()
+      .then((uploadResponse) => {
+        console.log(`UPLOAD RESPONSE for ${type}`, uploadResponse);
+        const uploadedItem = uploadResponse[0];
+        const newLocation = uploadedItem?.Location;
+
+        if (type === "profileImage") {
+          setUserData({
+            ...userData,
+            profileImage: newLocation,
+          });
+          console.log("Uploaded new profile image:", newLocation);
+        } else {
+          const updatedArray = [...(userData?.[type] || []), newLocation];
+          setUserData({
+            ...userData,
+            [type]: updatedArray,
+          });
+          console.log(`Uploaded new ${type.slice(0, -1)}:`, newLocation);
+        }
+      })
+      .catch((error) => {
+        console.error(`Error uploading new ${type.slice(0, -1)}:`, error);
+      });
+  };
 
   useEffect(() => {
     if (user) {
@@ -34,12 +88,22 @@ const AccountSettings = () => {
         email: user?.email || "",
         password: user?.password || "",
         phone: user?.phone || "",
+        profileImage: user?.profileImage || "",
         countryCode: user?.countryCode || "+34",
-        cardNumber: user?.cardNumber || "",
-        paymentMethod: user?.paymentMethod || "",
+        areaCode: user?.areaCode || "+34",
+        country: user?.country || "",
+        expirationDate: user?.paymentMethod?.details?.expirationDate || "",
+        facturationEmail: user?.facturationEmail || user?.email || "",
+        cardNumber: user?.paymentMethod?.details?.cardNumber || "",
+        paymentMethod: user?.paymentMethod?.method || "",
+        securityCode: user?.paymentMethod?.details?.securityCode || "",
         plan: user?.plan || "Free",
-        userDomain: user?.userDomain || "www.web.com",
-        fiscalNumber: user?.fiscalNumber || "A12345678",
+        userDomain: user?.userDomain || "",
+        corporativeLogos: user?.corporativeLogos || [],
+        signatureImages: user?.signatureImages || [],
+        selectedSignatureImage: user?.selectedSignatureImage || "",
+        selectedCorporativeLogo: user?.selectedCorporativeLogo || "",
+        fiscalNumber: user?.fiscalNumber || "",
         currency: user?.currency || "EUR",
         language: user?.language || "ES",
       };
@@ -61,13 +125,6 @@ const AccountSettings = () => {
       logout();
     }
   };
-  const formatPhoneNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/(\d{3})(?=\d)/g, "$1 ");
-  };
-
-  const formatCardNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
-  };
 
   const handleChange = ({ name, newValue }) => {
     console.log(`Setting ${name} to ${newValue}`);
@@ -75,7 +132,19 @@ const AccountSettings = () => {
   };
 
   const handleSave = async () => {
-    dispatch(updateUser({ userId: user.id, toUpdate: userData }));
+    const userDataToSave = {
+      ...userData,
+      paymentMethod: {
+        method: userData?.paymentMethod,
+        details: {
+          cardNumber: userData?.cardNumber,
+          expirationDate: userData?.expirationDate,
+          securityCode: userData?.securityCode,
+        },
+      },
+    };
+    console.log("saving user data", userDataToSave);
+    dispatch(updateUser({ userId: user.id, toUpdate: userDataToSave }));
   };
 
   return (
@@ -92,12 +161,29 @@ const AccountSettings = () => {
       )}
       {userData && (
         <div className={styles.profile}>
-          <div className={styles.profileImage}>
-            <img
-              src="https://imgs.search.brave.com/yszRftL1W07LQ1giXc8GEbXRV3GF1_nphk6aeJp4AOw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/bXlzdGVyaW91cy1w/cm9maWxlLXBpY3R1/cmUtdjAtbHZmZDgx/MnBwcTFlMS5qcGVn/P3dpZHRoPTY0MCZj/cm9wPXNtYXJ0JmF1/dG89d2VicCZzPTcx/MmIyNDNkMDBlMGI3/MDE3ODM1MmZhNWRj/MzhkNWZmNDVmM2Yz/OGE"
-              alt=""
+          <div className={styles.profileImageContainer}>
+            {userData?.profileImage ? (
+              <img
+                className={styles.profileImage}
+                src={userData?.profileImage}
+                alt=""
+              />
+            ) : (
+              <div className={styles.initials}>
+                {userData?.nombre.split(" ").map((letter) => letter[0])}
+              </div>
+            )}
+            <input
+              ref={profileFileInputRef}
+              type="file"
+              style={{ display: "none" }}
+              accept="image/*"
+              onChange={(e) => handleFileChange(e, "profileImage")}
             />
-            <div className={styles.editProfile}>
+            <div
+              onClick={() => handleAddImageClick("profileImage")}
+              className={styles.editProfile}
+            >
               <img src={editProfile} alt="" />
             </div>
           </div>
@@ -180,28 +266,31 @@ const AccountSettings = () => {
                 <button type="button">{t("edit")}</button>
               </div>
               +34 000 000 000
-              <div className={styles.phoneInputs}>
-                <select
-                  className={styles.countrySelect}
-                  value={userData?.countryCode}
-                  name="countryCode"
-                  onChange={handleChange}
-                >
-                  <option value="+34">{t("spain")} (+34)</option>
-                  <option value="+1">{t("unitedStates")} (+1)</option>
-                  <option value="+44">{t("unitedKingdom")} (+44)</option>
-                  <option value="+52">{t("mexico")} (+52)</option>
-                  <option value="+91">{t("india")} (+91)</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="000 000 000"
-                  className={styles.numberInput}
-                  name="phone"
-                  value={userData?.phone || ""}
-                  onChange={handleChange}
-                />
-              </div>
+              <CustomDropdown
+                editable={true}
+                setSelectedOption={(option) =>
+                  handleChange({ name: "countryCode", newValue: option })
+                }
+                hasObject={true}
+                options={[
+                  { value: "+34", label: "Spain (+34)" },
+                  { value: "+1", label: "United States (+1)" },
+                  { value: "+44", label: "United Kingdom (+44)" },
+                  { value: "+52", label: "Mexico (+52)" },
+                  { value: "+91", label: "India (+91)" },
+                ]}
+                selectedOption={userData?.countryCode}
+              />
+              <input
+                type="text"
+                placeholder="000 000 000"
+                className={styles.numberInput}
+                name="phone"
+                value={userData?.phone || ""}
+                onChange={(e) =>
+                  handleChange({ name: "phone", newValue: e.target.value })
+                }
+              />
             </label>
 
             <label>
@@ -218,7 +307,12 @@ const AccountSettings = () => {
                       name="paymentMethod"
                       value="creditCard"
                       checked={userData?.paymentMethod === "creditCard"}
-                      onChange={handleChange}
+                      onChange={() =>
+                        handleChange({
+                          name: "paymentMethod",
+                          newValue: "creditCard",
+                        })
+                      }
                     />
                     <div className={styles.paymentContainer}>
                       <div className={styles.paymentImage}>
@@ -243,7 +337,12 @@ const AccountSettings = () => {
                       name="paymentMethod"
                       value="paypal"
                       checked={userData?.paymentMethod === "paypal"}
-                      onChange={handleChange}
+                      onChange={() =>
+                        handleChange({
+                          name: "paymentMethod",
+                          newValue: "paypal",
+                        })
+                      }
                     />
                     <div className={styles.paymentImage}>
                       <img src={paypal} alt="Paypal logo" />
@@ -257,7 +356,12 @@ const AccountSettings = () => {
                       name="paymentMethod"
                       value="gPay"
                       checked={userData?.paymentMethod === "gPay"}
-                      onChange={handleChange}
+                      onChange={() =>
+                        handleChange({
+                          name: "paymentMethod",
+                          newValue: "gPay",
+                        })
+                      }
                     />
                     <div className={styles.paymentImage}>
                       <img src={gpay} alt="Google pay logo" />
@@ -271,7 +375,12 @@ const AccountSettings = () => {
                       name="paymentMethod"
                       value="crypto"
                       checked={userData?.paymentMethod === "crypto"}
-                      onChange={handleChange}
+                      onChange={() =>
+                        handleChange({
+                          name: "paymentMethod",
+                          newValue: "crypto",
+                        })
+                      }
                     />
                     <div className={styles.paymentContainer}>
                       <div className={styles.paymentImage}>
@@ -308,20 +417,36 @@ const AccountSettings = () => {
                 </div>
               </div>
               <div style={{ marginTop: "10px" }}>
-                Expire date
+                Fecha de expiración
                 <div className={styles.phoneInputs}>
                   <input
                     type="text"
+                    name="expirationDate"
+                    value={userData?.expirationDate}
+                    onChange={(e) =>
+                      handleChange({
+                        name: "expirationDate",
+                        newValue: e.target.value,
+                      })
+                    }
                     placeholder="MM/YY"
                     className={styles.numberInput}
                   />
                 </div>
               </div>
               <div style={{ marginTop: "10px" }}>
-                Security Code
+                Código de seguridad
                 <div className={styles.phoneInputs}>
                   <input
+                    name="securityCode"
                     type="password"
+                    value={userData?.securityCode}
+                    onChange={(e) =>
+                      handleChange({
+                        name: "securityCode",
+                        newValue: e.target.value,
+                      })
+                    }
                     maxLength={3}
                     placeholder="***"
                     className={styles.numberInput}
@@ -344,29 +469,51 @@ const AccountSettings = () => {
                 </div>
               </div>
               <div>
-                <span>info@email.com</span> <button>Editar</button>
+                <span>{user?.facturationEmail}</span> <button>Editar</button>
               </div>
               <div className={styles.info}>
                 <input
                   type="text"
-                  placeholder="Email Adress"
+                  placeholder="ejemplo@gmail.com"
+                  value={userData?.facturationEmail}
+                  onChange={(e) =>
+                    handleChange({
+                      name: "facturationEmail",
+                      newValue: e.target.value,
+                    })
+                  }
                   className={styles.numberInput}
                 />
                 <input
+                  value={userData?.areaCode}
+                  onChange={(e) =>
+                    handleChange({
+                      name: "areaCode",
+                      newValue: e.target.value,
+                    })
+                  }
                   type="text"
-                  placeholder="Zip code / Postcode"
+                  placeholder="Codigo ZIP / POSTAL"
                   className={styles.numberInput}
                 />
               </div>
-              Country of residence
+              Pais de residencia
               <input
                 type="text"
-                placeholder="Spain"
+                placeholder="España"
+                value={userData?.country}
+                onChange={(e) =>
+                  handleChange({
+                    name: "country",
+                    newValue: e.target.value,
+                  })
+                }
                 className={styles.numberInput}
               />
             </label>
 
             <EditableInput
+              placeholder="A12345678"
               label={"Número Fiscal"}
               initialValue={user?.fiscalNumber || ""}
               value={userData?.fiscalNumber}
@@ -375,8 +522,9 @@ const AccountSettings = () => {
             />
 
             <EditableInput
+              placeholder="www.web.com"
               label={"Web o dominio corporativo"}
-              initialValue={user?.userDomain || "www.web.com"}
+              initialValue={user?.userDomain || ""}
               value={userData?.userDomain}
               name="userDomain"
               onSave={handleChange}
@@ -385,51 +533,87 @@ const AccountSettings = () => {
             <label>
               <div className={styles.row}>
                 <p>Logo corporativo</p>
-                <button type="button">Añadir</button>
+                <div
+                  className={styles.editButton}
+                  onClick={() => handleAddImageClick("corporativeLogos")}
+                >
+                  Añadir
+                </div>
               </div>
               <div className={styles.logoCorporativo}>
-                <div className={styles.container}>
-                  <input type="radio" name="corporativeLogo1" />
-                  <img
-                    src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                    alt=""
-                  />
-                  <div className={styles.delete}>-</div>
-                </div>
-                <div className={styles.container}>
-                  <input type="radio" name="corporativeLogo1" />
-                  <img
-                    src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                    alt=""
-                  />
-                  <div className={styles.delete}>-</div>
-                </div>
+                {userData?.corporativeLogos.length === 0 && (
+                  <div className={styles.container}>
+                    <span>Aun no has añadido ningun logo corporativo.</span>
+                  </div>
+                )}
+                {userData?.corporativeLogos.map((logo) => (
+                  <div className={styles.container} key={logo}>
+                    <input
+                      checked={userData?.selectedCorporativeLogo === logo}
+                      onChange={(e) =>
+                        handleChange({
+                          name: "selectedCorporativeLogo",
+                          newValue: logo,
+                        })
+                      }
+                      type="radio"
+                      name="corporativeLogo1"
+                    />
+                    <img src={logo} alt="" />
+                    <div className={styles.delete}>-</div>
+                  </div>
+                ))}
               </div>
+              <input
+                ref={corporativeFileInputRef}
+                type="file"
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "corporativeLogos")}
+              />
             </label>
 
             <label>
               <div className={styles.row}>
                 <p>Firma</p>
-                <button type="button">Añadir</button>
+                <div
+                  className={styles.editButton}
+                  onClick={() => handleAddImageClick("signatureImages")}
+                >
+                  Añadir
+                </div>
               </div>
               <div className={styles.logoCorporativo}>
-                <div className={styles.container}>
-                  <input type="radio" name="corporativeLogo1" />
-                  <img
-                    src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                    alt=""
-                  />
-                  <div className={styles.delete}>-</div>
-                </div>
-                <div className={styles.container}>
-                  <input type="radio" name="corporativeLogo1" />
-                  <img
-                    src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                    alt=""
-                  />
-                  <div className={styles.delete}>-</div>
-                </div>
+                {userData?.signatureImages.length === 0 && (
+                  <div className={styles.container}>
+                    <span>Aun no has añadido ninguna imagen de firma.</span>
+                  </div>
+                )}
+                {userData?.signatureImages?.map((logo) => (
+                  <div className={styles.container} key={logo}>
+                    <input
+                      checked={userData?.selectedSignatureImage === logo}
+                      onChange={(e) =>
+                        handleChange({
+                          name: "selectedSignatureImage",
+                          newValue: logo,
+                        })
+                      }
+                      type="radio"
+                      name="signatureImage"
+                    />
+                    <img src={logo} alt="" />
+                    <div className={styles.delete}>-</div>
+                  </div>
+                ))}
               </div>
+              <input
+                ref={signatureFileInputRef}
+                type="file"
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "signatureImages")}
+              />
             </label>
 
             <label>

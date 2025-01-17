@@ -2,6 +2,7 @@
   width: 100%;
   position: relative;
   box-sizing: border-box;
+  overflow-y: auto;
   .messageContainer::-webkit-scrollbar {
     display: none;
   }

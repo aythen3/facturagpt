@@ -8,6 +8,14 @@ const CustomDropdown = ({
   options = [],
   selectedOption,
   setSelectedOption,
+  hasObject,
+  height = "35px",
+  textStyles = {
+    fontWeight: 500,
+    color: "#3d3c42",
+    marginLeft: "6px",
+    userSelect: "none",
+  },
 }) => {
   const { t } = useTranslation("dashboard");
   const dropdownRef = useRef(null);
@@ -43,15 +51,23 @@ const CustomDropdown = ({
       ref={dropdownRef}
     >
       <div
+        style={{ height }}
         className={styles.filterSort}
         onClick={(e) => {
           e.stopPropagation();
           handleToggle(e);
         }}
       >
-        <b>{selectedOption}</b>
+        <div style={textStyles}>
+          {Array.isArray(selectedOption) && selectedOption.length > 0
+            ? selectedOption.join(", ")
+            : Array.isArray(selectedOption) && selectedOption.length === 0
+              ? "Selecciona una opción"
+              : selectedOption || "Selecciona una opcion"}
+        </div>
         <FaChevronDown
           className={styles.chevronIcon}
+          color="#71717A"
           style={{
             transform: isOpen ? "rotate(180deg)" : "",
             transition: "transform 0.3s ease-in-out",
@@ -64,10 +80,16 @@ const CustomDropdown = ({
           {options.map((option, index) => (
             <div
               key={index}
+              style={{
+                color: textStyles.color,
+                fontWeight: textStyles.fontWeight,
+              }}
               className={styles.dropdownOption}
-              onClick={() => handleOptionClick(option)}
+              onClick={() =>
+                handleOptionClick(hasObject ? option.value : option)
+              }
             >
-              {option}
+              {hasObject ? option.label : option}
             </div>
           ))}
         </div>
