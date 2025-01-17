@@ -21,8 +21,9 @@ import dotsNotification from "../../assets/dotsNotification.svg";
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
-
+import { useSelector } from "react-redux";
 const NavbarAdmin = () => {
+  const { user } = useSelector((state) => state.user);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
