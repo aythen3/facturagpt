@@ -2,6 +2,11 @@
   width: 100%;
   position: relative;
   box-sizing: border-box;
+
+  ul {
+    list-style-type: disc;
+  }
+
   .messageContainer::-webkit-scrollbar {
     display: none;
   }
@@ -22,7 +27,7 @@
   .chatTextContainer {
     width: 100%;
     position: sticky;
-    bottom: 20px;
+    bottom: 0px;
     left: 0;
     background-color: white;
     padding: 10px 0;

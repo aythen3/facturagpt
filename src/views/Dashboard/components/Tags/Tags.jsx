@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Tags.module.css";
 
-const Tags = ({ onTagClick }) => {
+const Tags = ({ onTagClick, direction }) => {
   const tagList = [
     { bgColor: "#222222", label: "1", text: "Etiqueta" },
     { bgColor: "#0B06FF", label: "2", text: "Etiqueta" },
@@ -17,12 +17,16 @@ const Tags = ({ onTagClick }) => {
   ];
 
   return (
-    <div className={styles.tags}>
+    <div className={styles.tags} style={{}}>
       {tagList.map((tag, index) => (
         <span
           key={index}
           className={styles.tag}
-          style={{ backgroundColor: tag.bgColor, color: tag.color }}
+          style={{
+            backgroundColor: tag.bgColor,
+            color: tag.color,
+            width: "100%",
+          }}
           onClick={() => onTagClick(tag.label)}
         >
           {tag.text}

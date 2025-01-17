@@ -3,14 +3,16 @@
 }
 .historyContainer {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 50%;
-  height: 80vh;
+  /* top: 50%; */
+  /* left: 50%; */
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 100vh;
 
   overflow-y: scroll;
   background-color: white;
-  transform: translate(-50%, -50%) scale(1);
+  /* transform: translate(-50%, -50%) scale(1); */
   animation: scaleUp 300ms ease-out forwards;
   padding-bottom: 20px;
 
@@ -37,8 +39,8 @@
   padding: 20px;
   img {
     transform: rotate(90deg);
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
@@ -49,6 +51,7 @@
   p {
     margin: 0;
     font-weight: 500;
+    font-size: 13px;
   }
   button {
     background-color: transparent;
@@ -56,10 +59,13 @@
     text-decoration: underline;
     cursor: pointer;
     font-weight: 600;
+    font-size: 13px;
   }
 }
 .contentHistory {
   padding: 20px;
+  height: fit-content;
+  background-color: white;
   .content {
     margin: 20px 0;
   }
@@ -145,7 +151,7 @@
   animation: scaleDown 300ms ease-in forwards;
   -webkit-animation: scaleDown 300ms ease-in forwards;
 }
-
+/* 
 @keyframes scaleUp {
   from {
     transform: translate(-50%, -50%) scale(0);
@@ -178,7 +184,7 @@
     -ms-transform: translate(-50%, -50%) scale(0);
     -o-transform: translate(-50%, -50%) scale(0);
   }
-}
+} */
 
 .fadeOut {
   opacity: 0;

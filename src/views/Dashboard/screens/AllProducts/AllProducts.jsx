@@ -11,13 +11,23 @@ import optionDots from "../../assets/optionDots.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
 import LastTransactions from "../../components/LastTransactions/LastTransactions";
-
+import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
+import EditableInput from "../Clients/EditableInput/EditableInput";
+import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
+import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
+import Tags from "../../components/Tags/Tags";
 const AllProducts = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [newProductModal, setNewProductModal] = useState(false);
+  const [selectTypeClient, setSelectTypeClient] = useState(0);
+
+  const closeNewProductModal = () => {
+    setNewProductModal(false);
+  };
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -92,6 +102,20 @@ const AllProducts = () => {
   const formatPhoneNumber = (phoneNumber) => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
   };
+  const [editingIndices, setEditingIndices] = useState([]);
+  const [clientDataInputs, setClientDataInputs] = useState({
+    name: "",
+    desc: "",
+    unitPrice: "",
+    floorPrice: "",
+    parameters: [],
+  });
+  const [inputsEditing, setInputsEditing] = useState({
+    name: false,
+    desc: false,
+    unitPrice: false,
+    floorPrice: false,
+  });
 
   return (
     <div>
@@ -106,7 +130,12 @@ const AllProducts = () => {
             >
               Clientes y Proveedores
             </button>
-            <button className={styles.infoBtn}>Analíticas</button>
+            <button
+              className={styles.infoBtn}
+              onClick={() => setNewProductModal(true)}
+            >
+              Analíticas
+            </button>
 
             <div className={styles.inputWrapper}>
               <img src={searchGray} className={styles.inputIconInside} />
@@ -209,6 +238,152 @@ const AllProducts = () => {
         </div>
         {showModal && (
           <LastTransactions setShowModal={setShowModal} showModal={showModal} />
+        )}
+        {newProductModal && (
+          <ModalTemplate onClick={closeNewProductModal}>
+            <div className={styles.allProductC}>
+              <form className={styles.formAllProduct}>
+                <EditableInput
+                  label={"Nombre"}
+                  nameInput={"nombre"}
+                  placeholderInput={"Añade un nombre a tu producto"}
+                  isEditing={inputsEditing.name}
+                  value={clientDataInputs.name}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      name: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({ ...prev, name: !prev.name }))
+                  }
+                >
+                  <div
+                    className={`
+                    ${styles.typeClient}
+                    ${
+                      inputsEditing.name
+                        ? styles.typeClientActivate
+                        : styles.typeClientDisabled
+                    }
+                      `}
+                  >
+                    <button
+                      className={selectTypeClient == 0 && styles.selected}
+                      onClick={() => setSelectTypeClient(0)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Servicio
+                    </button>
+                    <button
+                      className={selectTypeClient == 1 && styles.selected}
+                      onClick={() => setSelectTypeClient(1)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Producto
+                    </button>
+                  </div>
+                </EditableInput>
+                <EditableInput
+                  label={"Descripción"}
+                  nameInput={"description"}
+                  placeholderInput={
+                    "Especifica las características del artículo"
+                  }
+                  isEditing={inputsEditing.desc}
+                  value={clientDataInputs.desc}
+                  type={"textarea"}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      desc: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({ ...prev, desc: !prev.desc }))
+                  }
+                />
+                <EditableInput
+                  label={"Precio unitario Recomendado (PVP)"}
+                  nameInput={"unitPrice"}
+                  placeholderInput={"0.0"}
+                  // isEditing={inputsEditing.unitPrice}
+                  isEditing={true}
+                  value={clientDataInputs.unitPrice}
+                  options={false}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      unitPrice: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      unitPrice: !prev.unitPrice,
+                    }))
+                  }
+                />
+                <EditableInput
+                  label={"Floor Price"}
+                  nameInput={"floorPrice"}
+                  placeholderInput={"0.0"}
+                  // isEditing={inputsEditing.floorPrice}
+                  isEditing={true}
+                  value={clientDataInputs.floorPrice}
+                  options={false}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      floorPrice: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      floorPrice: !prev.floorPrice,
+                    }))
+                  }
+                />
+
+                <label className={styles.impuestos}>
+                  <div>
+                    <p>Impuesto</p>
+                  </div>
+                  <button type="button">Añadir impuesto</button>
+                  <div className={styles.percent}>
+                    <span>21.00%</span>
+                    <div>Editar</div>
+                  </div>
+                </label>
+
+                <label className={styles.sku}>
+                  <div>
+                    <p># (SKU)</p>
+                  </div>
+                  <div className={styles.autogenerated}>
+                    <span>Autogenerado</span>
+                    <div>Editar</div>
+                  </div>
+                  <input type="text" placeholder="#" />
+                </label>
+
+                <ParametersLabel
+                  parameters={clientDataInputs.parameters}
+                  setClientDataInputs={setClientDataInputs}
+                  editingIndices={editingIndices}
+                  setEditingIndices={setEditingIndices}
+                  addUnit={true}
+                />
+
+                <Tags direction={"column"} />
+              </form>
+            </div>
+            <ProfileModalTemplate />
+          </ModalTemplate>
         )}
       </div>
     </div>

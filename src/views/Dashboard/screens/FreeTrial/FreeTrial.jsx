@@ -10,6 +10,7 @@ import lock from "../../assets/LockIcon.svg";
 
 import { useTranslation } from "react-i18next";
 import { useAuth0 } from "@auth0/auth0-react";
+import CookiePopup from "../../components/CookiePopup/CookiePopup";
 
 const FreeTrial = () => {
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
@@ -57,6 +58,7 @@ const FreeTrial = () => {
           {t("security")}
         </p>
       </div>
+      <CookiePopup />
     </div>
   );
 };

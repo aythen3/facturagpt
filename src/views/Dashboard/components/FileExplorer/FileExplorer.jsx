@@ -6,7 +6,7 @@ import codeIcon from "../../assets/S3/codeIcon.svg";
 import fileIcon from "../../assets/S3/fileIcon.svg";
 import { Search } from "lucide-react";
 import horizontalDots from "../../assets/S3/horizontalDots.svg";
-import filterIcon from "../../assets/S3/filterIcon.svg";
+import filterIcon from "../../assets/S3/filterIconBars.svg";
 import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { useDispatch, useSelector } from "react-redux";

@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "./Clients.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.png";
-import searchWhite from "../../assets/searchWhite.png";
-import newClientIcon from "../../assets/newClientIcon.svg";
-import clock from "../../assets/clock.png";
-import edit from "../../assets/edit.png";
+import { ReactComponent as ArrowUp } from "../../assets/arrowDownGray.svg";
 import plusIcon from "../../assets/Plus Icon.png";
 import optionDots from "../../assets/optionDots.svg";
-import creditCard from "../../assets/creditCardIcon.png";
 import closeIcon from "../../assets/closeMenu.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
+import { ReactComponent as Minus } from "../../assets/minus.svg";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,6 +20,10 @@ import {
 } from "../../../../actions/clients";
 import { clearClient, setClient } from "../../../../slices/clientsSlices";
 import { useNavigate } from "react-router-dom";
+import EditableInput from "./EditableInput/EditableInput";
+import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
+import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
+import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -33,7 +34,7 @@ const Clients = () => {
   const [emailError, setEmailError] = useState("");
   const [selectedClientIds, setSelectedClientIds] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
-
+  const [selectTypeClient, setSelectTypeClient] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -291,6 +292,47 @@ const Clients = () => {
   }, [showNewClient]);
 
   console.log("CLIENTSSSS", clients);
+  const handleChange = ({ name, newValue }) => {
+    console.log(`Setting ${name} to ${newValue}`);
+  };
+
+  const [clientDataInputs, setClientDataInputs] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    web: "",
+    info: [],
+    parameters: [],
+  });
+  const [inputsEditing, setInputsEditing] = useState({
+    name: false,
+    email: false,
+    phone: false,
+    web: false,
+    info: false,
+  });
+
+  const addParameter = () => {
+    setClientDataInputs((prev) => ({
+      ...prev,
+      parameters: [...prev.parameters, { name: "", value: "" }],
+    }));
+  };
+
+  const deleteParameter = (index) => {
+    setClientDataInputs((prev) => ({
+      ...prev,
+      parameters: prev.parameters.filter((_, i) => i !== index),
+    }));
+  };
+
+  const [isParametersVisible, setIsParametersVisible] = useState(true);
+
+  const toggleParametersVisibility = () => {
+    setIsParametersVisible((prev) => !prev);
+  };
+
+  const [editingIndices, setEditingIndices] = useState([]);
 
   return (
     <div>
@@ -438,209 +480,288 @@ const Clients = () => {
       </div>
       {showNewClient && (
         <>
-          <div className={styles.bg} onClick={handleCloseNewClient}></div>
-          <div
-            className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
-          >
-            <div className={styles.containerHeader}>
-              <h3>John Doe</h3>
-              <span onClick={handleCloseNewClient}>
-                <img src={closeIcon} />
-              </span>
-            </div>
+          <ModalTemplate onClick={handleCloseNewClient}>
+            <div
+              className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+            >
+              {/* <div className={styles.containerHeader}>
+                <h3>John Doe</h3>
+                <span onClick={handleCloseNewClient}>
+                  <img src={closeIcon} />
+                </span>
+              </div> */}
 
-            <form className={styles.newClientForm}>
-              <label>
-                <div className={styles.row}>
-                  <p>Nombre completo</p>
-                  <button type="button">Editar</button>
-                </div>
-                John Doe
-                <input
-                  type="text"
-                  placeholder="John Doe"
-                  value={clientData.fullName}
-                  // onChange={(e) => setFullName(e.target.value)}
-                  onChange={(e) => handleClientData("fullName", e.target.value)}
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Email</p>
-                  <button type="button">Editar</button>
-                </div>
-                j***e@gmail.com
-                <input
-                  type="email"
-                  placeholder="john.doe@gmail.com"
-                  value={clientData.email}
-                  onChange={(e) => handleClientData("email", e.target.value)}
-                />
-                {emailError && (
-                  <span className={styles.error}>{emailError}</span>
-                )}
-              </label>
-
-              <label className={styles.label}>
-                <div className={styles.row}>
-                  <p>Teléfono</p>
-                  <button type="button">Editar</button>
-                </div>
-                +34 000 000 000
-                <div className={styles.phoneInputs}>
-                  <select
-                    className={styles.countrySelect}
-                    value={clientData.codeCountry}
-                    // onChange={(e) => setCountryCode(e.target.value)}
-                    onChange={(e) =>
-                      handleClientData("codeCountry", e.target.value)
-                    }
-                  >
-                    <option value="+34">España (+34)</option>
-                    <option value="+1">Estados Unidos (+1)</option>
-                    <option value="+44">Reino Unido (+44)</option>
-                    <option value="+52">México (+52)</option>
-                    <option value="+91">India (+91)</option>
-                    {/* Agrega más países según sea necesario */}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="000 000 000"
-                    className={styles.numberInput}
-                    // value={formatPhoneNumber(phone)}
-                    value={clientData.numberPhone}
-                    // onChange={(e) => setPhone(e.target.value)}
-                    onChange={(e) =>
-                      handleClientData("numberPhone", e.target.value)
-                    }
-                  />
-                </div>
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Web o dominio corporativo</p>
-                  <button type="button">Editar</button>
-                </div>
-                www.web.com
-                <input
-                  type="text"
-                  placeholder="www.web.com"
-                  value={clientData.webSite}
-                  // onChange={(e) => setWeb(e.target.value)}
-                  onChange={(e) => handleClientData("webSite", e.target.value)}
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Detalles de Facturación</p>
-                  <button type="button">Añadir</button>
-                </div>
-                <div className={styles.details}>
-                  <input
-                    type="text"
-                    placeholder="Email address"
-                    value={clientData.billingEmail}
-                    onChange={(e) =>
-                      handleClientData("billingEmail", e.target.value)
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="Zip code / Postcode"
-                    value={clientData.zipCode}
-                    onChange={(e) =>
-                      handleClientData("zipCode", e.target.value)
-                    }
-                  />
-                </div>
-                Country of residence
-                <input
-                  type="text"
-                  placeholder="Spain"
-                  value={clientData.country}
-                  onChange={(e) => handleClientData("country", e.target.value)}
-                />
-                Email adress, Zip code / Postcode, Country of residence
-                <div>
-                  <button type="button">Editar</button>
-                </div>
-                Email adress, Zip code / Postcode, Country of residence
-                <div>
-                  <button type="button">Editar</button>
-                </div>
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Número Fiscal</p>
-                  <button type="button">Editar</button>
-                </div>
-                Desconocido
-                <input
-                  type="text"
-                  placeholder="000 000 000"
-                  value={clientData.taxNumber}
+              <form
+                className={styles.newClientForm}
+                onSubmit={handleCreateClient}
+              >
+                <EditableInput
+                  label={"Nombre completo"}
+                  nameInput={"nombre"}
+                  placeholderInput={"yeremi"}
+                  isEditing={inputsEditing.name}
+                  value={clientDataInputs.name}
                   onChange={(e) =>
-                    handleClientData("taxNumber", e.target.value)
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      name: e.target.value,
+                    })
                   }
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Moneda Preferida</p>
-                  <button type="button">Editar</button>
-                </div>
-                EUR
-                <input
-                  type="text"
-                  placeholder="EUR"
-                  value={clientData.preferredCurrency}
-                  onChange={(e) =>
-                    handleClientData("preferredCurrency", e.target.value)
+                  onClick={() =>
+                    setInputsEditing((prev) => ({ ...prev, name: !prev.name }))
                   }
-                />
-              </label>
-
-              <label>
-                <div className={styles.row}>
-                  <p>Métodos de Pago</p>
-                  <button type="button">Añadir</button>
-                </div>
-                <div className={styles.row}>Card number</div>
-                <div className={styles.inputContainer}>
-                  <input
-                    type="text"
-                    placeholder="1234 1234 1234 1234"
-                    className={styles.input}
-                    value={clientData.cardNumber}
-                    onChange={(e) =>
-                      handleClientData("cardNumber", e.target.value)
-                    }
-                  />
-                  <img
-                    src={creditCard}
-                    alt="Credit Card Icon"
-                    className={styles.icon}
-                  />
-                </div>
-              </label>
-              <div className={styles.btnOptionsContainer}>
-                <button className={styles.view}>Ver Transacciones</button>
-                <button
-                  onClick={(e) => handleCreateClient(e)}
-                  className={styles.new}
                 >
-                  {client && client.clientData
-                    ? "Editar Cliente"
-                    : "Crear Cliente"}
-                </button>
-              </div>
-            </form>
-          </div>
+                  <div
+                    className={`
+                    ${styles.typeClient}
+                    ${
+                      inputsEditing.name
+                        ? styles.typeClientActivate
+                        : styles.typeClientDisabled
+                    }
+                      `}
+                  >
+                    <button
+                      className={selectTypeClient == 0 && styles.selected}
+                      onClick={() => setSelectTypeClient(0)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Proveedor
+                    </button>
+                    <button
+                      className={selectTypeClient == 1 && styles.selected}
+                      onClick={() => setSelectTypeClient(1)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Cliente
+                    </button>
+                  </div>
+                </EditableInput>
+
+                <EditableInput
+                  label={"Email"}
+                  nameInput={"email"}
+                  placeholderInput={"johndoe@gmail.com"}
+                  isEditing={inputsEditing.email}
+                  value={clientDataInputs.email}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      email: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      email: !prev.email,
+                    }))
+                  }
+                />
+
+                <EditableInput
+                  label={"Teléfono"}
+                  nameInput={"phone"}
+                  placeholderInput={"phone"}
+                  isEditing={inputsEditing.phone}
+                  value={clientDataInputs.phone}
+                  phone={true}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      phone: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      phone: !prev.phone,
+                    }))
+                  }
+                />
+                <EditableInput
+                  label={"Web o dominio corporativo"}
+                  nameInput={"web"}
+                  placeholderInput={"www.web.com"}
+                  isEditing={inputsEditing.web}
+                  value={clientDataInputs.web}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      web: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({ ...prev, web: !prev.web }))
+                  }
+                />
+
+                <label>
+                  <div>
+                    <div className={styles.detailsBill}>
+                      <p>Detalles de Facturación</p>
+                      <div>
+                        <button type="button">
+                          Añadir Detalles de Facturación
+                        </button>
+                        <button type="button">
+                          Guardar Detalles de Facturación
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.infoBill}>
+                      <span>
+                        Dirección, Población, Provincia, Código Postal, País
+                      </span>
+                      <div
+                        className={styles.button}
+                        onClick={() =>
+                          setInputsEditing((prev) => ({
+                            ...prev,
+                            info: !prev.info,
+                          }))
+                        }
+                      >
+                        Editar
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.info1}>
+                    <div className={styles.info}>
+                      <span>Dirección</span>
+                      <input
+                        type="text"
+                        disabled={!inputsEditing.info}
+                        placeholder="000 000"
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.row}>
+                    <div className={styles.info}>
+                      <span>Población</span>
+                      <input
+                        type="text"
+                        disabled={!inputsEditing.info}
+                        placeholder="000 000"
+                      />
+                    </div>
+                    <div className={styles.info}>
+                      <span>Código Postal</span>
+                      <input
+                        type="text"
+                        disabled={!inputsEditing.info}
+                        placeholder="000 000"
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.row}>
+                    <div className={styles.info}>
+                      <span>Provincia</span>
+                      <input
+                        type="text"
+                        disabled={!inputsEditing.info}
+                        placeholder="000 000"
+                      />
+                    </div>
+                    <div className={styles.info}>
+                      <span>País</span>
+                      <input
+                        type="text"
+                        disabled={!inputsEditing.info}
+                        placeholder="000 000"
+                      />
+                    </div>
+                  </div>
+                </label>
+
+                <label>
+                  <div>
+                    <div className={styles.detailsBill}>
+                      <p>Métodos de Pago</p>
+                      <div>
+                        <button type="button">Añadir Método de Pago</button>
+                        <button type="button">Guardar Método de Pago</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.payMethodContainer}>
+                    <div className={styles.squareContainer}>
+                      <div className={`${styles.square} ${styles.arrow}`}>
+                        <ArrowUp className={styles.icon} />
+                      </div>
+                      <div className={styles.square}>
+                        <span>BANCO</span>
+                        <p>BBVA</p>
+                      </div>
+                      <div
+                        className={`${styles.square} ${styles.accountNumber}`}
+                      >
+                        <span>Número de Cuenta</span>
+                        <p>BBVA</p>
+                      </div>
+                      <div className={styles.square}>
+                        <span>SWIFT/BIC</span>
+                        <p>BBVA</p>
+                      </div>
+                      <div className={styles.square}>
+                        <span>Routing Number</span>
+                        <p>BBVA</p>
+                      </div>
+                      <div className={styles.square}>
+                        <span>Moneda</span>
+                        <p>BBVA</p>
+                      </div>
+                    </div>
+                    <div className={styles.payInfo}>
+                      <div>
+                        <span>Banco</span>
+                        <select>
+                          <option>EE.UU</option>
+                          <option>EE.UU</option>
+                          <option>EE.UU</option>
+                          <option>EE.UU</option>
+                        </select>
+                      </div>
+                      <div>
+                        <span>Número de cuenta</span>
+                        <input type="text" />
+                      </div>
+                      <div>
+                        <span>SWIFT-BIC</span>
+                        <input type="text" />
+                      </div>
+                      <div>
+                        <span>Routing Number</span>
+                        <input type="text" />
+                      </div>
+                      <div>
+                        <span>Moneda</span>
+                        <input type="text" />
+                      </div>
+                    </div>
+                    <div className={styles.defaultBank}>
+                      <div>
+                        <input type="checkbox" />
+                        <p>Banco predeterminado</p>
+                      </div>
+                      <div className={styles.delete}>
+                        <Minus className={styles.icon} />
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                <ParametersLabel
+                  parameters={clientDataInputs.parameters}
+                  setClientDataInputs={setClientDataInputs}
+                  editingIndices={editingIndices}
+                  setEditingIndices={setEditingIndices}
+                />
+              </form>
+            </div>
+            <ProfileModalTemplate />
+          </ModalTemplate>
         </>
       )}
     </div>

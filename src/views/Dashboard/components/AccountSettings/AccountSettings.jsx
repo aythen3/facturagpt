@@ -48,7 +48,7 @@ const AccountSettings = () => {
     }
   }, [user]);
 
-  const [seeHistory, setSeeHistory] = useState(false);
+  const [seeHistory, setSeeHistory] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const [editingCurrency, setEditingCurrency] = useState(false);

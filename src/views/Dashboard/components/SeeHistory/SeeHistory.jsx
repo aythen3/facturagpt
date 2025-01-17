@@ -104,10 +104,11 @@ const SeeHistory = ({
 
   return (
     <>
-      <div className={styles.bg} onClick={handleCloseNewClient}></div>
+      {/* <div className={styles.bg} onClick={handleCloseNewClient}></div> */}
 
       <div
-        className={`${styles.historyContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+        // className={`${styles.historyContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+        className={`${styles.historyContainer} `}
       >
         <header className={styles.headerHistory}>
           <img src={arrow} onClick={handleCloseNewClient} />

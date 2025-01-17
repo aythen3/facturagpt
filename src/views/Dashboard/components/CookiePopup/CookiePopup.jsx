@@ -26,7 +26,6 @@ const CookiePopup = () => {
   const handleReject = () => {
     // Manejar rechazo (opcional)
     setVisible(false);
-    navigate("/terms"); // Redirigir a la página de información de cookies
   };
 
   if (!visible) return null;

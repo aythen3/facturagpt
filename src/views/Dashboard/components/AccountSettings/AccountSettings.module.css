@@ -5,7 +5,6 @@
 
 .seeHistoryContainer {
   position: fixed;
-  background-color: red;
   z-index: 9999;
 }
 

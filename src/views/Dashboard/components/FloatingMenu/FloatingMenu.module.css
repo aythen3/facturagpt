@@ -21,7 +21,7 @@
 }
 
 .fab::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 52px;
   height: 52px;
@@ -50,7 +50,8 @@
 .menuContainer {
   position: absolute;
   top: 50px;
-  left: 320px;
+  /* left: 320px; */
+  right: 360px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -92,12 +93,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #233f39;
-  border-radius: 13px 0 0 13px;
-  -webkit-border-radius: 13px 0 0 13px;
-  -moz-border-radius: 13px 0 0 13px;
-  -ms-border-radius: 13px 0 0 13px;
-  -o-border-radius: 13px 0 0 13px;
+  background-color: #10a37f;
+  border-radius: 6px 0 0 6px;
+  -webkit-border-radius: 6px 0 0 6px;
+  -moz-border-radius: 6px 0 0 6px;
+  -ms-border-radius: 6px 0 0 6px;
+  -o-border-radius: 6px 0 0 6px;
 }
 .menuText {
   font-size: 1.2rem;

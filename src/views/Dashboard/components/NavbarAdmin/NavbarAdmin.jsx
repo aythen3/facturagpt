@@ -17,23 +17,39 @@ import addGreen from "../../assets/addGreen.svg";
 import chatIcon from "../../assets/chatIcon.svg";
 import boxIcon from "../../assets/boxIcon.svg";
 import dotsNotification from "../../assets/dotsNotification.svg";
+import FloatingMenu from "../FloatingMenu/FloatingMenu";
+import Automate from "../Automate/Automate";
+import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
 
-const NavbarAdmin = ({}) => {
+const NavbarAdmin = () => {
+  const [isModalAutomate, setIsModalAutomate] = useState(false);
+  const [typeContentAutomate, setTypeContentAutomate] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation("navbarAdmin");
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-
-  const navigate = useNavigate();
-  const { t } = useTranslation("navbarAdmin");
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleProfileClick = () => {
     setShowSidebar(!showSidebar);
   };
-
-  const handleLanguage = (lng) => {
-    localStorage.setItem("language", lng);
-    i18n.changeLanguage(lng);
+  const openModalAutomate = () => {
+    setIsModalAutomate(true);
+  };
+  const closeModalAutomate = () => {
+    setTypeContentAutomate("");
+    setIsModalAutomate(false);
   };
 
+  const handleShowContentAutomate = (type) => {
+    setIsModalAutomate(false);
+    setTypeContentAutomate(type);
+  };
+
+  const handleCloseContentAutomate = (type) => {
+    setIsModalAutomate(false);
+    setTypeContentAutomate("");
+  };
   return (
     <>
       <div className={styles.navbarAdmin}>
@@ -50,19 +66,23 @@ const NavbarAdmin = ({}) => {
           <a href="/clients">
             <img src={addBlack} alt="Icon" />
           </a>
-          <a href="/clients">
-            <img src={addGreen} alt="Icon" />
-          </a>
+          <div>
+            <img
+              src={addGreen}
+              alt="Icon"
+              onClick={() => setIsOpen((prev) => !prev)}
+            />
+          </div>
           <a href="/chat">
             <img src={chatIcon} alt="Icon" />
           </a>
           <a href="/clients">
             <img src={clientIcon} alt="Icon" />
           </a>
-          <a href="/clients">
+          <a href="/allproducts">
             <img src={boxIcon} alt="Icon" />
           </a>
-          <a href="#" className={styles.number}>
+          <a href="notification" className={styles.number}>
             <img src={dotsNotification} alt="Icon" />
             <span>234</span>
           </a>
@@ -84,6 +104,32 @@ const NavbarAdmin = ({}) => {
         </div>
         {showPlusModal && (
           <UpgradePlan onClose={() => setShowPlusModal(false)} />
+        )}
+        {isOpen && (
+          <FloatingMenu
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            openModalAutomate={openModalAutomate}
+            closeModalAutomate={closeModalAutomate}
+          />
+        )}
+        {isModalAutomate && (
+          <Automate
+            typeContent={handleShowContentAutomate}
+            close={closeModalAutomate}
+            isModalAutomate={isModalAutomate}
+            setIsModalAutomate={setIsModalAutomate}
+            isAnimating={isAnimating}
+            setIsAnimating={setIsAnimating}
+          />
+        )}
+
+        {typeContentAutomate && (
+          <PanelAutomate
+            typeContent={handleShowContentAutomate}
+            close={handleCloseContentAutomate}
+            type={typeContentAutomate}
+          />
         )}
       </div>
     </>

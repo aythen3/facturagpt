@@ -64,7 +64,7 @@ export default function InvoicePanel() {
 
   return (
     <>
-      <NavbarAdmin />
+      <NavbarAdmin setIsOpen={setIsOpen} isOpen={isOpen} />
       <div className={styles.container}>
         <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
 
@@ -94,15 +94,15 @@ export default function InvoicePanel() {
             <Preview companyInfo={company} />
           </>
         )}
-        <FloatingMenu
+        {/* <FloatingMenu
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           openModalAutomate={openModalAutomate}
           closeModalAutomate={closeModalAutomate}
-        />
+        /> */}
       </div>
 
-      {isModalAutomate && (
+      {/* {isModalAutomate && (
         <Automate
           typeContent={handleShowContentAutomate}
           close={closeModalAutomate}
@@ -119,7 +119,7 @@ export default function InvoicePanel() {
           close={handleCloseContentAutomate}
           type={typeContentAutomate}
         />
-      )}
+      )} */}
     </>
   );
 }
