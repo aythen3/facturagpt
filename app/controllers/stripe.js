@@ -2,10 +2,11 @@ const {
   updateClientService,
   getPaymentMethodService,
 } = require("../services/stripe");
-
+const { connectDB } = require("./utils");
 const { catchedAsync } = require("../utils/err");
+const { updateAccount } = require("../services/emailManager");
 const stripe = require("stripe")(
-  "sk_test_51NvRJUHKWJC5Rfvv8wADU6cg5vUJZ8uE7UGLMrM8lM2R2SbAKxpUCQb133YmBSoLA398sNXXHT6ETaeLLyIBEzqi00uGjLvJnZ"
+  "sk_test_51QUTjnJrDWENnRIx5AgnTo1sIyDvsMppmfOH7FsHC2SScYM3ibITPi5YtR1CMVv0JJ22Iyoov7OYaEpLxSROfS7A00yLdFumqy"
 );
 
 // ================================ STRIPE ======================================
@@ -100,8 +101,196 @@ const createSetupIntentController = async (req, res) => {
   }
 };
 
+const attachCustomPaymentMethodController = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res
+        .status(400)
+        .send({ success: false, message: "Missing userId in request." });
+    }
+
+    // Step 1: Fetch user from CouchDB
+    const db = await connectDB("db_emailmanager_accounts");
+    let dbUser = await db.get(userId);
+
+    if (!dbUser) {
+      return res
+        .status(404)
+        .send({ success: false, message: "User not found." });
+    }
+    console.log("Fetched user from CouchDB:", dbUser);
+
+    // Step 2: Create a Stripe customer if none exists
+    let stripeCustomerId = dbUser.stripeCustomerId;
+    if (!stripeCustomerId) {
+      console.log("Creating new Stripe customer...");
+      const customer = await stripe.customers.create({
+        email: dbUser.email,
+        metadata: { userId }, // Add unique metadata
+        description: `Customer for ${dbUser.email}`,
+      });
+      console.log("Stripe customer created:", customer);
+
+      stripeCustomerId = customer.id;
+
+      // Save the new customer ID to the database
+      dbUser.stripeCustomerId = stripeCustomerId;
+
+      // Retry updating until the conflict is resolved
+      let updateSuccessful = false;
+      while (!updateSuccessful) {
+        try {
+          const response = await db.insert({ ...dbUser, _rev: dbUser._rev });
+          console.log(
+            "Updated user in CouchDB with Stripe customer ID:",
+            response
+          );
+          updateSuccessful = true;
+        } catch (conflictError) {
+          if (conflictError.statusCode === 409) {
+            console.log("Conflict detected, fetching latest revision...");
+            dbUser = await db.get(userId); // Fetch the latest version
+          } else {
+            throw conflictError;
+          }
+        }
+      }
+    }
+
+    // Step 3: Create a test payment method using tok_visa
+    const createdPaymentMethod = await stripe.paymentMethods.create({
+      type: "card",
+      card: {
+        token: "tok_visa", // Using a test token for Visa
+      },
+    });
+    console.log("Test payment method created:", createdPaymentMethod);
+
+    // Step 4: Attach the payment method to the customer
+    const attachmentResponse = await stripe.paymentMethods.attach(
+      createdPaymentMethod.id,
+      {
+        customer: stripeCustomerId,
+      }
+    );
+    console.log("Payment method attached to customer:", attachmentResponse);
+
+    // Step 5: Update Stripe customer to set the default payment method
+    const updatedCustomer = await stripe.customers.update(stripeCustomerId, {
+      invoice_settings: {
+        default_payment_method: createdPaymentMethod.id,
+      },
+    });
+    console.log("Updated Stripe customer:", updatedCustomer);
+
+    // Step 6: Save payment method ID to the database
+    dbUser.paymentMethodId = createdPaymentMethod.id;
+
+    let updateSuccessful = false;
+    while (!updateSuccessful) {
+      try {
+        const response = await updateAccount({
+          userId,
+          toUpdate: { paymentMethodId: createdPaymentMethod.id },
+        });
+        console.log(
+          "Updated user in CouchDB with payment method ID:",
+          response
+        );
+        updateSuccessful = true;
+      } catch (conflictError) {
+        if (conflictError.statusCode === 409) {
+          console.log("Conflict detected, fetching latest revision...");
+          dbUser = await db.get(userId); // Fetch the latest version
+        } else {
+          throw conflictError;
+        }
+      }
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "Payment method attached successfully.",
+    });
+  } catch (err) {
+    console.error("Error in attachCustomPaymentMethodController:", err);
+    return res
+      .status(500)
+      .send({ success: false, message: "Internal server error." });
+  }
+};
+
+const createCustomPaymentIntentController = async (req, res) => {
+  try {
+    const { userId, amount, currency = "eur" } = req.body;
+
+    if (!userId || !amount) {
+      return res
+        .status(400)
+        .send({ success: false, message: "Missing userId or amount." });
+    }
+
+    const db = await connectDB("db_emailmanager_accounts");
+    const dbUser = await db.get(userId);
+
+    if (!dbUser || !dbUser.stripeCustomerId || !dbUser.paymentMethodId) {
+      return res.status(404).send({
+        success: false,
+        message: "User or payment details not found in the database.",
+      });
+    }
+
+    // Create a payment intent with restricted automatic payment methods
+
+    console.log("Creating payment intent with", {
+      amount,
+      currency,
+      stripeCustomerId: dbUser.stripeCustomerId,
+      paymentMethodId: dbUser.paymentMethodId,
+    });
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency,
+      customer: dbUser.stripeCustomerId,
+      payment_method: dbUser.paymentMethodId,
+      confirm: true,
+      description: `Payment for client: ${dbUser.email}`,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: "never",
+      },
+    });
+
+    console.log("Payment Intent Status:", paymentIntent.status);
+    if (paymentIntent.status !== "succeeded") {
+      throw new Error(
+        `Payment confirmation failed with status: ${paymentIntent.status}`
+      );
+    }
+
+    return res.status(200).send({
+      success: true,
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (err) {
+    console.error("Error in createPaymentIntentController:", err.message);
+    return res.status(500).send({
+      success: false,
+      message: "Error creating payment intent.",
+    });
+  }
+};
+
 module.exports = {
   createPaymentIntentController: catchedAsync(createPaymentIntentController),
   createSetupIntentController: catchedAsync(createSetupIntentController),
+  attachCustomPaymentMethodController: catchedAsync(
+    attachCustomPaymentMethodController
+  ),
+  createCustomPaymentIntentController: catchedAsync(
+    createCustomPaymentIntentController
+  ),
 };
-
