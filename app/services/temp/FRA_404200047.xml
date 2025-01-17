@@ -80,7 +80,7 @@
             <fabricante_provincia>Barcelona</fabricante_provincia>
             <fabricante_pais>ES</fabricante_pais>
             <fabricante_reg_mercantil>HSB S.A.</fabricante_reg_mercantil>
-            <cod_fabricante_externo>A58580629</cod_fabricante_externo>
+            <cod_fabricante_externo>A58580626</cod_fabricante_externo>
             <cod_fabricante_fabricante/>
             <direcciones>
                 <direccion id="1">
@@ -257,7 +257,7 @@
             <referencia>DOCS AITHEN</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>CURVA 90 H-H 2Acu 15</descripcion>
+            <descripcion>CURVA 90 H-H 2Cu 15</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>5</posicion_pedido>

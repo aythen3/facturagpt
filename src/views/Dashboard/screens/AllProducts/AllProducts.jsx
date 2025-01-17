@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AllProducts.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.svg";
@@ -17,20 +17,32 @@ import EditableInput from "../Clients/EditableInput/EditableInput";
 import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
 import Tags from "../../components/Tags/Tags";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProductFromTransaction,
+  getOneTransactionById,
+} from "../../../../actions/transactions";
 const AllProducts = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { transactionByClient } = useSelector((state) => state.transactions);
+  const { transactionByClient, loading } = useSelector(
+    (state) => state.transactions
+  );
   const [newProductModal, setNewProductModal] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
-
+  const dispatch = useDispatch();
   const closeNewProductModal = () => {
     setNewProductModal(false);
   };
+
+  // useEffect(() => {
+  //   dispatch(getOneTransactionById({ transactionId: transactionByClient?.id }));
+  // }, [loading]);
+
+  console.log("TRANSAAAAAAAA----------", transactionByClient);
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -120,6 +132,25 @@ const AllProducts = () => {
     floorPrice: false,
   });
 
+  const handleDelete = async (productRef) => {
+    await dispatch(
+      deleteProductFromTransaction({
+        transactionId: transactionByClient?.id,
+        productRef,
+      })
+    );
+    await dispatch(
+      getOneTransactionById({
+        transactionId: transactionByClient?.id || transactionByClient?.doc?._id,
+      })
+    );
+  };
+
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+  const handleActions = (rowIndex, transaction) => {
+    // dispatch(setClient(client));
+    setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
+  };
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
@@ -232,9 +263,22 @@ const AllProducts = () => {
                     <td>
                       <div className={styles.edit}>
                         <a href="#">Editar</a>
-                        <div>
+                        <div onClick={() => handleActions(rowIndex, product)}>
                           <img src={optionDots} alt="options" />
                         </div>
+                        {selectedRowIndex === rowIndex && (
+                          <ul className={styles.content_menu_actions}>
+                            <li
+                              onClick={() => {
+                                handleDelete(product.productRef);
+                                setSelectedRowIndex(null);
+                              }}
+                              className={styles.item_menu_actions}
+                            >
+                              Eliminar
+                            </li>
+                          </ul>
+                        )}
                       </div>
                     </td>
                   </tr>

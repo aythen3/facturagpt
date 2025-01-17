@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  deleteProductFromTransaction,
   deleteTransactions,
   getAllTransactionsByClient,
+  getOneTransactionById,
 } from "../actions/transactions";
 
 const transactionsSlices = createSlice({
@@ -34,7 +36,7 @@ const transactionsSlices = createSlice({
         // state.loading = false;
       })
 
-      // DETE TRANSACTIOn/S
+      // DELETE TRANSACTION/S
       .addCase(deleteTransactions.pending, (state) => {
         state.loading = true;
       })
@@ -44,6 +46,27 @@ const transactionsSlices = createSlice({
       .addCase(deleteTransactions.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
+      })
+
+      // DELETE PRODUCT FROM TRANSACTION
+      .addCase(deleteProductFromTransaction.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProductFromTransaction.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(deleteProductFromTransaction.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
+      // GET ONE TRANSACTION BY ID
+      .addCase(getOneTransactionById.pending, (state) => {})
+      .addCase(getOneTransactionById.fulfilled, (state, action) => {
+        state.transactionByClient = action.payload?.matchingDocuments?.[0];
+      })
+      .addCase(getOneTransactionById.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

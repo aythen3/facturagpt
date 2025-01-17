@@ -74,7 +74,7 @@
             <desc_incoterm/>
             <fabricante_nif>B17623257</fabricante_nif>
             <fabricante_nombre>HSB S.A.</fabricante_nombre>
-            <fabricante_direccion>AV Cardenal Reig, 32</fabricante_direccion>
+            <fabricante_direccion>AV Cardenal Reig, 32, 08028 Barcelona (Barcelona)</fabricante_direccion>
             <fabricante_poblacion>Barcelona</fabricante_poblacion>
             <fabricante_cpostal>08028</fabricante_cpostal>
             <fabricante_provincia>Barcelona</fabricante_provincia>
@@ -257,7 +257,7 @@
             <referencia>DOCS AITHEN</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>CURVA 90 H-H 2ACu 15</descripcion>
+            <descripcion>CURVA 90 H-H 2Acu 15</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>5</posicion_pedido>

@@ -207,7 +207,7 @@ const Transactions = () => {
   };
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
-  const handleActions = (rowIndex, client) => {
+  const handleActions = (rowIndex) => {
     // dispatch(setClient(client));
     setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
   };
