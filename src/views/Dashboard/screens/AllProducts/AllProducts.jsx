@@ -17,21 +17,20 @@ import EditableInput from "../Clients/EditableInput/EditableInput";
 import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
 import Tags from "../../components/Tags/Tags";
-
+import { useSelector } from "react-redux";
 const AllProducts = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
+  const { transactionByClient } = useSelector((state) => state.transactions);
   const [newProductModal, setNewProductModal] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
 
   const closeNewProductModal = () => {
     setNewProductModal(false);
   };
-
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
