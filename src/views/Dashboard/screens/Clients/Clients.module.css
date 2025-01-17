@@ -227,29 +227,36 @@ input[type="checkbox"] {
   display: none;
 }
 .newClientContainer {
-  position: fixed;
+  /* position: fixed; */
   background-color: white;
   padding-bottom: 20px;
-  top: 50%;
+  /* top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1); */
   height: 80vh;
-  width: 50%;
-  overflow-y: scroll;
+  width: 80%;
+  /* overflow-y: scroll; */
   border-radius: 10px;
-  -webkit-transform: translate(-50%, -50%) scale(1);
+  /* -webkit-transform: translate(-50%, -50%) scale(1);
   -moz-transform: translate(-50%, -50%) scale(1);
   -ms-transform: translate(-50%, -50%) scale(1);
-  -o-transform: translate(-50%, -50%) scale(1);
+  -o-transform: translate(-50%, -50%) scale(1); */
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   animation: scaleUp 300ms ease-out forwards;
   -webkit-animation: scaleUp 300ms ease-out forwards;
+  .newClientForm::-webkit-scrollbar {
+    display: none;
+  }
   .newClientForm {
     width: 90%;
     margin: 0 auto;
+    height: 100%;
+    overflow: scroll;
+    padding-bottom: 100px;
+    box-sizing: border-box;
   }
 
   .containerHeader {
@@ -276,159 +283,304 @@ input[type="checkbox"] {
       cursor: pointer;
     }
   }
+}
 
-  .phoneInputs {
-    width: 100%;
+.typeClient {
+  display: flex;
+  background-color: #f3f3f3;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  padding: 6px;
+  gap: 10px;
+  width: 300px;
+  button {
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    flex: 1;
+    background-color: transparent;
+  }
+}
+
+.typeClientActivate {
+  button {
+    background-color: transparent;
+    cursor: pointer;
+    color: #999999;
+  }
+  .selected {
+    background-color: white;
+    box-shadow: 0px 3px 8px rgb(172, 172, 172);
+    color: black;
+  }
+}
+
+.typeClientDisabled {
+  background-color: transparent;
+}
+.newClientForm {
+  label {
+    border-bottom: 1px solid #11a3812c;
+    padding: 10px 0;
+  }
+  .detailsBill {
     display: flex;
-    input {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .infoBill {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+    span {
+      color: #717171;
+    }
+    .button {
+      width: fit-content;
+      background-color: transparent;
+      outline: none;
+      border: none;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0;
+    }
+  }
+
+  .info1 {
+    margin-top: 20px;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    span {
+      color: #1e0045;
+      font-weight: bold;
+    }
+  }
+  .row {
+    display: flex;
+    gap: 10px;
+    .info {
       flex: 1;
     }
   }
 
-  .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  p {
-    color: #000;
-    font-weight: 500;
-    margin: 0;
-  }
-  .plan {
-    padding-right: 30px;
-    span {
-      color: #000;
-    }
-  }
-
-  .inputContainer {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .input {
-    width: 100%;
-    padding-right: 40px; /* Espacio para la imagen */
-    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
-  }
-
-  .icon {
-    position: absolute;
-    right: 10px; /* Ajusta la posición según el diseño */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px; /* Ajusta el tamaño según necesites */
-    height: 20px;
-    pointer-events: none; /* Evita que interfiera con la interacción del input */
-  }
-  label {
-    display: flex;
-    flex-direction: column;
-    color: #717171;
-    gap: 8px;
-    margin-bottom: 30px;
-    padding: 10px 0;
-    border-bottom: 1px solid #ebebeb;
-    input,
-    select,
-    option {
-      padding: 10px;
-      border: none;
-      outline: none;
-      background-color: #f5f5f5;
-      border-radius: 4px;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
-      -o-border-radius: 4px;
-    }
-
-    select,
-    option {
-      color: #757575;
-    }
-  }
-
-  .details {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .btnOptionsContainer {
-    display: flex;
-    width: 100%;
-    justify-content: end;
-    align-items: center;
-    gap: 10px;
-    button {
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
-    }
-    .view {
-      background-color: white;
-      border: 1px solid #cbcbcb;
-      color: #232222;
-    }
-    .new {
-      background-color: #233f39;
-      color: white;
-    }
-  }
-
-  button {
+  button[disabled],
+  input[disabled],
+  select[disabled],
+  option[disabled],
+  textarea[disabled] {
     background-color: transparent;
+  }
+
+  button,
+  input,
+  select,
+  option,
+  textarea {
     border: none;
     outline: none;
+    background-color: #f4f4f4;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .button {
+    cursor: pointer;
+    background-color: transparent;
     text-decoration: underline;
-    color: #000;
     font-weight: 600;
+  }
+  input {
+    width: 100%;
+
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
+
+  .squareContainer {
+    display: flex;
+
+    .square {
+      background-color: #f4f4f4;
+      border: 1px solid #dfdfdf;
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      gap: 10px;
+      padding-left: 10px;
+      span {
+        color: #828282;
+        font-weight: bold;
+      }
+      p {
+        margin: 0;
+        color: black;
+        font-weight: 600;
+      }
+    }
+    .square.arrow {
+      align-items: center;
+      flex: 1;
+      padding: 0;
+      .icon {
+        height: 20px;
+        width: 20px;
+      }
+    }
+    .accountNumber {
+      flex: 3;
+    }
+  }
+  .payMethodContainer {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    border: 1px solid #11a3812c;
+    color: #1e0045;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    span {
+      font-weight: 600;
+    }
+  }
+
+  .payInfo {
+    display: flex;
+    gap: 10px;
+  }
+
+  .defaultBank {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 20px;
+    gap: 30px;
+    div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    p {
+      margin: 0;
+      color: #2ebc89;
+    }
+    input {
+      width: fit-content;
+    }
+  }
+  .delete {
+    background-color: #dc3545;
+    height: 20px;
+    min-width: 20px;
+    max-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    cursor: pointer;
+    .icon {
+      height: 13px;
+      width: 13px;
+    }
+  }
+
+  .addParameter {
+    width: 100%;
+    background-color: #fafafa;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
     cursor: pointer;
   }
-}
-
-.scaleDown {
-  animation: scaleDown 300ms ease-in forwards;
-  -webkit-animation: scaleDown 300ms ease-in forwards;
-}
-
-@keyframes scaleUp {
-  from {
-    transform: translate(-50%, -50%) scale(0);
-    -webkit-transform: translate(-50%, -50%) scale(0);
-    -moz-transform: translate(-50%, -50%) scale(0);
-    -ms-transform: translate(-50%, -50%) scale(0);
-    -o-transform: translate(-50%, -50%) scale(0);
+  .parametersCounter {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    .icon {
+      height: 10px;
+      width: 10px;
+      -webkit-transition: all 300ms;
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+    }
+    .rotated {
+      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+    }
   }
-  to {
-    transform: translate(-50%, -50%) scale(1);
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    -moz-transform: translate(-50%, -50%) scale(1);
-    -ms-transform: translate(-50%, -50%) scale(1);
-    -o-transform: translate(-50%, -50%) scale(1);
+  .parametersHeader {
+    display: flex;
+    justify-content: space-between;
+    p {
+      color: #92959858;
+      margin: 0;
+    }
+    .button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      text-decoration: underline;
+    }
   }
-}
-
-@keyframes scaleDown {
-  from {
-    transform: translate(-50%, -50%) scale(1);
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    -moz-transform: translate(-50%, -50%) scale(1);
-    -ms-transform: translate(-50%, -50%) scale(1);
-    -o-transform: translate(-50%, -50%) scale(1);
+  .parameter {
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #11a3812c;
+    div {
+      flex: 1;
+    }
   }
-  to {
-    transform: translate(-50%, -50%) scale(0);
-    -webkit-transform: translate(-50%, -50%) scale(0);
-    -moz-transform: translate(-50%, -50%) scale(0);
-    -ms-transform: translate(-50%, -50%) scale(0);
-    -o-transform: translate(-50%, -50%) scale(0);
+  .parametersContainer {
+    transition: all 300ms;
+    -webkit-transition: all 300ms;
+    -moz-transition: all 300ms;
+    -ms-transition: all 300ms;
+    -o-transition: all 300ms;
+    overflow: hidden;
+    interpolate-size: allow-keywords;
   }
 }

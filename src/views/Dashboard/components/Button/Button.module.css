@@ -1,0 +1,22 @@
+.buttonTemplate {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.buttonTemplateGreen {
+  background-color: #10a37f;
+  color: white;
+}
+
+.buttonTemplateWhite {
+  background-color: #ffffff;
+  border: 1px solid #cbcbcb;
+}

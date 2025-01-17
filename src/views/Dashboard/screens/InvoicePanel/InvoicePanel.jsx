@@ -64,17 +64,11 @@ export default function InvoicePanel() {
 
   return (
     <>
-      <NavbarAdmin setActivateChat={setActivateChat} />
+      <NavbarAdmin setIsOpen={setIsOpen} isOpen={isOpen} />
       <div className={styles.container}>
-        <FileExplorer
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          setActivateChat={setActivateChat}
-        />
+        <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
 
-        {activateChat ? (
-          <Chat />
-        ) : !fileUploaded ? (
+        {!fileUploaded ? (
           <div
             className={styles.inputContainer}
             onDragOver={handleDragOver}
@@ -100,15 +94,15 @@ export default function InvoicePanel() {
             <Preview companyInfo={company} />
           </>
         )}
-        <FloatingMenu
+        {/* <FloatingMenu
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           openModalAutomate={openModalAutomate}
           closeModalAutomate={closeModalAutomate}
-        />
+        /> */}
       </div>
 
-      {isModalAutomate && (
+      {/* {isModalAutomate && (
         <Automate
           typeContent={handleShowContentAutomate}
           close={closeModalAutomate}
@@ -125,7 +119,7 @@ export default function InvoicePanel() {
           close={handleCloseContentAutomate}
           type={typeContentAutomate}
         />
-      )}
+      )} */}
     </>
   );
 }

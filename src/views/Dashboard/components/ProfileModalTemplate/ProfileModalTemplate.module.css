@@ -1,0 +1,38 @@
+.profileModalTemplate {
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  position: relative;
+  .camContainer {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    left: 50%;
+    bottom: 0px;
+    background-color: #9e9e9e;
+    transform: translate(-50%);
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    -o-transform: translate(-50%);
+    padding-top: 10px;
+    box-sizing: border-box;
+    .icon {
+      height: 30px;
+      width: 30px;
+      cursor: pointer;
+    }
+  }
+
+  img {
+    object-fit: contain;
+    object-position: left;
+  }
+}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
+import CookiePopup from "../../components/CookiePopup/CookiePopup";
+
 import {
   useLocation,
   useNavigate,
@@ -487,6 +489,7 @@ const DashboardLogin = () => {
           <p className={styles.footer}>© {t("copyright")}</p>
         </div>
       </div>
+      <CookiePopup />
     </div>
   );
 };

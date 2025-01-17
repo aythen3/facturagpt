@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./TermsAndConditions.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useTranslation } from "react-i18next";
+import CookiePopup from "../../components/CookiePopup/CookiePopup";
 
 const TermsAndConditions = () => {
   const { t } = useTranslation("termsAndCondition");
@@ -239,6 +240,7 @@ const TermsAndConditions = () => {
           <p>{t("footer")}</p>
         </section>
       </article>
+      <CookiePopup />
     </div>
   );
 };

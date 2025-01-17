@@ -6,7 +6,7 @@ import codeIcon from "../../assets/S3/codeIcon.svg";
 import fileIcon from "../../assets/S3/fileIcon.svg";
 import { Search } from "lucide-react";
 import horizontalDots from "../../assets/S3/horizontalDots.svg";
-import filterIcon from "../../assets/S3/filterIcon.svg";
+import filterIcon from "../../assets/S3/filterIconBars.svg";
 import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +26,7 @@ import FileOptionsPopup from "./FileOptionsPopup";
 import { FaUpload } from "react-icons/fa";
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 
-export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
+export default function FileExplorer({ isOpen, setIsOpen }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { currentPath, userFiles, getFilesLoading, uploadingFilesLoading } =
@@ -543,7 +543,7 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
           />
         )}
       </div>
-      {/* <div onClick={() => setActivateChat(true)}>Chat</div> */}
+
 
       {renderBreadcrumbs()}
       <div className={styles.fileList}>

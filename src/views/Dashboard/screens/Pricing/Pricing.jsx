@@ -12,6 +12,7 @@ import googleLogo from "../../assets/googleLogo.svg";
 import googleStar from "../../assets/googleStar.svg";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import CookiePopup from "../../components/CookiePopup/CookiePopup";
 
 const Pricing = () => {
   const navigate = useNavigate();
@@ -289,6 +290,7 @@ const Pricing = () => {
       <a href="/freetrial" className={styles.startButton}>
         Probar Gratis <img src={diagonalArrow} />
       </a>
+      <CookiePopup />
     </div>
   );
 };

@@ -1,0 +1,79 @@
+.labelEditableInput {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  p {
+    margin: 0;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    /* width: fit-content; */
+    height: fit-content;
+  }
+
+  button[disabled],
+  input[disabled],
+  select[disabled],
+  option[disabled],
+  textarea[disabled] {
+    background-color: transparent;
+  }
+
+  button,
+  input,
+  select,
+  option,
+  textarea {
+    border: none;
+    outline: none;
+    background-color: #f4f4f4;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .button {
+    cursor: pointer;
+    background-color: transparent;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  input,
+  textarea {
+    resize: none;
+    width: 100%;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
+}
+
+.phoneContainer {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height: 30px;
+}
+
+.delete {
+  background-color: #dc3545;
+  height: 20px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  cursor: pointer;
+  .icon {
+    height: 13px;
+    width: 13px;
+  }
+}

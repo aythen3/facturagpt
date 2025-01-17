@@ -6,6 +6,7 @@ import Navbar from "../Navbar/Navbar";
 import wsIcon from "../../assets/whatsappIcon.svg";
 import { useTranslation } from "react-i18next";
 import diagonalArrow from "../../assets/diagonalArrow.svg";
+import CookiePopup from "../CookiePopup/CookiePopup";
 
 const ContactForm = () => {
   const { t } = useTranslation("contactForm");
@@ -233,6 +234,7 @@ const ContactForm = () => {
           </a>
         </section>
       </div>
+      <CookiePopup />
     </>
   );
 };

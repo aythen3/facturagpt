@@ -1,17 +1,18 @@
-import { useState } from 'react';
-import { Plus } from 'lucide-react';
-import styles from './FloatingMenu.module.css';
-import FolderModal from '../FolderModal/FolderModal';
-import TagModal from '../TagModal/TagModal';
-import Automate from '../Automate/Automate';
-import { ReactComponent as FolderIcon } from '../../assets/uploadIconBW.svg';
-import { ReactComponent as TagIcon } from '../../assets/tagIconBW.svg';
-import { ReactComponent as WhatsAppIcon } from '../../assets/wsIconBW.svg';
-import { ReactComponent as CloudIcon } from '../../assets/uploadIconBW.svg';
-import { ReactComponent as CameraIcon } from '../../assets/camIconBW.svg';
-import { ReactComponent as FacturaIcon } from '../../assets/moneyIconBW.svg';
-import { ReactComponent as PlusIcon } from '../../assets/automatizaIconBW.svg';
-import { useDispatch } from 'react-redux';
+import { useState } from "react";
+import { Plus } from "lucide-react";
+import styles from "./FloatingMenu.module.css";
+import FolderModal from "../FolderModal/FolderModal";
+import TagModal from "../TagModal/TagModal";
+import Automate from "../Automate/Automate";
+import { ReactComponent as FolderIcon } from "../../assets/folderIconBW.svg";
+import { ReactComponent as TagIcon } from "../../assets/tagIconBW.svg";
+import { ReactComponent as WhatsAppIcon } from "../../assets/wsIconBW.svg";
+import { ReactComponent as CloudIcon } from "../../assets/uploadIconBW.svg";
+import { ReactComponent as CameraIcon } from "../../assets/camIconBW.svg";
+import { ReactComponent as FacturaIcon } from "../../assets/moneyIconBW.svg";
+import { ReactComponent as PlusIcon } from "../../assets/automatizaIconNew.svg";
+import { ReactComponent as ChatGPTIcon } from "../../assets/chatGPTIcon.svg";
+import { useDispatch } from "react-redux";
 
 export default function FloatingMenu({ openModalAutomate, isOpen, setIsOpen }) {
   const [activeModal, setActiveModal] = useState(null);
@@ -28,60 +29,65 @@ export default function FloatingMenu({ openModalAutomate, isOpen, setIsOpen }) {
   const closeModal = () => setActiveModal(null);
 
   const handleSave = (color) => {
-    console.log('Selected color:', color);
+    console.log("Selected color:", color);
     closeModal();
   };
 
   const menuItems = [
     {
       icon: <FolderIcon />,
-      text: 'Nueva Carpeta',
-      action: () => setActiveModal('folder'),
+      text: "Nueva Carpeta",
+      action: () => setActiveModal("folder"),
     },
     {
       icon: <TagIcon />,
-      text: 'Nueva Etiqueta',
-      action: () => setActiveModal('tag'),
+      text: "Nueva Etiqueta",
+      action: () => setActiveModal("tag"),
     },
     {
       icon: <WhatsAppIcon />,
-      text: 'Abrir Whatsapp',
-      action: () => setActiveModal('tag'),
+      text: "Abrir Whatsapp",
+      action: () => setActiveModal("tag"),
+    },
+    {
+      icon: <ChatGPTIcon />,
+      text: "ChatGPT",
+      action: () => console.log("ChatGPT"),
     },
     {
       icon: <CloudIcon />,
-      text: 'Subir Archivo',
-      action: () => console.log('Subir Archivo clicked'),
+      text: "Subir Archivo",
+      action: () => console.log("Subir Archivo clicked"),
     },
     {
       icon: <CameraIcon />,
-      text: 'Hacer una Foto',
-      action: () => console.log('Hacer una Foto clicked'),
+      text: "Hacer una Foto",
+      action: () => console.log("Hacer una Foto clicked"),
     },
     {
       icon: <PlusIcon />,
-      text: 'Automatiza',
+      text: "Automatiza",
       action: openModalAutomate,
     },
     {
       icon: <FacturaIcon />,
-      text: 'Nueva Factura',
-      action: () => console.log('Nueva Factura clicked'),
+      text: "Nueva Factura",
+      action: () => console.log("Nueva Factura clicked"),
     },
   ];
 
   return (
     <>
       <div className={styles.fabContainer}>
-        <div className='fab-wrapper'>
+        {/* <div className="fab-wrapper">
           <button
             className={styles.fab}
             onClick={toggleMenu}
-            aria-label='Open menu'
+            aria-label="Open menu"
           >
             <Plus className={styles.fabIcon} />
           </button>
-        </div>
+        </div> */}
 
         {isOpen && (
           <div className={styles.overlay} onClick={handleClickOutside}>
@@ -104,10 +110,10 @@ export default function FloatingMenu({ openModalAutomate, isOpen, setIsOpen }) {
         )}
       </div>
 
-      <FolderModal isOpen={activeModal === 'folder'} onClose={closeModal} />
+      <FolderModal isOpen={activeModal === "folder"} onClose={closeModal} />
 
       <TagModal
-        isOpen={activeModal === 'tag'}
+        isOpen={activeModal === "tag"}
         onClose={closeModal}
         onSave={handleSave}
       />
