@@ -18,6 +18,9 @@ const transactionsSlices = createSlice({
     setTransaction: (state, action) => {
       state.transactionByClient = action.payload;
     },
+    clearTransaction: (state) => {
+      state.transactionByClient = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,6 +74,6 @@ const transactionsSlices = createSlice({
   },
 });
 
-export const { setTransaction } = transactionsSlices.actions;
+export const { setTransaction, clearTransaction } = transactionsSlices.actions;
 
 export default transactionsSlices.reducer;

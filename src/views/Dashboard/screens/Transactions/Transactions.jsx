@@ -15,8 +15,13 @@ import {
   getAllTransactionsByClient,
 } from "../../../../actions/transactions";
 import { updateClient } from "../../../../actions/user";
-import { setTransaction } from "../../../../slices/transactionsSlices";
+import {
+  clearTransaction,
+  setTransaction,
+} from "../../../../slices/transactionsSlices";
 import { useNavigate } from "react-router-dom";
+import { clearClient } from "../../../../slices/clientsSlices";
+import FileExplorer from "../../components/FileExplorer/FileExplorer";
 
 const Transactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -50,13 +55,9 @@ const Transactions = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getAll = async () => {
-      const response = await dispatch(
-        getAllTransactionsByClient({ idsEmails: client?.processedemails })
-      );
-    };
-
-    getAll();
+    dispatch(
+      getAllTransactionsByClient({ idsEmails: client?.processedemails })
+    );
   }, [loading]);
 
   const selectClient = (rowIndex) => {
@@ -247,215 +248,227 @@ const Transactions = () => {
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div className={styles.container} onClick={() => setShowSidebar(false)}>
-        <div className={styles.clientsHeader}>
-          <div className={styles.infoClient}>
-            <div className={styles.contactInfo}>
-              <h3>{client?.clientData?.clientName}</h3>
-              <span>{client?.email}</span>
-              <span>
-                {client?.clientData?.codeCountry}{" "}
-                {client?.clientData?.numberPhone}
-              </span>
-            </div>
-            <div className={styles.info}>
-              <p>Número Fiscal</p>
-              <span>{client?.clientData?.taxNumber}</span>
-            </div>
-            <div className={styles.info}>
-              <p>ID Cliente</p>
-              <span>{client?.id.slice(-21, -16)}</span>
-            </div>
-          </div>
-          <div className={styles.searchContainer}>
-            <button
-              className={styles.infoBtn}
-              onClick={() => setShowNewClient(true)}
-            >
-              <img src={plusIcon} alt="" />
-              Nueva transacción
-            </button>
+      <div style={{ display: "flex" }}>
+        <FileExplorer />
 
-            <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder="Search..."
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-              <div className={styles.inputIconOutsideContainer}>
-                <img src={filterSearch} className={styles.inputIconOutside} />
+        <div className={styles.container} onClick={() => setShowSidebar(false)}>
+          <div className={styles.clientsHeader}>
+            <div className={styles.infoClient}>
+              <div className={styles.contactInfo}>
+                <h3>{client?.clientData?.clientName}</h3>
+                <span>{client?.email}</span>
+                <span>
+                  {client?.clientData?.codeCountry}{" "}
+                  {client?.clientData?.numberPhone}
+                </span>
+              </div>
+              <div className={styles.info}>
+                <p>Número Fiscal</p>
+                <span>{client?.clientData?.taxNumber}</span>
+              </div>
+              <div className={styles.info}>
+                <p>ID Cliente</p>
+                <span>{client?.id.slice(-21, -16)}</span>
+              </div>
+            </div>
+            <div className={styles.searchContainer}>
+              <button
+                className={styles.infoBtn}
+                onClick={() => setShowNewClient(true)}
+              >
+                <img src={plusIcon} alt="" />
+                Nueva transacción
+              </button>
+
+              <div className={styles.inputWrapper}>
+                <img src={searchGray} className={styles.inputIconInside} />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={handleSearchChange}
+                  className={styles.searchInput}
+                />
+                <div className={styles.inputIconOutsideContainer}>
+                  <img src={filterSearch} className={styles.inputIconOutside} />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div style={{ overflow: "auto" }}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.small}>
-                  <input
-                    type="checkbox"
-                    name="clientSelected"
-                    checked={
-                      clientSelected.length == tableData.length ? true : false
-                    }
-                    onClick={selectAllClients}
-                  />
-                </th>
-                {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 8 ? styles.small : ""}>
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {transactionsByClient.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
+          <div style={{ overflow: "auto" }}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.small}>
                     <input
                       type="checkbox"
                       name="clientSelected"
-                      onChange={() => toggleTransactionSelection(row.id)}
-                      onClick={() => selectClient(rowIndex)}
-                      checked={clientSelected.includes(rowIndex) ? true : false}
+                      checked={
+                        clientSelected.length == tableData.length ? true : false
+                      }
+                      onClick={selectAllClients}
                     />
-                  </td>
-                  <td className={styles.idContainer}>
-                    <img src={pdf} className={styles.pdfIcon} />
-                    {row.id.slice(10, 15)}
-                  </td>
-                  {/* <td>
+                  </th>
+                  {tableHeaders.map((header, index) => (
+                    <th key={index} className={index == 8 ? styles.small : ""}>
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {transactionsByClient.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="clientSelected"
+                        onChange={() => toggleTransactionSelection(row.id)}
+                        onClick={() => selectClient(rowIndex)}
+                        checked={
+                          clientSelected.includes(rowIndex) ? true : false
+                        }
+                      />
+                    </td>
+                    <td className={styles.idContainer}>
+                      <img src={pdf} className={styles.pdfIcon} />
+                      {row.id.slice(10, 15)}
+                    </td>
+                    {/* <td>
                     {Array.isArray(row.desc)
                       ? row.desc.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.desc}
                   </td> */}
-                  <td>
-                    <p>
-                      {row?.doc?.totalData?.description
-                        ? row?.doc?.totalData?.description
-                        : "Sin descripción"}
-                    </p>
-                  </td>
-                  <td>
-                    <div className={styles.tags}>
-                      <span className={`${styles.tag} ${styles.tagBlack}`}>
-                        Etiqueta
-                      </span>
-                      <span className={`${styles.tag} ${styles.tagBlue}`}>
-                        Etiqueta
-                      </span>
-                      <span className={`${styles.tag} ${styles.tagRed}`}>
-                        Etiqueta
-                      </span>
-                      <span className={`${styles.tag} ${styles.tagGreen}`}>
-                        Etiqueta
-                      </span>
-                    </div>
-                  </td>
-                  <td>{row?.doc?.totalData?.totalAmount}</td>
-                  <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
-                  <td>
-                    {row?.doc?.totalData?.expirationDateYear}-
-                    {row?.doc?.totalData?.expirationDateMonth}-
-                    {row?.doc?.totalData?.expirationDateDay}
-                  </td>
-                  <td>
-                    {row.doc?.totalData?.payMethod
-                      ? row.doc?.totalData?.payMethod
-                      : "Sin especificar"}
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      {/* <span className={getStateClass(row.state[0])}>
-                        &bull;
-                      </span> */}
-                      <span>
-                        {row?.doc?.totalData?.status
-                          ? row?.doc?.totalData?.status
-                          : "pendiente"}
-                      </span>
+                    <td>
+                      <p>
+                        {row?.doc?.totalData?.description
+                          ? row?.doc?.totalData?.description
+                          : "Sin descripción"}
+                      </p>
+                    </td>
+                    <td>
+                      <div className={styles.tags}>
+                        <span className={`${styles.tag} ${styles.tagBlack}`}>
+                          Etiqueta
+                        </span>
+                        <span className={`${styles.tag} ${styles.tagBlue}`}>
+                          Etiqueta
+                        </span>
+                        <span className={`${styles.tag} ${styles.tagRed}`}>
+                          Etiqueta
+                        </span>
+                        <span className={`${styles.tag} ${styles.tagGreen}`}>
+                          Etiqueta
+                        </span>
+                      </div>
+                    </td>
+                    <td>{row?.doc?.totalData?.totalAmount}</td>
+                    <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
+                    <td>
+                      {row?.doc?.totalData?.expirationDateYear}-
+                      {row?.doc?.totalData?.expirationDateMonth}-
+                      {row?.doc?.totalData?.expirationDateDay}
+                    </td>
+                    <td>
+                      {row.doc?.totalData?.payMethod
+                        ? row.doc?.totalData?.payMethod
+                        : "Sin especificar"}
+                    </td>
+                    <td>
                       <div
                         style={{
                           display: "flex",
-                          flexDirection: "column-reverse",
+                          alignItems: "center",
+                          gap: "5px",
                         }}
                       >
-                        {Array.isArray(row.state) ? (
-                          row.state.map((item, itemIndex) => (
-                            <p
-                              key={itemIndex}
-                              style={{
-                                color: itemIndex === 1 ? "blue" : "",
-                                fontWeight: itemIndex === 1 ? "600" : "inherit",
-                                margin: "0",
-                              }}
-                              className={getStateClass(row.state[0])}
-                            >
-                              {item}
-                            </p>
-                          ))
-                        ) : (
-                          <p>{row.state}</p>
-                        )}
+                        {/* <span className={getStateClass(row.state[0])}>
+                        &bull;
+                      </span> */}
+                        <span>
+                          {row?.doc?.totalData?.status
+                            ? row?.doc?.totalData?.status
+                            : "pendiente"}
+                        </span>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column-reverse",
+                          }}
+                        >
+                          {Array.isArray(row.state) ? (
+                            row.state.map((item, itemIndex) => (
+                              <p
+                                key={itemIndex}
+                                style={{
+                                  color: itemIndex === 1 ? "blue" : "",
+                                  fontWeight:
+                                    itemIndex === 1 ? "600" : "inherit",
+                                  margin: "0",
+                                }}
+                                className={getStateClass(row.state[0])}
+                              >
+                                {item}
+                              </p>
+                            ))
+                          ) : (
+                            <p>{row.state}</p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className={styles.actions}>
-                    <div className={styles.transacciones}>
-                      <a
-                        onClick={() => {
-                          navigate("/allproducts");
-                          dispatch(setTransaction(row));
-                        }}
-                        href="#"
-                      >
-                        Ver
-                      </a>
-                      <span>(2.345)</span>
-                    </div>
-                    <div onClick={() => handleActions(rowIndex, row)}>
-                      <img src={optionDots} />
-                    </div>
-                    {selectedRowIndex === rowIndex && (
-                      <ul className={styles.content_menu_actions}>
-                        <li
+                    </td>
+                    <td className={styles.actions}>
+                      <div className={styles.transacciones}>
+                        <a
                           onClick={() => {
-                            setShowNewClient(true);
-                            setSelectedRowIndex(null);
+                            navigate("/allproducts");
+                            dispatch(setTransaction(row));
                           }}
-                          className={styles.item_menu_actions}
+                          href="#"
                         >
-                          Editar
-                        </li>
-                        <li
-                          onClick={(e) => {
-                            handleDeleteTransactions(e);
-                            setSelectedRowIndex(null);
-                          }}
-                          className={styles.item_menu_actions}
-                        >
-                          Eliminar
-                        </li>
-                      </ul>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                          Ver
+                        </a>
+                        <span>(2.345)</span>
+                      </div>
+                      <div
+                        onClick={() => {
+                          toggleTransactionSelection(row.id);
+                          handleActions(rowIndex, row);
+                        }}
+                      >
+                        <img src={optionDots} />
+                      </div>
+                      {selectedRowIndex === rowIndex && (
+                        <ul className={styles.content_menu_actions}>
+                          <li
+                            onClick={() => {
+                              setShowNewClient(true);
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Editar
+                          </li>
+                          <li
+                            onClick={(e) => {
+                              handleDeleteTransactions(e);
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Eliminar
+                          </li>
+                        </ul>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       {showNewClient && (

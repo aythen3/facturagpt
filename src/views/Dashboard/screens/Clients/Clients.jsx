@@ -24,6 +24,8 @@ import EditableInput from "./EditableInput/EditableInput";
 import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
 import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
+import { clearTransaction } from "../../../../slices/transactionsSlices";
+import FileExplorer from "../../components/FileExplorer/FileExplorer";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -352,143 +354,149 @@ const Clients = () => {
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div className={styles.container} onClick={() => setShowSidebar(false)}>
-        <div className={styles.clientsHeader}>
-          <h2>{t("title")}</h2>
-          <div className={styles.searchContainer}>
-            <button
-              className={`${styles.addButton} ${styles.btnNewClient}`}
-              onClick={() => setShowNewClient(true)}
-            >
-              <img src={plusIcon} alt="Nuevo cliente" />
-              {t("buttonNewClient")}
-            </button>
-            <button className={styles.infoBtn}>Analíticas</button>
+      <div style={{ display: "flex" }}>
+        <FileExplorer />
+        <div className={styles.container} onClick={() => setShowSidebar(false)}>
+          <div className={styles.clientsHeader}>
+            <h2>{t("title")}</h2>
+            <div className={styles.searchContainer}>
+              <button
+                className={`${styles.addButton} ${styles.btnNewClient}`}
+                onClick={() => setShowNewClient(true)}
+              >
+                <img src={plusIcon} alt="Nuevo cliente" />
+                {t("buttonNewClient")}
+              </button>
+              <button className={styles.infoBtn}>Analíticas</button>
 
-            <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder={t("placeholderSearch")}
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-              <div className={styles.inputIconOutsideContainer}>
-                <img src={filterSearch} className={styles.inputIconOutside} />
+              <div className={styles.inputWrapper}>
+                <img src={searchGray} className={styles.inputIconInside} />
+                <input
+                  type="text"
+                  placeholder={t("placeholderSearch")}
+                  value={search}
+                  onChange={handleSearchChange}
+                  className={styles.searchInput}
+                />
+                <div className={styles.inputIconOutsideContainer}>
+                  <img src={filterSearch} className={styles.inputIconOutside} />
+                </div>
               </div>
+              <button className={styles.addButton}>
+                <img src={plusIcon} />
+              </button>
             </div>
-            <button className={styles.addButton}>
-              <img src={plusIcon} />
-            </button>
           </div>
-        </div>
 
-        <div className={styles.clientsTable} style={{ overflow: "auto" }}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.small}>
-                  <input
-                    type="checkbox"
-                    name="clientSelected"
-                    checked={
-                      selectedClientIds.length == tableData.length
-                        ? true
-                        : false
-                    }
-                    onClick={selectAllClients}
-                  />
-                </th>
-                {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 7 ? styles.hola : ""}>
-                    {header}
+          <div className={styles.clientsTable} style={{ overflow: "auto" }}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.small}>
+                    <input
+                      type="checkbox"
+                      name="clientSelected"
+                      checked={
+                        selectedClientIds.length == tableData.length
+                          ? true
+                          : false
+                      }
+                      onClick={selectAllClients}
+                    />
                   </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {clients &&
-                clients.map((client, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="clientSelected"
-                        // onClick={() => selectClient(rowIndex, row)}
-                        onChange={() => toggleClientSelection(client?.id)}
-                        // checked={
-                        //   clientSelected.includes(rowIndex) ? true : false
-                        // }
-                      />
-                    </td>
-                    <td className={styles.name}>
-                      {client.clientData.clientName}
-                    </td>
-                    <td>{client?.clientData.companyEmail || client.email}</td>
+                  {tableHeaders.map((header, index) => (
+                    <th key={index} className={index == 7 ? styles.hola : ""}>
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {clients &&
+                  clients.map((client, rowIndex) => (
+                    <tr key={rowIndex}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="clientSelected"
+                          // onClick={() => selectClient(rowIndex, row)}
+                          onChange={() => toggleClientSelection(client?.id)}
+                          // checked={
+                          //   clientSelected.includes(rowIndex) ? true : false
+                          // }
+                        />
+                      </td>
+                      <td className={styles.name}>
+                        {client.clientData.clientName}
+                      </td>
+                      <td>{client?.clientData.companyEmail || client.email}</td>
 
-                    {/* <td>
+                      {/* <td>
                     {Array.isArray(row.email)
                       ? row.email.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.email}
                   </td> */}
-                    <td>{client.clientData.companyPhoneNumber}</td>
-                    <td>
-                      {client.clientData.companyAddress}{" "}
-                      {client.clientData.clientProvice}
-                    </td>
-                    <td>{client.clientData.taxNumber}</td>
-                    <td>{client.clientData.cardNumber}</td>
-                    {/* <td>
+                      <td>{client.clientData.companyPhoneNumber}</td>
+                      <td>
+                        {client.clientData.companyAddress}{" "}
+                        {client.clientData.clientProvice}
+                      </td>
+                      <td>{client.clientData.taxNumber}</td>
+                      <td>{client.clientData.cardNumber}</td>
+                      {/* <td>
                     {Array.isArray(row.metodosPago)
                       ? row.metodosPago.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.metodosPago}
                   </td> */}
-                    <td>{client.clientData.preferredCurrency}</td>
-                    <td className={styles.actions}>
-                      <div className={styles.transacciones}>
-                        <a
-                          onClick={() => handleGetOneClient(client.id)}
-                          href="#"
-                        >
-                          Ver
-                        </a>
-                        <span>(2.345)</span>
-                      </div>
-                      <div onClick={() => handleActions(rowIndex, client)}>
-                        <img src={optionDots} />
-                      </div>
-                      {selectedRowIndex === rowIndex && (
-                        <ul className={styles.content_menu_actions}>
-                          <li
+                      <td>{client.clientData.preferredCurrency}</td>
+                      <td className={styles.actions}>
+                        <div className={styles.transacciones}>
+                          <a
                             onClick={() => {
-                              handleEditClient();
-                              setSelectedRowIndex(null);
+                              dispatch(clearTransaction());
+                              handleGetOneClient(client.id);
                             }}
-                            className={styles.item_menu_actions}
+                            href="#"
                           >
-                            Editar
-                          </li>
-                          <li
-                            onClick={(e) => {
-                              handleDeleteClient(e, client?.id);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Eliminar
-                          </li>
-                        </ul>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                            Ver
+                          </a>
+                          <span>(2.345)</span>
+                        </div>
+                        <div onClick={() => handleActions(rowIndex, client)}>
+                          <img src={optionDots} />
+                        </div>
+                        {selectedRowIndex === rowIndex && (
+                          <ul className={styles.content_menu_actions}>
+                            <li
+                              onClick={() => {
+                                handleEditClient();
+                                setSelectedRowIndex(null);
+                              }}
+                              className={styles.item_menu_actions}
+                            >
+                              Editar
+                            </li>
+                            <li
+                              onClick={(e) => {
+                                handleDeleteClient(e, client?.id);
+                                setSelectedRowIndex(null);
+                              }}
+                              className={styles.item_menu_actions}
+                            >
+                              Eliminar
+                            </li>
+                          </ul>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       {showNewClient && (
