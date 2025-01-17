@@ -168,6 +168,29 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const updateUserPassword = createAsyncThunk(
+  "user/updateUserPassword",
+  async ({ email, newPassword }) => {
+    console.log("updating password (ACTION)", { email, newPassword });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.put(
+        `/user/updateUserPassword`,
+        { email, newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error updating user password:", error);
+      throw new Error("Failed to update user password");
+    }
+  }
+);
+
 export const sendOTP = createAsyncThunk(
   "user/send-otp",
   async ({ email, language }, { rejectWithValue }) => {

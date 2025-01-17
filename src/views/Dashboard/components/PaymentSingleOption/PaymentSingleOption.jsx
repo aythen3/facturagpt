@@ -14,7 +14,7 @@ const PaymentSingleOption = ({
 }) => {
   const [cvcNumber, setCvcNumber] = useState("");
   return (
-    <div className={styles.paymentSingleOptionContainer}>
+    <div key={name} className={styles.paymentSingleOptionContainer}>
       {paymentMethod === name ? (
         <img
           style={{ cursor: "pointer" }}

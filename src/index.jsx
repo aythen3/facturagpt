@@ -29,6 +29,11 @@ import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 import { AppProvider } from "./context/AppContext.js";
 import ChatView from "./views/Dashboard/screens/ChatView/ChatView.jsx";
 import NotificationsView from "./views/Dashboard/screens/NotificationsView/NotificationsView.jsx";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
+);
 
 const Layout = () => {
   const { pathname } = window.location;
@@ -67,53 +72,55 @@ const Layout = () => {
         redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
         cacheLocation="localstorage"
       >
-        <I18nextProvider i18n={i18n}>
-          <DndProvider backend={HTML5Backend}>
-            <Provider store={store}>
-              <AppProvider>
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/login" element={<DashboardLogin />} />
-                    <Route path="/register" element={<DashboardLogin />} />
-                    <Route path="/recover" element={<DashboardLogin />} />
-                    <Route path="/otp" element={<DashboardLogin />} />
-                    <Route path="/landing" element={<LandingPage />} />
-                    <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/home" element={<Dashboard />} />
-                    <Route path="/freetrial" element={<FreeTrial />} />
-                    <Route path="/users" element={<UsersDashboard />} />
-                    <Route path="/userSettings" element={<UserSettings />} />
-                    <Route path="/clients" element={<Clients />} />
+        <Elements stripe={stripePromise}>
+          <I18nextProvider i18n={i18n}>
+            <DndProvider backend={HTML5Backend}>
+              <Provider store={store}>
+                <AppProvider>
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/login" element={<DashboardLogin />} />
+                      <Route path="/register" element={<DashboardLogin />} />
+                      <Route path="/recover" element={<DashboardLogin />} />
+                      <Route path="/otp" element={<DashboardLogin />} />
+                      <Route path="/landing" element={<LandingPage />} />
+                      <Route path="/pricing" element={<Pricing />} />
+                      <Route path="/home" element={<Dashboard />} />
+                      <Route path="/freetrial" element={<FreeTrial />} />
+                      <Route path="/users" element={<UsersDashboard />} />
+                      <Route path="/userSettings" element={<UserSettings />} />
+                      <Route path="/clients" element={<Clients />} />
 
-                    <Route path="/allproducts" element={<AllProducts />} />
-                    <Route path="/transactions" element={<Transactions />} />
-                    <Route
-                      path="/articlestransactions"
-                      element={<ArticlesTransactions />}
-                    />
+                      <Route path="/allproducts" element={<AllProducts />} />
+                      <Route path="/transactions" element={<Transactions />} />
+                      <Route
+                        path="/articlestransactions"
+                        element={<ArticlesTransactions />}
+                      />
 
-                    <Route path="/allproducts" element={<AllProducts />} />
-                    <Route path="/transactions" element={<Transactions />} />
-                    <Route
-                      path="/articlestransactions"
-                      element={<ArticlesTransactions />}
-                    />
+                      <Route path="/allproducts" element={<AllProducts />} />
+                      <Route path="/transactions" element={<Transactions />} />
+                      <Route
+                        path="/articlestransactions"
+                        element={<ArticlesTransactions />}
+                      />
 
-                    <Route path="/contact" element={<ContactForm />} />
-                    <Route path="/terms" element={<Terms />} />
-                    <Route path="*" element={<LandingPage />} />
-                    <Route path="/panel" element={<InvoicePanel />} />
-                    <Route path="/chat" element={<ChatView />} />
-                    <Route
-                      path="/notification"
-                      element={<NotificationsView />}
-                    />
-                  </Routes>
-                </BrowserRouter>
-              </AppProvider>
-            </Provider>
-          </DndProvider>
-        </I18nextProvider>
+                      <Route path="/contact" element={<ContactForm />} />
+                      <Route path="/terms" element={<Terms />} />
+                      <Route path="*" element={<LandingPage />} />
+                      <Route path="/panel" element={<InvoicePanel />} />
+                      <Route path="/chat" element={<ChatView />} />
+                      <Route
+                        path="/notification"
+                        element={<NotificationsView />}
+                      />
+                    </Routes>
+                  </BrowserRouter>
+                </AppProvider>
+              </Provider>
+            </DndProvider>
+          </I18nextProvider>
+        </Elements>
       </Auth0Provider>
     </>
   );

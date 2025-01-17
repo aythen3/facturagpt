@@ -9,6 +9,7 @@ const {
   generateAndSendOtp,
   verifyOTP,
   newsletter,
+  updateUserPassword,
 } = require("../services/user");
 const { catchedAsync } = require("../utils/err");
 const { updateClientService } = require("../services/stripe");
@@ -42,6 +43,19 @@ const updateAccountController = async (req, res) => {
   } catch (err) {
     console.log("Error in updateAccountController:", err);
     return res.status(500).send("Error updating user");
+  }
+};
+const updateAccountPasswordController = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+    console.log("User update data received:", { email, newPassword });
+
+    const response = await updateUserPassword({ email, newPassword });
+
+    return res.status(200).send(response);
+  } catch (err) {
+    console.log("Error in updateAccountPasswordController:", err);
+    return res.status(500).send("Error updating user password");
   }
 };
 
@@ -196,4 +210,7 @@ module.exports = {
   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
   verifyOTPController: catchedAsync(verifyOTPController),
   sendNewsletter: catchedAsync(sendNewsletter),
+  updateAccountPasswordController: catchedAsync(
+    updateAccountPasswordController
+  ),
 };
