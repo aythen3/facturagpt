@@ -23,6 +23,8 @@ import {
 } from "../../../../actions/scaleway";
 import SelectLocation from "../SelectLocation/SelectLocation";
 import FileOptionsPopup from "./FileOptionsPopup";
+import { FaUpload } from "react-icons/fa";
+import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 
 export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
   const dispatch = useDispatch();
@@ -33,8 +35,30 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
   const [activePopup, setActivePopup] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showLocationModal, setShowLocationModal] = useState(false);
+  const [userFilters, setUserFilters] = useState(null);
   const optionsButtonRefs = useRef([]);
   const fileExplorerRef = useRef(null);
+  const breadCrumbsRef = useRef(null);
+
+  const handleMouseDown = (e) => {
+    const element = breadCrumbsRef.current;
+    element.isDragging = true;
+    element.startX = e.pageX - element.offsetLeft;
+    element.scrollLeft = element.scrollLeft;
+  };
+
+  const handleMouseMove = (e) => {
+    const element = breadCrumbsRef.current;
+    if (!element.isDragging) return;
+    const x = e.pageX - element.offsetLeft;
+    const walk = (x - element.startX) * 0.05;
+    element.scrollLeft = element.scrollLeft - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    const element = breadCrumbsRef.current;
+    element.isDragging = false;
+  };
 
   // ============================================ DRAG / DROP =========================================================
   const [draggedItem, setDraggedItem] = useState(null);
@@ -191,7 +215,10 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
     const breadcrumbs = [
       <span key="inicio" className={styles.breadcrumb}>
         <div
-          onClick={() => handleBreadcrumbClick(`${user.id}/`)}
+          onClick={() => {
+            setUserFilters();
+            handleBreadcrumbClick(`${user.id}/`);
+          }}
           className={styles.breadcrumbButton}
         >
           Inicio
@@ -221,7 +248,18 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
       );
     });
 
-    return <div className={styles.breadcrumbs}>{breadcrumbs}</div>;
+    return (
+      <div
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseUpOrLeave}
+        onMouseUp={handleMouseUpOrLeave}
+        ref={breadCrumbsRef}
+        className={styles.breadcrumbs}
+      >
+        {breadcrumbs}
+      </div>
+    );
   };
 
   const handleBreadcrumbClick = (path) => {
@@ -234,40 +272,141 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
   }, [userFiles]);
 
   const filteredFiles = useMemo(() => {
+    if (!userFiles) return [];
+
+    if (!userFilters) {
+      const lowerSearchTerm = searchTerm.trim().toLowerCase();
+
+      return userFiles.filter((item) => {
+        const isFolder = item.Key.endsWith("/");
+        const fileName = isFolder
+          ? item.Key.split("/").slice(-2, -1)[0]
+          : item.Key.split("/").pop();
+
+        const normalizedCurrentPath = currentPath.replace(/\/$/, "");
+        const normalizedItemPath = item.Key.replace(/\/$/, "");
+
+        const currentSegments = normalizedCurrentPath.split("/");
+        const itemSegments = normalizedItemPath.split("/");
+
+        const isChildOfCurrent =
+          itemSegments.slice(0, currentSegments.length).join("/") ===
+          currentSegments.join("/");
+
+        const isOneLevelDeeper =
+          itemSegments.length === currentSegments.length + 1;
+
+        const isNotSameAsCurrent = normalizedItemPath !== normalizedCurrentPath;
+
+        const nameMatches =
+          !lowerSearchTerm || fileName.toLowerCase().includes(lowerSearchTerm);
+
+        return (
+          isChildOfCurrent &&
+          isOneLevelDeeper &&
+          isNotSameAsCurrent &&
+          nameMatches
+        );
+      });
+    }
+
+    const {
+      keyWord = "",
+      selectedCategory,
+      allFiles = false,
+      selectedTypes = [],
+      selectedTags = [],
+    } = userFilters;
+
+    const lowerKeyWord = keyWord.toLowerCase().trim();
     const lowerSearchTerm = searchTerm.trim().toLowerCase();
 
-    return userFiles.filter((item) => {
+    let baseFiltered = userFiles.filter((item) => {
       const isFolder = item.Key.endsWith("/");
       const fileName = isFolder
         ? item.Key.split("/").slice(-2, -1)[0]
         : item.Key.split("/").pop();
 
-      const normalizedCurrentPath = currentPath.replace(/\/$/, "");
-      const normalizedItemPath = item.Key.replace(/\/$/, "");
-
-      const currentSegments = normalizedCurrentPath.split("/");
-      const itemSegments = normalizedItemPath.split("/");
-
-      const isChildOfCurrent =
-        itemSegments.slice(0, currentSegments.length).join("/") ===
-        currentSegments.join("/");
-
-      const isOneLevelDeeper =
-        itemSegments.length === currentSegments.length + 1;
-
-      const isNotSameAsCurrent = normalizedItemPath !== normalizedCurrentPath;
-
-      const nameMatches =
-        !lowerSearchTerm || fileName.toLowerCase().includes(lowerSearchTerm);
-
-      return (
-        isChildOfCurrent &&
-        isOneLevelDeeper &&
-        isNotSameAsCurrent &&
-        nameMatches
-      );
+      if (!lowerSearchTerm) {
+        return true;
+      } else {
+        return fileName.toLowerCase().includes(lowerSearchTerm);
+      }
     });
-  }, [userFiles, currentPath, searchTerm]);
+
+    const finalFiltered = baseFiltered.filter((item) => {
+      const isFolder = item.Key.endsWith("/");
+      const fileName = isFolder
+        ? item.Key.split("/").slice(-2, -1)[0]
+        : item.Key.split("/").pop();
+
+      if (lowerKeyWord) {
+        if (!fileName.toLowerCase().includes(lowerKeyWord)) {
+          return false;
+        }
+      }
+
+      // (B) Tag filtering — e.g., if item.tags is an array
+      if (selectedTags.length > 0) {
+        const hasAtLeastOneTag = selectedTags.some((tag) =>
+          fileName.toLowerCase().includes(tag.toLowerCase())
+        );
+        if (!hasAtLeastOneTag) {
+          return false;
+        }
+      }
+
+      // (C) If allFiles is true, skip category & type checks
+      if (allFiles) {
+        return true;
+      }
+
+      // (D) Category-based logic
+      if (selectedCategory === "Imagenes") {
+        const extension = fileName.split(".").pop()?.toLowerCase() || "";
+        const imageExtensions = ["png", "jpg", "jpeg", "svg", "gif"];
+        if (!imageExtensions.includes(extension)) {
+          return false;
+        }
+      } else if (selectedCategory === "Documentos") {
+        const extension = fileName.split(".").pop()?.toLowerCase() || "";
+        const docExtensions = ["pdf", "doc", "docx", "xlsx"];
+        if (!docExtensions.includes(extension)) {
+          return false;
+        }
+      }
+      // ... other categories if needed
+
+      // (E) File type check (e.g. "PNG", "JPEG")
+      if (selectedTypes.length > 0) {
+        const extension = fileName.split(".").pop()?.toLowerCase();
+        const extensionMap = {
+          PDF: ["pdf"],
+          DOC: ["doc", "docx"],
+          XLS: ["xlsx"],
+          JPEG: ["jpeg", "jpg"],
+          PNG: ["png"],
+          SVG: ["svg"],
+          GIF: ["gif"],
+        };
+        let matchesType = false;
+        for (const t of selectedTypes) {
+          const exts = extensionMap[t] || [];
+          if (exts.includes(extension)) {
+            matchesType = true;
+            break;
+          }
+        }
+        if (!matchesType) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    return finalFiltered;
+  }, [userFiles, currentPath, searchTerm, userFilters]);
 
   const handleDropFiles = (event) => {
     if (!draggedItem) {
@@ -276,21 +415,18 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
       dispatch(uploadFiles({ files, currentPath }));
     }
   };
-
+  const [dragingOverContainer, setDragingOverContainer] = useState(false);
   const handleContainerDragOver = (event) => {
     event.preventDefault();
+    setDragingOverContainer(true);
   };
 
   const handleDownload = (item) => {
-    console.log("Downloading item:", item);
-
-    const fileName = item.Key.split("/").pop();
-
+    const location = `https://s3.fr-par.scw.cloud/factura-gpt/${item.Key}`;
     const link = document.createElement("a");
-    link.href = item.Location;
-    link.download = fileName;
-    link.style.display = "none";
-
+    link.href = location;
+    link.target = "_blank";
+    link.download = item.Key.split("/").pop();
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -355,12 +491,18 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
     }
   };
 
+  const handleApplyFilters = (filters) => {
+    console.log("Applying filters:", filters);
+    setUserFilters(filters);
+  };
+
   return (
     <div
       className={styles.container}
       ref={fileExplorerRef}
       onDrop={handleDropFiles}
       onDragOver={handleContainerDragOver}
+      onDragLeave={() => setDragingOverContainer(false)}
     >
       <div className={styles.searchContainer}>
         <div className={styles.searchInputWrapper}>
@@ -393,9 +535,15 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
           src={filterIcon}
           alt="filterIcon"
         />
-        <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
+        {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
+        {isFilterOpen && (
+          <FilesFilterModal
+            onClose={() => setIsFilterOpen(false)}
+            handleApplyFilters={handleApplyFilters}
+          />
+        )}
       </div>
-      <div onClick={() => setActivateChat(true)}>Chat</div>
+      {/* <div onClick={() => setActivateChat(true)}>Chat</div> */}
 
       {renderBreadcrumbs()}
       <div className={styles.fileList}>
@@ -412,6 +560,15 @@ export default function FileExplorer({ isOpen, setIsOpen, setActivateChat }) {
             />
           </div>
         ) : (
+          (filteredFiles.length === 0 && (
+            <div
+              style={{ background: dragingOverContainer && "#ECECF1" }}
+              className={styles.noFilesContainer}
+            >
+              <h3>Arrastra aquí tus archivos para subirlos.</h3>
+              <FaUpload size={50} color="#3a3a3a" />
+            </div>
+          )) ||
           filteredFiles?.map((item, index) => {
             const isFolder = item.Key.endsWith("/");
             const fileName = isFolder

@@ -17,7 +17,7 @@
 }
 
 .searchContainer {
-  padding: 12px 16px;
+  padding: 12px 8px;
   display: flex;
   gap: 10px;
 }
@@ -229,9 +229,16 @@
   color: #222222;
   font-weight: 600;
   font-size: 16px;
-  padding: 12px 16px;
+  padding: 12px 8px;
   display: flex;
   align-items: center;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  white-space: nowrap;
+  cursor: grab;
+  user-select: none;
+  margin-right: 5px;
 }
 
 .breadcrumb {
@@ -249,4 +256,22 @@
 
 .breadcrumbSeparator {
   margin: 0 4px;
+}
+
+.noFilesContainer {
+  flex: 1;
+  border: 2px dashed #d9d9e3;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  color: #3a3a3a;
+  padding-top: 30%;
+  gap: 10px;
+  font-weight: 600;
+  h3 {
+    max-width: 85%;
+    font-size: 16px;
+  }
 }
