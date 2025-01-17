@@ -16,6 +16,6 @@ clientsRouter
   .get("/getAllUserClients/:userId", getAllUserClientsController)
   .put("/updateClient/:clientId", updateClientController)
   .delete("/deleteClients", deleteClientController)
-  .get("/getClient/:clientId", getOneClientController);
+  .get("/getClient/:clientId/:userId", getOneClientController);
 
 module.exports = clientsRouter;

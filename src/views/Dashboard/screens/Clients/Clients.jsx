@@ -37,39 +37,40 @@ const Clients = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userStorage = localStorage.getItem("user");
-  const dataUser = JSON.parse(userStorage);
-
-  console.log("USSSSSSSSSS", dataUser);
+  const { user } = useSelector((state) => state.user);
 
   const { clients, loading, client } = useSelector((state) => state.clients);
 
   const [clientData, setClientData] = useState({
-    fullName: "",
+    clientName: "",
     email: "",
     numberPhone: "",
     codeCountry: "",
     webSite: "",
     billingEmail: "",
-    zipCode: "",
+    clientZip: "",
     country: "",
-    taxNumber: "",
+    clientCif: "",
     preferredCurrency: "",
     cardNumber: "",
   });
 
   useEffect(() => {
+    dispatch(getAllUserClients({ userId: user?.id }));
+  }, [loading, user]);
+
+  useEffect(() => {
     if (client?.clientData) {
       setClientData({
-        fullName: client.clientData.fullName || "",
-        email: client.clientData.email || "",
+        clientName: client.clientData.clientName || "",
+        email: client.email || "",
         numberPhone: client.clientData.numberPhone || "",
         codeCountry: client.clientData.codeCountry || "",
         webSite: client.clientData.webSite || "",
-        billingEmail: client.clientData.billingEmail || "",
-        zipCode: client.clientData.zipCode || "",
+        billingEmail: client.email || "",
+        clientZip: client.clientData.clientZip || "",
         country: client.clientData.country || "",
-        taxNumber: client.clientData.taxNumber || "",
+        clientCif: client.clientData.clientCif || "",
         preferredCurrency: client.clientData.preferredCurrency || "",
         cardNumber: client.clientData.cardNumber || "",
       });
@@ -89,10 +90,6 @@ const Clients = () => {
       });
     }
   }, [client]);
-
-  useEffect(() => {
-    dispatch(getAllUserClients({ userId: dataUser?.id }));
-  }, [loading]);
 
   const handleClientData = (field, value) => {
     const formattedValue =
@@ -177,9 +174,10 @@ const Clients = () => {
 
   const handleCreateClient = (e) => {
     e.preventDefault();
-    const userId = dataUser?.id;
-    const email = dataUser?.email;
+    const userId = user?.id;
+    const email = user?.email;
 
+    console.log("CLIENTESSSSSSSSSS", clients);
     if (client && client.clientData) {
       dispatch(
         updateClient({
@@ -227,7 +225,7 @@ const Clients = () => {
     dispatch(
       deleteClients({
         clientIds: clientID ? [clientID] : selectedClientIds,
-        userId: dataUser?.id,
+        userId: user?.id,
       })
     )
       .then((result) => {
@@ -253,8 +251,12 @@ const Clients = () => {
   };
 
   const handleGetOneClient = async (clientId) => {
+    console.log("CLIENTIDDD", clientId);
+
     try {
-      const response = await dispatch(getOneClient(clientId)).unwrap();
+      const response = await dispatch(
+        getOneClient({ userId: user?.id, clientId })
+      ).unwrap();
       console.log("Cliente obtenido:", response);
       navigate("/transactions");
     } catch (error) {
@@ -459,9 +461,11 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  value={clientData.fullName}
+                  value={clientData.clientName}
                   // onChange={(e) => setFullName(e.target.value)}
-                  onChange={(e) => handleClientData("fullName", e.target.value)}
+                  onChange={(e) =>
+                    handleClientData("clientName", e.target.value)
+                  }
                 />
               </label>
 
@@ -542,7 +546,7 @@ const Clients = () => {
                   <input
                     type="text"
                     placeholder="Email address"
-                    value={clientData.billingEmail}
+                    value={clientData.billingEmail || clientData.email}
                     onChange={(e) =>
                       handleClientData("billingEmail", e.target.value)
                     }
@@ -550,9 +554,9 @@ const Clients = () => {
                   <input
                     type="text"
                     placeholder="Zip code / Postcode"
-                    value={clientData.zipCode}
+                    value={clientData.clientZip}
                     onChange={(e) =>
-                      handleClientData("zipCode", e.target.value)
+                      handleClientData("clientZip", e.target.value)
                     }
                   />
                 </div>
@@ -582,9 +586,9 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="000 000 000"
-                  value={clientData.taxNumber}
+                  value={clientData.clientCif}
                   onChange={(e) =>
-                    handleClientData("taxNumber", e.target.value)
+                    handleClientData("clientCif", e.target.value)
                   }
                 />
               </label>

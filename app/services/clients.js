@@ -3,8 +3,24 @@ const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
 const createClient = async ({ email, userId, clientData }) => {
-  const dbClientsName = "db_emailmanager_clients";
-  const dbAccountsName = "db_emailmanager_accounts";
+  const normalizeDatabaseName = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9_$()+\-/]/g, "_")
+      .replace(/^[^a-z]/, "db_");
+  };
+
+  const extractLastId = (id) => {
+    const parts = id.split("_");
+    return parts[parts.length - 1];
+  };
+
+  const extractedId = extractLastId(userId);
+
+  const dbClientsName = normalizeDatabaseName(
+    `db_emailmanager_clients_${extractedId}`
+  );
+  const dbAccountsName = normalizeDatabaseName("db_emailmanager_accounts");
   let dbClients, dbAccounts;
 
   try {
@@ -58,9 +74,24 @@ const createClient = async ({ email, userId, clientData }) => {
 };
 
 const createClients = async ({ userId, clientsData }) => {
-  const dbClientsName = "db_emailmanager_clients";
-  const dbAccountsName = "db_emailmanager_accounts";
-  let dbClients, dbAccounts;
+  const normalizeDatabaseName = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9_$()+\-/]/g, "_")
+      .replace(/^[^a-z]/, "db_");
+  };
+
+  const extractLastId = (id) => {
+    const parts = id.split("_");
+    return parts[parts.length - 1];
+  };
+
+  const extractedId = extractLastId(userId);
+
+  const dbClientsName = normalizeDatabaseName(
+    `db_emailmanager_clients_${extractedId}`
+  );
+  const dbAccountsName = normalizeDatabaseName("db_emailmanager_accounts");
 
   try {
     const dbs = await nano.db.list();
@@ -85,7 +116,7 @@ const createClients = async ({ userId, clientsData }) => {
     const clientDocs = [];
 
     for (const clientData of clientsData) {
-      const { attachment, email, processedData } = clientData;
+      const { attachment, email, processedData, processedemails } = clientData;
 
       const emailId = attachment?.attachment?.emailId || "";
 
@@ -97,10 +128,15 @@ const createClients = async ({ userId, clientsData }) => {
       const sanitizedEmailId = emailId.replace(/[^a-zA-Z0-9-_@.]+/g, "_");
       const clientId = `client_${sanitizedEmailId}`;
 
-      console.log("Procesando cliente:", { attachment, email, processedData });
+      console.log("Procesando cliente:", {
+        attachment,
+        email,
+        processedData,
+        processedemails,
+      });
 
       const existingClient = await dbClients.find({
-        selector: { _id: clientId },
+        selector: { email: email },
         limit: 1,
       });
 
@@ -117,6 +153,7 @@ const createClients = async ({ userId, clientsData }) => {
           userId,
           email: email,
           emailId: attachment?.attachment?.emailId,
+          processedemails,
           clientData: processedData,
         };
 
@@ -153,7 +190,25 @@ const createClients = async ({ userId, clientsData }) => {
 };
 
 const getAllUserClients = async ({ userId }) => {
-  const dbClientsName = "db_emailmanager_clients";
+  const normalizeDatabaseName = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9_$()+\-/]/g, "_")
+      .replace(/^[^a-z]/, "db_");
+  };
+
+  const extractLastId = (id) => {
+    const parts = id.split("_");
+    return parts[parts.length - 1];
+  };
+
+  const extractedId = extractLastId(userId);
+
+  const dbClientsName = normalizeDatabaseName(
+    `db_emailmanager_clients_${extractedId}`
+  );
+
+  console.log("USER ID EN Service", extractedId);
 
   let dbClients;
 
@@ -169,9 +224,7 @@ const getAllUserClients = async ({ userId }) => {
       selector: { userId },
     });
 
-    console.log(
-      `Found ${clients.docs.length} automations for userId ${userId}`
-    );
+    console.log(`Found ${clients.docs.length} clients for userId ${userId}`);
 
     return clients.docs.length > 0 ? clients.docs : [];
   } catch (error) {
@@ -181,7 +234,9 @@ const getAllUserClients = async ({ userId }) => {
 };
 
 const deleteClient = async ({ clientIds, userId }) => {
-  const dbClientsName = "db_emailmanager_clients";
+  const userIdUid = userId.split("_")[2];
+  const dbClientsName = `db_emailmanager_clients_${userIdUid}`;
+
   const dbAccountsName = "db_emailmanager_accounts";
   let dbClients, dbAccounts;
 
@@ -214,7 +269,8 @@ const deleteClient = async ({ clientIds, userId }) => {
 };
 
 const updateClient = async ({ clientId, userId, toUpdate }) => {
-  const dbClientsName = "db_emailmanager_clients";
+  const userIdUid = userId.split("_")[2];
+  const dbClientsName = `db_emailmanager_clients_${userIdUid}`;
   let dbClients;
 
   try {
@@ -230,6 +286,8 @@ const updateClient = async ({ clientId, userId, toUpdate }) => {
       },
     };
 
+    console.log("CLIENTE A ACTUALIZAR", clientDoc);
+
     await dbClients.insert(updatedDoc);
     console.log(`Client ${clientId} updated successfully`);
 
@@ -244,8 +302,25 @@ const updateClient = async ({ clientId, userId, toUpdate }) => {
   }
 };
 
-const getOneClient = async ({ clientId }) => {
-  const dbClientsName = "db_emailmanager_clients";
+const getOneClient = async ({ userId, clientId }) => {
+  const normalizeDatabaseName = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9_$()+\-/]/g, "_")
+      .replace(/^[^a-z]/, "db_");
+  };
+
+  const extractLastId = (id) => {
+    const parts = id.split("_");
+    return parts[parts.length - 1];
+  };
+
+  const extractedId = extractLastId(userId);
+
+  const dbClientsName = normalizeDatabaseName(
+    `db_emailmanager_clients_${extractedId}`
+  );
+
   let dbClients;
 
   try {
