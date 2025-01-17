@@ -105,13 +105,14 @@ export const updateClient = createAsyncThunk(
 
 export const getOneClient = createAsyncThunk(
   "/getClient/client",
-  async (clientId) => {
+  async ({ userId, clientId }) => {
     console.log("CLIENTID EN ACTION", clientId);
+    console.log("USER IDDD EN ACTION", userId);
 
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.get(
-        `/clients/getClient/${clientId}`,
+        `/clients/getClient/${clientId}/${userId}`,
 
         {
           headers: {
