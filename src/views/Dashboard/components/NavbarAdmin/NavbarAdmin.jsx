@@ -22,6 +22,12 @@ import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
 import { useSelector } from "react-redux";
+import UpgradePlanWrapper from "../../screens/UpgradePlan/UpgradePlan";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
+);
 const NavbarAdmin = () => {
   const { user } = useSelector((state) => state.user);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
@@ -55,96 +61,106 @@ const NavbarAdmin = () => {
   };
   return (
     <>
-      <div className={styles.navbarAdmin}>
-        <div className={styles.navbarAdminIcons}>
-          <a href="/">
-            <img src={facturaGPT} alt="Icon" />
-          </a>
-        </div>
-
-        <button onClick={() => setShowPlusModal(true)} className={styles.plus}>
-          {t("buttonGetPlus")} <img src={star} alt="Icon" />
-        </button>
-        <div className={styles.profile}>
-          <a href="/clients">
-            <img src={addBlack} alt="Icon" />
-          </a>
-          <div>
-            <img
-              src={addGreen}
-              alt="Icon"
-              onClick={() => setIsOpen((prev) => !prev)}
-            />
+      <Elements stripe={stripePromise}>
+        <div className={styles.navbarAdmin}>
+          <div className={styles.navbarAdminIcons}>
+            <a href="/">
+              <img src={facturaGPT} alt="Icon" />
+            </a>
           </div>
-          <a href="/chat">
-            <img src={chatIcon} alt="Icon" />
-          </a>
-          <a href="/clients">
-            <img src={clientIcon} alt="Icon" />
-          </a>
-          <a href="/allproducts">
-            <img src={boxIcon} alt="Icon" />
-          </a>
-          <a href="notification" className={styles.number}>
-            <img src={dotsNotification} alt="Icon" />
-            <span>234</span>
-          </a>
 
-          <div onClick={handleProfileClick} className={styles.profileContainer}>
-            <div className={styles.profileText}>
-              <p>{user?.nombre}</p>
-              <span>{user?.role}</span>
-            </div>
-            {user?.profileImage ? (
+          <button
+            onClick={() => setShowPlusModal(true)}
+            className={styles.plus}
+          >
+            {t("buttonGetPlus")} <img src={star} alt="Icon" />
+          </button>
+          <div className={styles.profile}>
+            <a href="/clients">
+              <img src={addBlack} alt="Icon" />
+            </a>
+            <div>
               <img
-                className={styles.profileImage}
-                src={user?.profileImage}
-                alt=""
+                src={addGreen}
+                alt="Icon"
+                onClick={() => setIsOpen((prev) => !prev)}
               />
-            ) : (
-              <div className={styles.initials}>
-                {user?.nombre.split(" ").map((letter) => letter[0])}
-              </div>
-            )}
-          </div>
-        </div>
-        <div
-          className={` ${showSidebar ? styles.settingsBg : styles.none}`}
-          onClick={() => setShowSidebar(false)}
-        ></div>
-        <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
-          <AccountSettings />
-        </div>
-        {showPlusModal && (
-          <UpgradePlan onClose={() => setShowPlusModal(false)} />
-        )}
-        {isOpen && (
-          <FloatingMenu
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            openModalAutomate={openModalAutomate}
-            closeModalAutomate={closeModalAutomate}
-          />
-        )}
-        {isModalAutomate && (
-          <Automate
-            typeContent={handleShowContentAutomate}
-            close={closeModalAutomate}
-            isModalAutomate={isModalAutomate}
-            setIsModalAutomate={setIsModalAutomate}
-            isAnimating={isAnimating}
-            setIsAnimating={setIsAnimating}
-          />
-        )}
+            </div>
+            <a href="/chat">
+              <img src={chatIcon} alt="Icon" />
+            </a>
+            <a href="/clients">
+              <img src={clientIcon} alt="Icon" />
+            </a>
+            <a href="/allproducts">
+              <img src={boxIcon} alt="Icon" />
+            </a>
+            <a href="notification" className={styles.number}>
+              <img src={dotsNotification} alt="Icon" />
+              <span>234</span>
+            </a>
 
-        {typeContentAutomate && (
-          <PanelAutomate
-            typeContent={handleShowContentAutomate}
-            close={handleCloseContentAutomate}
-            type={typeContentAutomate}
-          />
-        )}
-      </div>
+            <div
+              onClick={handleProfileClick}
+              className={styles.profileContainer}
+            >
+              <div className={styles.profileText}>
+                <p>{user?.nombre}</p>
+                <span>{user?.role}</span>
+              </div>
+              {user?.profileImage ? (
+                <img
+                  className={styles.profileImage}
+                  src={user?.profileImage}
+                  alt=""
+                />
+              ) : (
+                <div className={styles.initials}>
+                  {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+                </div>
+              )}
+            </div>
+          </div>
+          <div
+            className={` ${showSidebar ? styles.settingsBg : styles.none}`}
+            onClick={() => setShowSidebar(false)}
+          ></div>
+          <div
+            className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}
+          >
+            <AccountSettings />
+          </div>
+          {showPlusModal && (
+            <UpgradePlanWrapper onClose={() => setShowPlusModal(false)} />
+          )}
+          {isOpen && (
+            <FloatingMenu
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              openModalAutomate={openModalAutomate}
+              closeModalAutomate={closeModalAutomate}
+            />
+          )}
+          {isModalAutomate && (
+            <Automate
+              typeContent={handleShowContentAutomate}
+              close={closeModalAutomate}
+              isModalAutomate={isModalAutomate}
+              setIsModalAutomate={setIsModalAutomate}
+              isAnimating={isAnimating}
+              setIsAnimating={setIsAnimating}
+            />
+          )}
+
+          {typeContentAutomate && (
+            <PanelAutomate
+              typeContent={handleShowContentAutomate}
+              close={handleCloseContentAutomate}
+              type={typeContentAutomate}
+            />
+          )}
+        </div>
+      </Elements>
     </>
   );
 };
