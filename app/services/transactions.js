@@ -2,8 +2,6 @@ const { default: axios } = require("axios");
 const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
-const saveTransaction = async ({ transactionData, userId }) => {};
-
 const getAllTransactionsByClient = async ({ idsEmails }) => {
   try {
     console.log("EMAILS ID TRANSACCIONES", idsEmails);
@@ -49,6 +47,5 @@ const getAllTransactionsByClient = async ({ idsEmails }) => {
 };
 
 module.exports = {
-  saveTransaction,
   getAllTransactionsByClient,
 };

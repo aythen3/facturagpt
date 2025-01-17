@@ -11,6 +11,7 @@ import optionDots from "../../assets/optionDots.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
 import LastTransactions from "../../components/LastTransactions/LastTransactions";
+import { useSelector } from "react-redux";
 
 const AllProducts = () => {
   const { t } = useTranslation("clients");
@@ -18,6 +19,7 @@ const AllProducts = () => {
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const { transactionByClient } = useSelector((state) => state.transactions);
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -170,40 +172,44 @@ const AllProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="clientSelected"
-                      onClick={() => selectClient(rowIndex)}
-                      checked={clientSelected.includes(rowIndex) ? true : false}
-                    />
-                  </td>
-                  <td className={styles.name}>
-                    <img src={row.url} alt="" />
-                    {row.name}
-                  </td>
-                  <td>{row.price}</td>
-                  <td>{row.quantity}</td>
-                  <td>{row.maxPrice}</td>
-                  <td>{row.minPrice}</td>
-                  <td>{row.priceEn}</td>
-                  <td className={styles.actions}>
-                    <div className={styles.transacciones}>
-                      <a href="#">Ver</a>
-                    </div>
-                  </td>
-                  <td>
-                    <div className={styles.edit}>
-                      <a href="#">Editar</a>
-                      <div>
-                        <img src={optionDots} alt="options" />
+              {transactionByClient?.doc?.totalData?.productList.map(
+                (product, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="clientSelected"
+                        onClick={() => selectClient(rowIndex)}
+                        checked={
+                          clientSelected.includes(rowIndex) ? true : false
+                        }
+                      />
+                    </td>
+                    <td className={styles.name}>
+                      {/* <img src={product.url} alt="" /> */}
+                      {product.productDescription}
+                    </td>
+                    <td>{product.productImport}</td>
+                    <td>{product.quantity}</td>
+                    <td>{product.productImportWithoutDiscount}</td>
+                    <td>{product.productPartial}</td>
+                    <td>{product.priceEn}</td>
+                    <td className={styles.actions}>
+                      <div className={styles.transacciones}>
+                        <a href="#">Ver</a>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td>
+                      <div className={styles.edit}>
+                        <a href="#">Editar</a>
+                        <div>
+                          <img src={optionDots} alt="options" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </div>

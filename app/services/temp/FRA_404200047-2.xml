@@ -36,9 +36,9 @@
                     <Volume/>
                 </RegistrationData>
                 <AddressInSpain>
-                    <Address></Address>
+                    <Address>AV Cardenal Reig, 32</Address>
                     <PostCode></PostCode>
-                    <Town></Town>
+                    <Town>Barcelona</Town>
                     <Province></Province>
                     <CountryCode>ESP</CountryCode>
                 </AddressInSpain>
@@ -56,7 +56,7 @@
                 <TaxIdentificationNumber>A58580626</TaxIdentificationNumber>
             </TaxIdentification>
             <LegalEntity>
-                <CorporateName>MEM ROCHE</CorporateName>
+                <CorporateName>HSB S.A.</CorporateName>
                 <AddressInSpain>
                     <Address>AV Cardenal Reig, 32</Address>
                     <PostCode></PostCode>
@@ -124,7 +124,7 @@
                             <DeliveryNoteNumber>R-4022000057</DeliveryNoteNumber>
                         </DeliveryNote>
                     </DeliveryNotesReferences>
-                    <ItemDescription>TERMINAL CURV.403F 22-3/4 C/ARAND.LT.</ItemDescription>
+                    <ItemDescription>TERMINAL CURV.403F 22-3/4 CI/ARAND.LT.</ItemDescription>
                     <Quantity>50</Quantity>
                     <UnitPriceWithoutTax>12.77</UnitPriceWithoutTax>
                     <TotalCost>638.50</TotalCost>

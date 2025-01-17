@@ -12,6 +12,8 @@ import arrow from "../../assets/arrow.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTransactionsByClient } from "../../../../actions/transactions";
 import { updateClient } from "../../../../actions/user";
+import { setTransaction } from "../../../../slices/transactionsSlices";
+import { useNavigate } from "react-router-dom";
 
 const Transactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -38,8 +40,10 @@ const Transactions = () => {
 
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.clients);
-
+  const { transactionsByClient } = useSelector((state) => state.transactions);
+  const navigate = useNavigate();
   console.log("CLIET--------", client);
+  console.log("TRANSACCIONESS--------", transactionsByClient);
 
   useEffect(() => {
     const getAll = async () => {
@@ -269,7 +273,7 @@ const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((row, rowIndex) => (
+              {transactionsByClient.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   <td>
                     <input
@@ -281,14 +285,21 @@ const Transactions = () => {
                   </td>
                   <td className={styles.idContainer}>
                     <img src={pdf} className={styles.pdfIcon} />
-                    {row.id}
+                    {row.id.slice(10, 15)}
                   </td>
-                  <td>
+                  {/* <td>
                     {Array.isArray(row.desc)
                       ? row.desc.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.desc}
+                  </td> */}
+                  <td>
+                    <p>
+                      {row?.doc?.totalData?.description
+                        ? row?.doc?.totalData?.description
+                        : "Sin descripción"}
+                    </p>
                   </td>
                   <td>
                     <div className={styles.tags}>
@@ -306,10 +317,18 @@ const Transactions = () => {
                       </span>
                     </div>
                   </td>
-                  <td>{row.total}</td>
-                  <td>{row.date}</td>
-                  <td>{row.expire}</td>
-                  <td>{row.PayMethod}</td>
+                  <td>{row?.doc?.totalData?.totalAmount}</td>
+                  <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
+                  <td>
+                    {row?.doc?.totalData?.expirationDateYear}-
+                    {row?.doc?.totalData?.expirationDateMonth}-
+                    {row?.doc?.totalData?.expirationDateDay}
+                  </td>
+                  <td>
+                    {row.doc?.totalData?.payMethod
+                      ? row.doc?.totalData?.payMethod
+                      : "Sin especificar"}
+                  </td>
                   <td>
                     <div
                       style={{
@@ -318,8 +337,13 @@ const Transactions = () => {
                         gap: "5px",
                       }}
                     >
-                      <span className={getStateClass(row.state[0])}>
+                      {/* <span className={getStateClass(row.state[0])}>
                         &bull;
+                      </span> */}
+                      <span>
+                        {row?.doc?.totalData?.status
+                          ? row?.doc?.totalData?.status
+                          : "pendiente"}
                       </span>
                       <div
                         style={{
@@ -349,7 +373,15 @@ const Transactions = () => {
                   </td>
                   <td className={styles.actions}>
                     <div className={styles.transacciones}>
-                      <a href="#">Ver</a>
+                      <a
+                        onClick={() => {
+                          navigate("/allproducts");
+                          dispatch(setTransaction(row));
+                        }}
+                        href="#"
+                      >
+                        Ver
+                      </a>
                       <span>(2.345)</span>
                     </div>
                     <div>

@@ -234,7 +234,9 @@ const getAllUserClients = async ({ userId }) => {
 };
 
 const deleteClient = async ({ clientIds, userId }) => {
-  const dbClientsName = `db_emailmanager_clients_${userId}`;
+  const userIdUid = userId.split("_")[2];
+  const dbClientsName = `db_emailmanager_clients_${userIdUid}`;
+
   const dbAccountsName = "db_emailmanager_accounts";
   let dbClients, dbAccounts;
 
@@ -267,7 +269,8 @@ const deleteClient = async ({ clientIds, userId }) => {
 };
 
 const updateClient = async ({ clientId, userId, toUpdate }) => {
-  const dbClientsName = `db_emailmanager_clients_${userId}`;
+  const userIdUid = userId.split("_")[2];
+  const dbClientsName = `db_emailmanager_clients_${userIdUid}`;
   let dbClients;
 
   try {
@@ -282,6 +285,8 @@ const updateClient = async ({ clientId, userId, toUpdate }) => {
         ...toUpdate,
       },
     };
+
+    console.log("CLIENTE A ACTUALIZAR", clientDoc);
 
     await dbClients.insert(updatedDoc);
     console.log(`Client ${clientId} updated successfully`);

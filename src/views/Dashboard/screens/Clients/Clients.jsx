@@ -42,15 +42,15 @@ const Clients = () => {
   const { clients, loading, client } = useSelector((state) => state.clients);
 
   const [clientData, setClientData] = useState({
-    fullName: "",
+    clientName: "",
     email: "",
     numberPhone: "",
     codeCountry: "",
     webSite: "",
     billingEmail: "",
-    zipCode: "",
+    clientZip: "",
     country: "",
-    taxNumber: "",
+    clientCif: "",
     preferredCurrency: "",
     cardNumber: "",
   });
@@ -62,15 +62,15 @@ const Clients = () => {
   useEffect(() => {
     if (client?.clientData) {
       setClientData({
-        fullName: client.clientData.fullName || "",
-        email: client.clientData.email || "",
+        clientName: client.clientData.clientName || "",
+        email: client.email || "",
         numberPhone: client.clientData.numberPhone || "",
         codeCountry: client.clientData.codeCountry || "",
         webSite: client.clientData.webSite || "",
-        billingEmail: client.clientData.billingEmail || "",
-        zipCode: client.clientData.zipCode || "",
+        billingEmail: client.email || "",
+        clientZip: client.clientData.clientZip || "",
         country: client.clientData.country || "",
-        taxNumber: client.clientData.taxNumber || "",
+        clientCif: client.clientData.clientCif || "",
         preferredCurrency: client.clientData.preferredCurrency || "",
         cardNumber: client.clientData.cardNumber || "",
       });
@@ -177,6 +177,7 @@ const Clients = () => {
     const userId = user?.id;
     const email = user?.email;
 
+    console.log("CLIENTESSSSSSSSSS", clients);
     if (client && client.clientData) {
       dispatch(
         updateClient({
@@ -460,9 +461,11 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  value={clientData.fullName}
+                  value={clientData.clientName}
                   // onChange={(e) => setFullName(e.target.value)}
-                  onChange={(e) => handleClientData("fullName", e.target.value)}
+                  onChange={(e) =>
+                    handleClientData("clientName", e.target.value)
+                  }
                 />
               </label>
 
@@ -543,7 +546,7 @@ const Clients = () => {
                   <input
                     type="text"
                     placeholder="Email address"
-                    value={clientData.billingEmail}
+                    value={clientData.billingEmail || clientData.email}
                     onChange={(e) =>
                       handleClientData("billingEmail", e.target.value)
                     }
@@ -551,9 +554,9 @@ const Clients = () => {
                   <input
                     type="text"
                     placeholder="Zip code / Postcode"
-                    value={clientData.zipCode}
+                    value={clientData.clientZip}
                     onChange={(e) =>
-                      handleClientData("zipCode", e.target.value)
+                      handleClientData("clientZip", e.target.value)
                     }
                   />
                 </div>
@@ -583,9 +586,9 @@ const Clients = () => {
                 <input
                   type="text"
                   placeholder="000 000 000"
-                  value={clientData.taxNumber}
+                  value={clientData.clientCif}
                   onChange={(e) =>
-                    handleClientData("taxNumber", e.target.value)
+                    handleClientData("clientCif", e.target.value)
                   }
                 />
               </label>

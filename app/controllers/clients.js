@@ -62,6 +62,9 @@ const updateClientController = async (req, res) => {
     const { clientId } = req.params;
     const { userId, ...toUpdate } = req.body;
 
+    console.log("CONTROLLER CLIENTS CLIENTID---------", clientId);
+    console.log("CONTROLLER CLIENTS USER/UPDATE---------", userId, toUpdate);
+
     const resp = await updateClient({ clientId, toUpdate, userId });
 
     return res.status(200).send(resp);
