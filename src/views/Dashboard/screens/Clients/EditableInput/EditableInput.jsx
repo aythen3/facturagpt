@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./EditableInput.module.css";
 import { ReactComponent as Minus } from "../../../assets/minus.svg";
-const PhoneNumberInput = ({ isEditing, onDelete }) => {
+const PhoneNumberInput = ({ isEditing, onDelete, onChange }) => {
   return (
     <div className={styles.phoneContainer}>
       <select disabled={!isEditing}>
@@ -49,6 +49,7 @@ const EditableInput = ({
     setPhoneInputs((prevInputs) => [
       ...prevInputs,
       <PhoneNumberInput
+        onChange={onChange}
         key={prevInputs.length}
         isEditing={isEditing}
         onDelete={() => removePhoneNumberInput(prevInputs.length)}
@@ -60,6 +61,8 @@ const EditableInput = ({
     if (isEditing)
       setPhoneInputs((prevInputs) => prevInputs.filter((_, i) => i !== index));
   };
+
+  console.log("CHANGEEEEEE-------", onchange);
 
   return (
     <label className={styles.labelEditableInput}>

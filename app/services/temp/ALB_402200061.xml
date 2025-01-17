@@ -80,13 +80,13 @@
                     <cliente_direccion>AV Cardenal Reig, 32</cliente_direccion>
                     <cliente_poblacion>Barcelona</cliente_poblacion>
                     <cliente_cpostal>08028</cliente_cpostal>
-                    <cliente_provincia></cliente_provincia>
+                    <cliente_provincia>Barcelona</cliente_provincia>
                     <cliente_pais>ES</cliente_pais>
                     <destino_nombre>HSB S.A.</destino_nombre>
                     <destino_direccion>AV Cardenal Reig, 32</destino_direccion>
                     <destino_poblacion>Barcelona</destino_poblacion>
                     <destino_cpostal>08028</destino_cpostal>
-                    <destino_provincia></destino_provincia>
+                    <destino_provincia>Barcelona</destino_provincia>
                     <destino_pais>ES</destino_pais>
                     <destino_telefono></destino_telefono>
                     <observaciones/>

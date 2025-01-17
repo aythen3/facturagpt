@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ModalTemplate.module.css";
 import Button from "../Button/Button";
 import { ReactComponent as ArrowDown } from "../../assets/ArrowLeftWhite.svg";
-const ModalTemplate = ({ children, onClick }) => {
+const ModalTemplate = ({ children, onClick, actionSave }) => {
   return (
     <>
       <div className={styles.bg} onClick={() => onClick()}></div>
@@ -18,7 +18,7 @@ const ModalTemplate = ({ children, onClick }) => {
           <div className={styles.buttonContainer}>
             <Button type={"white"}>Ver Transacciones</Button>
             <Button>Nueva Factura</Button>
-            <Button>Guardar</Button>
+            <Button action={actionSave}>Guardar</Button>
           </div>
         </div>
         <div className={styles.contentContainer}>{children}</div>
