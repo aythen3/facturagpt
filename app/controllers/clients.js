@@ -62,6 +62,9 @@ const updateClientController = async (req, res) => {
     const { clientId } = req.params;
     const { userId, ...toUpdate } = req.body;
 
+    console.log("CONTROLLER CLIENTS CLIENTID---------", clientId);
+    console.log("CONTROLLER CLIENTS USER/UPDATE---------", userId, toUpdate);
+
     const resp = await updateClient({ clientId, toUpdate, userId });
 
     return res.status(200).send(resp);
@@ -72,11 +75,10 @@ const updateClientController = async (req, res) => {
 };
 
 const getOneClientController = async (req, res) => {
-  console.log("ENTRE AL CONTROLLERRRRR");
   try {
-    const { clientId } = req.params;
+    const { clientId, userId } = req.params;
 
-    const client = await getOneClient({ clientId });
+    const client = await getOneClient({ userId, clientId });
 
     return res.status(200).send(client);
   } catch (err) {

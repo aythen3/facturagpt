@@ -1,10 +1,12 @@
 const { Router } = require("express");
-const { saveTransactionController } = require("../controllers/transactions");
+const {
+  getAllTransactionsByClientController,
+} = require("../controllers/transactions");
 const transactionsByClientRouter = Router();
 
 transactionsByClientRouter.post(
-  "/createTransaction",
-  saveTransactionController
+  "/alltransactionsByClient",
+  getAllTransactionsByClientController
 );
 
 module.exports = transactionsByClientRouter;

@@ -38,39 +38,40 @@ const Clients = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userStorage = localStorage.getItem("user");
-  const dataUser = JSON.parse(userStorage);
-
-  console.log("USSSSSSSSSS", dataUser);
+  const { user } = useSelector((state) => state.user);
 
   const { clients, loading, client } = useSelector((state) => state.clients);
 
   const [clientData, setClientData] = useState({
-    fullName: "",
+    clientName: "",
     email: "",
     numberPhone: "",
     codeCountry: "",
     webSite: "",
     billingEmail: "",
-    zipCode: "",
+    clientZip: "",
     country: "",
-    taxNumber: "",
+    clientCif: "",
     preferredCurrency: "",
     cardNumber: "",
   });
 
   useEffect(() => {
+    dispatch(getAllUserClients({ userId: user?.id }));
+  }, [loading, user]);
+
+  useEffect(() => {
     if (client?.clientData) {
       setClientData({
-        fullName: client.clientData.fullName || "",
-        email: client.clientData.email || "",
+        clientName: client.clientData.clientName || "",
+        email: client.email || "",
         numberPhone: client.clientData.numberPhone || "",
         codeCountry: client.clientData.codeCountry || "",
         webSite: client.clientData.webSite || "",
-        billingEmail: client.clientData.billingEmail || "",
-        zipCode: client.clientData.zipCode || "",
+        billingEmail: client.email || "",
+        clientZip: client.clientData.clientZip || "",
         country: client.clientData.country || "",
-        taxNumber: client.clientData.taxNumber || "",
+        clientCif: client.clientData.clientCif || "",
         preferredCurrency: client.clientData.preferredCurrency || "",
         cardNumber: client.clientData.cardNumber || "",
       });
@@ -90,10 +91,6 @@ const Clients = () => {
       });
     }
   }, [client]);
-
-  useEffect(() => {
-    dispatch(getAllUserClients({ userId: dataUser?.id }));
-  }, [loading]);
 
   const handleClientData = (field, value) => {
     const formattedValue =
@@ -178,9 +175,10 @@ const Clients = () => {
 
   const handleCreateClient = (e) => {
     e.preventDefault();
-    const userId = dataUser?.id;
-    const email = dataUser?.email;
+    const userId = user?.id;
+    const email = user?.email;
 
+    console.log("CLIENTESSSSSSSSSS", clients);
     if (client && client.clientData) {
       dispatch(
         updateClient({
@@ -228,7 +226,7 @@ const Clients = () => {
     dispatch(
       deleteClients({
         clientIds: clientID ? [clientID] : selectedClientIds,
-        userId: dataUser?.id,
+        userId: user?.id,
       })
     )
       .then((result) => {
@@ -254,8 +252,12 @@ const Clients = () => {
   };
 
   const handleGetOneClient = async (clientId) => {
+    console.log("CLIENTIDDD", clientId);
+
     try {
-      const response = await dispatch(getOneClient(clientId)).unwrap();
+      const response = await dispatch(
+        getOneClient({ userId: user?.id, clientId })
+      ).unwrap();
       console.log("Cliente obtenido:", response);
       navigate("/transactions");
     } catch (error) {
@@ -480,6 +482,7 @@ const Clients = () => {
       </div>
       {showNewClient && (
         <>
+
           <ModalTemplate onClick={handleCloseNewClient}>
             <div
               className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
@@ -518,9 +521,11 @@ const Clients = () => {
                       inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
+
                     }
                       `}
                   >
+
                     <button
                       className={selectTypeClient == 0 && styles.selected}
                       onClick={() => setSelectTypeClient(0)}
@@ -578,6 +583,7 @@ const Clients = () => {
                       ...prev,
                       phone: !prev.phone,
                     }))
+
                   }
                 />
                 <EditableInput

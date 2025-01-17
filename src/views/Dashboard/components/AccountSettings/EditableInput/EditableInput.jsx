@@ -10,6 +10,7 @@ const EditableInput = ({
   type = "text",
   verify = false,
   name,
+  placeholder,
 }) => {
   const { t } = useTranslation("accountSetting");
 
@@ -71,6 +72,7 @@ const EditableInput = ({
       <div className={styles.editableInput}>
         <span>{initialValue}</span>
         <input
+          placeholder={placeholder}
           ref={inputRef}
           name={name}
           type={type}

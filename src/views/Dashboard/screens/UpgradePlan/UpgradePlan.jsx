@@ -12,25 +12,38 @@ import SelectPlanModal from "./SelectPlanModal/SelectPlanModal";
 import uncheckedCircle from "../../assets/uncheckedCircle.svg";
 import checkedCircle from "../../assets/checkedCircle.svg";
 import PlanUpdatedModal from "../../components/PlanUpdatedModal/PlanUpdatedModal";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../../../actions/user";
 
 const UpgradePlan = ({ onClose }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const [selectedModal, setSelectedModal] = useState("upgradePlan");
   const [selectedPlan, setSelectedPlan] = useState("Plus");
-  const [cardNumber, setCardNumber] = useState("");
+  const [cardNumber, setCardNumber] = useState(
+    user?.paymentMethod?.details?.cardNumber || ""
+  );
   const [paymentDetailsData, setPaymentDetailsData] = useState(true);
-  const [expirationDate, setExpirationDate] = useState("");
-  const [securityCode, setSecurityCode] = useState("");
+  const [expirationDate, setExpirationDate] = useState(
+    user?.paymentMethod?.details?.expirationDate || ""
+  );
+  const [securityCode, setSecurityCode] = useState(
+    user?.paymentMethod?.details?.securityCode || ""
+  );
   const [showPlansModal, setShowPlansModal] = useState(false);
-  const [email, setEmail] = useState("");
-  const [areaCode, setAreaCode] = useState("");
-  const [country, setCountry] = useState("");
+  const [email, setEmail] = useState(
+    user?.facturationEmail || user?.email || ""
+  );
+  const [areaCode, setAreaCode] = useState(user?.areaCode || "");
+  const [country, setCountry] = useState(user?.country || "");
   const [savePaymentInfo, setSavePaymentInfo] = useState(true);
-  const [afiliatedCode, setAfiliatedCode] = useState("");
+  const [afiliatedCode, setAfiliatedCode] = useState(user?.afiliatedCode || "");
   const [showUpdatedSuccessfully, setShowUpdatedSuccessfully] = useState(false);
-  const [selectedPaymentOption, setSelectedPaymentOption] =
-    useState("visaMasterAmerican");
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState(
+    user?.paymentMethod?.method || "creditCard"
+  );
   const [selectedCurrentPaymentMethond, setSelectedCurrentPaymentMethod] =
-    useState("gPay");
+    useState(user?.paymentMethod?.details?.method || "gPay");
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
@@ -40,6 +53,26 @@ const UpgradePlan = ({ onClose }) => {
     }, 300);
   };
 
+  const handleSaveData = () => {
+    const data = {
+      email,
+      areaCode,
+      country,
+      facturationEmail: email,
+      afiliatedCode,
+      paymentMethod: {
+        method: selectedPaymentOption,
+        details: {
+          cardNumber,
+          expirationDate,
+          securityCode,
+        },
+      },
+    };
+    console.log("updating user with", data);
+    dispatch(updateUser({ userId: user?.id, toUpdate: data }));
+  };
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -47,6 +80,20 @@ const UpgradePlan = ({ onClose }) => {
       document.body.style.overflow = "";
     };
   }, []);
+
+  const handleExpirationChange = (e) => {
+    let val = e.target.value.replace(/\D/g, "");
+
+    if (val.length >= 3) {
+      val = val.slice(0, 2) + "/" + val.slice(2);
+    }
+
+    if (val.length > 5) {
+      val = val.slice(0, 5);
+    }
+
+    setExpirationDate(val);
+  };
 
   const showPaymentMethodsModal = () => {
     return (
@@ -199,6 +246,7 @@ const UpgradePlan = ({ onClose }) => {
             <button
               onClick={() => {
                 console.log("showing modal..");
+                handleSaveData();
                 setShowUpdatedSuccessfully(true);
               }}
               className={styles.upgradePlanButton}
@@ -243,21 +291,22 @@ const UpgradePlan = ({ onClose }) => {
           <div className={styles.leftContainer}>
             <h2 className={styles.upgradePlanTitle}>Pago</h2>
             <InputWithTitle
-              title={"Número de tarjeta"}
+              title="Número de tarjeta"
               value={cardNumber}
               onChange={(e) => {
-                const value = e.target.value;
-                if (value.length <= 16) {
-                  setCardNumber(value);
-                }
+                let digits = e.target.value.replace(/\D/g, "");
+                digits = digits.slice(0, 16);
+                const chunks = digits.match(/.{1,4}/g) || [];
+                const formatted = chunks.join(" ");
+                setCardNumber(formatted);
               }}
               onKeyDown={(e) => {
-                if (e.key === "e" || e.key === "+" || e.key === "-") {
+                if (["e", "+", "-"].includes(e.key)) {
                   e.preventDefault();
                 }
               }}
               placeholder="1234 1234 1234 1234"
-              type="number"
+              type="text"
               rightElement={
                 <img
                   style={{ width: "21px", height: "14px" }}
@@ -266,17 +315,20 @@ const UpgradePlan = ({ onClose }) => {
                 />
               }
             />
+
             <div className={styles.fullWidth}>
               <InputWithTitle
                 title={"Fecha de expiración"}
                 value={expirationDate}
-                onChange={(e) => setExpirationDate(e.target.value)}
+                onChange={handleExpirationChange}
+                maxLength="5"
                 placeholder="MM/AA"
               />
               <InputWithTitle
                 title={"Codigo de seguridad"}
                 value={securityCode}
-                type="number"
+                type="password"
+                maxLength="3"
                 placeholder="CVC"
                 onChange={(e) => {
                   const value = e.target.value;
@@ -298,7 +350,7 @@ const UpgradePlan = ({ onClose }) => {
             />
             <h1 className={styles.upgradePlanTitle}>Detalles de Facturación</h1>
             <div className={styles.emailContainer}>
-              <span>info@email.com</span>
+              <span>{user?.facturationEmail || user?.email || ""}</span>
               <div className={styles.changeEmail}>Cambiar</div>
             </div>
             <InputWithTitle
@@ -411,6 +463,7 @@ const UpgradePlan = ({ onClose }) => {
             <button
               onClick={() => {
                 console.log("showing modal..");
+                handleSaveData();
                 setShowUpdatedSuccessfully(true);
               }}
               className={styles.upgradePlanButton}

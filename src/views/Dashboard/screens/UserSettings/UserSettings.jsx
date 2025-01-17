@@ -11,7 +11,7 @@ import eye from "../../assets/eye.svg";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { addNewClient } from "../../../../actions/emailManager";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import StripeModal from "./StripeModal";
@@ -85,7 +85,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
     address: t("placeholderAddress"),
     emergencyContact: t("placeholderEmergencyNumer"),
   };
-
+  const { user } = useSelector((state) => state.user);
   const [tokenEmail, setTokenEmail] = useState(""); // Email (Bandejas)
   const [tokenPassword, setTokenPassword] = useState(""); // Contraseña a la derecha de bandejas
   const [tokenGPT, setTokenGPT] = useState(""); // TOKEN GPT
@@ -98,6 +98,8 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
   const [thirdTag, setThirdTag] = useState(""); // 3er tag
   const [fourthTag, setFourthTag] = useState(""); // 4to tag
   const [isPaymentConfigured, setIsPaymentConfigured] = useState(false); // Metodo de pago configurado
+
+  const formattIdAccount = user?.id.split("_")[2];
 
   const inputRefs = useRef({});
 
@@ -133,6 +135,7 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
       tokenUserPassword,
       firstTag,
       selectedOption,
+      accountId: formattIdAccount,
     };
 
     const missingFields = Object.entries(requiredFields).filter(

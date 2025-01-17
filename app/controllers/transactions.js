@@ -1,23 +1,34 @@
-const { saveTransaction } = require("../services/transactions");
+const { getAllTransactionsByClient } = require("../services/transactions");
 const { catchedAsync } = require("../utils/err");
 
-const saveTransactionController = async (req, res) => {
+const getAllTransactionsByClientController = async (req, res) => {
   try {
-    const { transactionData, userId } = req.body;
+    const { idsEmails } = req.body;
 
-    console.log("Received data:", { transactionData, userId });
+    if (!idsEmails || !Array.isArray(idsEmails)) {
+      return res
+        .status(400)
+        .json({ error: "Se requiere un array de idsEmails válido" });
+    }
 
-    // Llamar al servicio
-    const response = await saveTransaction({ transactionData, userId });
+    const filteredDatabases = await getAllTransactionsByClient({ idsEmails });
 
-    // Responder con éxito
-    return res.status(200).json(response);
+    return res.status(200).json({
+      success: true,
+      message: "Bases de datos obtenidas correctamente",
+      databases: filteredDatabases,
+    });
   } catch (error) {
-    console.error("Error in saveTransactionController:", error.message);
-    return res.status(500).json({ error: error.message });
+    console.error("Error en getAllTransactionsByClientController:", error);
+    return res.status(500).json({
+      success: false,
+      error: "Error al obtener las bases de datos",
+    });
   }
 };
 
 module.exports = {
-  saveTransactionController: catchedAsync(saveTransactionController),
+  getAllTransactionsByClientController: catchedAsync(
+    getAllTransactionsByClientController
+  ),
 };

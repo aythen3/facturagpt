@@ -100,7 +100,25 @@
     height: 40px;
   }
 }
-
+.profileImage {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+.initials {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #16c098;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
 .profileText {
   display: flex;
   flex-direction: column;

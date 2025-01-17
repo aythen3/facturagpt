@@ -1,163 +1,136 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ns2:Facturae xmlns:ns2="http://www.facturae.es/Facturae/2009/v3.2/Facturae">
-    <FileHeader>
-        <SchemaVersion>3.2</SchemaVersion>
-        <Modality>I</Modality>
-        <InvoiceIssuerType>EM</InvoiceIssuerType>
-        <Batch>
-            <BatchIdentifier>--</BatchIdentifier>
-            <InvoicesCount>1</InvoicesCount>
-            <TotalInvoicesAmount>
-                <TotalAmount>%totalAmount%</TotalAmount>
-            </TotalInvoicesAmount>
-            <TotalOutstandingAmount>
-                <TotalAmount>%totalAmount%</TotalAmount>
-            </TotalOutstandingAmount>
-            <TotalExecutableAmount>
-                <TotalAmount>%totalAmount%</TotalAmount>
-            </TotalExecutableAmount>
-            <InvoiceCurrencyCode>EUR</InvoiceCurrencyCode>
-        </Batch>
-    </FileHeader>
-    <Parties>
-      <SellerParty>
-    <TaxIdentification>
-    <PersonTypeCode>J</PersonTypeCode>
-    <ResidenceTypeCode>R</ResidenceTypeCode>
-    <TaxIdentificationNumber>ESB17623257</TaxIdentificationNumber>
-</TaxIdentification>
-<LegalEntity>
-<CorporateName>DEMO HSB, S.A.</CorporateName>
-<RegistrationData>
-<RegisterOfCompaniesLocation/>
-<Sheet/>
-<Folio/>
-<Section/>
-<Volume/>
-</RegistrationData>
-<AddressInSpain>
-<Address>%companyAddress%</Address>
-<PostCode>%companyPostCode%</PostCode>
-<Town>%companyCity%</Town>
-<Province>%companyProvince%</Province>
-<CountryCode>ESP</CountryCode>
-</AddressInSpain>
-<ContactDetails>
-<Telephone>%companyPhone%</Telephone>
-<TeleFax/>
-<ElectronicMail>%companyEmail%</ElectronicMail>
-</ContactDetails>
-</LegalEntity>
-    </SellerParty>  
-        <BuyerParty>
-            <TaxIdentification>
-                <PersonTypeCode>J</PersonTypeCode>
-                <ResidenceTypeCode>R</ResidenceTypeCode>
-                <TaxIdentificationNumber>%clientCif%</TaxIdentificationNumber>
-            </TaxIdentification>
-            <LegalEntity>
-                <CorporateName>%companyName%</CorporateName>
-                <AddressInSpain>
-                    <Address>%clientAddress%</Address>
-                    <PostCode>%clientPostCode%</PostCode>
-                    <Town>%clientCity%</Town>
-                    <Province>%clientProvince%</Province>
-                    <CountryCode>ES</CountryCode>
-                </AddressInSpain>
-                <ContactDetails>
-        <Telephone>%clientPhoneNumber%</Telephone>
-        <ElectronicMail>%clientEmail%</ElectronicMail>
-        </ContactDetails>
-            </LegalEntity>
-        </BuyerParty>
-    </Parties>
-
-    <Invoices>
-        <Invoice>
-            <InvoiceHeader>
-                <InvoiceNumber>%numberDocument%</InvoiceNumber>
-                <InvoiceDocumentType>FC</InvoiceDocumentType>
-                <InvoiceClass>OO</InvoiceClass>
-            </InvoiceHeader>
-            <InvoiceIssueData>
-                <IssueDate>%invoiceIssueDate%</IssueDate>
-                <InvoiceCurrencyCode>EUR</InvoiceCurrencyCode>
-                <TaxCurrencyCode>EUR</TaxCurrencyCode>
-                <LanguageName>es</LanguageName>
-            </InvoiceIssueData>
-
-            <TaxesOutputs>
-                <Tax>
-                    <TaxTypeCode>01</TaxTypeCode>
-                    <TaxRate>21.00</TaxRate>
-                    <TaxableBase>
-                        <TotalAmount>%partialAmount%</TotalAmount>
-                    </TaxableBase>
-                    <TaxAmount>
-                        <TotalAmount>%taxesFromPartialAmount%</TotalAmount>
-                    </TaxAmount>
-                </Tax>
-            </TaxesOutputs>
-
-            <InvoiceTotals>
-                <TotalGrossAmount>%partialAmount%</TotalGrossAmount>
-                <GeneralDiscounts>
-                    <Discount>
-                        <DiscountReason>Dto</DiscountReason>
-                        <DiscountRate>0.00</DiscountRate>
-                        <DiscountAmount>0.00</DiscountAmount>
-                    </Discount>
-                </GeneralDiscounts>
-                <TotalGeneralDiscounts>0.00</TotalGeneralDiscounts>
-                <TotalGeneralSurcharges>0.00</TotalGeneralSurcharges>
-                <TotalGrossAmountBeforeTaxes>%partialAmount%</TotalGrossAmountBeforeTaxes>
-                <TotalTaxOutputs>%taxesFromPartialAmount%</TotalTaxOutputs>
-                <TotalTaxesWithheld>0.00</TotalTaxesWithheld>
-                <InvoiceTotal>%totalAmount%</InvoiceTotal>
-                <TotalOutstandingAmount>%totalAmount%</TotalOutstandingAmount>
-                <TotalExecutableAmount>%totalAmount%</TotalExecutableAmount>
-            </InvoiceTotals>
-
-            <Items>
-                <InvoiceLine for-data="productList">
-                    <IssuerTransactionReference>%numberDocument%</IssuerTransactionReference>
-                    <ReceiverTransactionReference></ReceiverTransactionReference>
-                    <SequenceNumber>%n%</SequenceNumber>
-                    <DeliveryNotesReferences>
-                        <DeliveryNote>
-                            <DeliveryNoteNumber>%productAlbaranRef%</DeliveryNoteNumber>
-                        </DeliveryNote>
-                    </DeliveryNotesReferences>
-                    <ItemDescription>%productDescription%</ItemDescription>
-                    <Quantity>%productQuantity%</Quantity>
-                    <UnitPriceWithoutTax>%productPartial%</UnitPriceWithoutTax>
-                    <TotalCost>%productImportWithoutDiscount%</TotalCost>
-                    <DiscountsAndRebates>
-                        <Discount>
-                            <DiscountReason>Dto</DiscountReason>
-                            <DiscountRate>%productDiscountRate%</DiscountRate>
-                            <DiscountAmount>%productDiscountAmount%</DiscountAmount>
-                        </Discount>
-                    </DiscountsAndRebates>
-                    <GrossAmount>%productImport%</GrossAmount>
-                    <TaxesOutputs>
-                        <Tax>
-                            <TaxTypeCode>01</TaxTypeCode>
-                            <TaxRate>21.00</TaxRate>
-                            <TaxableBase>
-                                <TotalAmount>%productImport%</TotalAmount>
-                            </TaxableBase>
-                            <TaxAmount>
-                                <TotalAmount>%productImportWithTaxes%</TotalAmount>
-                            </TaxAmount>
-                            <EquivalenceSurcharge>0.00</EquivalenceSurcharge>
-                            <EquivalenceSurchargeAmount>
-                                <TotalAmount>0.00</TotalAmount>
-                            </EquivalenceSurchargeAmount>
-                        </Tax>
-                    </TaxesOutputs>
-                </InvoiceLine>
-            </Items>
-        </Invoice>
-    </Invoices>
-</ns2:Facturae>
+<envio_factura version="0.6">
+<id_control_fabricante/>
+<factura>
+<cabecera>
+<tipo_documento>01</tipo_documento>
+<desc_tipo_documento>Factura</desc_tipo_documento>
+<solicitante/>
+<destinatario/>
+<cod_punto_venta></cod_punto_venta>
+<motivo_documento/>
+<codigo_proveedor></codigo_proveedor>
+<condicion_pago/>
+<cod_medio_pago/>
+<desc_medio_pago/>
+<moneda>EUR</moneda>
+<info_adicional_pago/>
+<numero_factura>%numberDocument%</numero_factura>
+<referencia_factura/>
+<fecha_factura>
+<anyo>%invoiceDate::year%</anyo>
+<mes>%invoiceDate::month%</mes>
+<dia>%invoiceDate::day%</dia>
+<hora>0</hora>
+<minuto>0</minuto>
+<segundo>0</segundo>
+</fecha_factura>
+<vencimientos>
+<vencimiento id="0">
+<fecha_vencimiento>
+<anyo>%expirationDateYear%</anyo>
+<mes>%expirationDateMonth%</mes>
+<dia>%expirationDateDay%</dia>
+<hora>0</hora>
+<minuto>0</minuto>
+<segundo>0</segundo>
+</fecha_vencimiento>
+<importe_parcial>%partialAmount%</importe_parcial>
+</vencimiento>
+</vencimientos>
+<importes>
+<importe id="0">
+<tipo_importe>01</tipo_importe>
+<desc_tipo_importe>Neto</desc_tipo_importe>
+<valor_importe>%partialAmount%</valor_importe>
+<porcentaje>00.00</porcentaje>
+<signo_importe>01</signo_importe>
+</importe>
+<importe id="1">
+<tipo_importe>03</tipo_importe>
+<desc_tipo_importe>Total</desc_tipo_importe>
+<valor_importe>%totalAmount%</valor_importe>
+<porcentaje>21.00</porcentaje>
+<signo_importe>01</signo_importe>
+</importe>
+<importe id="2">
+<tipo_importe>09</tipo_importe>
+<desc_tipo_importe>Neto antes pronto pago</desc_tipo_importe>
+<valor_importe>%partialAmount%</valor_importe>
+<porcentaje>00.00</porcentaje>
+<signo_importe>01</signo_importe>
+</importe>
+</importes>
+<impuestos>
+<impuesto id="0">
+<tipo_impuesto>01</tipo_impuesto>
+<desc_tipo_impuesto>IVA</desc_tipo_impuesto>
+<base_impuesto>%partialAmount%</base_impuesto>
+<porcentaje_impuesto>21.00</porcentaje_impuesto>
+<signo_importe>01</signo_importe>
+<importe_impuesto>%taxesFromPartialAmount%</importe_impuesto>
+</impuesto>
+</impuestos>
+<incoterm>CIP</incoterm>
+<desc_incoterm/>
+<fabricante_nif>%clientNif%</fabricante_nif>
+<fabricante_nombre>%clientName%</fabricante_nombre>
+<fabricante_direccion>%clientAddress%</fabricante_direccion>
+<fabricante_poblacion>%clientCity%</fabricante_poblacion>
+<fabricante_cpostal>%clientZip%</fabricante_cpostal>
+<fabricante_provincia>%clientProvince%</fabricante_provincia>
+<fabricante_pais>ES</fabricante_pais>
+<fabricante_reg_mercantil>%clientName%</fabricante_reg_mercantil>
+<cod_fabricante_externo>%clientCif%</cod_fabricante_externo>
+<cod_fabricante_fabricante/>
+<direcciones>
+<direccion id="1">
+<direc_tipo>01</direc_tipo>
+<direc_nombre>%clientAddressStreet%</direc_nombre>
+<direc_direccion>%clientAddressNumber%</direc_direccion>
+<direc_poblacion>%clientCity%</direc_poblacion>
+<direc_cpostal>%clientZip%</direc_cpostal>
+<direc_provincia>%clientProvince%</direc_provincia>
+<direc_pais>ES</direc_pais>
+</direccion>
+</direcciones>
+<observaciones/>
+</cabecera>
+<posiciones for-data="productList">
+<posicion_albaran>%n%</posicion_albaran>
+<fecha_albaran>
+<anyo>%invoiceDate::year%</anyo>
+<mes>%invoiceDate::month%</mes>
+<dia>%invoiceDate::day%</dia>
+<hora>0</hora>
+<minuto>0</minuto>
+<segundo>0</segundo>
+</fecha_albaran>
+<albaran>%productAlbaran%</albaran>
+<referencia>%productAlbaranRef%</referencia>
+<codigo_partida/>
+<desc_partida/>
+<descripcion>%productDescription%</descripcion>
+<pedido>%numberDocument%</pedido>
+<pedido_cliente>%numberDocument%</pedido_cliente>
+<posicion_pedido>%n%</posicion_pedido>
+<referencia_factura/>
+<cantidad_entregada>%productQuantity%</cantidad_entregada>
+<unidad>UN</unidad>
+<posicion_factura>%n%</posicion_factura>
+<precio_unitario>%productPartial%</precio_unitario>
+<unidad_precio>%productPartial%</unidad_precio>
+<cantidad_precio>%productImport%</cantidad_precio>
+<observaciones/>
+<importes>
+<importe id="0">
+<tipo_importe>01</tipo_importe>
+<desc_tipo_importe>Neto</desc_tipo_importe>
+<valor_importe>%productImportWithoutDiscount%</valor_importe>
+<porcentaje>00.00</porcentaje>
+<signo_importe>01</signo_importe>
+</importe>
+</importes>
+<posicion_referenciada/>
+</posiciones>
+</factura>
+</envio_factura>

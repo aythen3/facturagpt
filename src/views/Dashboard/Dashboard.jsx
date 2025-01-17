@@ -57,7 +57,7 @@ const Dashboard = () => {
   const [showUserSettings, setShowUserSettings] = useState(false);
 
   const { allClients, allUsers } = useSelector((state) => state.emailManager);
-  const { user } = useSelector((state) => state.user);
+  const { user: userRedux } = useSelector((state) => state.user);
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 
@@ -226,53 +226,66 @@ const Dashboard = () => {
   const userStorage = localStorage.getItem("emailManagerAccount");
   const dataUser = JSON.parse(userStorage);
 
-  const toggleUserActive = async (user) => {
-    console.log("CLIENT", user);
-
+  const toggleUserActive = async (singleUser) => {
+    // console.log("CLIENT", singleUser);
     dispatch(
-      updateClient({ clientId: user.id, toUpdate: { active: !user.active } })
+      updateClient({
+        clientId: singleUser.id,
+        toUpdate: { active: !singleUser.active },
+      })
     );
-    if (!user.active) {
+    if (!singleUser.active) {
       const response = await dispatch(
         getEmailsByQuery({
-          userId: user?.id || "randomId",
-          email: user.tokenEmail,
-          password: user.tokenPassword,
-          query: user.emailQueries,
-          tokenGpt: user.tokenGPT,
-          logs: user.processedEmails,
+          userId: singleUser?.id || "randomId",
+          email: singleUser.tokenEmail,
+          password: singleUser.tokenPassword,
+          query: singleUser.emailQueries,
+          tokenGpt: singleUser.tokenGPT,
+          logs: singleUser.processedEmails,
           ftpData: {
-            host: user.host,
-            port: user.port,
-            user: user.tokenUser,
-            password: user.tokenUserPassword,
+            host: singleUser.host,
+            port: singleUser.port,
+            user: singleUser.tokenUser,
+            password: singleUser.tokenUserPassword,
           },
         })
       );
-      console.log("REPONSEEEE 1", response);
+      // console.log("REPONSEEEE 1", response);
 
       if (response.meta.requestStatus === "fulfilled") {
-        console.log("ENTRE A LA CREACION DE CLIENTES");
+        // console.log("ENTRE A LA CREACION DE CLIENTES");
 
         const clientsData = response.payload.processedAttachments.map(
           (attachment) => {
             const { xmlContent, ...attachmentWithoutXml } = attachment;
+
+            const emailFromAttachment =
+              attachmentWithoutXml.email.fromEmail[0].address;
+
+            const emailIds = response.payload.filteredEmails
+              .filter(
+                (email) => email.fromEmail[0].address === emailFromAttachment
+              )
+              .map((email) => email.emailId);
+
             return {
               attachment: attachmentWithoutXml,
-              email: attachmentWithoutXml.email.fromEmail[0].address,
+              email: emailFromAttachment,
               processedData: attachment.processedData,
+              processedemails: emailIds,
             };
           }
         );
 
         const createdClientsResponse = await dispatch(
           createClients({
-            userId: dataUser?.id,
+            userId: user?.id,
             clientsData: clientsData,
           })
         );
 
-        console.log("Clientes creados:", createdClientsResponse);
+        // console.log("Clientes creados:", createdClientsResponse);
       }
     }
   };
@@ -482,7 +495,7 @@ const Dashboard = () => {
               <span className={styles.tableSpan}>Asocidos y sus cuentas</span>
             </div>
             <div className={styles.filters}>
-              {user?.role === "superadmin" && (
+              {userRedux?.role === "superadmin" && (
                 <button className={styles.addClientButton}>
                   <img src={plus} alt="Add admin" />
                   Nuevo Admin

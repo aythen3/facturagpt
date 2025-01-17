@@ -2,21 +2,20 @@
 .inputWithTitleContainer {
   display: flex;
   flex-direction: column;
-  font-family: Inter, "sans-serif";
+  font-family: "Inter", sans-serif;
 }
 
 .inputTitle {
-  color: #676b5f;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   margin-bottom: 5px;
   margin-top: 0;
 }
 
 .inputContainer {
-  height: 44px;
   border-radius: 3px;
   display: flex;
+  font-family: "Inter", sans-serif;
   justify-content: space-between;
   align-items: center;
   background: #f5f5f5;
@@ -27,14 +26,12 @@
   outline: none;
   border: none;
   padding-right: 16px;
+  font-family: "Inter", sans-serif !important;
+  width: 100%;
   background: transparent;
-  color: #616161;
-  font-size: 13px;
-  font-weight: 400;
   &::placeholder {
-    color: #757575;
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 300 !important;
   }
 }
 
