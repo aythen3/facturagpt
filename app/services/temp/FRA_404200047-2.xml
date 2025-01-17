@@ -109,7 +109,7 @@
             <referencia>OBRA 289</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>TERMINAL CURV.403SF 22-3/4 C/ARAND.LT.</descripcion>
+            <descripcion>TERMINAL CURV.403F 22-3/4 CI/ARAND.LT.</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>1</posicion_pedido>
@@ -257,7 +257,7 @@
             <referencia>DOCS AITHEN</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>CURVA 90 H-H 2Cu 15</descripcion>
+            <descripcion>CURVA 90 H-H 2ACu 15</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>5</posicion_pedido>

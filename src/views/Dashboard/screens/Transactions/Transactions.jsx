@@ -10,7 +10,10 @@ import closeIcon from "../../assets/closeMenu.svg";
 import pdf from "../../assets/pdfIcon.png";
 import arrow from "../../assets/arrow.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllTransactionsByClient } from "../../../../actions/transactions";
+import {
+  deleteTransactions,
+  getAllTransactionsByClient,
+} from "../../../../actions/transactions";
 import { updateClient } from "../../../../actions/user";
 import { setTransaction } from "../../../../slices/transactionsSlices";
 import { useNavigate } from "react-router-dom";
@@ -37,24 +40,24 @@ const Transactions = () => {
   const [emailError, setEmailError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedTransactionIds, setSelectedTransactionIds] = useState([]);
 
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.clients);
-  const { transactionsByClient } = useSelector((state) => state.transactions);
+  const { transactionsByClient, loading } = useSelector(
+    (state) => state.transactions
+  );
   const navigate = useNavigate();
-  console.log("CLIET--------", client);
-  console.log("TRANSACCIONESS--------", transactionsByClient);
 
   useEffect(() => {
     const getAll = async () => {
       const response = await dispatch(
         getAllTransactionsByClient({ idsEmails: client?.processedemails })
       );
-      console.log("-------DATA REPONSE--------", response);
     };
 
     getAll();
-  }, []);
+  }, [loading]);
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -202,6 +205,44 @@ const Transactions = () => {
       setIsAnimating(false);
     }, 300);
   };
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+
+  const handleActions = (rowIndex, client) => {
+    // dispatch(setClient(client));
+    setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
+  };
+
+  const handleDeleteTransactions = (e) => {
+    e.preventDefault();
+    console.log("IDSSSSSS EN ACTION", selectedTransactionIds);
+
+    dispatch(
+      deleteTransactions({
+        transactionsIds: selectedTransactionIds,
+      })
+    )
+      .then((result) => {
+        if (result.meta.requestStatus === "fulfilled") {
+          console.log("Transaction deleted successfully");
+          setSelectedTransactionIds([]);
+        } else {
+          console.error("Error deleting transaction:", result.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Unexpected error:", error);
+      });
+  };
+
+  const toggleTransactionSelection = (transactionId) => {
+    setSelectedTransactionIds((prev) =>
+      prev.includes(transactionId)
+        ? prev.filter((id) => id !== transactionId)
+        : [...prev, transactionId]
+    );
+  };
+
+  console.log("TRANSACTIONS SELECTED IDS----", selectedTransactionIds);
 
   return (
     <div>
@@ -279,6 +320,7 @@ const Transactions = () => {
                     <input
                       type="checkbox"
                       name="clientSelected"
+                      onChange={() => toggleTransactionSelection(row.id)}
                       onClick={() => selectClient(rowIndex)}
                       checked={clientSelected.includes(rowIndex) ? true : false}
                     />
@@ -384,9 +426,31 @@ const Transactions = () => {
                       </a>
                       <span>(2.345)</span>
                     </div>
-                    <div>
+                    <div onClick={() => handleActions(rowIndex, row)}>
                       <img src={optionDots} />
                     </div>
+                    {selectedRowIndex === rowIndex && (
+                      <ul className={styles.content_menu_actions}>
+                        <li
+                          onClick={() => {
+                            setShowNewClient(true);
+                            setSelectedRowIndex(null);
+                          }}
+                          className={styles.item_menu_actions}
+                        >
+                          Editar
+                        </li>
+                        <li
+                          onClick={(e) => {
+                            handleDeleteTransactions(e);
+                            setSelectedRowIndex(null);
+                          }}
+                          className={styles.item_menu_actions}
+                        >
+                          Eliminar
+                        </li>
+                      </ul>
+                    )}
                   </td>
                 </tr>
               ))}

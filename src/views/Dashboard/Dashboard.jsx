@@ -223,10 +223,8 @@ const Dashboard = () => {
     setSearchQuery(event.target.value);
   };
 
-  const userStorage = localStorage.getItem("emailManagerAccount");
-  const dataUser = JSON.parse(userStorage);
-
   const toggleUserActive = async (singleUser) => {
+    console.log("USERIDDDDDD DASH--------", singleUser);
     // console.log("CLIENT", singleUser);
     dispatch(
       updateClient({
@@ -280,12 +278,12 @@ const Dashboard = () => {
 
         const createdClientsResponse = await dispatch(
           createClients({
-            userId: user?.id,
+            userId: userRedux?.id,
             clientsData: clientsData,
           })
         );
 
-        // console.log("Clientes creados:", createdClientsResponse);
+        console.log("Clientes creados:", createdClientsResponse);
       }
     }
   };
