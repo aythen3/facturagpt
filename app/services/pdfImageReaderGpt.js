@@ -614,6 +614,16 @@ const calculateTaxesAndDiscounts = (products) => {
   });
 };
 
+const convertToNumber = (input) => {
+  const number = parseFloat(input);
+
+  if (isNaN(number)) {
+    return 0;
+  }
+
+  return parseFloat(number.toFixed(2));
+};
+
 const fetchEmailsByQuery = async (req, res) => {
   try {
     const { userId, email, password, query, tokenGpt, logs, ftpData } =
@@ -664,12 +674,13 @@ const fetchEmailsByQuery = async (req, res) => {
               "PRODUCT LIST AFTER CALCULATING TAXES/DISCOUNTS",
               newProcessedData
             );
-            processedData.partialAmount =
-              processedData.partialAmount.toFixed(2);
+            processedData.partialAmount = convertToNumber(
+              processedData.partialAmount
+            );
             processedData.productList = newProcessedData;
 
             processedData.taxesFromPartialAmount =
-              Number(processedData.partialAmount) || 0 * 0.21;
+              processedData.partialAmount * 0.21;
 
             processedData = replaceNotFoundWithEmptyString(processedData);
             console.log("clientCif", processedData.clientCif);
@@ -1306,21 +1317,21 @@ Propiedades a extraer para cada producto:
 - "productRef": Referencia del producto (Ejemplos: "ABC123", 'REF. XXX', '66200', '180.180','625').
 - "productDescription": Descripción del producto (texto que identifica el producto, sin incluir la palabra "albaran").
 - "productQuantity": Cantidad del producto (un valor numérico).
-- "productUnit": Unidad de medida (si aplica, si no se encuentra dejar "").
+- "productUnit": Unidad de medida (si aplica, si no se encuentra dejar "UN").
 - "productPartial": Importe parcial o precio unitario antes de descuento (si se identifica, en caso contrario "").
 - "productDiscountRate": Porcentaje de descuento aplicado (si aparece, por ejemplo en una columna 'Dto.'), de lo contrario "".
 - "productDiscount": Valor absoluto del descuento (si puede inferirse o se muestra, en caso contrario "").
 - "productImport": Importe final del producto tras aplicar descuentos (si se identifica, caso contrario "").
 - "productAlbaranDate": Fecha del albarán (si existe alguna referencia previa a un albarán con fecha arriba de los productos, extraer esa fecha; si no se encuentra, dejar "").
-- "productAlbaranRef": Referencia del albarán (si existe alguna referencia previa del tipo "R-XXXXXXXXXX" u "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto (PRIORIZAR EL NUMERO DEL ALBARAN), si no se encuentra, dejar "").
-
+- "productAlbaran": Numero del albarán (si existe alguna referencia previa del tipo "R-XXXXXXXXXX" u "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto (PRIORIZAR EL NUMERO DEL ALBARAN), si no se encuentra, dejar "").
+- "productAlbaranRef": Referencia del albarán, suele estar a la derecha del numero del albarán (si existe alguna referencia previa del tipo "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto, si no se encuentra, dejar "").
 Reglas:
 - Todas las referencias deberian aparecer en la misma columna en cada producto. Si encontramos una, la referencia del producto siguiente, debe estar justo debajo de la anterior.
 - No confundir productRef con productPartial o productImport o productDiscountRate o productDiscount.
 - No devuelvas texto adicional ni explicaciones, solo un array JSON con los productos.
 - Si no encuentras una propiedad, déjala como una cadena vacía ("").
 - Si existen líneas que sirven como título o contienen la palabra "albaran" y no corresponden a un producto, ignóralas. No las incluyas como producto.
-- Puede haber casos donde no haya referencia a un albarán ni fecha asociada, en ese caso "productAlbaranDate" y "productAlbaranRef" serán "".
+- Puede haber casos donde no haya referencia a un albarán ni fecha asociada, en ese caso "productAlbaranDate" , "productAlbaran" y "productAlbaranRef"  serán "".
 - Puede haber casos en que el producto aparezca sin descuento, entonces "productDiscountRate" y "productDiscount" serán "".
 - Puede haber casos en que solo haya productos sin ningún encabezado, simplemente extrae la información de cada fila que parezca un producto.
 
@@ -1336,7 +1347,8 @@ Devuelve la respuesta en el siguiente formato (ejemplo con posibles datos, pero 
     "productDiscount": "2.50",
     "productImport": "22.50",
     "productAlbaranDate": "16/12/2024",
-    "productAlbaranRef": "R-12345678"
+    "productAlbaran": "R-12345678",
+    "productAlbaranRef": "OBRA XXX"
   }
 ]
 * IMPORTANTE *
@@ -1357,13 +1369,14 @@ No incluyas explicación ni texto adicional afuera del array.
     - "productRef": Referencia del producto (Ejemplos: "ABC123", 'REF. XXX', '66200', '180.180','625').
     - "productDescription": Descripción del producto (texto que identifica el producto, sin incluir la palabra "albaran").
     - "productQuantity": Cantidad del producto (un valor numérico).
-    - "productUnit": Unidad de medida (si aplica, si no se encuentra dejar "").
+    - "productUnit": Unidad de medida (si aplica, si no se encuentra dejar "UN").
     - "productPartial": Importe parcial o precio unitario antes de descuento (si se identifica, en caso contrario "").
     - "productDiscountRate": Porcentaje de descuento aplicado (si aparece, por ejemplo en una columna 'Dto.'), de lo contrario "".
     - "productDiscount": Valor absoluto del descuento (si puede inferirse o se muestra, en caso contrario "").
     - "productImport": Importe final del producto tras aplicar descuentos (si se identifica, caso contrario "").
     - "productAlbaranDate": Fecha del albarán (si existe alguna referencia previa a un albarán con fecha arriba de los productos, extraer esa fecha; si no se encuentra, dejar "").
-    - "productAlbaranRef": Referencia del albarán (si existe alguna referencia previa del tipo "R-XXXXXXXXXX" u "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto (PRIORIZAR EL NUMERO DEL ALBARAN), si no se encuentra, dejar "").
+    - "productAlbaran": Numero del albarán (si existe alguna referencia previa del tipo "R-XXXXXXXXXX" u "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto (PRIORIZAR EL NUMERO DEL ALBARAN), si no se encuentra, dejar "").
+    - "productAlbaranRef": Referencia del albarán (si existe alguna referencia previa del tipo "OBRA XXX" u otra en la fila de cabecera del bloque al que pertenece el producto, si no se encuentra, dejar "").
     
     Reglas:
     - Todas las referencias deberian aparecer en la misma columna en cada producto. Si encontramos una, la referencia del producto siguiente, debe estar justo debajo de la anterior.
@@ -1371,7 +1384,7 @@ No incluyas explicación ni texto adicional afuera del array.
     - No devuelvas texto adicional ni explicaciones, solo un array JSON con los productos.
     - Si no encuentras una propiedad, déjala como una cadena vacía ("").
     - Si existen líneas que sirven como título o contienen la palabra "albaran" y no corresponden a un producto, ignóralas. No las incluyas como producto.
-    - Puede haber casos donde no haya referencia a un albarán ni fecha asociada, en ese caso "productAlbaranDate" y "productAlbaranRef" serán "".
+    - Puede haber casos donde no haya referencia a un albarán ni fecha asociada, en ese caso "productAlbaranDate" , "productAlbaran" y "productAlbaranRef"  serán "".
     - Puede haber casos en que el producto aparezca sin descuento, entonces "productDiscountRate" y "productDiscount" serán "".
     - Puede haber casos en que solo haya productos sin ningún encabezado, simplemente extrae la información de cada fila que parezca un producto.
     
@@ -1387,7 +1400,8 @@ No incluyas explicación ni texto adicional afuera del array.
         "productDiscount": "2.50",
         "productImport": "22.50",
         "productAlbaranDate": "16/12/2024",
-        "productAlbaranRef": "R-12345678"
+        "productAlbaran": "R-12345678"
+        "productAlbaranRef": "OBRA XXX"
       }
     ]
     
@@ -1585,15 +1599,18 @@ Si no encuentras ningún NIF del cliente, devuelve: {"clientNif": "NOT FOUND"}.
      - "clientEmail": Correo electrónico del cliente.
 	   - "clientName": Nombre del cliente.
 	   - "clientAddress": Dirección completa del cliente.
+     - "clientAddressNumber": Número de la dirección del cliente.
+     - "clientAddressStreet": Calle de la dirección del cliente.
+     - "clientAddressFloor": Piso de la dirección del cliente.
 	   - "clientCity": Ciudad del cliente.
-     - "clientProvice": Provincia del cliente.
+     - "clientProvince": Provincia del cliente.
 	   - "clientZip": Código postal del cliente.
      - "companyPhoneNumber": Número de telefono de la empresa.
      - "companyEmail": Correo electrónico de la empresa.
 	   - "companyName": Nombre de la empresa.
 	   - "companyAddress": Dirección completa de la empresa.
 	   - "companyCity": Ciudad de la empresa.
-     - "companyProvice": Provincia de la empresa.
+     - "companyProvince": Provincia de la empresa.
 	   - "companyZip": Código postal de la empresa.
 	   - "conditionPay": Condición de pago.
 	   - Totales:
@@ -1614,7 +1631,7 @@ Si no encuentras ningún NIF del cliente, devuelve: {"clientNif": "NOT FOUND"}.
   }
   
   Consideraciones Finales:
-  Intentar buscar clientAddress, clientCity, clientProvice, clientZip, companyAddress, companyCity, companyProvice, companyZip. (Los del cliente suelen estar en la parte inferior del documento, mientras que los de la empresa en la parte superior).
+  Intentar buscar clientAddress, clientCity, clientProvince, clientZip, companyAddress, companyCity, companyProvince, companyZip. (Los del cliente suelen estar en la parte inferior del documento, mientras que los de la empresa en la parte superior).
   Convierte TODOS los numeros a numeros con 2 decimales, por mas que sea entero. Eliminar tipo de moneda y simbolo. (2,000.24€ -> 2000.24, 20€ -> 20.00)
   Evita confusiones entre el número de pedido, número de factura, y número de albarán.
   No incluyas datos confidenciales, como el número de cliente, más allá de lo especificado.

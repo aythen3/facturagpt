@@ -12,7 +12,7 @@ import klarnaIcon from "../../assets/klarnaIcon.svg";
 export const paymentMethods = [
   {
     icons: [visaIcon, mastercardIcon, americanIcon],
-    name: "visaMasterAmerican",
+    name: "creditCard",
   },
   {
     icons: [paypalIcon],
@@ -32,11 +32,11 @@ export const paymentMethods = [
   },
   {
     icons: [metamaskIcon],
-    name: "metamask",
+    name: "crypto",
   },
   {
     icons: [coinbaseIcon],
-    name: "coinbase",
+    name: "crypto",
   },
 ];
 

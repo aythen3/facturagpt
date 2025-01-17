@@ -17,8 +17,10 @@ import addGreen from "../../assets/addGreen.svg";
 import chatIcon from "../../assets/chatIcon.svg";
 import boxIcon from "../../assets/boxIcon.svg";
 import dotsNotification from "../../assets/dotsNotification.svg";
+import { useSelector } from "react-redux";
 
 const NavbarAdmin = ({ setActivateChat }) => {
+  const { user } = useSelector((state) => state.user);
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -78,10 +80,20 @@ const NavbarAdmin = ({ setActivateChat }) => {
 
           <div onClick={handleProfileClick} className={styles.profileContainer}>
             <div className={styles.profileText}>
-              <p>John Doe</p>
-              <span>Admin</span>
+              <p>{user?.nombre}</p>
+              <span>{user?.role}</span>
             </div>
-            <img src={profileIcon} className={styles.imgProfile} />
+            {user?.profileImage ? (
+              <img
+                className={styles.profileImage}
+                src={user?.profileImage}
+                alt=""
+              />
+            ) : (
+              <div className={styles.initials}>
+                {user?.nombre.split(" ").map((letter) => letter[0])}
+              </div>
+            )}
           </div>
         </div>
         <div
