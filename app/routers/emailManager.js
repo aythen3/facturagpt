@@ -13,6 +13,8 @@ const {
   createSetupIntentController,
   generateAndSendOtpController,
   verifyOTPController,
+  generateAndSendRecoveryCodeController,
+  verifyRecoveryCodeController,
 } = require("../controllers/emailManager");
 const { fetchEmailsByQuery } = require("../services/pdfImageReaderGpt");
 
@@ -30,6 +32,8 @@ emailManagerRouter
   .post("/create-setup-intent", createSetupIntentController)
   .post("/send-otp", generateAndSendOtpController)
   .post("/verify-otp", verifyOTPController)
-  .post("/getEmailsByQuery", fetchEmailsByQuery);
+  .post("/getEmailsByQuery", fetchEmailsByQuery)
+  .post("/send-recovery-code", generateAndSendRecoveryCodeController)
+  .post("/verify-recovery-code", verifyRecoveryCodeController);
 
 module.exports = emailManagerRouter;

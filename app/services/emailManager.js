@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
-const { sendOtpEmail } = require("./email");
+const { sendOtpEmail, sendRecoveryCode } = require("./email");
 
 const createAccount = async ({ nombre, email, password, role }) => {
   console.log("Data received in createAccount service:", {
@@ -807,6 +807,108 @@ const verifyOTPService = async ({ email, otp }) => {
   }
 };
 
+const generateAndSendRecoveryCodeService = async ({ email, language }) => {
+  const dbName = "db_emailmanager_recovery_codes";
+  let db;
+
+  try {
+    const dbs = await nano.db.list();
+    if (!dbs.includes(dbName)) {
+      console.log(`Database ${dbName} does not exist. Creating...`);
+      await nano.db.create(dbName);
+    }
+    db = nano.use(dbName);
+  } catch (error) {
+    console.error("Error accessing or creating database:", error);
+    throw new Error("Database initialization failed");
+  }
+
+  try {
+    const recoveryCode = String(Math.floor(100000 + Math.random() * 900000));
+
+    const expirationTime = Date.now() + 5 * 60 * 1000;
+    const recoveryCodeId = uuidv4();
+    const docId = `recovery_${email}_${recoveryCodeId}`;
+
+    const recoveryCodeDocument = {
+      _id: docId,
+      email,
+      recoveryCode,
+      expirationTime,
+      createdAt: new Date().toISOString(),
+    };
+
+    await db.insert(recoveryCodeDocument);
+    console.log(
+      `Recovery Code generated and saved for ${email}:`,
+      recoveryCode
+    );
+
+    await sendRecoveryCode(email, recoveryCode, language);
+
+    return {
+      success: true,
+      message: "Recovery code generated and sent successfully.",
+    };
+  } catch (error) {
+    console.error("Error generating or sending recovery code:", error);
+    throw new Error("Could not generate or send the recovery code.");
+  }
+};
+
+const verifyRecoveryCodeService = async ({ email, recoveryCode }) => {
+  console.log("Data received in verifyRecoveryCodeService:", {
+    email,
+    recoveryCode,
+  });
+
+  const dbName = "db_emailmanager_recovery_codes";
+  let db;
+
+  try {
+    const dbs = await nano.db.list();
+    if (!dbs.includes(dbName)) {
+      console.log(`Database ${dbName} does not exist.`);
+      return {
+        success: false,
+        message: "Recovery codes database does not exist.",
+      };
+    }
+    db = nano.use(dbName);
+  } catch (error) {
+    console.error("Error accessing database:", error);
+    throw new Error("Database access failed");
+  }
+
+  try {
+    const queryResponse = await db.find({
+      selector: { email, recoveryCode },
+    });
+
+    if (queryResponse.docs.length === 0) {
+      console.log(`No matching recovery code found for email: ${email}`);
+      return { success: false, message: "Invalid or expired recovery code." };
+    }
+
+    const recoveryDoc = queryResponse.docs[0];
+    const now = new Date();
+    const expiresAt = new Date(recoveryDoc.expirationTime);
+
+    if (now > expiresAt) {
+      console.log("Recovery code has expired.");
+      return { success: false, message: "Recovery code has expired." };
+    }
+
+    await db.destroy(recoveryDoc._id, recoveryDoc._rev);
+    console.log("Recovery code verified and deleted successfully.");
+
+    return { success: true, message: "Recovery code verified successfully." };
+  } catch (error) {
+    console.error("Error verifying recovery code:", error);
+    throw new Error("Failed to verify recovery code");
+  }
+};
+
 module.exports = {
   createAccount: createAccount,
   updateAccount: updateAccount,
@@ -819,4 +921,6 @@ module.exports = {
   getPaymentMethodService: getPaymentMethodService,
   generateAndSendOtp: generateAndSendOtpService,
   verifyOTP: verifyOTPService,
+  generateAndSendRecoveryCodeService: generateAndSendRecoveryCodeService,
+  verifyRecoveryCodeService: verifyRecoveryCodeService,
 };

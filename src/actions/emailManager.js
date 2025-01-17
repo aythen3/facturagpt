@@ -293,3 +293,47 @@ export const verifyOTP = createAsyncThunk(
     }
   }
 );
+
+export const sendRecoveryCode = createAsyncThunk(
+  "emailManager/send-recovery-code",
+  async ({ email, language }, { rejectWithValue }) => {
+    console.log("Sending recovery code to:", email);
+    try {
+      const res = await apiBackend.post(`/emailManager/send-recovery-code`, {
+        email,
+        language,
+      });
+      return res.data;
+    } catch (error) {
+      console.error(
+        "Error sending recovery code:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(
+        error.response?.data || "Failed to send recovery code"
+      );
+    }
+  }
+);
+
+export const verifyRecoveryCode = createAsyncThunk(
+  "emailManager/verify-recovery-code",
+  async ({ email, recoveryCode }, { rejectWithValue }) => {
+    console.log("Verifying recovery code for:", email);
+    try {
+      const res = await apiBackend.post(`/emailManager/verify-recovery-code`, {
+        email,
+        recoveryCode,
+      });
+      return res.data;
+    } catch (error) {
+      console.error(
+        "Error verifying recovery code:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(
+        error.response?.data || "Failed to verify recovery code"
+      );
+    }
+  }
+);

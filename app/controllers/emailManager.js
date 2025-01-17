@@ -10,6 +10,8 @@ const {
   getPaymentMethodService,
   generateAndSendOtp,
   verifyOTP,
+  generateAndSendRecoveryCodeService,
+  verifyRecoveryCodeService,
 } = require("../services/emailManager");
 const { catchedAsync } = require("../utils/err");
 const stripe = require("stripe")(
@@ -159,6 +161,40 @@ const verifyOTPController = async (req, res) => {
   }
 };
 
+const generateAndSendRecoveryCodeController = async (req, res) => {
+  try {
+    const { email, language } = req.body;
+    console.log("Generating recovery code for email:", email);
+
+    const response = await generateAndSendRecoveryCodeService({
+      email,
+      language,
+    });
+
+    return res.status(200).send(response);
+  } catch (err) {
+    console.log("Error in generateAndSendRecoveryCodeController:", err);
+    return res.status(500).send("Error generating recovery code");
+  }
+};
+
+const verifyRecoveryCodeController = async (req, res) => {
+  try {
+    const { email, recoveryCode } = req.body;
+    console.log("Verifying recovery code for email:", email);
+
+    const response = await verifyRecoveryCodeService({ email, recoveryCode });
+
+    if (response.success) {
+      return res.status(200).send(response);
+    }
+    return res.status(401).send(response);
+  } catch (err) {
+    console.log("Error in verifyRecoveryCodeController:", err);
+    return res.status(500).send("Error verifying recovery code");
+  }
+};
+
 // ================================ STRIPE ======================================
 
 const createPaymentIntentController = async (req, res) => {
@@ -266,4 +302,8 @@ module.exports = {
   createSetupIntentController: catchedAsync(createSetupIntentController),
   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
   verifyOTPController: catchedAsync(verifyOTPController),
+  generateAndSendRecoveryCodeController: catchedAsync(
+    generateAndSendRecoveryCodeController
+  ),
+  verifyRecoveryCodeController: catchedAsync(verifyRecoveryCodeController),
 };

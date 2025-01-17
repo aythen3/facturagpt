@@ -3,29 +3,29 @@ import styles from "./DashboardLogin.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 import CookiePopup from "../../components/CookiePopup/CookiePopup";
 
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useRoutes,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import facturaLogo from "../../assets/logo-facturagpt.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
-import { LockIcon, Mail } from "lucide-react";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
 import {
   createAccount,
   loginToManager,
   verifyOTP,
   sendOTP,
+  updateUser,
+  updateUserPassword,
 } from "../../../../actions/user";
 import { useTranslation } from "react-i18next";
 import { useAuth0 } from "@auth0/auth0-react";
-import { setUser } from "../../../../slices/emailManagerSlices";
 import sentEmail from "../../assets/sentEmail.svg";
 import i18n from "../../../../i18";
+import { FaLock } from "react-icons/fa";
+import {
+  sendRecoveryCode,
+  verifyRecoveryCode,
+} from "../../../../actions/emailManager";
 
 const DashboardLogin = () => {
   const { t } = useTranslation("dahsboardLogin");
@@ -39,6 +39,7 @@ const DashboardLogin = () => {
   const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [resendTimer, setResendTimer] = useState(45);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +47,9 @@ const DashboardLogin = () => {
   const [storedEmail, setStoredEmail] = useState("");
   const [storedPassword, setStoredPassword] = useState("");
   const [recaptchaValue, setRecaptchaValue] = useState("");
+  const [forgotPasswordStep, setForgotPasswordStep] = useState(1);
   const navigate = useNavigate();
+  const [recoveryCode, setRecoveryCode] = useState("");
 
   const validatePassword = (password) => {
     const minLength = /.{8,}/;
@@ -87,6 +90,34 @@ const DashboardLogin = () => {
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
+    validatePassword(newPassword);
+  };
+
+  const handleResetPassword = () => {
+    setIsLoading(true);
+    if (email.length > 1) {
+      if (confirmPassword.length > 1 && password.length > 1) {
+        if (password === confirmPassword) {
+          dispatch(updateUserPassword({ email, newPassword: password }))
+            .unwrap()
+            .then(() => {
+              navigate("/login");
+            })
+            .catch((error) => {
+              setError(error.message || "Error al actualizar la contraseña");
+            })
+            .finally(() => {
+              clearStates();
+              setIsLoading(false);
+            });
+        }
+      }
+    }
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setConfirmPassword(newPassword);
     validatePassword(newPassword);
   };
 
@@ -141,7 +172,7 @@ const DashboardLogin = () => {
           };
           localStorage.setItem("user", JSON.stringify(accountData));
           clearStates();
-          if (response.role !== "user") {
+          if (response?.role !== "user") {
             navigate("/home");
           } else {
             navigate("/panel");
@@ -182,6 +213,31 @@ const DashboardLogin = () => {
         })
         .finally(() => {
           setIsLoading(false);
+        });
+    }
+  };
+
+  const handleVerifyRecoveryCode = (receivedCode) => {
+    console.log("on handleVerifyRecoveryCode", receivedCode);
+    if (receivedCode.length === 6) {
+      setIsLoading(true);
+      console.log("verifying code", { email, recoveryCode: receivedCode });
+      dispatch(verifyRecoveryCode({ email, recoveryCode: receivedCode }))
+        .unwrap()
+        .then((res) => {
+          if (!res.success) {
+            setError(res.message || "Error al verificar código");
+            return;
+          }
+          setForgotPasswordStep(3);
+        })
+        .catch((error) => {
+          setError(error.message || "Error al verificar código");
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1000);
         });
     }
   };
@@ -238,12 +294,25 @@ const DashboardLogin = () => {
   };
 
   const handleForgotPassword = () => {
-    if (email.length > 1 && recaptchaValue) {
+    if (email.length > 1) {
       setIsLoading(true);
-      // Implement Logic
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+      dispatch(sendRecoveryCode({ email, language: i18n.language }))
+        .unwrap()
+        .then((res) => {
+          if (res.success) {
+            console.log("Ssetting step to 2");
+            setForgotPasswordStep(2);
+          } else {
+            setError(res.message || "Error al enviar código de recuperación");
+          }
+        })
+        .catch((error) => {
+          setError(error.message || "Error al enviar código de recuperación");
+        })
+        .finally(() => {
+          setError("");
+          setIsLoading(false);
+        });
     }
   };
 
@@ -367,34 +436,96 @@ const DashboardLogin = () => {
       <div className={styles.forgotPasswordIcon}>
         <KeyIcon />
       </div>
-      <h1 className={styles.forgotPasswordTitle}>{t("title3")}</h1>
-      <p className={styles.forgotPasswordSubtitle}>{t("solution")}</p>
+      <h1 className={styles.forgotPasswordTitle}>
+        {forgotPasswordStep === 3
+          ? "Establece tu nueva contraseña"
+          : t("title3")}
+      </h1>
+      <p className={styles.forgotPasswordSubtitle}>
+        {forgotPasswordStep === 2
+          ? "Ingresa el codigo de recuperación que enviamos a tu correo"
+          : forgotPasswordStep === 3
+            ? email
+            : t("solution")}
+      </p>
       <form className={styles.form}>
-        <label className={styles.label}>
-          {t("label1")}
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder={t("placeholder1")}
-            className={styles.input}
+        {forgotPasswordStep === 1 && (
+          <label className={styles.label}>
+            {t("label1")}
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder={t("placeholder1")}
+              className={styles.input}
+            />
+          </label>
+        )}
+        {forgotPasswordStep === 2 && (
+          <OTPInput
+            onChange={setRecoveryCode}
+            handleVerifyOTP={handleVerifyRecoveryCode}
           />
-        </label>
-        {/* <div className={styles.recaptchaContainer}>
-          <div className="g-recaptcha" data-sitekey="your-site-key"></div>
-        </div> */}
-        <button
-          type="button"
-          onClick={handleForgotPassword}
-          className={styles.continueButton}
-          disabled={isLoading}
-        >
-          {isLoading ? t("buttonContinue2") : t("buttonContinue1")}
-        </button>
+        )}
+        {forgotPasswordStep === 1 && (
+          <button
+            type="button"
+            onClick={!isLoading && handleForgotPassword}
+            className={styles.continueButton}
+          >
+            {isLoading ? t("buttonContinue2") : t("buttonContinue1")}
+          </button>
+        )}
+        {forgotPasswordStep === 2 && (
+          <button
+            type="button"
+            onClick={() => !isLoading && handleVerifyRecoveryCode(recoveryCode)}
+            className={styles.continueButton}
+          >
+            {isLoading ? "Verifying..." : "Verify Code"}
+          </button>
+        )}
+        {forgotPasswordStep === 3 && (
+          <label className={styles.label}>
+            <input
+              value={password}
+              onChange={handlePasswordChange}
+              type="password"
+              placeholder={"Nueva contraseña"}
+              onKeyDown={handleKeyDown}
+              className={styles.input}
+            />
+            <span className={styles.passwordRequirements}>
+              {t("conditionPassword")}
+            </span>
+          </label>
+        )}
+        {forgotPasswordStep === 3 && (
+          <label className={styles.label}>
+            <input
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              type="password"
+              placeholder={"Confirmar contraseña"}
+              onKeyDown={handleKeyDown}
+              className={styles.input}
+            />
+          </label>
+        )}
+        {forgotPasswordStep === 3 && (
+          <button
+            type="button"
+            onClick={() => !isLoading && handleResetPassword()}
+            className={styles.continueButton}
+          >
+            {isLoading ? "Procesando..." : "Continuar"}
+          </button>
+        )}
+        {error && <p className={styles.error}>{error}</p>}
       </form>
       <p className={styles.securityNote}>
         <span className={styles.lockIcon}>
-          <img src={LockIcon} />
+          <FaLock color="#000000" />
         </span>
         {t("security")}
       </p>
@@ -441,7 +572,7 @@ const DashboardLogin = () => {
             <p className={styles.error}>{error}</p>
             <p className={styles.securityNote}>
               <span className={styles.lockIcon}>
-                <LockIcon />
+                <FaLock color="#000000" />
               </span>{" "}
               Tu seguridad nos importa
             </p>

@@ -57,3 +57,55 @@ export const createSetupIntent = createAsyncThunk(
     }
   }
 );
+
+export const attachCustomPaymentMethod = createAsyncThunk(
+  "stripe/attachCustomPaymentMethod",
+  async ({ userId }) => {
+    console.log("=== ON ATTACH CUSTOM PAYMENT METHOD ===", {
+      userId,
+    });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        `/stripe/attach-custom-payment-method`,
+        { userId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error adding new payment intent:", error);
+      throw new Error("Failed to add new payment intent");
+    }
+  }
+);
+
+export const createCustomPaymentIntent = createAsyncThunk(
+  "stripe/createCustomPaymentIntent",
+  async ({ userId, amount, currency = "usd" }) => {
+    console.log("=== ON CREATE CUSTOM PAYMENT INTENT ===", {
+      userId,
+      amount,
+      currency,
+    });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        `/stripe/create-custom-payment-intent`,
+        { userId, amount, currency },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error adding new payment intent:", error);
+      throw new Error("Failed to add new payment intent");
+    }
+  }
+);

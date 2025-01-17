@@ -37,11 +37,11 @@ import { useSelector } from "react-redux";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import Payment from "./screens/UserSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
-import { Elements } from "@stripe/react-stripe-js";
 import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
 import UserSettings from "./screens/UserSettings/UserSettings";
 import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
+import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
@@ -384,6 +384,14 @@ const Dashboard = () => {
   useEffect(() => {
     console.log("showPaymentModal changed to", showPaymentModal);
   }, [showPaymentModal]);
+
+  useEffect(() => {
+    if (userRedux) {
+      if (userRedux?.role === "user") {
+        navigate("/panel");
+      }
+    }
+  }, [userRedux]);
 
   return (
     <Elements stripe={stripePromise}>

@@ -14,12 +14,16 @@ import checkedCircle from "../../assets/checkedCircle.svg";
 import PlanUpdatedModal from "../../components/PlanUpdatedModal/PlanUpdatedModal";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../../../actions/user";
+import {
+  attachCustomPaymentMethod,
+  createCustomPaymentIntent,
+} from "../../../../actions/stripe";
 
 const UpgradePlan = ({ onClose }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [selectedModal, setSelectedModal] = useState("upgradePlan");
-  const [selectedPlan, setSelectedPlan] = useState("Plus");
+  const [selectedPlan, setSelectedPlan] = useState(user?.userPlan || "Plus");
   const [cardNumber, setCardNumber] = useState(
     user?.paymentMethod?.details?.cardNumber || ""
   );
@@ -45,6 +49,7 @@ const UpgradePlan = ({ onClose }) => {
   const [selectedCurrentPaymentMethond, setSelectedCurrentPaymentMethod] =
     useState(user?.paymentMethod?.details?.method || "gPay");
   const [isClosing, setIsClosing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -53,13 +58,62 @@ const UpgradePlan = ({ onClose }) => {
     }, 300);
   };
 
-  const handleSaveData = () => {
+  const handleSaveData = async () => {
+    try {
+      setIsProcessing(true);
+
+      const data = {
+        email,
+        areaCode,
+        country,
+        userPlan: selectedPlan,
+        facturationEmail: email,
+        afiliatedCode,
+        paymentMethod: {
+          method: selectedPaymentOption,
+          details: {
+            cardNumber,
+            expirationDate,
+            securityCode,
+          },
+        },
+      };
+
+      console.log("Updating user with", data);
+
+      await dispatch(updateUser({ userId: user?.id, toUpdate: data }));
+
+      const amountInCents = getMinPricingInCents(selectedPlan);
+
+      if (!amountInCents) {
+        console.error("Unable to calculate the amount for the selected plan.");
+        return;
+      }
+
+      const paymentIntentResult = await dispatch(
+        createCustomPaymentIntent({
+          userId: user?.id,
+          amount: amountInCents,
+          currency: "eur",
+        })
+      );
+
+      console.log("Result from PAYMENT INTENT:", paymentIntentResult);
+
+      setShowUpdatedSuccessfully(true);
+    } catch (error) {
+      console.error("Error during update or payment intent creation:", error);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleSaveCardData = () => {
     const data = {
-      email,
+      userPlan: selectedPlan,
+      facturationEmail: email,
       areaCode,
       country,
-      facturationEmail: email,
-      afiliatedCode,
       paymentMethod: {
         method: selectedPaymentOption,
         details: {
@@ -70,7 +124,23 @@ const UpgradePlan = ({ onClose }) => {
       },
     };
     console.log("updating user with", data);
-    dispatch(updateUser({ userId: user?.id, toUpdate: data }));
+    dispatch(updateUser({ userId: user?.id, toUpdate: data })).then(() => {
+      dispatch(attachCustomPaymentMethod({ userId: user?.id }));
+    });
+  };
+
+  const getMinPricingInCents = (selectedPlan) => {
+    const pricingString = plansPricing[selectedPlan].pricing;
+
+    const [minPriceString] = pricingString.split(" - ");
+
+    const minPriceInEuros = parseFloat(
+      minPriceString.replace("€", "").replace(".", "").replace(",", ".").trim()
+    );
+
+    const minPriceInCents = Math.round(minPriceInEuros * 100);
+
+    return minPriceInCents;
   };
 
   useEffect(() => {
@@ -247,14 +317,17 @@ const UpgradePlan = ({ onClose }) => {
               onClick={() => {
                 console.log("showing modal..");
                 handleSaveData();
-                setShowUpdatedSuccessfully(true);
               }}
               className={styles.upgradePlanButton}
             >
-              <span>
-                Mejorar a plan
-                <strong> {selectedPlan}</strong>
-              </span>
+              {isProcessing ? (
+                <span>Procesando...</span>
+              ) : (
+                <span>
+                  Mejorar a plan
+                  <strong> {selectedPlan}</strong>
+                </span>
+              )}
             </button>
             <div className={styles.currencyContainer}>
               Prices in USD/EUR/ETH/BTC/USDC<span>Change Currency</span>
@@ -370,6 +443,16 @@ const UpgradePlan = ({ onClose }) => {
               onChange={(e) => setCountry(e.target.value)}
               placeholder="España"
             />
+            <button
+              onClick={() => {
+                console.log("Saving card data..");
+                handleSaveCardData();
+                // setShowUpdatedSuccessfully(true);
+              }}
+              className={styles.upgradePlanButton}
+            >
+              <span>Guardar datos de facturación</span>
+            </button>
           </div>
           {/* ================ RIGHT ================ */}
           <div className={styles.rightContainer}>
@@ -464,14 +547,17 @@ const UpgradePlan = ({ onClose }) => {
               onClick={() => {
                 console.log("showing modal..");
                 handleSaveData();
-                setShowUpdatedSuccessfully(true);
               }}
               className={styles.upgradePlanButton}
             >
-              <span>
-                Mejorar a plan
-                <strong> {selectedPlan}</strong>
-              </span>
+              {isProcessing ? (
+                <span>Procesando...</span>
+              ) : (
+                <span>
+                  Mejorar a plan
+                  <strong> {selectedPlan}</strong>
+                </span>
+              )}
             </button>
             <div className={styles.currencyContainer}>
               Prices in USD/EUR/ETH/BTC/USDC<span>Change Currency</span>
