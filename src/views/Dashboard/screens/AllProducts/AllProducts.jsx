@@ -123,14 +123,14 @@ const AllProducts = () => {
     name: "",
     desc: "",
     unitPrice: "",
-    floorPrice: "",
+    retailPrice: "",
     parameters: [],
   });
   const [inputsEditing, setInputsEditing] = useState({
     name: false,
     desc: false,
     unitPrice: false,
-    floorPrice: false,
+    retailPrice: false,
   });
 
   const handleDelete = async (productRef) => {
@@ -370,45 +370,39 @@ const AllProducts = () => {
                       }))
                     }
                   />
+
+                  <label>
+                    <p>Proveedor por defecto</p>
+                    <div>
+                      <input type="checkbox" />
+                      <span>
+                        Marca la casilla si tu eres el dueño de este activo
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Busca y selecciona proveedores"
+                    />
+                  </label>
+
                   <EditableInput
-                    label={"Precio unitario Recomendado (PVP)"}
-                    nameInput={"unitPrice"}
-                    placeholderInput={"0.0"}
-                    // isEditing={inputsEditing.unitPrice}
-                    isEditing={true}
-                    value={clientDataInputs.unitPrice}
-                    options={false}
-                    onChange={(e) =>
-                      setClientDataInputs({
-                        ...clientDataInputs,
-                        unitPrice: e.target.value,
-                      })
-                    }
-                    onClick={() =>
-                      setInputsEditing((prev) => ({
-                        ...prev,
-                        unitPrice: !prev.unitPrice,
-                      }))
-                    }
-                  />
-                  <EditableInput
-                    label={"Floor Price"}
-                    nameInput={"floorPrice"}
+                    label={"Retail Price (PVP)"}
+                    nameInput={"retailPrice"}
                     placeholderInput={"0.0"}
                     // isEditing={inputsEditing.floorPrice}
                     isEditing={true}
-                    value={clientDataInputs.floorPrice}
+                    value={clientDataInputs.retailPrice}
                     options={false}
                     onChange={(e) =>
                       setClientDataInputs({
                         ...clientDataInputs,
-                        floorPrice: e.target.value,
+                        retailPrice: e.target.value,
                       })
                     }
                     onClick={() =>
                       setInputsEditing((prev) => ({
                         ...prev,
-                        floorPrice: !prev.floorPrice,
+                        retailPrice: !prev.retailPrice,
                       }))
                     }
                   />

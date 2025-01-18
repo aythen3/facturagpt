@@ -339,9 +339,9 @@ const DashboardLogin = () => {
         alt="FacturaGPT"
         className={styles.logo}
       />
-      <span className={styles.logoText}>
-        Factura<strong>GPT</strong>
-      </span>
+      <p className={styles.logoText}>
+        Factura<span>GPT</span>
+      </p>
     </div>
   );
 

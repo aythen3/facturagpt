@@ -520,3 +520,243 @@ input:checked + .slider:before {
   user-select: none;
   gap: 5px;
 }
+
+.homeContainer {
+  width: 100%;
+}
+
+.statisticsHeader {
+  display: flex;
+  width: 100%;
+  padding: 10px 10px 0 10px;
+  box-sizing: border-box;
+  gap: 20px;
+  p {
+    margin: 0;
+  }
+  .statisticCard {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    p {
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+    .icon {
+      cursor: pointer;
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+    }
+  }
+  span {
+    color: #a6a6a6;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .statisticTotal {
+    font-size: 30px;
+    text-align: end;
+    font-weight: bold;
+  }
+}
+.divider {
+  width: 100%;
+  height: 8px;
+  background-color: #e7ffe7;
+  border-radius: 99px;
+  -webkit-border-radius: 99px;
+  -moz-border-radius: 99px;
+  -ms-border-radius: 99px;
+  -o-border-radius: 99px;
+}
+.talkWithFacturaGPT {
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  background-color: #10a37f;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box;
+  color: white;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  .icon {
+    height: 30px;
+    width: 30px;
+  }
+  button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    outline: none;
+    background-color: #ffffff;
+    color: #10a37f;
+    width: 100%;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+    font-weight: bold;
+    span {
+      color: #10a37f;
+      font-weight: bold;
+    }
+  }
+}
+
+.homeContent {
+  display: flex;
+  padding: 20px;
+}
+.salesSummaryContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  box-sizing: border-box;
+}
+
+.salesSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.salesSummaryHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  p {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+  }
+  span {
+    color: #a6a6a6;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+}
+
+.salesSummaryTotal {
+  p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 30px;
+  }
+  span {
+    color: #a6a6a6;
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+}
+
+.salesSummaryOptions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  span {
+    text-transform: initial;
+    font-size: 16px;
+    color: #00000035;
+  }
+}
+
+.monthsContainer {
+  display: flex;
+  gap: 10px;
+
+  p::before {
+    content: "";
+    height: 2px; /* Ajustado a 5px */
+    width: 100%;
+    background-color: #2b0e50; /* Cambiado a azul */
+    display: block;
+    position: absolute;
+    top: 0px;
+  }
+
+  p {
+    margin: 0;
+    padding-top: 10px;
+    position: relative;
+  }
+}
+
+.expenseAccounts {
+  flex: 1;
+}
+
+.expenseAccounts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  p {
+    margin: 0;
+  }
+  .spent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      p {
+        color: #000000;
+        font-weight: bold;
+      }
+    }
+    span {
+      color: #22024b;
+      min-width: 150px;
+    }
+  }
+}
+
+.expenseAccountsOptions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  p {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+  }
+  span {
+    text-transform: initial;
+    font-size: 16px;
+    color: #00000035;
+    font-weight: bold;
+  }
+}
+
+.expenseAccountsHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .month {
+    color: #a6a6a6;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+}
