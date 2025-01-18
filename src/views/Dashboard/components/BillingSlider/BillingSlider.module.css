@@ -43,6 +43,7 @@
   cursor: pointer;
   position: relative; /* Agregar esta propiedad */
   z-index: 2; /* Aseguramos que el slider esté encima de otros elementos */
+  padding: 0px;
 }
 
 .slider::-webkit-slider-thumb {
@@ -54,6 +55,8 @@
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  margin-right: 50px;
+  padding: 0px;
 }
 
 .slider::-moz-range-thumb {
@@ -62,6 +65,7 @@
   background: #16c098;
   border-radius: 50%;
   cursor: pointer;
+  padding: 0px;
 }
 
 .labels {

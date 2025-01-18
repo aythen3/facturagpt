@@ -135,7 +135,7 @@ const Pricing = () => {
   };
 
   const getSelectedPlanIndex = () => {
-    if (sliderValue <= 10) return 0;
+    if (sliderValue <= 9) return 0;
     if (sliderValue <= 49) return 1;
     if (sliderValue <= 69) return 2;
     if (sliderValue <= 94) return 3;

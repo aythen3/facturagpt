@@ -58,9 +58,7 @@
 .button {
   background-color: #10a37f;
   color: white;
-  font-weight: 600;
   width: 143px;
-  height: 30px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -70,19 +68,19 @@
   -moz-border-radius: 7px;
   -ms-border-radius: 7px;
   -o-border-radius: 7px;
+  padding: 6px;
 }
 
 .button:hover {
-  background-color: #ececec;
+  background-color: #0c8e6d;
 }
 
 .buttonLogIn {
   background-color: #6e6e80;
   color: white;
-  font-weight: 500;
 }
 .buttonLogIn:hover {
-  background-color: #104237;
+  background-color: #5a5a67;
 }
 .navFlex {
   display: flex;

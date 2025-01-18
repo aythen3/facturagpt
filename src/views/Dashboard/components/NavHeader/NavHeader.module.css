@@ -64,12 +64,14 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: #16c098;
+    font-weight: 500;
   }
   .gpt {
     background: linear-gradient(90deg, #0f5443 66%, #222222 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: #16c098;
+    font-weight: 700;
   }
 
   span {

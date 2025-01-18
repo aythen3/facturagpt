@@ -4,10 +4,13 @@ import PricingCards from "../../components/PricingCard/PricingCard";
 import BillingSlider from "../../components/BillingSlider/BillingSlider";
 import flag from "../../assets/flag.svg";
 import heart from "../../assets/heart.svg";
-import pdf from "../../assets/pdfIconNew.svg";
-import jpg from "../../assets/jpgIconNew.svg";
-import png from "../../assets/pngIconNew.svg";
-import xml from "../../assets/xmlIconNewGreen.svg";
+import jpg from "../../assets/jpgNewFormat.svg";
+import png from "../../assets/pngNewFormat.svg";
+import txt from "../../assets/txtNewFormat.svg";
+import csv from "../../assets/csvNewFormat.svg";
+import json from "../../assets/jsonNewFormat.svg";
+import xml from "../../assets/xmlNewFormat.svg";
+
 import outlook from "../../assets/outlook.svg";
 import gmail from "../../assets/gmail.svg";
 import xslx from "../../assets/xlsx.svg";
@@ -71,7 +74,7 @@ const Packs = () => {
   const horasTotalesFormatted = numberFormatter.format(horasRedondeadas);
   const valorEnDolaresFormatted = formatNumber(valorEnDolares);
 
-  const cardsData = [pdf, jpg, png, xml];
+  const cardsData = [jpg, png, txt, csv, json, xml];
   const compatiblePrograms = [outlook, gmail, xslx, odoo, logoImage, stripe];
 
   const steps = [

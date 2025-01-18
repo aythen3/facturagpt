@@ -31,7 +31,6 @@ const stripePromise = loadStripe(
 const NavbarAdmin = () => {
   const { user } = useSelector((state) => state.user);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
-  const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation("navbarAdmin");
 
@@ -39,6 +38,16 @@ const NavbarAdmin = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // =======================
+  const [typeContentAutomate, setTypeContentAutomate] = useState("");
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setTypeContentAutomate(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+  // =======================
   const handleProfileClick = () => {
     setShowSidebar(!showSidebar);
   };
@@ -59,6 +68,7 @@ const NavbarAdmin = () => {
     setIsModalAutomate(false);
     setTypeContentAutomate("");
   };
+
   return (
     <>
       <Elements stripe={stripePromise}>
@@ -155,8 +165,9 @@ const NavbarAdmin = () => {
           {typeContentAutomate && (
             <PanelAutomate
               typeContent={handleShowContentAutomate}
-              close={handleCloseContentAutomate}
+              close={handleCloseNewClient}
               type={typeContentAutomate}
+              isAnimating={isAnimating}
             />
           )}
         </div>

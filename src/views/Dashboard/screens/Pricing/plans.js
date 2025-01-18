@@ -30,7 +30,7 @@ export const plansData = [
   },
   {
     title: "Pro",
-    price: "-",
+    price: "299",
     documentPrices: ["0.15€ for document", "0.13€ for document"],
     features: [
       "2.000-20.000 documentos",
