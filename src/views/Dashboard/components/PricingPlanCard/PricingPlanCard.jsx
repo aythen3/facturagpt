@@ -14,30 +14,35 @@ const PricingPlanCard = ({
   const navigate = useNavigate();
   const getDocumentPrice = () => {
     if (sliderValue <= 9) return 0;
-    if (sliderValue <= 20) return 0.2;
-    if (sliderValue <= 30) return 0.19;
-    if (sliderValue <= 40) return 0.18;
+    if (sliderValue <= 19) return 0.2;
+    if (sliderValue <= 29) return 0.19;
+    if (sliderValue <= 39) return 0.18;
     if (sliderValue <= 49) return 0.16;
-    if (sliderValue <= 69) return 0.15;
-    if (sliderValue <= 70) return 0.13;
-    if (sliderValue <= 80) return 0.11;
+    if (sliderValue <= 59) return 0.15;
+    if (sliderValue <= 69) return 0.13;
+    if (sliderValue <= 79) return 0.12;
+    if (sliderValue <= 89) return 0.11;
     if (sliderValue <= 94) return 0.09;
+    if (sliderValue <= 99) return 0.05;
     return 0.05;
   };
   const documentPrice = getDocumentPrice();
   const calculatePrice = () => {
     // if (sliderValue <= 10) return "0,00";
-    if (sliderValue > 94) return "¿Aún más?";
+    if (sliderValue == 100) return "¿Aún más?";
     console.log(sliderValue);
     if (sliderValue <= 9) return 0;
-    if (sliderValue <= 20) return "3.99";
-    if (sliderValue <= 30) return "3.80";
-    if (sliderValue <= 40) return "3.60";
-    if (sliderValue <= 49) return "3.20";
-    if (sliderValue <= 69) return "299";
-    if (sliderValue <= 70) return "259";
-    if (sliderValue <= 80) return "2,199.00";
-    if (sliderValue <= 94) return "1,799.00";
+    if (sliderValue <= 19) return "4";
+    if (sliderValue <= 29) return "38";
+    if (sliderValue <= 39) return "92";
+    if (sliderValue <= 49) return "falta";
+    if (sliderValue <= 59) return "322";
+    if (sliderValue <= 69) return "712";
+    if (sliderValue <= 79) return "1.312";
+    if (sliderValue <= 89) return "2.412";
+    if (sliderValue <= 94) return "5.112";
+    if (sliderValue <= 99) return "7.612";
+    // if (sliderValue <= 94) return "7.612";
     // console.log((documentos * documentPrice).toFixed(2).replace('.', ','));
     // return (documentos * documentPrice).toFixed(2).replace('.', ',');
     return price;
@@ -59,7 +64,7 @@ const PricingPlanCard = ({
           )}
         </p>
         {priceTag && <span className={styles.priceTag}>{priceTag}</span>}
-        {sliderValue > 9 && sliderValue <= 94 && (
+        {sliderValue > 9 && sliderValue <= 99 && (
           <p className={styles.docPrice}>
             {getDocumentPrice().toFixed(2)}€ por documento
           </p>
