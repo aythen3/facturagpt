@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./panelAutomate.module.css";
-import CloseSVG from "../svgs/CloseSVG";
-import TitleComponent from "../Components/TitleComponent";
-import SearchComponent from "../Components/SearchComponent/SearchComponent";
 import CardAutomate from "../Components/CardAutomate/CardAutomate";
 import { data } from "../utils/automatesJson";
 import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/GmailAndOutlook";
@@ -20,9 +17,11 @@ import {
   createAutomation,
   getAllUserAutomations,
 } from "../../../../../actions/automations";
-import { setUser } from "../../../../../slices/emailManagerSlices";
 import { useNavigate } from "react-router-dom";
 import ModalBlackBgTemplate from "../../ModalBlackBgTemplate/ModalBlackBgTemplate";
+import chevronLeft from "../../../assets/chevronLeft.svg";
+import automation from "../../../assets/automation.svg";
+import CustomSearchbar from "../../CustomSearchbar/CustomSearchbar";
 
 const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
   const { user } = useSelector((state) => state.user);
@@ -31,12 +30,52 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
   const dispatch = useDispatch();
   const [dataFilter, setDataFilter] = useState(data || newData);
   const [filterType, setfilterType] = useState("Todas");
+  const [searchTerm, setSearchTerm] = useState("");
   const handleDataFilter = (searchTerm) => {
     const filteredData = data.filter((card) =>
       card.automateName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setDataFilter(filteredData);
   };
+
+  //   ================================ CONFIGS =====================================
+
+  const [gmailAndOutlookConfiguration, setGmailAndOutlookConfiguration] =
+    useState({
+      folderLocation: "/Inicio",
+      includeAllRemitents: true,
+      subjectExactMatch: true,
+      bodyExactMatch: true,
+      attachmentExactMatch: true,
+      selectedTypes: [],
+      addedRemitents: [],
+      subjectKeyWords: [],
+      bodyKeyWords: [],
+      notificateGmail: false,
+      notificateWhatsApp: false,
+      emailConnectionData: [],
+      selectedEmailConnection: "",
+      fileName: "",
+      tags: "",
+      gmailToNotificate: "",
+      whatsAppToNotificate: "",
+      notificateAfterExport: false,
+    });
+
+  useEffect(() => {
+    console.log(
+      "gmailAndOutlookConfiguration changed to:",
+      gmailAndOutlookConfiguration
+    );
+  }, [gmailAndOutlookConfiguration]);
+  //   ==============================================================================
+  useEffect(() => {
+    if (searchTerm === "") {
+      setDataFilter(data || newData);
+    } else {
+      handleDataFilter(searchTerm);
+    }
+  }, [searchTerm]);
 
   const typeFilterButton =
     filterType === "Entrada / Input" ? "input" : "output";
@@ -62,41 +101,58 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
   }, [userAutomations]);
 
   const handleAddAutomation = () => {
-    console.log("Adding automation...", type);
-    // Aca podes agregar la data hardcodeada por el momento para poder testear, te dejo la action comentada para que puedas probar
+    console.log(
+      "Adding automation...",
+      type,
+      "with data:",
+      gmailAndOutlookConfiguration
+    );
 
-    // if (user) {
-    //   dispatch(
-    //     createAutomation({
-    //       userId: user?.id,
-    //       email: user?.email,
-    //       automationData: {
-    //         name: `New ${type} Automation`,
-    //         description: "Automation test...",
-    //         type, // esto es lo unico que tenemos de estados por el momento...
-    //       },
-    //     })
-    //   );
-    // }
+    // Por el momento testeamos con gmail y outlook
+
+    if (user) {
+      dispatch(
+        createAutomation({
+          userId: user?.id,
+          email: user?.email,
+          automationData: gmailAndOutlookConfiguration,
+        })
+      );
+    }
   };
 
   return (
     <ModalBlackBgTemplate close={close} isAnimating={isAnimating}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.content_header}>
-            <div className={styles.header}>
-              <TitleComponent title="Añadir Automatización" />
-              <div>
-                <div onClick={close}>
-                  <CloseSVG />
-                </div>
+          <div className={styles.headerContainer}>
+            <div className={styles.headerLeft}>
+              <div onClick={close} className={styles.backButton}>
+                <img src={chevronLeft} alt="chevronLeft" />
               </div>
+              <h2>Añadir Automatización</h2>
+            </div>
+            <div className={styles.buttonsContainer}>
+              <button
+                onClick={close}
+                className={`${styles.buttons_footer} ${styles.button_back}`}
+              >
+                Atrás
+              </button>
+              <button
+                onClick={handleAddAutomation}
+                className={`${styles.buttons_footer} ${styles.button_add}`}
+              >
+                <img src={automation} alt="automation" /> Guardar
+              </button>
             </div>
           </div>
           <div className={styles.body}>
-            <div>
-              <SearchComponent onSearch={handleDataFilter} />
+            <div className={styles.leftContainer}>
+              <CustomSearchbar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              />
               <div className={styles.buttons_header}>
                 <button
                   onClick={() => setfilterType("Todas")}
@@ -108,66 +164,77 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
                   onClick={() => setfilterType("Entrada / Input")}
                   className={`${styles.button_header} ${filterType === "Entrada / Input" && styles.button_header_active}`}
                 >
-                  Entrada / Input
+                  Entrada
                 </button>
                 <button
                   onClick={() => setfilterType("Salida / Output")}
                   className={`${styles.button_header} ${filterType === "Salida / Output" && styles.button_header_active}`}
                 >
-                  Salida / Output
+                  Salida
                 </button>
               </div>
               {filterType === "Todas" ? (
                 <>
-                  <p style={{ fontWeight: "bold" }}>Entrada / Input</p>
-                  {dataFilter
-                    .filter((card) => card.role === "input")
-                    .map((card) => (
-                      <CardAutomate
-                        key={card.id}
-                        type={card.type}
-                        name={card.automateName}
-                        image={card.image}
-                        contactType={card.contactType}
-                        typeContent={typeContent}
-                        isActive={activeCard === card.id}
-                        onCardClick={() => handleCardClick(card.id)}
-                      />
-                    ))}
+                  <p style={{ fontWeight: "bold" }}>Entrada</p>
+                  <div className={styles.cardsContainer}>
+                    {dataFilter
+                      .filter((card) => card.role === "input")
+                      .map((card) => (
+                        <CardAutomate
+                          fromPanel={true}
+                          key={card.id}
+                          type={card.type}
+                          name={card.automateName}
+                          image={card.image}
+                          contactType={card.contactType}
+                          typeContent={typeContent}
+                          isActive={activeCard === card.id}
+                          onCardClick={() => handleCardClick(card.id)}
+                        />
+                      ))}
+                  </div>
 
-                  <p style={{ fontWeight: "bold" }}>Salida / Output</p>
-                  {dataFilter
-                    .filter((card) => card.role === "output")
-                    .map((card) => (
-                      <CardAutomate
-                        key={card.id}
-                        type={card.type}
-                        name={card.automateName}
-                        image={card.image}
-                        contactType={card.contactType}
-                        typeContent={typeContent}
-                        isActive={activeCard === card.id}
-                        onCardClick={() => handleCardClick(card.id)}
-                      />
-                    ))}
+                  <p style={{ fontWeight: "bold" }}>Salida</p>
+                  <div className={styles.cardsContainer}>
+                    {dataFilter
+                      .filter((card) => card.role === "output")
+                      .map((card) => (
+                        <CardAutomate
+                          key={card.id}
+                          type={card.type}
+                          name={card.automateName}
+                          image={card.image}
+                          contactType={card.contactType}
+                          typeContent={typeContent}
+                          fromPanel={true}
+                          isActive={activeCard === card.id}
+                          onCardClick={() => handleCardClick(card.id)}
+                        />
+                      ))}
+                  </div>
                 </>
               ) : (
                 <>
-                  <p style={{ fontWeight: "bold" }}>{filterType}</p>
-                  {dataFilter
-                    .filter((card) => card.role === typeFilterButton)
-                    .map((card) => (
-                      <CardAutomate
-                        key={card.id}
-                        type={card.type}
-                        name={card.automateName}
-                        image={card.image}
-                        contactType={card.contactType}
-                        typeContent={typeContent}
-                        isActive={activeCard === card.id}
-                        onCardClick={() => handleCardClick(card.id)}
-                      />
-                    ))}
+                  <p style={{ fontWeight: "bold" }}>
+                    {filterType === "Entrada / Input" ? "Entrada" : "Salida"}
+                  </p>
+                  <div className={styles.cardsContainer}>
+                    {dataFilter
+                      .filter((card) => card.role === typeFilterButton)
+                      .map((card) => (
+                        <CardAutomate
+                          key={card.id}
+                          fromPanel={true}
+                          type={card.type}
+                          name={card.automateName}
+                          image={card.image}
+                          contactType={card.contactType}
+                          typeContent={typeContent}
+                          isActive={activeCard === card.id}
+                          onCardClick={() => handleCardClick(card.id)}
+                        />
+                      ))}
+                  </div>
                 </>
               )}
             </div>
@@ -177,7 +244,13 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
                 switch (type) {
                   case "Gmail":
                   case "Outlook":
-                    return <GmailAndOutlook type={type} />;
+                    return (
+                      <GmailAndOutlook
+                        configuration={gmailAndOutlookConfiguration}
+                        setConfiguration={setGmailAndOutlookConfiguration}
+                        type={type}
+                      />
+                    );
                   case "Google Drive":
                     return <GoogleDriveFormCreateAutomate type={type} />;
                   case "WhatsApp":
@@ -205,7 +278,7 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
             </div>
           </div>
 
-          <div className={styles.container_buttons_footer}>
+          {/* <div className={styles.container_buttons_footer}>
             <button
               onClick={close}
               className={`${styles.buttons_footer} ${styles.button_back}`}
@@ -219,7 +292,7 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
             >
               Añadir{" "}
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </ModalBlackBgTemplate>

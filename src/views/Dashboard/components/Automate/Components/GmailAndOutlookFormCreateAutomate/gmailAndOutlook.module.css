@@ -21,6 +21,9 @@
 .title_content_input {
   color: #1f184b;
   font-size: 18px;
+  line-height: 1;
+  margin-top: 15px;
+  margin-bottom: 8px;
 }
 
 .input_ubication {
@@ -96,4 +99,39 @@
   padding: 0 10px 0 10px;
   border-radius: 8px;
   margin: 25px 0 25px 0;
+}
+
+.cardTypesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 9px 0;
+}
+.singleTypeCard {
+  display: flex;
+  gap: 9px;
+  padding: 3px 12px;
+  border-radius: 30px;
+  border: 1px solid #e0e3e6;
+  span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #2a2e32;
+    user-select: none;
+  }
+}
+.minusIcon {
+  height: 13px;
+  margin-top: 1px;
+  width: 13px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 50%;
+  background: #dc3545;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.minusBlackIcon {
+  background: #464646;
 }
