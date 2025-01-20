@@ -280,7 +280,7 @@ const Dashboard = () => {
 
         const createdClientsResponse = await dispatch(
           createClients({
-            userId: user?.id,
+            userId: userRedux?.id,
             clientsData: clientsData,
           })
         );

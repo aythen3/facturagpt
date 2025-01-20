@@ -51,6 +51,7 @@ const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
 ]);
 
 const connectToImap = (config) => {
+  console.log("config", config);
   return new Promise((resolve, reject) => {
     const imap = new Imap(config);
 
@@ -610,6 +611,7 @@ const calculateTaxesAndDiscounts = (products) => {
       productImportWithoutDiscount: productImportWithoutDiscount.toFixed(2),
       productDiscountAmount: productDiscountAmount.toFixed(2),
       productImportWithTaxes: productImportWithTaxes.toFixed(2),
+      productDiscountRate: productDiscountRate.toFixed(2),
     };
   });
 };
