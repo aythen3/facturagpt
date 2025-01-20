@@ -165,6 +165,10 @@ const DashboardLogin = () => {
       dispatch(loginToManager({ email, password }))
         .unwrap()
         .then((response) => {
+          if (response.success === false) {
+            setError(response.message || "Error al iniciar sesión");
+            return;
+          }
           console.log("REPONSE LOGIN", response);
 
           let accountData = {

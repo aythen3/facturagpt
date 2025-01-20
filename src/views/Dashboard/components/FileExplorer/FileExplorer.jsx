@@ -283,23 +283,23 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           ? item.Key.split("/").slice(-2, -1)[0]
           : item.Key.split("/").pop();
 
-        const normalizedCurrentPath = currentPath.replace(/\/$/, "");
-        const normalizedItemPath = item.Key.replace(/\/$/, "");
+        const normalizedCurrentPath = currentPath?.replace(/\/$/, "");
+        const normalizedItemPath = item?.Key?.replace(/\/$/, "");
 
-        const currentSegments = normalizedCurrentPath.split("/");
-        const itemSegments = normalizedItemPath.split("/");
+        const currentSegments = normalizedCurrentPath?.split("/");
+        const itemSegments = normalizedItemPath?.split("/");
 
         const isChildOfCurrent =
-          itemSegments.slice(0, currentSegments.length).join("/") ===
-          currentSegments.join("/");
+          itemSegments?.slice(0, currentSegments?.length).join("/") ===
+          currentSegments?.join("/");
 
         const isOneLevelDeeper =
-          itemSegments.length === currentSegments.length + 1;
+          itemSegments?.length === currentSegments?.length + 1;
 
         const isNotSameAsCurrent = normalizedItemPath !== normalizedCurrentPath;
 
         const nameMatches =
-          !lowerSearchTerm || fileName.toLowerCase().includes(lowerSearchTerm);
+          !lowerSearchTerm || fileName?.toLowerCase().includes(lowerSearchTerm);
 
         return (
           isChildOfCurrent &&
@@ -543,7 +543,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           />
         )}
       </div>
-
 
       {renderBreadcrumbs()}
       <div className={styles.fileList}>
