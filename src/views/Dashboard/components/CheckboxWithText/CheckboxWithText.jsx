@@ -3,15 +3,21 @@ import styles from "./CheckboxWithText.module.css";
 import { MdCheckBox } from "react-icons/md";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
-const CheckboxWithText = ({ state, setState, text }) => {
+const CheckboxWithText = ({
+  state,
+  setState,
+  text,
+  color = "#0A5B48",
+  marginTop = "0px",
+}) => {
   return (
-    <div className={styles.checkboxWithTextContainer}>
+    <div style={{ marginTop }} className={styles.checkboxWithTextContainer}>
       {state ? (
         <MdCheckBox
           style={{ cursor: "pointer" }}
           onClick={() => setState(false)}
           size={20}
-          color="#0A5B48"
+          color={color}
         />
       ) : (
         <MdCheckBoxOutlineBlank
