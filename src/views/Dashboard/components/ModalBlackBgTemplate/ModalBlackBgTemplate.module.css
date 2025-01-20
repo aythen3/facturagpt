@@ -11,10 +11,10 @@
 
 .modalBlackContent {
   -webkit-animation: scaleUp 300ms ease-out forwards;
-  /* pointer-events: none; */
   z-index: 9999;
   width: fit-content;
-  width: 1200px;
+  width: 100%;
+  max-width: 1142px;
 }
 
 .bgModalBlackBgTemplate {

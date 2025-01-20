@@ -1,67 +1,30 @@
 import React from "react";
+import styles from "./InputComponent.module.css";
 
 const InputComponent = ({
   icon,
   placeholder,
   textButton,
   typeInput,
-  labelTag,
+  value,
+  setValue,
+  readOnly,
+  action,
 }) => {
   return (
-    <div
-      style={{
-        backgroundColor: "#F5F5F5",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0px 12px 0px 12px",
-        height: 32,
-        borderRadius: "4px",
-      }}
-    >
-      {labelTag && (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "5px",
-            backgroundColor: "white",
-            padding: "5px",
-            borderRadius: "15px",
-          }}
-        >
-          <span style={{ fontSize: "12px" }}>{labelTag}</span>
-          <button
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-              cursor: "pointer",
-            }}
-          >
-            X
-          </button>
-        </div>
-      )}
-      <div style={{ display: "flex", gap: "5px", width: "100%" }}>
-        {icon && <div>{icon}</div>}
+    <div className={styles.inputContainer}>
+      <div className={styles.inputWrapper}>
+        {icon && <div className={styles.iconContainer}>{icon}</div>}
         <input
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            width: "60%",
-          }}
+          readOnly={readOnly}
+          className={styles.inputField}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           type={typeInput}
           placeholder={placeholder}
         />
       </div>
-
-      <p
-        style={{
-          cursor: "pointer",
-          fontSize: "12px",
-          whiteSpace: "nowrap",
-        }}
-      >
+      <p onClick={action} className={styles.actionText}>
         {textButton}
       </p>
     </div>

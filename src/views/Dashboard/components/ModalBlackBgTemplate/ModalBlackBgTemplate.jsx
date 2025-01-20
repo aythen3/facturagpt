@@ -3,19 +3,9 @@ import styles from "./ModalBlackBgTemplate.module.css";
 const ModalBlackBgTemplate = ({ children, isAnimating, close }) => {
   return (
     <div className={styles.ModalBlackBgTemplate}>
-      <div
-        className={styles.bgModalBlackBgTemplate}
-        // onClick={handleCloseNewClient}
-        onClick={close}
-        // onClick={() => {
-        //   console.log("a");
-        // }}
-      ></div>
+      <div className={styles.bgModalBlackBgTemplate} onClick={close}></div>
       <div
         className={`${styles.modalBlackContent} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
-        // onClick={() => {
-        //   console.log("b");
-        // }}
       >
         {children}
       </div>

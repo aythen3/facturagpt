@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import TitleComponent from "./Components/TitleComponent";
 import SearchComponent from "./Components/SearchComponent/SearchComponent";
 import CardAutomate from "./Components/CardAutomate/CardAutomate";
 import { data } from "./utils/automatesJson";
 import styles from "./automate.module.css";
-import CloseSVG from "./svgs/CloseSVG";
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
 import { useDispatch } from "react-redux";
+import closeGray from "../../assets/closeGray.svg";
+import chevronLeft from "../../assets/chevronLeft.svg";
+import { Search } from "lucide-react";
+import k from "../../assets/k.svg";
+import cmd from "../../assets/cmd.svg";
+import searchMagnify from "../../assets/searchMagnify.svg";
+import automation from "../../assets/automation.svg";
 
 const Automate = ({
   close,
@@ -19,6 +24,7 @@ const Automate = ({
 }) => {
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
   const handleDataFilter = (searchTerm) => {
     const filteredData = data.filter((card) =>
       card.automateName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -26,6 +32,13 @@ const Automate = ({
     setDataFilter(filteredData);
   };
 
+  useEffect(() => {
+    if (searchTerm === "") {
+      setDataFilter(data || newData);
+    } else {
+      handleDataFilter(searchTerm);
+    }
+  }, [searchTerm]);
   const handleCloseNewClient = () => {
     setIsAnimating(true);
     setTimeout(() => {
@@ -58,37 +71,69 @@ const Automate = ({
       <div
         className={`${styles.content} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
-        <div className={styles.automate_header}>
-          <TitleComponent title="Automatiza" />
-          <div onClick={handleCloseNewClient}>
-            <CloseSVG />
+        <div className={styles.headerContainer}>
+          <div className={styles.headerLeft}>
+            <div onClick={handleCloseNewClient} className={styles.backButton}>
+              <img src={chevronLeft} alt="chevronLeft" />
+            </div>
+            <h2>Automatiza</h2>
           </div>
+          {/* <div onClick={handleCloseNewClient} className={styles.closeIcon}>
+            <img src={closeGray} alt="closeGray" />
+          </div> */}
         </div>
         <div className={styles.automate_content}>
-          <SearchComponent onSearch={handleDataFilter} />
-          {dataFilter.map((card) => (
-            <CardAutomate
-              fullContent={true}
-              type={card.type}
-              typeContent={typeContent}
-              key={card.id}
-              name={card.automateName}
-              image={card.image}
-              contactType={card.contactType}
-              isBorders={true}
-            />
-          ))}
+          <div className={styles.searchContainer}>
+            <div className={styles.searchInputWrapper}>
+              <div className={styles.searchIcon}>
+                <img src={searchMagnify} alt="searchMagnify" />
+              </div>
+              <input
+                type="text"
+                placeholder="Buscar"
+                className={styles.searchInput}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <div
+                onClick={() => setShowLocationModal(true)}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={cmd} alt="cmdIcon" />
+              </div>
+              <div
+                style={{ marginLeft: "7px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={k} alt="kIcon" />
+              </div>
+            </div>
+          </div>
+          <div className={styles.contentContainer}>
+            {dataFilter.map((card, i) => (
+              <CardAutomate
+                fullContent={true}
+                type={card.type}
+                typeContent={typeContent}
+                key={card.id}
+                name={card.automateName}
+                image={card.image}
+                contactType={card.contactType}
+                isBorders={true}
+                last={i === dataFilter.length - 1}
+              />
+            ))}
+          </div>
         </div>
         <div className={styles.container_buttons_footer}>
           <button
             onClick={close}
             className={`${styles.buttons_footer} ${styles.button_back}`}
           >
-            {" "}
             Atrás
           </button>
           <button className={`${styles.buttons_footer} ${styles.button_add}`}>
-            <PlusIcon /> Nueva Automatización
+            <img src={automation} alt="automation" /> Nueva Automatización
           </button>
         </div>
       </div>

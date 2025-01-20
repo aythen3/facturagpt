@@ -1,41 +1,41 @@
 import React from "react";
+import styles from "./LabelInputComponent.module.css";
 
 const LabelInputComponent = ({
   label,
   placeholder,
-  inputType,
+  inputType = "text",
   isSelect,
   options,
+  value,
+  setValue,
+  maxLength,
 }) => {
   return (
-    <div>
-      <label style={{ fontWeight: "bold" }} htmlFor="">
+    <div className={styles.labelInputContainer}>
+      <label className={styles.label} htmlFor="">
         {label}
       </label>
       {!isSelect ? (
         <input
-          style={{
-            backgroundColor: "#F2F2F2",
-            borderRadius: "8px",
-            height: 30,
-            width: "100%",
-            border: "none",
-            padding: "8px",
+          className={styles.input}
+          value={value}
+          maxLength={maxLength}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (!maxLength) {
+              setValue(value);
+              return;
+            }
+            if (value.length <= maxLength) {
+              setValue(value);
+            }
           }}
           type={inputType}
           placeholder={placeholder}
         />
       ) : (
-        <select
-          style={{
-            backgroundColor: "#F2F2F2",
-            borderRadius: "8px",
-            height: 30,
-            width: "100%",
-            border: "none",
-            padding: "8px",
-          }}
-        >
+        <select className={styles.select}>
           {options.map((option) => (
             <option key={option} value="">
               {option}
