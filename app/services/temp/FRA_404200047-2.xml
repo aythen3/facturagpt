@@ -105,11 +105,15 @@
                 <minuto>0</minuto>
                 <segundo>0</segundo>
             </fecha_albaran>
-            <albaran>R-4022000057</albaran>
-            <referencia>OBRA 289</referencia>
+            <albaran>R-402200057</albaran>
+            <referencia>OBRA 289 REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
+<<<<<<< HEAD
+            <descripcion>TERMINAL CURV.403F 22-3/4 C/ARAND.LT.</descripcion>
+=======
             <descripcion>TERMINAL CURV.403SF 22-3/4 CI/ARAND.LT.</descripcion>
+>>>>>>> d70557490bd66f8d7448f530300d3a296a37c9bc
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>1</posicion_pedido>
@@ -117,9 +121,9 @@
             <cantidad_entregada>50</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>1</posicion_factura>
-            <precio_unitario>12.77</precio_unitario>
-            <unidad_precio>12.77</unidad_precio>
-            <cantidad_precio>478.88</cantidad_precio>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
             <observaciones/>
             <importes>
                 <importe id="0">
@@ -128,6 +132,13 @@
                     <valor_importe>638.50</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>478.88</valor_importe>
+                    <porcentaje>25.00</porcentaje>
+                    <signo_importe>02</signo_importe>
                 </importe>
             </importes>
             <posicion_referenciada/>
@@ -142,11 +153,11 @@
                 <minuto>0</minuto>
                 <segundo>0</segundo>
             </fecha_albaran>
-            <albaran>R-4022000058</albaran>
-            <referencia>OBRA 314</referencia>
+            <albaran>R-402200058</albaran>
+            <referencia>OBRA 314 REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>Bandeja 66 perforada PVC-M1 U23X 60x200 gris</descripcion>
+            <descripcion>Bandeja 66 perforado PVC-M1 U23X 60x200 gris</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>2</posicion_pedido>
@@ -154,9 +165,9 @@
             <cantidad_entregada>50</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>2</posicion_factura>
-            <precio_unitario>18.38</precio_unitario>
-            <unidad_precio>18.38</unidad_precio>
-            <cantidad_precio>597.35</cantidad_precio>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
             <observaciones/>
             <importes>
                 <importe id="0">
@@ -165,6 +176,13 @@
                     <valor_importe>919.00</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>597.35</valor_importe>
+                    <porcentaje>35.00</porcentaje>
+                    <signo_importe>02</signo_importe>
                 </importe>
             </importes>
             <posicion_referenciada/>
@@ -179,8 +197,8 @@
                 <minuto>0</minuto>
                 <segundo>0</segundo>
             </fecha_albaran>
-            <albaran>R-4022000059</albaran>
-            <referencia>DOCS AITHEN</referencia>
+            <albaran>R-402200059</albaran>
+            <referencia>DOCS AITHEN REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>CURVA FIG.2agCu 15x1/2</descripcion>
@@ -191,9 +209,9 @@
             <cantidad_entregada>50</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>3</posicion_factura>
-            <precio_unitario>0.54</precio_unitario>
-            <unidad_precio>0.54</unidad_precio>
-            <cantidad_precio>14.85</cantidad_precio>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
             <observaciones/>
             <importes>
                 <importe id="0">
@@ -202,6 +220,13 @@
                     <valor_importe>27.00</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>14.85</valor_importe>
+                    <porcentaje>45.00</porcentaje>
+                    <signo_importe>02</signo_importe>
                 </importe>
             </importes>
             <posicion_referenciada/>
@@ -216,8 +241,8 @@
                 <minuto>0</minuto>
                 <segundo>0</segundo>
             </fecha_albaran>
-            <albaran>R-4022000060</albaran>
-            <referencia>DOCS AITHEN</referencia>
+            <albaran>R-402200060</albaran>
+            <referencia>DOCS AITHEN REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>CAJA EMPOTRAR UNIVERSAL ENLAZABLE</descripcion>
@@ -228,9 +253,9 @@
             <cantidad_entregada>300</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>4</posicion_factura>
-            <precio_unitario>0.81</precio_unitario>
-            <unidad_precio>0.81</unidad_precio>
-            <cantidad_precio>170.10</cantidad_precio>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
             <observaciones/>
             <importes>
                 <importe id="0">
@@ -239,6 +264,13 @@
                     <valor_importe>243.00</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>170.10</valor_importe>
+                    <porcentaje>30.00</porcentaje>
+                    <signo_importe>02</signo_importe>
                 </importe>
             </importes>
             <posicion_referenciada/>
@@ -253,11 +285,11 @@
                 <minuto>0</minuto>
                 <segundo>0</segundo>
             </fecha_albaran>
-            <albaran>R-4022000060</albaran>
-            <referencia>DOCS AITHEN</referencia>
+            <albaran>R-402200060</albaran>
+            <referencia>DOCS AITHEN REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>CURVA 90 H-H 2Cu 15</descripcion>
+            <descripcion>CURVA 90 H-H 2Acu 15</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>5</posicion_pedido>
@@ -265,9 +297,9 @@
             <cantidad_entregada>25</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>5</posicion_factura>
-            <precio_unitario>0.90</precio_unitario>
-            <unidad_precio>0.90</unidad_precio>
-            <cantidad_precio>12.38</cantidad_precio>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
             <observaciones/>
             <importes>
                 <importe id="0">
@@ -276,6 +308,13 @@
                     <valor_importe>22.50</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>12.38</valor_importe>
+                    <porcentaje>45.00</porcentaje>
+                    <signo_importe>02</signo_importe>
                 </importe>
             </importes>
             <posicion_referenciada/>
@@ -290,8 +329,8 @@
                 <minuto>0</minuto>
                 <segundo>0</segundo>
             </fecha_albaran>
-            <albaran>R-4022000061</albaran>
-            <referencia>OBRA 303</referencia>
+            <albaran>R-402200061</albaran>
+            <referencia>OBRA 303 REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>Soporte horizontal PVC-M1 P/66200/1 U23X gris</descripcion>
@@ -302,9 +341,9 @@
             <cantidad_entregada>20</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>6</posicion_factura>
-            <precio_unitario>9.48</precio_unitario>
-            <unidad_precio>9.48</unidad_precio>
-            <cantidad_precio>123.24</cantidad_precio>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
             <observaciones/>
             <importes>
                 <importe id="0">
@@ -313,6 +352,13 @@
                     <valor_importe>189.60</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>123.24</valor_importe>
+                    <porcentaje>35.00</porcentaje>
+                    <signo_importe>02</signo_importe>
                 </importe>
             </importes>
             <posicion_referenciada/>
@@ -327,8 +373,8 @@
                 <minuto>0</minuto>
                 <segundo>0</segundo>
             </fecha_albaran>
-            <albaran>R-4022000061</albaran>
-            <referencia>OBRA 303</referencia>
+            <albaran>R-402200061</albaran>
+            <referencia>OBRA 303 REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>ESCUADRA 300-150</descripcion>
@@ -339,9 +385,9 @@
             <cantidad_entregada>10</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>7</posicion_factura>
-            <precio_unitario>14.87</precio_unitario>
-            <unidad_precio>14.87</unidad_precio>
-            <cantidad_precio>148.70</cantidad_precio>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
             <observaciones/>
             <importes>
                 <importe id="0">
@@ -350,6 +396,57 @@
                     <valor_importe>148.70</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>148.70</valor_importe>
+                    <porcentaje>0.00</porcentaje>
+                    <signo_importe>02</signo_importe>
+                </importe>
+            </importes>
+            <posicion_referenciada/>
+        </posiciones>
+         <posiciones id="8">
+            <posicion_albaran>4</posicion_albaran>
+            <fecha_albaran>
+                <anyo>2024</anyo>
+                <mes>12</mes>
+                <dia>15</dia>
+                <hora>0</hora>
+                <minuto>0</minuto>
+                <segundo>0</segundo>
+            </fecha_albaran>
+            <albaran>R-402200061</albaran>
+            <referencia>DOCS AITHEN REF. AUX.</referencia>
+            <codigo_partida/>
+            <desc_partida/>         
+            <descripcion>CAJA EMPOTRAR UNIVERSAL ENLAZABLE</descripcion>
+            <pedido>404200047</pedido>
+            <pedido_cliente>404200047</pedido_cliente>
+            <posicion_pedido>8</posicion_pedido>
+            <referencia_factura/>
+            <cantidad_entregada>200</cantidad_entregada>
+            <unidad>UN</unidad>
+            <posicion_factura>8</posicion_factura>
+            <precio_unitario/>
+            <unidad_precio/>
+            <cantidad_precio/>
+            <observaciones/>
+            <importes>
+                <importe id="0">
+                    <tipo_importe>01</tipo_importe>
+                    <desc_tipo_importe>Neto</desc_tipo_importe>
+                    <valor_importe>162.00</valor_importe>
+                    <porcentaje>00.00</porcentaje>
+                    <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento</desc_tipo_importe>
+                    <valor_importe>113.40</valor_importe>
+                    <porcentaje>30.00</porcentaje>
+                    <signo_importe>02</signo_importe>
                 </importe>
             </importes>
             <posicion_referenciada/>

@@ -133,7 +133,7 @@
 <tipo_importe>02</tipo_importe>
 <desc_tipo_importe>Descuento</desc_tipo_importe>
 <valor_importe>%productImport%</valor_importe>
-<porcentaje>%productDiscountRate%.00</porcentaje>
+<porcentaje>%productDiscountRate%</porcentaje>
 <signo_importe>02</signo_importe>
 </importe>
 </importes>
