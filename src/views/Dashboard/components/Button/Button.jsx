@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./Button.module.css";
-const Button = ({ children, type = "green" }) => {
+const Button = ({ children, type = "green", action }) => {
   return (
     <button
+      onClick={action}
       type="button"
       className={`${styles.buttonTemplate} ${type == "green" && styles.buttonTemplateGreen} ${type == "white" && styles.buttonTemplateWhite}`}
     >

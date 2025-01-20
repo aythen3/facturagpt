@@ -60,7 +60,9 @@ const Automate = ({
       >
         <div className={styles.automate_header}>
           <TitleComponent title="Automatiza" />
-          <CloseSVG onClick={handleCloseNewClient} />
+          <div onClick={handleCloseNewClient}>
+            <CloseSVG />
+          </div>
         </div>
         <div className={styles.automate_content}>
           <SearchComponent onSearch={handleDataFilter} />

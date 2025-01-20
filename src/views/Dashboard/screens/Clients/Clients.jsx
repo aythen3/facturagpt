@@ -24,6 +24,8 @@ import EditableInput from "./EditableInput/EditableInput";
 import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
 import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
+import { clearTransaction } from "../../../../slices/transactionsSlices";
+import FileExplorer from "../../components/FileExplorer/FileExplorer";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -44,8 +46,8 @@ const Clients = () => {
 
   const [clientData, setClientData] = useState({
     clientName: "",
-    email: "",
-    numberPhone: "",
+    companyEmail: "",
+    companyPhoneNumber: "",
     codeCountry: "",
     webSite: "",
     billingEmail: "",
@@ -54,6 +56,10 @@ const Clients = () => {
     clientCif: "",
     preferredCurrency: "",
     cardNumber: "",
+    companyAddress: "",
+    companyCity: "",
+    companyProvince: "",
+    companyCountry: "",
   });
 
   useEffect(() => {
@@ -64,8 +70,8 @@ const Clients = () => {
     if (client?.clientData) {
       setClientData({
         clientName: client.clientData.clientName || "",
-        email: client.email || "",
-        numberPhone: client.clientData.numberPhone || "",
+        companyEmail: client.clientData.companyEmail || "",
+        companyPhoneNumber: client.clientData.companyPhoneNumber || "",
         codeCountry: client.clientData.codeCountry || "",
         webSite: client.clientData.webSite || "",
         billingEmail: client.email || "",
@@ -74,20 +80,28 @@ const Clients = () => {
         clientCif: client.clientData.clientCif || "",
         preferredCurrency: client.clientData.preferredCurrency || "",
         cardNumber: client.clientData.cardNumber || "",
+        companyAddress: client.clientData.companyAddress || "",
+        companyCity: client.clientData.companyCity || "",
+        companyProvince: client.clientData.companyProvince || "",
+        companyCountry: client.clientData.companyCountry || "",
       });
     } else {
       setClientData({
-        fullName: "",
-        email: "",
-        numberPhone: "",
+        clientName: "",
+        companyEmail: "",
+        companyPhoneNumber: "",
         codeCountry: "",
         webSite: "",
         billingEmail: "",
-        zipCode: "",
+        clientZip: "",
         country: "",
-        taxNumber: "",
+        clientCif: "",
         preferredCurrency: "",
         cardNumber: "",
+        companyAddress: "",
+        companyCity: "",
+        companyProvince: "",
+        companyCountry: "",
       });
     }
   }, [client]);
@@ -178,7 +192,7 @@ const Clients = () => {
     const userId = user?.id;
     const email = user?.email;
 
-    console.log("CLIENTESSSSSSSSSS", clients);
+    console.log("CLIENTESSSSSSSSSS", clientData);
     if (client && client.clientData) {
       dispatch(
         updateClient({
@@ -244,7 +258,7 @@ const Clients = () => {
 
   const handleActions = (rowIndex, client) => {
     dispatch(setClient(client));
-    setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex); // Alterna el estado
+    setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
   };
 
   const handleEditClient = () => {
@@ -335,155 +349,162 @@ const Clients = () => {
   };
 
   const [editingIndices, setEditingIndices] = useState([]);
+  console.log("DATAAAAA--------", clientData);
 
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div className={styles.container} onClick={() => setShowSidebar(false)}>
-        <div className={styles.clientsHeader}>
-          <h2>{t("title")}</h2>
-          <div className={styles.searchContainer}>
-            <button
-              className={`${styles.addButton} ${styles.btnNewClient}`}
-              onClick={() => setShowNewClient(true)}
-            >
-              <img src={plusIcon} alt="Nuevo cliente" />
-              {t("buttonNewClient")}
-            </button>
-            <button className={styles.infoBtn}>Analíticas</button>
+      <div style={{ display: "flex" }}>
+        <FileExplorer />
+        <div className={styles.container} onClick={() => setShowSidebar(false)}>
+          <div className={styles.clientsHeader}>
+            <h2>{t("title")}</h2>
+            <div className={styles.searchContainer}>
+              <button
+                className={`${styles.addButton} ${styles.btnNewClient}`}
+                onClick={() => setShowNewClient(true)}
+              >
+                <img src={plusIcon} alt="Nuevo cliente" />
+                {t("buttonNewClient")}
+              </button>
+              <button className={styles.infoBtn}>Analíticas</button>
 
-            <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder={t("placeholderSearch")}
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-              <div className={styles.inputIconOutsideContainer}>
-                <img src={filterSearch} className={styles.inputIconOutside} />
+              <div className={styles.inputWrapper}>
+                <img src={searchGray} className={styles.inputIconInside} />
+                <input
+                  type="text"
+                  placeholder={t("placeholderSearch")}
+                  value={search}
+                  onChange={handleSearchChange}
+                  className={styles.searchInput}
+                />
+                <div className={styles.inputIconOutsideContainer}>
+                  <img src={filterSearch} className={styles.inputIconOutside} />
+                </div>
               </div>
+              <button className={styles.addButton}>
+                <img src={plusIcon} />
+              </button>
             </div>
-            <button className={styles.addButton}>
-              <img src={plusIcon} />
-            </button>
           </div>
-        </div>
 
-        <div className={styles.clientsTable} style={{ overflow: "auto" }}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.small}>
-                  <input
-                    type="checkbox"
-                    name="clientSelected"
-                    checked={
-                      selectedClientIds.length == tableData.length
-                        ? true
-                        : false
-                    }
-                    onClick={selectAllClients}
-                  />
-                </th>
-                {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 7 ? styles.hola : ""}>
-                    {header}
+          <div className={styles.clientsTable} style={{ overflow: "auto" }}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.small}>
+                    <input
+                      type="checkbox"
+                      name="clientSelected"
+                      checked={
+                        selectedClientIds.length == tableData.length
+                          ? true
+                          : false
+                      }
+                      onClick={selectAllClients}
+                    />
                   </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {clients &&
-                clients.map((client, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="clientSelected"
-                        // onClick={() => selectClient(rowIndex, row)}
-                        onChange={() => toggleClientSelection(client?.id)}
-                        // checked={
-                        //   clientSelected.includes(rowIndex) ? true : false
-                        // }
-                      />
-                    </td>
-                    <td className={styles.name}>
-                      {client.clientData.clientName}
-                    </td>
-                    <td>{client?.email}</td>
+                  {tableHeaders.map((header, index) => (
+                    <th key={index} className={index == 7 ? styles.hola : ""}>
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {clients &&
+                  clients.map((client, rowIndex) => (
+                    <tr key={rowIndex}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="clientSelected"
+                          // onClick={() => selectClient(rowIndex, row)}
+                          onChange={() => toggleClientSelection(client?.id)}
+                          // checked={
+                          //   clientSelected.includes(rowIndex) ? true : false
+                          // }
+                        />
+                      </td>
+                      <td className={styles.name}>
+                        {client.clientData.clientName}
+                      </td>
+                      <td>{client?.clientData.companyEmail || client.email}</td>
 
-                    {/* <td>
+                      {/* <td>
                     {Array.isArray(row.email)
                       ? row.email.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.email}
                   </td> */}
-                    <td>
-                      {formatPhoneNumber(client.clientData.companyPhoneNumber)}
-                    </td>
-                    <td>
-                      {client.clientData.clientAddress}{" "}
-                      {client.clientData.clientProvice}
-                    </td>
-                    <td>{client.clientData.taxNumber}</td>
-                    <td>{client.clientData.cardNumber}</td>
-                    {/* <td>
+                      <td>{client.clientData.companyPhoneNumber}</td>
+                      <td>
+                        {client.clientData.companyAddress}{" "}
+                        {client.clientData.clientProvice}
+                      </td>
+                      <td>{client.clientData.taxNumber}</td>
+                      <td>{client.clientData.cardNumber}</td>
+                      {/* <td>
                     {Array.isArray(row.metodosPago)
                       ? row.metodosPago.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.metodosPago}
                   </td> */}
-                    <td>{client.clientData.preferredCurrency}</td>
-                    <td className={styles.actions}>
-                      <div className={styles.transacciones}>
-                        <a
-                          onClick={() => handleGetOneClient(client.id)}
-                          href="#"
-                        >
-                          Ver
-                        </a>
-                        <span>(2.345)</span>
-                      </div>
-                      <div onClick={() => handleActions(rowIndex, client)}>
-                        <img src={optionDots} />
-                      </div>
-                      {selectedRowIndex === rowIndex && (
-                        <ul className={styles.content_menu_actions}>
-                          <li
+                      <td>{client.clientData.preferredCurrency}</td>
+                      <td className={styles.actions}>
+                        <div className={styles.transacciones}>
+                          <a
                             onClick={() => {
-                              handleEditClient();
-                              setSelectedRowIndex(null);
+                              dispatch(clearTransaction());
+                              handleGetOneClient(client.id);
                             }}
-                            className={styles.item_menu_actions}
+                            href="#"
                           >
-                            Editar
-                          </li>
-                          <li
-                            onClick={(e) => {
-                              handleDeleteClient(e, client?.id);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Eliminar
-                          </li>
-                        </ul>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                            Ver
+                          </a>
+                          <span>(2.345)</span>
+                        </div>
+                        <div onClick={() => handleActions(rowIndex, client)}>
+                          <img src={optionDots} />
+                        </div>
+                        {selectedRowIndex === rowIndex && (
+                          <ul className={styles.content_menu_actions}>
+                            <li
+                              onClick={() => {
+                                handleEditClient();
+                                setSelectedRowIndex(null);
+                              }}
+                              className={styles.item_menu_actions}
+                            >
+                              Editar
+                            </li>
+                            <li
+                              onClick={(e) => {
+                                handleDeleteClient(e, client?.id);
+                                setSelectedRowIndex(null);
+                              }}
+                              className={styles.item_menu_actions}
+                            >
+                              Eliminar
+                            </li>
+                          </ul>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       {showNewClient && (
         <>
-
-          <ModalTemplate onClick={handleCloseNewClient}>
+          <ModalTemplate
+            actionSave={handleCreateClient}
+            onClick={handleCloseNewClient}
+          >
             <div
               className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
             >
@@ -501,15 +522,16 @@ const Clients = () => {
                 <EditableInput
                   label={"Nombre completo"}
                   nameInput={"nombre"}
-                  placeholderInput={"yeremi"}
+                  placeholderInput={clientData.clientName || "yeremi"}
                   isEditing={inputsEditing.name}
-                  value={clientDataInputs.name}
-                  onChange={(e) =>
+                  value={clientData.clientName || clientDataInputs.name}
+                  onChange={(e) => {
                     setClientDataInputs({
                       ...clientDataInputs,
                       name: e.target.value,
-                    })
-                  }
+                    });
+                    handleClientData("clientName", e.target.value);
+                  }}
                   onClick={() =>
                     setInputsEditing((prev) => ({ ...prev, name: !prev.name }))
                   }
@@ -521,11 +543,9 @@ const Clients = () => {
                       inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
-
                     }
                       `}
                   >
-
                     <button
                       className={selectTypeClient == 0 && styles.selected}
                       onClick={() => setSelectTypeClient(0)}
@@ -550,13 +570,14 @@ const Clients = () => {
                   nameInput={"email"}
                   placeholderInput={"johndoe@gmail.com"}
                   isEditing={inputsEditing.email}
-                  value={clientDataInputs.email}
-                  onChange={(e) =>
+                  value={clientData.companyEmail || clientDataInputs.email}
+                  onChange={(e) => {
                     setClientDataInputs({
                       ...clientDataInputs,
                       email: e.target.value,
-                    })
-                  }
+                    });
+                    handleClientData("companyEmail", e.target.value);
+                  }}
                   onClick={() =>
                     setInputsEditing((prev) => ({
                       ...prev,
@@ -565,39 +586,70 @@ const Clients = () => {
                   }
                 />
 
-                <EditableInput
+                {/* <EditableInput
                   label={"Teléfono"}
                   nameInput={"phone"}
                   placeholderInput={"phone"}
                   isEditing={inputsEditing.phone}
-                  value={clientDataInputs.phone}
+                  value={
+                    clientData.companyPhoneNumber || clientDataInputs.phone
+                  }
                   phone={true}
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setClientDataInputs({
                       ...clientDataInputs,
                       phone: e.target.value,
-                    })
-                  }
+                    });
+                    handleClientData("companyPhoneNumber", e.target.value);
+                  }}
                   onClick={() =>
                     setInputsEditing((prev) => ({
                       ...prev,
                       phone: !prev.phone,
                     }))
-
                   }
-                />
+                /> */}
+                <div className={styles.phoneContainer}>
+                  <select /*disabled={!isEditing}*/>
+                    <option value="34">España, (+34)</option>
+                    <option value="1">Estados Unidos, (+1)</option>
+                    <option value="52">México, (+52)</option>
+                    <option value="54">Argentina, (+54)</option>
+                    <option value="55">Brasil, (+55)</option>
+                    <option value="44">Reino Unido, (+44)</option>
+                    <option value="33">Francia, (+33)</option>
+                    <option value="49">Alemania, (+49)</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="000 000 000"
+                    value={clientData.companyPhoneNumber || ""}
+                    onChange={(e) =>
+                      handleClientData("companyPhoneNumber", e.target.value)
+                    }
+                    /*disabled={!isEditing}*/
+                  />
+                  <div
+                    className={styles.delete}
+                    // onClick={onDelete}
+                    /*style={{ background: !isEditing && "#dd7a84" }}*/
+                  >
+                    <Minus className={styles.icon} />
+                  </div>
+                </div>
                 <EditableInput
                   label={"Web o dominio corporativo"}
                   nameInput={"web"}
                   placeholderInput={"www.web.com"}
                   isEditing={inputsEditing.web}
-                  value={clientDataInputs.web}
-                  onChange={(e) =>
+                  value={clientData.webSite || clientDataInputs.web}
+                  onChange={(e) => {
+                    handleClientData("webSite", e.target.value);
                     setClientDataInputs({
                       ...clientDataInputs,
                       web: e.target.value,
-                    })
-                  }
+                    });
+                  }}
                   onClick={() =>
                     setInputsEditing((prev) => ({ ...prev, web: !prev.web }))
                   }
@@ -640,6 +692,10 @@ const Clients = () => {
                         type="text"
                         disabled={!inputsEditing.info}
                         placeholder="000 000"
+                        value={clientData.companyAddress || ""}
+                        onChange={(e) =>
+                          handleClientData("companyAddress", e.target.value)
+                        }
                       />
                     </div>
                   </div>
@@ -657,7 +713,11 @@ const Clients = () => {
                       <input
                         type="text"
                         disabled={!inputsEditing.info}
+                        value={clientData.clientZip || ""}
                         placeholder="000 000"
+                        onChange={(e) =>
+                          handleClientData("clientZip", e.target.value)
+                        }
                       />
                     </div>
                   </div>
@@ -668,6 +728,10 @@ const Clients = () => {
                         type="text"
                         disabled={!inputsEditing.info}
                         placeholder="000 000"
+                        value={clientData.companyProvince || ""}
+                        onChange={(e) =>
+                          handleClientData("companyProvince", e.target.value)
+                        }
                       />
                     </div>
                     <div className={styles.info}>
@@ -676,6 +740,10 @@ const Clients = () => {
                         type="text"
                         disabled={!inputsEditing.info}
                         placeholder="000 000"
+                        value={clientData.companyCountry || ""}
+                        onChange={(e) =>
+                          handleClientData("companyCountry", e.target.value)
+                        }
                       />
                     </div>
                   </div>

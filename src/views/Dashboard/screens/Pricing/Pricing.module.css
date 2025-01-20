@@ -73,6 +73,7 @@
   cursor: pointer;
   position: relative; /* Agregar esta propiedad */
   z-index: 2; /* Aseguramos que el slider esté encima de otros elementos */
+  padding: 0px;
 }
 
 .slider::-webkit-slider-thumb {

@@ -74,7 +74,7 @@
             <desc_incoterm/>
             <fabricante_nif>B17623257</fabricante_nif>
             <fabricante_nombre>HSB S.A.</fabricante_nombre>
-            <fabricante_direccion>AV Cardenal Reig, 32</fabricante_direccion>
+            <fabricante_direccion>AV Cardenal Reig, 32, 08028 Barcelona (Barcelona)</fabricante_direccion>
             <fabricante_poblacion>Barcelona</fabricante_poblacion>
             <fabricante_cpostal>08028</fabricante_cpostal>
             <fabricante_provincia>Barcelona</fabricante_provincia>
@@ -109,7 +109,11 @@
             <referencia>OBRA 289 REF. AUX.</referencia>
             <codigo_partida/>
             <desc_partida/>
+<<<<<<< HEAD
             <descripcion>TERMINAL CURV.403F 22-3/4 C/ARAND.LT.</descripcion>
+=======
+            <descripcion>TERMINAL CURV.403SF 22-3/4 CI/ARAND.LT.</descripcion>
+>>>>>>> d70557490bd66f8d7448f530300d3a296a37c9bc
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>1</posicion_pedido>

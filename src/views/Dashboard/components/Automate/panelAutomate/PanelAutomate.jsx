@@ -21,12 +21,12 @@ import {
   getAllUserAutomations,
 } from "../../../../../actions/automations";
 import { setUser } from "../../../../../slices/emailManagerSlices";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import ModalBlackBgTemplate from "../../ModalBlackBgTemplate/ModalBlackBgTemplate";
 
-
-const PanelAutomate = ({ type, close, typeContent }) => {
+const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
   const { user } = useSelector((state) => state.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { userAutomations } = useSelector((state) => state.automations); // Aca tenemos el array de automates del user (con toda la info dentro, no solo ids)
   const dispatch = useDispatch();
   const [dataFilter, setDataFilter] = useState(data || newData);
@@ -81,142 +81,148 @@ const PanelAutomate = ({ type, close, typeContent }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.content_header}>
-          <div className={styles.header}>
-            <TitleComponent title="Añadir Automatización" />
+    <ModalBlackBgTemplate close={close} isAnimating={isAnimating}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div className={styles.content_header}>
+            <div className={styles.header}>
+              <TitleComponent title="Añadir Automatización" />
+              <div>
+                <div onClick={close}>
+                  <CloseSVG />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.body}>
             <div>
-              <CloseSVG action={close} />
+              <SearchComponent onSearch={handleDataFilter} />
+              <div className={styles.buttons_header}>
+                <button
+                  onClick={() => setfilterType("Todas")}
+                  className={`${styles.button_header} ${filterType === "Todas" && styles.button_header_active}`}
+                >
+                  Todas
+                </button>
+                <button
+                  onClick={() => setfilterType("Entrada / Input")}
+                  className={`${styles.button_header} ${filterType === "Entrada / Input" && styles.button_header_active}`}
+                >
+                  Entrada / Input
+                </button>
+                <button
+                  onClick={() => setfilterType("Salida / Output")}
+                  className={`${styles.button_header} ${filterType === "Salida / Output" && styles.button_header_active}`}
+                >
+                  Salida / Output
+                </button>
+              </div>
+              {filterType === "Todas" ? (
+                <>
+                  <p style={{ fontWeight: "bold" }}>Entrada / Input</p>
+                  {dataFilter
+                    .filter((card) => card.role === "input")
+                    .map((card) => (
+                      <CardAutomate
+                        key={card.id}
+                        type={card.type}
+                        name={card.automateName}
+                        image={card.image}
+                        contactType={card.contactType}
+                        typeContent={typeContent}
+                        isActive={activeCard === card.id}
+                        onCardClick={() => handleCardClick(card.id)}
+                      />
+                    ))}
+
+                  <p style={{ fontWeight: "bold" }}>Salida / Output</p>
+                  {dataFilter
+                    .filter((card) => card.role === "output")
+                    .map((card) => (
+                      <CardAutomate
+                        key={card.id}
+                        type={card.type}
+                        name={card.automateName}
+                        image={card.image}
+                        contactType={card.contactType}
+                        typeContent={typeContent}
+                        isActive={activeCard === card.id}
+                        onCardClick={() => handleCardClick(card.id)}
+                      />
+                    ))}
+                </>
+              ) : (
+                <>
+                  <p style={{ fontWeight: "bold" }}>{filterType}</p>
+                  {dataFilter
+                    .filter((card) => card.role === typeFilterButton)
+                    .map((card) => (
+                      <CardAutomate
+                        key={card.id}
+                        type={card.type}
+                        name={card.automateName}
+                        image={card.image}
+                        contactType={card.contactType}
+                        typeContent={typeContent}
+                        isActive={activeCard === card.id}
+                        onCardClick={() => handleCardClick(card.id)}
+                      />
+                    ))}
+                </>
+              )}
+            </div>
+
+            <div className={styles.formAutomateContainer}>
+              {(() => {
+                switch (type) {
+                  case "Gmail":
+                  case "Outlook":
+                    return <GmailAndOutlook type={type} />;
+                  case "Google Drive":
+                    return <GoogleDriveFormCreateAutomate type={type} />;
+                  case "WhatsApp":
+                    return <WhatsAppFormCreateAutomate type={type} />;
+                  case "esPúblico Gestiona":
+                    return <EsPublicoGestionaFormAutomate type={type} />;
+                  case "Google Sheets":
+                    return <GoogleSheetsFormAutomate type={type} />;
+                  case "XML para Declaciones Físcales":
+                    return <XmlFormAutomate type={type} />;
+                  case "Odoo":
+                    return <OdooFormAutomate type={type} />;
+                  case "Wolters Kluwer A3":
+                    return <WoltersKluwerA3FormAutomate type={type} />;
+                  case "Facturas automáticamente a tu portal de la Agencia Tributaria":
+                    return <AgencyTributFormAutomate type={type} />;
+                  case "whatsApp notifications":
+                    return (
+                      <WhatsAppSendNotificationsFormAutomate type={type} />
+                    );
+                  default:
+                    return <div>OTRO</div>;
+                }
+              })()}
             </div>
           </div>
-        </div>
-        <div className={styles.body}>
-          <div>
-            <SearchComponent onSearch={handleDataFilter} />
-            <div className={styles.buttons_header}>
-              <button
-                onClick={() => setfilterType("Todas")}
-                className={`${styles.button_header} ${filterType === "Todas" && styles.button_header_active}`}
-              >
-                Todas
-              </button>
-              <button
-                onClick={() => setfilterType("Entrada / Input")}
-                className={`${styles.button_header} ${filterType === "Entrada / Input" && styles.button_header_active}`}
-              >
-                Entrada / Input
-              </button>
-              <button
-                onClick={() => setfilterType("Salida / Output")}
-                className={`${styles.button_header} ${filterType === "Salida / Output" && styles.button_header_active}`}
-              >
-                Salida / Output
-              </button>
-            </div>
-            {filterType === "Todas" ? (
-              <>
-                <p style={{ fontWeight: "bold" }}>Entrada / Input</p>
-                {dataFilter
-                  .filter((card) => card.role === "input")
-                  .map((card) => (
-                    <CardAutomate
-                      key={card.id}
-                      type={card.type}
-                      name={card.automateName}
-                      image={card.image}
-                      contactType={card.contactType}
-                      typeContent={typeContent}
-                      isActive={activeCard === card.id}
-                      onCardClick={() => handleCardClick(card.id)}
-                    />
-                  ))}
 
-                <p style={{ fontWeight: "bold" }}>Salida / Output</p>
-                {dataFilter
-                  .filter((card) => card.role === "output")
-                  .map((card) => (
-                    <CardAutomate
-                      key={card.id}
-                      type={card.type}
-                      name={card.automateName}
-                      image={card.image}
-                      contactType={card.contactType}
-                      typeContent={typeContent}
-                      isActive={activeCard === card.id}
-                      onCardClick={() => handleCardClick(card.id)}
-                    />
-                  ))}
-              </>
-            ) : (
-              <>
-                <p style={{ fontWeight: "bold" }}>{filterType}</p>
-                {dataFilter
-                  .filter((card) => card.role === typeFilterButton)
-                  .map((card) => (
-                    <CardAutomate
-                      key={card.id}
-                      type={card.type}
-                      name={card.automateName}
-                      image={card.image}
-                      contactType={card.contactType}
-                      typeContent={typeContent}
-                      isActive={activeCard === card.id}
-                      onCardClick={() => handleCardClick(card.id)}
-                    />
-                  ))}
-              </>
-            )}
+          <div className={styles.container_buttons_footer}>
+            <button
+              onClick={close}
+              className={`${styles.buttons_footer} ${styles.button_back}`}
+            >
+              {" "}
+              Atrás
+            </button>
+            <button
+              onClick={handleAddAutomation}
+              className={`${styles.buttons_footer} ${styles.button_add}`}
+            >
+              Añadir{" "}
+            </button>
           </div>
-
-          <div>
-            {(() => {
-              switch (type) {
-                case "Gmail":
-                case "Outlook":
-                  return <GmailAndOutlook type={type} />;
-                case "Google Drive":
-                  return <GoogleDriveFormCreateAutomate type={type} />;
-                case "WhatsApp":
-                  return <WhatsAppFormCreateAutomate type={type} />;
-                case "esPúblico Gestiona":
-                  return <EsPublicoGestionaFormAutomate type={type} />;
-                case "Google Sheets":
-                  return <GoogleSheetsFormAutomate type={type} />;
-                case "XML para Declaciones Físcales":
-                  return <XmlFormAutomate type={type} />;
-                case "Odoo":
-                  return <OdooFormAutomate type={type} />;
-                case "Wolters Kluwer A3":
-                  return <WoltersKluwerA3FormAutomate type={type} />;
-                case "Facturas automáticamente a tu portal de la Agencia Tributaria":
-                  return <AgencyTributFormAutomate type={type} />;
-                case "whatsApp notifications":
-                  return <WhatsAppSendNotificationsFormAutomate type={type} />;
-                default:
-                  return <div>OTRO</div>;
-              }
-            })()}
-          </div>
-        </div>
-
-        <div className={styles.container_buttons_footer}>
-          <button
-            onClick={close}
-            className={`${styles.buttons_footer} ${styles.button_back}`}
-          >
-            {" "}
-            Atrás
-          </button>
-          <button
-            onClick={handleAddAutomation}
-            className={`${styles.buttons_footer} ${styles.button_add}`}
-          >
-            Añadir{" "}
-          </button>
         </div>
       </div>
-    </div>
+    </ModalBlackBgTemplate>
   );
 };
 

@@ -25,3 +25,84 @@ export const getAllTransactionsByClient = createAsyncThunk(
     }
   }
 );
+
+export const deleteTransactions = createAsyncThunk(
+  "transactions/deleteTransactions",
+  async ({ transactionsIds }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await apiBackend.post(
+        "/transactions/deleteTransacions",
+        { transactionsIds },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      return res.data; // Retornar datos de la respuesta del servidor
+    } catch (error) {
+      console.error("Error deleting transactions:", error);
+
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+
+export const deleteProductFromTransaction = createAsyncThunk(
+  "transactions/deleteProductFromTransacion",
+  async ({ transactionId, productRef }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await apiBackend.post(
+        "/transactions/deleteProductFromTransacion",
+        { transactionId, productRef },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      return res.data; // Retornar datos de la respuesta del servidor
+    } catch (error) {
+      console.error("Error deleting transactions:", error);
+
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+
+export const getOneTransactionById = createAsyncThunk(
+  "transactions/getOneTransaction/", // Nombre de la acción
+  async ({ transactionId }, { rejectWithValue }) => {
+    console.log("IDDDDD ACTION ----------", transactionId);
+
+    try {
+      // Obtener el token de localStorage para la autenticación
+      const token = localStorage.getItem("token");
+
+      // Realizar la solicitud POST al servidor con los datos de la transacción
+      const res = await apiBackend.get(
+        `/transactions/getOneTransaction/${transactionId}`, // Endpoint
+
+        {
+          headers: { Authorization: `Bearer ${token}` }, // Enviar el token como parte de los encabezados
+        }
+      );
+
+      // Retornar los datos de la respuesta si la solicitud es exitosa
+      return res.data;
+    } catch (error) {
+      console.error("Error al eliminar el producto de la transacción:", error);
+
+      // Manejo de errores, devuelve un mensaje de error
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);

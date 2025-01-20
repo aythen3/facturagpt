@@ -408,6 +408,7 @@ input[type="checkbox"] {
 }
 
 .edit {
+  position: relative;
   display: flex;
   gap: 10px;
   align-items: end;
@@ -536,4 +537,24 @@ input[type="checkbox"] {
       cursor: pointer;
     }
   }
+}
+
+.content_menu_actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #073f31;
+  position: absolute;
+  padding: 15px;
+  bottom: 20px;
+  right: 0;
+}
+
+.item_menu_actions {
+  list-style-type: none;
+  color: white;
+  cursor: pointer;
 }
