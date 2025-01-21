@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 const EditableInput = ({
   label,
-  initialValue,
+  initialValue = "",
   value,
   onSave,
   type = "text",
@@ -70,7 +70,7 @@ const EditableInput = ({
       </div>
 
       <div className={styles.editableInput}>
-        <span>{initialValue}</span>
+        {initialValue !== "" && <span>{initialValue}</span>}
         <input
           placeholder={placeholder}
           ref={inputRef}

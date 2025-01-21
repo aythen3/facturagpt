@@ -101,6 +101,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .button {
+      text-decoration: underline;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #222222;
+    }
+  }
+
+  .phoneContainer {
+    display: flex;
+    gap: 10px;
   }
 
   p {
@@ -297,7 +311,6 @@
     width: 100%;
     background-color: #233f39;
     padding: 0px 8px;
-    margin-top: 10px;
     color: white;
     text-decoration: none;
     cursor: pointer;
@@ -407,4 +420,16 @@
   color: #fff;
   font-size: 22px;
   font-weight: 600;
+}
+
+.saveButtonContainer {
+  background-color: white;
+  position: sticky;
+  bottom: 0px;
+  right: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }

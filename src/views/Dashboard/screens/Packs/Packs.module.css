@@ -253,11 +253,11 @@
 /* Wrapper with space around and flex alignment */
 .wrapper {
   display: flex;
-  justify-content: space-around;
-  gap: 8px;
+  justify-content: center;
+  gap: 15px;
   padding: clamp(1rem, 3vw, 3.5rem); /* Ajuste dinámico del padding */
   text-align: center;
-  width: 100%;
+  width: 88%;
   flex-wrap: wrap; /* Permite que las cards se ajusten en varias filas si es necesario */
   align-items: center;
 }

@@ -52,6 +52,7 @@
 
 .fadeOut {
   opacity: 0;
+  pointer-events: none;
 }
 .headerContainer {
   display: flex;

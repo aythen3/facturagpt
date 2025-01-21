@@ -1,0 +1,42 @@
+.TagsLandingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.tagLanding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: white;
+  width: fit-content;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 99px;
+  -webkit-border-radius: 99px;
+  -moz-border-radius: 99px;
+  -ms-border-radius: 99px;
+  -o-border-radius: 99px;
+  /* width: 100%; */
+  min-width: 200px;
+  max-width: 500px;
+
+  justify-content: center;
+}
+
+@media (max-width: 940px) {
+  .tagLanding {
+    flex-direction: column;
+  }
+}

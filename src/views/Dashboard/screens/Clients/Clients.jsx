@@ -405,7 +405,7 @@ const Clients = () => {
                     />
                   </th>
                   {tableHeaders.map((header, index) => (
-                    <th key={index} className={index == 7 ? styles.hola : ""}>
+                    <th key={index} className={styles.small}>
                       {header}
                     </th>
                   ))}

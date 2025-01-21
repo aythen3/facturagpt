@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FaChevronDown } from "react-icons/fa";
 
 const CustomDropdown = ({
+  editing,
   editable = true,
   options = [],
   selectedOption,
@@ -57,9 +58,12 @@ const CustomDropdown = ({
         style={{ height, borderRadius }}
         className={emailsDropdown ? styles.emailsFilterSort : styles.filterSort}
         onClick={(e) => {
+
           e.stopPropagation();
-          if (options.length === 0) return;
-          handleToggle(e);
+          if (editing) {   
+            handleToggle(e);
+          }
+
         }}
       >
         <div style={textStyles}>

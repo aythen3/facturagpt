@@ -25,6 +25,8 @@ import droopbox from "../../assets/droopbox.svg";
 import Reviews from "../../components/Reviews/Reviews";
 import CompatibleProgramsSection from "../../components/CompatibleProgramsSection/CompatibleProgramsSection";
 import { useTranslation } from "react-i18next";
+import TagsLanding from "../../components/TagsLanding/TagsLanding";
+import CircleProgressBar from "../../components/CircleProgressBar/CircleProgressBar";
 
 const Packs = () => {
   const { t } = useTranslation("packs");
@@ -93,6 +95,21 @@ const Packs = () => {
       title: t("title3"),
       description: t("description3"),
     },
+    {
+      step: t("step4"),
+      title: t("title4"),
+      description: t("description4"),
+    },
+    {
+      step: t("step5"),
+      title: t("title5"),
+      description: t("description5"),
+    },
+    {
+      step: t("step6"),
+      title: t("title6"),
+      description: t("description6"),
+    },
   ];
   console.log(sliderValueFormatted);
   const LogoIcons = [
@@ -141,6 +158,7 @@ const Packs = () => {
             </div>
           ))}
         </div>
+        <TagsLanding />
       </div>
       <BillingSlider
         setSliderValue={setSliderValue}
@@ -177,6 +195,7 @@ const Packs = () => {
         sliderValue={sliderValue}
         setFacturasTotales={setFacturasTotales}
       />
+      <CircleProgressBar />
       <div className={styles.banner}>
         <h3 className={styles.bannerTitle}>{t("reduces1")}</h3>
         <h3 className={styles.bannerTitle}>{t("reduces2")}</h3>

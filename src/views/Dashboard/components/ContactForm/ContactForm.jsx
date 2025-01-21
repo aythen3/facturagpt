@@ -5,8 +5,8 @@ import handPointer from "../../assets/handPointer.svg";
 import Navbar from "../Navbar/Navbar";
 import wsIcon from "../../assets/whatsappIcon.svg";
 import { useTranslation } from "react-i18next";
-import diagonalArrow from "../../assets/diagonalArrow.svg";
 import CookiePopup from "../CookiePopup/CookiePopup";
+import FreeTrialButton from "../FreeTrialButton/FreeTrialButton";
 
 const ContactForm = () => {
   const { t } = useTranslation("contactForm");
@@ -229,9 +229,7 @@ const ContactForm = () => {
           <span className={styles.reviewsDescriptionLast}>
             ¡Estás un paso más cerca de obtener el mejor servicio!
           </span>
-          <a href="/freetrial" className={styles.startButton}>
-            Probar Gratis <img src={diagonalArrow} />
-          </a>
+          <FreeTrialButton />
         </section>
       </div>
       <CookiePopup />

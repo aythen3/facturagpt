@@ -58,13 +58,14 @@
 }
 
 .verify {
-  position: absolute;
+  /* position: absolute; */
   right: 10px;
   top: 31px;
   font-weight: 600 !important;
   font-size: 14px;
   color: #000 !important;
   cursor: pointer;
+  text-align: end;
 }
 
 .verify:hover {
@@ -72,7 +73,7 @@
 }
 
 .error {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 400;
   color: #b40e1b;
 }

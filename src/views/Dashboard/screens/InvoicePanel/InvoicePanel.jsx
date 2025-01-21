@@ -45,7 +45,7 @@ export default function InvoicePanel() {
     setTypeContentAutomate("");
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChangeInvoice = (event) => {
     if (event.target.files.length > 0) {
       setFileUploaded(true);
     }
@@ -76,13 +76,12 @@ export default function InvoicePanel() {
           >
             <input
               type="file"
-              onChange={handleFileChange}
+              onChange={handleFileChangeInvoice}
               placeholder="Selecciona una factura o arrastra"
+              id="InvoiceInput"
             />
             <label
-              onClick={() =>
-                document.querySelector('input[type="file"]').click()
-              }
+              onClick={() => document.querySelector("#InvoiceInput").click()}
             >
               Selecciona una factura o arrastra y suelta <br /> Digitaliza y
               gestiona todos tus documentos con FacturaGPT.
