@@ -5,6 +5,7 @@ import styles from "./NavHeader.module.css";
 import ArrowDown from "../../assets/ArrowDown.svg";
 
 import { useTranslation } from "react-i18next";
+import FreeTrialButton from "../FreeTrialButton/FreeTrialButton";
 const NavHeader = () => {
   const { t } = useTranslation("navBarHeader");
 
@@ -44,18 +45,16 @@ const NavHeader = () => {
         src={starIcon}
         className={`${styles.iconfloat} ${styles.starIconR} `}
       />
-      <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          // justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
         <span className={styles.navHeaderDescription}>{t("description")}</span>
-        <div
-          className={styles.nextSteps}
-          onClick={handleScrollToFacturation}
-          style={{ cursor: "pointer" }}
-        >
-          {t("invitation")}
-          <span>
-            <img src={ArrowDown} alt="" />
-          </span>
-        </div>
+        <FreeTrialButton />
       </div>
     </div>
   );

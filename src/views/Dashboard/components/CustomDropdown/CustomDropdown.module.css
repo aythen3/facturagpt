@@ -5,6 +5,7 @@
   display: inline-block;
   width: 100%;
   font-family: "Inter", sans-serif;
+  flex: 1;
 }
 
 .filterSort {

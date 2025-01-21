@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FaChevronDown } from "react-icons/fa";
 
 const CustomDropdown = ({
+  editing,
   editable = true,
   options = [],
   selectedOption,
@@ -54,8 +55,10 @@ const CustomDropdown = ({
         style={{ height }}
         className={styles.filterSort}
         onClick={(e) => {
-          e.stopPropagation();
-          handleToggle(e);
+          if (editing) {
+            e.stopPropagation();
+            handleToggle(e);
+          }
         }}
       >
         <div style={textStyles}>

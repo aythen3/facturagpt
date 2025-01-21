@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./FilesFilterModal.module.css";
 import closeGray from "../../assets/closeGray.svg";
 import chevronLeft from "../../assets/chevronLeft.svg";
@@ -9,7 +9,7 @@ import minusIcon from "../../assets/minusIcon.svg";
 import { FaChevronDown } from "react-icons/fa";
 import searchGray from "../../assets/searchGray.svg";
 
-const FilesFilterModal = ({ onClose, handleApplyFilters }) => {
+const FilesFilterModal = ({ onClose, handleApplyFilters, isFilterOpen }) => {
   const colors = [
     "#0B06FF",
     "#FF0000",
@@ -21,7 +21,7 @@ const FilesFilterModal = ({ onClose, handleApplyFilters }) => {
     "#C075EE",
     "#EEFF00",
   ];
-  const [isClosing, setIsClosing] = useState(false);
+  const [isClosing, setIsClosing] = useState(isFilterOpen);
   const [keyWord, setKeyWord] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allFiles, setAllFiles] = useState(false);
@@ -34,10 +34,27 @@ const FilesFilterModal = ({ onClose, handleApplyFilters }) => {
   const [tag, setTag] = useState("");
 
   const handleClose = () => {
-    setIsClosing(true);
+    setIsClosing(false);
     setTimeout(() => {
       onClose();
     }, 300);
+  };
+
+  const handleCancel = () => {
+    // Reiniciar estados
+    setKeyWord("");
+    setSelectedCategory("");
+    setAllFiles(false);
+    setSelectedTypes([]);
+    setMinValue("");
+    setMaxValue("");
+    setSelectedCurrency("EUR");
+    setSelectedTags([]);
+    setTag("");
+
+    handleClose();
+    handleApplyFilters({});
+    console.log("vacio");
   };
 
   const handleApplyFiltering = () => {
@@ -51,9 +68,26 @@ const FilesFilterModal = ({ onClose, handleApplyFilters }) => {
       selectedCurrency,
       selectedTags,
     };
+    console.log(filters);
     handleApplyFilters(filters);
+
+    // Reiniciar estados
+    setKeyWord("");
+    setSelectedCategory("");
+    setAllFiles(false);
+    setSelectedTypes([]);
+    setMinValue("");
+    setMaxValue("");
+    setSelectedCurrency("EUR");
+    setSelectedTags([]);
+    setTag("");
+
     handleClose();
   };
+
+  useEffect(() => {
+    setIsClosing(isFilterOpen);
+  }, [isFilterOpen]);
 
   return (
     <div
@@ -61,13 +95,13 @@ const FilesFilterModal = ({ onClose, handleApplyFilters }) => {
         e.stopPropagation();
         handleClose();
       }}
-      className={`${styles.modalOverlay} ${isClosing ? styles.fadeOut : ""}`}
+      className={`${styles.modalOverlay} ${!isClosing ? styles.fadeOut : ""}`}
     >
       <div
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className={`${styles.modalContent} ${isClosing ? styles.scaleDown : ""}`}
+        className={`${styles.modalContent} ${!isClosing ? styles.scaleDown : ""}`}
       >
         {/* Header */}
         <div className={styles.headerContainer}>
@@ -78,7 +112,9 @@ const FilesFilterModal = ({ onClose, handleApplyFilters }) => {
             <h2>Filtrar</h2>
           </div>
           <div onClick={handleClose} className={styles.closeIcon}>
-            <img src={closeGray} alt="closeGray" />
+            <div onClick={handleClose}>
+              <img src={closeGray} alt="closeGray" onClick={handleClose} />
+            </div>
           </div>
         </div>
         {/* Content */}
@@ -278,7 +314,7 @@ const FilesFilterModal = ({ onClose, handleApplyFilters }) => {
         </div>
         {/* Buttons */}
         <div className={styles.footerContainer}>
-          <div onClick={handleClose} className={styles.newFolderButton}>
+          <div onClick={handleCancel} className={styles.newFolderButton}>
             Cancelar
           </div>
           <div onClick={handleApplyFiltering} className={styles.selectButton}>

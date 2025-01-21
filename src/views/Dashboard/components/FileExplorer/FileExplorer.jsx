@@ -490,10 +490,12 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
       );
     }
   };
-
   const handleApplyFilters = (filters) => {
     console.log("Applying filters:", filters);
     setUserFilters(filters);
+    console.log(userFilters);
+    // console.log(!!userFilters && Object.keys(userFilters).length > 0);
+    // console.log(userFilters.keyWord !== "");
   };
 
   return (
@@ -529,19 +531,20 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             <img src={k} alt="kIcon" />
           </div>
         </div>
-        <img
-          style={{ cursor: "pointer" }}
+        <div
+          className={`${userFilters && Object.keys(userFilters).length > 0 && userFilters.keyWord !== "" ? styles.greenBackground : ""} ${styles.searchContainerL}`}
           onClick={() => setIsFilterOpen(true)}
-          src={filterIcon}
-          alt="filterIcon"
-        />
+          style={{ cursor: "pointer" }}
+        >
+          <img src={filterIcon} alt="filterIcon" />
+        </div>
         {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
-        {isFilterOpen && (
-          <FilesFilterModal
-            onClose={() => setIsFilterOpen(false)}
-            handleApplyFilters={handleApplyFilters}
-          />
-        )}
+
+        <FilesFilterModal
+          onClose={() => setIsFilterOpen(false)}
+          handleApplyFilters={handleApplyFilters}
+          isFilterOpen={isFilterOpen}
+        />
       </div>
 
       {renderBreadcrumbs()}

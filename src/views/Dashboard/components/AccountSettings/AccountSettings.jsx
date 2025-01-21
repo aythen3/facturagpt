@@ -112,11 +112,14 @@ const AccountSettings = () => {
     }
   }, [user]);
 
-  const [seeHistory, setSeeHistory] = useState(true);
+  const [seeHistory, setSeeHistory] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const [editingCurrency, setEditingCurrency] = useState(false);
   const [editingLanguage, setEditingLanguage] = useState(false);
+  const [editingPhone, setEditingPhone] = useState(false);
+  const [editingPayMethod, setEditingPayMethod] = useState(false);
+  const [facturacionDetails, setFacturacionDetails] = useState([]);
 
   const handleLogOut = () => {
     const isConfirm = confirm(t("confirmLogout"));
@@ -145,6 +148,16 @@ const AccountSettings = () => {
     };
     console.log("saving user data", userDataToSave);
     dispatch(updateUser({ userId: user.id, toUpdate: userDataToSave }));
+  };
+
+  const handleAddFacturacion = () => {
+    setFacturacionDetails([...facturacionDetails, ""]);
+  };
+
+  const handleEditFacturacion = (index) => {
+    const newDetails = [...facturacionDetails];
+    newDetails[index] = newDetails[index] === "Editable" ? "" : "Editable";
+    setFacturacionDetails(newDetails);
   };
 
   return (
@@ -235,7 +248,6 @@ const AccountSettings = () => {
 
             <EditableInput
               label={t("fullName")}
-              initialValue={user?.nombre}
               value={userData?.nombre}
               name="nombre"
               onSave={handleChange}
@@ -243,7 +255,6 @@ const AccountSettings = () => {
 
             <EditableInput
               label={t("email")}
-              initialValue={user?.email}
               value={userData?.email}
               type="email"
               name="email"
@@ -252,7 +263,6 @@ const AccountSettings = () => {
 
             <EditableInput
               label={t("password")}
-              initialValue={"********"}
               value={userData?.password}
               type="password"
               name="password"
@@ -263,40 +273,56 @@ const AccountSettings = () => {
             <label className={styles.label}>
               <div className={styles.row}>
                 <p>{t("phone")}</p>
-                <button type="button">{t("edit")}</button>
+                <div
+                  className={styles.button}
+                  onClick={() => setEditingPhone((prev) => !prev)}
+                >
+                  {!editingPhone ? t("edit") : "Guardar"}
+                  {/* {t("edit")} */}
+                </div>
               </div>
-              +34 000 000 000
-              <CustomDropdown
-                editable={true}
-                setSelectedOption={(option) =>
-                  handleChange({ name: "countryCode", newValue: option })
-                }
-                hasObject={true}
-                options={[
-                  { value: "+34", label: "Spain (+34)" },
-                  { value: "+1", label: "United States (+1)" },
-                  { value: "+44", label: "United Kingdom (+44)" },
-                  { value: "+52", label: "Mexico (+52)" },
-                  { value: "+91", label: "India (+91)" },
-                ]}
-                selectedOption={userData?.countryCode}
-              />
-              <input
-                type="text"
-                placeholder="000 000 000"
-                className={styles.numberInput}
-                name="phone"
-                value={userData?.phone || ""}
-                onChange={(e) =>
-                  handleChange({ name: "phone", newValue: e.target.value })
-                }
-              />
+
+              <div className={styles.phoneContainer}>
+                <CustomDropdown
+                  editable={true}
+                  setSelectedOption={(option) =>
+                    handleChange({ name: "countryCode", newValue: option })
+                  }
+                  editing={editingPhone}
+                  hasObject={true}
+                  options={[
+                    { value: "+34", label: "Spain (+34)" },
+                    { value: "+1", label: "United States (+1)" },
+                    { value: "+44", label: "United Kingdom (+44)" },
+                    { value: "+52", label: "Mexico (+52)" },
+                    { value: "+91", label: "India (+91)" },
+                  ]}
+                  selectedOption={userData?.countryCode}
+                />
+                <input
+                  type="text"
+                  placeholder="000 000 000"
+                  className={styles.numberInput}
+                  name="phone"
+                  value={userData?.phone || ""}
+                  disabled={!editingPhone}
+                  onChange={(e) =>
+                    handleChange({ name: "phone", newValue: e.target.value })
+                  }
+                />
+              </div>
             </label>
 
             <label>
               <div className={styles.row}>
                 <p>{t("payMethods")}</p>
-                <button type="button">{t("add")}</button>
+                <div
+                  className={styles.button}
+                  type="button"
+                  onClick={() => setEditingPayMethod((prev) => !prev)}
+                >
+                  {!editingPayMethod ? t("add") : "Guardar"}
+                </div>
               </div>
               {t("unknown")}
               <div className={styles.payContainer}>
@@ -305,6 +331,7 @@ const AccountSettings = () => {
                     <input
                       type="radio"
                       name="paymentMethod"
+                      disabled={!editingPayMethod}
                       value="creditCard"
                       checked={userData?.paymentMethod === "creditCard"}
                       onChange={() =>
@@ -313,6 +340,7 @@ const AccountSettings = () => {
                           newValue: "creditCard",
                         })
                       }
+                      onClick={(e) => e.stopPropagation()}
                     />
                     <div className={styles.paymentContainer}>
                       <div className={styles.paymentImage}>
@@ -335,6 +363,7 @@ const AccountSettings = () => {
                     <input
                       type="radio"
                       name="paymentMethod"
+                      disabled={!editingPayMethod}
                       value="paypal"
                       checked={userData?.paymentMethod === "paypal"}
                       onChange={() =>
@@ -343,6 +372,7 @@ const AccountSettings = () => {
                           newValue: "paypal",
                         })
                       }
+                      onClick={(e) => e.stopPropagation()}
                     />
                     <div className={styles.paymentImage}>
                       <img src={paypal} alt="Paypal logo" />
@@ -354,6 +384,7 @@ const AccountSettings = () => {
                     <input
                       type="radio"
                       name="paymentMethod"
+                      disabled={!editingPayMethod}
                       value="gPay"
                       checked={userData?.paymentMethod === "gPay"}
                       onChange={() =>
@@ -362,6 +393,7 @@ const AccountSettings = () => {
                           newValue: "gPay",
                         })
                       }
+                      onClick={(e) => e.stopPropagation()}
                     />
                     <div className={styles.paymentImage}>
                       <img src={gpay} alt="Google pay logo" />
@@ -373,6 +405,7 @@ const AccountSettings = () => {
                     <input
                       type="radio"
                       name="paymentMethod"
+                      disabled={!editingPayMethod}
                       value="crypto"
                       checked={userData?.paymentMethod === "crypto"}
                       onChange={() =>
@@ -381,6 +414,7 @@ const AccountSettings = () => {
                           newValue: "crypto",
                         })
                       }
+                      onClick={(e) => e.stopPropagation()}
                     />
                     <div className={styles.paymentContainer}>
                       <div className={styles.paymentImage}>
@@ -400,6 +434,7 @@ const AccountSettings = () => {
                     type="text"
                     placeholder="1234 1234 1234 1234"
                     className={styles.input}
+                    disabled={!editingPayMethod}
                     name="cardNumber"
                     value={userData?.cardNumber}
                     onChange={(e) =>
@@ -416,41 +451,47 @@ const AccountSettings = () => {
                   />
                 </div>
               </div>
-              <div style={{ marginTop: "10px" }}>
-                Fecha de expiración
-                <div className={styles.phoneInputs}>
-                  <input
-                    type="text"
-                    name="expirationDate"
-                    value={userData?.expirationDate}
-                    onChange={(e) =>
-                      handleChange({
-                        name: "expirationDate",
-                        newValue: e.target.value,
-                      })
-                    }
-                    placeholder="MM/YY"
-                    className={styles.numberInput}
-                  />
+              <div
+                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+              >
+                <div>
+                  Fecha de expiración
+                  <div className={styles.phoneInputs}>
+                    <input
+                      type="text"
+                      name="expirationDate"
+                      value={userData?.expirationDate}
+                      disabled={!editingPayMethod}
+                      onChange={(e) =>
+                        handleChange({
+                          name: "expirationDate",
+                          newValue: e.target.value,
+                        })
+                      }
+                      placeholder="MM/YY"
+                      className={styles.numberInput}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div style={{ marginTop: "10px" }}>
-                Código de seguridad
-                <div className={styles.phoneInputs}>
-                  <input
-                    name="securityCode"
-                    type="password"
-                    value={userData?.securityCode}
-                    onChange={(e) =>
-                      handleChange({
-                        name: "securityCode",
-                        newValue: e.target.value,
-                      })
-                    }
-                    maxLength={3}
-                    placeholder="***"
-                    className={styles.numberInput}
-                  />
+                <div>
+                  Código de seguridad
+                  <div className={styles.phoneInputs}>
+                    <input
+                      name="securityCode"
+                      type="password"
+                      value={userData?.securityCode}
+                      disabled={!editingPayMethod}
+                      onChange={(e) =>
+                        handleChange({
+                          name: "securityCode",
+                          newValue: e.target.value,
+                        })
+                      }
+                      maxLength={3}
+                      placeholder="***"
+                      className={styles.numberInput}
+                    />
+                  </div>
                 </div>
               </div>
             </label>
@@ -458,58 +499,41 @@ const AccountSettings = () => {
             <label>
               <div className={styles.row}>
                 <p>Detalles de facturación</p>
-                <button type="button">{t("edit")}</button>
-              </div>
-              Sin especificar
-              <div className={styles.facturacion}>
-                <input type="radio" name="facturacion" value="facturacion" />
-                <div className={styles.facturacionZip}>
-                  Email adress, Zip code / Postcode, Country of residence
-                  <button>Editar</button>
+                <div
+                  className={styles.button}
+                  type="button"
+                  id="addFacturacion"
+                  onClick={handleAddFacturacion}
+                >
+                  Añadir
                 </div>
               </div>
-              <div>
-                <span>{user?.facturationEmail}</span> <button>Editar</button>
-              </div>
-              <div className={styles.info}>
-                <input
-                  type="text"
-                  placeholder="ejemplo@gmail.com"
-                  value={userData?.facturationEmail}
-                  onChange={(e) =>
-                    handleChange({
-                      name: "facturationEmail",
-                      newValue: e.target.value,
-                    })
-                  }
-                  className={styles.numberInput}
-                />
-                <input
-                  value={userData?.areaCode}
-                  onChange={(e) =>
-                    handleChange({
-                      name: "areaCode",
-                      newValue: e.target.value,
-                    })
-                  }
-                  type="text"
-                  placeholder="Codigo ZIP / POSTAL"
-                  className={styles.numberInput}
-                />
-              </div>
-              Pais de residencia
-              <input
-                type="text"
-                placeholder="España"
-                value={userData?.country}
-                onChange={(e) =>
-                  handleChange({
-                    name: "country",
-                    newValue: e.target.value,
-                  })
-                }
-                className={styles.numberInput}
-              />
+              {facturacionDetails.length === 0 ? "Sin especificar" : null}
+              {facturacionDetails.map((facturacion, index) => (
+                <div key={index} className={styles.facturacion}>
+                  <input
+                    type="radio"
+                    name="facturacion"
+                    value={index}
+                    onChange={() => {
+                      // Lógica para seleccionar el detalle de facturación
+                    }}
+                  />
+                  <input
+                    type="text"
+                    value={facturacion === "Editable" ? "" : facturacion}
+                    disabled={facturacion !== "Editable"}
+                    onChange={(e) => {
+                      // const newDetails = [...facturacionDetails];
+                      // newDetails[index] = e.target.value;
+                      // setFacturacionDetails(newDetails);
+                    }}
+                  />
+                  <button onClick={() => handleEditFacturacion(index)}>
+                    {facturacion === "Editable" ? "Guardar" : "Editar"}
+                  </button>
+                </div>
+              ))}
             </label>
 
             <EditableInput
@@ -635,9 +659,10 @@ const AccountSettings = () => {
                   {editingCurrency ? "Guardar" : "Editar"}
                 </div>
               </div>
-              {userData?.currency || "EUR"}
+
               <CustomDropdown
                 editable={editingCurrency}
+                editing={editingCurrency}
                 options={["EUR", "USD"]}
                 selectedOption={userData?.currency}
                 setSelectedOption={(option) =>
@@ -664,7 +689,6 @@ const AccountSettings = () => {
                   {editingLanguage ? "Guardar" : "Editar"}
                 </div>
               </div>
-              {userData?.language === "EN" ? "Ingles" : "Español"}
               <div>
                 <div className={styles.flagContainers}>
                   <img
@@ -686,9 +710,15 @@ const AccountSettings = () => {
                 </div>
               </div>
             </label>
-            <button onClick={handleSave} className={styles.save} type="submit">
-              {updatingUserLoading ? "Guardando..." : t("saveChange")}
-            </button>
+            <div className={styles.saveButtonContainer}>
+              <button
+                onClick={handleSave}
+                className={styles.save}
+                type="submit"
+              >
+                {updatingUserLoading ? "Guardando..." : t("saveChange")}
+              </button>
+            </div>
           </div>
         </div>
       )}
