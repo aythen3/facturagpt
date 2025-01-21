@@ -11,21 +11,30 @@ const CardAutomate = ({
   fullContent,
   isActive,
   onCardClick,
+  last,
+  fromPanel,
 }) => {
   return (
     <>
       <div
         onClick={onCardClick}
-        className={`${styles.content} ${isActive ? styles.content_active : ""}`}
-        style={{ borderBottom: isActive ? "3px solid #e2f4f0" : "" }}
+        className={`${styles.content} ${fromPanel && styles.content_panel} ${isActive ? styles.content_active : ""}`}
+        style={{ borderBottom: !last && !fromPanel && "1px solid #e2f4f0" }}
       >
         <div onClick={() => typeContent(type)} className={styles.data_contain}>
           <div>
             <img className={styles.image} src={image} alt="logo" />
           </div>
           <div>
-            <p className={styles.automate_name}>{name}</p>
-            {fullContent && <p className={styles.contact}>{contactType}</p>}
+            <p
+              style={{ marginBottom: !fromPanel && "4px" }}
+              className={styles.automate_name}
+            >
+              {name}
+            </p>
+            {!fromPanel && fullContent && (
+              <p className={styles.contact}>{contactType}</p>
+            )}
           </div>
         </div>
         {fullContent && (

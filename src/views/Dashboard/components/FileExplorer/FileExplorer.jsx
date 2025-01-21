@@ -24,6 +24,7 @@ import {
 import SelectLocation from "../SelectLocation/SelectLocation";
 import FileOptionsPopup from "./FileOptionsPopup";
 import { FaUpload } from "react-icons/fa";
+import searchMagnify from "../../assets/searchMagnify.svg";
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 
 export default function FileExplorer({ isOpen, setIsOpen }) {
@@ -509,7 +510,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
       <div className={styles.searchContainer}>
         <div className={styles.searchInputWrapper}>
           <div className={styles.searchIcon}>
-            <Search size={20} />
+            <img src={searchMagnify} alt="searchMagnify" />
           </div>
           <input
             type="text"

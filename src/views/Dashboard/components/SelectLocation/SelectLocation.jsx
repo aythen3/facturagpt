@@ -8,7 +8,7 @@ import CustomCheckboxWithLabel from "../CustomCheckboxWithLabel/CustomCheckboxWi
 import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
 import blackChevron from "../../assets/blackChevron.svg";
 
-const SelectLocation = ({ onClose }) => {
+const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
   const { user } = useSelector((state) => state.user);
   const { userFiles } = useSelector((state) => state.scaleway);
   const [isClosing, setIsClosing] = useState(false);
@@ -181,7 +181,12 @@ const SelectLocation = ({ onClose }) => {
             Nueva Carpeta
           </div>
           <div
-            onClick={() => console.log("Selecting location", selectedLocation)}
+            onClick={() => {
+              pickLocation(
+                `/${selectedLocation.replace(`${user.id}`, "Inicio")}`
+              );
+              handleClose();
+            }}
             className={styles.selectButton}
           >
             Seleccionar

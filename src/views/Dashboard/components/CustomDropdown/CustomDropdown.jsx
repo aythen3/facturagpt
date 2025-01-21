@@ -10,7 +10,10 @@ const CustomDropdown = ({
   selectedOption,
   setSelectedOption,
   hasObject,
+  emailsDropdown,
   height = "35px",
+  borderRadius = "4px",
+  placeholder = "Selecciona una opcion",
   textStyles = {
     fontWeight: 500,
     color: "#3d3c42",
@@ -52,21 +55,23 @@ const CustomDropdown = ({
       ref={dropdownRef}
     >
       <div
-        style={{ height }}
-        className={styles.filterSort}
+        style={{ height, borderRadius }}
+        className={emailsDropdown ? styles.emailsFilterSort : styles.filterSort}
         onClick={(e) => {
-          if (editing) {
-            e.stopPropagation();
+
+          e.stopPropagation();
+          if (editing) {   
             handleToggle(e);
           }
+
         }}
       >
         <div style={textStyles}>
           {Array.isArray(selectedOption) && selectedOption.length > 0
             ? selectedOption.join(", ")
             : Array.isArray(selectedOption) && selectedOption.length === 0
-              ? "Selecciona una opción"
-              : selectedOption || "Selecciona una opcion"}
+              ? placeholder
+              : selectedOption || placeholder}
         </div>
         <FaChevronDown
           className={styles.chevronIcon}

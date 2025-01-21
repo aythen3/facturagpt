@@ -1,8 +1,15 @@
 import React from "react";
 import styles from "../Components/GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import SelectComponent from "./SelectComponent";
+import CustomDropdown from "../../CustomDropdown/CustomDropdown";
 
-const HeaderFormsComponent = ({ icon, action }) => {
+const HeaderFormsComponent = ({
+  icon,
+  action,
+  emailConnections = [],
+  selectedEmailConnection = "ejemplo@email.com",
+  setSelectedEmailConnection = () => {},
+}) => {
   return (
     <div className={styles.header}>
       <div className={styles.header_mail}>
@@ -14,24 +21,31 @@ const HeaderFormsComponent = ({ icon, action }) => {
             border: "1px solid #D9D9D9",
             borderTopLeftRadius: "8px",
             borderBottomLeftRadius: "8px",
-            height: 30,
+            height: 27,
             width: 30,
           }}
         >
-          {/* <EsPublicoIcon /> */}
           {icon}
         </div>
+        <CustomDropdown
+          options={emailConnections}
+          isEmail={true}
+          height="27px"
+          borderRadius="0px 8px 8px 0px"
+          placeholder="Añade una cuenta de correo"
+          selectedOption={selectedEmailConnection}
+          setSelectedOption={setSelectedEmailConnection}
+          emailsDropdown={true}
+        />
 
-        <SelectComponent
-          options={[
-            "example1@gmail.com",
-            "example2@gmail.com",
-            "example3@gmail.com",
-          ]}
+        {/* <SelectComponent
+          options={emailConnections}
           name="mail"
           id="mail"
           isEmail={true}
-        />
+          selectedEmailConnection={selectedEmailConnection}
+          setSelectedEmailConnection={setSelectedEmailConnection}
+        /> */}
       </div>
       <p onClick={action} style={{ color: "#159B7C", cursor: "pointer" }}>
         Añadir conexion

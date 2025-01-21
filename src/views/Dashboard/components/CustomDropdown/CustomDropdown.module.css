@@ -14,7 +14,6 @@
   font-weight: 400;
   color: #7e7e7e;
   height: 35px;
-  border-radius: 4px;
   background: #f4f4f4;
   padding: 0px 12px;
   display: flex;
@@ -22,8 +21,25 @@
   justify-content: flex-start;
   cursor: pointer;
 }
+.emailsFilterSort {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #7e7e7e;
+  height: 20px;
+  background: #fff;
+  padding: 0px 12px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e5e5;
+  justify-content: flex-start;
+  cursor: pointer;
+  gap: 10px;
+  border-left: none;
+}
 
 .chevronIcon {
+  margin-top: 1px;
   margin-left: auto;
   color: #292d32;
 }

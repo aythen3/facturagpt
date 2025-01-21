@@ -15,23 +15,20 @@
 
 .content {
   width: 100%;
-  max-height: 90vh;
-  max-width: 1064px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 646px;
   background-color: white;
-  /*padding: 24px;
-  */
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-  scrollbar-width: none;
-  box-sizing: border-box;
+  overflow: hidden;
   transform: translate(-50%, -50%) scale(1);
   -webkit-transform: translate(-50%, -50%) scale(1);
   -moz-transform: translate(-50%, -50%) scale(1);
   -ms-transform: translate(-50%, -50%) scale(1);
   -o-transform: translate(-50%, -50%) scale(1);
   animation: scaleUp 300ms ease-out forwards;
-
   position: fixed;
   top: 50%;
   left: 50%;
@@ -51,8 +48,10 @@
 .automate_content {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #e3e3e3;
-  padding: 24px;
+  padding: 0px 39px;
+  gap: 10px;
+  overflow: hidden;
+  background: #f5f5f5;
 }
 
 .content::-webkit-scrollbar {
@@ -61,22 +60,17 @@
 
 .container_buttons_footer {
   display: flex;
-  gap: 10px;
-  padding: 24px;
-  width: 100%;
-  position: sticky;
-  bottom: 0;
-  background-color: white;
-  justify-content: end;
+  gap: 16px;
+  padding: 14px 24px;
+  background-color: #f5f5f5;
+  justify-content: flex-end;
   align-items: center;
-  box-sizing: border-box;
-  border-top: 1px solid #e3e3e3;
 }
 
 .buttons_footer {
   height: 44px;
-  padding: 14px;
-  border-radius: 10px;
+  padding: 0 24px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -88,12 +82,15 @@
 }
 
 .button_add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background-color: #10a37f;
   color: white;
   display: flex;
-  gap: 10px;
-  font-size: 16;
+  gap: 22px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -134,4 +131,129 @@
 
 .fadeOut {
   opacity: 0;
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f5f5;
+  height: 84px;
+  padding: 0px 20px;
+}
+.headerLeft {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #222222;
+  font-size: 20px;
+  font-weight: 600;
+  gap: 33px;
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+  }
+}
+.closeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #f6f6f6;
+  user-select: none;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+  user-select: none;
+  background: #10a37f;
+}
+.closeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #f6f6f6;
+  user-select: none;
+}
+
+.searchContainer {
+  display: flex;
+  gap: 10px;
+}
+.searchInputWrapper {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  height: 57px;
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid #d9d9e3;
+  border-radius: 8px;
+  padding: 0px 25px;
+}
+.searchIconsWrappers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #ececf1;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 3px;
+}
+.searchIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #666;
+}
+.searchInput {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: #666;
+}
+
+.contentContainer {
+  border: 1px solid #ececf1;
+  border-radius: 8px;
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+.contentContainer::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.contentContainer::-webkit-scrollbar-thumb {
+  background-color: #e2e2e2;
+  border-radius: 12px;
+}
+.contentContainer::-webkit-scrollbar-track {
+  background: #fff;
 }

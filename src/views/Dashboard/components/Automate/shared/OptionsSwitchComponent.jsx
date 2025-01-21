@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import styles from "./optionsSwitch.module.css";
 
-const OptionsSwitchComponent = ({ text, icon, notSwitch }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
+const OptionsSwitchComponent = ({
+  text,
+  icon,
+  notSwitch,
+  isChecked,
+  setIsChecked,
+}) => {
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };

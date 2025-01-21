@@ -1,16 +1,29 @@
 .content {
   display: flex;
-  padding: 10px;
+  padding: 0 33px;
   align-items: center;
+  background: #fff;
   justify-content: space-between;
+  height: 74px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .content:hover {
-  background-color: #eeeeef;
+  background-color: #fafafa;
 }
 
 .content_active {
-  background-color: #eeeeef;
+  background-color: #ececf1;
+}
+.content_panel {
+  background: transparent;
+  border-radius: 4px;
+  height: 55px;
+  padding: 0 10px;
+}
+.content_panel:hover {
+  background-color: #ececf1;
 }
 
 .data_contain {
@@ -26,7 +39,6 @@
 }
 
 .automate_name {
-  margin-bottom: 4px;
   font-size: 16px;
 }
 
@@ -37,7 +49,9 @@
 
 .buttons_contains {
   display: flex;
-  gap: 10px;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
 }
 
 .button_edit {
