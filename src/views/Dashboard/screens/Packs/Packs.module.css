@@ -135,7 +135,7 @@
   font-size: clamp(17px, 5vw, 20px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   /* margin-top: 33px; */
-  max-width: 55%;
+  max-width: 65%;
   text-align: center;
   padding: 0 20px;
 }
@@ -178,7 +178,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: #18181b;
+  color: #10a37f;
   margin-top: 0px;
   text-align: center;
 
@@ -213,7 +213,6 @@
   align-items: center;
   justify-content: center;
   padding: 10px; /* Añade algo de espacio en los bordes */
-  gap: 40px; /* Espacio entre las cards */
   margin-top: 30px;
 }
 
@@ -231,6 +230,12 @@
 }
 
 .pdfIcon {
+  height: 50px;
+  width: 50px;
+}
+.fileIcon {
+  height: 40px;
+  width: 40px;
 }
 
 .compatibleProgramsContainer {
@@ -264,7 +269,7 @@
 
 /* Individual Card */
 .card {
-  max-width: clamp(200px, 30%, 280px); /* Tamaño dinámico con clamp */
+  max-width: clamp(200px, 30%, 330px); /* Tamaño dinámico con clamp */
   min-width: 280px;
   display: flex;
   flex-direction: column;

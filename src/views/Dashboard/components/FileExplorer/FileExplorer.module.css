@@ -75,6 +75,7 @@
   -moz-border-radius: 8px 0 0 8px;
   -ms-border-radius: 8px 0 0 8px;
   -o-border-radius: 8px 0 0 8px;
+  width: 100%;
 }
 .searchIconsWrappers {
   display: flex;
@@ -303,5 +304,18 @@
   h3 {
     max-width: 85%;
     font-size: 16px;
+  }
+}
+
+.bottomMenu {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  color: #2222226d;
+  span {
+    color: #222222;
   }
 }

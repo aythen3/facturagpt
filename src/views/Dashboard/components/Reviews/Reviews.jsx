@@ -10,9 +10,6 @@ const Reviews = () => {
   const { t } = useTranslation("reviews");
   return (
     <div className={styles.reviewsContainer}>
-      <h2 className={styles.reviewsTitle}>{t("title")}</h2>
-      <span className={styles.reviewsDescription}>{t("subTitle")}</span>
-      <Carousel />
       <section className={styles.reviewsSection}>
         <h2 className={styles.reviewsTitle}>{t("priceTitle")}</h2>
         {/* <span className={styles.reviewsDescriptionSecondary}>
@@ -29,6 +26,10 @@ const Reviews = () => {
         </div>
         <span className={styles.thinSubtitle}>{t("priceFooter")}</span>
       </section>
+      <h2 className={styles.reviewsTitle}>{t("title")}</h2>
+      <span className={styles.reviewsDescription}>{t("subTitle")}</span>
+      <Carousel />
+
       {/* <ContactForm /> */}
       <FAQ />
       <section className={styles.startNowSection}>

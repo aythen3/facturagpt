@@ -1,36 +1,61 @@
 import React from "react";
 import styles from "./CircleProgressBar.module.css"; // Asegúrate de importar los estilos
 
-const data = [
-  { text: "De ahorro en tiempo", percentage: "+90%" },
-  { text: "Optimización del trabajo", percentage: "+80%" },
-  { text: "Mejora la productividad", percentage: "+90%" },
-  { text: "Errores humanos", percentage: "-70%" },
-];
-const progressClasses = [styles.pg0, styles.pg1, styles.pg2, styles.pg3];
-
 const CircleProgressBar = () => {
+  const skills = [
+    { id: 1, percentage: "+90%", label: "De ahorro en tiempo" },
+    { id: 2, percentage: "+80%", label: "Optimización del trabajo" },
+    { id: 2, percentage: "+90%", label: "Mejora la productividad" },
+    { id: 2, percentage: "-70%", label: "Errores humanos" },
+  ];
+  const progressClasses = [styles.pg0, styles.pg1, styles.pg2, styles.pg3];
+
   return (
-    <div className={styles.cpb}>
-      {data.map((item, index) => (
-        <div key={index} className={styles.circleProgressBarContainer}>
-          <div className={styles.circular}>
-            <div className={styles.inner}></div>
-            <div className={styles.numb}>{item.percentage}</div>
-            <div className={styles.circle}>
-              <div className={`${styles.bar} ${styles.left}`}>
-                <div className={`${styles.progress} `}></div>
+    <div>
+      <div className={styles.CircleProgress}>
+        {skills.map((skill, index) => (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flex: "1",
+              gap: "10px",
+            }}
+            className={styles.cardPBContainer}
+          >
+            <div key={skill.id} className={`${styles.skill} `}>
+              <div className={styles.outer}>
+                <div className={styles.inner}>
+                  <div id={styles.number}>{skill.percentage}</div>
+                </div>
               </div>
-              <div
-                className={`${styles.bar} ${styles.right} ${progressClasses[index]}`}
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.1"
+                width="160px"
+                height="160px"
+                id={styles.ProgressBarCircle}
               >
-                <div className={styles.progress}></div>
-              </div>
+                <defs>
+                  <linearGradient id="GradientColor">
+                    <stop offset="0%" stopColor="#e91e63" />
+                    <stop offset="100%" stopColor="#673ab7" />
+                  </linearGradient>
+                </defs>
+                <circle
+                  cx="80"
+                  cy="80"
+                  r="70"
+                  strokeLinecap="round"
+                  className={progressClasses[index]}
+                />
+              </svg>
             </div>
+            <div>{skill.label}</div>
           </div>
-          {item.text}
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

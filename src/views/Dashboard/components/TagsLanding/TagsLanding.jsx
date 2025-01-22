@@ -14,7 +14,7 @@ const TagsLanding = () => {
   ];
   const tags3 = [
     "📊  Analiza tus datos",
-    "🫰 Automatiza Pagos",
+    "💸 Automatiza Pagos",
     " 🖇️ Conecta con terceros",
     "💬 Chatea con FacturaGPT ",
   ];

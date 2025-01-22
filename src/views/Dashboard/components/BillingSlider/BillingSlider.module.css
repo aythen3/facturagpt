@@ -7,7 +7,7 @@
 
 .title {
   font-size: clamp(20px, 5vw, 50px) !important; /* Ajuste dinámico con clamp */
-  color: #18181b;
+  color: #10a37f;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
@@ -25,7 +25,7 @@
   font-size: clamp(15px, 3vw, 21px) !important; /* Ajuste dinámico con clamp */
   color: #222222 !important;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin: 0;
 }
 
 .sliderWrapper {
@@ -49,23 +49,25 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #16c098;
+  width: 30px;
+  height: 30px;
+  background: url("../../assets/starSlider.svg") white no-repeat center center;
   border-radius: 50%;
+  background-size: cover;
   cursor: pointer;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   margin-right: 50px;
-  padding: 0px;
+  box-sizing: border-box;
 }
 
 .slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #16c098;
+  width: 30px;
+  height: 30px;
+  background: url("../../assets/starSlider.svg") white no-repeat center center;
   border-radius: 50%;
+  background-size: cover;
   cursor: pointer;
-  padding: 0px;
+  box-sizing: border-box;
 }
 
 .labels {

@@ -1,4 +1,4 @@
-.container {
+/* .container {
   padding: 20px;
 }
 
@@ -7,4 +7,13 @@
   margin-bottom: 20px;
   font-size: 24px;
   color: #333;
+} */
+
+.compatibleProgramsSection {
+  margin-top: 30px;
+  display: flex;
+  width: 55%;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }

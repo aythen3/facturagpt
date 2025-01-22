@@ -1,0 +1,134 @@
+.linesContainer {
+  height: 500px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.LinesLogoContainer {
+  height: 200px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background: linear-gradient(to bottom, #10a37f 0%, #00a67d 100%);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 50px rgba(42, 42, 42, 0.5); /* Sombra negra muy suave */
+  .logo {
+    height: 120px;
+    width: 120px;
+  }
+}
+.linesContent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100vw;
+}
+
+.lines,
+.linesR {
+  position: absolute;
+}
+
+.lines {
+  right: 120px;
+  top: -120px;
+}
+
+.linesR {
+  transform: rotate(180deg) scaleY(-1);
+  -webkit-transform: rotate(180deg) scaleY(-1);
+  -moz-transform: rotate(180deg) scaleY(-1);
+  -ms-transform: rotate(180deg) scaleY(-1);
+  -o-transform: rotate(180deg) scaleY(-1);
+  left: 120px;
+  top: -120px;
+}
+
+.logo {
+  position: absolute;
+  z-index: 3;
+}
+.uniqueStripe {
+  top: 95px;
+  left: 40px;
+}
+
+.uniqueHubSpot {
+  top: 190px;
+  left: 110px;
+}
+
+.uniqueGmail {
+  top: 165px;
+  left: 215px;
+}
+
+.uniqueSharePoint {
+  top: 230px;
+  left: 285px;
+}
+
+.uniqueDrive {
+  bottom: 150px;
+  left: 40px;
+}
+
+.uniqueAgenciaTributaria {
+  bottom: 160px;
+  left: 180px;
+}
+
+.uniqueOdoo {
+  bottom: 20px;
+  left: 50px;
+}
+
+.uniqueOutlook {
+  bottom: 70px;
+  left: 135px;
+}
+
+.uniquePaypal {
+  top: 105px;
+  right: 35px;
+}
+
+.uniqueEspublico {
+  top: 190px;
+  right: 110px;
+}
+
+.uniqueWhatsapp {
+  top: 165px;
+  right: 215px;
+}
+
+.uniqueDropBox {
+  top: 230px;
+  right: 295px;
+}
+
+.uniqueExcel {
+  bottom: 150px;
+  right: 40px;
+}
+
+.uniqueHolded {
+  bottom: 140px;
+  right: 180px;
+}
+
+.uniqueA3 {
+  bottom: 30px;
+  right: 70px;
+}
