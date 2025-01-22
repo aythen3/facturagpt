@@ -23,7 +23,13 @@ import chevronLeft from "../../../assets/chevronLeft.svg";
 import automation from "../../../assets/automation.svg";
 import CustomSearchbar from "../../CustomSearchbar/CustomSearchbar";
 
-const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
+const PanelAutomate = ({
+  type,
+  close,
+  typeContent,
+  isAnimating,
+  automationData,
+}) => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const { userAutomations } = useSelector((state) => state.automations); // Aca tenemos el array de automates del user (con toda la info dentro, no solo ids)
@@ -42,6 +48,7 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
 
   const [gmailAndOutlookConfiguration, setGmailAndOutlookConfiguration] =
     useState({
+      type: "Gmail",
       folderLocation: "/Inicio",
       includeAllRemitents: true,
       subjectExactMatch: true,
@@ -57,11 +64,43 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
       selectedEmailConnection: "",
       fileName: "",
       tags: "",
-      gmailToNotificate: "",
+      gmailTo: "",
+      gmailSubject: "",
+      gmailBody: "",
       whatsAppToNotificate: "",
+      whatsAppMessage: "",
       notificateAfterExport: false,
     });
 
+  const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({
+    type: "WhatsApp",
+    phoneNumber: "",
+    folderLocation: "/Inicio",
+    selectedWhatsAppConnection: "",
+    whatsAppConnectionData: [],
+    phoneNumbers: [],
+    notificateAfterExport: false,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppMessage: "",
+  });
+
+  useEffect(() => {
+    if (automationData) {
+      if (automationData.automationData.type === "WhatsApp") {
+        setWhatsAppConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "Gmail") {
+        setGmailAndOutlookConfiguration(automationData.automationData);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("type changed to", type);
+  }, [type]);
   useEffect(() => {
     console.log(
       "gmailAndOutlookConfiguration changed to:",
@@ -87,26 +126,30 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
   };
 
   useEffect(() => {
-    if (user) {
-      dispatch(getAllUserAutomations({ userId: user?.id }));
-    }
-  }, [user]);
-
-  useEffect(() => {
     console.log("user", user);
   }, [user]);
 
-  useEffect(() => {
-    console.log("userAutomations", userAutomations);
-  }, [userAutomations]);
-
   const handleAddAutomation = () => {
-    console.log(
-      "Adding automation...",
-      type,
-      "with data:",
-      gmailAndOutlookConfiguration
-    );
+    console.log("Adding automation...", type);
+
+    let selectedAutomationData;
+
+    if (type === "Gmail") {
+      selectedAutomationData = {
+        ...gmailAndOutlookConfiguration,
+        type: type,
+      };
+    } else if (type === "Outlook") {
+      selectedAutomationData = {
+        ...gmailAndOutlookConfiguration,
+        type: type,
+      };
+    } else if (type === "WhatsApp") {
+      selectedAutomationData = {
+        ...whatsAppConfiguration,
+        type: type,
+      };
+    }
 
     // Por el momento testeamos con gmail y outlook
 
@@ -115,7 +158,7 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
         createAutomation({
           userId: user?.id,
           email: user?.email,
-          automationData: gmailAndOutlookConfiguration,
+          automationData: selectedAutomationData,
         })
       );
     }
@@ -254,7 +297,13 @@ const PanelAutomate = ({ type, close, typeContent, isAnimating }) => {
                   case "Google Drive":
                     return <GoogleDriveFormCreateAutomate type={type} />;
                   case "WhatsApp":
-                    return <WhatsAppFormCreateAutomate type={type} />;
+                    return (
+                      <WhatsAppFormCreateAutomate
+                        type={type}
+                        configuration={whatsAppConfiguration}
+                        setConfiguration={setWhatsAppConfiguration}
+                      />
+                    );
                   case "esPúblico Gestiona":
                     return <EsPublicoGestionaFormAutomate type={type} />;
                   case "Google Sheets":

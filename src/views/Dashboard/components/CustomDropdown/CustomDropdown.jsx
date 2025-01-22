@@ -58,12 +58,9 @@ const CustomDropdown = ({
         style={{ height, borderRadius }}
         className={emailsDropdown ? styles.emailsFilterSort : styles.filterSort}
         onClick={(e) => {
-
           e.stopPropagation();
-          if (editing) {   
-            handleToggle(e);
-          }
-
+          if (options.length === 0) return;
+          handleToggle(e);
         }}
       >
         <div style={textStyles}>

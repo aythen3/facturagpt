@@ -3,7 +3,7 @@ import { ReactComponent as EsPublicoIcon } from "../../../../assets/espublicoges
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
-import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import ModalAddConnectionEsPublico from "./ModalAddConnectionEsPublico";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 const EsPublicoGestionaFormAutomate = ({ type }) => {

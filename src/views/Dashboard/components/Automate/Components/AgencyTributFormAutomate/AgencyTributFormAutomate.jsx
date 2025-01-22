@@ -4,7 +4,7 @@ import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComp
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 import { ReactComponent as AgencyTributIcon } from "../../../../assets/agenciatributariaLogo.svg";
-import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import ModalAddConnectionAgencyTribut from "./ModalAddConnectionAgencyTribut";
 
 const AgencyTributFormAutomate = ({ type }) => {

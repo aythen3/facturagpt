@@ -1,10 +1,10 @@
 import React from "react";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
-import InputComponent from "../../shared/InputComponent";
+import InputComponent from "../../../InputComponent/InputComponent";
 import SearchSVG from "../../svgs/SearchSVG";
 import CheckboxComponent from "../../shared/CheckboxComponent";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
-import SelectComponent from "../../shared/SelectComponent";
+import SelectComponent from "../../../SelectComponent/SelectComponent";
 const OdooFormAutomate = ({ type }) => {
   return (
     <div>
