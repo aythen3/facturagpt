@@ -1,5 +1,5 @@
 import React from "react";
-import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
+import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
 import { ReactComponent as AgencyTributIcon } from "../../../../assets/agenciatributariaLogo.svg";
 

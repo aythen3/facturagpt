@@ -140,11 +140,11 @@ const UsersDashboard = () => {
     },
   ];
 
-  useEffect(() => {
-    if (userData) {
-      dispatch(getAllUserAutomations({ userId: userData.id }));
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData) {
+  //     dispatch(getAllUserAutomations({ userId: userData.id }));
+  //   }
+  // }, [userData]);
 
   // useEffect(() => {
   //   if (userData) {

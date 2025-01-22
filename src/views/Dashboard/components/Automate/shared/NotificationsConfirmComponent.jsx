@@ -1,8 +1,9 @@
 import React from "react";
 import CheckboxComponent from "./CheckboxComponent";
-import InputComponent from "./InputComponent";
-import OptionsSwitchComponent from "./OptionsSwitchComponent";
+import InputComponent from "../../InputComponent/InputComponent";
+import OptionsSwitchComponent from "../../OptionsSwichComponent/OptionsSwitchComponent";
 import NotificationsSVG from "../svgs/NotificationsSVG";
+import styles from "./NotificationsConfirmComponent.module.css";
 
 const NotificationsConfirmComponent = ({
   title,
@@ -21,10 +22,16 @@ const NotificationsConfirmComponent = ({
   state2Value,
   setState2Value,
   setState2,
+  gmailTo,
+  setGmailTo,
+  gmailSubject,
+  setGmailSubject,
+  gmailBody,
+  setGmailBody,
 }) => {
   return (
-    <div style={{ display: "grid", gap: "24px" }}>
-      <div style={{ marginTop: "10px" }}>
+    <div className={styles.container}>
+      <div className={styles.marginTop}>
         <OptionsSwitchComponent
           isChecked={mainState}
           setIsChecked={setMainState}
@@ -32,60 +39,60 @@ const NotificationsConfirmComponent = ({
           text={title}
         />
       </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: 46,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
+      <div className={styles.row}>
+        <div className={styles.checkboxRow}>
           <CheckboxComponent
             color="#11A380"
             state={state1}
             setState={setState1}
           />
           {icons[0]}
-          {/* <WhatsAppIcon style={{ width: 25 }} /> */}
           <p>{type1}</p>
         </div>
-        <InputComponent
+        {/* <InputComponent
           placeholder={placeholder1}
           typeInput="text"
           value={state1Value}
           setValue={setState1Value}
-        />
+        /> */}
       </div>
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: 46,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
+      <div className={styles.gmailConfigurationContainer}>
+        <div className={styles.gmailConfigurationItem}>
+          <span className={styles.inputLabel}>Para:</span>
+          <InputComponent
+            value={gmailTo}
+            placeholder={"email"}
+            typeInput="text"
+            setValue={setGmailTo}
+          />
+        </div>
+        <div className={styles.gmailConfigurationItem}>
+          <span className={styles.inputLabel}>Asunto:</span>
+          <InputComponent
+            value={gmailSubject}
+            placeholder={"xxxx"}
+            typeInput="text"
+            setValue={setGmailSubject}
+          />
+        </div>
+        <div className={styles.gmailConfigurationItem}>
+          <span className={styles.inputLabel}>Mensaje:</span>
+          <InputComponent
+            value={gmailBody}
+            placeholder={"xxxx"}
+            typeInput="text"
+            setValue={setGmailBody}
+          />
+        </div>
+      </div>
+      <div className={styles.row}>
+        <div className={styles.checkboxRow}>
           <CheckboxComponent
             color="#11A380"
             state={state2}
             setState={setState2}
           />
           {icons[1]}
-
           <p>{type2}</p>
         </div>
         <InputComponent

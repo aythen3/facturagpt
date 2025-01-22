@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginToManager } from "../actions/user";
 import { checkOrCreateUserBucket, getUserFiles } from "../actions/scaleway";
+import { getAllUserAutomations } from "../actions/automations";
 
 const AppContext = createContext();
 
@@ -32,10 +33,8 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     console.log("===USER===", user);
     if (user && user.id) {
-      // dispatch(checkOrCreateUserBucket({ userId: user.id })).then(() =>
-      //   dispatch(getUserFiles({ userId: user.id }))
-      // );
       dispatch(getUserFiles({ userId: user.id }));
+      dispatch(getAllUserAutomations({ userId: user?.id }));
     }
   }, [user]);
 

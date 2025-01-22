@@ -1,5 +1,5 @@
 import React from "react";
-import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
+import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
 import { ReactComponent as GoogleSheetsIcon } from "../../../../assets/excel.svg";
 import { ReactComponent as GoogleIcon } from "../../../../assets/googleLogo.svg";

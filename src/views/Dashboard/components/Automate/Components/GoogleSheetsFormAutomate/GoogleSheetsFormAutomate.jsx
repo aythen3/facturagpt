@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as GoogleSheetsIcon } from "../../../../assets/excel.svg";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
-import InputComponent from "../../shared/InputComponent";
+import InputComponent from "../../../InputComponent/InputComponent";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import CheckboxComponent from "../../shared/CheckboxComponent";
-import OptionsSwitchComponent from "../../shared/OptionsSwitchComponent";
+import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 import NotificationsSVG from "../../svgs/NotificationsSVG";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
