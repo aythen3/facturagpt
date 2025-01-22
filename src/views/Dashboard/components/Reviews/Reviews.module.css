@@ -27,7 +27,7 @@
 }
 .reviewsTitle {
   font-size: clamp(20px, 5vw, 50px) !important; /* Ajuste dinámico con clamp */
-  font-weight: 700;
+  font-weight: 400;
   color: #18181b;
   text-align: center;
 }

@@ -9,7 +9,7 @@
   font-weight: 400;
   background: #16c098;
   width: 40%;
-  max-width: 360px;
+  max-width: 225px;
   height: 57px;
   min-height: 57px;
   text-decoration: none;
@@ -19,6 +19,6 @@
   -ms-border-radius: 999px;
   -o-border-radius: 999px;
   img {
-    height: 10px;
+    height: 15px;
   }
 }

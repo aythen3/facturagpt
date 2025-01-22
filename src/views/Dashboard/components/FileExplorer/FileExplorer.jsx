@@ -9,6 +9,8 @@ import horizontalDots from "../../assets/S3/horizontalDots.svg";
 import filterIcon from "../../assets/S3/filterIconBars.svg";
 import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
+import { ReactComponent as HouseContainer } from "../../assets/HouseContainerIcon.svg";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentPath,
@@ -650,6 +652,9 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             />
           </div>
         )}
+      </div>
+      <div className={styles.bottomMenu}>
+        <HouseContainer /> > <span>2025</span>
       </div>
       {showLocationModal && (
         <SelectLocation onClose={() => setShowLocationModal(false)} />

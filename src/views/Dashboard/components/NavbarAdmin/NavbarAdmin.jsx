@@ -25,6 +25,8 @@ import { useSelector } from "react-redux";
 import UpgradePlanWrapper from "../../screens/UpgradePlan/UpgradePlan";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import NewTag from "../NewTag/NewTag";
+import SelectLocation from "../SelectLocation/SelectLocation";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
@@ -33,7 +35,8 @@ const NavbarAdmin = () => {
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation("navbarAdmin");
-
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [showNewTagModal, setShowNewTagModal] = useState(false);
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -53,6 +56,7 @@ const NavbarAdmin = () => {
   };
   const openModalAutomate = () => {
     setIsModalAutomate(true);
+    setIsOpen(false);
   };
   const closeModalAutomate = () => {
     setTypeContentAutomate("");
@@ -149,6 +153,10 @@ const NavbarAdmin = () => {
               setIsOpen={setIsOpen}
               openModalAutomate={openModalAutomate}
               closeModalAutomate={closeModalAutomate}
+              showLocationModal={showLocationModal}
+              setShowLocationModal={setShowLocationModal}
+              showNewTagModal={showNewTagModal}
+              setShowNewTagModal={setShowNewTagModal}
             />
           )}
           {isModalAutomate && (
@@ -161,7 +169,12 @@ const NavbarAdmin = () => {
               setIsAnimating={setIsAnimating}
             />
           )}
-
+          {showNewTagModal && (
+            <NewTag setShowNewTagModal={setShowNewTagModal} />
+          )}
+          {showLocationModal && (
+            <SelectLocation onClose={() => setShowLocationModal(false)} />
+          )}
           {typeContentAutomate && (
             <PanelAutomate
               typeContent={handleShowContentAutomate}

@@ -9,14 +9,14 @@
 
 .sendEmailModal {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 65%;
-  height: 80vh;
+  bottom: 10px;
+  right: 10px;
+  width: 43%;
+  height: 52vh;
   padding-bottom: 20px;
   overflow-y: scroll;
   background-color: white;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(0%, 0%) scale(1);
   z-index: 999;
   border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -25,6 +25,10 @@
   -o-border-radius: 10px;
   animation: scaleUp 300ms ease-out forwards;
   -webkit-animation: scaleUp 300ms ease-out forwards;
+  -webkit-transform: translate(0%, 0%) scale(1);
+  -moz-transform: translate(0%, 0%) scale(1);
+  -ms-transform: translate(0%, 0%) scale(1);
+  -o-transform: translate(0%, 0%) scale(1);
 }
 .sendEmailModal::-webkit-scrollbar {
   display: none;
@@ -198,34 +202,34 @@
 
 @keyframes scaleUp {
   from {
-    transform: translate(-50%, -50%) scale(0);
-    -webkit-transform: translate(-50%, -50%) scale(0);
-    -moz-transform: translate(-50%, -50%) scale(0);
-    -ms-transform: translate(-50%, -50%) scale(0);
-    -o-transform: translate(-50%, -50%) scale(0);
+    transform: translate(0%, 0%) scale(0);
+    -webkit-transform: translate(0%, 0%) scale(0);
+    -moz-transform: translate(0%, 0%) scale(0);
+    -ms-transform: translate(0%, 0%) scale(0);
+    -o-transform: translate(0%, 0%) scale(0);
   }
   to {
-    transform: translate(-50%, -50%) scale(1);
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    -moz-transform: translate(-50%, -50%) scale(1);
-    -ms-transform: translate(-50%, -50%) scale(1);
-    -o-transform: translate(-50%, -50%) scale(1);
+    transform: translate(0%, 0%) scale(1);
+    -webkit-transform: translate(0%, 0%) scale(1);
+    -moz-transform: translate(0%, 0%) scale(1);
+    -ms-transform: translate(0%, 0%) scale(1);
+    -o-transform: translate(0%, 0%) scale(1);
   }
 }
 
 @keyframes scaleDown {
   from {
-    transform: translate(-50%, -50%) scale(1);
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    -moz-transform: translate(-50%, -50%) scale(1);
-    -ms-transform: translate(-50%, -50%) scale(1);
-    -o-transform: translate(-50%, -50%) scale(1);
+    transform: translate(0%, 0%) scale(1);
+    -webkit-transform: translate(0%, 0%) scale(1);
+    -moz-transform: translate(0%, 0%) scale(1);
+    -ms-transform: translate(0%, 0%) scale(1);
+    -o-transform: translate(0%, 0%) scale(1);
   }
   to {
-    transform: translate(-50%, -50%) scale(0);
-    -webkit-transform: translate(-50%, -50%) scale(0);
-    -moz-transform: translate(-50%, -50%) scale(0);
-    -ms-transform: translate(-50%, -50%) scale(0);
-    -o-transform: translate(-50%, -50%) scale(0);
+    transform: translate(0%, 0%) scale(0);
+    -webkit-transform: translate(0%, 0%) scale(0);
+    -moz-transform: translate(0%, 0%) scale(0);
+    -ms-transform: translate(0%, 0%) scale(0);
+    -o-transform: translate(0%, 0%) scale(0);
   }
 }
