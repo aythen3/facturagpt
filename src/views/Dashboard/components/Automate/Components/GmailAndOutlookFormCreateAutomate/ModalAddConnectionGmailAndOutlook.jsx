@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
+import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";

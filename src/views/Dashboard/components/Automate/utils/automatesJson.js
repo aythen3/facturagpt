@@ -2,7 +2,7 @@ import mail from "../../../assets/gmail.svg";
 import outlook from "../../../assets/outlook.svg";
 import drive from "../../../assets/drive.svg";
 import dropbox from "../../../assets/droopbox.svg";
-import whatsApp from "../../../assets/whatsapp.svg";
+import whatsApp from "../../../assets/whatsappIcon.svg";
 import esPublico from "../../../assets/espublicogestionaLogo.svg";
 import googleSheets from "../../../assets/excel.svg";
 import xml from "../../../assets/xmlIcon.svg";

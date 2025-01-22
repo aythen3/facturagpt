@@ -4,7 +4,7 @@ import CardAutomate from "./Components/CardAutomate/CardAutomate";
 import { data } from "./utils/automatesJson";
 import styles from "./automate.module.css";
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import closeGray from "../../assets/closeGray.svg";
 import chevronLeft from "../../assets/chevronLeft.svg";
 import { Search } from "lucide-react";
@@ -22,6 +22,7 @@ const Automate = ({
   isAnimating,
   setIsAnimating,
 }) => {
+  const { userAutomations } = useSelector((state) => state.automations);
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
@@ -110,19 +111,35 @@ const Automate = ({
             </div>
           </div>
           <div className={styles.contentContainer}>
-            {dataFilter.map((card, i) => (
-              <CardAutomate
-                fullContent={true}
-                type={card.type}
-                typeContent={typeContent}
-                key={card.id}
-                name={card.automateName}
-                image={card.image}
-                contactType={card.contactType}
-                isBorders={true}
-                last={i === dataFilter.length - 1}
-              />
-            ))}
+            {userAutomations.length > 0 &&
+              userAutomations?.map((card, i) => {
+                console.log("automationData", card.automationData);
+                const filteredAutomation = data.find(
+                  (automation) =>
+                    automation?.type === card?.automationData?.type
+                );
+                console.log("filteredAutomation", filteredAutomation);
+                return (
+                  <CardAutomate
+                    fullContent={true}
+                    type={filteredAutomation.type}
+                    typeContent={typeContent}
+                    key={card.id}
+                    name={filteredAutomation.automateName}
+                    image={filteredAutomation.image}
+                    contactType={
+                      card?.automationData?.type === "Gmail"
+                        ? card?.automationData?.selectedEmailConnection
+                        : card?.automationData?.type === "WhatsApp"
+                          ? card?.automationData?.selectedWhatsAppConnection
+                          : card?.email
+                    }
+                    automationData={card}
+                    isBorders={true}
+                    last={i === dataFilter.length - 1}
+                  />
+                );
+              })}
           </div>
         </div>
         <div className={styles.container_buttons_footer}>
@@ -132,7 +149,10 @@ const Automate = ({
           >
             Atrás
           </button>
-          <button className={`${styles.buttons_footer} ${styles.button_add}`}>
+          <button
+            onClick={() => typeContent("Gmail")}
+            className={`${styles.buttons_footer} ${styles.button_add}`}
+          >
             <img src={automation} alt="automation" /> Nueva Automatización
           </button>
         </div>

@@ -1,0 +1,42 @@
+.container {
+  display: grid;
+  gap: 24px;
+}
+
+.marginTop {
+  margin-top: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 46px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gmailConfigurationContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: -10px;
+  gap: 12px;
+}
+
+.gmailConfigurationItem {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.inputLabel {
+  font-weight: 400;
+  width: 50px;
+  color: #71717a;
+  margin-right: 8px;
+}

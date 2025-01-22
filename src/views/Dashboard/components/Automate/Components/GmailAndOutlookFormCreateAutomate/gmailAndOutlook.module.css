@@ -135,3 +135,17 @@
 .minusBlackIcon {
   background: #464646;
 }
+
+.singlePhoneNumber {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  justify-content: space-between;
+  color: #666666;
+  font-size: 12px;
+  font-weight: 500;
+  div {
+    cursor: pointer;
+    user-select: none;
+  }
+}

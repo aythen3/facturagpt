@@ -33,6 +33,7 @@ const NavbarAdmin = () => {
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation("navbarAdmin");
+  const [selectedAutomationData, setSelectedAutomationData] = useState(null);
 
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
@@ -59,9 +60,10 @@ const NavbarAdmin = () => {
     setIsModalAutomate(false);
   };
 
-  const handleShowContentAutomate = (type) => {
+  const handleShowContentAutomate = (type, automationData) => {
     setIsModalAutomate(false);
     setTypeContentAutomate(type);
+    setSelectedAutomationData(automationData);
   };
 
   const handleCloseContentAutomate = (type) => {
@@ -164,6 +166,7 @@ const NavbarAdmin = () => {
 
           {typeContentAutomate && (
             <PanelAutomate
+              automationData={selectedAutomationData}
               typeContent={handleShowContentAutomate}
               close={handleCloseNewClient}
               type={typeContentAutomate}

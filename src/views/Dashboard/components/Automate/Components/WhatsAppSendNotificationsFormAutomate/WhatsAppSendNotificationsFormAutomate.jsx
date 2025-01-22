@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
-import InputComponent from "../../shared/InputComponent";
+import InputComponent from "../../../InputComponent/InputComponent";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import SearchSVG from "../../svgs/SearchSVG";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
 import CheckboxComponent from "../../shared/CheckboxComponent";
 import ModalAddConnectionWhatsAppSendNotifications from "./ModalAddConnectionWhatsAppSendNotifications";
-import HeaderFormsComponent from "../../shared/HeaderFormsComponent";
+import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsapp.svg";
 
 const WhatsAppSendNotificationsFormAutomate = () => {

@@ -1,8 +1,11 @@
-import React from "react";
-import LabelInputComponent from "../AddConenctionModal/components/LabelInputComponent";
+import React, { useState } from "react";
+import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-const ModalAddConnectionWhatsApp = ({ close }) => {
+const ModalAddConnectionWhatsApp = ({ close, addConnection }) => {
+  const [accountId, setAccountId] = useState("");
+  const [token, setToken] = useState("");
+
   return (
     <AddConnectionModal
       headerColor={["#3AD656", "#5BF876"]}
@@ -20,14 +23,28 @@ const ModalAddConnectionWhatsApp = ({ close }) => {
           label="WhatsApp Account ID"
           placeholder="Account ID"
           inputType="text"
+          value={accountId}
+          setValue={setAccountId}
         />
 
         <LabelInputComponent
           label="Token"
           placeholder="Token"
           inputType="text"
+          value={token}
+          setValue={setToken}
         />
         <button
+          onClick={() => {
+            if (!accountId || !token) {
+              alert("Porfavor completa los campos");
+              return;
+            }
+            addConnection({ accountId, token });
+            setAccountId("");
+            setToken("");
+            close();
+          }}
           style={{
             backgroundColor: "#4BE666",
             color: "white",

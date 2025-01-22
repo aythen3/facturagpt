@@ -35,7 +35,7 @@ const OptionsSwitchComponent = ({
       >
         <div style={{ backgroundColor: "#233F39" }}>{icon}</div>
 
-        <p>{text}</p>
+        <p style={{ marginLeft: "15px" }}>{text}</p>
       </div>
       {!notSwitch && (
         <label className={styles.switch}>
