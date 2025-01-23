@@ -26,6 +26,7 @@ import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileM
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
 import { clearTransaction } from "../../../../slices/transactionsSlices";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
+import { getEmailsByQuery } from "../../../../actions/emailManager";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -41,6 +42,7 @@ const Clients = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const { allClients, allUsers } = useSelector((state) => state.emailManager);
 
   const { clients, loading, client } = useSelector((state) => state.clients);
 
@@ -226,12 +228,33 @@ const Clients = () => {
     }
   };
 
-  const toggleClientSelection = (clientId) => {
+  const toggleClientSelection = async (clientId) => {
     setSelectedClientIds((prev) =>
       prev.includes(clientId)
         ? prev.filter((id) => id !== clientId)
         : [...prev, clientId]
     );
+    console.log("users", allUsers);
+    console.log("toggling clientId", clientId);
+    console.log("allClients", allClients);
+    let singleUser = allClients[0];
+    const response = await dispatch(
+      getEmailsByQuery({
+        userId: singleUser?.id || "randomId",
+        email: singleUser.tokenEmail,
+        password: singleUser.tokenPassword,
+        query: singleUser.emailQueries,
+        tokenGpt: singleUser.tokenGPT,
+        logs: [],
+        ftpData: {
+          host: singleUser.host,
+          port: singleUser.port,
+          user: singleUser.tokenUser,
+          password: singleUser.tokenUserPassword,
+        },
+      })
+    );
+    console.log("RESPONSE==", response);
   };
 
   const handleDeleteClient = (e, clientID) => {

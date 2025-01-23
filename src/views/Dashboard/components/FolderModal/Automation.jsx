@@ -78,7 +78,7 @@ export function AutomationModal({ onClose }) {
             <div className={styles.section}>
               <FileText className={styles.sectionIcon} />
               <div className={styles.sectionContent}>
-                <label className={styles.label}>Asunto Contine</label>
+                <label className={styles.label}>Asunto Contiene</label>
                 <input
                   type="text"
                   className={styles.input}
@@ -96,7 +96,7 @@ export function AutomationModal({ onClose }) {
             <div className={styles.section}>
               <MessageSquare className={styles.sectionIcon} />
               <div className={styles.sectionContent}>
-                <label className={styles.label}>Body Contine</label>
+                <label className={styles.label}>Mensaje Contiene</label>
                 <input
                   type="text"
                   className={styles.input}

@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import { ReactComponent as EsPublicoIcon } from "../../../../assets/espublico-icon.svg";
-const ModalAddConnectionEsPublico = ({ close, addConnection }) => {
+import { ReactComponent as DriveIcon } from "../../../../assets/drive.svg";
+import { ReactComponent as DropboxIcon } from "../../../../assets/dropbox-icon.svg";
+import { ReactComponent as DropboxIconWhite } from "../../../../assets/dropboxWhite.svg";
+
+const ModalAddConnectionDropbox = ({ close, addConnection }) => {
   const [clientId, setClientId] = useState("");
   const [secretKey, setSecretKey] = useState("");
   return (
-    <AddConnectionModal
-      headerColor={["#EE7A01", "#FF9F3B"]}
-      close={close}
-      type="esPúblico"
-      icon={<EsPublicoIcon />}
-    >
+    <AddConnectionModal close={close} type="Dropbox" icon={<DropboxIcon />}>
       <div
         style={{
           display: "grid",
@@ -45,26 +43,36 @@ const ModalAddConnectionEsPublico = ({ close, addConnection }) => {
             close();
           }}
           style={{
-            backgroundColor: "#EE7A01",
-            color: "white",
             display: "flex",
             justifyContent: "flex-start",
-            gap: "24px",
+            gap: "10px",
             alignItems: "center",
             borderRadius: "6px",
             border: "none",
             height: 40,
+            color: "white",
             padding: "8px",
+            backgroundColor: "#0062FF",
             cursor: "pointer",
             width: "100%",
           }}
         >
-          <EsPublicoIcon width={25} height={25} />
-          <span>Add Connection</span>
+          <DropboxIconWhite width={25} height={25} />
+          <span
+            style={{
+              borderLeft: "1px solid white",
+              height: 40,
+              paddingLeft: "24px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            Add Connection
+          </span>
         </button>
       </div>
     </AddConnectionModal>
   );
 };
 
-export default ModalAddConnectionEsPublico;
+export default ModalAddConnectionDropbox;

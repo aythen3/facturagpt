@@ -16,12 +16,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createAutomation,
   getAllUserAutomations,
+  updateAutomation,
 } from "../../../../../actions/automations";
 import { useNavigate } from "react-router-dom";
 import ModalBlackBgTemplate from "../../ModalBlackBgTemplate/ModalBlackBgTemplate";
 import chevronLeft from "../../../assets/chevronLeft.svg";
 import automation from "../../../assets/automation.svg";
 import CustomSearchbar from "../../CustomSearchbar/CustomSearchbar";
+import DropboxFormCreateAutomate from "../Components/DropboxFormCreateAutomate/DropboxFormCreateAutomate";
 
 const PanelAutomate = ({
   type,
@@ -48,7 +50,6 @@ const PanelAutomate = ({
 
   const [gmailAndOutlookConfiguration, setGmailAndOutlookConfiguration] =
     useState({
-      type: "Gmail",
       folderLocation: "/Inicio",
       includeAllRemitents: true,
       subjectExactMatch: true,
@@ -58,18 +59,18 @@ const PanelAutomate = ({
       addedRemitents: [],
       subjectKeyWords: [],
       bodyKeyWords: [],
-      notificateGmail: false,
-      notificateWhatsApp: false,
       emailConnectionData: [],
       selectedEmailConnection: "",
       fileName: "",
       tags: "",
+      notificateAfterExport: false,
+      notificateGmail: false,
+      notificateWhatsApp: false,
       gmailTo: "",
       gmailSubject: "",
       gmailBody: "",
       whatsAppToNotificate: "",
       whatsAppMessage: "",
-      notificateAfterExport: false,
     });
 
   const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({
@@ -88,15 +89,108 @@ const PanelAutomate = ({
     whatsAppMessage: "",
   });
 
+  const [googleDriveConfiguration, setGoogleDriveConfiguration] = useState({
+    type: "Google Drive",
+    folderLocation: "/Inicio",
+    selectedGoogleDriveConnection: "",
+    googleDriveConnectionData: [],
+    filesKeyWords: [],
+    filesKeyWordsExactMatch: true,
+    selectedFileTypes: [],
+    allowAllFileTypes: true,
+    changeFileName: false,
+    fileName: "",
+    notificateAfterExport: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+  });
+
+  const [esPublicoGestionaConfiguration, setEsPublicoGestionaConfiguration] =
+    useState({
+      type: "esPúblico Gestiona",
+      folderLocation: "/Inicio",
+      selectedPublicoGestionaConnection: "",
+      publicoGestionaConnectionData: [],
+      notificateAfterExport: false,
+      notificateGmail: false,
+      notificateWhatsApp: false,
+      gmailTo: "",
+      gmailSubject: "",
+      gmailBody: "",
+      whatsAppToNotificate: "",
+      whatsAppMessage: "",
+      notificateAfterError: false,
+      notificateErrorGmail: false,
+      notificateErrorWhatsApp: false,
+      errorGmailTo: "",
+      errorGmailSubject: "",
+      errorGmailBody: "",
+      errorWhatsAppToNotificate: "",
+      errorWhatsAppMessage: "",
+    });
+
+  const [dropBoxConfiguration, setDropBoxConfiguration] = useState({
+    type: "Dropbox",
+    folderLocation: "/Inicio",
+    selectedDropboxConnection: "",
+    dropboxConnectionData: [],
+    filesKeyWords: [],
+    filesKeyWordsExactMatch: true,
+    selectedFileTypes: [],
+    allowAllFileTypes: true,
+    changeFileName: false,
+    fileName: "",
+    notificateAfterExport: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+  });
+
   useEffect(() => {
     if (automationData) {
+      console.log("AUTOMATIONDATA LOADED", automationData);
       if (automationData.automationData.type === "WhatsApp") {
+        console.log(
+          "Setting whatsAppConfiguration",
+          automationData.automationData
+        );
         setWhatsAppConfiguration(automationData.automationData);
       } else if (automationData.automationData.type === "Gmail") {
+        console.log(
+          "Setting gmailAndOutlookConfiguration",
+          automationData.automationData
+        );
         setGmailAndOutlookConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "Google Drive") {
+        console.log(
+          "Setting googleDriveConfiguration",
+          automationData.automationData
+        );
+        setGoogleDriveConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "esPúblico Gestiona") {
+        console.log(
+          "Setting esPublicoGestionaConfiguration",
+          automationData.automationData
+        );
+        setEsPublicoGestionaConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "Dropbox") {
+        console.log(
+          "Setting dropBoxConfiguration",
+          automationData.automationData
+        );
+        setDropBoxConfiguration(automationData.automationData);
       }
     }
-  }, []);
+  }, [automationData]);
 
   useEffect(() => {
     console.log("type changed to", type);
@@ -149,11 +243,36 @@ const PanelAutomate = ({
         ...whatsAppConfiguration,
         type: type,
       };
+    } else if (type === "Google Drive") {
+      selectedAutomationData = {
+        ...googleDriveConfiguration,
+        type: type,
+      };
+    } else if (type === "esPúblico Gestiona") {
+      selectedAutomationData = {
+        ...esPublicoGestionaConfiguration,
+        type: type,
+      };
+    } else if (type === "Dropbox") {
+      selectedAutomationData = {
+        ...dropBoxConfiguration,
+        type: type,
+      };
     }
 
     // Por el momento testeamos con gmail y outlook
 
-    if (user) {
+    if (user && selectedAutomationData?.id) {
+      console.log("UPDATING AUTOMATION", selectedAutomationData?.id);
+      dispatch(
+        updateAutomation({
+          automationId: selectedAutomationData?.id,
+          toUpdate: { automationData: selectedAutomationData },
+          userId: user?.id,
+        })
+      );
+    } else if (user) {
+      console.log("CREATING AUTOMATION");
       dispatch(
         createAutomation({
           userId: user?.id,
@@ -295,7 +414,21 @@ const PanelAutomate = ({
                       />
                     );
                   case "Google Drive":
-                    return <GoogleDriveFormCreateAutomate type={type} />;
+                    return (
+                      <GoogleDriveFormCreateAutomate
+                        configuration={googleDriveConfiguration}
+                        setConfiguration={setGoogleDriveConfiguration}
+                        type={type}
+                      />
+                    );
+                  case "Dropbox":
+                    return (
+                      <DropboxFormCreateAutomate
+                        configuration={dropBoxConfiguration}
+                        setConfiguration={setDropBoxConfiguration}
+                        type={type}
+                      />
+                    );
                   case "WhatsApp":
                     return (
                       <WhatsAppFormCreateAutomate
@@ -305,7 +438,13 @@ const PanelAutomate = ({
                       />
                     );
                   case "esPúblico Gestiona":
-                    return <EsPublicoGestionaFormAutomate type={type} />;
+                    return (
+                      <EsPublicoGestionaFormAutomate
+                        configuration={esPublicoGestionaConfiguration}
+                        setConfiguration={setEsPublicoGestionaConfiguration}
+                        type={type}
+                      />
+                    );
                   case "Google Sheets":
                     return <GoogleSheetsFormAutomate type={type} />;
                   case "XML para Declaciones Físcales":

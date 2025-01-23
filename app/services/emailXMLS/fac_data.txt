@@ -106,7 +106,7 @@
 <segundo>0</segundo>
 </fecha_albaran>
 <albaran>%productAlbaran%</albaran>
-<referencia>%productAlbaranRef%</referencia>
+<referencia>%productRef%</referencia>
 <codigo_partida/>
 <desc_partida/>
 <descripcion>%productDescription%</descripcion>
@@ -117,22 +117,22 @@
 <cantidad_entregada>%productQuantity%</cantidad_entregada>
 <unidad>UN</unidad>
 <posicion_factura>%n%</posicion_factura>
-<precio_unitario></precio_unitario>
-<unidad_precio></unidad_precio>
-<cantidad_precio></cantidad_precio>
+<precio_unitario>%productPartial%</precio_unitario>
+<unidad_precio>%productUnit%</unidad_precio>
+<cantidad_precio>1</cantidad_precio>
 <observaciones/>
 <importes>
 <importe id="0">
 <tipo_importe>01</tipo_importe>
 <desc_tipo_importe>Neto</desc_tipo_importe>
-<valor_importe>%productImportWithoutDiscount%</valor_importe>
+<valor_importe>%productImport%</valor_importe>
 <porcentaje>00.00</porcentaje>
 <signo_importe>01</signo_importe>
 </importe>
 <importe id="1">
 <tipo_importe>02</tipo_importe>
-<desc_tipo_importe>Descuento</desc_tipo_importe>
-<valor_importe>%productImport%</valor_importe>
+<desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
+<valor_importe>%productDiscountAmount%</valor_importe>
 <porcentaje>%productDiscountRate%</porcentaje>
 <signo_importe>02</signo_importe>
 </importe>

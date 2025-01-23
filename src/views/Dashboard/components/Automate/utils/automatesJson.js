@@ -3,7 +3,7 @@ import outlook from "../../../assets/outlook.svg";
 import drive from "../../../assets/drive.svg";
 import dropbox from "../../../assets/droopbox.svg";
 import whatsApp from "../../../assets/whatsappIcon.svg";
-import esPublico from "../../../assets/espublicogestionaLogo.svg";
+import esPublico from "../../../assets/espublico-icon.svg";
 import googleSheets from "../../../assets/excel.svg";
 import xml from "../../../assets/xmlIcon.svg";
 import odoo from "../../../assets/odoo.svg";
@@ -40,7 +40,7 @@ export const data = [
     automateName: "Sube tus Facturas de Dropbox",
     image: dropbox,
     contactType: "example@gmail.com",
-    type: "dropbox",
+    type: "Dropbox",
     role: "input",
   },
   {
