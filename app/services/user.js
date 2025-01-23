@@ -486,10 +486,10 @@ const deleteClientService = async ({ clientId }) => {
   }
 };
 
-const generateAndSendOtpService = async ({ email, language }) => {
+const generateAndSendOtpService = async ({ nombre, email, language }) => {
   const dbName = "db_emailmanager_otp";
   let db;
-
+  console.log(nombre);
   try {
     // Verificar y crear la base de datos si no existe
     const dbs = await nano.db.list();
@@ -524,7 +524,7 @@ const generateAndSendOtpService = async ({ email, language }) => {
     console.log(`OTP generado y guardado para ${email}:`, otp);
 
     // Enviar el correo electrónico con el OTP
-    await sendOtpEmail(email, otp, language);
+    await sendOtpEmail(nombre, email, otp, language);
 
     return { success: true, message: "OTP generado y enviado exitosamente." };
   } catch (error) {

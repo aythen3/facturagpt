@@ -9,6 +9,10 @@
   color: #333;
 } */
 
+.compatibleProgramsSection::-webkit-scrollbar {
+  display: none;
+}
+
 .compatibleProgramsSection {
   margin-top: 30px;
   display: flex;
@@ -16,4 +20,12 @@
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
+  overflow-y: scroll;
+}
+@media (width <= 590px) {
+  .compatibleProgramsSection {
+    max-height: 400px;
+    width: 80%;
+    gap: 20px;
+  }
 }

@@ -7,7 +7,7 @@
   width: 90%;
   h2 {
     font-size: clamp(30px, 5vw, 50px) !important;
-    font-weight: 700;
+    font-weight: 400;
     color: #18181b;
     text-align: center;
   }

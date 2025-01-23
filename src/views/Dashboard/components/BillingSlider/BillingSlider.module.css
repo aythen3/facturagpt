@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  font-weight: 400;
 }
 
 .star {
@@ -30,9 +31,11 @@
 
 .sliderWrapper {
   position: relative;
-  width: 50%;
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
 }
+
 .slider {
   -webkit-appearance: none;
   appearance: none;

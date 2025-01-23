@@ -26,6 +26,7 @@
     width: 120px;
   }
 }
+
 .linesContent {
   position: relative;
   display: flex;
@@ -58,77 +59,314 @@
   position: absolute;
   z-index: 3;
 }
+
 .uniqueStripe {
   top: 95px;
-  left: 40px;
+  left: 4%;
 }
 
 .uniqueHubSpot {
   top: 190px;
-  left: 110px;
+  left: 8%;
 }
 
 .uniqueGmail {
   top: 165px;
-  left: 215px;
+  left: 16%;
 }
 
 .uniqueSharePoint {
   top: 230px;
-  left: 285px;
+  left: 22%;
 }
 
 .uniqueDrive {
   bottom: 150px;
-  left: 40px;
+  left: 4%;
 }
 
 .uniqueAgenciaTributaria {
   bottom: 160px;
-  left: 180px;
+  left: 14%;
 }
 
 .uniqueOdoo {
   bottom: 20px;
-  left: 50px;
+  left: 5%;
 }
 
 .uniqueOutlook {
   bottom: 70px;
-  left: 135px;
+  left: 11%;
 }
 
 .uniquePaypal {
   top: 105px;
-  right: 35px;
+  right: 0%;
 }
 
 .uniqueEspublico {
   top: 190px;
-  right: 110px;
+  right: 8%;
 }
 
 .uniqueWhatsapp {
   top: 165px;
-  right: 215px;
+  right: 18%;
 }
 
 .uniqueDropBox {
-  top: 230px;
-  right: 295px;
+  top: 250px;
+  right: 24%;
 }
 
 .uniqueExcel {
   bottom: 150px;
-  right: 40px;
+  right: 2%;
 }
 
 .uniqueHolded {
   bottom: 140px;
-  right: 180px;
+  right: 10%;
+}
+
+.uniqueOneDrive {
+  bottom: 70px;
+  right: 0%;
 }
 
 .uniqueA3 {
   bottom: 30px;
-  right: 70px;
+  right: 8%;
+}
+
+@media (width <=950px) {
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .uniqueStripe {
+    top: 155px;
+  }
+
+  .uniqueHubSpot {
+    top: 205px;
+  }
+
+  .uniqueGmail {
+    top: 180px;
+  }
+
+  .uniqueSharePoint {
+    top: 230px;
+  }
+
+  .uniqueDrive {
+    bottom: 190px;
+  }
+
+  .uniqueAgenciaTributaria {
+    bottom: 200px;
+  }
+
+  .uniqueOdoo {
+    bottom: 120px;
+  }
+
+  .uniqueOutlook {
+    bottom: 145px;
+  }
+
+  .uniquePaypal {
+    top: 160px;
+  }
+
+  .uniqueEspublico {
+    top: 210px;
+  }
+
+  .uniqueWhatsapp {
+    top: 195px;
+  }
+
+  .uniqueDropBox {
+    top: 235px;
+  }
+
+  .uniqueExcel {
+    bottom: 180px;
+  }
+
+  .uniqueHolded {
+    bottom: 170px;
+  }
+
+  .uniqueOneDrive {
+    bottom: 115px;
+  }
+
+  .uniqueA3 {
+    bottom: 100px;
+  }
+}
+
+@media (width <= 570px) {
+  .LinesLogoContainer {
+    height: 100px;
+    width: 100px;
+    .logo {
+      height: 50px;
+      width: 50px;
+    }
+  }
+  .linesR {
+    left: -2px;
+    top: -168px;
+  }
+  .lines {
+    right: -2px;
+    top: -168px;
+  }
+
+  .uniqueStripe {
+    /* top: 170px; */
+  }
+
+  .uniqueHubSpot {
+    /* top: 205px; */
+  }
+
+  .uniqueGmail {
+    /* top: 180px; */
+    left: 19%;
+  }
+
+  .uniqueSharePoint {
+    /* top: 230px; */
+    left: 24%;
+  }
+
+  .uniqueDrive {
+    /* bottom: 190px; */
+  }
+
+  .uniqueAgenciaTributaria {
+    /* bottom: 200px; */
+  }
+
+  .uniqueOdoo {
+    /* bottom: 140px; */
+  }
+
+  .uniqueOutlook {
+    /* bottom: 165px; */
+    left: 16%;
+  }
+
+  .uniquePaypal {
+    /* top: 175px; */
+  }
+
+  .uniqueEspublico {
+    /* top: 210px; */
+    right: 3%;
+  }
+
+  .uniqueWhatsapp {
+    /* top: 195px; */
+    right: 15%;
+  }
+
+  .uniqueDropBox {
+    /* top: 235px; */
+  }
+
+  .uniqueExcel {
+    /* bottom: 200px; */
+  }
+
+  .uniqueHolded {
+    /* bottom: 187px; */
+    right: 11%;
+  }
+
+  .uniqueOneDrive {
+    /* bottom: 155px; */
+  }
+
+  .uniqueA3 {
+    /* bottom: 130px; */
+    right: 12%;
+  }
+}
+
+@media (width <=400px) {
+  .logo {
+    width: 30px;
+  }
+  .uniqueStripe {
+    top: 170px;
+  }
+
+  .uniqueHubSpot {
+    top: 205px;
+  }
+
+  .uniqueGmail {
+    top: 180px;
+  }
+
+  .uniqueSharePoint {
+    top: 230px;
+  }
+
+  .uniqueDrive {
+    bottom: 190px;
+  }
+
+  .uniqueAgenciaTributaria {
+    bottom: 200px;
+  }
+
+  .uniqueOdoo {
+    bottom: 140px;
+  }
+
+  .uniqueOutlook {
+    bottom: 165px;
+  }
+
+  .uniquePaypal {
+    top: 175px;
+  }
+
+  .uniqueEspublico {
+    top: 210px;
+  }
+
+  .uniqueWhatsapp {
+    top: 195px;
+  }
+
+  .uniqueDropBox {
+    top: 235px;
+  }
+
+  .uniqueExcel {
+    bottom: 200px;
+  }
+
+  .uniqueHolded {
+    bottom: 187px;
+    right: 11%;
+  }
+
+  .uniqueOneDrive {
+    bottom: 155px;
+  }
+
+  .uniqueA3 {
+    bottom: 130px;
+  }
 }

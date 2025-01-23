@@ -35,7 +35,7 @@
 
 .packsDescription {
   color: #b8b8b8;
-  font-size: clamp(18px, 5vw, 24px); /* Ajuste dinámico del tamaño de título */
+  font-size: clamp(18px, 5vw, 22px); /* Ajuste dinámico del tamaño de título */
   font-weight: 400;
   align-items: center;
   justify-content: center;
@@ -184,6 +184,7 @@
 
   h2 {
     margin: 0;
+    font-weight: 400;
     font-size: clamp(
       20px,
       5vw,
@@ -288,10 +289,8 @@
   color: #16c098 !important;
   font-size: clamp(16px, 4vw, 22px); /* Ajuste dinámico del tamaño de texto */
   font-weight: 400;
-  /* Title text */
   color: #18181b;
   font-size: clamp(18px, 5vw, 24px); /* Ajuste dinámico del tamaño de título */
-  font-weight: bold;
   margin: 0;
 }
 

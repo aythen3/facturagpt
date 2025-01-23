@@ -193,10 +193,14 @@ export const updateUserPassword = createAsyncThunk(
 
 export const sendOTP = createAsyncThunk(
   "user/send-otp",
-  async ({ email, language }, { rejectWithValue }) => {
+  async ({ nombre, email, language }, { rejectWithValue }) => {
     console.log("Sending OTP to:", email);
     try {
-      const res = await apiBackend.post(`/user/send-otp`, { email, language });
+      const res = await apiBackend.post(`/user/send-otp`, {
+        nombre,
+        email,
+        language,
+      });
       return res.data;
     } catch (error) {
       console.error(
@@ -210,10 +214,12 @@ export const sendOTP = createAsyncThunk(
 
 export const verifyOTP = createAsyncThunk(
   "user/verify-otp",
-  async ({ email, otp }, { rejectWithValue }) => {
+  async ({ nombre, email, otp }, { rejectWithValue }) => {
     console.log("Verifying OTP for:", email);
+
     try {
       const res = await apiBackend.post(`/user/verify-otp`, {
+        nombre,
         email,
         otp,
       });

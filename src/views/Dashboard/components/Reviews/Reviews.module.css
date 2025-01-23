@@ -34,7 +34,6 @@
 .reviewsDescription {
   font-size: clamp(17px, 5vw, 20px);
   font-weight: 400;
-  max-width: 574px;
   color: #b8b8b8;
   text-align: center;
   width: 80%;
@@ -65,13 +64,21 @@
   font-size: 36px;
   color: #10a37f;
   display: flex;
-
   gap: 10px;
+  div {
+    display: flex;
+    gap: 10px;
+  }
   span {
     color: black;
   }
   span:first-child {
     font-weight: 300;
+  }
+}
+@media (width <= 370px) {
+  .startsFrom {
+    flex-direction: column;
   }
 }
 .price {
@@ -103,7 +110,7 @@
   font-size: 18px;
   font-weight: 400;
   background: #16c098;
-  width: 40%;
+  width: 100%;
   max-width: 360px;
   height: 57px;
   min-height: 57px;
