@@ -17,8 +17,10 @@ const Reviews = () => {
         mejor servicio de impuestos.
       </span> */}
         <p className={styles.startsFrom}>
-          <span>{t("plan")}</span>
-          <span>{t("planType")}</span>
+          <div>
+            <span>{t("plan")}</span>
+            <span>{t("planType")}</span>
+          </div>
           {t("priceSubTitle")}
         </p>
         <div className={styles.price}>

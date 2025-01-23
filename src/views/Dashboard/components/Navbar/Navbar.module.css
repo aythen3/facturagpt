@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 .navbar {
-  /* background: linear-gradient(to right, #12a380 0%, #073d30 100%); */
-  background: white;
+  background: rgba(255, 255, 255, 0.7); /* Fondo blanco con transparencia */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
   color: black;
   display: flex;
   justify-content: space-between;

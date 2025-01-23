@@ -1,8 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
-
 const nodemailer = require("nodemailer");
-
 const {
   generateUniqueToken,
   calculateExpirationDateForOneDay,
@@ -93,6 +91,11 @@ async function sendEmail(email, template, data) {
         content: data.attachment,
         encoding: "base64",
       },
+      {
+        filename: "GreenLogo.png",
+        path: "./assets/GreenLogo.png",
+        cid: "unique@logo.cid",
+      },
     ];
   }
 
@@ -177,7 +180,7 @@ const getEmail = async (req, res) => {
   return res.send(html);
 };
 
-const sendOtpEmail = async (email, otp, language = "es") => {
+async function sendOtpEmail(nombre, email, otp, language = "es") {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -190,17 +193,26 @@ const sendOtpEmail = async (email, otp, language = "es") => {
 
   if (language === "es") {
     htmlContent = `
-    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
-  <h1 style="color: #4CAF50; text-align: center; font-size: 24px;">Tu Código OTP</h1>
-  <p style="font-size: 16px; line-height: 1.5;">Hola,</p>
-  <p style="font-size: 16px; line-height: 1.5;">Tu código OTP para acceder al sistema es:</p>
-  <div style="text-align: center; margin: 20px 0;">
-    <h2 style="color: #4CAF50; font-size: 32px; letter-spacing: 4px; background-color: #e8f5e9; padding: 10px; border-radius: 8px; display: inline-block;">${otp}</h2>
-  </div>
-  <p style="font-size: 16px; line-height: 1.5; color: #555;">Este código expirará en <strong>5 minutos</strong>. Si no solicitaste este código, por favor ignora este mensaje.</p>
-  <p style="font-size: 16px; line-height: 1.5;">Atentamente,<br><strong>El equipo de Aythen</strong></p>
-</div>
-  `;
+    <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+      <h1 style="text-align: center; font-size: 24px;">
+        <img src="cid:logo" style="max-width: 65%; height: auto;" />
+      </h1>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hola, ${nombre}</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Para completar el proceso de activación y validar tu cuenta, por favor introduce el siguiente código de 6 dígitos en nuestra plataforma:</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B; font-weight:bold;">Código de Verificación:</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <h2 style="font-size: 16px; letter-spacing: 4px; color:#0D0D0D; padding: 10px; border-radius: 8px; display: inline-block;">${otp}</h2>
+      </div>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Este código es válido durante los próximos 10 minutos. Si el código ha expirado o necesitas uno nuevo, puedes solicitar otro fácilmente utilizando la opción "Reenviar Código" en la página de verificación.</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">
+      ¿Qué sigue?
+        <ol style="color:#1F184B;">
+          <li>Ingresa el código: Copia y pega el código anterior en el campo correspondiente de nuestra página de activación.</li>
+          <li>Completa la validación: Una vez ingresado el código, tu cuenta será activada y estarás listo para disfrutar de todos los beneficios de Linkeram.</li>
+        </ol>
+      </p>
+    </div>
+    `;
   } else {
     htmlContent = `
    <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
@@ -222,6 +234,13 @@ const sendOtpEmail = async (email, otp, language = "es") => {
     to: email,
     subject: language === "es" ? "Tu código OTP" : "Your OTP Code",
     html: htmlContent,
+    attachments: [
+      {
+        filename: "GreenLogo.png",
+        path: path.join(__dirname, "assets/GreenLogo.png"),
+        cid: "logo",
+      },
+    ],
   };
 
   try {
@@ -231,7 +250,7 @@ const sendOtpEmail = async (email, otp, language = "es") => {
     console.error("Error al enviar el OTP:", error);
     throw new Error("No se pudo enviar el OTP.");
   }
-};
+}
 
 const sendRecoveryCode = async (email, recoveryCode, language = "es") => {
   const transporter = nodemailer.createTransport({

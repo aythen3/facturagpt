@@ -205,7 +205,7 @@ const DashboardLogin = () => {
       setIsLoading(true);
       const language = await localStorage.getItem("language");
       console.log("language", language);
-      dispatch(sendOTP({ email: storedEmail, language }))
+      dispatch(sendOTP({ nombre, email: storedEmail, language }))
         .unwrap()
         .then(() => {
           setMode("otp");
@@ -251,7 +251,7 @@ const DashboardLogin = () => {
     if (receivedOtp.length === 6) {
       setIsLoading(true);
       console.log({ email: storedEmail, otp: receivedOtp });
-      dispatch(verifyOTP({ email: storedEmail, otp: receivedOtp }))
+      dispatch(verifyOTP({ nombre, email: storedEmail, otp: receivedOtp }))
         .unwrap()
         .then(() => {
           dispatch(
@@ -284,7 +284,7 @@ const DashboardLogin = () => {
 
   const handleResendOTP = () => {
     setIsLoading(true);
-    dispatch(sendOTP({ email: storedEmail }))
+    dispatch(sendOTP({ nombre, email: storedEmail }))
       .unwrap()
       .then(() => {
         setResendTimer(45);

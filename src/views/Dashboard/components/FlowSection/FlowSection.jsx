@@ -10,7 +10,7 @@ const steps = () => [
     icon: (
       <>
         <ArrowPointingTop className={`${styles.Arrow} ${styles.arrow1}`} />
-        <EntradaIcon />
+        <EntradaIcon className={styles.icon} />
       </>
     ),
     title: "Entrada",
@@ -20,7 +20,7 @@ const steps = () => [
     icon: (
       <>
         <ArrowPointingBottom className={`${styles.Arrow} ${styles.arrow2}`} />
-        <EstructuracionIcon />
+        <EstructuracionIcon className={styles.icon} />
       </>
     ),
     title: "Estructuración",
@@ -30,7 +30,7 @@ const steps = () => [
     icon: (
       <>
         <ArrowPointingTop className={`${styles.Arrow} ${styles.arrow3}`} />
-        <SalidaIcon />
+        <SalidaIcon className={styles.icon} />
         <ArrowPointingBottom className={`${styles.Arrow} ${styles.arrow4}`} />
       </>
     ),

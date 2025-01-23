@@ -32,6 +32,7 @@ const icons = [
   { Component: OdooCircle, uniqueClass: styles.uniqueOdoo },
   { Component: OutlookCircle, uniqueClass: styles.uniqueOutlook },
   { Component: ExcelCircle, uniqueClass: styles.uniqueExcel },
+  { Component: OneDriveCircle, uniqueClass: styles.uniqueOneDrive },
   { Component: WhatsappCircle, uniqueClass: styles.uniqueWhatsapp },
   { Component: PaypalCircle, uniqueClass: styles.uniquePaypal },
   { Component: EsPublicoCircle, uniqueClass: styles.uniqueEspublico },
