@@ -55,25 +55,6 @@
   top: -120px;
 }
 
-@media (width <= 570px) {
-  .LinesLogoContainer {
-    height: 100px;
-    width: 100px;
-    .logo {
-      height: 50px;
-      width: 50px;
-    }
-  }
-  .linesR {
-    left: -2px;
-    top: -168px;
-  }
-  .lines {
-    right: -2px;
-    top: -168px;
-  }
-}
-
 .logo {
   position: absolute;
   z-index: 3;
@@ -227,5 +208,165 @@
 
   .uniqueA3 {
     bottom: 100px;
+  }
+}
+
+@media (width <= 570px) {
+  .LinesLogoContainer {
+    height: 100px;
+    width: 100px;
+    .logo {
+      height: 50px;
+      width: 50px;
+    }
+  }
+  .linesR {
+    left: -2px;
+    top: -168px;
+  }
+  .lines {
+    right: -2px;
+    top: -168px;
+  }
+
+  .uniqueStripe {
+    /* top: 170px; */
+  }
+
+  .uniqueHubSpot {
+    /* top: 205px; */
+  }
+
+  .uniqueGmail {
+    /* top: 180px; */
+    left: 19%;
+  }
+
+  .uniqueSharePoint {
+    /* top: 230px; */
+    left: 24%;
+  }
+
+  .uniqueDrive {
+    /* bottom: 190px; */
+  }
+
+  .uniqueAgenciaTributaria {
+    /* bottom: 200px; */
+  }
+
+  .uniqueOdoo {
+    /* bottom: 140px; */
+  }
+
+  .uniqueOutlook {
+    /* bottom: 165px; */
+    left: 16%;
+  }
+
+  .uniquePaypal {
+    /* top: 175px; */
+  }
+
+  .uniqueEspublico {
+    /* top: 210px; */
+    right: 3%;
+  }
+
+  .uniqueWhatsapp {
+    /* top: 195px; */
+    right: 15%;
+  }
+
+  .uniqueDropBox {
+    /* top: 235px; */
+  }
+
+  .uniqueExcel {
+    /* bottom: 200px; */
+  }
+
+  .uniqueHolded {
+    /* bottom: 187px; */
+    right: 11%;
+  }
+
+  .uniqueOneDrive {
+    /* bottom: 155px; */
+  }
+
+  .uniqueA3 {
+    /* bottom: 130px; */
+    right: 12%;
+  }
+}
+
+@media (width <=400px) {
+  .logo {
+    width: 30px;
+  }
+  .uniqueStripe {
+    top: 170px;
+  }
+
+  .uniqueHubSpot {
+    top: 205px;
+  }
+
+  .uniqueGmail {
+    top: 180px;
+  }
+
+  .uniqueSharePoint {
+    top: 230px;
+  }
+
+  .uniqueDrive {
+    bottom: 190px;
+  }
+
+  .uniqueAgenciaTributaria {
+    bottom: 200px;
+  }
+
+  .uniqueOdoo {
+    bottom: 140px;
+  }
+
+  .uniqueOutlook {
+    bottom: 165px;
+  }
+
+  .uniquePaypal {
+    top: 175px;
+  }
+
+  .uniqueEspublico {
+    top: 210px;
+  }
+
+  .uniqueWhatsapp {
+    top: 195px;
+  }
+
+  .uniqueDropBox {
+    top: 235px;
+  }
+
+  .uniqueExcel {
+    bottom: 200px;
+  }
+
+  .uniqueHolded {
+    bottom: 187px;
+    right: 11%;
+  }
+
+  .uniqueOneDrive {
+    bottom: 155px;
+  }
+
+  .uniqueA3 {
+    bottom: 130px;
   }
 }
