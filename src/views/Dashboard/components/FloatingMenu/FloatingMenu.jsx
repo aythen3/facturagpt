@@ -13,13 +13,24 @@ import { ReactComponent as FacturaIcon } from "../../assets/moneyIconBW.svg";
 import { ReactComponent as PlusIcon } from "../../assets/automatizaIconNew.svg";
 import { ReactComponent as ChatGPTIcon } from "../../assets/chatGPTIcon.svg";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import SelectLocation from "../SelectLocation/SelectLocation";
+import NewTag from "../NewTag/NewTag";
 
-export default function FloatingMenu({ openModalAutomate, isOpen, setIsOpen }) {
+export default function FloatingMenu({
+  openModalAutomate,
+  isOpen,
+  setIsOpen,
+  showLocationModal,
+  setShowLocationModal,
+  showNewTagModal,
+  setShowNewTagModal,
+}) {
   const [activeModal, setActiveModal] = useState(null);
   const dispach = useDispatch();
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
+  const navigate = useNavigate();
   const handleClickOutside = (e) => {
     if (e.target === e.currentTarget) {
       setIsOpen(false);
@@ -37,22 +48,28 @@ export default function FloatingMenu({ openModalAutomate, isOpen, setIsOpen }) {
     {
       icon: <FolderIcon />,
       text: "Nueva Carpeta",
-      action: () => setActiveModal("folder"),
+      action: () => {
+        setShowLocationModal(true);
+        setIsOpen(false);
+      },
     },
     {
       icon: <TagIcon />,
       text: "Nueva Etiqueta",
-      action: () => setActiveModal("tag"),
+      action: () => {
+        setShowNewTagModal(true);
+        setIsOpen(false);
+      },
     },
     {
       icon: <WhatsAppIcon />,
       text: "Abrir Whatsapp",
-      action: () => setActiveModal("tag"),
+      action: () => window.open("https://wa.me/584243356112", "_blank"), // Reemplaza 1234567890 con el número de WhatsApp deseado
     },
     {
       icon: <ChatGPTIcon />,
       text: "ChatGPT",
-      action: () => console.log("ChatGPT"),
+      action: () => navigate("/chat"), // Cambia a la ruta deseada
     },
     {
       icon: <CloudIcon />,
@@ -98,7 +115,7 @@ export default function FloatingMenu({ openModalAutomate, isOpen, setIsOpen }) {
                   className={styles.menuItem}
                   onClick={() => {
                     item.action();
-                    setIsOpen(false);
+                    // setIsOpen(false);
                   }}
                 >
                   <span className={styles.menuIcon}>{item.icon}</span>

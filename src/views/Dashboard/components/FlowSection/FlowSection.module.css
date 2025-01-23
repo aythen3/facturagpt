@@ -1,0 +1,55 @@
+.stepsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 220px;
+  h3,
+  p {
+    margin: 0;
+  }
+  p {
+    color: #676767;
+  }
+}
+
+.steps {
+  width: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+.iconContainer {
+  width: fit-content;
+  background-color: #10a37f;
+  padding: 20px;
+  border-radius: 20px 20px 20px 0;
+  -webkit-border-radius: 20px 20px 20px 0;
+  -moz-border-radius: 20px 20px 20px 0;
+  -ms-border-radius: 20px 20px 20px 0;
+  -o-border-radius: 20px 20px 20px 0;
+}
+
+.Arrow {
+  position: absolute;
+}
+
+.arrow1 {
+  left: -225px;
+  top: 80px;
+}
+.arrow2 {
+  left: -220px;
+  top: 0px;
+}
+.arrow3 {
+  left: -235px;
+  top: 40px;
+}
+.arrow4 {
+  left: 160px;
+  top: -30px;
+}

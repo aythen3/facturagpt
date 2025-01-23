@@ -1,4 +1,4 @@
-.cpb {
+/* .cpb {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -100,7 +100,7 @@
   width: 50%;
   height: 10px;
   margin-top: -5px;
-  animation: dot 4s linear both; /* Duración ajustada */
+  animation: dot 4s linear both; 
   transform-origin: 0% 50%;
   transform: rotate(270deg);
 }
@@ -142,4 +142,102 @@
   -moz-transform: rotate(80deg) !important;
   -ms-transform: rotate(80deg) !important;
   -o-transform: rotate(80deg) !important;
+} */
+
+/* ========================================== */
+/* NUEVO */
+
+.CircleProgress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #10a37f;
+  justify-content: center;
+  width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  margin-bottom: 50px;
 }
+
+.skill {
+  width: 160px;
+  height: 160px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.outer {
+  height: 160px;
+  width: 160px;
+  padding: 20px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.inner {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#number {
+  font-weight: 700;
+  font-size: 30px;
+  color: black;
+}
+
+circle {
+  fill: none;
+  stroke: #10a37f;
+  stroke-width: 10px;
+  stroke-dasharray: 472;
+  stroke-dashoffset: 165;
+}
+#ProgressBarCircle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: rotate(270deg);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+}
+
+.pg0,
+.pg2 {
+  stroke-dashoffset: 80;
+}
+.pg1 {
+}
+
+.pg3 {
+  stroke-dashoffset: 190;
+}
+
+@media (max-width: 620px) {
+  .CircleProgress {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cardPBContainer {
+    flex-direction: column;
+  }
+}
+
+/* ========================================== */

@@ -4,12 +4,9 @@ import PricingCards from "../../components/PricingCard/PricingCard";
 import BillingSlider from "../../components/BillingSlider/BillingSlider";
 import flag from "../../assets/flag.svg";
 import heart from "../../assets/heart.svg";
-import jpg from "../../assets/jpgNewFormat.svg";
-import png from "../../assets/pngNewFormat.svg";
-import txt from "../../assets/txtNewFormat.svg";
-import csv from "../../assets/csvNewFormat.svg";
-import json from "../../assets/jsonNewFormat.svg";
-import xml from "../../assets/xmlNewFormat.svg";
+import image from "../../assets/imageIcon.svg";
+import code from "../../assets/codeIcon.svg";
+import txt from "../../assets/fileIcon.svg";
 
 import outlook from "../../assets/outlook.svg";
 import gmail from "../../assets/gmail.svg";
@@ -27,6 +24,8 @@ import CompatibleProgramsSection from "../../components/CompatibleProgramsSectio
 import { useTranslation } from "react-i18next";
 import TagsLanding from "../../components/TagsLanding/TagsLanding";
 import CircleProgressBar from "../../components/CircleProgressBar/CircleProgressBar";
+import LinesLandingSection from "../../components/LinesLandingSection/LinesLandingSection";
+import FlowSection from "../../components/FlowSection/FlowSection";
 
 const Packs = () => {
   const { t } = useTranslation("packs");
@@ -76,7 +75,7 @@ const Packs = () => {
   const horasTotalesFormatted = numberFormatter.format(horasRedondeadas);
   const valorEnDolaresFormatted = formatNumber(valorEnDolares);
 
-  const cardsData = [jpg, png, txt, csv, json, xml];
+  const cardsData = [image, txt, code];
   const compatiblePrograms = [outlook, gmail, xslx, odoo, logoImage, stripe];
 
   const steps = [
@@ -94,21 +93,6 @@ const Packs = () => {
       step: t("step3"),
       title: t("title3"),
       description: t("description3"),
-    },
-    {
-      step: t("step4"),
-      title: t("title4"),
-      description: t("description4"),
-    },
-    {
-      step: t("step5"),
-      title: t("title5"),
-      description: t("description5"),
-    },
-    {
-      step: t("step6"),
-      title: t("title6"),
-      description: t("description6"),
     },
   ];
   console.log(sliderValueFormatted);
@@ -142,13 +126,7 @@ const Packs = () => {
   return (
     <div className={styles.packsContainer}>
       <div className={styles.stepsContainer} id="facturation">
-        <div className={styles.logoContainer}>
-          {LogoIcons.map((icon, index) => (
-            <div key={index} className={styles.logo}>
-              <img src={icon.image} alt={icon.title} />
-            </div>
-          ))}
-        </div>
+        <LinesLandingSection />
         <div className={styles.wrapper}>
           {steps.map((step, index) => (
             <div key={index} className={styles.card}>
@@ -158,8 +136,17 @@ const Packs = () => {
             </div>
           ))}
         </div>
+        <FlowSection />
         <TagsLanding />
       </div>
+
+      <CircleProgressBar />
+      <div className={styles.banner}>
+        <h3 className={styles.bannerTitle}>{t("reduces1")}</h3>
+        <h3 className={styles.bannerTitle}>{t("reduces2")}</h3>
+        <h3 className={styles.bannerTitle}>{t("reduces3")}</h3>
+      </div>
+
       <BillingSlider
         setSliderValue={setSliderValue}
         sliderValue={sliderValue}
@@ -195,12 +182,7 @@ const Packs = () => {
         sliderValue={sliderValue}
         setFacturasTotales={setFacturasTotales}
       />
-      <CircleProgressBar />
-      <div className={styles.banner}>
-        <h3 className={styles.bannerTitle}>{t("reduces1")}</h3>
-        <h3 className={styles.bannerTitle}>{t("reduces2")}</h3>
-        <h3 className={styles.bannerTitle}>{t("reduces3")}</h3>
-      </div>
+
       <section className={styles.extensionsContainer}>
         <div className={styles.extensionsTitle}>
           <img className={styles.flag} src={flag} alt="flag" />
@@ -211,7 +193,7 @@ const Packs = () => {
           {cardsData.map((card, index) => (
             <div className={styles.innerCard} key={index}>
               <img
-                className={index === 0 ? styles.pdfIcon : styles.pdfIcon}
+                className={index === 1 ? styles.fileIcon : styles.pdfIcon}
                 src={card}
                 alt="card"
               />

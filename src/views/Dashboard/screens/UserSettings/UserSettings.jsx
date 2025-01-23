@@ -14,12 +14,16 @@ import { addNewClient } from "../../../../actions/emailManager";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { ReactComponent as ArrowGray } from "../../assets/arrowDownGray.svg";
+import { ReactComponent as ArrowLeft } from "../../assets/ArrowLeftWhite.svg";
+import lock from "../../assets/greenLock.svg";
 import StripeModal from "./StripeModal";
 import StripePaymentForm from "./StripePaymentForm";
 import Payment from "./StripeComponents/Payment";
 import SetupPayment from "./StripeComponents/SetupPayment";
 import { getNextPaymentDate } from "../../utils/constants";
 import { useTranslation } from "react-i18next";
+import Button from "../../components/Button/Button";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
@@ -64,26 +68,29 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
     companyName: "",
     email: "",
     phoneNumber: "",
-    cif: "",
+    VatId: "",
     address: "",
     emergencyContact: "",
+    tokenGPT: "",
   });
   const categoriesTitles = {
     companyName: t("name"),
     email: t("email"),
     phoneNumber: t("phone"),
-    cif: t("cif"),
+    VatId: "Vat ID",
     address: t("address"),
     emergencyContact: t("emergencyContact"),
+    tokenGPT: "Token GPT",
   };
 
   const placeholdersValues = {
     companyName: t("placeholderName"),
     email: t("placeholderEmail"),
     phoneNumber: t("placeholderPhone"),
-    cif: t("placeholderCif"),
+    VatId: "No provisto",
     address: t("placeholderAddress"),
     emergencyContact: t("placeholderEmergencyNumer"),
+    tokenGPT: "Token GPT",
   };
   const { user } = useSelector((state) => state.user);
   const [tokenEmail, setTokenEmail] = useState(""); // Email (Bandejas)
@@ -226,238 +233,268 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
               setPaymentId={setPaymentId}
             />
           )}
-
-          {/* Left Side */}
-          <div className={styles.leftSection}>
-            <div className={styles.breadcrumb}>
-              <span onClick={() => navigate("/home")}>Admin</span>{" "}
-              <FaChevronRight /> <span>{t("newRegistration")}</span>
-            </div>
-            <div className={styles.userIconContainer}>
-              <img src={userAdd} alt="User Add" className={styles.userIcon} />
-            </div>
-            <div className={styles.detailsContainer}>
-              {Object.keys(fieldValues).map((field) => (
-                <div key={field} className={styles.detailItem}>
-                  <div className={styles.rowSpaced}>
-                    <span className={styles.detailTitle}>
-                      {categoriesTitles[field]}
-                    </span>
-                    <span
-                      className={styles.detailEdit}
-                      onClick={() => toggleEdit(field)}
-                    >
-                      {editFields[field] ? t("save") : t("edit")}
-                    </span>
-                  </div>
-                  <div className={styles.detailContent}>
-                    {editFields[field] ? (
-                      <input
-                        type="text"
-                        placeholder={placeholdersValues[field]}
-                        className={styles.inputEdit}
-                        value={fieldValues[field]}
-                        onChange={(e) => handleChange(field, e.target.value)}
-                        ref={(el) => (inputRefs.current[field] = el)}
-                      />
-                    ) : (
-                      <span className={styles.fieldSpan}>
-                        {fieldValues[field].length
-                          ? fieldValues[field]
-                          : placeholdersValues[field]}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Tokens Section */}
-            <div className={styles.tokensContainer}>
-              <div className={styles.leftTokensContent}>
-                {" "}
-                <h2 className={styles.title}>Tokens</h2>
-                <div className={styles.tokensWrapper}>
-                  <div className={styles.inputGroup}>
-                    <img
-                      src={openEmail}
-                      alt="Bandejas"
-                      className={styles.icon}
-                    />
-                    <div className={styles.inputWrapper}>
-                      <input
-                        value={tokenEmail}
-                        onChange={(e) => setTokenEmail(e.target.value)}
-                        type="text"
-                        placeholder={t("placeholderInboxes")}
-                        className={styles.input}
-                      />
-                    </div>
-                    <img
-                      src={passwordIcon}
-                      alt="Contraseña"
-                      className={styles.icon}
-                    />
-                    <div className={styles.inputWrapper}>
-                      <input
-                        value={tokenPassword}
-                        onChange={(e) => setTokenPassword(e.target.value)}
-                        type="password"
-                        placeholder={t("placeholderPassword")}
-                        className={styles.input}
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.inputGroup}>
-                    <img
-                      src={circuit}
-                      alt="Token GPT"
-                      className={styles.icon}
-                    />
-                    <div className={styles.inputWrapper}>
-                      <input
-                        value={tokenGPT}
-                        onChange={(e) => setTokenGPT(e.target.value)}
-                        type="text"
-                        placeholder={t("placeholderTokenGPT")}
-                        className={styles.input}
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.inputGroup}>
-                    <img src={connection} alt="Host" className={styles.icon} />
-                    <div className={styles.inputWrapper}>
-                      <input
-                        value={host}
-                        onChange={(e) => setHost(e.target.value)}
-                        type="text"
-                        placeholder={t("placeholderHost")}
-                        className={styles.input}
-                      />
-                    </div>
-                  </div>
-
-                  <div className={styles.portGroup}>
-                    <div className={styles.portInputWrapper}>
-                      <input
-                        value={port}
-                        onChange={(e) => setPort(e.target.value)}
-                        type="text"
-                        placeholder={t("placeholderPort")}
-                        className={styles.input}
-                      />
-                    </div>
-                    <div className={styles.portInputWrapper}>
-                      <input
-                        value={tokenUser}
-                        onChange={(e) => setTokenUser(e.target.value)}
-                        type="text"
-                        placeholder={t("placeholderUser")}
-                        className={styles.input}
-                      />
-                    </div>
-                    <div className={styles.portInputWrapper}>
-                      <input
-                        value={tokenUserPassword}
-                        onChange={(e) => setTokenUserPassword(e.target.value)}
-                        type="password"
-                        placeholder={t("placeholderPasswordHost")}
-                        className={styles.input}
-                      />
-                    </div>
-                  </div>
-                </div>
+          <div className={styles.HeaderUserSetting}>
+            <div className={styles.headerLeft}>
+              <div
+                className={styles.arrowGreen}
+                onClick={() => setShowUserSettings(false)}
+              >
+                <ArrowLeft className={styles.arrowGreenIcon} />
               </div>
-              <div className={styles.tagsWrapper}>
-                <img
-                  src={paperSearch}
-                  alt="Etiquetas"
-                  className={styles.icon}
-                />
-                <div className={styles.tagsContent}>
-                  <label>#{t("labels")}</label>
-                  <input
-                    value={firstTag}
-                    onChange={(e) => setFirstTag(e.target.value)}
-                    type="text"
-                    className={styles.tagInput}
-                  />
-                  <input
-                    value={secondTag}
-                    onChange={(e) => setSecondTag(e.target.value)}
-                    type="text"
-                    className={styles.tagInput}
-                  />
-                  <input
-                    value={thirdTag}
-                    onChange={(e) => setThirdTag(e.target.value)}
-                    type="text"
-                    className={styles.tagInput}
-                  />
-                  <input
-                    value={fourthTag}
-                    onChange={(e) => setFourthTag(e.target.value)}
-                    type="text"
-                    className={styles.tagInput}
-                  />
-                </div>
-              </div>
+              Admin <ArrowGray className={styles.arrowHeaderGray} /> alta nuevo
+              cliente
+            </div>
+
+            <div style={{ display: "flex", gap: "10px" }}>
+              <Button type={"white"}>Cancel</Button>
+              <Button>Dar de alta</Button>
             </div>
           </div>
-          {/* Right Side */}
-          <div className={styles.rightSection}>
-            <div className={styles.faqContainer}>
-              <div className={styles.faqItem}>
-                <div className={styles.switchContainer}>
-                  <img src={shield} alt="Shield" />
-                  <input
-                    checked={isPaymentConfigured}
-                    onChange={handleTogglePayment}
-                    type="checkbox"
-                    id="paymentSwitch"
-                    className={styles.switch}
-                  />
-                  <label
-                    htmlFor="paymentSwitch"
-                    className={styles.switchLabel}
-                  ></label>
-                  <span className={styles.switchText}>{t("payConfig")}</span>
-                </div>
-                {paymentId && <span>{paymentId}</span>}
-                <p>{t("titleRight1")}</p>
-                <span>{t("subTitle1")}</span>
-              </div>
-              <div className={styles.faqItem}>
-                {/* <img src={lock} alt='Lock' /> */}
-                <p>{t("titleRight2")}</p>
-                <span>{t("subTitle2")}</span>
-              </div>
-              <div className={styles.faqItem}>
-                <img src={eye} alt="Eye" />
-                <p>{t("titleRight3")}</p>
-                <span>{t("subTitle3")}</span>
-                <div
-                  className={styles.filterSort}
-                  onClick={handleDropdownToggle}
-                  ref={dropdownRef}
-                >
-                  <b>{selectedOption}</b> {t("documents")}
-                  <FaChevronDown className={styles.chevronIcon} />
-                  {isOpen && (
-                    <div className={styles.dropdownOptions}>
-                      {options.map((option, index) => (
-                        <div
-                          key={index}
-                          className={styles.dropdownOption}
-                          onClick={() => handleOptionClick(option)}
-                        >
-                          {option}
-                        </div>
-                      ))}
+          <div style={{ display: "flex" }}>
+            {/* Left Side */}
+            <div className={styles.leftSection}>
+              <div className={styles.faqContainer}>
+                <div className={styles.faqItem}>
+                  <div className={styles.switchContainer}>
+                    <img src={shield} alt="Shield" />
+                    <input
+                      checked={isPaymentConfigured}
+                      onChange={handleTogglePayment}
+                      type="checkbox"
+                      id="paymentSwitch"
+                      className={styles.switch}
+                    />
+                    <label
+                      htmlFor="paymentSwitch"
+                      className={styles.switchLabel}
+                    ></label>
+                    <div className={styles.switchTextContainer}>
+                      <span className={styles.switchText}>
+                        {t("payConfig")}
+                      </span>
+                      <div className={styles.button}>Añadir tarjeta</div>
                     </div>
-                  )}
+                  </div>
+                  {paymentId && <span>{paymentId}</span>}
+                  <p>{t("titleRight1")}</p>
+                  <span>{t("subTitle1")}</span>
                 </div>
-                <div onClick={handleAddClient} className={styles.signInButton}>
-                  {t("buttonActive")}
+                <div className={styles.faqItem}>
+                  <img src={lock} alt="Lock" />
+                  <p>{t("titleRight2")}</p>
+                  <span>{t("subTitle2")}</span>
+                </div>
+                {/* <div className={styles.faqItem}>
+                  <img src={eye} alt="Eye" />
+                  <p>{t("titleRight3")}</p>
+                  <span>{t("subTitle3")}</span>
+                  <div
+                    className={styles.filterSort}
+                    onClick={handleDropdownToggle}
+                    ref={dropdownRef}
+                  >
+                    <b>{selectedOption}</b> {t("documents")}
+                    <FaChevronDown className={styles.chevronIcon} />
+                    {isOpen && (
+                      <div className={styles.dropdownOptions}>
+                        {options.map((option, index) => (
+                          <div
+                            key={index}
+                            className={styles.dropdownOption}
+                            onClick={() => handleOptionClick(option)}
+                          >
+                            {option}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    onClick={handleAddClient}
+                    className={styles.signInButton}
+                  >
+                    {t("buttonActive")}
+                  </div>
+                </div> */}
+              </div>
+            </div>
+            {/* Right Side */}
+            <div className={styles.rightSection}>
+              {/* <div className={styles.breadcrumb}>
+                <span onClick={() => navigate("/home")}>Admin</span>{" "}
+                <FaChevronRight /> <span>{t("newRegistration")}</span>
+              </div> */}
+              {/* <div className={styles.userIconContainer}>
+                <img src={userAdd} alt="User Add" className={styles.userIcon} />
+              </div> */}
+              <div className={styles.detailsContainer}>
+                {Object.keys(fieldValues).map((field) => (
+                  <div key={field} className={styles.detailItem}>
+                    <div className={styles.rowSpaced}>
+                      <span className={styles.detailTitle}>
+                        {categoriesTitles[field]}
+                      </span>
+                      <span
+                        className={styles.detailEdit}
+                        onClick={() => toggleEdit(field)}
+                      >
+                        {editFields[field] ? t("save") : t("edit")}
+                      </span>
+                    </div>
+                    <div className={styles.detailContent}>
+                      {editFields[field] ? (
+                        <input
+                          type="text"
+                          placeholder={placeholdersValues[field]}
+                          className={styles.inputEdit}
+                          value={fieldValues[field]}
+                          onChange={(e) => handleChange(field, e.target.value)}
+                          ref={(el) => (inputRefs.current[field] = el)}
+                        />
+                      ) : (
+                        <span className={styles.fieldSpan}>
+                          {fieldValues[field].length
+                            ? fieldValues[field]
+                            : placeholdersValues[field]}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Tokens Section */}
+              <div className={styles.tokensContainer}>
+                <div className={styles.leftTokensContent}>
+                  {" "}
+                  <h2 className={styles.title}>Tokens</h2>
+                  <div className={styles.tokensWrapper}>
+                    <div className={styles.inputGroup}>
+                      <img
+                        src={openEmail}
+                        alt="Bandejas"
+                        className={styles.icon}
+                      />
+                      <div className={styles.inputWrapper}>
+                        <input
+                          value={tokenEmail}
+                          onChange={(e) => setTokenEmail(e.target.value)}
+                          type="text"
+                          placeholder={t("placeholderInboxes")}
+                          className={styles.input}
+                        />
+                      </div>
+                      <img
+                        src={passwordIcon}
+                        alt="Contraseña"
+                        className={styles.icon}
+                      />
+                      <div className={styles.inputWrapper}>
+                        <input
+                          value={tokenPassword}
+                          onChange={(e) => setTokenPassword(e.target.value)}
+                          type="password"
+                          placeholder={t("placeholderPassword")}
+                          className={styles.input}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.inputGroup}>
+                      <img
+                        src={circuit}
+                        alt="Token GPT"
+                        className={styles.icon}
+                      />
+                      <div className={styles.inputWrapper}>
+                        <input
+                          value={tokenGPT}
+                          onChange={(e) => setTokenGPT(e.target.value)}
+                          type="text"
+                          placeholder={t("placeholderTokenGPT")}
+                          className={styles.input}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.inputGroup}>
+                      <img
+                        src={connection}
+                        alt="Host"
+                        className={styles.icon}
+                      />
+                      <div className={styles.inputWrapper}>
+                        <input
+                          value={host}
+                          onChange={(e) => setHost(e.target.value)}
+                          type="text"
+                          placeholder={t("placeholderHost")}
+                          className={styles.input}
+                        />
+                      </div>
+                    </div>
+
+                    <div className={styles.portGroup}>
+                      <div className={styles.portInputWrapper}>
+                        <input
+                          value={port}
+                          onChange={(e) => setPort(e.target.value)}
+                          type="text"
+                          placeholder={t("placeholderPort")}
+                          className={styles.input}
+                        />
+                      </div>
+                      <div className={styles.portInputWrapper}>
+                        <input
+                          value={tokenUser}
+                          onChange={(e) => setTokenUser(e.target.value)}
+                          type="text"
+                          placeholder={t("placeholderUser")}
+                          className={styles.input}
+                        />
+                      </div>
+                      <div className={styles.portInputWrapper}>
+                        <input
+                          value={tokenUserPassword}
+                          onChange={(e) => setTokenUserPassword(e.target.value)}
+                          type="password"
+                          placeholder={t("placeholderPasswordHost")}
+                          className={styles.input}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.tagsWrapper}>
+                  <img
+                    src={paperSearch}
+                    alt="Etiquetas"
+                    className={styles.icon}
+                  />
+                  <div className={styles.tagsContent}>
+                    <label>#{t("labels")}</label>
+                    <input
+                      value={firstTag}
+                      onChange={(e) => setFirstTag(e.target.value)}
+                      type="text"
+                      className={styles.tagInput}
+                    />
+                    <input
+                      value={secondTag}
+                      onChange={(e) => setSecondTag(e.target.value)}
+                      type="text"
+                      className={styles.tagInput}
+                    />
+                    <input
+                      value={thirdTag}
+                      onChange={(e) => setThirdTag(e.target.value)}
+                      type="text"
+                      className={styles.tagInput}
+                    />
+                    <input
+                      value={fourthTag}
+                      onChange={(e) => setFourthTag(e.target.value)}
+                      type="text"
+                      className={styles.tagInput}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

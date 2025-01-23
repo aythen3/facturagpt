@@ -58,7 +58,7 @@
 .button {
   background-color: #10a37f;
   color: white;
-  width: 143px;
+  width: 120px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -68,7 +68,7 @@
   -moz-border-radius: 7px;
   -ms-border-radius: 7px;
   -o-border-radius: 7px;
-  padding: 6px;
+  padding: 7px;
 }
 
 .button:hover {
