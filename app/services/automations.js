@@ -39,7 +39,7 @@ const createAutomation = async ({ userId, email, automationData }) => {
       id: automationId,
       userId,
       email,
-      automationData,
+      automationData: { ...automationData, id: automationId },
     };
 
     await dbAutomations.insert(automationDoc);

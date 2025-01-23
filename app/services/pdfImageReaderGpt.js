@@ -598,8 +598,9 @@ const calculateTaxesAndDiscounts = (products) => {
     );
     const productDiscountAmount = parseFloat(
       (
-        productImport -
-        (productImport - (productImport * productDiscountRate) / 100)
+        productImportWithoutDiscount -
+        (productImportWithoutDiscount -
+          (productImportWithoutDiscount * productDiscountRate) / 100)
       ).toFixed(2)
     );
     const productImportWithTaxes = parseFloat(
@@ -630,6 +631,14 @@ const fetchEmailsByQuery = async (req, res) => {
   try {
     const { userId, email, password, query, tokenGpt, logs, ftpData } =
       req.body;
+
+    console.log("On fetchEmailsByQuery", {
+      userId,
+      email,
+      password,
+      query,
+      logs,
+    });
 
     if (!email || !password || !query) {
       return res.status(400).json({ message: "Missing required parameters" });
@@ -1321,7 +1330,7 @@ Propiedades a extraer para cada producto:
 - "productQuantity": Cantidad del producto (un valor numérico).
 - "productUnit": Unidad de medida (si aplica, si no se encuentra dejar "UN").
 - "productPartial": Importe parcial o precio unitario antes de descuento (si se identifica, en caso contrario "").
-- "productDiscountRate": Porcentaje de descuento aplicado (si aparece, por ejemplo en una columna 'Dto.'), de lo contrario "".
+- "productDiscountRate": Porcentaje de descuento aplicado, (Ej: 50, 10%, 35.00) (si aparece, por ejemplo en una columna 'Dto.'), de lo contrario "".
 - "productDiscount": Valor absoluto del descuento (si puede inferirse o se muestra, en caso contrario "").
 - "productImport": Importe final del producto tras aplicar descuentos (si se identifica, caso contrario "").
 - "productAlbaranDate": Fecha del albarán (si existe alguna referencia previa a un albarán con fecha arriba de los productos, extraer esa fecha; si no se encuentra, dejar "").
@@ -1345,7 +1354,7 @@ Devuelve la respuesta en el siguiente formato (ejemplo con posibles datos, pero 
     "productQuantity": "10",
     "productUnit": "UN",
     "productPartial": "2.50",
-    "productDiscountRate": "10%",
+    "productDiscountRate": "10",
     "productDiscount": "2.50",
     "productImport": "22.50",
     "productAlbaranDate": "16/12/2024",
@@ -1354,6 +1363,8 @@ Devuelve la respuesta en el siguiente formato (ejemplo con posibles datos, pero 
   }
 ]
 * IMPORTANTE *
+Si hay 10 filas con cantidad/unidades deben haber 10 productos en el array. Las propiedades que no se encuentren en la fila, deben ser "".
+Agregar TODOS los productos, sin importar si no se encuentra alguna referencia, si esta la cantidad y la descripcion, esa fila debe ser agregada al array de productos.
 Convierte TODOS los numeros a numeros con 2 decimales, por mas que sea entero. Eliminar tipo de moneda y simbolo. (2,000.24€ -> 2000.24, 12.770 -> 12.77)
 No incluyas explicación ni texto adicional afuera del array.
 `;
@@ -1373,7 +1384,7 @@ No incluyas explicación ni texto adicional afuera del array.
     - "productQuantity": Cantidad del producto (un valor numérico).
     - "productUnit": Unidad de medida (si aplica, si no se encuentra dejar "UN").
     - "productPartial": Importe parcial o precio unitario antes de descuento (si se identifica, en caso contrario "").
-    - "productDiscountRate": Porcentaje de descuento aplicado (si aparece, por ejemplo en una columna 'Dto.'), de lo contrario "".
+    - "productDiscountRate": Porcentaje de descuento aplicado, (Ej: 50, 10%, 35.00) (si aparece, por ejemplo en una columna 'Dto.'), de lo contrario "".
     - "productDiscount": Valor absoluto del descuento (si puede inferirse o se muestra, en caso contrario "").
     - "productImport": Importe final del producto tras aplicar descuentos (si se identifica, caso contrario "").
     - "productAlbaranDate": Fecha del albarán (si existe alguna referencia previa a un albarán con fecha arriba de los productos, extraer esa fecha; si no se encuentra, dejar "").
@@ -1398,7 +1409,7 @@ No incluyas explicación ni texto adicional afuera del array.
         "productQuantity": "10",
         "productUnit": "UN",
         "productPartial": "2.50",
-        "productDiscountRate": "10%",
+        "productDiscountRate": "10",
         "productDiscount": "2.50",
         "productImport": "22.50",
         "productAlbaranDate": "16/12/2024",
@@ -1407,6 +1418,9 @@ No incluyas explicación ni texto adicional afuera del array.
       }
     ]
     
+    * IMPORTANTE *
+    Si hay 10 filas con cantidad/unidades deben haber 10 productos en el array. Las propiedades que no se encuentren en la fila, deben ser "".
+    Agregar TODOS los productos, sin importar si no se encuentra alguna referencia, si esta la cantidad y la descripcion, esa fila debe ser agregada al array de productos.
     No incluyas explicación ni texto adicional afuera del array.
     `;
   }
@@ -1506,7 +1520,10 @@ const processProductsSection = async (imageBuffer, token) => {
         image: sectionImageUrl,
         imageSize,
       });
-      // console.log("First pass result:", firstPassResult);
+      console.log(
+        "First pass result:",
+        JSON.parse(firstPassResult).map((item) => item.productDescription)
+      );
 
       let firstPassProducts = [];
       try {
@@ -1523,10 +1540,10 @@ const processProductsSection = async (imageBuffer, token) => {
         imageSize,
         previousData: firstPassProducts,
       });
-      // console.log(
-      //   "RETURNING DATA FROM PRODUCTS SECTION (Refined):",
-      //   secondPassResult
-      // );
+      console.log(
+        "RETURNING DATA FROM PRODUCTS SECTION (Refined):",
+        JSON.parse(secondPassResult).map((item) => item.productDescription)
+      );
       return secondPassResult;
     } catch (sectionError) {
       console.error("Error processing document:", sectionError);
@@ -1686,7 +1703,9 @@ const getAttachmentData = async (attach) => {
             searchCif: true,
             searchNif: true,
           });
-        } else if (attempts === 2 && clientCifFound && !clientNifFound) {
+        }
+        // ====================== UNCOMMENT BELOW =============================
+        else if (attempts === 2 && clientCifFound && !clientNifFound) {
           console.log(
             `Attempt 2, Searching for NIF, CIF FOUND: ${clientCifFound}`
           );
@@ -1704,7 +1723,10 @@ const getAttachmentData = async (attach) => {
             image: imageUrl,
             searchCif: true,
           });
-        } else {
+        }
+
+        // ====================== UNCOMMENT ABOVE =============================
+        else {
           // console.log("FALLS HERE ");
 
           attemptResult = await documentGPT({
@@ -1781,6 +1803,8 @@ const getAttachmentData = async (attach) => {
         }
       }
 
+      // ====================== UNCOMMENT BELOW =============================
+
       if (!clientCifFound || !clientNifFound) {
         console.log(
           `clientCif or clientNif not found after ${maxAttempts} attempts for page ${
@@ -1823,6 +1847,8 @@ const getAttachmentData = async (attach) => {
           }
         }
       }
+
+      // ====================== UNCOMMENT ABOVE =============================
 
       // let recheckProducts = await recheckProductList(
       //   token,

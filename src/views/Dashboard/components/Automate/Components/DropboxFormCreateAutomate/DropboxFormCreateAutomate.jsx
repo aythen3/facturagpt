@@ -1,30 +1,30 @@
 import React, { useState } from "react";
-import styles from "./gmailAndOutlook.module.css";
-import SearchSVG from "../../svgs/SearchSVG";
-import WarningSVG from "../../svgs/WarningSVG";
-import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
-import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
-import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
+import TitleFormsComponent from "../../shared/TitleFormsComponent";
+import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
+import { ReactComponent as DriveIcon } from "../../../../assets/drive.svg";
 import SelectComponent from "../../../SelectComponent/SelectComponent";
+import InputComponent from "../../../InputComponent/InputComponent";
+import SearchSVG from "../../svgs/SearchSVG";
 import CheckboxComponent from "../../shared/CheckboxComponent";
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
-import TextSVG from "../../svgs/TextSVG";
 import LabelSVG from "../../svgs/LabelSVG";
-import NotificationsSVG from "../../svgs/NotificationsSVG";
-import InputComponent from "../../../InputComponent/InputComponent";
-import TitleFormsComponent from "../../shared/TitleFormsComponent";
+import TextSVG from "../../svgs/TextSVG";
+import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
+import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
+import { ReactComponent as DropboxIcon } from "../../../../assets/dropbox-icon.svg";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
-import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
-import ModalAddConnectionGmailAndOutlook from "./ModalAddConnectionGmailAndOutlook";
+import ModalAddConnectionDropbox from "./ModalAddConnectionDropbox";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import minusIcon from "../../../../assets/minusIcon.svg";
-import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
 
-const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
+const DropboxFormCreateAutomate = ({
+  type,
+  configuration,
+  setConfiguration,
+}) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   const [showAddConnection, setShowAddConnection] = useState(false);
 
@@ -36,36 +36,38 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
   };
 
   const addConnection = (connection) => {
+    console.log("adding connection", connection);
     const updatedConnections = [
-      ...(configuration.emailConnectionData || []),
+      ...(configuration.dropboxConnectionData || []),
       connection,
     ];
-    handleConfigurationChange("emailConnectionData", updatedConnections);
-    if (!configuration.selectedEmailConnection) {
-      handleConfigurationChange("selectedEmailConnection", connection.email);
+    handleConfigurationChange("dropboxConnectionData", updatedConnections);
+    if (!configuration.selectedDropboxConnection) {
+      handleConfigurationChange(
+        "selectedDropboxConnection",
+        connection.clientId
+      );
     }
   };
 
   return (
     <div>
       <HeaderFormsComponent
-        selectedEmailConnection={configuration.selectedEmailConnection}
+        placeholder="Añade una cuenta de Dropbox"
+        selectedEmailConnection={configuration.selectedDropboxConnection}
         setSelectedEmailConnection={(value) =>
-          handleConfigurationChange("selectedEmailConnection", value)
+          handleConfigurationChange("selectedDropboxConnection", value)
         }
-        emailConnections={(configuration.emailConnectionData || []).map(
-          (connection) => connection.email
+        emailConnections={(configuration.dropboxConnectionData || []).map(
+          (connection) => connection.clientId
         )}
         action={() => setShowAddConnection(true)}
-        icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
+        icon={<DropboxIcon />}
       />
-      <TitleFormsComponent type={type} title="Sube tus facturas de" />
+      <TitleFormsComponent title="Sube tus facturas de" type={type} />
 
       <div>
-        <p>
-          Ubicación{" "}
-          <span>Configura la ubicación donde Gmail guardará los datos</span>
-        </p>
+        <p>Ubicación</p>
         <InputComponent
           readOnly={true}
           value={configuration.folderLocation}
@@ -78,93 +80,51 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
           action={() => setShowSelectLocation(true)}
         />
 
-        <div className={styles.contentInput}>
-          <p className={styles.titleContentInput}>Remitentes</p>
-
-          <AddEmailsInput
-            addedEmails={configuration.addedRemitents || []}
-            setAddedEmails={(value) =>
-              handleConfigurationChange("addedRemitents", value)
-            }
-            placeholder="ejemplo@email.com"
-          />
-          <CheckboxWithText
-            color="#10A37F"
-            marginTop="10px"
-            state={configuration.includeAllRemitents || false}
-            setState={(value) =>
-              handleConfigurationChange("includeAllRemitents", value)
-            }
-            text="Incluir todos los remitentes"
-          />
-        </div>
-
-        <div className={styles.contentInput}>
-          <p className={styles.titleContentInput}>Asunto Contiene</p>
+        <div className={styles.content_input}>
+          <p className={styles.title_content_input}>
+            Título del archivo Contiene
+          </p>
 
           <InputComponent
-            value={configuration.subjectKeyWords}
+            value={configuration.filesKeyWords}
             setValue={(value) =>
-              handleConfigurationChange("subjectKeyWords", value)
+              handleConfigurationChange("filesKeyWords", value)
             }
             placeholder="Palabras clave separadas por coma"
             typeInput="text"
           />
-
           <CheckboxWithText
             marginTop="10px"
             color="#10A37F"
-            state={configuration.subjectExactMatch || false}
+            state={configuration.filesExactMatch || false}
             setState={(value) =>
-              handleConfigurationChange("subjectExactMatch", value)
+              handleConfigurationChange("filesExactMatch", value)
             }
             text="Match exacto"
           />
         </div>
 
-        <div className={styles.contentInput}>
-          <p className={styles.titleContentInput}>Mensaje Contiene</p>
-          <InputComponent
-            value={configuration.bodyKeyWords}
-            setValue={(value) =>
-              handleConfigurationChange("bodyKeyWords", value)
-            }
-            placeholder="Palabras clave separadas por coma"
-            typeInput="text"
-          />
-
-          <CheckboxWithText
-            color="#10A37F"
-            marginTop="10px"
-            state={configuration.bodyExactMatch || false}
-            setState={(value) =>
-              handleConfigurationChange("bodyExactMatch", value)
-            }
-            text="Match exacto"
-          />
-        </div>
-
-        <div className={styles.contentInput}>
+        <div className={styles.content_input}>
           <p className={styles.titleContentInput}>Tipos de Archivo</p>
 
           <CheckboxWithText
             marginTop="10px"
             color="#10A37F"
-            state={configuration.attachmentExactMatch || false}
+            state={configuration.allowAllFileTypes || false}
             setState={(value) =>
-              handleConfigurationChange("attachmentExactMatch", value)
+              handleConfigurationChange("allowAllFileTypes", value)
             }
             text="Incluir todos los tipos de archivos"
           />
           <div className={styles.cardTypesContainer}>
-            {(configuration.selectedTypes || []).map((type) => (
+            {(configuration.selectedFileTypes || []).map((type) => (
               <div className={styles.singleTypeCard} key={type}>
                 <span>{type}</span>
                 <div
                   onClick={() =>
                     handleConfigurationChange(
-                      "selectedTypes",
-                      (configuration.selectedTypes || []).filter(
+                      "selectedFileTypes",
+                      (configuration.selectedFileTypes || []).filter(
                         (option) => option !== type
                       )
                     )
@@ -178,7 +138,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
           </div>
           <CustomDropdown
             options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-            selectedOption={configuration.selectedTypes || []}
+            selectedOption={configuration.selectedFileTypes || []}
             height="31px"
             textStyles={{
               fontWeight: 300,
@@ -189,22 +149,18 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             }}
             setSelectedOption={(selected) =>
               handleConfigurationChange(
-                "selectedTypes",
-                configuration.selectedTypes?.includes(selected)
-                  ? configuration.selectedTypes.filter(
+                "selectedFileTypes",
+                configuration.selectedFileTypes?.includes(selected)
+                  ? configuration.selectedFileTypes.filter(
                       (option) => option !== selected
                     )
-                  : [...(configuration.selectedTypes || []), selected]
+                  : [...(configuration.selectedFileTypes || []), selected]
               )
             }
           />
-          <div className={styles.advertency}>
-            <WarningSVG />
-            <p>
-              Si el correo no tiene archivos adjuntos no se guardará ninguna
-              factura
-            </p>
-          </div>
+        </div>
+
+        <div style={{ marginTop: "24px" }}>
           <div style={{ display: "grid", gap: "10px" }}>
             <OptionsSwitchComponent
               isChecked={configuration.changeFileName || false}
@@ -219,23 +175,6 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
               typeInput="text"
               value={configuration.fileName || ""}
               setValue={(value) => handleConfigurationChange("fileName", value)}
-            />
-          </div>
-          <div style={{ display: "grid", gap: "10px", marginTop: "10px" }}>
-            <OptionsSwitchComponent
-              isChecked={configuration.addTags || false}
-              setIsChecked={(value) =>
-                handleConfigurationChange("addTags", value)
-              }
-              icon={<LabelSVG />}
-              text="Añadir etiqueta"
-            />
-            <InputComponent
-              placeholder="Buscar etiqueta"
-              typeInput="text"
-              textButton="Crear"
-              value={configuration.tags || ""}
-              setValue={(value) => handleConfigurationChange("tags", value)}
             />
           </div>
           <NotificationsConfirmComponent
@@ -291,7 +230,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
         />
       )}
       {showAddConnection && (
-        <ModalAddConnectionGmailAndOutlook
+        <ModalAddConnectionDropbox
           close={() => setShowAddConnection(false)}
           addConnection={addConnection}
         />
@@ -300,4 +239,4 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
   );
 };
 
-export default GmailAndOutlook;
+export default DropboxFormCreateAutomate;
