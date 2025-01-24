@@ -144,7 +144,7 @@ const Automate = ({
         </div>
         <div className={styles.container_buttons_footer}>
           <button
-            onClick={close}
+            onClick={handleCloseNewClient}
             className={`${styles.buttons_footer} ${styles.button_back}`}
           >
             Atrás

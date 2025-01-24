@@ -15,7 +15,6 @@ import WhatsAppSendNotificationsFormAutomate from "../Components/WhatsAppSendNot
 import { useDispatch, useSelector } from "react-redux";
 import {
   createAutomation,
-  getAllUserAutomations,
   updateAutomation,
 } from "../../../../../actions/automations";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +24,7 @@ import automation from "../../../assets/automation.svg";
 import CustomSearchbar from "../../CustomSearchbar/CustomSearchbar";
 import DropboxFormCreateAutomate from "../Components/DropboxFormCreateAutomate/DropboxFormCreateAutomate";
 import HoldedFormAutomate from "../Components/HoldedFormAutomate/HoldedFormAutomate";
+import FTPFormAutomate from "../Components/FTPFormAutomate/FTPFormAutomate";
 
 const PanelAutomate = ({
   type,
@@ -32,6 +32,7 @@ const PanelAutomate = ({
   typeContent,
   isAnimating,
   automationData,
+  setIsModalAutomate,
 }) => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const PanelAutomate = ({
 
   const [gmailAndOutlookConfiguration, setGmailAndOutlookConfiguration] =
     useState({
-      folderLocation: "/Inicio",
+      folderLocation: "/Inicio/",
       includeAllRemitents: true,
       subjectExactMatch: true,
       bodyExactMatch: true,
@@ -77,7 +78,7 @@ const PanelAutomate = ({
   const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({
     type: "WhatsApp",
     phoneNumber: "",
-    folderLocation: "/Inicio",
+    folderLocation: "/Inicio/",
     selectedWhatsAppConnection: "",
     whatsAppConnectionData: [],
     phoneNumbers: [],
@@ -92,7 +93,7 @@ const PanelAutomate = ({
 
   const [googleDriveConfiguration, setGoogleDriveConfiguration] = useState({
     type: "Google Drive",
-    folderLocation: "/Inicio",
+    folderLocation: "/Inicio/",
     selectedGoogleDriveConnection: "",
     googleDriveConnectionData: [],
     filesKeyWords: [],
@@ -114,7 +115,7 @@ const PanelAutomate = ({
   const [esPublicoGestionaConfiguration, setEsPublicoGestionaConfiguration] =
     useState({
       type: "esPúblico Gestiona",
-      folderLocation: "/Inicio",
+      folderLocation: "/Inicio/",
       selectedPublicoGestionaConnection: "",
       publicoGestionaConnectionData: [],
       notificateAfterExport: false,
@@ -137,7 +138,7 @@ const PanelAutomate = ({
 
   const [dropBoxConfiguration, setDropBoxConfiguration] = useState({
     type: "Dropbox",
-    folderLocation: "/Inicio",
+    folderLocation: "/Inicio/",
     selectedDropboxConnection: "",
     dropboxConnectionData: [],
     filesKeyWords: [],
@@ -178,8 +179,8 @@ const PanelAutomate = ({
   const [XMLConfiguration, setXMLConfiguration] = useState({
     type: "XML",
     fileName: "",
-    filesSource: "/Inicio",
-    folderLocation: "/Inicio",
+    filesSource: "/Inicio/",
+    folderLocation: "/Inicio/",
     formatType: "",
     notificateAfterExport: true,
     notificateGmail: false,
@@ -203,8 +204,8 @@ const PanelAutomate = ({
     type: "Odoo",
     selectedOdooConnection: "",
     odooConnectionData: [],
-    filesSource: "/Inicio",
-    folderLocation: "/Inicio",
+    filesSource: "/Inicio/",
+    folderLocation: "/Inicio/",
     formatType: "",
     changeFileName: false,
     fileName: "",
@@ -233,7 +234,7 @@ const PanelAutomate = ({
     selectedWoltersConnection: "",
     woltersConnectionData: [],
     filesSource: "",
-    folderLocation: "/Inicio",
+    folderLocation: "/Inicio/",
     formatType: "",
     changeFileName: false,
     fileName: "",
@@ -285,7 +286,7 @@ const PanelAutomate = ({
     selectedWhatsAppConnection: "",
     whatsAppConnectionData: [],
     phoneNumbers: [],
-    notificationsFromFolder: "/Inicio",
+    notificationsFromFolder: "/Inicio/",
     newFileNotification: true,
     tagUpdateNotification: true,
     notificateDaysBeforeDueDate: true,
@@ -296,7 +297,7 @@ const PanelAutomate = ({
     selectedHoldedConnection: "",
     holdedConnectionData: [],
     filesSource: "",
-    folderLocation: "/Inicio",
+    folderLocation: "/Inicio/",
     formatType: "",
     changeFileName: false,
     fileName: "",
@@ -316,6 +317,19 @@ const PanelAutomate = ({
     errorGmailBody: "",
     errorWhatsAppToNotificate: "",
     errorWhatsAppMessage: "",
+  });
+
+  const [ftpConfiguration, setFtpConfiguration] = useState({
+    type: "FTP",
+    filesSource: "/FTP",
+    selectedFTPConnection: "",
+    ftpConnectionData: [],
+    filesKeyWords: [],
+    filesKeyWordsExactMatch: true,
+    selectedFileTypes: [],
+    allowAllFileTypes: true,
+    changeFileName: false,
+    fileName: "",
   });
 
   //   =====================================================================================
@@ -388,6 +402,9 @@ const PanelAutomate = ({
           automationData.automationData
         );
         setAgenciaConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "FTP") {
+        console.log("FTP configuration", automationData.automationData);
+        setFtpConfiguration(automationData.automationData);
       }
     }
   }, [automationData]);
@@ -423,7 +440,7 @@ const PanelAutomate = ({
     console.log("user", user);
   }, [user]);
 
-  const handleAddAutomation = () => {
+  const handleAddAutomation = async () => {
     console.log("Adding automation...", type);
 
     let selectedAutomationData;
@@ -493,6 +510,11 @@ const PanelAutomate = ({
         ...holdedConfiguration,
         type: "Holded",
       };
+    } else if (type === "FTP") {
+      selectedAutomationData = {
+        ...ftpConfiguration,
+        type: "FTP",
+      };
     }
     // else if (type === "Acrobat") {
     //   selectedAutomationData = {
@@ -536,13 +558,24 @@ const PanelAutomate = ({
             </div>
             <div className={styles.buttonsContainer}>
               <button
-                onClick={close}
+                onClick={() => {
+                  close();
+                  setTimeout(() => {
+                    setIsModalAutomate(true);
+                  }, 300);
+                }}
                 className={`${styles.buttons_footer} ${styles.button_back}`}
               >
                 Atrás
               </button>
               <button
-                onClick={handleAddAutomation}
+                onClick={async () => {
+                  await handleAddAutomation();
+                  close();
+                  setTimeout(() => {
+                    setIsModalAutomate(true);
+                  }, 300);
+                }}
                 className={`${styles.buttons_footer} ${styles.button_add}`}
               >
                 <img src={automation} alt="automation" /> Guardar
@@ -741,8 +774,16 @@ const PanelAutomate = ({
                         setConfiguration={setHoldedConfiguration}
                       />
                     );
+                  case "FTP":
+                    return (
+                      <FTPFormAutomate
+                        type={type}
+                        configuration={ftpConfiguration}
+                        setConfiguration={setFtpConfiguration}
+                      />
+                    );
                   default:
-                    return <div>OTRO</div>;
+                    return <div>Falta figma</div>;
                 }
               })()}
             </div>

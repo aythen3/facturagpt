@@ -31,17 +31,20 @@ const NotificationsConfirmComponent = ({
   setGmailBody,
   whatsAppMessage,
   setWhatsAppMessage,
+  disableSwitch,
 }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.marginTop}>
-        <OptionsSwitchComponent
-          isChecked={mainState}
-          setIsChecked={setMainState}
-          icon={<NotificationsSVG />}
-          text={title}
-        />
-      </div>
+      {!disableSwitch && (
+        <div className={styles.marginTop}>
+          <OptionsSwitchComponent
+            isChecked={mainState}
+            setIsChecked={setMainState}
+            icon={<NotificationsSVG />}
+            text={title}
+          />
+        </div>
+      )}
       <div className={styles.row}>
         <div className={styles.checkboxRow}>
           <CheckboxComponent

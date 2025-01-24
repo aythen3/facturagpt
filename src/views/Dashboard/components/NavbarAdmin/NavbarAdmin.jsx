@@ -182,6 +182,7 @@ const NavbarAdmin = () => {
             <PanelAutomate
               automationData={selectedAutomationData}
               typeContent={handleShowContentAutomate}
+              setIsModalAutomate={setIsModalAutomate}
               close={handleCloseNewClient}
               type={typeContentAutomate}
               isAnimating={isAnimating}

@@ -140,6 +140,14 @@ const UsersDashboard = () => {
     },
   ];
 
+  useEffect(() => {
+    if (userData) {
+      if (userData?.role === "user") {
+        navigate("/panel");
+      }
+    }
+  }, [userData]);
+
   // useEffect(() => {
   //   if (userData) {
   //     dispatch(getAllUserAutomations({ userId: userData.id }));
@@ -512,7 +520,7 @@ const UsersDashboard = () => {
               <h1 className={styles.tableTitle}>
                 Usuarios y permisos{" "}
                 <span
-                  onClick={() => navigate("/home")}
+                  onClick={() => navigate("/users/clients")}
                   className={styles.changeTabButton}
                 >
                   Ir a clientes
@@ -530,14 +538,14 @@ const UsersDashboard = () => {
                   Nuevo Admin
                 </button>
               )}
-              <button
+              {/* <button
                 // onClick={() => navigate("/userSettings")}
                 onClick={() => setShowUserSettings(true)}
                 className={styles.addClientButton}
               >
                 <img src={plus} alt="Add client" />
                 Alta nuevo cliente
-              </button>
+              </button> */}
               <div className={styles.filterSearch}>
                 <img src={magnify} alt="search" />
                 <input
@@ -586,58 +594,62 @@ const UsersDashboard = () => {
               <span className={style.columnEmail}>Email</span>
               <span className={style.columnRole}>Rol</span>
             </div>
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
-                <div key={user.id} className={style.tableRow}>
-                  <span className={style.columnName}>{user.email || "-"}</span>
-                  <span className={style.columnPin}>{user.pin || "-"}</span>
-                  <span className={style.columnContact}>
-                    {user.email || "-"}
-                  </span>
-                  <span className={style.columnPassword}>-</span>
-                  <span className={style.columnEmail}>{user.email}</span>
-                  {user.email === userData.email ? (
-                    <span
-                      style={{ cursor: "default" }}
-                      className={style.filterSort}
-                    >
-                      <b>{user.role}</b>
+            {filteredUsers.filter((user) => user.role !== "user").length > 0 ? (
+              filteredUsers
+                .filter((user) => user.role !== "user")
+                .map((user) => (
+                  <div key={user.id} className={style.tableRow}>
+                    <span className={style.columnName}>
+                      {user.email || "-"}
                     </span>
-                  ) : userData.role !== "user" ? (
-                    <div
-                      className={style.filterSort}
-                      onClick={() => handleRoleDropdownToggle(user.id)}
-                    >
-                      <b>{userOptions[user.id]}</b>
-                      <FaChevronDown className={style.chevronIcon} />
-                      {openRoleDropdown === user.id && (
-                        <div
-                          ref={dropdownRoleRef}
-                          className={style.dropdownOptions}
-                        >
-                          {roleOptions.map((option, index) => (
-                            <div
-                              key={option}
-                              className={style.dropdownOption}
-                              onClick={() =>
-                                handleRoleOptionClick(user.id, option)
-                              }
-                              style={{
-                                borderBottom:
-                                  index === roleOptions.length - 1 && "none",
-                              }}
-                            >
-                              {option}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <span className={style.filterSort}>{user.role}</span>
-                  )}
-                </div>
-              ))
+                    <span className={style.columnPin}>{user.pin || "-"}</span>
+                    <span className={style.columnContact}>
+                      {user.email || "-"}
+                    </span>
+                    <span className={style.columnPassword}>-</span>
+                    <span className={style.columnEmail}>{user.email}</span>
+                    {user.email === userData.email ? (
+                      <span
+                        style={{ cursor: "default" }}
+                        className={style.filterSort}
+                      >
+                        <b>{user.role}</b>
+                      </span>
+                    ) : userData.role !== "user" ? (
+                      <div
+                        className={style.filterSort}
+                        onClick={() => handleRoleDropdownToggle(user.id)}
+                      >
+                        <b>{userOptions[user.id]}</b>
+                        <FaChevronDown className={style.chevronIcon} />
+                        {openRoleDropdown === user.id && (
+                          <div
+                            ref={dropdownRoleRef}
+                            className={style.dropdownOptions}
+                          >
+                            {roleOptions.map((option, index) => (
+                              <div
+                                key={option}
+                                className={style.dropdownOption}
+                                onClick={() =>
+                                  handleRoleOptionClick(user.id, option)
+                                }
+                                style={{
+                                  borderBottom:
+                                    index === roleOptions.length - 1 && "none",
+                                }}
+                              >
+                                {option}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <span className={style.filterSort}>{user.role}</span>
+                    )}
+                  </div>
+                ))
             ) : (
               <div className={styles.noResultsMessage}>{t("notResults")}</div>
             )}

@@ -13,6 +13,7 @@ const AddAdminModal = ({ onClose }) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [nombre, setNombre] = useState("");
+  const [isClosing, setIsClosing] = useState(false);
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -22,22 +23,40 @@ const AddAdminModal = ({ onClose }) => {
 
   const handleAddAdmin = async () => {
     setIsLoading(true);
+    if (email.length === 0 || password.length === 0 || nombre.length === 0) {
+      setError("Todos los campos son obligatorios");
+      setIsLoading(false);
+      return;
+    }
     try {
       await dispatch(createAccount({ nombre, email, password, role: "admin" }));
     } catch (error) {
       console.log("error", error);
     } finally {
       setIsLoading(false);
-      onClose();
+      handleClose();
     }
   };
 
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div
+      onClick={handleClose}
+      className={`${styles.modalContainer} ${isClosing ? styles.fadeOut : ""}`}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={`${styles.upgradePlanContainer} ${isClosing ? styles.scaleDown : ""}`}
+      >
         <div className={styles.header}>
           <h2>Agregar Administrador</h2>
-          <div className={styles.closeButton} onClick={onClose}>
+          <div className={styles.closeButton} onClick={handleClose}>
             <MdClose size={20} />
           </div>
         </div>

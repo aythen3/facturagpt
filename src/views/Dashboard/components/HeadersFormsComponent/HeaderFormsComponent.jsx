@@ -26,7 +26,7 @@ const HeaderFormsComponent = ({
         />
       </div>
       <p className={styles.addConnection} onClick={action}>
-        Añadir conexion
+        Añadir conexión
       </p>
     </div>
   );
