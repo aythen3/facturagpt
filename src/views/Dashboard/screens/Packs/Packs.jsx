@@ -127,7 +127,7 @@ const Packs = () => {
     <div className={styles.packsContainer}>
       <div className={styles.stepsContainer} id="facturation">
         <LinesLandingSection />
-        <div className={styles.wrapper}>
+        <section className={styles.wrapper}>
           {steps.map((step, index) => (
             <div key={index} className={styles.card}>
               <p className={styles.step}>{step.step}</p>
@@ -135,47 +135,57 @@ const Packs = () => {
               <p className={styles.subtitle}>{step.description}</p>
             </div>
           ))}
-        </div>
+        </section>
         <FlowSection />
         <TagsLanding />
       </div>
 
       <CircleProgressBar />
-      <div className={styles.banner}>
+
+      <section className={styles.banner}>
         <h3 className={styles.bannerTitle}>{t("reduces1")}</h3>
         <h3 className={styles.bannerTitle}>{t("reduces2")}</h3>
         <h3 className={styles.bannerTitle}>{t("reduces3")}</h3>
-      </div>
-
-      <BillingSlider
-        setSliderValue={setSliderValue}
-        sliderValue={sliderValue}
-      />
-      <span className={styles.packsDescription}>
-        {/* Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
+      </section>
+      <section
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <BillingSlider
+          setSliderValue={setSliderValue}
+          sliderValue={sliderValue}
+        />
+        <span className={styles.packsDescription}>
+          {/* Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
         empresa con una facturación de{" "} */}
-        {t("resume")}
-        {/* <strong> {sliderValueFormatted} M </strong> */}
-        <span>
-          {" "}
-          {/* {sliderValueFormatted} {sliderValue <= 999999 ? 'K' : 'M'}{' '} */}
-          {sliderValueFormatted}{" "}
-          {/* {sliderValue <= 900 ? "" : sliderValue <= 999999 ? "K" : "M"}{" "} */}
+          {t("resume")}
+          {/* <strong> {sliderValueFormatted} M </strong> */}
+          <span>
+            {" "}
+            {/* {sliderValueFormatted} {sliderValue <= 999999 ? 'K' : 'M'}{' '} */}
+            {sliderValueFormatted}{" "}
+            {/* {sliderValue <= 900 ? "" : sliderValue <= 999999 ? "K" : "M"}{" "} */}
+          </span>
+          {/* genera aproximadamente{" "} */}
+          {t("resume_strong")}
+          <span>
+            {" "}
+            {totalFacturasFormatted} {t("resume_strong2")}
+          </span>
+          {/* . Con FacturaGPT, puedes ahorrar más de{" "} */}
+          {t("resume_cont")}
+          <span>
+            {horasTotalesFormatted} {t("resume_hours")}{" "}
+          </span>{" "}
+          {t("resume_end")}
+          <span>{valorEnDolaresFormatted} €</span>.
         </span>
-        {/* genera aproximadamente{" "} */}
-        {t("resume_strong")}
-        <span>
-          {" "}
-          {totalFacturasFormatted} {t("resume_strong2")}
-        </span>
-        {/* . Con FacturaGPT, puedes ahorrar más de{" "} */}
-        {t("resume_cont")}
-        <span>
-          {horasTotalesFormatted} {t("resume_hours")}{" "}
-        </span>{" "}
-        {t("resume_end")}
-        <span>{valorEnDolaresFormatted} €</span>.
-      </span>
+      </section>
       <PricingCards
         facturasTotales={facturasTotales}
         setSliderValue={setSliderValue}
@@ -202,12 +212,23 @@ const Packs = () => {
         </div>
       </section>
 
-      <div className={styles.extensionsTitle}>
-        <img className={styles.heart} src={heart} alt="heart" />
-        <h2>{t("programsTitle")}</h2>
-      </div>
-      <span className={styles.regular08}>{t("programsDescription")}</span>
-      <CompatibleProgramsSection />
+      <section>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <div className={styles.extensionsTitle}>
+            <img className={styles.heart} src={heart} alt="heart" />
+            <h2>{t("programsTitle")}</h2>
+          </div>
+          <span className={styles.regular08}>{t("programsDescription")}</span>
+          <CompatibleProgramsSection />
+        </div>
+      </section>
       <Reviews />
     </div>
   );

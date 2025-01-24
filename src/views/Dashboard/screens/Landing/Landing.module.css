@@ -6,3 +6,7 @@
   background: #fff;
   overflow-y: auto;
 }
+
+section {
+  margin-top: 100px;
+}

@@ -166,6 +166,11 @@
   height: 160px;
   position: relative;
   box-sizing: border-box;
+  transform: scale(0.6);
+  -webkit-transform: scale(0.6);
+  -moz-transform: scale(0.6);
+  -ms-transform: scale(0.6);
+  -o-transform: scale(0.6);
 }
 
 .outer {
@@ -241,3 +246,13 @@ circle {
 }
 
 /* ========================================== */
+
+@media (width <= 620px) {
+  .skill {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+  }
+}

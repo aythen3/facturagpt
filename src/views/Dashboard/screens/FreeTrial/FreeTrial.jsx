@@ -35,7 +35,7 @@ const FreeTrial = () => {
           </p>
         </div>
         <div className={styles.btnContainer}>
-          <button onClick={() => navigate("/login")}>
+          <button onClick={() => navigate("/register")}>
             <img src={mail} alt="Mail Icon" />
             {t("registerButton")}
           </button>

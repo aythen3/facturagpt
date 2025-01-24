@@ -131,9 +131,12 @@ label {
 
 .wsBtn {
   /* background: linear-gradient(45deg, #3ad656, #5bf876); */
-  background-color: #10a37f;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
   margin-top: 40px;
-  width: 100%;
+  width: 65%;
+  color: #676767;
+  font-weight: 500;
   p {
     display: flex;
     align-items: center;
@@ -256,6 +259,10 @@ label {
 }
 .textContainer {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .title {

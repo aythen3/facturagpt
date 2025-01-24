@@ -56,7 +56,7 @@ const CustomDropdown = ({
     >
       <div
         style={{ height, borderRadius }}
-        className={emailsDropdown ? styles.emailsFilterSort : styles.filterSort}
+        className={`${emailsDropdown ? styles.emailsFilterSort : styles.filterSort} ${!editable && styles.disabledBtn}`}
         onClick={(e) => {
           e.stopPropagation();
           if (options.length === 0) return;

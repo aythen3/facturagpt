@@ -71,3 +71,7 @@
 .dropdownOption:hover {
   background-color: #ececf1;
 }
+
+.disabledBtn {
+  background-color: transparent;
+}

@@ -31,6 +31,8 @@ const AccountSettings = () => {
   const signatureFileInputRef = useRef(null);
   const profileFileInputRef = useRef(null);
 
+  const [isReadOnly, setIsReadOnly] = useState(false);
+
   const handleAddImageClick = (type) => {
     if (type === "corporativeLogos" && corporativeFileInputRef.current) {
       corporativeFileInputRef.current.click();
@@ -94,6 +96,7 @@ const AccountSettings = () => {
         country: user?.country || "",
         expirationDate: user?.paymentMethod?.details?.expirationDate || "",
         facturationEmail: user?.facturationEmail || user?.email || "",
+        zipCode: user?.paymentMethod?.details?.zipCode || "",
         cardNumber: user?.paymentMethod?.details?.cardNumber || "",
         paymentMethod: user?.paymentMethod?.method || "",
         securityCode: user?.paymentMethod?.details?.securityCode || "",
@@ -119,7 +122,25 @@ const AccountSettings = () => {
   const [editingLanguage, setEditingLanguage] = useState(false);
   const [editingPhone, setEditingPhone] = useState(false);
   const [editingPayMethod, setEditingPayMethod] = useState(false);
-  const [facturacionDetails, setFacturacionDetails] = useState([]);
+
+  const [facturacionCount, setFacturacionCount] = useState(1);
+  const [facturacionInputs, setFacturacionInputs] = useState([
+    { value: "", editable: false },
+  ]);
+
+  const handleEditToggle = (index) => {
+    setFacturacionInputs((prev) =>
+      prev.map((input, i) =>
+        i === index ? { ...input, editable: !input.editable } : input
+      )
+    );
+  };
+
+  const handleInputChange = (index, value) => {
+    setFacturacionInputs((prev) =>
+      prev.map((input, i) => (i === index ? { ...input, value } : input))
+    );
+  };
 
   const handleLogOut = () => {
     const isConfirm = confirm(t("confirmLogout"));
@@ -150,14 +171,8 @@ const AccountSettings = () => {
     dispatch(updateUser({ userId: user.id, toUpdate: userDataToSave }));
   };
 
-  const handleAddFacturacion = () => {
-    setFacturacionDetails([...facturacionDetails, ""]);
-  };
-
-  const handleEditFacturacion = (index) => {
-    const newDetails = [...facturacionDetails];
-    newDetails[index] = newDetails[index] === "Editable" ? "" : "Editable";
-    setFacturacionDetails(newDetails);
+  const handleToggleReadOnly = () => {
+    setIsReadOnly((prev) => !prev);
   };
 
   return (
@@ -284,7 +299,7 @@ const AccountSettings = () => {
 
               <div className={styles.phoneContainer}>
                 <CustomDropdown
-                  editable={true}
+                  editable={editingPhone}
                   setSelectedOption={(option) =>
                     handleChange({ name: "countryCode", newValue: option })
                   }
@@ -325,175 +340,183 @@ const AccountSettings = () => {
                 </div>
               </div>
               {t("unknown")}
-              <div className={styles.payContainer}>
-                <div>
-                  <div className={styles.paymentMethod}>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      disabled={!editingPayMethod}
-                      value="creditCard"
-                      checked={userData?.paymentMethod === "creditCard"}
-                      onChange={() =>
-                        handleChange({
-                          name: "paymentMethod",
-                          newValue: "creditCard",
-                        })
-                      }
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                    <div className={styles.paymentContainer}>
-                      <div className={styles.paymentImage}>
-                        <img src={visa} alt="Visa logo" />
+              {editingPayMethod && (
+                <>
+                  <div className={styles.payContainer}>
+                    <div>
+                      <div className={styles.paymentMethod}>
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          disabled={!editingPayMethod}
+                          value="creditCard"
+                          checked={userData?.paymentMethod === "creditCard"}
+                          onChange={() =>
+                            handleChange({
+                              name: "paymentMethod",
+                              newValue: "creditCard",
+                            })
+                          }
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className={styles.paymentContainer}>
+                          <div className={styles.paymentImage}>
+                            <img src={visa} alt="Visa logo" />
+                          </div>
+                          <div className={styles.paymentImage}>
+                            <img src={mastercard} alt="Mastercard logo" />
+                          </div>
+                          <div className={styles.paymentImage}>
+                            <img
+                              src={americanexpress}
+                              alt="American Express logo"
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <div className={styles.paymentImage}>
-                        <img src={mastercard} alt="Mastercard logo" />
+                    </div>
+                    <div>
+                      <div className={styles.paymentMethod}>
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          disabled={!editingPayMethod}
+                          value="paypal"
+                          checked={userData?.paymentMethod === "paypal"}
+                          onChange={() =>
+                            handleChange({
+                              name: "paymentMethod",
+                              newValue: "paypal",
+                            })
+                          }
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className={styles.paymentImage}>
+                          <img src={paypal} alt="Paypal logo" />
+                        </div>
                       </div>
-                      <div className={styles.paymentImage}>
-                        <img
-                          src={americanexpress}
-                          alt="American Express logo"
+                    </div>
+                    <div>
+                      <div className={styles.paymentMethod}>
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          disabled={!editingPayMethod}
+                          value="gPay"
+                          checked={userData?.paymentMethod === "gPay"}
+                          onChange={() =>
+                            handleChange({
+                              name: "paymentMethod",
+                              newValue: "gPay",
+                            })
+                          }
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className={styles.paymentImage}>
+                          <img src={gpay} alt="Google pay logo" />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className={styles.paymentMethod}>
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          disabled={!editingPayMethod}
+                          value="crypto"
+                          checked={userData?.paymentMethod === "crypto"}
+                          onChange={() =>
+                            handleChange({
+                              name: "paymentMethod",
+                              newValue: "crypto",
+                            })
+                          }
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className={styles.paymentContainer}>
+                          <div className={styles.paymentImage}>
+                            <img src={metamask} alt="Metamask logo" />
+                          </div>
+                          <div className={styles.paymentImage}>
+                            <img src={coinbase} alt="CoinBase logo" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ marginTop: "10px" }}>
+                    <div className={styles.row}>{t("cardNumber")}</div>
+                    <div className={styles.inputContainer}>
+                      <input
+                        type="text"
+                        placeholder="1234 1234 1234 1234"
+                        className={styles.input}
+                        disabled={!editingPayMethod}
+                        name="cardNumber"
+                        value={userData?.cardNumber}
+                        onChange={(e) =>
+                          handleChange({
+                            name: "cardNumber",
+                            newValue: e.target.value,
+                          })
+                        }
+                      />
+                      <img
+                        src={creditCard}
+                        alt="Credit Card Icon"
+                        className={styles.icon}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>
+                      Fecha de expiración
+                      <div className={styles.phoneInputs}>
+                        <input
+                          type="text"
+                          name="expirationDate"
+                          value={userData?.expirationDate}
+                          disabled={!editingPayMethod}
+                          onChange={(e) =>
+                            handleChange({
+                              name: "expirationDate",
+                              newValue: e.target.value,
+                            })
+                          }
+                          placeholder="MM/YY"
+                          className={styles.numberInput}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      Código de seguridad
+                      <div className={styles.phoneInputs}>
+                        <input
+                          name="securityCode"
+                          type="password"
+                          value={userData?.securityCode}
+                          disabled={!editingPayMethod}
+                          onChange={(e) =>
+                            handleChange({
+                              name: "securityCode",
+                              newValue: e.target.value,
+                            })
+                          }
+                          maxLength={3}
+                          placeholder="***"
+                          className={styles.numberInput}
                         />
                       </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <div className={styles.paymentMethod}>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      disabled={!editingPayMethod}
-                      value="paypal"
-                      checked={userData?.paymentMethod === "paypal"}
-                      onChange={() =>
-                        handleChange({
-                          name: "paymentMethod",
-                          newValue: "paypal",
-                        })
-                      }
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                    <div className={styles.paymentImage}>
-                      <img src={paypal} alt="Paypal logo" />
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className={styles.paymentMethod}>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      disabled={!editingPayMethod}
-                      value="gPay"
-                      checked={userData?.paymentMethod === "gPay"}
-                      onChange={() =>
-                        handleChange({
-                          name: "paymentMethod",
-                          newValue: "gPay",
-                        })
-                      }
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                    <div className={styles.paymentImage}>
-                      <img src={gpay} alt="Google pay logo" />
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className={styles.paymentMethod}>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      disabled={!editingPayMethod}
-                      value="crypto"
-                      checked={userData?.paymentMethod === "crypto"}
-                      onChange={() =>
-                        handleChange({
-                          name: "paymentMethod",
-                          newValue: "crypto",
-                        })
-                      }
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                    <div className={styles.paymentContainer}>
-                      <div className={styles.paymentImage}>
-                        <img src={metamask} alt="Metamask logo" />
-                      </div>
-                      <div className={styles.paymentImage}>
-                        <img src={coinbase} alt="CoinBase logo" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div style={{ marginTop: "10px" }}>
-                <div className={styles.row}>{t("cardNumber")}</div>
-                <div className={styles.inputContainer}>
-                  <input
-                    type="text"
-                    placeholder="1234 1234 1234 1234"
-                    className={styles.input}
-                    disabled={!editingPayMethod}
-                    name="cardNumber"
-                    value={userData?.cardNumber}
-                    onChange={(e) =>
-                      handleChange({
-                        name: "cardNumber",
-                        newValue: e.target.value,
-                      })
-                    }
-                  />
-                  <img
-                    src={creditCard}
-                    alt="Credit Card Icon"
-                    className={styles.icon}
-                  />
-                </div>
-              </div>
-              <div
-                style={{ display: "flex", gap: "10px", alignItems: "center" }}
-              >
-                <div>
-                  Fecha de expiración
-                  <div className={styles.phoneInputs}>
-                    <input
-                      type="text"
-                      name="expirationDate"
-                      value={userData?.expirationDate}
-                      disabled={!editingPayMethod}
-                      onChange={(e) =>
-                        handleChange({
-                          name: "expirationDate",
-                          newValue: e.target.value,
-                        })
-                      }
-                      placeholder="MM/YY"
-                      className={styles.numberInput}
-                    />
-                  </div>
-                </div>
-                <div>
-                  Código de seguridad
-                  <div className={styles.phoneInputs}>
-                    <input
-                      name="securityCode"
-                      type="password"
-                      value={userData?.securityCode}
-                      disabled={!editingPayMethod}
-                      onChange={(e) =>
-                        handleChange({
-                          name: "securityCode",
-                          newValue: e.target.value,
-                        })
-                      }
-                      maxLength={3}
-                      placeholder="***"
-                      className={styles.numberInput}
-                    />
-                  </div>
-                </div>
-              </div>
+                </>
+              )}
             </label>
 
             <label>
@@ -503,37 +526,81 @@ const AccountSettings = () => {
                   className={styles.button}
                   type="button"
                   id="addFacturacion"
-                  onClick={handleAddFacturacion}
+                  onClick={() => {
+                    setFacturacionCount(facturacionCount + 1);
+                    setFacturacionInputs([
+                      ...facturacionInputs,
+                      { value: "", editable: false },
+                    ]);
+                  }}
                 >
                   Añadir
                 </div>
               </div>
-              {facturacionDetails.length === 0 ? "Sin especificar" : null}
-              {facturacionDetails.map((facturacion, index) => (
-                <div key={index} className={styles.facturacion}>
+              {[...Array(facturacionCount)].map((_, index) => (
+                <div className={styles.facturacion} key={index}>
                   <input
                     type="radio"
                     name="facturacion"
-                    value={index}
-                    onChange={() => {
-                      // Lógica para seleccionar el detalle de facturación
-                    }}
+                    value={`facturacion${index}`}
+                    onChange={() =>
+                      handleChange({
+                        name: "facturacion",
+                        newValue: `facturacion${index}`,
+                      })
+                    }
                   />
                   <input
                     type="text"
-                    value={facturacion === "Editable" ? "" : facturacion}
-                    disabled={facturacion !== "Editable"}
-                    onChange={(e) => {
-                      // const newDetails = [...facturacionDetails];
-                      // newDetails[index] = e.target.value;
-                      // setFacturacionDetails(newDetails);
-                    }}
+                    value={facturacionInputs[index]?.value || ""}
+                    disabled={!facturacionInputs[index]?.editable}
+                    onChange={(e) => handleInputChange(index, e.target.value)}
                   />
-                  <button onClick={() => handleEditFacturacion(index)}>
-                    {facturacion === "Editable" ? "Guardar" : "Editar"}
-                  </button>
+                  <div
+                    className={styles.facturacionButtonEdit}
+                    onClick={() => handleEditToggle(index)}
+                  >
+                    {facturacionInputs[index]?.editable ? "Guardar" : "Editar"}
+                  </div>
                 </div>
               ))}
+              <div className={styles.label}>
+                <div className={styles.headerLabel}>
+                  <span>info@gmail.com</span>
+                  <div className={styles.button} onClick={handleToggleReadOnly}>
+                    {!isReadOnly ? "Editar" : "Guardar"}
+                  </div>
+                </div>
+                <EditableInput
+                  label={"info@gmail.com"}
+                  value={userData?.facturationEmail}
+                  name="facturationEmail"
+                  onSave={handleChange}
+                  options={true}
+                  labelOptions={true}
+                  placeholder={"Email address"}
+                  readOnly={!isReadOnly}
+                />
+                <EditableInput
+                  value={userData?.zipCode}
+                  name="zipCode"
+                  onSave={handleChange}
+                  options={true}
+                  labelOptions={true}
+                  placeholder={"Zip code / Postcode"}
+                  readOnly={!isReadOnly}
+                />
+                <EditableInput
+                  value={userData?.country}
+                  name="country"
+                  onSave={handleChange}
+                  labelOptions={false}
+                  options={true}
+                  label={"Country of residence"}
+                  placeholder={"Spain"}
+                  readOnly={!isReadOnly}
+                />
+              </div>
             </label>
 
             <EditableInput

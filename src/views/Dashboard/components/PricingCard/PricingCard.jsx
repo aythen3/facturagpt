@@ -195,7 +195,7 @@ const PricingCards = ({
   }, []);
 
   return (
-    <div
+    <section
       className={styles.cardContainer}
       ref={containerRef}
       onMouseDown={handleMouseDown}
@@ -220,7 +220,7 @@ const PricingCards = ({
           compareSelected={false}
         />
       ))}
-    </div>
+    </section>
   );
 };
 

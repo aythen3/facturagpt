@@ -263,9 +263,31 @@ const DashboardLogin = () => {
           )
             .unwrap()
             .then(() => {
-              clearStates();
-              setMode("signin");
-              navigate("/login");
+              dispatch(loginToManager({ email, password }))
+                .unwrap()
+                .then((response) => {
+                  if (response.success === false) {
+                    setError(response.message || "Error al iniciar sesión");
+                    return;
+                  }
+                  console.log("REPONSE LOGIN", response);
+
+                  let accountData = {
+                    accessToken: response?.password,
+                  };
+                  localStorage.setItem("user", JSON.stringify(accountData));
+                  clearStates();
+                  if (response?.role !== "user") {
+                    navigate("/home");
+                  } else {
+                    navigate("/");
+                  }
+                })
+                .catch((error) => {
+                  setError(error.message || "Failed to sign in");
+
+                  setError(error.message || "Error al iniciar sesión");
+                });
             })
             .catch((error) => {
               setError(error.message || "Error al crear cuenta");

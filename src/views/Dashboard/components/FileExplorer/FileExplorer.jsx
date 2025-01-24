@@ -7,6 +7,7 @@ import fileIcon from "../../assets/S3/fileIcon.svg";
 import { Search } from "lucide-react";
 import horizontalDots from "../../assets/S3/horizontalDots.svg";
 import filterIcon from "../../assets/S3/filterIconBars.svg";
+import filterIconGreen from "../../assets/filtersIconBarGreen.svg";
 import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { ReactComponent as HouseContainer } from "../../assets/HouseContainerIcon.svg";
@@ -16,7 +17,7 @@ import {
   setCurrentPath,
   setUserFiles,
 } from "../../../../slices/scalewaySlices";
-import k from "../../assets/k.svg";
+import l from "../../assets/lIcon.svg";
 import cmd from "../../assets/cmd.svg";
 import {
   deleteObject,
@@ -521,25 +522,32 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div
+          {/* <div
             onClick={() => setShowLocationModal(true)}
             className={styles.searchIconsWrappers}
           >
             <img src={cmd} alt="cmdIcon" />
-          </div>
+          </div> */}
           <div
             style={{ marginLeft: "5px" }}
             className={styles.searchIconsWrappers}
           >
-            <img src={k} alt="kIcon" />
+            <img src={l} alt="kIcon" />
           </div>
         </div>
         <div
-          className={`${userFilters && Object.keys(userFilters).length > 0 && userFilters.keyWord !== "" ? styles.greenBackground : ""} ${styles.searchContainerL}`}
+          // ${userFilters && Object.keys(userFilters).length > 0 && userFilters.keyWord !== "" ? styles.greenBackground : ""}
+          className={`${styles.searchContainerL}`}
           onClick={() => setIsFilterOpen(true)}
           style={{ cursor: "pointer" }}
         >
-          <img src={filterIcon} alt="filterIcon" />
+          {userFilters &&
+          Object.keys(userFilters).length > 0 &&
+          userFilters.keyWord !== "" ? (
+            <img src={filterIconGreen} alt="filterIcon" />
+          ) : (
+            <img src={filterIcon} alt="filterIcon" />
+          )}
         </div>
         {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
 
