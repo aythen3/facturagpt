@@ -251,7 +251,6 @@ const AllProducts = () => {
                         />
                       </td>
                       <td className={styles.name}>
-                        {/* <img src={product.url} alt="" /> */}
                         {product.productDescription}
                       </td>
                       <td>{product.productImport}</td>

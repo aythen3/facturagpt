@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./cardAutomate.module.css";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
+import ConfirmationPopup from "../../../ConfirmationPopup/ConfirmationPopup";
+import { deleteAutomation } from "../../../../../../actions/automations";
+import { useDispatch } from "react-redux";
 
 const CardAutomate = ({
   name,
@@ -15,17 +18,26 @@ const CardAutomate = ({
   fromPanel,
   automationData,
 }) => {
+  const dispatch = useDispatch();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const handleDelete = async () => {
+    console.log("Deleting automation...", automationData);
+    const res = await dispatch(
+      deleteAutomation({
+        automationId: automationData.id,
+        userId: automationData.userId,
+      })
+    );
+    return res;
+  };
   return (
     <>
       <div
-        onClick={onCardClick}
+        onClick={() => typeContent(type, automationData)}
         className={`${styles.content} ${fromPanel && styles.content_panel} ${isActive ? styles.content_active : ""}`}
         style={{ borderBottom: !last && !fromPanel && "1px solid #e2f4f0" }}
       >
-        <div
-          onClick={() => typeContent(type, automationData)}
-          className={styles.data_contain}
-        >
+        <div className={styles.data_contain}>
           <div>
             <img className={styles.image} src={image} alt="logo" />
           </div>
@@ -43,11 +55,31 @@ const CardAutomate = ({
         </div>
         {fullContent && (
           <div className={styles.buttons_contains}>
-            <button className={styles.button_edit}>Editar</button>
-            <CircleDeleteSVG />
+            <button
+              onClick={() => typeContent(type, automationData)}
+              className={styles.button_edit}
+            >
+              Editar
+            </button>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowDeletePopup(true);
+              }}
+            >
+              <CircleDeleteSVG />
+            </div>
           </div>
         )}
       </div>
+      {showDeletePopup && (
+        <ConfirmationPopup
+          onClose={() => setShowDeletePopup(false)}
+          title="Eliminar Automatización"
+          message="¿Estás seguro de que deseas eliminar esta automatización?"
+          handleAccept={handleDelete}
+        />
+      )}
     </>
   );
 };

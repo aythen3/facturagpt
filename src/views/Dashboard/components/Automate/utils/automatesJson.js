@@ -5,10 +5,13 @@ import dropbox from "../../../assets/droopbox.svg";
 import whatsApp from "../../../assets/whatsappIcon.svg";
 import esPublico from "../../../assets/espublico-icon.svg";
 import googleSheets from "../../../assets/excel.svg";
-import xml from "../../../assets/xmlIcon.svg";
+import stripe from "../../../assets/stripe.svg";
+import xml from "../../../assets/xml.svg";
 import odoo from "../../../assets/odoo.svg";
 import wolters from "../../../assets/wolters-icon.svg";
-import agencyTribut from "../../../assets/agenciatributariaLogo.svg";
+import holded from "../../../assets/holded.svg";
+import agencyTribut from "../../../assets/agencia.svg";
+import acrobat from "../../../assets/acrobat.svg";
 
 export const data = [
   {
@@ -67,50 +70,69 @@ export const data = [
     type: "Google Sheets",
     role: "output",
   },
-
   {
     id: 8,
     automateName: "Genera Archivos XML para Declaraciones Físcales",
     image: xml,
-    contactType: "example@gmail.com ",
-    type: "XML para Declaciones Físcales",
+    contactType: "example@gmail.com",
+    type: "XML",
     role: "output",
   },
-
   {
     id: 9,
-    automateName: "Sincroniza Facturas con Odoo  ",
+    automateName: "Sincroniza Facturas con Odoo",
     image: odoo,
     contactType: "example@gmail.com ",
     type: "Odoo",
     role: "output",
   },
-
   {
     id: 10,
     automateName: "Exporta Facturas a Wolters Kluwer A3",
     image: wolters,
     contactType: "example@gmail.com ",
-    type: "Wolters Kluwer A3",
+    type: "Wolters",
     role: "output",
   },
-
   {
     id: 11,
     automateName:
       "Envía Facturas automáticamente a tu portal de la Agencia Tributaria",
     image: agencyTribut,
     contactType: "example@gmail.com ",
-    type: "Facturas automáticamente a tu portal de la Agencia Tributaria",
+    type: "Agencia Tributaria",
     role: "output",
   },
-
   {
     id: 12,
     automateName: "Envía Notificaciónes por WhatApp",
     image: whatsApp,
     contactType: "+00000000",
     type: "whatsApp notifications",
+    role: "output",
+  },
+  {
+    id: 13,
+    automateName: "Procesa Pagos Automáticamente con Stripe",
+    image: stripe,
+    contactType: "+00000000",
+    type: "Stripe",
+    role: "output",
+  },
+  {
+    id: 14,
+    automateName: "Conecta Facturas con Holded",
+    image: holded,
+    contactType: "+00000000",
+    type: "Holded",
+    role: "output",
+  },
+  {
+    id: 15,
+    automateName: "Genera y Envía Informes PDF Personalizados",
+    image: acrobat,
+    contactType: "+00000000",
+    type: "Acrobat",
     role: "output",
   },
 ];

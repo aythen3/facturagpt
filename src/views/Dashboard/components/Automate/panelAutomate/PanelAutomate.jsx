@@ -24,6 +24,7 @@ import chevronLeft from "../../../assets/chevronLeft.svg";
 import automation from "../../../assets/automation.svg";
 import CustomSearchbar from "../../CustomSearchbar/CustomSearchbar";
 import DropboxFormCreateAutomate from "../Components/DropboxFormCreateAutomate/DropboxFormCreateAutomate";
+import HoldedFormAutomate from "../Components/HoldedFormAutomate/HoldedFormAutomate";
 
 const PanelAutomate = ({
   type,
@@ -46,7 +47,7 @@ const PanelAutomate = ({
     setDataFilter(filteredData);
   };
 
-  //   ================================ CONFIGS =====================================
+  //   ================================ INPUT CONFIGS =====================================
 
   const [gmailAndOutlookConfiguration, setGmailAndOutlookConfiguration] =
     useState({
@@ -155,6 +156,170 @@ const PanelAutomate = ({
     whatsAppMessage: "",
   });
 
+  //   ================================ OUTPUT CONFIGS =====================================
+
+  const [googleSheetsConfiguration, setGoogleSheetsConfiguration] = useState({
+    type: "Google Sheets",
+    selectedGoogleSheetsConnection: "",
+    googleSheetsConnectionData: [],
+    sheetId: "",
+    sheetTitle: "",
+    generalConfiguration: {},
+    notificateAfterCreatingRow: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+  });
+
+  const [XMLConfiguration, setXMLConfiguration] = useState({
+    type: "XML",
+    fileName: "",
+    filesSource: "/Inicio",
+    folderLocation: "/Inicio",
+    formatType: "",
+    notificateAfterExport: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+    notificateAfterError: false,
+    notificateErrorGmail: false,
+    notificateErrorWhatsApp: false,
+    errorGmailTo: "",
+    errorGmailSubject: "",
+    errorGmailBody: "",
+    errorWhatsAppToNotificate: "",
+    errorWhatsAppMessage: "",
+  });
+
+  const [odooConfiguration, setOdooConfiguration] = useState({
+    type: "Odoo",
+    selectedOdooConnection: "",
+    odooConnectionData: [],
+    filesSource: "/Inicio",
+    folderLocation: "/Inicio",
+    formatType: "",
+    changeFileName: false,
+    fileName: "",
+    addTag: false,
+    tags: [],
+    notificateAfterExport: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+    notificateAfterError: false,
+    notificateErrorGmail: false,
+    notificateErrorWhatsApp: false,
+    errorGmailTo: "",
+    errorGmailSubject: "",
+    errorGmailBody: "",
+    errorWhatsAppToNotificate: "",
+    errorWhatsAppMessage: "",
+  });
+
+  const [woltersConfiguration, setWoltersConfiguration] = useState({
+    type: "Wolters",
+    selectedWoltersConnection: "",
+    woltersConnectionData: [],
+    filesSource: "",
+    folderLocation: "/Inicio",
+    formatType: "",
+    changeFileName: false,
+    fileName: "",
+    notificateAfterExport: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+    notificateAfterError: false,
+    notificateErrorGmail: false,
+    notificateErrorWhatsApp: false,
+    errorGmailTo: "",
+    errorGmailSubject: "",
+    errorGmailBody: "",
+    errorWhatsAppToNotificate: "",
+    errorWhatsAppMessage: "",
+  });
+
+  const [agenciaConfiguration, setAgenciaConfiguration] = useState({
+    type: "Agencia",
+    selectedAgenciaConnection: "",
+    agenciaConnectionData: [],
+    notificateAfterExport: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+    notificateAfterError: false,
+    notificateErrorGmail: false,
+    notificateErrorWhatsApp: false,
+    errorGmailTo: "",
+    errorGmailSubject: "",
+    errorGmailBody: "",
+    errorWhatsAppToNotificate: "",
+    errorWhatsAppMessage: "",
+  });
+
+  const [
+    whatsAppNotificationsConfiguration,
+    setWhatsAppNotificationsConfiguration,
+  ] = useState({
+    type: "whatsApp notifications",
+    selectedWhatsAppConnection: "",
+    whatsAppConnectionData: [],
+    phoneNumbers: [],
+    notificationsFromFolder: "/Inicio",
+    newFileNotification: true,
+    tagUpdateNotification: true,
+    notificateDaysBeforeDueDate: true,
+  });
+
+  const [holdedConfiguration, setHoldedConfiguration] = useState({
+    type: "Holded",
+    selectedHoldedConnection: "",
+    holdedConnectionData: [],
+    filesSource: "",
+    folderLocation: "/Inicio",
+    formatType: "",
+    changeFileName: false,
+    fileName: "",
+    notificateAfterExport: true,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+    notificateAfterError: false,
+    notificateErrorGmail: false,
+    notificateErrorWhatsApp: false,
+    errorGmailTo: "",
+    errorGmailSubject: "",
+    errorGmailBody: "",
+    errorWhatsAppToNotificate: "",
+    errorWhatsAppMessage: "",
+  });
+
+  //   =====================================================================================
+
   useEffect(() => {
     if (automationData) {
       console.log("AUTOMATIONDATA LOADED", automationData);
@@ -188,6 +353,41 @@ const PanelAutomate = ({
           automationData.automationData
         );
         setDropBoxConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "Google Sheets") {
+        console.log(
+          "Setting googleSheetsConfiguration",
+          automationData.automationData
+        );
+        setGoogleSheetsConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "XML") {
+        console.log("Setting XML configuration", automationData.automationData);
+        setXMLConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "Odoo") {
+        console.log(
+          "Setting Odoo configuration",
+          automationData.automationData
+        );
+        setOdooConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "Wolters") {
+        console.log(
+          "Setting Wolters configuration",
+          automationData.automationData
+        );
+        setWoltersConfiguration(automationData.automationData);
+      } else if (
+        automationData.automationData.type === "whatsApp notifications"
+      ) {
+        console.log(
+          "Setting whatsApp notifications configuration",
+          automationData.automationData
+        );
+        setWhatsAppNotificationsConfiguration(automationData.automationData);
+      } else if (automationData.automationData.type === "Agencia Tributaria") {
+        console.log(
+          "Setting Agencia Tributaria configuration",
+          automationData.automationData
+        );
+        setAgenciaConfiguration(automationData.automationData);
       }
     }
   }, [automationData]);
@@ -258,8 +458,48 @@ const PanelAutomate = ({
         ...dropBoxConfiguration,
         type: type,
       };
+    } else if (type === "Google Sheets") {
+      selectedAutomationData = {
+        ...googleSheetsConfiguration,
+        type: type,
+      };
+    } else if (type === "XML") {
+      selectedAutomationData = {
+        ...XMLConfiguration,
+        type: "XML",
+      };
+    } else if (type === "Odoo") {
+      selectedAutomationData = {
+        ...odooConfiguration,
+        type: "Odoo",
+      };
+    } else if (type === "Wolters") {
+      selectedAutomationData = {
+        ...woltersConfiguration,
+        type: "Wolters",
+      };
+    } else if (type === "Agencia Tributaria") {
+      selectedAutomationData = {
+        ...agenciaConfiguration,
+        type: "Agencia Tributaria",
+      };
+    } else if (type === "whatsApp notifications") {
+      selectedAutomationData = {
+        ...whatsAppNotificationsConfiguration,
+        type: "whatsApp notifications",
+      };
+    } else if (type === "Holded") {
+      selectedAutomationData = {
+        ...holdedConfiguration,
+        type: "Holded",
+      };
     }
-
+    // else if (type === "Acrobat") {
+    //   selectedAutomationData = {
+    //     ...acrobatConfiguration,
+    //     type: "Acrobat",
+    //   };
+    // }
     // Por el momento testeamos con gmail y outlook
 
     if (user && selectedAutomationData?.id) {
@@ -446,18 +686,60 @@ const PanelAutomate = ({
                       />
                     );
                   case "Google Sheets":
-                    return <GoogleSheetsFormAutomate type={type} />;
-                  case "XML para Declaciones Físcales":
-                    return <XmlFormAutomate type={type} />;
+                    return (
+                      <GoogleSheetsFormAutomate
+                        configuration={googleSheetsConfiguration}
+                        setConfiguration={setGoogleSheetsConfiguration}
+                        type={type}
+                      />
+                    );
+                  case "XML":
+                    return (
+                      <XmlFormAutomate
+                        type={type}
+                        configuration={XMLConfiguration}
+                        setConfiguration={setXMLConfiguration}
+                      />
+                    );
                   case "Odoo":
-                    return <OdooFormAutomate type={type} />;
-                  case "Wolters Kluwer A3":
-                    return <WoltersKluwerA3FormAutomate type={type} />;
-                  case "Facturas automáticamente a tu portal de la Agencia Tributaria":
-                    return <AgencyTributFormAutomate type={type} />;
+                    return (
+                      <OdooFormAutomate
+                        type={type}
+                        configuration={odooConfiguration}
+                        setConfiguration={setOdooConfiguration}
+                      />
+                    );
+                  case "Wolters":
+                    return (
+                      <WoltersKluwerA3FormAutomate
+                        type={type}
+                        configuration={woltersConfiguration}
+                        setConfiguration={setWoltersConfiguration}
+                      />
+                    );
+                  case "Agencia Tributaria":
+                    return (
+                      <AgencyTributFormAutomate
+                        type={type}
+                        configuration={agenciaConfiguration}
+                        setConfiguration={setAgenciaConfiguration}
+                      />
+                    );
                   case "whatsApp notifications":
                     return (
-                      <WhatsAppSendNotificationsFormAutomate type={type} />
+                      <WhatsAppSendNotificationsFormAutomate
+                        type={type}
+                        configuration={whatsAppNotificationsConfiguration}
+                        setConfiguration={setWhatsAppNotificationsConfiguration}
+                      />
+                    );
+                  case "Holded":
+                    return (
+                      <HoldedFormAutomate
+                        type={type}
+                        configuration={holdedConfiguration}
+                        setConfiguration={setHoldedConfiguration}
+                      />
                     );
                   default:
                     return <div>OTRO</div>;

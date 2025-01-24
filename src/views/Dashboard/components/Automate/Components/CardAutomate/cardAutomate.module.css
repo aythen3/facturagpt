@@ -5,7 +5,6 @@
   background: #fff;
   justify-content: space-between;
   height: 74px;
-  cursor: pointer;
   user-select: none;
 }
 
@@ -30,7 +29,6 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  cursor: pointer;
 }
 
 .image {
@@ -52,6 +50,14 @@
   gap: 5px;
   align-items: center;
   justify-content: center;
+  button {
+    cursor: pointer;
+    user-select: none;
+  }
+  div {
+    cursor: pointer;
+    user-select: none;
+  }
 }
 
 .button_edit {
@@ -60,5 +66,4 @@
   text-decoration: underline;
   font-weight: 700;
   font-size: 16px;
-  cursor: pointer;
 }

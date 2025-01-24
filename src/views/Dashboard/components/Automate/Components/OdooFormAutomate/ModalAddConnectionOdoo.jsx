@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-const ModalAddConnectionWhatsAppSendNotifications = ({
-  close,
-  addConnection,
-}) => {
-  const [accountId, setAccountId] = useState("");
-  const [token, setToken] = useState("");
+import { ReactComponent as OdooIcon } from "../../../../assets/odoo.svg";
+const ModalAddConnectionOdoo = ({ close, addConnection }) => {
+  const [clientId, setClientId] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
 
   return (
     <AddConnectionModal
-      headerColor={["#3AD656", "#5BF876"]}
+      headerColor={["#A14589", "#6E509B"]}
       close={close}
-      type="WhatsApp"
-      icon={<WhatsAppIcon />}
+      type="Odoo"
+      icon={<OdooIcon />}
     >
       <div
         style={{
@@ -23,33 +20,33 @@ const ModalAddConnectionWhatsAppSendNotifications = ({
         }}
       >
         <LabelInputComponent
-          label="WhatsApp Account ID"
-          placeholder="Account ID"
+          label="Client ID"
+          placeholder="Client ID"
           inputType="text"
-          value={accountId}
-          setValue={setAccountId}
+          value={clientId}
+          setValue={setClientId}
         />
 
         <LabelInputComponent
-          label="Token"
-          placeholder="Token"
+          label="Client Secret"
+          placeholder="Client Secret"
           inputType="text"
-          value={token}
-          setValue={setToken}
+          value={clientSecret}
+          setValue={setClientSecret}
         />
         <button
           onClick={() => {
-            if (!accountId || !token) {
+            if (!clientId || !clientSecret) {
               alert("Porfavor completa los campos");
               return;
             }
-            addConnection({ accountId, token });
-            setAccountId("");
-            setToken("");
+            addConnection({ clientId, clientSecret });
+            setClientId("");
+            setClientSecret("");
             close();
           }}
           style={{
-            backgroundColor: "#4BE666",
+            backgroundColor: "#A24689",
             color: "white",
             display: "flex",
             justifyContent: "flex-start",
@@ -63,7 +60,7 @@ const ModalAddConnectionWhatsAppSendNotifications = ({
             width: "100%",
           }}
         >
-          <WhatsAppIcon width={25} height={25} />
+          <OdooIcon width={25} height={25} />
           <span>Add Connection</span>
         </button>
       </div>
@@ -71,4 +68,4 @@ const ModalAddConnectionWhatsAppSendNotifications = ({
   );
 };
 
-export default ModalAddConnectionWhatsAppSendNotifications;
+export default ModalAddConnectionOdoo;

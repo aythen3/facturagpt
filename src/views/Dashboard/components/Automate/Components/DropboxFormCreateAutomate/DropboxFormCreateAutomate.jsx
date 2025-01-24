@@ -212,6 +212,10 @@ const DropboxFormCreateAutomate = ({
             setState2Value={(value) =>
               handleConfigurationChange("whatsAppToNotificate", value)
             }
+            whatsAppMessage={configuration.whatsAppMessage || ""}
+            setWhatsAppMessage={(value) =>
+              handleConfigurationChange("whatsAppMessage", value)
+            }
             title="Notificar tras la exportación"
             icons={[
               <GmailIcon style={{ width: 25 }} />,

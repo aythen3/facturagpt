@@ -4,6 +4,7 @@ import InputComponent from "../../InputComponent/InputComponent";
 import OptionsSwitchComponent from "../../OptionsSwichComponent/OptionsSwitchComponent";
 import NotificationsSVG from "../svgs/NotificationsSVG";
 import styles from "./NotificationsConfirmComponent.module.css";
+import TextareaComponent from "../../TextareaComponent/TextareaComponent";
 
 const NotificationsConfirmComponent = ({
   title,
@@ -28,6 +29,8 @@ const NotificationsConfirmComponent = ({
   setGmailSubject,
   gmailBody,
   setGmailBody,
+  whatsAppMessage,
+  setWhatsAppMessage,
 }) => {
   return (
     <div className={styles.container}>
@@ -102,6 +105,10 @@ const NotificationsConfirmComponent = ({
           setValue={setState2Value}
         />
       </div>
+      <TextareaComponent
+        value={whatsAppMessage}
+        onChange={(e) => setWhatsAppMessage(e.target.value)}
+      />
     </div>
   );
 };

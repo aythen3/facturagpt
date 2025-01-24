@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-const ModalAddConnectionWhatsAppSendNotifications = ({
-  close,
-  addConnection,
-}) => {
-  const [accountId, setAccountId] = useState("");
-  const [token, setToken] = useState("");
+import { ReactComponent as HoldedIcon } from "../../../../assets/holded.svg";
+const ModalAddConnectionHolded = ({ close, addConnection }) => {
+  const [clientId, setClientId] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
 
   return (
     <AddConnectionModal
-      headerColor={["#3AD656", "#5BF876"]}
+      headerColor={["#FC454C", "#b9262b"]}
       close={close}
-      type="WhatsApp"
-      icon={<WhatsAppIcon />}
+      type="Holded"
+      icon={<HoldedIcon />}
     >
       <div
         style={{
@@ -23,33 +20,33 @@ const ModalAddConnectionWhatsAppSendNotifications = ({
         }}
       >
         <LabelInputComponent
-          label="WhatsApp Account ID"
-          placeholder="Account ID"
+          label="Client ID"
+          placeholder="Client ID"
           inputType="text"
-          value={accountId}
-          setValue={setAccountId}
+          value={clientId}
+          setValue={setClientId}
         />
 
         <LabelInputComponent
-          label="Token"
-          placeholder="Token"
+          label="Client Secret"
+          placeholder="Client Secret"
           inputType="text"
-          value={token}
-          setValue={setToken}
+          value={clientSecret}
+          setValue={setClientSecret}
         />
         <button
           onClick={() => {
-            if (!accountId || !token) {
+            if (!clientId || !clientSecret) {
               alert("Porfavor completa los campos");
               return;
             }
-            addConnection({ accountId, token });
-            setAccountId("");
-            setToken("");
+            addConnection({ clientId, clientSecret });
+            setClientId("");
+            setClientSecret("");
             close();
           }}
           style={{
-            backgroundColor: "#4BE666",
+            backgroundColor: "#FC454C",
             color: "white",
             display: "flex",
             justifyContent: "flex-start",
@@ -63,7 +60,7 @@ const ModalAddConnectionWhatsAppSendNotifications = ({
             width: "100%",
           }}
         >
-          <WhatsAppIcon width={25} height={25} />
+          <HoldedIcon width={25} height={25} />
           <span>Add Connection</span>
         </button>
       </div>
@@ -71,4 +68,4 @@ const ModalAddConnectionWhatsAppSendNotifications = ({
   );
 };
 
-export default ModalAddConnectionWhatsAppSendNotifications;
+export default ModalAddConnectionHolded;

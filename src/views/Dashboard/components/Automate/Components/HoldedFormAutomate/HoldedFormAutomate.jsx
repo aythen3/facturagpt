@@ -2,23 +2,20 @@ import React, { useState } from "react";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import InputComponent from "../../../InputComponent/InputComponent";
 import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
-import CheckboxComponent from "../../shared/CheckboxComponent";
 import SearchSVG from "../../svgs/SearchSVG";
-import SelectComponent from "../../../SelectComponent/SelectComponent";
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
-import { ReactComponent as OdooIcon } from "../../../../assets/odoo.svg";
+import { ReactComponent as HoldedIcon } from "../../../../assets/holded.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-import NotificationsSVG from "../../svgs/NotificationsSVG";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
 import TextSVG from "../../svgs/TextSVG";
 import LabelSVG from "../../svgs/LabelSVG";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
-import ModalAddConnectionOdoo from "./ModalAddConnectionOdoo";
+import ModalAddConnectionHolded from "./ModalAddConnectionHolded";
 
-const OdooFormAutomate = ({ type, configuration, setConfiguration }) => {
+const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectInputLocation, setShowSelectInputLocation] = useState(false);
   const [showSelectOutputLocation, setShowSelectOutputLocation] =
@@ -31,31 +28,34 @@ const OdooFormAutomate = ({ type, configuration, setConfiguration }) => {
   };
 
   const addConnection = (connection) => {
-    console.log("adding Odoo connection", connection);
+    console.log("adding Holded connection", connection);
     const updatedConnections = [
-      ...(configuration.odooConnectionData || []),
+      ...(configuration.holdedConnectionData || []),
       connection,
     ];
-    console.log("setting odooConnectionData", updatedConnections);
-    handleConfigurationChange("odooConnectionData", updatedConnections);
-    if (!configuration.selectedOdooConnection) {
-      handleConfigurationChange("selectedOdooConnection", connection.clientId);
+    console.log("setting holdedConnectionData", updatedConnections);
+    handleConfigurationChange("holdedConnectionData", updatedConnections);
+    if (!configuration.selectedHoldedConnection) {
+      handleConfigurationChange(
+        "selectedHoldedConnection",
+        connection.clientId
+      );
     }
   };
 
   return (
     <div>
       <HeaderFormsComponent
-        placeholder="Añade una cuenta de Odoo"
-        selectedEmailConnection={configuration.selectedOdooConnection}
+        placeholder="Añade una cuenta de Holded"
+        selectedEmailConnection={configuration.selectedHoldedConnection}
         setSelectedEmailConnection={(value) =>
-          handleConfigurationChange("selectedOdooConnection", value)
+          handleConfigurationChange("selectedHoldedConnection", value)
         }
-        emailConnections={(configuration.odooConnectionData || []).map(
+        emailConnections={(configuration.holdedConnectionData || []).map(
           (connection) => connection.clientId
         )}
         action={() => setShowAddConnection(true)}
-        icon={<OdooIcon />}
+        icon={<HoldedIcon />}
       />
       <TitleFormsComponent title="Sincroniza con" type={type} />
 
@@ -64,7 +64,7 @@ const OdooFormAutomate = ({ type, configuration, setConfiguration }) => {
         <p className={styles.title_content_input}>
           Ubicación{" "}
           <span style={{ color: "#18181B", fontSize: "12px" }}>
-            Configura la ubicación donde Odoo guardará los documentos
+            Configura la ubicación donde Holded guardará los documentos
           </span>{" "}
         </p>
 
@@ -84,7 +84,7 @@ const OdooFormAutomate = ({ type, configuration, setConfiguration }) => {
           Ubicación{" "}
           <span style={{ color: "#18181B", fontSize: "12px" }}>
             Configura la ubicación de Factura GPT para exportar los documentos a
-            Odoo
+            Holded
           </span>{" "}
         </p>
 
@@ -280,7 +280,7 @@ const OdooFormAutomate = ({ type, configuration, setConfiguration }) => {
         />
       )}
       {showAddConnection && (
-        <ModalAddConnectionOdoo
+        <ModalAddConnectionHolded
           close={() => setShowAddConnection(false)}
           addConnection={(connection) => {
             addConnection(connection);
@@ -292,4 +292,4 @@ const OdooFormAutomate = ({ type, configuration, setConfiguration }) => {
   );
 };
 
-export default OdooFormAutomate;
+export default HoldedFormAutomate;

@@ -74,13 +74,13 @@
             <desc_incoterm/>
             <fabricante_nif>B17623257</fabricante_nif>
             <fabricante_nombre>HSB S.A.</fabricante_nombre>
-            <fabricante_direccion>AV Cardenal Reig, 32, 08028 Barcelona (Barcelona)</fabricante_direccion>
+            <fabricante_direccion>AV Cardenal Reig, 32</fabricante_direccion>
             <fabricante_poblacion>Barcelona</fabricante_poblacion>
             <fabricante_cpostal>08028</fabricante_cpostal>
             <fabricante_provincia>Barcelona</fabricante_provincia>
             <fabricante_pais>ES</fabricante_pais>
             <fabricante_reg_mercantil>HSB S.A.</fabricante_reg_mercantil>
-            <cod_fabricante_externo>A58580629</cod_fabricante_externo>
+            <cod_fabricante_externo>A58580626</cod_fabricante_externo>
             <cod_fabricante_fabricante/>
             <direcciones>
                 <direccion id="1">
@@ -109,12 +109,12 @@
             <referencia>G041020403SF</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>TERMINAL CURV.403F 22-3/4 CI/ARAND.LT.</descripcion>
+            <descripcion>TERMINAL CURV.403SF 22-3/4 C/ARAND.LT.</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>1</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>50</cantidad_entregada>
+            <cantidad_entregada>50.00</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>1</posicion_factura>
             <precio_unitario>12.77</precio_unitario>
@@ -130,10 +130,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>159.63</valor_importe>
+                    <porcentaje>25.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -158,7 +158,7 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>2</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>60</cantidad_entregada>
+            <cantidad_entregada>60.00</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>2</posicion_factura>
             <precio_unitario>1.35</precio_unitario>
@@ -174,10 +174,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>24.30</valor_importe>
+                    <porcentaje>30.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -202,7 +202,7 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>3</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>40</cantidad_entregada>
+            <cantidad_entregada>40.00</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>3</posicion_factura>
             <precio_unitario>1.35</precio_unitario>
@@ -218,10 +218,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>16.20</valor_importe>
+                    <porcentaje>30.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -246,7 +246,7 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>4</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>50</cantidad_entregada>
+            <cantidad_entregada>50.00</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>4</posicion_factura>
             <precio_unitario>18.38</precio_unitario>
@@ -262,10 +262,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>321.65</valor_importe>
+                    <porcentaje>30.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -290,9 +290,9 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>5</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>50</cantidad_entregada>
+            <cantidad_entregada>50.00</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>5</posicion_factura>
+            <posicion_factura>4</posicion_factura>
             <precio_unitario>0.54</precio_unitario>
             <unidad_precio>UN</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -306,10 +306,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>12.15</valor_importe>
+                    <porcentaje>45.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -334,9 +334,9 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>6</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>300</cantidad_entregada>
+            <cantidad_entregada>300.00</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>6</posicion_factura>
+            <posicion_factura>5</posicion_factura>
             <precio_unitario>0.81</precio_unitario>
             <unidad_precio>UN</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -350,10 +350,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>72.90</valor_importe>
+                    <porcentaje>30.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -370,7 +370,7 @@
                 <segundo>0</segundo>
             </fecha_albaran>
             <albaran>R-4022000060</albaran>
-            <referencia>625</referencia>
+            <referencia></referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>CAJA EMPOTRAR UNIVERSAL ENLAZABLE</descripcion>
@@ -378,9 +378,9 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>7</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>200</cantidad_entregada>
+            <cantidad_entregada>200.00</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>7</posicion_factura>
+            <posicion_factura>6</posicion_factura>
             <precio_unitario>0.81</precio_unitario>
             <unidad_precio>UN</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -394,10 +394,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>48.60</valor_importe>
+                    <porcentaje>30.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -417,14 +417,14 @@
             <referencia>072015</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>CURVA 90 H-H 2Acu 15</descripcion>
+            <descripcion>CURVA 90 H-H 2ACu 15</descripcion>
             <pedido>404200047</pedido>
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>8</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>25</cantidad_entregada>
+            <cantidad_entregada>25.00</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>8</posicion_factura>
+            <posicion_factura>7</posicion_factura>
             <precio_unitario>0.90</precio_unitario>
             <unidad_precio>UN</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -438,10 +438,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>10.13</valor_importe>
+                    <porcentaje>45.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -466,9 +466,9 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>9</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>20</cantidad_entregada>
+            <cantidad_entregada>20.00</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>9</posicion_factura>
+            <posicion_factura>8</posicion_factura>
             <precio_unitario>9.48</precio_unitario>
             <unidad_precio>UN</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -482,10 +482,10 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
+                    <valor_importe>66.36</valor_importe>
+                    <porcentaje>35.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -510,9 +510,9 @@
             <pedido_cliente>404200047</pedido_cliente>
             <posicion_pedido>10</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>10</cantidad_entregada>
+            <cantidad_entregada>10.00</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>10</posicion_factura>
+            <posicion_factura>9</posicion_factura>
             <precio_unitario>14.87</precio_unitario>
             <unidad_precio>UN</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -526,7 +526,7 @@
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
-                    <tipo_importe>02</tipo_importe>
+                    <tipo_importe>06</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
                     <valor_importe>0.00</valor_importe>
                     <porcentaje>0.00</porcentaje>
