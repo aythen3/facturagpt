@@ -17,7 +17,7 @@ import {
   setCurrentPath,
   setUserFiles,
 } from "../../../../slices/scalewaySlices";
-import k from "../../assets/k.svg";
+import l from "../../assets/lIcon.svg";
 import cmd from "../../assets/cmd.svg";
 import {
   deleteObject,
@@ -522,17 +522,17 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div
+          {/* <div
             onClick={() => setShowLocationModal(true)}
             className={styles.searchIconsWrappers}
           >
             <img src={cmd} alt="cmdIcon" />
-          </div>
+          </div> */}
           <div
             style={{ marginLeft: "5px" }}
             className={styles.searchIconsWrappers}
           >
-            <img src={k} alt="kIcon" />
+            <img src={l} alt="kIcon" />
           </div>
         </div>
         <div
