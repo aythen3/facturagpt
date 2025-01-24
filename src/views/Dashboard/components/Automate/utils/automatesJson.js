@@ -12,6 +12,7 @@ import wolters from "../../../assets/wolters-icon.svg";
 import holded from "../../../assets/holded.svg";
 import agencyTribut from "../../../assets/agencia.svg";
 import acrobat from "../../../assets/acrobat.svg";
+import ftp from "../../../assets/ftp.svg";
 
 export const data = [
   {
@@ -133,6 +134,14 @@ export const data = [
     image: acrobat,
     contactType: "+00000000",
     type: "Acrobat",
+    role: "output",
+  },
+  {
+    id: 16,
+    automateName: "Exporta a tu Servidor FTP",
+    image: ftp,
+    contactType: "682",
+    type: "FTP",
     role: "output",
   },
 ];

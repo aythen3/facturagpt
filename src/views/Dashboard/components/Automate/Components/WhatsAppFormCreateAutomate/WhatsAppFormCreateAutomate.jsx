@@ -6,7 +6,6 @@ import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import InputComponent from "../../../InputComponent/InputComponent";
 import SearchSVG from "../../svgs/SearchSVG";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
-import minusIcon from "../../../../assets/minusIcon.svg";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import ModalAddConnectionWhatsApp from "./ModalAddConnectionWhatsApp";
 import SelectLocation from "../../../SelectLocation/SelectLocation";

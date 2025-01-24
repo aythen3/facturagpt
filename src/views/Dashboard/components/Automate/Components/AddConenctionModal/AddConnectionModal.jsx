@@ -4,8 +4,8 @@ import styles from "./addConnection.module.css";
 
 const AddConnectionModal = ({ children, type, icon, close, headerColor }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
+    <div onClick={close} className={styles.container}>
+      <div onClick={(e) => e.stopPropagation()} className={styles.content}>
         <Header
           headerColor={headerColor}
           type={type}
