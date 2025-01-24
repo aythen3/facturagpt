@@ -31,6 +31,7 @@ import ChatView from "./views/Dashboard/screens/ChatView/ChatView.jsx";
 import NotificationsView from "./views/Dashboard/screens/NotificationsView/NotificationsView.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import UsersClientsDashboard from "./views/Dashboard/UsersClientsDashboard.jsx";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
@@ -87,7 +88,14 @@ const Layout = () => {
                       <Route path="/pricing" element={<Pricing />} />
                       <Route path="/home" element={<Dashboard />} />
                       <Route path="/freetrial" element={<FreeTrial />} />
-                      <Route path="/users" element={<UsersDashboard />} />
+                      <Route
+                        path="/users/admins"
+                        element={<UsersDashboard />}
+                      />
+                      <Route
+                        path="/users/clients"
+                        element={<UsersClientsDashboard />}
+                      />
                       <Route path="/userSettings" element={<UserSettings />} />
                       <Route path="/clients" element={<Clients />} />
 
