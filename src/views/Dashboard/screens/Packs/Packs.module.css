@@ -7,15 +7,12 @@
   flex-direction: column;
   font-family: "Inter", sans-serif;
   background-size: contain;
-  padding: 44px 0px;
   max-width: 1440px;
   align-self: center;
   overflow: hidden;
 }
 
 .stepsContainer {
-  /* height: 75vh; */
-  padding: 30px 0;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -24,12 +21,10 @@
 
 .extensionsContainer {
   /* height: 95vh; */
-  padding: 30px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 0;
   gap: 10px;
 }
 
@@ -184,7 +179,7 @@
 
   h2 {
     margin: 0;
-    font-weight: 400;
+    font-weight: 500;
     font-size: clamp(
       20px,
       5vw,
@@ -261,7 +256,6 @@
   display: flex;
   justify-content: center;
   gap: 15px;
-  padding: clamp(1rem, 3vw, 3.5rem); /* Ajuste dinámico del padding */
   text-align: center;
   width: 88%;
   flex-wrap: wrap; /* Permite que las cards se ajusten en varias filas si es necesario */

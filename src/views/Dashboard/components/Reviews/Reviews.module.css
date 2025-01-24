@@ -4,32 +4,28 @@
   flex-direction: column;
   font-family: "Inter", sans-serif;
   align-items: center;
-  padding: 50px 20px;
   width: 100vw;
 }
 .reviewsSection {
   display: flex;
   flex-direction: column;
-  /* height: 70vh; */
-
   justify-content: center;
   align-items: center;
-  margin-top: 0;
-  padding: 60px 10px;
 }
 .startNowSection {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 0;
   padding: 0 10px;
+  margin-bottom: 50px;
 }
 .reviewsTitle {
   font-size: clamp(20px, 5vw, 50px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
   color: #18181b;
   text-align: center;
+  margin: 0;
 }
 .reviewsDescription {
   font-size: clamp(17px, 5vw, 20px);

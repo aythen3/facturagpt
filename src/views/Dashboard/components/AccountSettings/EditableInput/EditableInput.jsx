@@ -11,6 +11,9 @@ const EditableInput = ({
   verify = false,
   name,
   placeholder,
+  labelOptions = false,
+  options = false,
+  readOnly,
 }) => {
   const { t } = useTranslation("accountSetting");
 
@@ -65,8 +68,15 @@ const EditableInput = ({
   return (
     <div className={styles.editableInputContainer}>
       <div className={styles.editableInputHeader}>
-        <span>{label}</span>
-        <div onClick={handleEditClick}>{editable ? "Guardar" : "Editar"}</div>
+        {!labelOptions && <span>{label}</span>}
+        {!options && (
+          <div
+            onClick={handleEditClick}
+            style={{ cursor: readOnly ? "not-allowed" : "pointer" }}
+          >
+            {editable ? "Guardar" : "Editar"}
+          </div>
+        )}
       </div>
 
       <div className={styles.editableInput}>
@@ -78,10 +88,15 @@ const EditableInput = ({
           type={type}
           value={newValue}
           onChange={(e) => setNewValue(e.target.value)}
-          readOnly={!editable}
+          readOnly={readOnly !== undefined ? readOnly : !editable}
         />
+
         {verify && (
-          <span className={styles.verify} onClick={handlePasswordVerify}>
+          <span
+            className={styles.verify}
+            onClick={handlePasswordVerify}
+            style={{ opacity: !editable ? "0" : "1" }}
+          >
             {t("verify")}
           </span>
         )}

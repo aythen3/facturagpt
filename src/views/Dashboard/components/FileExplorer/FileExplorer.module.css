@@ -69,12 +69,12 @@
   height: 36px;
   min-height: 36px;
   border: 1px solid #d9d9e3;
-  border-radius: 8px 0 0 8px;
+  border-radius: 8px;
   padding: 0px 9px;
-  -webkit-border-radius: 8px 0 0 8px;
-  -moz-border-radius: 8px 0 0 8px;
-  -ms-border-radius: 8px 0 0 8px;
-  -o-border-radius: 8px 0 0 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
   width: 100%;
 }
 .searchIconsWrappers {

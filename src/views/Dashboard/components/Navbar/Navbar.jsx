@@ -8,14 +8,15 @@ import english_flag from "../../assets/english_flag.svg";
 import spain_flag from "../../assets/spain_flag.svg";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../../i18";
-
+import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
   const [t] = useTranslation("navBar");
 
   const [menuOpen, setMenuOpen] = useState(false); // Estado para el menú
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);

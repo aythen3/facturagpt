@@ -48,7 +48,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className={styles.faqSection}>
+    <section className={styles.faqSection}>
       <h2>{t("title")}</h2>
       <div className={styles.faqContainer}>
         {faqs.map((faq, index) => (
@@ -82,7 +82,7 @@ const FAQ = () => {
           </a>
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

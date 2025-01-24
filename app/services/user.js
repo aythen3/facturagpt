@@ -555,7 +555,7 @@ const verifyOTPService = async ({ email, otp }) => {
     const queryResponse = await db.find({
       selector: { email, otp },
     });
-
+    console.log(`queryResponse ${queryResponse.docs}`);
     if (queryResponse.docs.length === 0) {
       console.log(`No matching OTP found for email: ${email}`);
       return { success: false, message: "Invalid or expired OTP." };
@@ -596,21 +596,30 @@ const newsletter = async ({
   phone,
   keepInformed,
 }) => {
-  console.log("name", name);
-  console.log("email", email);
-  console.log("message", message);
   console.log("desde actions");
-  const mailOptions = {
+
+  const mailToAythen = {
     from: email, // El correo del usuario que llenó el formulario
     to: "yyeremi15@gmail.com", // Tu correo donde recibirás los mensajes
     subject: `Nuevo mensaje de ${name}`,
     text: `Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}`,
   };
 
+  const mailFromAythen = {
+    from: "yyeremi15@gmail.com", // Tu correo
+    to: email, // Correo del usuario que llenó el formulario
+    subject: `Confirmación de recepción de mensaje de ${name}`,
+    text: `Hola ${name},\n\nGracias por tu mensaje. Hemos recibido tu consulta y nos pondremos en contacto contigo pronto.\n\nMensaje recibido:\n${message}\n\nSaludos,\nEl equipo.`,
+  };
+
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Correo enviado:", info.response);
-    return { success: true, message: "Email sent correctly" };
+    const infoToAythen = await transporter.sendMail(mailToAythen);
+    console.log("Correo enviado a yyeremi15@gmail.com:", infoToAythen.response);
+
+    const infoFromAythen = await transporter.sendMail(mailFromAythen);
+    console.log("Correo enviado al usuario:", infoFromAythen.response);
+
+    return { success: true, message: "Emails sent correctly" };
   } catch (error) {
     console.error("Error sending mail:", error);
     throw new Error("Error sending mail");

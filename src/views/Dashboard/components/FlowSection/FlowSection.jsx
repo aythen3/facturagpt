@@ -40,7 +40,7 @@ const steps = () => [
 ];
 const FlowSection = () => {
   return (
-    <div className={styles.stepsContainer}>
+    <section className={styles.stepsContainer}>
       {steps().map((step, index) => (
         <div key={index} className={styles.steps}>
           <div className={styles.iconContainer}>{step.icon}</div>
@@ -48,7 +48,7 @@ const FlowSection = () => {
           <p>{step.description}</p>
         </div>
       ))}
-    </div>
+    </section>
   );
 };
 

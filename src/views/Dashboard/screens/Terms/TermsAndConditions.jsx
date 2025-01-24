@@ -16,7 +16,7 @@ const TermsAndConditions = () => {
           <p>{t("subTitle")}</p>
         </header>
 
-        <section>
+        <section className={styles.termsandconditionsection}>
           <p>
             Estos Términos de Uso se aplican al uso de FacturaGPT y otros
             servicios para individuos, junto con cualquier aplicación de

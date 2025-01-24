@@ -43,7 +43,7 @@ const icons = [
 
 const LinesLandingSection = () => {
   return (
-    <div className={styles.linesContainer}>
+    <section className={styles.linesContainer}>
       {icons.map(({ Component, uniqueClass }, index) => (
         <Component key={index} className={`${styles.logo} ${uniqueClass}`} />
       ))}
@@ -54,7 +54,7 @@ const LinesLandingSection = () => {
         </div>
         <Lines className={styles.linesR} />
       </div>
-    </div>
+    </section>
   );
 };
 

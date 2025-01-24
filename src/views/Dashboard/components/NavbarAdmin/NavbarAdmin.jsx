@@ -35,7 +35,7 @@ const NavbarAdmin = () => {
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation("navbarAdmin");
-
+  console.log(user);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [showNewTagModal, setShowNewTagModal] = useState(false);
   const [selectedAutomationData, setSelectedAutomationData] = useState(null);
@@ -82,11 +82,10 @@ const NavbarAdmin = () => {
       <Elements stripe={stripePromise}>
         <div className={styles.navbarAdmin}>
           <div className={styles.navbarAdminIcons}>
-            <a href="/">
+            <a href={user ? "/panel" : "/"}>
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
-
           <button
             onClick={() => setShowPlusModal(true)}
             className={styles.plus}
