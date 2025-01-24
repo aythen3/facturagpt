@@ -74,7 +74,7 @@
             <desc_incoterm/>
             <fabricante_nif></fabricante_nif>
             <fabricante_nombre>MATELUCA, S.A.</fabricante_nombre>
-            <fabricante_direccion>P. Pla d'en Bote, C/Carrasco, 26</fabricante_direccion>
+            <fabricante_direccion>P. Pla d'en Bosc, C/Carrasco, 26</fabricante_direccion>
             <fabricante_poblacion>Mataró</fabricante_poblacion>
             <fabricante_cpostal>08320</fabricante_cpostal>
             <fabricante_provincia>Barcelona</fabricante_provincia>
@@ -329,7 +329,7 @@
             <referencia>DRL50</referencia>
             <codigo_partida/>
             <desc_partida/>
-            <descripcion>TUBO AISCAN DRL (ROLLLOS)</descripcion>
+            <descripcion>TUBO AISCAN DRL (ROLL0S)</descripcion>
             <pedido>FV24-09620</pedido>
             <pedido_cliente>FV24-09620</pedido_cliente>
             <posicion_pedido>6</posicion_pedido>
@@ -378,10 +378,10 @@
             <pedido_cliente>FV24-09620</pedido_cliente>
             <posicion_pedido>7</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>50</cantidad_entregada>
+            <cantidad_entregada>200</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>7</posicion_factura>
-            <precio_unitario>2.95</precio_unitario>
+            <precio_unitario>0.71</precio_unitario>
             <unidad_precio>Mts.</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
             <observaciones/>
@@ -389,15 +389,15 @@
                 <importe id="0">
                     <tipo_importe>01</tipo_importe>
                     <desc_tipo_importe>Neto</desc_tipo_importe>
-                    <valor_importe>23.63</valor_importe>
+                    <valor_importe>142.00</valor_importe>
                     <porcentaje>00.00</porcentaje>
                     <signo_importe>01</signo_importe>
                 </importe>
                 <importe id="1">
                     <tipo_importe>02</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>112.10</valor_importe>
-                    <porcentaje>76.00</porcentaje>
+                    <valor_importe>0.00</valor_importe>
+                    <porcentaje>0.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -414,7 +414,7 @@
                 <segundo>0</segundo>
             </fecha_albaran>
             <albaran></albaran>
-            <referencia>CHF20</referencia>
+            <referencia>CHF40</referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>AISCAN-CHF(LIBRE DE HALOGENOS)</descripcion>
@@ -469,7 +469,7 @@
             <cantidad_entregada>150</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>9</posicion_factura>
-            <precio_unitario>1.30</precio_unitario>
+            <precio_unitario>2.95</precio_unitario>
             <unidad_precio>Mts.</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
             <observaciones/>
@@ -484,8 +484,8 @@
                 <importe id="1">
                     <tipo_importe>02</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>152.10</valor_importe>
-                    <porcentaje>78.00</porcentaje>
+                    <valor_importe>336.30</valor_importe>
+                    <porcentaje>76.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
             </importes>
@@ -510,7 +510,7 @@
             <pedido_cliente>FV24-09620</pedido_cliente>
             <posicion_pedido>10</posicion_pedido>
             <referencia_factura/>
-            <cantidad_entregada>150</cantidad_entregada>
+            <cantidad_entregada>20</cantidad_entregada>
             <unidad>UN</unidad>
             <posicion_factura>10</posicion_factura>
             <precio_unitario>5.24</precio_unitario>
@@ -528,7 +528,7 @@
                 <importe id="1">
                     <tipo_importe>02</tipo_importe>
                     <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>550.20</valor_importe>
+                    <valor_importe>73.36</valor_importe>
                     <porcentaje>70.00</porcentaje>
                     <signo_importe>02</signo_importe>
                 </importe>
@@ -546,61 +546,17 @@
                 <segundo>0</segundo>
             </fecha_albaran>
             <albaran></albaran>
-            <referencia>MGE32</referencia>
-            <codigo_partida/>
-            <desc_partida/>
-            <descripcion>Manguito incluido (BGE32)</descripcion>
-            <pedido>FV24-09620</pedido>
-            <pedido_cliente>FV24-09620</pedido_cliente>
-            <posicion_pedido>11</posicion_pedido>
-            <referencia_factura/>
-            <cantidad_entregada>20</cantidad_entregada>
-            <unidad>UN</unidad>
-            <posicion_factura>11</posicion_factura>
-            <precio_unitario></precio_unitario>
-            <unidad_precio>Und.</unidad_precio>
-            <cantidad_precio>1</cantidad_precio>
-            <observaciones/>
-            <importes>
-                <importe id="0">
-                    <tipo_importe>01</tipo_importe>
-                    <desc_tipo_importe>Neto</desc_tipo_importe>
-                    <valor_importe></valor_importe>
-                    <porcentaje>00.00</porcentaje>
-                    <signo_importe>01</signo_importe>
-                </importe>
-                <importe id="1">
-                    <tipo_importe>02</tipo_importe>
-                    <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
-                    <signo_importe>02</signo_importe>
-                </importe>
-            </importes>
-            <posicion_referenciada/>
-        </posiciones>
-        <posiciones id="12">
-            <posicion_albaran>12</posicion_albaran>
-            <fecha_albaran>
-                <anyo>2024</anyo>
-                <mes>10</mes>
-                <dia>13</dia>
-                <hora>0</hora>
-                <minuto>0</minuto>
-                <segundo>0</segundo>
-            </fecha_albaran>
-            <albaran></albaran>
             <referencia>EHF20</referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>AISCAN-EHF(LIBRE DE HALOGENOS)</descripcion>
             <pedido>FV24-09620</pedido>
             <pedido_cliente>FV24-09620</pedido_cliente>
-            <posicion_pedido>12</posicion_pedido>
+            <posicion_pedido>11</posicion_pedido>
             <referencia_factura/>
             <cantidad_entregada>171</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>12</posicion_factura>
+            <posicion_factura>11</posicion_factura>
             <precio_unitario>4.82</precio_unitario>
             <unidad_precio>Mts.</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -623,8 +579,8 @@
             </importes>
             <posicion_referenciada/>
         </posiciones>
-        <posiciones id="13">
-            <posicion_albaran>13</posicion_albaran>
+        <posiciones id="12">
+            <posicion_albaran>12</posicion_albaran>
             <fecha_albaran>
                 <anyo>2024</anyo>
                 <mes>10</mes>
@@ -640,11 +596,11 @@
             <descripcion>AISCAN-EHF(LIBRE DE HALOGENOS)</descripcion>
             <pedido>FV24-09620</pedido>
             <pedido_cliente>FV24-09620</pedido_cliente>
-            <posicion_pedido>13</posicion_pedido>
+            <posicion_pedido>12</posicion_pedido>
             <referencia_factura/>
             <cantidad_entregada>171</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>13</posicion_factura>
+            <posicion_factura>12</posicion_factura>
             <precio_unitario>6.63</precio_unitario>
             <unidad_precio>Mts.</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -667,8 +623,8 @@
             </importes>
             <posicion_referenciada/>
         </posiciones>
-        <posiciones id="14">
-            <posicion_albaran>14</posicion_albaran>
+        <posiciones id="13">
+            <posicion_albaran>13</posicion_albaran>
             <fecha_albaran>
                 <anyo>2024</anyo>
                 <mes>10</mes>
@@ -684,11 +640,11 @@
             <descripcion>AISCAN-EHF(LIBRE DE HALOGENOS)</descripcion>
             <pedido>FV24-09620</pedido>
             <pedido_cliente>FV24-09620</pedido_cliente>
-            <posicion_pedido>14</posicion_pedido>
+            <posicion_pedido>13</posicion_pedido>
             <referencia_factura/>
             <cantidad_entregada>30</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>14</posicion_factura>
+            <posicion_factura>13</posicion_factura>
             <precio_unitario>13.32</precio_unitario>
             <unidad_precio>Und.</unidad_precio>
             <cantidad_precio>1</cantidad_precio>
@@ -711,8 +667,8 @@
             </importes>
             <posicion_referenciada/>
         </posiciones>
-        <posiciones id="15">
-            <posicion_albaran>15</posicion_albaran>
+        <posiciones id="14">
+            <posicion_albaran>14</posicion_albaran>
             <fecha_albaran>
                 <anyo>2024</anyo>
                 <mes>10</mes>
@@ -726,6 +682,50 @@
             <codigo_partida/>
             <desc_partida/>
             <descripcion>Manguito incluido (EHF20)</descripcion>
+            <pedido>FV24-09620</pedido>
+            <pedido_cliente>FV24-09620</pedido_cliente>
+            <posicion_pedido>14</posicion_pedido>
+            <referencia_factura/>
+            <cantidad_entregada>57</cantidad_entregada>
+            <unidad>UN</unidad>
+            <posicion_factura>14</posicion_factura>
+            <precio_unitario></precio_unitario>
+            <unidad_precio>Und.</unidad_precio>
+            <cantidad_precio>1</cantidad_precio>
+            <observaciones/>
+            <importes>
+                <importe id="0">
+                    <tipo_importe>01</tipo_importe>
+                    <desc_tipo_importe>Neto</desc_tipo_importe>
+                    <valor_importe></valor_importe>
+                    <porcentaje>00.00</porcentaje>
+                    <signo_importe>01</signo_importe>
+                </importe>
+                <importe id="1">
+                    <tipo_importe>02</tipo_importe>
+                    <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
+                    <valor_importe>0.00</valor_importe>
+                    <porcentaje>0.00</porcentaje>
+                    <signo_importe>02</signo_importe>
+                </importe>
+            </importes>
+            <posicion_referenciada/>
+        </posiciones>
+        <posiciones id="15">
+            <posicion_albaran>15</posicion_albaran>
+            <fecha_albaran>
+                <anyo>2024</anyo>
+                <mes>10</mes>
+                <dia>13</dia>
+                <hora>0</hora>
+                <minuto>0</minuto>
+                <segundo>0</segundo>
+            </fecha_albaran>
+            <albaran></albaran>
+            <referencia>MEHF25</referencia>
+            <codigo_partida/>
+            <desc_partida/>
+            <descripcion>Manguito incluido (EHF25)</descripcion>
             <pedido>FV24-09620</pedido>
             <pedido_cliente>FV24-09620</pedido_cliente>
             <posicion_pedido>15</posicion_pedido>
@@ -766,61 +766,17 @@
                 <segundo>0</segundo>
             </fecha_albaran>
             <albaran></albaran>
-            <referencia>MEHF25</referencia>
-            <codigo_partida/>
-            <desc_partida/>
-            <descripcion>Manguito incluido (EHF25)</descripcion>
-            <pedido>FV24-09620</pedido>
-            <pedido_cliente>FV24-09620</pedido_cliente>
-            <posicion_pedido>16</posicion_pedido>
-            <referencia_factura/>
-            <cantidad_entregada>57</cantidad_entregada>
-            <unidad>UN</unidad>
-            <posicion_factura>16</posicion_factura>
-            <precio_unitario></precio_unitario>
-            <unidad_precio>Und.</unidad_precio>
-            <cantidad_precio>1</cantidad_precio>
-            <observaciones/>
-            <importes>
-                <importe id="0">
-                    <tipo_importe>01</tipo_importe>
-                    <desc_tipo_importe>Neto</desc_tipo_importe>
-                    <valor_importe></valor_importe>
-                    <porcentaje>00.00</porcentaje>
-                    <signo_importe>01</signo_importe>
-                </importe>
-                <importe id="1">
-                    <tipo_importe>02</tipo_importe>
-                    <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
-                    <valor_importe>0.00</valor_importe>
-                    <porcentaje>0.00</porcentaje>
-                    <signo_importe>02</signo_importe>
-                </importe>
-            </importes>
-            <posicion_referenciada/>
-        </posiciones>
-        <posiciones id="17">
-            <posicion_albaran>17</posicion_albaran>
-            <fecha_albaran>
-                <anyo>2024</anyo>
-                <mes>10</mes>
-                <dia>13</dia>
-                <hora>0</hora>
-                <minuto>0</minuto>
-                <segundo>0</segundo>
-            </fecha_albaran>
-            <albaran></albaran>
             <referencia>MEHF40</referencia>
             <codigo_partida/>
             <desc_partida/>
             <descripcion>Manguito incluido (EHF40)</descripcion>
             <pedido>FV24-09620</pedido>
             <pedido_cliente>FV24-09620</pedido_cliente>
-            <posicion_pedido>17</posicion_pedido>
+            <posicion_pedido>16</posicion_pedido>
             <referencia_factura/>
             <cantidad_entregada>10</cantidad_entregada>
             <unidad>UN</unidad>
-            <posicion_factura>17</posicion_factura>
+            <posicion_factura>16</posicion_factura>
             <precio_unitario></precio_unitario>
             <unidad_precio>Und.</unidad_precio>
             <cantidad_precio>1</cantidad_precio>

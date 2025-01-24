@@ -130,7 +130,7 @@
 <signo_importe>01</signo_importe>
 </importe>
 <importe id="1">
-<tipo_importe>02</tipo_importe>
+<tipo_importe>06</tipo_importe>
 <desc_tipo_importe>Descuento Comercial</desc_tipo_importe>
 <valor_importe>%productDiscountAmount%</valor_importe>
 <porcentaje>%productDiscountRate%</porcentaje>
