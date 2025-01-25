@@ -1,5 +1,5 @@
 .linesContainer {
-  height: 500px;
+  height: 200px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -61,82 +61,82 @@
 }
 
 .uniqueStripe {
-  top: 95px;
+  top: -40px;
   left: 4%;
 }
 
 .uniqueHubSpot {
-  top: 190px;
+  top: 40px;
   left: 8%;
 }
 
 .uniqueGmail {
-  top: 165px;
+  top: 25px;
   left: 16%;
 }
 
 .uniqueSharePoint {
-  top: 230px;
+  top: 60px;
   left: 22%;
 }
 
 .uniqueDrive {
-  bottom: 150px;
+  bottom: 20px;
   left: 4%;
 }
 
 .uniqueAgenciaTributaria {
-  bottom: 160px;
+  bottom: 30px;
   left: 14%;
 }
 
 .uniqueOdoo {
-  bottom: 20px;
+  bottom: -100px;
   left: 5%;
 }
 
 .uniqueOutlook {
-  bottom: 70px;
+  bottom: -50px;
   left: 11%;
 }
 
 .uniquePaypal {
-  top: 105px;
+  top: -55px;
   right: 0%;
 }
 
 .uniqueEspublico {
-  top: 190px;
+  top: 20px;
   right: 8%;
 }
 
 .uniqueWhatsapp {
-  top: 165px;
-  right: 18%;
+  top: 15px;
+  right: 16%;
 }
 
 .uniqueDropBox {
-  top: 250px;
-  right: 24%;
+  top: 75px;
+  right: 21%;
 }
 
 .uniqueExcel {
-  bottom: 150px;
+  bottom: 30px;
   right: 2%;
 }
 
 .uniqueHolded {
-  bottom: 140px;
-  right: 10%;
+  bottom: 0px;
+  right: 11%;
 }
 
 .uniqueOneDrive {
-  bottom: 70px;
+  bottom: -70px;
   right: 0%;
 }
 
 .uniqueA3 {
-  bottom: 30px;
+  bottom: -100px;
   right: 8%;
 }
 
@@ -147,67 +147,83 @@
   }
 
   .uniqueStripe {
-    top: 155px;
+    top: 0px;
+    left: 4%;
   }
 
   .uniqueHubSpot {
-    top: 205px;
+    top: 50px;
+    left: 8%;
   }
 
   .uniqueGmail {
-    top: 180px;
+    top: 25px;
+    left: 16%;
   }
 
   .uniqueSharePoint {
-    top: 230px;
+    top: 70px;
+    left: 22%;
   }
 
   .uniqueDrive {
-    bottom: 190px;
+    bottom: 50px;
+    left: 4%;
   }
 
   .uniqueAgenciaTributaria {
-    bottom: 200px;
+    bottom: 40px;
+    left: 14%;
   }
 
   .uniqueOdoo {
-    bottom: 120px;
+    bottom: -40px;
+    left: 3%;
   }
 
   .uniqueOutlook {
-    bottom: 145px;
+    bottom: -20px;
+    left: 11%;
   }
 
   .uniquePaypal {
-    top: 160px;
+    top: 5px;
+    right: 0%;
   }
 
   .uniqueEspublico {
-    top: 210px;
+    top: 40px;
+    right: 8%;
   }
 
   .uniqueWhatsapp {
-    top: 195px;
+    top: 55px;
+    right: 16%;
   }
 
   .uniqueDropBox {
-    top: 235px;
+    top: 95px;
+    right: 22%;
   }
 
   .uniqueExcel {
-    bottom: 180px;
+    bottom: 50px;
+    right: 2%;
   }
 
   .uniqueHolded {
-    bottom: 170px;
+    bottom: 30px;
+    right: 11%;
   }
 
   .uniqueOneDrive {
-    bottom: 115px;
+    bottom: -20px;
+    right: 0%;
   }
 
   .uniqueA3 {
-    bottom: 100px;
+    bottom: -30px;
+    right: 8%;
   }
 }
 
@@ -220,6 +236,10 @@
       width: 50px;
     }
   }
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
   .linesR {
     left: -2px;
     top: -168px;
@@ -228,76 +248,84 @@
     right: -2px;
     top: -168px;
   }
-
   .uniqueStripe {
-    /* top: 170px; */
+    top: 30px;
+    left: 4%;
   }
 
   .uniqueHubSpot {
-    /* top: 205px; */
+    top: 70px;
+    left: 8%;
   }
 
   .uniqueGmail {
-    /* top: 180px; */
-    left: 19%;
-  }
-
-  .uniqueSharePoint {
-    /* top: 230px; */
-    left: 24%;
-  }
-
-  .uniqueDrive {
-    /* bottom: 190px; */
-  }
-
-  .uniqueAgenciaTributaria {
-    /* bottom: 200px; */
-  }
-
-  .uniqueOdoo {
-    /* bottom: 140px; */
-  }
-
-  .uniqueOutlook {
-    /* bottom: 165px; */
+    top: 45px;
     left: 16%;
   }
 
+  .uniqueSharePoint {
+    top: 85px;
+    left: 22%;
+  }
+
+  .uniqueDrive {
+    bottom: 55px;
+    left: 4%;
+  }
+
+  .uniqueAgenciaTributaria {
+    bottom: 50px;
+    left: 15%;
+  }
+
+  .uniqueOdoo {
+    bottom: 0px;
+    left: 3%;
+  }
+
+  .uniqueOutlook {
+    bottom: 20px;
+    left: 11%;
+  }
+
   .uniquePaypal {
-    /* top: 175px; */
+    top: 20px;
+    right: 0%;
   }
 
   .uniqueEspublico {
-    /* top: 210px; */
-    right: 3%;
+    top: 60px;
+    right: 8%;
   }
 
   .uniqueWhatsapp {
-    /* top: 195px; */
-    right: 15%;
+    top: 55px;
+    right: 19%;
   }
 
   .uniqueDropBox {
-    /* top: 235px; */
+    top: 95px;
+    right: 24%;
   }
 
   .uniqueExcel {
-    /* bottom: 200px; */
+    bottom: 55px;
+    right: 2%;
   }
 
   .uniqueHolded {
-    /* bottom: 187px; */
-    right: 11%;
+    bottom: 55px;
+    right: 13%;
   }
 
   .uniqueOneDrive {
-    /* bottom: 155px; */
+    bottom: 20px;
+    right: 0%;
   }
 
   .uniqueA3 {
-    /* bottom: 130px; */
-    right: 12%;
+    bottom: 00px;
+    right: 8%;
   }
 }
 
@@ -305,7 +333,7 @@
   .logo {
     width: 30px;
   }
-  .uniqueStripe {
+  /* .uniqueStripe {
     top: 170px;
   }
 
@@ -368,5 +396,5 @@
 
   .uniqueA3 {
     bottom: 130px;
-  }
+  } */
 }
