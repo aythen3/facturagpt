@@ -180,6 +180,22 @@
     .error {
       color: #b40e1b;
     }
+    input:disabled,
+    select:disabled,
+    option:disabled,
+    input[readonly],
+    select[readonly],
+    option[readonly],
+    input::placeholder,
+    select::placeholder {
+      color: #757575; /* Color rojo para texto deshabilitado */
+    }
+
+    input,
+    select,
+    option {
+      color: 757575; /* Color verde para texto habilitado */
+    }
   }
 
   .inputWrapper {
@@ -344,6 +360,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-top: 5px;
   }
   .facturacion:hover {
     .facturacionButtonEdit {

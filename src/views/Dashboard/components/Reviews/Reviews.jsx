@@ -16,13 +16,13 @@ const Reviews = () => {
         Nuestros precios están diseño para brindar un valor excepcional para el
         mejor servicio de impuestos.
       </span> */}
-        <p className={styles.startsFrom}>
+        <div className={styles.startsFrom}>
           <div>
             <span>{t("plan")}</span>
             <span>{t("planType")}</span>
           </div>
           {t("priceSubTitle")}
-        </p>
+        </div>
         <div className={styles.price}>
           €3’99 <span>/{t("priceTime")}</span>
         </div>

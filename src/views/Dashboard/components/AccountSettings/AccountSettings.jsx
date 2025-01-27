@@ -123,10 +123,11 @@ const AccountSettings = () => {
   const [editingPhone, setEditingPhone] = useState(false);
   const [editingPayMethod, setEditingPayMethod] = useState(false);
 
-  const [facturacionCount, setFacturacionCount] = useState(1);
+  const [facturacionCount, setFacturacionCount] = useState(0);
   const [facturacionInputs, setFacturacionInputs] = useState([
     { value: "", editable: false },
   ]);
+  const [addingPhone, setAddingPhone] = useState(false);
 
   const handleEditToggle = (index) => {
     setFacturacionInputs((prev) =>
@@ -261,70 +262,92 @@ const AccountSettings = () => {
               </div>
             </label>
 
-            <EditableInput
-              label={t("fullName")}
-              value={userData?.nombre}
-              name="nombre"
-              onSave={handleChange}
-            />
+            <label>
+              <EditableInput
+                label={t("fullName")}
+                value={userData?.nombre}
+                name="nombre"
+                onSave={handleChange}
+              />
+            </label>
 
-            <EditableInput
-              label={t("email")}
-              value={userData?.email}
-              type="email"
-              name="email"
-              onSave={handleChange}
-            />
+            <label>
+              {" "}
+              <EditableInput
+                label={t("email")}
+                value={userData?.email}
+                type="email"
+                name="email"
+                onSave={handleChange}
+              />
+            </label>
 
-            <EditableInput
-              label={t("password")}
-              value={userData?.password}
-              type="password"
-              name="password"
-              verify={true}
-              onSave={handleChange}
-            />
+            <label>
+              <EditableInput
+                label={t("password")}
+                value={userData?.password}
+                type="password"
+                name="password"
+                verify={true}
+                onSave={handleChange}
+              />
+            </label>
 
             <label className={styles.label}>
               <div className={styles.row}>
                 <p>{t("phone")}</p>
                 <div
                   className={styles.button}
-                  onClick={() => setEditingPhone((prev) => !prev)}
+                  onClick={() => {
+                    setAddingPhone(true);
+                    setEditingPhone((prev) => !prev);
+                  }}
                 >
-                  {!editingPhone ? t("edit") : "Guardar"}
-                  {/* {t("edit")} */}
+                  {!addingPhone
+                    ? "Añadir"
+                    : !editingPhone
+                      ? t("edit")
+                      : "Guardar"}
                 </div>
               </div>
 
               <div className={styles.phoneContainer}>
-                <CustomDropdown
-                  editable={editingPhone}
-                  setSelectedOption={(option) =>
-                    handleChange({ name: "countryCode", newValue: option })
-                  }
-                  editing={editingPhone}
-                  hasObject={true}
-                  options={[
-                    { value: "+34", label: "Spain (+34)" },
-                    { value: "+1", label: "United States (+1)" },
-                    { value: "+44", label: "United Kingdom (+44)" },
-                    { value: "+52", label: "Mexico (+52)" },
-                    { value: "+91", label: "India (+91)" },
-                  ]}
-                  selectedOption={userData?.countryCode}
-                />
-                <input
-                  type="text"
-                  placeholder="000 000 000"
-                  className={styles.numberInput}
-                  name="phone"
-                  value={userData?.phone || ""}
-                  disabled={!editingPhone}
-                  onChange={(e) =>
-                    handleChange({ name: "phone", newValue: e.target.value })
-                  }
-                />
+                {addingPhone ? (
+                  <>
+                    <CustomDropdown
+                      editable={editingPhone}
+                      setSelectedOption={(option) =>
+                        handleChange({ name: "countryCode", newValue: option })
+                      }
+                      editing={editingPhone}
+                      hasObject={true}
+                      options={[
+                        { value: "+34", label: "Spain (+34)" },
+                        { value: "+1", label: "United States (+1)" },
+                        { value: "+44", label: "United Kingdom (+44)" },
+                        { value: "+52", label: "Mexico (+52)" },
+                        { value: "+91", label: "India (+91)" },
+                      ]}
+                      selectedOption={userData?.countryCode}
+                    />
+                    <input
+                      type="text"
+                      placeholder="000 000 000"
+                      className={styles.numberInput}
+                      name="phone"
+                      value={userData?.phone || ""}
+                      disabled={!editingPhone}
+                      onChange={(e) =>
+                        handleChange({
+                          name: "phone",
+                          newValue: e.target.value,
+                        })
+                      }
+                    />
+                  </>
+                ) : (
+                  <span>Desconocido</span>
+                )}
               </div>
             </label>
 
@@ -520,50 +543,55 @@ const AccountSettings = () => {
             </label>
 
             <label>
-              <div className={styles.row}>
-                <p>Detalles de facturación</p>
-                <div
-                  className={styles.button}
-                  type="button"
-                  id="addFacturacion"
-                  onClick={() => {
-                    setFacturacionCount(facturacionCount + 1);
-                    setFacturacionInputs([
-                      ...facturacionInputs,
-                      { value: "", editable: false },
-                    ]);
-                  }}
-                >
-                  Añadir
-                </div>
-              </div>
-              {[...Array(facturacionCount)].map((_, index) => (
-                <div className={styles.facturacion} key={index}>
-                  <input
-                    type="radio"
-                    name="facturacion"
-                    value={`facturacion${index}`}
-                    onChange={() =>
-                      handleChange({
-                        name: "facturacion",
-                        newValue: `facturacion${index}`,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    value={facturacionInputs[index]?.value || ""}
-                    disabled={!facturacionInputs[index]?.editable}
-                    onChange={(e) => handleInputChange(index, e.target.value)}
-                  />
+              <div className={styles.label} style={{ marginBottom: "20px" }}>
+                <div className={styles.row}>
+                  <p>Detalles de facturación</p>
                   <div
-                    className={styles.facturacionButtonEdit}
-                    onClick={() => handleEditToggle(index)}
+                    className={styles.button}
+                    type="button"
+                    id="addFacturacion"
+                    onClick={() => {
+                      setFacturacionCount(facturacionCount + 1);
+                      setFacturacionInputs([
+                        ...facturacionInputs,
+                        { value: "", editable: false },
+                      ]);
+                    }}
                   >
-                    {facturacionInputs[index]?.editable ? "Guardar" : "Editar"}
+                    Añadir
                   </div>
                 </div>
-              ))}
+                {[...Array(facturacionCount)].map((_, index) => (
+                  <div className={styles.facturacion} key={index}>
+                    <input
+                      type="radio"
+                      name="facturacion"
+                      value={`facturacion${index}`}
+                      onChange={() =>
+                        handleChange({
+                          name: "facturacion",
+                          newValue: `facturacion${index}`,
+                        })
+                      }
+                    />
+                    <input
+                      type="text"
+                      value={facturacionInputs[index]?.value || ""}
+                      disabled={!facturacionInputs[index]?.editable}
+                      onChange={(e) => handleInputChange(index, e.target.value)}
+                      placeholder="Email adress, Zip code / Postcode, Country of residence"
+                    />
+                    <div
+                      className={styles.facturacionButtonEdit}
+                      onClick={() => handleEditToggle(index)}
+                    >
+                      {facturacionInputs[index]?.editable
+                        ? "Guardar"
+                        : "Editar"}
+                    </div>
+                  </div>
+                ))}
+              </div>
               <div className={styles.label}>
                 <div className={styles.headerLabel}>
                   <span>info@gmail.com</span>
@@ -603,23 +631,27 @@ const AccountSettings = () => {
               </div>
             </label>
 
-            <EditableInput
-              placeholder="A12345678"
-              label={"Número Fiscal"}
-              initialValue={user?.fiscalNumber || ""}
-              value={userData?.fiscalNumber}
-              name="fiscalNumber"
-              onSave={handleChange}
-            />
+            <label>
+              <EditableInput
+                placeholder="A12345678"
+                label={"Número Fiscal"}
+                initialValue={user?.fiscalNumber || ""}
+                value={userData?.fiscalNumber}
+                name="fiscalNumber"
+                onSave={handleChange}
+              />
+            </label>
 
-            <EditableInput
-              placeholder="www.web.com"
-              label={"Web o dominio corporativo"}
-              initialValue={user?.userDomain || ""}
-              value={userData?.userDomain}
-              name="userDomain"
-              onSave={handleChange}
-            />
+            <label>
+              <EditableInput
+                placeholder="www.web.com"
+                label={"Web o dominio corporativo"}
+                initialValue={user?.userDomain || ""}
+                value={userData?.userDomain}
+                name="userDomain"
+                onSave={handleChange}
+              />
+            </label>
 
             <label>
               <div className={styles.row}>

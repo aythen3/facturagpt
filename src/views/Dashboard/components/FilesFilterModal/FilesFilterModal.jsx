@@ -72,15 +72,15 @@ const FilesFilterModal = ({ onClose, handleApplyFilters, isFilterOpen }) => {
     handleApplyFilters(filters);
 
     // Reiniciar estados
-    setKeyWord("");
-    setSelectedCategory("");
-    setAllFiles(false);
-    setSelectedTypes([]);
-    setMinValue("");
-    setMaxValue("");
-    setSelectedCurrency("EUR");
-    setSelectedTags([]);
-    setTag("");
+    // setKeyWord("");
+    // setSelectedCategory("");
+    // setAllFiles(false);
+    // setSelectedTypes([]);
+    // setMinValue("");
+    // setMaxValue("");
+    // setSelectedCurrency("EUR");
+    // setSelectedTags([]);
+    // setTag("");
 
     handleClose();
   };

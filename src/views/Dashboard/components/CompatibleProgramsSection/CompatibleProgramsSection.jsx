@@ -118,22 +118,22 @@ import { ReactComponent as AgenciaTributariaCircle } from "../../assets/agenciaT
 const CompatibleProgramsSection = () => {
   return (
     <div className={styles.compatibleProgramsSection}>
-      <ExcelCircle />
-      <DriveCircle />
-      <GmailCircle />
-      <OneDriveCircle />
-      <OutlookCircle />
-      <SharePointCircle />
-      <WhatsappCircle />
-      <StripeCircle />
-      <PaypalCircle />
-      <A3Circle />
-      <OdooCircle />
-      <EsPublicoCircle />
-      <HoldedCircle />
-      <DropBoxCircle />
-      <HubSpotCircle />
-      <AgenciaTributariaCircle />
+      <ExcelCircle className={styles.icon} />
+      <DriveCircle className={styles.icon} />
+      <GmailCircle className={styles.icon} />
+      <OneDriveCircle className={styles.icon} />
+      <OutlookCircle className={styles.icon} />
+      <SharePointCircle className={styles.icon} />
+      <WhatsappCircle className={styles.icon} />
+      <StripeCircle className={styles.icon} />
+      <PaypalCircle className={styles.icon} />
+      <A3Circle className={styles.icon} />
+      <OdooCircle className={styles.icon} />
+      <EsPublicoCircle className={styles.icon} />
+      <HoldedCircle className={styles.icon} />
+      <DropBoxCircle className={styles.icon} />
+      <HubSpotCircle className={styles.icon} />
+      <AgenciaTributariaCircle className={styles.icon} />
     </div>
   );
 };
