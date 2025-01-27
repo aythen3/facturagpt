@@ -20,6 +20,12 @@
   flex-wrap: wrap;
   justify-content: center;
   overflow-y: scroll;
+  margin-top: 40px;
+
+  .icon {
+    height: 60px;
+    width: 60px;
+  }
 }
 @media (width <= 590px) {
   .compatibleProgramsSection {

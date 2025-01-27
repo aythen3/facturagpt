@@ -19,7 +19,7 @@ const Navbar = () => {
   console.log(user);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname]); // Agrega user.nombre como dependencia
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -98,18 +98,20 @@ const Navbar = () => {
             />
           </div>
         </div>
-        <button
-          className={`${styles.button} ${styles.buttonLogIn}`}
-          onClick={() => navigate("/login")}
-        >
-          {t("logIn")}
-        </button>
-        <button
-          className={styles.button}
-          onClick={() => navigate("/freetrial")}
-        >
-          {t("button")}
-        </button>
+        <div className={styles.buttonContainer}>
+          <button
+            className={`${styles.button} ${styles.buttonLogIn}`}
+            onClick={() => navigate("/login")}
+          >
+            {t("logIn")}
+          </button>
+          <button
+            className={styles.button}
+            onClick={() => navigate("/freetrial")}
+          >
+            {t("button")}
+          </button>
+        </div>
       </div>
     </nav>
   );

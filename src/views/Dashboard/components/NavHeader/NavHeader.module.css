@@ -46,7 +46,7 @@
   /* font-size: 66px; */
   font-size: clamp(20px, 2.5vw, 11vw); /* Tamaño escalable */
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
   background: linear-gradient(90deg, #00ffc3 0%, #222222 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -103,7 +103,7 @@
 .navHeaderDescription {
   font-weight: 500;
   font-size: clamp(12px, 2vw, 18px);
-  color: #b8b8b8;
+  color: #676767;
   display: block;
   /* max-width: 728px; */
   width: 100%;

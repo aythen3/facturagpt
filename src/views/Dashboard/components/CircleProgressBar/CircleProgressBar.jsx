@@ -52,7 +52,7 @@ const CircleProgressBar = () => {
                 />
               </svg>
             </div>
-            <div>{skill.label}</div>
+            <div className={styles.label}>{skill.label}</div>
           </div>
         ))}
       </div>
