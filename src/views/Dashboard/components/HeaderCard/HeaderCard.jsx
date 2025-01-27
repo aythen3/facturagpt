@@ -1,16 +1,17 @@
 import React from "react";
 import closeMenu from "../../assets/closeMenu.svg";
 import styles from "./HeaderCard.module.css";
-
-const HeaderCard = ({ title, setShowNewTagModal }) => {
+import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
+const HeaderCard = ({ title, children }) => {
   return (
     <header className={styles.newTagHeader}>
-      <h3>{title}</h3>
-      <img
-        src={closeMenu}
-        alt="Cerrar menú"
-        onClick={() => setShowNewTagModal(false)}
-      />
+      <div className={styles.leftSide}>
+        <div className={styles.iconContainer}>
+          <Arrow />
+        </div>
+        <h3>{title}</h3>
+      </div>
+      <div className={styles.rightSide}>{children}</div>
     </header>
   );
 };

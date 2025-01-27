@@ -9,9 +9,10 @@ const HeaderFormsComponent = ({
   selectedEmailConnection = "ejemplo@email.com",
   setSelectedEmailConnection = () => {},
   placeholder = "Añade una cuenta de correo",
+  headerStyle = {},
 }) => {
   return (
-    <div className={styles.header}>
+    <div className={styles.header} style={headerStyle}>
       <div className={styles.headerMail}>
         <div className={styles.iconContainer}>{icon}</div>
         <CustomDropdown

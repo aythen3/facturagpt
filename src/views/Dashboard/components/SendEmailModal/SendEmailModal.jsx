@@ -12,6 +12,17 @@ import json from "../../assets/jsonIcon.svg";
 import adjuntar from "../../assets/share.svg";
 import minus from "../../assets/minus.svg";
 import closeMenu from "../../assets/closeMenu.svg";
+
+import { ReactComponent as FolderIcon } from "../../assets/folderIcon.svg";
+import { ReactComponent as FileIcon } from "../../assets/fileIcon.svg";
+import { ReactComponent as CodeIcon } from "../../assets/codeIcon.svg";
+import { ReactComponent as ImageIcon } from "../../assets/imageIcon.svg";
+import { ReactComponent as ArrowWhite } from "../../assets/ArrowLeftWhite.svg";
+
+import facturaEjemplo from "../../assets/facturaEjemplo.png";
+import Button from "../Button/Button";
+import HeaderFormsComponent from "../HeadersFormsComponent/HeaderFormsComponent";
+import { ReactComponent as DropboxIcon } from "../../assets/dropbox-icon.svg";
 const SendEmailModal = ({
   mailModal,
   setMailModal,
@@ -91,51 +102,84 @@ const SendEmailModal = ({
         className={`${styles.sendEmailModal} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
         <header className={styles.sendEmailHeader}>
+          <Button
+            headerStyle={{
+              padding: "4px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            action={handleCloseNewClient}
+          >
+            <ArrowWhite
+              style={{
+                height: "15px",
+                width: "15px",
+              }}
+            />
+          </Button>
           <h2>Send Email</h2>
           <div className={styles.options}>
-            <span>coolemail@gmail.com</span>
-            <select>
-              <option value="">Bandejas</option>
-              <option value="">Bandejas</option>
-              <option value="">Bandejas</option>
-            </select>
-            <img src={closeMenu} onClick={handleCloseNewClient} />
+            <Button action={handleCloseNewClient} type="white">
+              Cancelar
+            </Button>
+            <Button>Enviar</Button>
+            <Button>Aceptar</Button>
           </div>
         </header>
         <div className={styles.sendEmailContent}>
+          <HeaderFormsComponent
+            placeholder="Añade una cuenta de Dropbox"
+            // selectedEmailConnection={configuration.selectedDropboxConnection}
+            // setSelectedEmailConnection={(value) =>
+            //   handleConfigurationChange("selectedDropboxConnection", value)
+            // }
+            emailConnections={[
+              "ejemplo@gmail.com",
+              "ejemplo2@gmail.com",
+              "ejemplo3@gmail.com",
+            ]}
+            action={() => setShowAddConnection(true)}
+            icon={<DropboxIcon />}
+            headerStyle={{
+              flexDirection: "column",
+              alignItems: "end",
+            }}
+          />
           <div className={styles.infOptions}>
             <input type="text" placeholder="Para: [email], ..." />
             <input type="text" placeholder="Asunto: [document_title]" />
             <Toolbar />
           </div>
         </div>
-        <div style={{ borderBottom: "1px solid #e3e3e3" }}>
+        <div className={styles.addFileEmail}>
           <div className={styles.attach}>
-            <div>
-              <img src={adjuntar} />
-            </div>
-            <p>Añadir Adjunto</p>
+            <img src={adjuntar} />
           </div>
-          {files.map((file) => (
-            <div className={styles.file}>
-              <div className={styles.fileTitle}>
-                <div>
-                  <img src={file.img} />
-                </div>
-                <p>{file.title}</p>
-              </div>
-              <div className={styles.sizeFile}>
-                <p>{file.size}</p>
-                <span>
-                  <img src={minus} alt="" />
-                </span>
-              </div>
+          <div className={styles.file}>
+            <div className={styles.addFileRow}>
+              <div style={{ color: "#1F184B" }}>Añadir Adjunto</div>
+              <Button type="white">Seleccionar Documento</Button>
             </div>
-          ))}
-        </div>
-        <div className={styles.btnContainerFiles}>
-          <button className={styles.btnCancel}>Cancel</button>
-          <button className={styles.btnSend}>Enviar</button>
+            <div className={styles.addFileRow}>
+              <div className={styles.fileIcon}>
+                <FolderIcon />
+                <FileIcon />
+                <CodeIcon />
+                <ImageIcon />
+                <p className={styles.titleFile}>Titulo del archivo</p>
+              </div>
+              <span className={styles.weight}>
+                557 KB
+                <div className={styles.delete}>
+                  <img src={minus} alt="Icon" />
+                </div>
+              </span>
+            </div>
+            <div>
+              <img src={facturaEjemplo} />
+            </div>
+          </div>
         </div>
       </div>
     </>

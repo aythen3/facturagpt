@@ -7,7 +7,8 @@ import curvedLine from "../../assets/S3/curvedLine.svg";
 import CustomCheckboxWithLabel from "../CustomCheckboxWithLabel/CustomCheckboxWithLabel";
 import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
 import blackChevron from "../../assets/blackChevron.svg";
-
+import HeaderCard from "../HeaderCard/HeaderCard";
+import Button from "../Button/Button";
 const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
   const { user } = useSelector((state) => state.user);
   const { userFiles } = useSelector((state) => state.scaleway);
@@ -75,6 +76,10 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
                 currentPath === `${user?.id}/` ? "#F4F4F4" : "#fff",
             }}
             className={styles.folderInnerContainer}
+            onClick={() => {
+              toggleFolder(currentPath);
+              console.log(`currentPath ${currentPath}`);
+            }}
           >
             {subFolders &&
               currentPath !== `${user?.id}/` &&
@@ -105,7 +110,6 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
                 marginLeft: depth * 40,
               }}
               className={styles.folderHeader}
-              onClick={() => toggleFolder(currentPath)}
             >
               {depth > 0 && (
                 <img
@@ -157,20 +161,37 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
         className={`${styles.modalContent} ${isClosing ? styles.scaleDown : ""}`}
       >
         {/* Header */}
-        <div className={styles.headerContainer}>
+        {/* <div className={styles.headerContainer}>
           <div className={styles.headerLeft}>
             <h2>Seleccionar Ubicación</h2>
           </div>
           <div onClick={handleClose} className={styles.closeIcon}>
             <img src={closeGray} alt="closeGray" />
           </div>
-        </div>
+        </div> */}
+        <HeaderCard title={"Seleccionar Ubicación"}>
+          <Button type="white" action={handleClose}>
+            Cancelar
+          </Button>
+          <Button>Guardar</Button>
+        </HeaderCard>
         {/* Content */}
         <div className={styles.contentContainer}>
-          {renderFolders(folderStructure)}
+          <div className={styles.content}>
+            <div
+              onClick={() => {
+                console.log("Creating new folder on", selectedLocation);
+                setShowCreateFolderModal(true);
+              }}
+              className={styles.newFolderButton}
+            >
+              Nueva Carpeta
+            </div>
+            {renderFolders(folderStructure)}
+          </div>
         </div>
         {/* Buttons */}
-        <div className={styles.footerContainer}>
+        {/* <div className={styles.footerContainer}>
           <div
             onClick={() => {
               console.log("Creating new folder on", selectedLocation);
@@ -191,7 +212,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
           >
             Seleccionar
           </div>
-        </div>
+        </div> */}
       </div>
       {showCreateFolderModal && (
         <CreateFolderModal
