@@ -23,6 +23,7 @@ import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
+import PanelIniAutomate from "../Automate/panelAutomate/IniAutomate";
 import { useSelector } from "react-redux";
 import UpgradePlanWrapper from "../../screens/UpgradePlan/UpgradePlan";
 import { Elements } from "@stripe/react-stripe-js";
@@ -177,8 +178,8 @@ console.log('languageFromPath', fromPath)
                 className={styles.profileContainer}
               >
                 <div className={styles.profileText}>
-                  <p>{user?.nombre}</p>
-                  <span>{user?.role}</span>
+                  <p>{user?.nombre || 'Not found'}</p>
+                  <span>{user?.role || 'Not found'}</span>
                 </div>
                 {user?.profileImage ? (
                   <img
@@ -263,6 +264,12 @@ console.log('languageFromPath', fromPath)
               close={handleCloseNewClient}
               type={typeContentAutomate}
               isAnimating={isAnimating}
+            />
+          )}
+
+          {true && (
+            <PanelIniAutomate 
+            
             />
           )}
         </div>
