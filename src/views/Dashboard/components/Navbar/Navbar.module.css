@@ -39,7 +39,7 @@
 .navLinks {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   align-items: center;
@@ -54,6 +54,12 @@
 
 .navLinks li:hover {
   color: #ececec;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .button {

@@ -6,7 +6,6 @@
   width: 100%;
   font-family: "Inter", sans-serif;
   gap: 8.5px;
-  margin-bottom: 20px;
   padding-bottom: 10px;
 }
 
@@ -62,9 +61,26 @@
     border-radius: 5px;
     padding: 0px 9px;
   }
-}
-input[readonly] {
-  background-color: transparent;
+
+  input:disabled,
+  select:disabled,
+  option:disabled,
+  input[readonly],
+  select[readonly],
+  option[readonly],
+  input::placeholder,
+  select::placeholder {
+    color: #757575; /* Color rojo para texto deshabilitado */
+  }
+
+  input,
+  select,
+  option {
+    color: 757575; /* Color verde para texto habilitado */
+  }
+  input[readonly] {
+    background-color: transparent;
+  }
 }
 
 .verify {

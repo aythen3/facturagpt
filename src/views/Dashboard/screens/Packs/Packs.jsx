@@ -140,13 +140,6 @@ const Packs = () => {
         <TagsLanding />
       </div>
 
-      <CircleProgressBar />
-
-      <section className={styles.banner}>
-        <h3 className={styles.bannerTitle}>{t("reduces1")}</h3>
-        <h3 className={styles.bannerTitle}>{t("reduces2")}</h3>
-        <h3 className={styles.bannerTitle}>{t("reduces3")}</h3>
-      </section>
       <section
         style={{
           display: "flex",
@@ -195,7 +188,7 @@ const Packs = () => {
 
       <section className={styles.extensionsContainer}>
         <div className={styles.extensionsTitle}>
-          <img className={styles.flag} src={flag} alt="flag" />
+          {/* <img className={styles.flag} src={flag} alt="flag" /> */}
           <h2>{t("formatsTitle")}</h2>
         </div>
         <span className={styles.regular08}>{t("formatsDescription")}</span>
@@ -219,15 +212,26 @@ const Packs = () => {
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
+            gap: "20px",
           }}
         >
           <div className={styles.extensionsTitle}>
-            <img className={styles.heart} src={heart} alt="heart" />
+            {/* <img className={styles.heart} src={heart} alt="heart" /> */}
             <h2>{t("programsTitle")}</h2>
           </div>
-          <span className={styles.regular08}>{t("programsDescription")}</span>
+          <div>
+            <p className={styles.regular08}>{t("programsDescription1")}</p>
+            <p className={styles.regular08}>{t("programsDescription2")}</p>
+          </div>
           <CompatibleProgramsSection />
         </div>
+      </section>
+      <CircleProgressBar />
+
+      <section className={styles.banner}>
+        <h3 className={styles.bannerTitle}>{t("reduces1")}</h3>
+        <h3 className={styles.bannerTitle}>{t("reduces2")}</h3>
+        <h3 className={styles.bannerTitle}>{t("reduces3")}</h3>
       </section>
       <Reviews />
     </div>

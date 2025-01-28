@@ -95,6 +95,7 @@
   justify-content: space-around;
   align-items: center;
   text-align: center;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
@@ -129,10 +130,9 @@
   color: #b8b8b8;
   font-size: clamp(17px, 5vw, 20px) !important; /* Ajuste dinámico con clamp */
   font-weight: 400;
-  /* margin-top: 33px; */
-  max-width: 65%;
   text-align: center;
   padding: 0 20px;
+  margin: 0;
 }
 @media (max-width: 1000px) {
   .regular08 {
@@ -179,7 +179,7 @@
 
   h2 {
     margin: 0;
-    font-weight: 500;
+    font-weight: 400;
     font-size: clamp(
       20px,
       5vw,
@@ -284,7 +284,7 @@
   font-size: clamp(16px, 4vw, 22px); /* Ajuste dinámico del tamaño de texto */
   font-weight: 400;
   color: #18181b;
-  font-size: clamp(18px, 5vw, 24px); /* Ajuste dinámico del tamaño de título */
+  font-size: clamp(15px, 5vw, 19px); /* Ajuste dinámico del tamaño de título */
   margin: 0;
 }
 

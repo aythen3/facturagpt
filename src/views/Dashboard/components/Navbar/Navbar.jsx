@@ -19,7 +19,7 @@ const Navbar = () => {
   // console.log(user);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname]); // Agrega user.nombre como dependencia
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -133,6 +133,7 @@ const Navbar = () => {
               )}
             </div>
         )}
+
       </div>
     </nav>
   );
