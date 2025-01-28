@@ -183,67 +183,9 @@ const UpgradePlan = ({ onClose }) => {
         {/* ================ CONTENT ================ */}
         <div className={styles.content}>
           {/* ================ LEFT ================ */}
-          <div
-            style={{ borderRight: "1px solid #E3E3E3", paddingBottom: "24px" }}
-            className={styles.leftContainer}
-          >
-            <h2 className={styles.upgradePlanTitle}>Froma de pago</h2>
-            <div
-              style={{ marginTop: "-24px", marginBottom: "12px" }}
-              className={styles.spacedBetween}
-            >
-              <span>Google Pay, Visa terminada en 2069</span>
-            </div>
-            <div className={styles.paymentMethodsContainer}>
-              {currentPaymentMethods?.map((method, index) => (
-                <PaymentSingleOption
-                  key={index}
-                  {...method}
-                  paymentMethod={selectedCurrentPaymentMethond}
-                  setPaymentMethod={setSelectedCurrentPaymentMethod}
-                />
-              ))}
-            </div>
-            <strong
-              onClick={() => setSelectedModal("upgradePlan")}
-              className={styles.addPaymentMethod}
-            >
-              Añadir metodo de pago
-            </strong>
-            <h2 className={styles.upgradePlanTitle}>Detalles de facturación</h2>
-            <div className={styles.paymentDetailsItem}>
-              {paymentDetailsData ? (
-                <img
-                  style={{ cursor: "pointer" }}
-                  src={checkedCircle}
-                  alt="checkedCircle"
-                />
-              ) : (
-                <img
-                  style={{ cursor: "pointer" }}
-                  src={uncheckedCircle}
-                  alt="uncheckedCircle"
-                />
-              )}
-              <div className={styles.paymentDetailsContainer}>
-                <div>
-                  Email adress, Zip code / Postcode, Country of residence
-                </div>
-                <strong
-                  style={{ marginTop: "-4px" }}
-                  className={styles.addPaymentMethod}
-                >
-                  Editar
-                </strong>
-              </div>
-            </div>
-            <strong className={styles.addPaymentMethod}>
-              Añadir detalles de facturación
-            </strong>
-          </div>
-          {/* ================ RIGHT ================ */}
-          <div style={{ borderLeft: "none" }} className={styles.rightContainer}>
+          <div style={{ borderLeft: "none" }} className={styles.leftContainer}>
             <span className={styles.lightText}>
+              e
               La facturación se realiza el primer día de cada mes, según los
               documentos reconocidos durante el mes anterior
             </span>
@@ -338,6 +280,66 @@ const UpgradePlan = ({ onClose }) => {
               aplicarse.
             </p>
           </div>
+          {/* ================ RIGHT ================ */}
+          <div
+            style={{ borderRight: "1px solid #E3E3E3", paddingBottom: "24px" }}
+            className={styles.leftContainer}
+          >
+            <h2 className={styles.upgradePlanTitle}>Froma de pago</h2>
+            <div
+              style={{ marginTop: "-24px", marginBottom: "12px" }}
+              className={styles.spacedBetween}
+            >
+              <span>Google Pay, Visa terminada en 2069</span>
+            </div>
+            <div className={styles.paymentMethodsContainer}>
+              {currentPaymentMethods?.map((method, index) => (
+                <PaymentSingleOption
+                  key={index}
+                  {...method}
+                  paymentMethod={selectedCurrentPaymentMethond}
+                  setPaymentMethod={setSelectedCurrentPaymentMethod}
+                />
+              ))}
+            </div>
+            <strong
+              onClick={() => setSelectedModal("upgradePlan")}
+              className={styles.addPaymentMethod}
+            >
+              Añadir metodo de pago
+            </strong>
+            <h2 className={styles.upgradePlanTitle}>Detalles de facturación</h2>
+            <div className={styles.paymentDetailsItem}>
+              {paymentDetailsData ? (
+                <img
+                  style={{ cursor: "pointer" }}
+                  src={checkedCircle}
+                  alt="checkedCircle"
+                />
+              ) : (
+                <img
+                  style={{ cursor: "pointer" }}
+                  src={uncheckedCircle}
+                  alt="uncheckedCircle"
+                />
+              )}
+              <div className={styles.paymentDetailsContainer}>
+                <div>
+                  Email adress, Zip code / Postcode, Country of residence
+                </div>
+                <strong
+                  style={{ marginTop: "-4px" }}
+                  className={styles.addPaymentMethod}
+                >
+                  Editar
+                </strong>
+              </div>
+            </div>
+            <strong className={styles.addPaymentMethod}>
+              Añadir detalles de facturación
+            </strong>
+          </div>
+       
         </div>
       </div>
     );
@@ -361,100 +363,6 @@ const UpgradePlan = ({ onClose }) => {
         {/* ================ CONTENT ================ */}
         <div className={styles.content}>
           {/* ================ LEFT ================ */}
-          <div className={styles.leftContainer}>
-            <h2 className={styles.upgradePlanTitle}>Pago</h2>
-            <InputWithTitle
-              title="Número de tarjeta"
-              value={cardNumber}
-              onChange={(e) => {
-                let digits = e.target.value.replace(/\D/g, "");
-                digits = digits.slice(0, 16);
-                const chunks = digits.match(/.{1,4}/g) || [];
-                const formatted = chunks.join(" ");
-                setCardNumber(formatted);
-              }}
-              onKeyDown={(e) => {
-                if (["e", "+", "-"].includes(e.key)) {
-                  e.preventDefault();
-                }
-              }}
-              placeholder="1234 1234 1234 1234"
-              type="text"
-              rightElement={
-                <img
-                  style={{ width: "21px", height: "14px" }}
-                  src={grayCard}
-                  alt="grayCard"
-                />
-              }
-            />
-
-            <div className={styles.fullWidth}>
-              <InputWithTitle
-                title={"Fecha de expiración"}
-                value={expirationDate}
-                onChange={handleExpirationChange}
-                maxLength="5"
-                placeholder="MM/AA"
-              />
-              <InputWithTitle
-                title={"Codigo de seguridad"}
-                value={securityCode}
-                type="password"
-                maxLength="3"
-                placeholder="CVC"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value.length <= 3) {
-                    setSecurityCode(value);
-                  }
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "e" || e.key === "+" || e.key === "-") {
-                    e.preventDefault();
-                  }
-                }}
-              />
-            </div>
-            <CheckboxWithText
-              state={savePaymentInfo}
-              setState={setSavePaymentInfo}
-              text={"Guardar información de pago"}
-            />
-            <h1 className={styles.upgradePlanTitle}>Detalles de Facturación</h1>
-            <div className={styles.emailContainer}>
-              <span>{user?.facturationEmail || user?.email || ""}</span>
-              <div className={styles.changeEmail}>Cambiar</div>
-            </div>
-            <InputWithTitle
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Dirección de correo"
-            />
-            <InputWithTitle
-              value={areaCode}
-              type="number"
-              onChange={(e) => setAreaCode(e.target.value)}
-              placeholder="ZIP / Código postal"
-            />
-            <InputWithTitle
-              title={"Pais de residencia"}
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              placeholder="España"
-            />
-            <button
-              onClick={() => {
-                console.log("Saving card data..");
-                handleSaveCardData();
-                // setShowUpdatedSuccessfully(true);
-              }}
-              className={styles.upgradePlanButton}
-            >
-              <span>Guardar datos de facturación</span>
-            </button>
-          </div>
-          {/* ================ RIGHT ================ */}
           <div className={styles.rightContainer}>
             <span className={styles.lightText}>
               La facturación se realiza el primer día de cada mes, según los
@@ -568,6 +476,101 @@ const UpgradePlan = ({ onClose }) => {
               aplicarse.
             </p>
           </div>
+          {/* ================ RIGHT ================ */}
+          <div className={styles.leftContainer}>
+            <h2 className={styles.upgradePlanTitle}>Pago</h2>
+            <InputWithTitle
+              title="Número de tarjeta"
+              value={cardNumber}
+              onChange={(e) => {
+                let digits = e.target.value.replace(/\D/g, "");
+                digits = digits.slice(0, 16);
+                const chunks = digits.match(/.{1,4}/g) || [];
+                const formatted = chunks.join(" ");
+                setCardNumber(formatted);
+              }}
+              onKeyDown={(e) => {
+                if (["e", "+", "-"].includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              placeholder="1234 1234 1234 1234"
+              type="text"
+              rightElement={
+                <img
+                  style={{ width: "21px", height: "14px" }}
+                  src={grayCard}
+                  alt="grayCard"
+                />
+              }
+            />
+
+            <div className={styles.fullWidth}>
+              <InputWithTitle
+                title={"Fecha de expiración"}
+                value={expirationDate}
+                onChange={handleExpirationChange}
+                maxLength="5"
+                placeholder="MM/AA"
+              />
+              <InputWithTitle
+                title={"Codigo de seguridad"}
+                value={securityCode}
+                type="password"
+                maxLength="3"
+                placeholder="CVC"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value.length <= 3) {
+                    setSecurityCode(value);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "e" || e.key === "+" || e.key === "-") {
+                    e.preventDefault();
+                  }
+                }}
+              />
+            </div>
+            <CheckboxWithText
+              state={savePaymentInfo}
+              setState={setSavePaymentInfo}
+              text={"Guardar información de pago"}
+            />
+            <h1 className={styles.upgradePlanTitle}>Detalles de Facturación</h1>
+            <div className={styles.emailContainer}>
+              <span>{user?.facturationEmail || user?.email || ""}</span>
+              <div className={styles.changeEmail}>Cambiar</div>
+            </div>
+            <InputWithTitle
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Dirección de correo"
+            />
+            <InputWithTitle
+              value={areaCode}
+              type="number"
+              onChange={(e) => setAreaCode(e.target.value)}
+              placeholder="ZIP / Código postal"
+            />
+            <InputWithTitle
+              title={"Pais de residencia"}
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              placeholder="España"
+            />
+            <button
+              onClick={() => {
+                console.log("Saving card data..");
+                handleSaveCardData();
+                // setShowUpdatedSuccessfully(true);
+              }}
+              className={styles.upgradePlanButton}
+            >
+              <span>Guardar datos de facturación</span>
+            </button>
+          </div>
+         
         </div>
       </div>
     );

@@ -37,7 +37,7 @@ const Navbar = () => {
 
 
   const handleProfileClick = () => {
-    navigate('/panel')
+    navigate('/admin/chat')
   }
 
   return (

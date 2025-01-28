@@ -12,19 +12,21 @@ import creditCard from "../../assets/creditCardIcon.png";
 import spanish_flag from "../../assets/spain_flag.svg";
 import english_flag from "../../assets/english_flag.svg";
 import { useTranslation } from "react-i18next";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import SeeHistory from "../SeeHistory/SeeHistory";
 import { useDispatch, useSelector } from "react-redux";
 import EditableInput from "./EditableInput/EditableInput";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { updateUser } from "../../../../actions/user";
 import { uploadFiles } from "../../../../actions/scaleway";
+import { useNavigate } from "react-router-dom";
 
 const AccountSettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation("accountSetting");
   const { user, updatingUserLoading } = useSelector((state) => state.user);
-  const { logout } = useAuth0();
+  // const { logout } = useAuth0();
+  const navigate = useNavigate()
   const [userData, setUserData] = useState();
 
   const corporativeFileInputRef = useRef(null);
@@ -32,6 +34,13 @@ const AccountSettings = () => {
   const profileFileInputRef = useRef(null);
 
   const [isReadOnly, setIsReadOnly] = useState(false);
+
+
+  const logout = () => {
+    localStorage.clear()
+    // navigate('/login')
+    window.href = '/login'
+  }
 
   const handleAddImageClick = (type) => {
     if (type === "corporativeLogos" && corporativeFileInputRef.current) {

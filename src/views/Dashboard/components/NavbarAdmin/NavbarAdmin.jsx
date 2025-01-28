@@ -13,9 +13,10 @@ import UpgradePlan from "../../screens/UpgradePlan/UpgradePlan";
 import time from "../../assets/time.svg";
 import profileIcon from "../../assets/profileIcon.svg";
 import addBlack from "../../assets/addBlack.svg";
-import addPlus from "../../assets/addPlus.svg";
+import { ReactComponent as AddPlus } from "../../assets/addPlus.svg";
 import addGreen from "../../assets/addGreen.svg";
-import chatIcon from "../../assets/chatIcon.svg";
+// import chatIcon from "../../assets/chatIcon.svg";
+import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
 import boxIcon from "../../assets/boxIcon.svg";
 import dotsNotification from "../../assets/dotsNotification.svg";
 import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
@@ -32,6 +33,13 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 const NavbarAdmin = () => {
+  const { pathname } = window.location;
+
+  const fromPath = pathname.split("/")[2];
+
+
+console.log('languageFromPath', fromPath)
+
   const { user } = useSelector((state) => state.user);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -45,6 +53,8 @@ const NavbarAdmin = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [numNotification, setNumNotification] = useState(0);
+  
 
   // =======================
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
@@ -91,84 +101,108 @@ const NavbarAdmin = () => {
       <Elements stripe={stripePromise}>
         <div className={styles.navbarAdmin}>
           <div className={styles.navbarAdminIcons}>
-            <a href={user ? "/panel" : "/"}>
+            <a href={user ? "/admin/chat" : "/"}>
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
 
-            <div className={styles.hiddenMobile}>
-              <button
-                onClick={() => setShowPlusModal(true)}
-                className={styles.plus}
-              >
-                {t("buttonGetPlus")} <img src={star} alt="Icon" />
-              </button>
-              <div className={styles.profile}>
-                {/* <a href="/clients">
+          <div className={styles.hiddenMobile}>
+            <button
+              onClick={() => setShowPlusModal(true)}
+              className={styles.plus}
+            >
+              {t("buttonGetPlus")} <img src={star} alt="Icon" />
+            </button>
+            <div className={styles.profile}>
+              {/* <a href="/clients">
               <img src={addBlack} alt="Icon" />
             </a> */}
-                {!isOpen ? (
-                  <div>
-                    <img
-                      src={addPlus}
-                      alt="Icon"
-                      onClick={() => setIsOpen((prev) => !prev)}
-                    />
-                  </div>
+              {!isOpen ? (
+                <a
+                onClick={() => setIsOpen((prev) => !prev)}
+                >
+                  <AddPlus />
+                  {/* <img
+                    src={addPlus}
+                    alt="Icon"
+                    onClick={() => setIsOpen((prev) => !prev)}
+                    style={{
+                      width: '13px',
+                      height: '13px'
+                    }}
+                  /> */}
+                </a>
+              ) : (
+                <a>
+                  <img
+                    src={addGreen}
+                    alt="Icon"
+                    onClick={() => setIsOpen((prev) => !prev)}
+                  />
+                </a>
+              )}
+              <a
+                href="/admin/chat"
+                className={fromPath == 'chat' ? styles.active : ''}
+              >
+                <ChatIcon />
+                {/* <img src={chatIcon} alt="Icon" /> */}
+              </a>
+              <a
+                href="/admin/contacts"
+                className={fromPath == 'chat' ? styles.active : ''}
+              >
+                <img src={clientIcon} alt="Icon" />
+              </a>
+              <a
+                href="/admin/products"
+                className={fromPath == 'chat' ? styles.active : ''}
+              >
+                <img src={boxIcon} alt="Icon" />
+              </a>
+              <a
+                href="/admin/notification" 
+                // className={styles.number}
+                className={`${styles.number} 
+                ${fromPath == 'chat' ? styles.active : ''}`}
+              >
+                <img src={dotsNotification} alt="Icon" />
+                {(numNotification !== 0) && (
+                  <span>{numNotification}</span>
+                )}
+              </a>
+
+              <div
+                onClick={handleProfileClick}
+                className={styles.profileContainer}
+              >
+                <div className={styles.profileText}>
+                  <p>{user?.nombre}</p>
+                  <span>{user?.role}</span>
+                </div>
+                {user?.profileImage ? (
+                  <img
+                    className={styles.profileImage}
+                    src={user?.profileImage}
+                    alt=""
+                  />
                 ) : (
-                  <div>
-                    <img
-                      src={addGreen}
-                      alt="Icon"
-                      onClick={() => setIsOpen((prev) => !prev)}
-                    />
+                  <div className={styles.initials}>
+                    {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
                   </div>
                 )}
-                <a href="/chat">
-                  <img src={chatIcon} alt="Icon" />
-                </a>
-                <a href="/clients">
-                  <img src={clientIcon} alt="Icon" />
-                </a>
-                <a href="/allproducts">
-                  <img src={boxIcon} alt="Icon" />
-                </a>
-                <a href="notification" className={styles.number}>
-                  <img src={dotsNotification} alt="Icon" />
-                  <span>234</span>
-                </a>
-
-                <div
-                  onClick={handleProfileClick}
-                  className={styles.profileContainer}
-                >
-                  <div className={styles.profileText}>
-                    <p>{user?.nombre}</p>
-                    <span>{user?.role}</span>
-                  </div>
-                  {user?.profileImage ? (
-                    <img
-                      className={styles.profileImage}
-                      src={user?.profileImage}
-                      alt=""
-                    />
-                  ) : (
-                    <div className={styles.initials}>
-                      {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
-                    </div>
-                  )}
-                </div>
               </div>
-              <div
-                className={` ${showSidebar ? styles.settingsBg : styles.none}`}
-                onClick={() => setShowSidebar(false)}
-              ></div>
             </div>
-            <div className={styles.showMobile}>
-              <button className={styles.hamburger} onClick={toggleMenu}>
-                <img src={menuIcon} alt="Menu Icon" />
-              </button>
-            </div>
+            <div
+              className={` ${showSidebar ? styles.settingsBg : styles.none}`}
+              onClick={() => setShowSidebar(false)}
+            ></div>
+          </div>
+          <div className={styles.showMobile}>
+            <button className={styles.hamburger} onClick={toggleMenu}>
+              <img src={menuIcon} alt="Menu Icon" />
+            </button>
+          </div>
 
 
           {menuOpen && (

@@ -142,6 +142,7 @@ const UsersDashboard = () => {
 
   useEffect(() => {
     if (userData) {
+      console.log('userrrss', userData)
       if (userData?.role === "user") {
         navigate("/panel");
       }
@@ -520,7 +521,7 @@ const UsersDashboard = () => {
               <h1 className={styles.tableTitle}>
                 Usuarios y permisos{" "}
                 <span
-                  onClick={() => navigate("/users/clients")}
+                  onClick={() => navigate("/admin/clients")}
                   className={styles.changeTabButton}
                 >
                   Ir a clientes

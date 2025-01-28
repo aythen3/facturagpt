@@ -111,12 +111,31 @@ const Chat = () => {
           </>
         )}
         {messages.map((message, index) => (
-          <p
-            key={index}
-            className={`${styles.message} ${message.sender === "bot" ? styles.botMessage : styles.userMessage}`}
-          >
-            {message.text}
-          </p>
+          <>
+            {/* <p
+              key={index}
+              className={`${styles.message} ${message.sender === "bot" ? styles.botMessage : styles.userMessage}`}
+            >
+              {message.text}
+            </p> */}
+            {message.sender !== "bot" ? (
+              <div className={`${styles.message} ${styles.userMessage}`}>
+                <p>
+                {message.text}
+                </p>
+                <div 
+                  className={styles.avatar}
+                />
+              </div>
+            ) : (
+              <div className={`${styles.message} ${styles.botMessage}`} >
+              <div 
+                className={styles.avatar}
+              />
+              {message.text}
+            </div>
+          )}
+          </>
         ))}
       </div>
       <div className={styles.chatTextContainer}>

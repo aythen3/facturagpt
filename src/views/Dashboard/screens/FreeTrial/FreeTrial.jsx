@@ -17,11 +17,11 @@ const FreeTrial = () => {
   const { t } = useTranslation("freeTrial");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/home");
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/home");
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <div className={styles.container}>

@@ -32,10 +32,13 @@ import {
   getAllClients,
   getAllUsers,
   updateClient,
-  getEmailsByQuery,
-} from "../../actions/emailManager";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+  getEmailsByQuery, //
+  // getClient
+
+// } from "../../actions/emailManager";
+} from "../../actions/user";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import Payment from "./screens/UserSettings/StripeComponents/Payment";
@@ -385,6 +388,8 @@ const UsersClientsDashboard = () => {
   const [clientIdForPaymentSetup, setClientIdForPaymentSetup] = useState();
   const [amountToPay, setAmountToPay] = useState();
 
+  const [showSidebar, setShowSidebar] = useState(false);
+
   useEffect(() => {
     console.log("showPaymentModal changed to", showPaymentModal);
   }, [showPaymentModal]);
@@ -488,7 +493,10 @@ const UsersClientsDashboard = () => {
           clientId={clientIdForPaymentSetup}
         />
       )}
-      <div className={styles.statsContainer}>
+
+      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      
+      <div className={styles.statsContainer} onClick={() => setShowSidebar(false)}>
         {stats.map((stat, index) => (
           <div key={index} className={styles.statCard}>
             <div
@@ -569,7 +577,7 @@ const UsersClientsDashboard = () => {
               Seguimiento y estados{" "}
               {userRedux?.role !== "user" && (
                 <span
-                  onClick={() => navigate("/users/admins")}
+                  onClick={() => navigate("/admin/users")}
                   className={styles.changeTabButton}
                 >
                   Ir a usuarios
@@ -643,7 +651,11 @@ const UsersClientsDashboard = () => {
           </div>
           {filteredClients.length > 0 ? (
             filteredClients.map((client, index) => (
-              <div key={index} className={styles.tableRow}>
+              <div 
+              key={index} 
+              className={styles.tableRow}
+              onClick={() => setShowUserSettings(client)}
+              >
                 <span
                   onClick={() => checkUserMonthlyPayment(client)}
                   className={styles.columnName}

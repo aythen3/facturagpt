@@ -18,7 +18,7 @@ import {
   updateUserPassword,
 } from "../../../../actions/user";
 import { useTranslation } from "react-i18next";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import sentEmail from "../../assets/sentEmail.svg";
 import i18n from "../../../../i18";
 import { FaLock } from "react-icons/fa";
@@ -31,7 +31,7 @@ import {
 
 const DashboardLogin = () => {
   const { t } = useTranslation("dahsboardLogin");
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  // const { loginWithRedirect, isAuthenticated } = useAuth0();
 
   const { user } = useSelector((state) => state.user);
   const location = useLocation();
@@ -127,11 +127,11 @@ const DashboardLogin = () => {
     validatePassword(newPassword);
   };
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/home");
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/panel/home");
+  //   }
+  // }, [isAuthenticated]);
 
   useEffect(() => {
     let timer;
@@ -178,14 +178,14 @@ const DashboardLogin = () => {
           console.log("REPONSE LOGIN", response);
 
           let accountData = {
-            accessToken: response?.password,
+            accessToken: response?.token,
           };
           localStorage.setItem("user", JSON.stringify(accountData));
           clearStates();
           if (response?.role !== "user") {
-            navigate("/home");
+            navigate("/admin/chat");
           } else {
-            navigate("/panel");
+            navigate("/admin/chat");
           }
         })
         .catch((error) => {

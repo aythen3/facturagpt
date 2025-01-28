@@ -12,6 +12,7 @@ import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { ReactComponent as HouseContainer } from "../../assets/HouseContainerIcon.svg";
 
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentPath,
@@ -33,6 +34,7 @@ import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 export default function FileExplorer({ isOpen, setIsOpen }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate()
   const { currentPath, userFiles, getFilesLoading, uploadingFilesLoading } =
     useSelector((state) => state.scaleway);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -542,8 +544,8 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           style={{ cursor: "pointer" }}
         >
           {userFilters &&
-          Object.keys(userFilters).length > 0 &&
-          userFilters.keyWord !== "" ? (
+            Object.keys(userFilters).length > 0 &&
+            userFilters.keyWord !== "" ? (
             <img src={filterIconGreen} alt="filterIcon" />
           ) : (
             <img src={filterIcon} alt="filterIcon" />
@@ -551,15 +553,12 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         </div>
         {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
 
-        <FilesFilterModal
-          onClose={() => setIsFilterOpen(false)}
-          handleApplyFilters={handleApplyFilters}
-          isFilterOpen={isFilterOpen}
-        />
       </div>
 
-      {renderBreadcrumbs()}
-      <div className={styles.fileList}>
+     
+      <div 
+      className={styles.fileList}
+      >
         {getFilesLoading ? (
           <div className={styles.loaderContainer}>
             <MutatingDots
@@ -594,6 +593,10 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                   if (isFolder) {
                     console.log("setting current path to", item.Key);
                     dispatch(setCurrentPath(item.Key));
+                  }
+
+                  if(1){
+                    navigate('/admin/panel')
                   }
                 }}
                 key={index}
@@ -661,12 +664,24 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           </div>
         )}
       </div>
+
+     
       <div className={styles.bottomMenu}>
-        <HouseContainer /> > <span>2025</span>
+        <HouseContainer /> 
+         {/* <span>2025</span> */}
+
+        {renderBreadcrumbs()}
       </div>
       {showLocationModal && (
         <SelectLocation onClose={() => setShowLocationModal(false)} />
       )}
+
+      <FilesFilterModal
+        onClose={() => setIsFilterOpen(false)}
+        handleApplyFilters={handleApplyFilters}
+        isFilterOpen={isFilterOpen}
+      />
+
     </div>
   );
 }

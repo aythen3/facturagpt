@@ -6,6 +6,7 @@
   left: 50%;
   background-color: #f6f6f6;
   transform: translate(-50%, -50%);
+  z-index: 1;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -31,6 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 .modalTemplateHeader {
   display: flex;
