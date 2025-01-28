@@ -3,10 +3,15 @@ import styles from "./CustomDropdown.module.css";
 import { useTranslation } from "react-i18next";
 import { FaChevronDown } from "react-icons/fa";
 
+import spanish_flag from "../../assets/spain_flag.svg";
+import english_flag from "../../assets/english_flag.svg";
+
+
 const CustomDropdown = ({
   editing,
   editable = true,
   options = [],
+  optionsLabel = {},
   selectedOption,
   setSelectedOption,
   hasObject,
@@ -94,6 +99,12 @@ const CustomDropdown = ({
                 handleOptionClick(hasObject ? option.value : option)
               }
             >
+              {option.iso == 'es' ? (
+                <img src={spanish_flag} /> 
+              ): option.iso == 'en' ? (
+                <img src={spanish_flag} /> 
+              ): ''}
+
               {hasObject ? option.label : option}
             </div>
           ))}

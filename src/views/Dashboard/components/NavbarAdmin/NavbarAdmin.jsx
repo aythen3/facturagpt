@@ -13,11 +13,12 @@ import UpgradePlan from "../../screens/UpgradePlan/UpgradePlan";
 import time from "../../assets/time.svg";
 import profileIcon from "../../assets/profileIcon.svg";
 import addBlack from "../../assets/addBlack.svg";
+import addPlus from "../../assets/addPlus.svg";
 import addGreen from "../../assets/addGreen.svg";
 import chatIcon from "../../assets/chatIcon.svg";
 import boxIcon from "../../assets/boxIcon.svg";
 import dotsNotification from "../../assets/dotsNotification.svg";
-
+import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
@@ -35,7 +36,7 @@ const NavbarAdmin = () => {
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation("navbarAdmin");
-  console.log(user);
+  // console.log(user);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [showNewTagModal, setShowNewTagModal] = useState(false);
   const [selectedAutomationData, setSelectedAutomationData] = useState(null);
@@ -43,6 +44,7 @@ const NavbarAdmin = () => {
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // =======================
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
@@ -77,6 +79,13 @@ const NavbarAdmin = () => {
     setTypeContentAutomate("");
   };
 
+
+  // ========================
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <>
       <Elements stripe={stripePromise}>
@@ -86,62 +95,96 @@ const NavbarAdmin = () => {
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
-          <button
-            onClick={() => setShowPlusModal(true)}
-            className={styles.plus}
-          >
-            {t("buttonGetPlus")} <img src={star} alt="Icon" />
-          </button>
-          <div className={styles.profile}>
-            <a href="/clients">
-              <img src={addBlack} alt="Icon" />
-            </a>
-            <div>
-              <img
-                src={addGreen}
-                alt="Icon"
-                onClick={() => setIsOpen((prev) => !prev)}
-              />
-            </div>
-            <a href="/chat">
-              <img src={chatIcon} alt="Icon" />
-            </a>
-            <a href="/clients">
-              <img src={clientIcon} alt="Icon" />
-            </a>
-            <a href="/allproducts">
-              <img src={boxIcon} alt="Icon" />
-            </a>
-            <a href="notification" className={styles.number}>
-              <img src={dotsNotification} alt="Icon" />
-              <span>234</span>
-            </a>
 
-            <div
-              onClick={handleProfileClick}
-              className={styles.profileContainer}
-            >
-              <div className={styles.profileText}>
-                <p>{user?.nombre}</p>
-                <span>{user?.role}</span>
-              </div>
-              {user?.profileImage ? (
-                <img
-                  className={styles.profileImage}
-                  src={user?.profileImage}
-                  alt=""
-                />
-              ) : (
-                <div className={styles.initials}>
-                  {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+            <div className={styles.hiddenMobile}>
+              <button
+                onClick={() => setShowPlusModal(true)}
+                className={styles.plus}
+              >
+                {t("buttonGetPlus")} <img src={star} alt="Icon" />
+              </button>
+              <div className={styles.profile}>
+                {/* <a href="/clients">
+              <img src={addBlack} alt="Icon" />
+            </a> */}
+                {!isOpen ? (
+                  <div>
+                    <img
+                      src={addPlus}
+                      alt="Icon"
+                      onClick={() => setIsOpen((prev) => !prev)}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <img
+                      src={addGreen}
+                      alt="Icon"
+                      onClick={() => setIsOpen((prev) => !prev)}
+                    />
+                  </div>
+                )}
+                <a href="/chat">
+                  <img src={chatIcon} alt="Icon" />
+                </a>
+                <a href="/clients">
+                  <img src={clientIcon} alt="Icon" />
+                </a>
+                <a href="/allproducts">
+                  <img src={boxIcon} alt="Icon" />
+                </a>
+                <a href="notification" className={styles.number}>
+                  <img src={dotsNotification} alt="Icon" />
+                  <span>234</span>
+                </a>
+
+                <div
+                  onClick={handleProfileClick}
+                  className={styles.profileContainer}
+                >
+                  <div className={styles.profileText}>
+                    <p>{user?.nombre}</p>
+                    <span>{user?.role}</span>
+                  </div>
+                  {user?.profileImage ? (
+                    <img
+                      className={styles.profileImage}
+                      src={user?.profileImage}
+                      alt=""
+                    />
+                  ) : (
+                    <div className={styles.initials}>
+                      {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
+              <div
+                className={` ${showSidebar ? styles.settingsBg : styles.none}`}
+                onClick={() => setShowSidebar(false)}
+              ></div>
             </div>
-          </div>
-          <div
-            className={` ${showSidebar ? styles.settingsBg : styles.none}`}
-            onClick={() => setShowSidebar(false)}
-          ></div>
+            <div className={styles.showMobile}>
+              <button className={styles.hamburger} onClick={toggleMenu}>
+                <img src={menuIcon} alt="Menu Icon" />
+              </button>
+            </div>
+
+
+          {menuOpen && (
+            <div>
+              Obtener plus
+              Automatizar
+              Chat
+              Clients
+              Products
+              Notificacions
+              User
+            </div>
+          )}
+
+
+          {/* PopUps */}
           <div
             className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}
           >

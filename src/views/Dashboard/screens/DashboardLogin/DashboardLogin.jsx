@@ -27,6 +27,8 @@ import {
   verifyRecoveryCode,
 } from "../../../../actions/emailManager";
 
+// import { useSelector } from "react-redux";
+
 const DashboardLogin = () => {
   const { t } = useTranslation("dahsboardLogin");
   const { loginWithRedirect, isAuthenticated } = useAuth0();
@@ -79,13 +81,17 @@ const DashboardLogin = () => {
 
   useEffect(() => {
     console.log("location", location);
+    if (user) navigate('/panel')
+
     if (location?.pathname === "/login" && mode !== "signin") setMode("signin");
     if (location?.pathname === "/register" && mode !== "signup")
       setMode("signup");
     if (location?.pathname === "/recover" && mode !== "forgot-password")
       setMode("forgot-password");
     if (location?.pathname === "/otp" && mode !== "otp") setMode("otp");
-  }, [location]);
+
+
+  }, [location, user]);
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -589,9 +595,8 @@ const DashboardLogin = () => {
             </div>
             <div
               onClick={() => handleVerifyOTP(otp)}
-              className={`${styles.signInButton} ${
-                isLoading ? styles.loading : ""
-              }`}
+              className={`${styles.signInButton} ${isLoading ? styles.loading : ""
+                }`}
             >
               {isLoading ? "Verifying..." : "Next"}
             </div>
