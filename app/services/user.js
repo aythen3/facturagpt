@@ -5,12 +5,15 @@ const { sendOtpEmail } = require("./email");
 const nodemailer = require("nodemailer");
 const { checkOrCreateUserBucket } = require("./scaleway");
 
+const jwt = require('jsonwebtoken');
+
 const createAccount = async ({ nombre, email, password }) => {
   console.log("Data received in createAccount service:", {
     nombre,
     email,
     password,
   });
+
 
   const dbName = "db_emailmanager_accounts";
   let db;
@@ -246,7 +249,7 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
     if (accessToken) {
       console.log("Attempting login with accessToken");
       const tokenQuery = await db.find({
-        selector: { password: accessToken },
+        selector: { token: accessToken },
       });
 
       if (tokenQuery.docs.length === 0) {
@@ -276,6 +279,32 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
         console.log("Invalid password provided.");
         return { success: false, message: "Invalid email or password." };
       }
+
+
+      // Generate JWT token
+      const token = jwt.sign(
+        {
+          userId: account._id,
+          email: account.email,
+          role: account.role
+        },
+        'your-secret-key', // Replace with a secure secret key from environment variables
+        { expiresIn: '24h' }
+      );
+
+      // Update account with new token
+      const updatedDoc = {
+        ...account,
+        token: token,
+        _rev: account._rev,
+      };
+
+      // Save token to database
+      await db.insert(updatedDoc);
+
+      account = updatedDoc;
+      // account.token = token
+
       console.log(`Login successful for account: ${account._id}`);
     }
 

@@ -36,6 +36,9 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 
+
+import { useSelector } from "react-redux";
+
 // import { useSelector } from "react-redux";
 
 const Layout = () => {
@@ -69,6 +72,30 @@ const Layout = () => {
 
   const [isAuth, setIsAuth] = useState(false);
 
+
+  const ComponentPrivate = () => {
+    const { user } = useSelector((state) => state.user);
+    return (
+      <div>
+        {/* <h2>Bienvenido, {user?.name || 'Usuario'}</h2> */}
+        
+        <Routes>
+          <Route path="/home" element={<Dashboard />} />
+          <Route path="/panel" element={<InvoicePanel />} />
+          
+          <Route path="/clients" element={<UsersClientsDashboard />} />
+          <Route path="/users" element={<UsersDashboard />} />
+          <Route path="/contacts" element={<Clients />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/products" element={<AllProducts />} />
+          <Route path="/chat" element={<ChatView />} />
+          <Route path="/articlestransactions" element={<ArticlesTransactions />} />
+          <Route path="/notification" element={<NotificationsView />} />
+        </Routes>
+      </div>
+    );
+  }
+
   return (
     <>
       <Auth0Provider
@@ -89,27 +116,29 @@ const Layout = () => {
                       <Route path="/pricing" element={<Pricing />} />
                       <Route path="/terms" element={<Terms />} />
 
-
+                      <Route path="/freetrial" element={<FreeTrial />} />
                       <Route path="/login" element={<DashboardLogin />} />
                       <Route path="/register" element={<DashboardLogin />} />
                       <Route path="/recover" element={<DashboardLogin />} />
                       <Route path="/otp" element={<DashboardLogin />} />
 
+                      <Route path="/admin/*" element={<ComponentPrivate />} />
                       {/* Admin */}
+                      {/* <Route path="/userSettings" element={<UserSettings />} /> */}
+                      {/*
                       <Route path="/home" element={<Dashboard />} />
                       <Route path="/panel" element={<InvoicePanel />} />
                       <Route path="/freetrial" element={<FreeTrial />} />
                       <Route path="/admin/clients" element={<UsersClientsDashboard />} />
                       <Route path="/admin/users" element={<UsersDashboard />} />
 
-                      {/* <Route path="/userSettings" element={<UserSettings />} /> */}
                       <Route path="/clients" element={<Clients />} />
                       <Route path="/transactions" element={<Transactions />} />
                       <Route path="/products" element={<AllProducts />} />
                       <Route path="/chat" element={<ChatView />} />
 
                       <Route path="/articlestransactions" element={<ArticlesTransactions />} />
-                      <Route path="/notification" element={<NotificationsView />} />
+                      <Route path="/notification" element={<NotificationsView />} /> */}
 
                       <Route path="*" element={<LandingPage />} />
                     </Routes>

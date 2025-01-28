@@ -17,7 +17,7 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   background-color: white;
-  border: 1px solid #22222273;
+  /* border: 1px solid #22222273; */
   position: fixed;
   top: 50%;
   left: 50%;

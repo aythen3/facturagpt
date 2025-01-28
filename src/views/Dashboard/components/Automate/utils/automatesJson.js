@@ -22,6 +22,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "Gmail",
     role: "input",
+    available: true
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "Outlook",
     role: "input",
+    available: false
   },
   {
     id: 3,
@@ -38,6 +40,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "Google Drive",
     role: "input",
+    available: false
   },
   {
     id: 4,
@@ -46,6 +49,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "Dropbox",
     role: "input",
+    available: false
   },
   {
     id: 5,
@@ -54,6 +58,7 @@ export const data = [
     contactType: "+00000000",
     type: "WhatsApp",
     role: "input",
+    available: false
   },
   {
     id: 6,
@@ -62,6 +67,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "esPúblico Gestiona",
     role: "input",
+    available: false
   },
   {
     id: 7,
@@ -70,6 +76,7 @@ export const data = [
     contactType: "Título de la hoja.xls",
     type: "Google Sheets",
     role: "output",
+    available: true
   },
   {
     id: 8,
@@ -78,6 +85,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "XML",
     role: "output",
+    available: true
   },
   {
     id: 9,
@@ -86,6 +94,7 @@ export const data = [
     contactType: "example@gmail.com ",
     type: "Odoo",
     role: "output",
+    available: false
   },
   {
     id: 10,
@@ -94,6 +103,7 @@ export const data = [
     contactType: "example@gmail.com ",
     type: "Wolters",
     role: "output",
+    available: false
   },
   {
     id: 11,
@@ -103,6 +113,7 @@ export const data = [
     contactType: "example@gmail.com ",
     type: "Agencia Tributaria",
     role: "output",
+    available: false
   },
   {
     id: 12,
@@ -111,6 +122,7 @@ export const data = [
     contactType: "+00000000",
     type: "whatsApp notifications",
     role: "output",
+    available: false
   },
   {
     id: 13,
@@ -119,6 +131,7 @@ export const data = [
     contactType: "+00000000",
     type: "Stripe",
     role: "output",
+    available: false
   },
   {
     id: 14,
@@ -127,6 +140,7 @@ export const data = [
     contactType: "+00000000",
     type: "Holded",
     role: "output",
+    available: false
   },
   {
     id: 15,
@@ -135,6 +149,7 @@ export const data = [
     contactType: "+00000000",
     type: "Acrobat",
     role: "output",
+    available: false
   },
   {
     id: 16,
@@ -143,5 +158,6 @@ export const data = [
     contactType: "682",
     type: "FTP",
     role: "output",
+    available: true
   },
 ];

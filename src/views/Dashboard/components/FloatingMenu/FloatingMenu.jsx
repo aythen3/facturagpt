@@ -69,7 +69,7 @@ export default function FloatingMenu({
     {
       icon: <ChatGPTIcon />,
       text: "ChatGPT",
-      action: () => navigate("/chat"), // Cambia a la ruta deseada
+      action: () => navigate("/admin/chat"), // Cambia a la ruta deseada
     },
     {
       icon: <CloudIcon />,

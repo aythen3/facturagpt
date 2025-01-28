@@ -28,7 +28,11 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 
-const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
+const UserSettings = ({
+  // id, 
+  showUserSettings,
+  setShowUserSettings
+}) => {
   const { t } = useTranslation("userSetting");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -93,6 +97,8 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
     tokenGPT: "Token GPT",
   };
   const { user } = useSelector((state) => state.user);
+
+
   const [tokenEmail, setTokenEmail] = useState(""); // Email (Bandejas)
   const [tokenPassword, setTokenPassword] = useState(""); // Contraseña a la derecha de bandejas
   const [tokenGPT, setTokenGPT] = useState(""); // TOKEN GPT
@@ -223,6 +229,22 @@ const UserSettings = ({ showUserSettings, setShowUserSettings }) => {
     console.log("Payment id changed to", paymentId);
   }, [paymentId]);
 
+
+  useEffect(() => {
+    console.log('!!!! showUserSettings', showUserSettings)
+    if (showUserSettings) {
+      // dispatch()
+      setFieldValues({
+        companyName: showUserSettings.companyName || "",
+        email: showUserSettings.email || "",
+        phoneNumber: showUserSettings.phoneNumber || "",
+        VatId: showUserSettings.VatId || "",
+        address: showUserSettings.address || "",
+        emergencyContact: showUserSettings.emergencyContact || "",
+        tokenGPT: showUserSettings.tokenGPT || "",
+      })
+    }
+  }, [showUserSettings])
   return (
     <div>
       <Elements stripe={stripePromise}>

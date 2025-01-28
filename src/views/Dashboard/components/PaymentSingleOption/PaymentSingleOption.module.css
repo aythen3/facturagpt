@@ -16,13 +16,13 @@
 
 .iconWrapper {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 32px;
-  background: #fdfdfc;
-  border-radius: 3px;
-  border: 1px solid #e2e2e2;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 28px;
+      background: #fdfdfc;
+      border-radius: 3px;
+      border: 1px solid #e2e2e2;
 }
 
 .paymentSingleOptionText {
