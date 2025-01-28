@@ -2,11 +2,11 @@ import React from "react";
 import closeMenu from "../../assets/closeMenu.svg";
 import styles from "./HeaderCard.module.css";
 import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
-const HeaderCard = ({ title, children }) => {
+const HeaderCard = ({ title, children, setState }) => {
   return (
     <header className={styles.newTagHeader}>
       <div className={styles.leftSide}>
-        <div className={styles.iconContainer}>
+        <div className={styles.iconContainer} onClick={() => setState(false)}>
           <Arrow />
         </div>
         <h3>{title}</h3>
