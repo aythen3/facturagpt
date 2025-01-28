@@ -23,7 +23,7 @@
   max-width: 559px;
   gap: 20px;
   transform: scale(1);
-  padding: 22px 40px;
+  padding: 10px 20px;
   animation: scaleUp 300ms ease-out forwards;
   font-family: "Inter", sans-serif;
 }
@@ -121,7 +121,7 @@
 .contentContainer {
   display: flex;
   flex-direction: column;
-  padding: 20px 35px;
+  padding: 20px 15px;
   max-height: 55vh;
   overflow-y: auto;
   background: #fff;

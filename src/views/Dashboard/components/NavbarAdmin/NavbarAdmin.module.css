@@ -1,6 +1,7 @@
 .none {
   display: none;
 }
+
 .settingsBg {
   height: 100vh;
   width: 100vw;
@@ -26,6 +27,7 @@
   padding: 10px 8px;
   box-sizing: border-box;
   height: 50px;
+
   a {
     text-decoration: none;
   }
@@ -42,22 +44,19 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: white;
+  color: #676767;
   outline: none;
   border: none;
   cursor: pointer;
-  /* background: linear-gradient(270deg, #0d886b 0%, #084739 100%); */
-  background: #10a37f;
-  /* flex: 1; */
+  background: #fff;
+  font-weight: 600;
   padding: 5px 10px;
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -o-border-radius: 8px;
+  border-radius: 16px;
+  border: 2px solid #cacaca;
 }
 
 .profileContainer {
+  cursor: pointer;
   display: flex;
   gap: 10px;
 }
@@ -68,6 +67,7 @@
   gap: 25px;
   justify-content: end;
   flex: 1;
+
   .number {
     position: relative;
 
@@ -87,6 +87,7 @@
       font-weight: bold;
     }
   }
+
   img {
     width: 20px;
     border-radius: 5px;
@@ -95,17 +96,20 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
   }
+
   .imgProfile {
     width: 40px;
     height: 40px;
   }
 }
+
 .profileImage {
   width: 40px;
   min-width: 40px;
   height: 40px;
   border-radius: 5px;
 }
+
 .initials {
   width: 40px;
   height: 40px;
@@ -119,22 +123,27 @@
   font-size: 20px;
   font-weight: 600;
 }
+
 .profileText {
   display: flex;
   flex-direction: column;
   text-align: end;
+
   p {
     font-size: 15px;
     margin: 0;
   }
+
   span {
     font-size: 10px;
   }
 }
+
 .sidebar {
   position: fixed;
   top: 0;
-  right: -800px; /* Cambiado a -300px para que coincida con el ancho de la barra lateral */
+  right: -800px;
+  /* Cambiado a -300px para que coincida con el ancho de la barra lateral */
   width: 400px;
   height: 100vh;
   overflow-y: scroll;
@@ -142,14 +151,16 @@
   z-index: 1000;
   transition:
     right 0.3s ease-in-out,
-    opacity 0.3s ease-in-out; /* Agregado efecto de opacidad */
+    opacity 0.3s ease-in-out;
+  /* Agregado efecto de opacidad */
   color: black;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
 .sidebar::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none;
+  /* Safari and Chrome */
 }
 
 .show {
@@ -158,4 +169,24 @@
 
 .sidebarContent {
   padding: 20px;
+}
+
+
+.hiddenMobile {
+  display: flex;
+}
+.showMobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  
+  .hiddenMobile {
+    display: none;
+  }
+  
+  .showMobile {
+    
+    display: flex;
+  }
 }

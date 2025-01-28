@@ -1,6 +1,6 @@
 {
-  "title": "Clientes y Proveedores",
-  "buttonNewClient": "Alta nuevo cliente",
+  "title": "Gestión de Contactos",
+  "buttonNewClient": "Nuevo Cliente",
   "placeholderSearch": "Buscar",
   "tableCol1": "Nombre",
   "tableCol2": "Correo",

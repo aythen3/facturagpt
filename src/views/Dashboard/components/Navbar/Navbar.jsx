@@ -16,7 +16,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]); // Agrega user.nombre como dependencia
@@ -35,6 +35,11 @@ const Navbar = () => {
     i18n.changeLanguage(lng);
   };
 
+
+  const handleProfileClick = () => {
+    navigate('/panel')
+  }
+
   return (
     <nav className={styles.navbar}>
       <img
@@ -47,17 +52,10 @@ const Navbar = () => {
         <img src={menuIcon} alt="Menu Icon" />
       </button>
       <div
-        className={`${styles.navLinks} ${
-          menuOpen ? styles.navLinksOpen : styles.navLinksClosed
-        }`}
+        className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : styles.navLinksClosed
+          }`}
       >
         <div className={styles.navFlex}>
-          {/* <div onClick={() => navigate('/landing')}>{t('item1')}</div>
-          {location.pathname !== '/contact' ? (
-            <div onClick={scrollToContact}>{t('item2')} </div>
-          ) : (
-            <div className={styles.disabledBtn}>{t('item2')}</div>
-          )} */}
           <div className={styles.nav}>
             {["landing", "contact", "pricing"].map((link, index) => (
               <div
@@ -98,20 +96,44 @@ const Navbar = () => {
             />
           </div>
         </div>
-        <div className={styles.buttonContainer}>
-          <button
-            className={`${styles.button} ${styles.buttonLogIn}`}
-            onClick={() => navigate("/login")}
-          >
-            {t("logIn")}
-          </button>
-          <button
-            className={styles.button}
-            onClick={() => navigate("/freetrial")}
-          >
-            {t("button")}
-          </button>
-        </div>
+        {!user ? (
+          <>
+            <button
+              className={`${styles.button} ${styles.buttonLogIn}`}
+              onClick={() => navigate("/login")}
+            >
+              {t("logIn")}
+            </button>
+            <button
+              className={styles.button}
+              onClick={() => navigate("/freetrial")}
+            >
+              {t("button")}
+            </button>
+          </>
+        ) : (
+            <div
+              onClick={handleProfileClick}
+              className={styles.profileContainer}
+            >
+              <div className={styles.profileText}>
+                <p>{user?.nombre}</p>
+                <span>{user?.role}</span>
+              </div>
+              {user?.profileImage ? (
+                <img
+                  className={styles.profileImage}
+                  src={user?.profileImage}
+                  alt=""
+                />
+              ) : (
+                <div className={styles.initials}>
+                  {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+                </div>
+              )}
+            </div>
+        )}
+
       </div>
     </nav>
   );

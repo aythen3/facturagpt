@@ -14,7 +14,8 @@
   z-index: 9999;
   width: fit-content;
   width: 100%;
-  max-width: 1142px;
+  /* max-width: 1142px; */
+  max-width: 942px;
 }
 
 .bgModalBlackBgTemplate {

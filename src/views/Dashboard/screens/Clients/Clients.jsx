@@ -10,6 +10,8 @@ import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as Minus } from "../../assets/minus.svg";
 
+import l from "../../assets/lIcon.svg";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   createClient,
@@ -374,6 +376,7 @@ const Clients = () => {
   const [editingIndices, setEditingIndices] = useState([]);
   console.log("DATAAAAA--------", clientData);
 
+  
   return (
     <div>
       <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
@@ -390,8 +393,7 @@ const Clients = () => {
                 <img src={plusIcon} alt="Nuevo cliente" />
                 {t("buttonNewClient")}
               </button>
-              <button className={styles.infoBtn}>Analíticas</button>
-
+              {/* <button className={styles.infoBtn}>Analíticas</button> */}
               <div className={styles.inputWrapper}>
                 <img src={searchGray} className={styles.inputIconInside} />
                 <input
@@ -401,13 +403,19 @@ const Clients = () => {
                   onChange={handleSearchChange}
                   className={styles.searchInput}
                 />
-                <div className={styles.inputIconOutsideContainer}>
+                {/* <div className={styles.inputIconOutsideContainer}>
                   <img src={filterSearch} className={styles.inputIconOutside} />
+                </div> */}
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={l} alt="kIcon" />
                 </div>
               </div>
-              <button className={styles.addButton}>
+              {/* <button className={styles.addButton}>
                 <img src={plusIcon} />
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -444,9 +452,9 @@ const Clients = () => {
                           name="clientSelected"
                           // onClick={() => selectClient(rowIndex, row)}
                           onChange={() => toggleClientSelection(client?.id)}
-                          // checked={
-                          //   clientSelected.includes(rowIndex) ? true : false
-                          // }
+                        // checked={
+                        //   clientSelected.includes(rowIndex) ? true : false
+                        // }
                         />
                       </td>
                       <td className={styles.name}>
@@ -562,11 +570,10 @@ const Clients = () => {
                   <div
                     className={`
                     ${styles.typeClient}
-                    ${
-                      inputsEditing.name
+                    ${inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
-                    }
+                      }
                       `}
                   >
                     <button
@@ -650,12 +657,12 @@ const Clients = () => {
                     onChange={(e) =>
                       handleClientData("companyPhoneNumber", e.target.value)
                     }
-                    /*disabled={!isEditing}*/
+                  /*disabled={!isEditing}*/
                   />
                   <div
                     className={styles.delete}
-                    // onClick={onDelete}
-                    /*style={{ background: !isEditing && "#dd7a84" }}*/
+                  // onClick={onDelete}
+                  /*style={{ background: !isEditing && "#dd7a84" }}*/
                   >
                     <Minus className={styles.icon} />
                   </div>

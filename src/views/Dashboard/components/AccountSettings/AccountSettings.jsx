@@ -219,7 +219,7 @@ const AccountSettings = () => {
           <div className={styles.profileInfo}>
             <p>{user?.nombre}</p>
             <span>{user?.email}</span>
-            <button>{t("changeAccount")}</button>
+            {/* <button>{t("changeAccount")}</button> */}
             <button
               style={{ cursor: "pointer", color: "red" }}
               onClick={handleLogOut}
@@ -758,11 +758,46 @@ const AccountSettings = () => {
                   {editingCurrency ? "Guardar" : "Editar"}
                 </div>
               </div>
-
               <CustomDropdown
                 editable={editingCurrency}
                 editing={editingCurrency}
                 options={["EUR", "USD"]}
+                selectedOption={userData?.currency}
+                setSelectedOption={(option) =>
+                  handleChange({ name: "currency", newValue: option })
+                }
+              />
+            </label>
+            <label>
+              <div className={styles.row}>
+                <p>Idioma</p>
+                <div
+                  className={styles.editButton}
+                  onClick={() => {
+                    console.log("clicking on edit button...");
+                    if (editingCurrency) {
+                      setEditingCurrency(false);
+                    } else {
+                      setEditingCurrency(true);
+                    }
+                  }}
+                  type="button"
+                  style={{ cursor: "pointer", userSelect: "none" }}
+                >
+                  {editingCurrency ? "Guardar" : "Editar"}
+                </div>
+              </div>
+              <CustomDropdown
+                editable={editingCurrency}
+                editing={editingCurrency}
+                hasObject={true}
+                options={[{
+                  iso: 'es',
+                  label: 'Spanish'
+                }, {
+                  iso: 'en',
+                  label: 'English'
+                }]}
                 selectedOption={userData?.currency}
                 setSelectedOption={(option) =>
                   handleChange({ name: "currency", newValue: option })

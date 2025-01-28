@@ -1,6 +1,6 @@
 .content {
   display: flex;
-  padding: 0 33px;
+  padding: 0 20px;
   align-items: center;
   background: #fff;
   justify-content: space-between;
@@ -32,12 +32,12 @@
 }
 
 .image {
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
 }
 
 .automate_name {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .contact {

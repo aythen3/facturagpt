@@ -36,7 +36,11 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 
+// import { useSelector } from "react-redux";
+
 const Layout = () => {
+  // const { user } = useSelector((state) => state.user);
+
   const { pathname } = window.location;
 
   const languageFromPath = pathname.split("/")[1];
@@ -80,48 +84,34 @@ const Layout = () => {
                 <AppProvider>
                   <BrowserRouter>
                     <Routes>
+                      <Route path="/landing" element={<LandingPage />} />
+                      <Route path="/contact" element={<ContactForm />} />
+                      <Route path="/pricing" element={<Pricing />} />
+                      <Route path="/terms" element={<Terms />} />
+
+
                       <Route path="/login" element={<DashboardLogin />} />
                       <Route path="/register" element={<DashboardLogin />} />
                       <Route path="/recover" element={<DashboardLogin />} />
                       <Route path="/otp" element={<DashboardLogin />} />
-                      <Route path="/landing" element={<LandingPage />} />
-                      <Route path="/pricing" element={<Pricing />} />
+
+                      {/* Admin */}
                       <Route path="/home" element={<Dashboard />} />
-                      <Route path="/freetrial" element={<FreeTrial />} />
-                      <Route
-                        path="/users/admins"
-                        element={<UsersDashboard />}
-                      />
-                      <Route
-                        path="/users/clients"
-                        element={<UsersClientsDashboard />}
-                      />
-                      <Route path="/userSettings" element={<UserSettings />} />
-                      <Route path="/clients" element={<Clients />} />
-
-                      <Route path="/allproducts" element={<AllProducts />} />
-                      <Route path="/transactions" element={<Transactions />} />
-                      <Route
-                        path="/articlestransactions"
-                        element={<ArticlesTransactions />}
-                      />
-
-                      <Route path="/allproducts" element={<AllProducts />} />
-                      <Route path="/transactions" element={<Transactions />} />
-                      <Route
-                        path="/articlestransactions"
-                        element={<ArticlesTransactions />}
-                      />
-
-                      <Route path="/contact" element={<ContactForm />} />
-                      <Route path="/terms" element={<Terms />} />
-                      <Route path="*" element={<LandingPage />} />
                       <Route path="/panel" element={<InvoicePanel />} />
+                      <Route path="/freetrial" element={<FreeTrial />} />
+                      <Route path="/admin/clients" element={<UsersClientsDashboard />} />
+                      <Route path="/admin/users" element={<UsersDashboard />} />
+
+                      {/* <Route path="/userSettings" element={<UserSettings />} /> */}
+                      <Route path="/clients" element={<Clients />} />
+                      <Route path="/transactions" element={<Transactions />} />
+                      <Route path="/products" element={<AllProducts />} />
                       <Route path="/chat" element={<ChatView />} />
-                      <Route
-                        path="/notification"
-                        element={<NotificationsView />}
-                      />
+
+                      <Route path="/articlestransactions" element={<ArticlesTransactions />} />
+                      <Route path="/notification" element={<NotificationsView />} />
+
+                      <Route path="*" element={<LandingPage />} />
                     </Routes>
                   </BrowserRouter>
                 </AppProvider>

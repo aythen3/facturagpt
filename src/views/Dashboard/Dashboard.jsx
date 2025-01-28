@@ -389,13 +389,13 @@ const Dashboard = () => {
     console.log("showPaymentModal changed to", showPaymentModal);
   }, [showPaymentModal]);
 
-  useEffect(() => {
-    if (userRedux) {
-      if (userRedux?.role === "user") {
-        navigate("/panel");
-      }
-    }
-  }, [userRedux]);
+  // useEffect(() => {
+  //   if (userRedux) {
+  //     if (userRedux?.role === "user") {
+  //       navigate("/panel");
+  //     }
+  //   }
+  // }, [userRedux]);
 
   const statistics = [
     {
@@ -505,7 +505,7 @@ const Dashboard = () => {
             <div className={styles.talkWithFacturaGPT}>
               <FacturaGPTIcon className={styles.icon} />
               <p>Datos y Analíticas en el Chat</p>
-              <button>
+              <button onClick={() => navigate('/chat')}>
                 <ChatGPTIconGreen /> Habla con FacturaGPT
               </button>
             </div>

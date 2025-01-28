@@ -28,7 +28,7 @@
 }
 .formAutomateContainer {
   border: 1px solid #ececf1;
-  padding: 22px 60px;
+  padding: 22px 20px;
   border-radius: 8px;
   background: #fff;
   overflow-y: auto;
@@ -56,8 +56,7 @@
 }
 .leftContainer {
   background: #f5f5f5;
-  padding: 0px 21px;
-  padding-top: 22px;
+  padding: 0px 10px;
   overflow-y: auto;
   height: calc(80vh - 105px);
 }
@@ -189,8 +188,8 @@
   align-items: center;
   justify-content: space-between;
   background: #f5f5f5;
-  height: 84px;
-  min-height: 84px;
+  height: 64px;
+  min-height: 64px;
   padding: 0px 20px;
 }
 .headerLeft {
@@ -200,7 +199,7 @@
   color: #222222;
   font-size: 20px;
   font-weight: 600;
-  gap: 33px;
+  gap: 18px;
   h2 {
     font-size: 22px;
     font-weight: 600;
