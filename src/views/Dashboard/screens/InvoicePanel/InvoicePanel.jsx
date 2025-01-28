@@ -6,6 +6,8 @@ import FloatingMenu from "../../components/FloatingMenu/FloatingMenu.jsx";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin.jsx";
 import { useState } from "react";
 import Automate from "../../components/Automate/Automate.jsx";
+import Factura from "../../assets/facturaEjemplo.png";
+
 import PanelAutomate from "../../components/Automate/panelAutomate/PanelAutomate.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import Chat from "../../components/Chat/Chat.jsx";
@@ -90,7 +92,7 @@ export default function InvoicePanel() {
         ) : (
           <>
             <InvoiceForm />
-            <Preview companyInfo={company} />
+            <Preview companyInfo={company} document={Factura} />
           </>
         )}
         {/* <FloatingMenu

@@ -10,6 +10,8 @@ import gestionaEsPublico from "../../assets/gestionaEsPublicoIcon.svg";
 import stripeIcon from "../../assets/stripeIconText.svg";
 import wsIcon from "../../assets/whatsappIcon.svg";
 import SendEmailModal from "../SendEmailModal/SendEmailModal";
+import { ReactComponent as EyeWhiteIcon } from "../../assets/eyeWhiteIcon.svg";
+import SeeBill from "./SeeBill/SeeBill";
 
 const ButtonActionsWithText = ({ children, classStyle, click }) => {
   return (
@@ -21,8 +23,11 @@ const ButtonActionsWithText = ({ children, classStyle, click }) => {
 
 const DocumentPreview = ({ document, companyInfo }) => {
   const [options, setOptions] = useState(0);
+
   const [mailModal, setMailModal] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [seeBill, setSeeBill] = useState(false);
+
   const actions = [
     {
       text: "Enviar Correo",
@@ -111,9 +116,10 @@ const DocumentPreview = ({ document, companyInfo }) => {
               height={500}
               className={styles.documentImage}
             />
-            <button className={styles.menuButton}>
-              <MoreVertical className={styles.menuIcon} />
-            </button>
+            <div className={styles.visualizar} onClick={() => setSeeBill(true)}>
+              <EyeWhiteIcon />
+              Visualizar
+            </div>
           </div>
         ) : (
           <div className={styles.emptyPreview}>
@@ -121,6 +127,9 @@ const DocumentPreview = ({ document, companyInfo }) => {
           </div>
         )}
       </div>
+
+      {seeBill && <SeeBill document={document} setSeeBill={setSeeBill} />}
+
       <div className={styles.actionsSection}>
         <div className={styles.actionsContainer}>
           <button
