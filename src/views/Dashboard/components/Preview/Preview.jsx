@@ -1,6 +1,6 @@
 import { MoreVertical } from "lucide-react";
 import styles from "./Preview.module.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import sendMail from "../../assets/sendMail.svg";
 import downloadIcon from "../../assets/downloadIcon.svg";
 import tagIcon from "../../assets/tagIcon.svg";
@@ -103,6 +103,7 @@ const DocumentPreview = ({ document, companyInfo }) => {
       </div>
     );
   };
+  const seeBillRef = useRef(); // Referencia al componente SeeBill
 
   return (
     <div className={styles.container}>
@@ -116,7 +117,15 @@ const DocumentPreview = ({ document, companyInfo }) => {
               height={500}
               className={styles.documentImage}
             />
-            <div className={styles.visualizar} onClick={() => setSeeBill(true)}>
+            <div
+              className={styles.visualizar}
+              onClick={() => {
+                setSeeBill(true); // Mostrar el modal
+                setTimeout(() => {
+                  seeBillRef.current?.generatePDF(); // Llamar a la función en el hijo
+                }, 300); // Asegurar que el modal está montado
+              }}
+            >
               <EyeWhiteIcon />
               Visualizar
             </div>
@@ -128,7 +137,9 @@ const DocumentPreview = ({ document, companyInfo }) => {
         )}
       </div>
 
-      {seeBill && <SeeBill document={document} setSeeBill={setSeeBill} />}
+      {seeBill && (
+        <SeeBill ref={seeBillRef} document={document} setSeeBill={setSeeBill} />
+      )}
 
       <div className={styles.actionsSection}>
         <div className={styles.actionsContainer}>
