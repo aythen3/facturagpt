@@ -13,6 +13,8 @@ const {
   verifyOTPController,
   sendNewsletter,
   updateAccountPasswordController,
+  uploadPDF,
+  upload,
 } = require("../controllers/user");
 
 // -------------------------------
@@ -28,6 +30,7 @@ userManagerRouter
   .put("/updateUserPassword", updateAccountPasswordController)
   .post("/send-otp", generateAndSendOtpController)
   .post("/verify-otp", verifyOTPController)
-  .post("/newsletter", sendNewsletter);
+  .post("/newsletter", sendNewsletter)
+  .post("/upload-pdf", upload.single("file"), uploadPDF);
 
 module.exports = userManagerRouter;
