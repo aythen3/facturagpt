@@ -277,17 +277,18 @@ const AccountSettings = () => {
                 value={userData?.nombre}
                 name="nombre"
                 onSave={handleChange}
+                placeholder="Nombre"
               />
             </label>
 
             <label>
-              {" "}
               <EditableInput
                 label={t("email")}
                 value={userData?.email}
                 type="email"
                 name="email"
                 onSave={handleChange}
+                placeholder="Email"
               />
             </label>
 
@@ -299,6 +300,7 @@ const AccountSettings = () => {
                 name="password"
                 verify={true}
                 onSave={handleChange}
+                placeholder="Contraseña"
               />
             </label>
 
@@ -355,7 +357,12 @@ const AccountSettings = () => {
                     />
                   </>
                 ) : (
-                  <span>Desconocido</span>
+                  <span style={{
+                    color: '#71717a',
+                    marginTop: '10px'
+                  }}>
+                    Desconocido
+                  </span>
                 )}
               </div>
             </label>
@@ -371,7 +378,14 @@ const AccountSettings = () => {
                   {!editingPayMethod ? t("add") : "Guardar"}
                 </div>
               </div>
+              <span
+                style={{
+                  color: '#71717a',
+                  marginTop: '10px'
+                }}
+              >
               {t("unknown")}
+              </span>
               {editingPayMethod && (
                 <>
                   <div className={styles.payContainer}>
@@ -383,13 +397,13 @@ const AccountSettings = () => {
                           disabled={!editingPayMethod}
                           value="creditCard"
                           checked={userData?.paymentMethod === "creditCard"}
+                          onClick={(e) => e.stopPropagation()}
                           onChange={() =>
                             handleChange({
                               name: "paymentMethod",
                               newValue: "creditCard",
                             })
                           }
-                          onClick={(e) => e.stopPropagation()}
                         />
                         <div className={styles.paymentContainer}>
                           <div className={styles.paymentImage}>
@@ -552,7 +566,7 @@ const AccountSettings = () => {
             </label>
 
             <label>
-              <div className={styles.label} style={{ marginBottom: "20px" }}>
+              <div className={styles.label} style={{ marginBottom: "10px" }}>
                 <div className={styles.row}>
                   <p>Detalles de facturación</p>
                   <div

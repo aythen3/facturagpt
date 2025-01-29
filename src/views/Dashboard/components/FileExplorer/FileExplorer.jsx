@@ -504,6 +504,26 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
     // console.log(userFilters.keyWord !== "");
   };
 
+
+  // ---------------------------------------------------
+
+  const searchInputRef = useRef(null);
+
+  // Add this useEffect to handle the keyboard shortcut
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.shiftKey && e.key === "/") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+
+  
   return (
     <div
       className={styles.container}
@@ -518,6 +538,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             <img src={searchMagnify} alt="searchMagnify" />
           </div>
           <input
+          ref={searchInputRef}
             type="text"
             placeholder="Buscar"
             className={styles.searchInput}
@@ -595,8 +616,11 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                     dispatch(setCurrentPath(item.Key));
                   }
 
-                  if(1){
+                  if(isFolder){
                     navigate('/admin/panel')
+                  }else{
+                    console.log('item.Key', item)
+                    navigate('/admin/panel/' + item.ETag)
                   }
                 }}
                 key={index}

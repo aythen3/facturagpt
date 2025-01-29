@@ -29,8 +29,11 @@ import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabe
 import { clearTransaction } from "../../../../slices/transactionsSlices";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
 import { getEmailsByQuery } from "../../../../actions/emailManager";
+import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
+
 
 const Clients = () => {
+  
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
@@ -41,6 +44,9 @@ const Clients = () => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+
+
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -378,10 +384,8 @@ const Clients = () => {
 
   
   return (
+    <PanelTemplate>
     <div>
-      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div style={{ display: "flex" }}>
-        <FileExplorer />
         <div className={styles.container} onClick={() => setShowSidebar(false)}>
           <div className={styles.clientsHeader}>
             <h2>{t("title")}</h2>
@@ -529,7 +533,6 @@ const Clients = () => {
             </table>
           </div>
         </div>
-      </div>
       {showNewClient && (
         <>
           <ModalTemplate
@@ -869,6 +872,7 @@ const Clients = () => {
         </>
       )}
     </div>
+    </PanelTemplate>
   );
 };
 

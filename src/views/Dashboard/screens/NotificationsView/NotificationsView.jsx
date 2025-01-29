@@ -70,8 +70,43 @@ const notifications = [
 ];
 
 const ButtonsOptions = ({ option, index }) => {
+
+  const shareOption = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Compartir documento',
+          text: 'Mira este documento',
+          url: window.location.href,
+        });
+      } else {
+        alert('La función de compartir no está disponible en este dispositivo');
+      }
+    } catch (error) {
+      console.error('Error al compartir:', error);
+    }
+  }
+
+  const handleClick = (value) => {
+    switch (value) {
+      case 'Reenviar':
+        alert(1)
+        break;
+      case 'Responder':
+        alert(1)
+        break;
+      case 'Compartir':
+        shareOption()
+        break;
+      case 'Ver Email':
+        alert(1)
+        break;
+
+    }
+  }
   return (
     <button
+      onClick={() => handleClick(option)}
       key={index}
       style={{
         color: option === "Reenviar" ? "#7B7575" : "#04614b",

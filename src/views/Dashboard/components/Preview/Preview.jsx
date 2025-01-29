@@ -156,7 +156,11 @@ const DocumentPreview = ({ document, companyInfo }) => {
             Acciones
           </button>
         </div>
-        {options === 1 && <Actions />}
+        {options === 0 ? (
+          <Actions />
+        ) : (
+          <Actions />
+        )}
       </div>
       {mailModal && (
         <SendEmailModal
@@ -171,3 +175,176 @@ const DocumentPreview = ({ document, companyInfo }) => {
 };
 
 export default DocumentPreview;
+
+
+
+
+const Details = () => {
+  return (
+    <div>
+      ----
+      Estado : stripe Pagado
+
+      Subtotal
+      Editar
+      0,00€
+
+      Descuento
+      Añadir Descuento
+      Editar
+      10%
+      0,00€
+
+      Impuestos
+      Añadir Impuestos
+      Editar
+      21%
+      0,00€
+
+      Total
+      Editar
+      0,00€
+
+
+      #Factura
+      0001
+
+      #Orden de compra
+      0001
+
+      Fecha
+      Editar
+      25 Dec 2025
+
+      Fecha vencimiento
+      25 Dec 2025
+
+      Condiciones y formas de pago
+
+      ex. Payments is due within 15 days
+
+      Logo
+      icon
+      Añade tu Logo
+
+
+      Firma
+      Añade tu Firma
+
+      Seleccionar Plantilla
+
+      Editar Código HTML
+      icon thunder
+    </div>
+  )
+}
+
+
+const PanelImpuesto = () => {
+  return (
+    <div>
+      <div>
+        <button>
+          =!
+        </button>
+        <h2>
+          Seleccionar Impuesto
+        </h2>
+        <div>
+          <button>
+            Cancel
+          </button>
+          <button>
+            Seleccionar
+          </button>
+        </div>
+        <div>
+          <div>
+            Nombre del Impuesto
+            [taxname]
+          </div>
+          <div>
+            Tasa de impuesto
+            %
+          </div>
+          <div>
+            icon
+            Impuesto compuesto
+          </div>
+        </div>
+
+        <div>
+          <table>
+            <tr>
+              <td>
+                Nombre del Impuesto
+              </td>
+              <td>
+                Tasa del Impuesto
+              </td>
+              <td>
+                Impuesto Compuesto
+              </td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+      <div>
+        <div>
+          <button>
+            =!
+          </button>
+          <h2>
+            Seleccionar Descuento
+          </h2>
+        </div>
+        <div>
+          <b>
+            Nombre o descripción del descuento
+          </b>
+          <input
+            type="text"
+            placeholder="[discountname]"
+          />
+        </div>
+        <div>
+          <b>
+            Descuento
+          </b>
+          <input
+            type="text"
+            placeholder="%"
+          />
+        </div>
+        <button>
+          Añadir Impuesto
+        </button>
+        <button>
+          Editar
+          10%
+        </button>
+        <div>
+          <table>
+            <tr>
+              <td>
+                Nombre del Impuesto
+              </td>
+              <td>
+                Descuento Aplicado
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Descuento Aplicado
+              </td>
+              <td>
+                21.00%
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  )
+}

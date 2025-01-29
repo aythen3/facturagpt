@@ -23,6 +23,8 @@ import {
   getOneTransactionById,
 } from "../../../../actions/transactions";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
+import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
+
 const AllProducts = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -153,298 +155,292 @@ const AllProducts = () => {
     setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
   };
   return (
-    <div>
-      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div style={{ display: "flex" }}>
-        <FileExplorer />
+    <PanelTemplate>
+      <div className={styles.container} onClick={() => setShowSidebar(false)}>
+        <div className={styles.clientsHeader}>
+          <h2>Articulos</h2>
+          <div className={styles.searchContainer}>
+            <button
+              className={styles.addButton}
+              onClick={() => setShowModal(true)}
+            >
+              Clientes y Proveedores
+            </button>
+            <button
+              className={styles.infoBtn}
+              onClick={() => setNewProductModal(true)}
+            >
+              Analíticas
+            </button>
 
-        <div className={styles.container} onClick={() => setShowSidebar(false)}>
-          <div className={styles.clientsHeader}>
-            <h2>Articulos</h2>
-            <div className={styles.searchContainer}>
-              <button
-                className={styles.addButton}
-                onClick={() => setShowModal(true)}
-              >
-                Clientes y Proveedores
-              </button>
-              <button
-                className={styles.infoBtn}
-                onClick={() => setNewProductModal(true)}
-              >
-                Analíticas
-              </button>
+            <div className={styles.inputWrapper}>
+              <img src={searchGray} className={styles.inputIconInside} />
+              <input
+                type="text"
+                placeholder={t("placeholderSearch")}
+                value={search}
+                onChange={handleSearchChange}
+                className={styles.searchInput}
+              />
 
-              <div className={styles.inputWrapper}>
-                <img src={searchGray} className={styles.inputIconInside} />
-                <input
-                  type="text"
-                  placeholder={t("placeholderSearch")}
-                  value={search}
-                  onChange={handleSearchChange}
-                  className={styles.searchInput}
-                />
-
-                <div className={styles.inputIconOutsideContainer}>
-                  <img src={filterSearch} className={styles.inputIconOutside} />
-                </div>
+              <div className={styles.inputIconOutsideContainer}>
+                <img src={filterSearch} className={styles.inputIconOutside} />
               </div>
-              <button className={styles.moreBtn}>
-                <img src={plusIcon} />
-              </button>
             </div>
+            <button className={styles.moreBtn}>
+              <img src={plusIcon} />
+            </button>
           </div>
+        </div>
 
-          <div className={styles.clientsTable} style={{ overflow: "auto" }}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th className={styles.small}>
-                    <input
-                      type="checkbox"
-                      name="clientSelected"
-                      checked={
-                        clientSelected.length == tableData.length ? true : false
-                      }
-                      onClick={selectAllClients}
-                    />
-                  </th>
-                  {tableHeaders.map((header, index) => (
-                    <th
-                      key={index}
-                      className={
-                        index == 7
-                          ? styles.small
-                          : "" || index == 6
-                            ? styles.small
-                            : "" || index == 0
-                              ? styles.big
-                              : "" || index == 1
-                                ? styles.big
-                                : ""
-                      }
-                    >
-                      {Array.isArray(header) ? (
-                        <div className={styles.headerStack}>
-                          <span>{header[0]}</span>
-                          <span className={styles.subHeader}>{header[1]}</span>
-                        </div>
-                      ) : (
-                        header
-                      )}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {transactionByClient?.doc?.totalData?.productList.map(
-                  (product, rowIndex) => (
-                    <tr key={rowIndex}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          name="clientSelected"
-                          onClick={() => selectClient(rowIndex)}
-                          checked={
-                            clientSelected.includes(rowIndex) ? true : false
-                          }
-                        />
-                      </td>
-                      <td className={styles.name}>
-                        {product.productDescription}
-                      </td>
-                      <td>{product.productImport}</td>
-                      <td>{product.quantity}</td>
-                      <td>{product.productImportWithoutDiscount}</td>
-                      <td>{product.productPartial}</td>
-                      <td>{product.priceEn}</td>
-                      <td className={styles.actions}>
-                        <div className={styles.transacciones}>
-                          <a href="#">Ver</a>
-                        </div>
-                      </td>
-                      <td>
-                        <div className={styles.edit}>
-                          <a href="#">Editar</a>
-                          <div onClick={() => handleActions(rowIndex, product)}>
-                            <img src={optionDots} alt="options" />
-                          </div>
-                          {selectedRowIndex === rowIndex && (
-                            <ul className={styles.content_menu_actions}>
-                              <li
-                                onClick={() => {
-                                  handleDelete(product.productRef);
-                                  setSelectedRowIndex(null);
-                                }}
-                                className={styles.item_menu_actions}
-                              >
-                                Eliminar
-                              </li>
-                            </ul>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-            </table>
-          </div>
-          {showModal && (
-            <LastTransactions
-              setShowModal={setShowModal}
-              showModal={showModal}
-            />
-          )}
-          {newProductModal && (
-            <ModalTemplate onClick={closeNewProductModal}>
-              <div className={styles.allProductC}>
-                <form className={styles.formAllProduct}>
-                  <EditableInput
-                    label={"Nombre"}
-                    nameInput={"nombre"}
-                    placeholderInput={"Añade un nombre a tu producto"}
-                    isEditing={inputsEditing.name}
-                    value={clientDataInputs.name}
-                    onChange={(e) =>
-                      setClientDataInputs({
-                        ...clientDataInputs,
-                        name: e.target.value,
-                      })
+        <div className={styles.clientsTable} style={{ overflow: "auto" }}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.small}>
+                  <input
+                    type="checkbox"
+                    name="clientSelected"
+                    checked={
+                      clientSelected.length == tableData.length ? true : false
                     }
-                    onClick={() =>
-                      setInputsEditing((prev) => ({
-                        ...prev,
-                        name: !prev.name,
-                      }))
+                    onClick={selectAllClients}
+                  />
+                </th>
+                {tableHeaders.map((header, index) => (
+                  <th
+                    key={index}
+                    className={
+                      index == 7
+                        ? styles.small
+                        : "" || index == 6
+                          ? styles.small
+                          : "" || index == 0
+                            ? styles.big
+                            : "" || index == 1
+                              ? styles.big
+                              : ""
                     }
                   >
-                    <div
-                      className={`
+                    {Array.isArray(header) ? (
+                      <div className={styles.headerStack}>
+                        <span>{header[0]}</span>
+                        <span className={styles.subHeader}>{header[1]}</span>
+                      </div>
+                    ) : (
+                      header
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {transactionByClient?.doc?.totalData?.productList.map(
+                (product, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="clientSelected"
+                        onClick={() => selectClient(rowIndex)}
+                        checked={
+                          clientSelected.includes(rowIndex) ? true : false
+                        }
+                      />
+                    </td>
+                    <td className={styles.name}>
+                      {product.productDescription}
+                    </td>
+                    <td>{product.productImport}</td>
+                    <td>{product.quantity}</td>
+                    <td>{product.productImportWithoutDiscount}</td>
+                    <td>{product.productPartial}</td>
+                    <td>{product.priceEn}</td>
+                    <td className={styles.actions}>
+                      <div className={styles.transacciones}>
+                        <a href="#">Ver</a>
+                      </div>
+                    </td>
+                    <td>
+                      <div className={styles.edit}>
+                        <a href="#">Editar</a>
+                        <div onClick={() => handleActions(rowIndex, product)}>
+                          <img src={optionDots} alt="options" />
+                        </div>
+                        {selectedRowIndex === rowIndex && (
+                          <ul className={styles.content_menu_actions}>
+                            <li
+                              onClick={() => {
+                                handleDelete(product.productRef);
+                                setSelectedRowIndex(null);
+                              }}
+                              className={styles.item_menu_actions}
+                            >
+                              Eliminar
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
+        {showModal && (
+          <LastTransactions
+            setShowModal={setShowModal}
+            showModal={showModal}
+          />
+        )}
+        {newProductModal && (
+          <ModalTemplate onClick={closeNewProductModal}>
+            <div className={styles.allProductC}>
+              <form className={styles.formAllProduct}>
+                <EditableInput
+                  label={"Nombre"}
+                  nameInput={"nombre"}
+                  placeholderInput={"Añade un nombre a tu producto"}
+                  isEditing={inputsEditing.name}
+                  value={clientDataInputs.name}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      name: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      name: !prev.name,
+                    }))
+                  }
+                >
+                  <div
+                    className={`
                     ${styles.typeClient}
-                    ${
-                      inputsEditing.name
+                    ${inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
-                    }
+                      }
                       `}
+                  >
+                    <button
+                      className={selectTypeClient == 0 && styles.selected}
+                      onClick={() => setSelectTypeClient(0)}
+                      type="button"
+                      disabled={!inputsEditing.name}
                     >
-                      <button
-                        className={selectTypeClient == 0 && styles.selected}
-                        onClick={() => setSelectTypeClient(0)}
-                        type="button"
-                        disabled={!inputsEditing.name}
-                      >
-                        Servicio
-                      </button>
-                      <button
-                        className={selectTypeClient == 1 && styles.selected}
-                        onClick={() => setSelectTypeClient(1)}
-                        type="button"
-                        disabled={!inputsEditing.name}
-                      >
-                        Producto
-                      </button>
-                    </div>
-                  </EditableInput>
-                  <EditableInput
-                    label={"Descripción"}
-                    nameInput={"description"}
-                    placeholderInput={
-                      "Especifica las características del artículo"
-                    }
-                    isEditing={inputsEditing.desc}
-                    value={clientDataInputs.desc}
-                    type={"textarea"}
-                    onChange={(e) =>
-                      setClientDataInputs({
-                        ...clientDataInputs,
-                        desc: e.target.value,
-                      })
-                    }
-                    onClick={() =>
-                      setInputsEditing((prev) => ({
-                        ...prev,
-                        desc: !prev.desc,
-                      }))
-                    }
+                      Servicio
+                    </button>
+                    <button
+                      className={selectTypeClient == 1 && styles.selected}
+                      onClick={() => setSelectTypeClient(1)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Producto
+                    </button>
+                  </div>
+                </EditableInput>
+                <EditableInput
+                  label={"Descripción"}
+                  nameInput={"description"}
+                  placeholderInput={
+                    "Especifica las características del artículo"
+                  }
+                  isEditing={inputsEditing.desc}
+                  value={clientDataInputs.desc}
+                  type={"textarea"}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      desc: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      desc: !prev.desc,
+                    }))
+                  }
+                />
+
+                <label>
+                  <p>Proveedor por defecto</p>
+                  <div>
+                    <input type="checkbox" />
+                    <span>
+                      Marca la casilla si tu eres el dueño de este activo
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Busca y selecciona proveedores"
                   />
+                </label>
 
-                  <label>
-                    <p>Proveedor por defecto</p>
-                    <div>
-                      <input type="checkbox" />
-                      <span>
-                        Marca la casilla si tu eres el dueño de este activo
-                      </span>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Busca y selecciona proveedores"
-                    />
-                  </label>
+                <EditableInput
+                  label={"Retail Price (PVP)"}
+                  nameInput={"retailPrice"}
+                  placeholderInput={"0.0"}
+                  // isEditing={inputsEditing.floorPrice}
+                  isEditing={true}
+                  value={clientDataInputs.retailPrice}
+                  options={false}
+                  onChange={(e) =>
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      retailPrice: e.target.value,
+                    })
+                  }
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      retailPrice: !prev.retailPrice,
+                    }))
+                  }
+                />
 
-                  <EditableInput
-                    label={"Retail Price (PVP)"}
-                    nameInput={"retailPrice"}
-                    placeholderInput={"0.0"}
-                    // isEditing={inputsEditing.floorPrice}
-                    isEditing={true}
-                    value={clientDataInputs.retailPrice}
-                    options={false}
-                    onChange={(e) =>
-                      setClientDataInputs({
-                        ...clientDataInputs,
-                        retailPrice: e.target.value,
-                      })
-                    }
-                    onClick={() =>
-                      setInputsEditing((prev) => ({
-                        ...prev,
-                        retailPrice: !prev.retailPrice,
-                      }))
-                    }
-                  />
+                <label className={styles.impuestos}>
+                  <div>
+                    <p>Impuesto</p>
+                  </div>
+                  <button type="button">Añadir impuesto</button>
+                  <div className={styles.percent}>
+                    <span>21.00%</span>
+                    <div>Editar</div>
+                  </div>
+                </label>
 
-                  <label className={styles.impuestos}>
-                    <div>
-                      <p>Impuesto</p>
-                    </div>
-                    <button type="button">Añadir impuesto</button>
-                    <div className={styles.percent}>
-                      <span>21.00%</span>
-                      <div>Editar</div>
-                    </div>
-                  </label>
+                <label className={styles.sku}>
+                  <div>
+                    <p># (SKU)</p>
+                  </div>
+                  <div className={styles.autogenerated}>
+                    <span>Autogenerado</span>
+                    <div>Editar</div>
+                  </div>
+                  <input type="text" placeholder="#" />
+                </label>
 
-                  <label className={styles.sku}>
-                    <div>
-                      <p># (SKU)</p>
-                    </div>
-                    <div className={styles.autogenerated}>
-                      <span>Autogenerado</span>
-                      <div>Editar</div>
-                    </div>
-                    <input type="text" placeholder="#" />
-                  </label>
+                <ParametersLabel
+                  parameters={clientDataInputs.parameters}
+                  setClientDataInputs={setClientDataInputs}
+                  editingIndices={editingIndices}
+                  setEditingIndices={setEditingIndices}
+                  addUnit={true}
+                />
 
-                  <ParametersLabel
-                    parameters={clientDataInputs.parameters}
-                    setClientDataInputs={setClientDataInputs}
-                    editingIndices={editingIndices}
-                    setEditingIndices={setEditingIndices}
-                    addUnit={true}
-                  />
-
-                  <Tags direction={"column"} />
-                </form>
-              </div>
-              <ProfileModalTemplate />
-            </ModalTemplate>
-          )}
-        </div>
+                <Tags direction={"column"} />
+              </form>
+            </div>
+            <ProfileModalTemplate />
+          </ModalTemplate>
+        )}
       </div>
-    </div>
+    </PanelTemplate>
   );
 };
 

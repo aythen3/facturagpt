@@ -30,6 +30,15 @@
   }
 }
 
+.contentContainer{
+  &.active{
+    display: block;
+  }
+  &.disabled{
+    display: none;
+  }
+}
+
 .contentInput {
   margin-top: 5px;
   display: flex;

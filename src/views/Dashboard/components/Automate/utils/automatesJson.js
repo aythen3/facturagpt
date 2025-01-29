@@ -79,11 +79,30 @@ export const data = [
     available: true
   },
   {
+    id: 16,
+    automateName: "Exporta a tu Servidor FTP",
+    image: ftp,
+    contactType: "682",
+    type: "FTP",
+    role: "output",
+    available: true
+  },
+  {
     id: 8,
-    automateName: "Genera Archivos XML para Declaraciones Físcales",
+    automateName: "Genera Archivos XML",
     image: xml,
     contactType: "example@gmail.com",
     type: "XML",
+    role: "output",
+    available: true
+  },
+  {
+    id: 11,
+    automateName:
+      "Envía a tu portal de la Agencia Tributaria",
+    image: agencyTribut,
+    contactType: "example@gmail.com ",
+    type: "Agencia Tributaria",
     role: "output",
     available: true
   },
@@ -105,16 +124,7 @@ export const data = [
     role: "output",
     available: false
   },
-  {
-    id: 11,
-    automateName:
-      "Envía Facturas automáticamente a tu portal de la Agencia Tributaria",
-    image: agencyTribut,
-    contactType: "example@gmail.com ",
-    type: "Agencia Tributaria",
-    role: "output",
-    available: false
-  },
+  
   {
     id: 12,
     automateName: "Envía Notificaciónes por WhatApp",
@@ -151,13 +161,5 @@ export const data = [
     role: "output",
     available: false
   },
-  {
-    id: 16,
-    automateName: "Exporta a tu Servidor FTP",
-    image: ftp,
-    contactType: "682",
-    type: "FTP",
-    role: "output",
-    available: true
-  },
+  
 ];
