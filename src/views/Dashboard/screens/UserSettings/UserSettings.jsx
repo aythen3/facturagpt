@@ -214,7 +214,7 @@ const UserSettings = ({
 
     // console.log('Adding new client with default values:', defaultClient);
     // dispatch(addNewClient({ clientData: defaultClient }));
-    navigate("/home");
+    // navigate("/home");
     alert("Cliente agregado satisfactoriamente!");
   };
 
@@ -268,14 +268,23 @@ const UserSettings = ({
             </div>
 
             <div style={{ display: "flex", gap: "10px" }}>
-              <Button type={"white"}>Cancel</Button>
-              <Button>Dar de alta</Button>
+              <Button
+                type={"white"}
+                action={() => setShowUserSettings(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                action={handleAddClient}
+              >
+                Dar de alta
+              </Button>
             </div>
           </div>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", gap: "40px", height: "100%" }}>
             {/* Left Side */}
             <div className={styles.leftSection}>
-              <div className={styles.faqContainer}>
+              <div className={styles.c}>
                 <div className={styles.faqItem}>
                   <div className={styles.switchContainer}>
                     <img src={shield} alt="Shield" />

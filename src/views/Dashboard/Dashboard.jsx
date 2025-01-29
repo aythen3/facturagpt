@@ -43,7 +43,7 @@ import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
 import UserSettings from "./screens/UserSettings/UserSettings";
-import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
+// import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
 import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
@@ -474,9 +474,16 @@ const Dashboard = () => {
     },
   ];
 
+
+  // const [fromPath, setFromPath] = useState("chat");
+
   return (
     <Elements stripe={stripePromise}>
-      <NavbarAdmin />
+      {/* <NavbarAdmin 
+        fromPath={fromPath}
+        setFromPath={setFromPath}
+      /> */}
+      {/* fromPath: :{fromPath} */}
       <div style={{ display: "flex" }}>
         <FileExplorer />
         <div className={styles.homeContainer}>

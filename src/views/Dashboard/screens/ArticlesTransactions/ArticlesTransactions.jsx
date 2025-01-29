@@ -137,7 +137,7 @@ const ArticlesTransactions = () => {
 
   return (
     <div>
-      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      {/* <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} /> */}
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
           <div className={styles.infoClient}>

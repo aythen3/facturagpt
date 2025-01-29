@@ -115,7 +115,6 @@ const SeeHistory = ({
           <p>
             Historial Guardado en /<strong>NombredelaCuenta</strong>
           </p>
-          <button>Editar Ubicacion</button>
         </header>
         <div className={styles.contentHistory}>
           {historyData.map((item, index) => (
@@ -129,7 +128,7 @@ const SeeHistory = ({
                     <img src={pdfIcon} alt="" />
                     Ver PDF
                   </button>
-                  <img src={optionDots} alt="" />
+                  {/* <img src={optionDots} alt="" /> */}
                 </div>
               </div>
 

@@ -6,6 +6,7 @@
   justify-content: space-between;
   height: 74px;
   user-select: none;
+  cursor: pointer;
 }
 
 .content:hover {
@@ -15,6 +16,13 @@
 .content_active {
   background-color: #ececf1;
 }
+.content_disabled {
+  background-color: #f1f1f1 !important;
+  opacity: 0.3;
+  cursor: no-drop;
+
+}
+
 .content_panel {
   background: transparent;
   border-radius: 4px;
@@ -32,8 +40,8 @@
 }
 
 .image {
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
 }
 
 .automate_name {

@@ -95,7 +95,11 @@ const EditableInput = ({
           <span
             className={styles.verify}
             onClick={handlePasswordVerify}
-            style={{ opacity: !editable ? "0" : "1" }}
+            // style={{ opacity: !editable ? "0" : "1" }}
+            style={{
+              display: !editable ? "none" : "block",
+              cursor: !editable ? "not-allowed" : "pointer"
+            }}
           >
             {t("verify")}
           </span>

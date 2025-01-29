@@ -621,6 +621,7 @@ const PanelAutomate = ({
                           type={card.type}
                           name={card.automateName}
                           image={card.image}
+                          available={card.available}
                           contactType={card.contactType}
                           typeContent={typeContent}
                           isActive={activeCard === card.id}
@@ -639,6 +640,7 @@ const PanelAutomate = ({
                           type={card.type}
                           name={card.automateName}
                           image={card.image}
+                          available={card.available}
                           contactType={card.contactType}
                           typeContent={typeContent}
                           fromPanel={true}
@@ -663,6 +665,7 @@ const PanelAutomate = ({
                           type={card.type}
                           name={card.automateName}
                           image={card.image}
+                          available={card.available}
                           contactType={card.contactType}
                           typeContent={typeContent}
                           isActive={activeCard === card.id}

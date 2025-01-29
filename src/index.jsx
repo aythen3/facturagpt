@@ -36,6 +36,8 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 
+import NavbarAdmin from "./views/Dashboard/components/NavbarAdmin/NavbarAdmin";
+
 
 import { useSelector } from "react-redux";
 
@@ -75,14 +77,18 @@ const Layout = () => {
 
   const ComponentPrivate = () => {
     const { user } = useSelector((state) => state.user);
+    
+    // const [fromPath, setFromPath] = useState("chat");
+
     return (
       <div>
         {/* <h2>Bienvenido, {user?.name || 'Usuario'}</h2> */}
-        
+        {/* <NavbarAdmin
+          fromPath={fromPath}
+          setFromPath={setFromPath}
+        /> */}
         <Routes>
           <Route path="/home" element={<Dashboard />} />
-          <Route path="/panel" element={<InvoicePanel />} />
-          
           <Route path="/clients" element={<UsersClientsDashboard />} />
           <Route path="/users" element={<UsersDashboard />} />
           <Route path="/contacts" element={<Clients />} />
@@ -91,6 +97,9 @@ const Layout = () => {
           <Route path="/chat" element={<ChatView />} />
           <Route path="/articlestransactions" element={<ArticlesTransactions />} />
           <Route path="/notification" element={<NotificationsView />} />
+
+          <Route path="/panel" element={<InvoicePanel />} />
+          <Route path="/panel/:id" element={<InvoicePanel />} />
         </Routes>
       </div>
     );

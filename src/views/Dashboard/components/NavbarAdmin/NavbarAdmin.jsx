@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./NavbarAdmin.module.css";
 import star from "../../assets/starPlus.svg";
 import facturaGPT from "../../assets/FacturaGPTBlack.svg";
-import clientIcon from "../../assets/clientsIcon.svg";
+// import clientIcon from "../../assets/clientsIcon.svg";
 import spanish_flag from "../../assets/spain_flag.svg";
 import english_flag from "../../assets/english_flag.svg";
 import AccountSettings from "../AccountSettings/AccountSettings";
@@ -17,8 +17,12 @@ import { ReactComponent as AddPlus } from "../../assets/addPlus.svg";
 import addGreen from "../../assets/addGreen.svg";
 // import chatIcon from "../../assets/chatIcon.svg";
 import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
-import boxIcon from "../../assets/boxIcon.svg";
-import dotsNotification from "../../assets/dotsNotification.svg";
+import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
+// import boxIcon from "../../assets/boxIcon.svg";
+// import dotsNotification from "../../assets/dotsNotification.svg";
+import { ReactComponent as DotsNotification } from "../../assets/dotsNotification.svg";
+import { ReactComponent as ClientIcon } from "../../assets/clientsIcon.svg";
+// import clientIcon from "../../assets/clientsIcon.svg";
 import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
@@ -33,13 +37,16 @@ import SelectLocation from "../SelectLocation/SelectLocation";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
-const NavbarAdmin = () => {
+const NavbarAdmin = ({ 
+  fromPath, 
+  setFromPath = () => {} 
+}) => {
   const { pathname } = window.location;
 
-  const fromPath = pathname.split("/")[2];
+  // const fromPath = pathname.split("/")[2];
 
 
-console.log('languageFromPath', fromPath)
+  // console.log('languageFromPath', fromPath)
 
   const { user } = useSelector((state) => state.user);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
@@ -55,7 +62,7 @@ console.log('languageFromPath', fromPath)
   const [isAnimating, setIsAnimating] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [numNotification, setNumNotification] = useState(0);
-  
+
 
   // =======================
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
@@ -120,7 +127,7 @@ console.log('languageFromPath', fromPath)
             </a> */}
               {!isOpen ? (
                 <a
-                onClick={() => setIsOpen((prev) => !prev)}
+                  onClick={() => setIsOpen((prev) => !prev)}
                 >
                   <AddPlus />
                   {/* <img
@@ -143,31 +150,37 @@ console.log('languageFromPath', fromPath)
                 </a>
               )}
               <a
-                href="/admin/chat"
+                // href="/admin/chat"
+                onClick={() => setFromPath('chat')}
                 className={fromPath == 'chat' ? styles.active : ''}
               >
                 <ChatIcon />
                 {/* <img src={chatIcon} alt="Icon" /> */}
               </a>
               <a
-                href="/admin/contacts"
-                className={fromPath == 'chat' ? styles.active : ''}
+                // href="/admin/contacts"
+                onClick={() => setFromPath('contacts')}
+                className={fromPath == 'contacts' ? styles.active : ''}
               >
-                <img src={clientIcon} alt="Icon" />
+                <ClientIcon />
+                {/* <img src={clientIcon} alt="Icon" /> */}
               </a>
               <a
-                href="/admin/products"
-                className={fromPath == 'chat' ? styles.active : ''}
-              >
-                <img src={boxIcon} alt="Icon" />
+                // href="/admin/products"
+                onClick={() => setFromPath('products')}
+                className={fromPath == 'products' ? styles.active : ''}
+                >
+                {/* <img src={boxIcon} alt="Icon" /> */}
+                <BoxIcon />
               </a>
               <a
-                href="/admin/notification" 
-                // className={styles.number}
+                //href="/admin/notification"
                 className={`${styles.number} 
-                ${fromPath == 'chat' ? styles.active : ''}`}
+                ${fromPath == 'notification' ? styles.active : ''}`}
+                onClick={() => setFromPath('notification')}
               >
-                <img src={dotsNotification} alt="Icon" />
+                <DotsNotification />
+                {/* <img src={dotsNotification} alt="Icon" /> */}
                 {(numNotification !== 0) && (
                   <span>{numNotification}</span>
                 )}
@@ -207,15 +220,85 @@ console.log('languageFromPath', fromPath)
 
 
           {menuOpen && (
-            <div>
-              Obtener plus
-              Automatizar
-              Chat
-              Clients
-              Products
-              Notificacions
-              User
-            </div>
+            <>
+              <div
+                className={styles.mobileMenuOverlay}
+                onClick={() => setMenuOpen(false)}
+              ></div>
+              <div className={styles.mobileMenu}>
+                <button>
+                  {t("buttonGetPlus")} <img src={star} alt="Icon" />
+                </button>
+                <ul>
+                  <li
+                    onClick={() => setIsOpen((prev) => !prev)}
+                  >
+                    <AddPlus />
+                    Automatizar
+                  </li>
+                  <li>
+                    <a
+                      href="/admin/chat"
+                      className={fromPath == 'chat' ? styles.active : ''}
+                    >
+                      <ChatIcon />
+                      Chat
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/admin/contacts"
+                      className={fromPath == 'contacts' ? styles.active : ''}
+                    >
+                      <ClientIcon />
+                      Clients
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/admin/products"
+                      className={fromPath == 'products' ? styles.active : ''}
+                    >
+                      <BoxIcon />
+                      Products
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/admin/notification"
+                      className={`${styles.number} 
+                ${fromPath == 'notification' ? styles.active : ''}`}
+                    >
+                      <DotsNotification />
+                      Notificacions
+                      {(numNotification !== 0) && (
+                        <span>{numNotification}</span>
+                      )}
+                    </a>
+                  </li>
+                </ul>
+                <div
+                  onClick={handleProfileClick}
+                  className={styles.profileContainer}
+                >
+                  <div className={styles.profileText}>
+                    <p>{user?.nombre || 'Not found'}</p>
+                    <span>{user?.role || 'Not found'}</span>
+                  </div>
+                  {user?.profileImage ? (
+                    <img
+                      className={styles.profileImage}
+                      src={user?.profileImage}
+                      alt=""
+                    />
+                  ) : (
+                    <div className={styles.initials}>
+                      {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </>
           )}
 
 
@@ -268,8 +351,8 @@ console.log('languageFromPath', fromPath)
           )}
 
           {true && (
-            <PanelIniAutomate 
-            
+            <PanelIniAutomate
+
             />
           )}
         </div>

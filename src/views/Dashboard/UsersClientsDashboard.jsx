@@ -46,7 +46,7 @@ import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
 import UserSettings from "./screens/UserSettings/UserSettings";
-import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
+// import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
 import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
@@ -54,7 +54,8 @@ const stripePromise = loadStripe(
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
 import { createClients } from "../../actions/clients";
-import FileExplorer from "./components/FileExplorer/FileExplorer";
+// import FileExplorer from "./components/FileExplorer/FileExplorer";
+import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
 
 const UsersClientsDashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -479,6 +480,7 @@ const UsersClientsDashboard = () => {
     },
   ];
   return (
+    <PanelTemplate>
     <div className={styles.container}>
       {showPaymentModal && amountToPay && (
         <Payment
@@ -494,7 +496,7 @@ const UsersClientsDashboard = () => {
         />
       )}
 
-      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      {/* <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} /> */}
       
       <div className={styles.statsContainer} onClick={() => setShowSidebar(false)}>
         {stats.map((stat, index) => (
@@ -727,6 +729,7 @@ const UsersClientsDashboard = () => {
         />
       )}
     </div>
+    </PanelTemplate>
   );
 };
 

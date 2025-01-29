@@ -72,9 +72,9 @@
 .leftContainer::-webkit-scrollbar-track {
   background: transparent;
 }
-.body > div:first-child {
+/* .body > div:first-child {
   padding-right: 24px;
-}
+} */
 
 .content_header {
   /* width: 80%; */

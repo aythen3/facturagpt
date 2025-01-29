@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 const CardAutomate = ({
   name,
   image,
+  available = true,
   contactType,
   typeContent,
   type,
@@ -33,8 +34,12 @@ const CardAutomate = ({
   return (
     <>
       <div
-        onClick={() => typeContent(type, automationData)}
-        className={`${styles.content} ${fromPanel && styles.content_panel} ${isActive ? styles.content_active : ""}`}
+        onClick={() => available && typeContent(type, automationData)}
+        className={`${styles.content} 
+        ${fromPanel && styles.content_panel} 
+        ${isActive ? styles.content_active : ""}
+        ${!available ? styles.content_disabled : ""}
+        `}
         style={{ borderBottom: !last && !fromPanel && "1px solid #e2f4f0" }}
       >
         <div className={styles.data_contain}>
