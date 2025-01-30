@@ -37,14 +37,10 @@ import SelectLocation from "../SelectLocation/SelectLocation";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
-const NavbarAdmin = ({ 
-  fromPath, 
-  setFromPath = () => {} 
-}) => {
+const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   const { pathname } = window.location;
 
   // const fromPath = pathname.split("/")[2];
-
 
   // console.log('languageFromPath', fromPath)
 
@@ -62,7 +58,6 @@ const NavbarAdmin = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [numNotification, setNumNotification] = useState(0);
-
 
   // =======================
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
@@ -97,7 +92,6 @@ const NavbarAdmin = ({
     setTypeContentAutomate("");
   };
 
-
   // ========================
 
   const toggleMenu = () => {
@@ -126,9 +120,7 @@ const NavbarAdmin = ({
               <img src={addBlack} alt="Icon" />
             </a> */}
               {!isOpen ? (
-                <a
-                  onClick={() => setIsOpen((prev) => !prev)}
-                >
+                <a onClick={() => setIsOpen((prev) => !prev)}>
                   <AddPlus />
                   {/* <img
                     src={addPlus}
@@ -151,39 +143,37 @@ const NavbarAdmin = ({
               )}
               <a
                 // href="/admin/chat"
-                onClick={() => setFromPath('chat')}
-                className={fromPath == 'chat' ? styles.active : ''}
+                onClick={() => setFromPath("chat")}
+                className={fromPath == "chat" ? styles.active : ""}
               >
                 <ChatIcon />
                 {/* <img src={chatIcon} alt="Icon" /> */}
               </a>
               <a
                 // href="/admin/contacts"
-                onClick={() => setFromPath('contacts')}
-                className={fromPath == 'contacts' ? styles.active : ''}
+                onClick={() => setFromPath("contacts")}
+                className={fromPath == "contacts" ? styles.active : ""}
               >
                 <ClientIcon />
                 {/* <img src={clientIcon} alt="Icon" /> */}
               </a>
               <a
                 // href="/admin/products"
-                onClick={() => setFromPath('products')}
-                className={fromPath == 'products' ? styles.active : ''}
-                >
+                onClick={() => setFromPath("products")}
+                className={fromPath == "products" ? styles.active : ""}
+              >
                 {/* <img src={boxIcon} alt="Icon" /> */}
                 <BoxIcon />
               </a>
               <a
                 //href="/admin/notification"
                 className={`${styles.number} 
-                ${fromPath == 'notification' ? styles.active : ''}`}
-                onClick={() => setFromPath('notification')}
+                ${fromPath == "notification" ? styles.active : ""}`}
+                onClick={() => setFromPath("notification")}
               >
                 <DotsNotification />
                 {/* <img src={dotsNotification} alt="Icon" /> */}
-                {(numNotification !== 0) && (
-                  <span>{numNotification}</span>
-                )}
+                {numNotification !== 0 && <span>{numNotification}</span>}
               </a>
 
               <div
@@ -191,8 +181,8 @@ const NavbarAdmin = ({
                 className={styles.profileContainer}
               >
                 <div className={styles.profileText}>
-                  <p>{user?.nombre || 'Not found'}</p>
-                  <span>{user?.role || 'Not found'}</span>
+                  <p>{user?.nombre || "Not found"}</p>
+                  <span>{user?.role || "Not found"}</span>
                 </div>
                 {user?.profileImage ? (
                   <img
@@ -202,7 +192,9 @@ const NavbarAdmin = ({
                   />
                 ) : (
                   <div className={styles.initials}>
-                    {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+                    {user?.nombre
+                      ?.split(" ")
+                      .map((letter) => letter?.[0] || "U")}
                   </div>
                 )}
               </div>
@@ -218,7 +210,6 @@ const NavbarAdmin = ({
             </button>
           </div>
 
-
           {menuOpen && (
             <>
               <div
@@ -230,16 +221,14 @@ const NavbarAdmin = ({
                   {t("buttonGetPlus")} <img src={star} alt="Icon" />
                 </button>
                 <ul>
-                  <li
-                    onClick={() => setIsOpen((prev) => !prev)}
-                  >
+                  <li onClick={() => setIsOpen((prev) => !prev)}>
                     <AddPlus />
                     Automatizar
                   </li>
                   <li>
                     <a
                       href="/admin/chat"
-                      className={fromPath == 'chat' ? styles.active : ''}
+                      className={fromPath == "chat" ? styles.active : ""}
                     >
                       <ChatIcon />
                       Chat
@@ -248,7 +237,7 @@ const NavbarAdmin = ({
                   <li>
                     <a
                       href="/admin/contacts"
-                      className={fromPath == 'contacts' ? styles.active : ''}
+                      className={fromPath == "contacts" ? styles.active : ""}
                     >
                       <ClientIcon />
                       Clients
@@ -257,7 +246,7 @@ const NavbarAdmin = ({
                   <li>
                     <a
                       href="/admin/products"
-                      className={fromPath == 'products' ? styles.active : ''}
+                      className={fromPath == "products" ? styles.active : ""}
                     >
                       <BoxIcon />
                       Products
@@ -267,13 +256,11 @@ const NavbarAdmin = ({
                     <a
                       href="/admin/notification"
                       className={`${styles.number} 
-                ${fromPath == 'notification' ? styles.active : ''}`}
+                ${fromPath == "notification" ? styles.active : ""}`}
                     >
                       <DotsNotification />
                       Notificacions
-                      {(numNotification !== 0) && (
-                        <span>{numNotification}</span>
-                      )}
+                      {numNotification !== 0 && <span>{numNotification}</span>}
                     </a>
                   </li>
                 </ul>
@@ -282,8 +269,8 @@ const NavbarAdmin = ({
                   className={styles.profileContainer}
                 >
                   <div className={styles.profileText}>
-                    <p>{user?.nombre || 'Not found'}</p>
-                    <span>{user?.role || 'Not found'}</span>
+                    <p>{user?.nombre || "Not found"}</p>
+                    <span>{user?.role || "Not found"}</span>
                   </div>
                   {user?.profileImage ? (
                     <img
@@ -293,14 +280,15 @@ const NavbarAdmin = ({
                     />
                   ) : (
                     <div className={styles.initials}>
-                      {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+                      {user?.nombre
+                        ?.split(" ")
+                        .map((letter) => letter?.[0] || "U")}
                     </div>
                   )}
                 </div>
               </div>
             </>
           )}
-
 
           {/* PopUps */}
           <div
@@ -350,11 +338,7 @@ const NavbarAdmin = ({
             />
           )}
 
-          {true && (
-            <PanelIniAutomate
-
-            />
-          )}
+          {true && <PanelIniAutomate />}
         </div>
       </Elements>
     </>

@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+.columnInfoBill {
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  p {
+    margin: 0;
+  }
+
+  .headerInfoBill {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .button {
+        text-decoration: underline;
+        color: #222222;
+        font-weight: 500;
+      }
+    }
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 60px;
+    img {
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+      object-fit: cover;
+      min-width: 30px;
+      height: 30px;
+    }
+
+    p {
+      color: #09090b;
+    }
+    span {
+      color: #666666;
+      font-size: 13px;
+    }
+  }
+
+  textarea {
+    width: 100%;
+    resize: none;
+    font-family: "Inter", sans-serif;
+    color: #71717a;
+  }
+  .inputContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    background-color: #f4f4f4;
+    input::placeholder {
+      color: #71717a;
+    }
+  }
+  textarea,
+  .inputContainer {
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+  }
+}
