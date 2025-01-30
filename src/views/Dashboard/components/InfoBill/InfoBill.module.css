@@ -51,7 +51,10 @@
       cursor: pointer;
     }
   }
-
+  .infoBill {
+    display: flex;
+    gap: 10px;
+  }
   color: #222222;
   .light {
     color: #71717a;
@@ -220,14 +223,14 @@
   .parameters {
     .addParameters {
       width: 100%;
-      padding: 12px 0;
+      padding: 12px;
       box-sizing: border-box;
       border-bottom: 2px solid #11a38129;
       button {
         width: 100%;
         background-color: #fafafa;
         border: 1px solid #ced4da;
-        padding: 4px;
+        padding: 8px;
         border-radius: 4px;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
@@ -348,13 +351,8 @@
     width: 15px;
   }
   img {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
+    height: 80px;
+    width: 80px;
   }
   .articleTitle {
     display: flex;
@@ -371,38 +369,69 @@
     display: flex;
     gap: 20px;
     align-items: center;
-
+    .grab {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      .icon {
+        cursor: pointer;
+      }
+    }
     .info {
       width: 100%;
       display: flex;
       flex-direction: column;
-
       .addTag {
         display: flex;
         align-items: center;
         gap: 10px;
         background-color: #ffffff;
         border: 1px solid #d9d9d9;
-        border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        -ms-border-radius: 4px;
-        -o-border-radius: 4px;
+        border-radius: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ms-border-radius: 6px;
+        -o-border-radius: 6px;
         padding: 8px 12px;
-        width: 80%;
+        width: 100%;
+        max-width: 150px;
         margin-bottom: 10px;
         img {
           height: 15px;
+          width: fit-content;
         }
       }
 
-      div {
+      .test {
         width: 100%;
+        display: flex;
+        gap: 10px;
+        box-sizing: border-box;
+        flex: 1;
+      }
+      .leftInfo {
+        /* flex: 2; */
         display: flex;
         flex-direction: column;
         gap: 10px;
-        padding-right: 50px;
-        box-sizing: border-box;
+        width: 62%;
+      }
+      .rightInfo {
+        flex: 1;
+        text-align: end;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        p {
+          margin: 0;
+          color: #71717a;
+          font-size: 13px;
+        }
+        .button {
+          text-decoration: underline;
+          font-weight: 600;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -424,7 +453,6 @@
       color: #75757575;
       border: none;
       outline: none;
-      padding: 8px;
       border-radius: 8px;
       -webkit-border-radius: 8px;
       -moz-border-radius: 8px;
@@ -435,6 +463,12 @@
         height: 40px;
         background-color: red;
       }
+    }
+    P {
+      font-size: 13px;
+    }
+    span {
+      font-size: 13px;
     }
   }
 
@@ -454,7 +488,6 @@
     }
   }
   .addTax {
-    background-color: e;
     border: 1px solid #ced4da;
     padding: 6px 10px;
     background-color: #fafafa;
@@ -464,6 +497,10 @@
     -ms-border-radius: 7px;
     -o-border-radius: 7px;
     display: flex;
+    width: 120px;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    overflow: hidden; /* Oculta el texto que se salga del botón */
+    cursor: pointer;
   }
 }
 .delete {

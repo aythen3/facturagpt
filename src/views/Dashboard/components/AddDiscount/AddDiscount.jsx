@@ -1,57 +1,61 @@
 import React, { useState } from 'react';
 import HeaderCard from '../HeaderCard/HeaderCard';
-import styles from './AddTax.module.css';
+import styles from './AddDiscount.module.css';
 import DeleteButton from '../DeleteButton/DeleteButton';
 import Button from '../Button/Button';
 import DiscardChange from '../DiscardChange/DiscardChange';
-const AddTax = ({ setShowTaxModal }) => {
+
+const AddDiscount = ({ setShowDiscountModal }) => {
   const [selectedRow, setSelectedRow] = useState(null);
-  const [taxes, setTaxes] = useState([]);
-  const [taxName, setTaxName] = useState('');
-  const [taxRate, setTaxRate] = useState('');
-  const [isCompound, setIsCompound] = useState(false);
+  const [discounts, setDiscounts] = useState([]);
+  const [discountName, setDiscountName] = useState('');
+  const [discountRate, setDiscountRate] = useState('');
 
   const handleRowClick = (index) => {
     setSelectedRow(index === selectedRow ? null : index);
   };
 
-  const handleAddTax = () => {
-    if (taxName.trim() === '' || taxRate.trim() === '') return;
+  const handleAddDiscount = () => {
+    if (discountName.trim() === '' || discountRate.trim() === '') return;
 
-    const newTax = {
-      name: taxName,
-      rate: `${taxRate}%`,
-      compound: isCompound ? 'Si' : 'No',
+    const newDiscount = {
+      name: discountName,
+      rate: `${discountRate}%`,
     };
 
-    setTaxes([...taxes, newTax]);
-    setTaxName('');
-    setTaxRate('');
-    setIsCompound(false);
+    setDiscounts([...discounts, newDiscount]);
+    setDiscountName('');
+    setDiscountRate('');
   };
 
-  const handleDeleteTax = (index) => {
-    setTaxes(taxes.filter((_, i) => i !== index));
+  const handleDeleteDiscount = (index) => {
+    setDiscounts(discounts.filter((_, i) => i !== index));
     setSelectedRow(null);
   };
   const [showDiscardChange, setShowDiscardChange] = useState(false);
 
   return (
     <div>
-      <div className={styles.bg} onClick={() => setShowTaxModal(false)}></div>
+      <div
+        className={styles.bg}
+        onClick={() => setShowDiscountModal(false)}
+      ></div>
       {showDiscardChange && (
         <DiscardChange
           actionSave={() => setShowDiscardChange(false)}
           actionDiscard={() => {
             setShowDiscardChange(false);
-            setShowTaxModal(false);
+            setShowDiscountModal(false);
           }}
         />
       )}
       <div
         className={`${styles.addTaxContainer} ${showDiscardChange && styles.opacity}`}
       >
-        <HeaderCard title={'Seleccionar Impuesto'} setState={setShowTaxModal}>
+        <HeaderCard
+          title={'Seleccionar Descuento'}
+          setState={setShowDiscountModal}
+        >
           <Button type="white" action={() => setShowDiscardChange(true)}>
             Cancel
           </Button>
@@ -59,47 +63,38 @@ const AddTax = ({ setShowTaxModal }) => {
         </HeaderCard>
         <div className={styles.addTaxContent}>
           <div className={styles.taxes}>
-            <div className={styles.column}>
-              <p>Nombre del Impuesto</p>
+            <div className={styles.columnLeft}>
+              <p>Nombre o descripción del descuento</p>
               <input
                 type="text"
-                placeholder="[taxname]"
-                value={taxName}
-                onChange={(e) => setTaxName(e.target.value)}
+                placeholder="[discount name]"
+                value={discountName}
+                onChange={(e) => setDiscountName(e.target.value)}
               />
             </div>
             <div className={styles.column}>
-              <p>Tasa de impuesto</p>
+              <p>Descuento Aplicado</p>
               <input
                 type="number"
                 placeholder="%"
-                value={taxRate}
-                onChange={(e) => setTaxRate(e.target.value)}
+                value={discountRate}
+                onChange={(e) => setDiscountRate(e.target.value)}
               />
-            </div>
-            <div className={styles.compuesto}>
-              <input
-                type="checkbox"
-                checked={isCompound}
-                onChange={() => setIsCompound(!isCompound)}
-              />
-              <span>Impuesto compuesto</span>
             </div>
           </div>
           <div className={styles.tableTaxes}>
-            <button onClick={handleAddTax}>Añadir Impuesto</button>
+            <button onClick={handleAddDiscount}>Añadir Descuento</button>
             <table>
               <thead>
                 <tr>
                   <th className={styles.small}></th>
                   <th>Nombre del Impuesto</th>
-                  <th>Tasa de Impuesto</th>
-                  <th>Impuesto Compuesto</th>
+                  <th>Descuento Aplicado</th>
                   <th className={styles.small}></th>
                 </tr>
               </thead>
               <tbody>
-                {taxes.map((tax, index) => (
+                {discounts.map((discount, index) => (
                   <tr
                     key={index}
                     className={selectedRow === index ? styles.selectedRow : ''}
@@ -113,14 +108,13 @@ const AddTax = ({ setShowTaxModal }) => {
                         readOnly
                       />
                     </td>
-                    <td>{tax.name}</td>
-                    <td>{tax.rate}</td>
-                    <td>{tax.compound}</td>
+                    <td>{discount.name}</td>
+                    <td>{discount.rate}</td>
                     <td className={styles.small}>
                       <DeleteButton
                         action={(e) => {
                           e.stopPropagation();
-                          handleDeleteTax(index);
+                          handleDeleteDiscount(index);
                         }}
                       />
                     </td>
@@ -135,4 +129,4 @@ const AddTax = ({ setShowTaxModal }) => {
   );
 };
 
-export default AddTax;
+export default AddDiscount;

@@ -37,6 +37,7 @@
     display: flex;
     align-items: end;
     justify-content: space-between;
+    gap: 10px;
     input {
       background-color: #f5f5f5;
       border: none;
@@ -48,9 +49,16 @@
       align-items: center;
       gap: 10px;
     }
+    > div {
+      flex: 1;
+    }
+    .columnLeft {
+      flex: 2;
+    }
   }
   table {
     border-collapse: collapse; /* Asegura que no haya separación entre las celdas */
+    width: 100%;
   }
   table thead {
     font-size: 13px;
@@ -58,6 +66,7 @@
 
   .small {
     min-width: 10px;
+    max-width: 30px;
   }
   .selectedRow {
     background-color: #eeeeef;

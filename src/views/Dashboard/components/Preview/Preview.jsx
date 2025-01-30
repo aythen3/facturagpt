@@ -1,17 +1,17 @@
-import { MoreVertical } from "lucide-react";
-import styles from "./Preview.module.css";
-import { useRef, useState } from "react";
-import sendMail from "../../assets/sendMail.svg";
-import downloadIcon from "../../assets/downloadIcon.svg";
-import tagIcon from "../../assets/tagIcon.svg";
-import moveToFolder from "../../assets/moveToFolderIcon.svg";
-import printIcon from "../../assets/printIcon.svg";
-import gestionaEsPublico from "../../assets/gestionaEsPublicoIcon.svg";
-import stripeIcon from "../../assets/stripeIconText.svg";
-import wsIcon from "../../assets/whatsappIcon.svg";
-import SendEmailModal from "../SendEmailModal/SendEmailModal";
-import { ReactComponent as EyeWhiteIcon } from "../../assets/eyeWhiteIcon.svg";
-import SeeBill from "./SeeBill/SeeBill";
+import { MoreVertical } from 'lucide-react';
+import styles from './Preview.module.css';
+import { useRef, useState } from 'react';
+import sendMail from '../../assets/sendMail.svg';
+import downloadIcon from '../../assets/downloadIcon.svg';
+import tagIcon from '../../assets/tagIcon.svg';
+import moveToFolder from '../../assets/moveToFolderIcon.svg';
+import printIcon from '../../assets/printIcon.svg';
+import gestionaEsPublico from '../../assets/gestionaEsPublicoIcon.svg';
+import stripeIcon from '../../assets/stripeIconText.svg';
+import wsIcon from '../../assets/whatsappIcon.svg';
+import SendEmailModal from '../SendEmailModal/SendEmailModal';
+import { ReactComponent as EyeWhiteIcon } from '../../assets/eyeWhiteIcon.svg';
+import SeeBill from './SeeBill/SeeBill';
 
 const ButtonActionsWithText = ({ children, classStyle, click }) => {
   return (
@@ -30,58 +30,58 @@ const DocumentPreview = ({ document, companyInfo }) => {
 
   const actions = [
     {
-      text: "Enviar Correo",
+      text: 'Enviar Correo',
       icon: sendMail,
       click: () => {
         setMailModal(true); // Cambia el estado para mostrar el modal
       },
     },
     {
-      text: "Descargar",
+      text: 'Descargar',
       icon: downloadIcon,
       click: () => {
-        console.log("Documento descargado");
+        console.log('Documento descargado');
       },
     },
     {
-      text: "Añadir Etiqueta",
+      text: 'Añadir Etiqueta',
       icon: tagIcon,
       click: () => {
-        console.log("Etiqueta añadida");
+        console.log('Etiqueta añadida');
       },
     },
     {
-      text: "Mover a Carpeta",
+      text: 'Mover a Carpeta',
       icon: moveToFolder,
       click: () => {
-        console.log("Documento movido a carpeta");
+        console.log('Documento movido a carpeta');
       },
     },
     {
-      text: "Imprimir",
+      text: 'Imprimir',
       icon: printIcon,
       click: () => {
-        console.log("Documento enviado a imprimir");
+        console.log('Documento enviado a imprimir');
       },
     },
     {
       icon: stripeIcon,
       click: () => {
-        console.log("Acción de Stripe ejecutada");
+        console.log('Acción de Stripe ejecutada');
       },
       classOption: styles.bgStripe,
     },
     {
       icon: wsIcon,
       click: () => {
-        console.log("Acción de WhatsApp ejecutada");
+        console.log('Acción de WhatsApp ejecutada');
       },
       classOption: styles.bgWs,
     },
     {
       icon: gestionaEsPublico,
       click: () => {
-        console.log("Gestión pública ejecutada");
+        console.log('Gestión pública ejecutada');
       },
       classOption: styles.bgGestiona,
     },
@@ -103,6 +103,15 @@ const DocumentPreview = ({ document, companyInfo }) => {
       </div>
     );
   };
+
+  const details = () => {
+    return (
+      <div>
+        <div>hola</div>
+      </div>
+    );
+  };
+
   const seeBillRef = useRef(); // Referencia al componente SeeBill
 
   return (
@@ -145,22 +154,18 @@ const DocumentPreview = ({ document, companyInfo }) => {
         <div className={styles.actionsContainer}>
           <button
             onClick={() => setOptions(0)}
-            className={options === 0 ? styles.btnActionSelected : ""}
+            className={options === 0 ? styles.btnActionSelected : ''}
           >
             Detalles
           </button>
           <button
             onClick={() => setOptions(1)}
-            className={options === 1 ? styles.btnActionSelected : ""}
+            className={options === 1 ? styles.btnActionSelected : ''}
           >
             Acciones
           </button>
         </div>
-        {options === 0 ? (
-          <Actions />
-        ) : (
-          <Actions />
-        )}
+        {options === 0 ? <Actions /> : <Actions />}
       </div>
       {mailModal && (
         <SendEmailModal
@@ -176,175 +181,73 @@ const DocumentPreview = ({ document, companyInfo }) => {
 
 export default DocumentPreview;
 
-
-
-
 const Details = () => {
   return (
     <div>
-      ----
-      Estado : stripe Pagado
-
-      Subtotal
-      Editar
-      0,00€
-
-      Descuento
-      Añadir Descuento
-      Editar
-      10%
-      0,00€
-
-      Impuestos
-      Añadir Impuestos
-      Editar
-      21%
-      0,00€
-
-      Total
-      Editar
-      0,00€
-
-
-      #Factura
-      0001
-
-      #Orden de compra
-      0001
-
-      Fecha
-      Editar
-      25 Dec 2025
-
-      Fecha vencimiento
-      25 Dec 2025
-
-      Condiciones y formas de pago
-
-      ex. Payments is due within 15 days
-
-      Logo
-      icon
-      Añade tu Logo
-
-
-      Firma
-      Añade tu Firma
-
-      Seleccionar Plantilla
-
-      Editar Código HTML
-      icon thunder
+      ---- Estado : stripe Pagado Subtotal Editar 0,00€ Descuento Añadir
+      Descuento Editar 10% 0,00€ Impuestos Añadir Impuestos Editar 21% 0,00€
+      Total Editar 0,00€ #Factura 0001 #Orden de compra 0001 Fecha Editar 25 Dec
+      2025 Fecha vencimiento 25 Dec 2025 Condiciones y formas de pago ex.
+      Payments is due within 15 days Logo icon Añade tu Logo Firma Añade tu
+      Firma Seleccionar Plantilla Editar Código HTML icon thunder
     </div>
-  )
-}
-
+  );
+};
 
 const PanelImpuesto = () => {
   return (
     <div>
       <div>
-        <button>
-          =!
-        </button>
-        <h2>
-          Seleccionar Impuesto
-        </h2>
+        <button>=!</button>
+        <h2>Seleccionar Impuesto</h2>
         <div>
-          <button>
-            Cancel
-          </button>
-          <button>
-            Seleccionar
-          </button>
+          <button>Cancel</button>
+          <button>Seleccionar</button>
         </div>
         <div>
-          <div>
-            Nombre del Impuesto
-            [taxname]
-          </div>
-          <div>
-            Tasa de impuesto
-            %
-          </div>
-          <div>
-            icon
-            Impuesto compuesto
-          </div>
+          <div>Nombre del Impuesto [taxname]</div>
+          <div>Tasa de impuesto %</div>
+          <div>icon Impuesto compuesto</div>
         </div>
 
         <div>
           <table>
             <tr>
-              <td>
-                Nombre del Impuesto
-              </td>
-              <td>
-                Tasa del Impuesto
-              </td>
-              <td>
-                Impuesto Compuesto
-              </td>
+              <td>Nombre del Impuesto</td>
+              <td>Tasa del Impuesto</td>
+              <td>Impuesto Compuesto</td>
             </tr>
           </table>
         </div>
-
       </div>
       <div>
         <div>
-          <button>
-            =!
-          </button>
-          <h2>
-            Seleccionar Descuento
-          </h2>
+          <button>=!</button>
+          <h2>Seleccionar Descuento</h2>
         </div>
         <div>
-          <b>
-            Nombre o descripción del descuento
-          </b>
-          <input
-            type="text"
-            placeholder="[discountname]"
-          />
+          <b>Nombre o descripción del descuento</b>
+          <input type="text" placeholder="[discountname]" />
         </div>
         <div>
-          <b>
-            Descuento
-          </b>
-          <input
-            type="text"
-            placeholder="%"
-          />
+          <b>Descuento</b>
+          <input type="text" placeholder="%" />
         </div>
-        <button>
-          Añadir Impuesto
-        </button>
-        <button>
-          Editar
-          10%
-        </button>
+        <button>Añadir Impuesto</button>
+        <button>Editar 10%</button>
         <div>
           <table>
             <tr>
-              <td>
-                Nombre del Impuesto
-              </td>
-              <td>
-                Descuento Aplicado
-              </td>
+              <td>Nombre del Impuesto</td>
+              <td>Descuento Aplicado</td>
             </tr>
             <tr>
-              <td>
-                Descuento Aplicado
-              </td>
-              <td>
-                21.00%
-              </td>
+              <td>Descuento Aplicado</td>
+              <td>21.00%</td>
             </tr>
           </table>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
