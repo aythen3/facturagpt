@@ -23,7 +23,6 @@
   }
 }
 
-
 .hamburger {
   background: none;
   border: none;
@@ -39,10 +38,21 @@
 .navLinks {
   list-style: none;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   margin: 0;
   padding: 0;
   align-items: center;
+}
+.btnContainerNavbar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.flagContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .navLinks li {
@@ -138,6 +148,14 @@
     -ms-transition: left 0.3s ease-in-out;
     -o-transition: left 0.3s ease-in-out;
     -webkit-transition: left 0.3s ease-in-out;
+    .btnContainerNavbar {
+      width: 100%;
+      flex-wrap: wrap;
+      button {
+        width: 100%;
+        height: fit-content;
+      }
+    }
   }
 
   .chevDownIcon {
@@ -172,8 +190,6 @@
   }
 }
 
-
-
 .profileContainer {
   display: flex;
   gap: 10px;
@@ -198,7 +214,6 @@
     border-radius: 5px;
   }
 }
-
 
 @media (max-width: 300px) {
   .navLinksOpen {

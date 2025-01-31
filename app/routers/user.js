@@ -17,6 +17,8 @@ const {
   verifyOTPController,
   sendNewsletter,
   updateAccountPasswordController,
+  uploadPDF,
+  upload,
 } = require("../controllers/user");
 
 // -------------------------------
@@ -35,6 +37,7 @@ userManagerRouter
   .post("/newsletter", sendNewsletter)
   .post("/send-email", sendEmail)
   .get("/get-email", getEmail)
-  .get("/get-file/:name", getFile);
+  .get("/get-file/:name", getFile)
+  .post("/upload-pdf", upload.single("file"), uploadPDF);
 
 module.exports = userManagerRouter;

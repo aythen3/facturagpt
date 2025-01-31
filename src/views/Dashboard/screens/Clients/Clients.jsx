@@ -1,51 +1,48 @@
-import React, { useEffect, useState } from "react";
-import styles from "./Clients.module.css";
-import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
-import searchGray from "../../assets/searchGray.png";
-import { ReactComponent as ArrowUp } from "../../assets/arrowDownGray.svg";
-import plusIcon from "../../assets/Plus Icon.png";
-import optionDots from "../../assets/optionDots.svg";
-import closeIcon from "../../assets/closeMenu.svg";
-import filterSearch from "../../assets/Filters Search.png";
-import { useTranslation } from "react-i18next";
-import { ReactComponent as Minus } from "../../assets/minus.svg";
+import React, { useEffect, useState } from 'react';
+import styles from './Clients.module.css';
+import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
+import searchGray from '../../assets/searchGray.png';
+import { ReactComponent as ArrowUp } from '../../assets/arrowDownGray.svg';
+import plusIcon from '../../assets/Plus Icon.png';
+import optionDots from '../../assets/optionDots.svg';
+import closeIcon from '../../assets/closeMenu.svg';
+import filterSearch from '../../assets/Filters Search.png';
+import { useTranslation } from 'react-i18next';
+import { ReactComponent as Minus } from '../../assets/minus.svg';
 
-import l from "../../assets/lIcon.svg";
+import l from '../../assets/lIcon.svg';
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createClient,
   deleteClients,
   getAllUserClients,
   getOneClient,
   updateClient,
-} from "../../../../actions/clients";
-import { clearClient, setClient } from "../../../../slices/clientsSlices";
-import { useNavigate } from "react-router-dom";
-import EditableInput from "./EditableInput/EditableInput";
-import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
-import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
-import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
-import { clearTransaction } from "../../../../slices/transactionsSlices";
-import FileExplorer from "../../components/FileExplorer/FileExplorer";
-import { getEmailsByQuery } from "../../../../actions/emailManager";
-import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
-
+} from '../../../../actions/clients';
+import { clearClient, setClient } from '../../../../slices/clientsSlices';
+import { useNavigate } from 'react-router-dom';
+import EditableInput from './EditableInput/EditableInput';
+import ModalTemplate from '../../components/ModalTemplate/ModalTemplate';
+import ProfileModalTemplate from '../../components/ProfileModalTemplate/ProfileModalTemplate';
+import { ParametersLabel } from '../../components/ParametersLabel/ParametersLabel';
+import { clearTransaction } from '../../../../slices/transactionsSlices';
+import FileExplorer from '../../components/FileExplorer/FileExplorer';
+import { getEmailsByQuery } from '../../../../actions/emailManager';
+import PanelTemplate from '../../components/PanelTemplate/PanelTemplate';
+import PayMethod from '../../components/PayMethod/PayMethod';
 
 const Clients = () => {
-  
-  const { t } = useTranslation("clients");
+  const { t } = useTranslation('clients');
   const [showSidebar, setShowSidebar] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-  const [emailError, setEmailError] = useState("");
+  const [emailError, setEmailError] = useState('');
   const [selectedClientIds, setSelectedClientIds] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-
-
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,21 +52,21 @@ const Clients = () => {
   const { clients, loading, client } = useSelector((state) => state.clients);
 
   const [clientData, setClientData] = useState({
-    clientName: "",
-    companyEmail: "",
-    companyPhoneNumber: "",
-    codeCountry: "",
-    webSite: "",
-    billingEmail: "",
-    clientZip: "",
-    country: "",
-    clientCif: "",
-    preferredCurrency: "",
-    cardNumber: "",
-    companyAddress: "",
-    companyCity: "",
-    companyProvince: "",
-    companyCountry: "",
+    clientName: '',
+    companyEmail: '',
+    companyPhoneNumber: '',
+    codeCountry: '',
+    webSite: '',
+    billingEmail: '',
+    clientZip: '',
+    country: '',
+    clientCif: '',
+    preferredCurrency: '',
+    cardNumber: '',
+    companyAddress: '',
+    companyCity: '',
+    companyProvince: '',
+    companyCountry: '',
   });
 
   useEffect(() => {
@@ -79,46 +76,46 @@ const Clients = () => {
   useEffect(() => {
     if (client?.clientData) {
       setClientData({
-        clientName: client.clientData.clientName || "",
-        companyEmail: client.clientData.companyEmail || "",
-        companyPhoneNumber: client.clientData.companyPhoneNumber || "",
-        codeCountry: client.clientData.codeCountry || "",
-        webSite: client.clientData.webSite || "",
-        billingEmail: client.email || "",
-        clientZip: client.clientData.clientZip || "",
-        country: client.clientData.country || "",
-        clientCif: client.clientData.clientCif || "",
-        preferredCurrency: client.clientData.preferredCurrency || "",
-        cardNumber: client.clientData.cardNumber || "",
-        companyAddress: client.clientData.companyAddress || "",
-        companyCity: client.clientData.companyCity || "",
-        companyProvince: client.clientData.companyProvince || "",
-        companyCountry: client.clientData.companyCountry || "",
+        clientName: client.clientData.clientName || '',
+        companyEmail: client.clientData.companyEmail || '',
+        companyPhoneNumber: client.clientData.companyPhoneNumber || '',
+        codeCountry: client.clientData.codeCountry || '',
+        webSite: client.clientData.webSite || '',
+        billingEmail: client.email || '',
+        clientZip: client.clientData.clientZip || '',
+        country: client.clientData.country || '',
+        clientCif: client.clientData.clientCif || '',
+        preferredCurrency: client.clientData.preferredCurrency || '',
+        cardNumber: client.clientData.cardNumber || '',
+        companyAddress: client.clientData.companyAddress || '',
+        companyCity: client.clientData.companyCity || '',
+        companyProvince: client.clientData.companyProvince || '',
+        companyCountry: client.clientData.companyCountry || '',
       });
     } else {
       setClientData({
-        clientName: "",
-        companyEmail: "",
-        companyPhoneNumber: "",
-        codeCountry: "",
-        webSite: "",
-        billingEmail: "",
-        clientZip: "",
-        country: "",
-        clientCif: "",
-        preferredCurrency: "",
-        cardNumber: "",
-        companyAddress: "",
-        companyCity: "",
-        companyProvince: "",
-        companyCountry: "",
+        clientName: '',
+        companyEmail: '',
+        companyPhoneNumber: '',
+        codeCountry: '',
+        webSite: '',
+        billingEmail: '',
+        clientZip: '',
+        country: '',
+        clientCif: '',
+        preferredCurrency: '',
+        cardNumber: '',
+        companyAddress: '',
+        companyCity: '',
+        companyProvince: '',
+        companyCountry: '',
       });
     }
   }, [client]);
 
   const handleClientData = (field, value) => {
     const formattedValue =
-      field === "cardNumber" ? formatCardNumber(value) : value;
+      field === 'cardNumber' ? formatCardNumber(value) : value;
 
     setClientData((prev) => ({
       ...prev,
@@ -155,45 +152,45 @@ const Clients = () => {
   };
 
   const tableHeaders = [
-    t("tableCol1"),
-    t("tableCol2"),
-    t("tableCol3"),
-    t("tableCol4"),
-    t("tableCol5"),
-    t("tableCol6"),
-    t("tableCol7"),
-    t("tableCol8"),
+    t('tableCol1'),
+    t('tableCol2'),
+    t('tableCol3'),
+    t('tableCol4'),
+    t('tableCol5'),
+    t('tableCol6'),
+    t('tableCol7'),
+    t('tableCol8'),
   ];
 
   const tableData = [
     {
-      nombre: "Aythen",
-      email: ["info@aythen.com", "support@aythen.com"],
-      telefono: "+34600789012",
-      direccion: "Calle A, Barcelona",
-      numeroFiscal: "ES123456789",
-      metodosPago: ["Visa ****1234", "Paypal: juan@gmail.com"],
-      moneda: "EUR",
+      nombre: 'Aythen',
+      email: ['info@aythen.com', 'support@aythen.com'],
+      telefono: '+34600789012',
+      direccion: 'Calle A, Barcelona',
+      numeroFiscal: 'ES123456789',
+      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
+      moneda: 'EUR',
     },
     {
-      nombre: "Aythen",
-      email: "info@aythen.com",
-      telefono: "+584243356112",
-      direccion: "Calle A, Barcelona",
-      numeroFiscal: "ES123456789",
-      metodosPago: ["Visa ****1234", "Paypal: juan@gmail.com"],
-      moneda: "EUR",
+      nombre: 'Aythen',
+      email: 'info@aythen.com',
+      telefono: '+584243356112',
+      direccion: 'Calle A, Barcelona',
+      numeroFiscal: 'ES123456789',
+      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
+      moneda: 'EUR',
     },
   ];
 
   const formatCardNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
+    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
   };
 
   const formatPhoneNumber = (phoneNumber) => {
     return phoneNumber?.replace(
       /(\+\d{2})(\d{3})(\d{3})(\d{3})/,
-      "$1 $2 $3 $4"
+      '$1 $2 $3 $4'
     );
   };
 
@@ -202,7 +199,7 @@ const Clients = () => {
     const userId = user?.id;
     const email = user?.email;
 
-    console.log("CLIENTESSSSSSSSSS", clientData);
+    console.log('CLIENTESSSSSSSSSS', clientData);
     if (client && client.clientData) {
       dispatch(
         updateClient({
@@ -212,26 +209,26 @@ const Clients = () => {
         })
       )
         .then((result) => {
-          if (result.meta.requestStatus === "fulfilled") {
+          if (result.meta.requestStatus === 'fulfilled') {
             setShowNewClient(false);
           } else {
-            console.error("Error creating client:", result.error);
+            console.error('Error creating client:', result.error);
           }
         })
         .catch((error) => {
-          console.error("Unexpected error:", error);
+          console.error('Unexpected error:', error);
         });
     } else {
       dispatch(createClient({ userId, email, clientData }))
         .then((result) => {
-          if (result.meta.requestStatus === "fulfilled") {
+          if (result.meta.requestStatus === 'fulfilled') {
             setShowNewClient(false);
           } else {
-            console.error("Error creating client:", result.error);
+            console.error('Error creating client:', result.error);
           }
         })
         .catch((error) => {
-          console.error("Unexpected error:", error);
+          console.error('Unexpected error:', error);
         });
     }
   };
@@ -242,13 +239,13 @@ const Clients = () => {
         ? prev.filter((id) => id !== clientId)
         : [...prev, clientId]
     );
-    console.log("users", allUsers);
-    console.log("toggling clientId", clientId);
-    console.log("allClients", allClients);
+    console.log('users', allUsers);
+    console.log('toggling clientId', clientId);
+    console.log('allClients', allClients);
     let singleUser = allClients[0];
     const response = await dispatch(
       getEmailsByQuery({
-        userId: singleUser?.id || "randomId",
+        userId: singleUser?.id || 'randomId',
         email: singleUser.tokenEmail,
         password: singleUser.tokenPassword,
         query: singleUser.emailQueries,
@@ -262,7 +259,7 @@ const Clients = () => {
         },
       })
     );
-    console.log("RESPONSE==", response);
+    console.log('RESPONSE==', response);
   };
 
   const handleDeleteClient = (e, clientID) => {
@@ -275,15 +272,15 @@ const Clients = () => {
       })
     )
       .then((result) => {
-        if (result.meta.requestStatus === "fulfilled") {
-          console.log("Clients deleted successfully");
+        if (result.meta.requestStatus === 'fulfilled') {
+          console.log('Clients deleted successfully');
           setSelectedClientIds([]);
         } else {
-          console.error("Error deleting clients:", result.error);
+          console.error('Error deleting clients:', result.error);
         }
       })
       .catch((error) => {
-        console.error("Unexpected error:", error);
+        console.error('Unexpected error:', error);
       });
   };
 
@@ -297,16 +294,16 @@ const Clients = () => {
   };
 
   const handleGetOneClient = async (clientId) => {
-    console.log("CLIENTIDDD", clientId);
+    console.log('CLIENTIDDD', clientId);
 
     try {
       const response = await dispatch(
         getOneClient({ userId: user?.id, clientId })
       ).unwrap();
-      console.log("Cliente obtenido:", response);
-      navigate("/transactions");
+      console.log('Cliente obtenido:', response);
+      navigate('/transactions');
     } catch (error) {
-      console.error("Error al obtener el cliente:", error);
+      console.error('Error al obtener el cliente:', error);
     }
   };
 
@@ -321,7 +318,7 @@ const Clients = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape" && showNewClient) {
+      if (event.key === 'Escape' && showNewClient) {
         setIsAnimating(true);
         setTimeout(() => {
           dispatch(clearClient());
@@ -331,23 +328,23 @@ const Clients = () => {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [showNewClient]);
 
-  console.log("CLIENTSSSS", clients);
+  console.log('CLIENTSSSS', clients);
   const handleChange = ({ name, newValue }) => {
     console.log(`Setting ${name} to ${newValue}`);
   };
 
   const [clientDataInputs, setClientDataInputs] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    web: "",
+    name: '',
+    email: '',
+    phone: '',
+    web: '',
     info: [],
     parameters: [],
   });
@@ -362,7 +359,7 @@ const Clients = () => {
   const addParameter = () => {
     setClientDataInputs((prev) => ({
       ...prev,
-      parameters: [...prev.parameters, { name: "", value: "" }],
+      parameters: [...prev.parameters, { name: '', value: '' }],
     }));
   };
 
@@ -380,29 +377,28 @@ const Clients = () => {
   };
 
   const [editingIndices, setEditingIndices] = useState([]);
-  console.log("DATAAAAA--------", clientData);
+  console.log('DATAAAAA--------', clientData);
 
-  
   return (
     <PanelTemplate>
-    <div>
+      <div>
         <div className={styles.container} onClick={() => setShowSidebar(false)}>
           <div className={styles.clientsHeader}>
-            <h2>{t("title")}</h2>
+            <h2>{t('title')}</h2>
             <div className={styles.searchContainer}>
               <button
                 className={`${styles.addButton} ${styles.btnNewClient}`}
                 onClick={() => setShowNewClient(true)}
               >
                 <img src={plusIcon} alt="Nuevo cliente" />
-                {t("buttonNewClient")}
+                {t('buttonNewClient')}
               </button>
               {/* <button className={styles.infoBtn}>Analíticas</button> */}
               <div className={styles.inputWrapper}>
                 <img src={searchGray} className={styles.inputIconInside} />
                 <input
                   type="text"
-                  placeholder={t("placeholderSearch")}
+                  placeholder={t('placeholderSearch')}
                   value={search}
                   onChange={handleSearchChange}
                   className={styles.searchInput}
@@ -411,7 +407,7 @@ const Clients = () => {
                   <img src={filterSearch} className={styles.inputIconOutside} />
                 </div> */}
                 <div
-                  style={{ marginLeft: "5px" }}
+                  style={{ marginLeft: '5px' }}
                   className={styles.searchIconsWrappers}
                 >
                   <img src={l} alt="kIcon" />
@@ -423,7 +419,7 @@ const Clients = () => {
             </div>
           </div>
 
-          <div className={styles.clientsTable} style={{ overflow: "auto" }}>
+          <div className={styles.clientsTable} style={{ overflow: 'auto' }}>
             <table className={styles.table}>
               <thead>
                 <tr>
@@ -456,9 +452,9 @@ const Clients = () => {
                           name="clientSelected"
                           // onClick={() => selectClient(rowIndex, row)}
                           onChange={() => toggleClientSelection(client?.id)}
-                        // checked={
-                        //   clientSelected.includes(rowIndex) ? true : false
-                        // }
+                          // checked={
+                          //   clientSelected.includes(rowIndex) ? true : false
+                          // }
                         />
                       </td>
                       <td className={styles.name}>
@@ -475,7 +471,7 @@ const Clients = () => {
                   </td> */}
                       <td>{client.clientData.companyPhoneNumber}</td>
                       <td>
-                        {client.clientData.companyAddress}{" "}
+                        {client.clientData.companyAddress}{' '}
                         {client.clientData.clientProvice}
                       </td>
                       <td>{client.clientData.taxNumber}</td>
@@ -533,93 +529,97 @@ const Clients = () => {
             </table>
           </div>
         </div>
-      {showNewClient && (
-        <>
-          <ModalTemplate
-            actionSave={handleCreateClient}
-            onClick={handleCloseNewClient}
-          >
-            <div
-              className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+        {showNewClient && (
+          <>
+            <ModalTemplate
+              actionSave={handleCreateClient}
+              onClick={handleCloseNewClient}
             >
-              {/* <div className={styles.containerHeader}>
+              <div
+                className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+              >
+                {/* <div className={styles.containerHeader}>
                 <h3>John Doe</h3>
                 <span onClick={handleCloseNewClient}>
                   <img src={closeIcon} />
                 </span>
               </div> */}
 
-              <form
-                className={styles.newClientForm}
-                onSubmit={handleCreateClient}
-              >
-                <EditableInput
-                  label={"Nombre completo"}
-                  nameInput={"nombre"}
-                  placeholderInput={clientData.clientName || "yeremi"}
-                  isEditing={inputsEditing.name}
-                  value={clientData.clientName || clientDataInputs.name}
-                  onChange={(e) => {
-                    setClientDataInputs({
-                      ...clientDataInputs,
-                      name: e.target.value,
-                    });
-                    handleClientData("clientName", e.target.value);
-                  }}
-                  onClick={() =>
-                    setInputsEditing((prev) => ({ ...prev, name: !prev.name }))
-                  }
+                <form
+                  className={styles.newClientForm}
+                  onSubmit={handleCreateClient}
                 >
-                  <div
-                    className={`
+                  <EditableInput
+                    label={'Nombre completo'}
+                    nameInput={'nombre'}
+                    placeholderInput={clientData.clientName || 'yeremi'}
+                    isEditing={inputsEditing.name}
+                    value={clientData.clientName || clientDataInputs.name}
+                    onChange={(e) => {
+                      setClientDataInputs({
+                        ...clientDataInputs,
+                        name: e.target.value,
+                      });
+                      handleClientData('clientName', e.target.value);
+                    }}
+                    onClick={() =>
+                      setInputsEditing((prev) => ({
+                        ...prev,
+                        name: !prev.name,
+                      }))
+                    }
+                  >
+                    <div
+                      className={`
                     ${styles.typeClient}
-                    ${inputsEditing.name
+                    ${
+                      inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
-                      }
+                    }
                       `}
-                  >
-                    <button
-                      className={selectTypeClient == 0 && styles.selected}
-                      onClick={() => setSelectTypeClient(0)}
-                      type="button"
-                      disabled={!inputsEditing.name}
                     >
-                      Proveedor
-                    </button>
-                    <button
-                      className={selectTypeClient == 1 && styles.selected}
-                      onClick={() => setSelectTypeClient(1)}
-                      type="button"
-                      disabled={!inputsEditing.name}
-                    >
-                      Cliente
-                    </button>
-                  </div>
-                </EditableInput>
+                      <button
+                        className={selectTypeClient == 0 && styles.selected}
+                        onClick={() => setSelectTypeClient(0)}
+                        type="button"
+                        disabled={!inputsEditing.name}
+                      >
+                        Proveedor
+                      </button>
+                      <button
+                        className={selectTypeClient == 1 && styles.selected}
+                        onClick={() => setSelectTypeClient(1)}
+                        type="button"
+                        disabled={!inputsEditing.name}
+                      >
+                        Cliente
+                      </button>
+                    </div>
+                  </EditableInput>
 
-                <EditableInput
-                  label={"Email"}
-                  nameInput={"email"}
-                  placeholderInput={"johndoe@gmail.com"}
-                  isEditing={inputsEditing.email}
-                  value={clientData.companyEmail || clientDataInputs.email}
-                  onChange={(e) => {
-                    setClientDataInputs({
-                      ...clientDataInputs,
-                      email: e.target.value,
-                    });
-                    handleClientData("companyEmail", e.target.value);
-                  }}
-                  onClick={() =>
-                    setInputsEditing((prev) => ({
-                      ...prev,
-                      email: !prev.email,
-                    }))
-                  }
-                />
+                  <EditableInput
+                    label={'Email'}
+                    nameInput={'email'}
+                    placeholderInput={'johndoe@gmail.com'}
+                    isEditing={inputsEditing.email}
+                    value={clientData.companyEmail || clientDataInputs.email}
+                    onChange={(e) => {
+                      setClientDataInputs({
+                        ...clientDataInputs,
+                        email: e.target.value,
+                      });
+                      handleClientData('companyEmail', e.target.value);
+                    }}
+                    onClick={() =>
+                      setInputsEditing((prev) => ({
+                        ...prev,
+                        email: !prev.email,
+                      }))
+                    }
+                  />
 
-                {/* <EditableInput
+                  {/* <EditableInput
                   label={"Teléfono"}
                   nameInput={"phone"}
                   placeholderInput={"phone"}
@@ -642,236 +642,172 @@ const Clients = () => {
                     }))
                   }
                 /> */}
-                <div className={styles.phoneContainer}>
-                  <select /*disabled={!isEditing}*/>
-                    <option value="34">España, (+34)</option>
-                    <option value="1">Estados Unidos, (+1)</option>
-                    <option value="52">México, (+52)</option>
-                    <option value="54">Argentina, (+54)</option>
-                    <option value="55">Brasil, (+55)</option>
-                    <option value="44">Reino Unido, (+44)</option>
-                    <option value="33">Francia, (+33)</option>
-                    <option value="49">Alemania, (+49)</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="000 000 000"
-                    value={clientData.companyPhoneNumber || ""}
-                    onChange={(e) =>
-                      handleClientData("companyPhoneNumber", e.target.value)
+                  <div className={styles.phoneContainer}>
+                    <select /*disabled={!isEditing}*/>
+                      <option value="34">España, (+34)</option>
+                      <option value="1">Estados Unidos, (+1)</option>
+                      <option value="52">México, (+52)</option>
+                      <option value="54">Argentina, (+54)</option>
+                      <option value="55">Brasil, (+55)</option>
+                      <option value="44">Reino Unido, (+44)</option>
+                      <option value="33">Francia, (+33)</option>
+                      <option value="49">Alemania, (+49)</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="000 000 000"
+                      value={clientData.companyPhoneNumber || ''}
+                      onChange={(e) =>
+                        handleClientData('companyPhoneNumber', e.target.value)
+                      }
+                      /*disabled={!isEditing}*/
+                    />
+                    <div
+                      className={styles.delete}
+                      // onClick={onDelete}
+                      /*style={{ background: !isEditing && "#dd7a84" }}*/
+                    >
+                      <Minus className={styles.icon} />
+                    </div>
+                  </div>
+                  <EditableInput
+                    label={'Web o dominio corporativo'}
+                    nameInput={'web'}
+                    placeholderInput={'www.web.com'}
+                    isEditing={inputsEditing.web}
+                    value={clientData.webSite || clientDataInputs.web}
+                    onChange={(e) => {
+                      handleClientData('webSite', e.target.value);
+                      setClientDataInputs({
+                        ...clientDataInputs,
+                        web: e.target.value,
+                      });
+                    }}
+                    onClick={() =>
+                      setInputsEditing((prev) => ({ ...prev, web: !prev.web }))
                     }
-                  /*disabled={!isEditing}*/
                   />
-                  <div
-                    className={styles.delete}
-                  // onClick={onDelete}
-                  /*style={{ background: !isEditing && "#dd7a84" }}*/
-                  >
-                    <Minus className={styles.icon} />
-                  </div>
-                </div>
-                <EditableInput
-                  label={"Web o dominio corporativo"}
-                  nameInput={"web"}
-                  placeholderInput={"www.web.com"}
-                  isEditing={inputsEditing.web}
-                  value={clientData.webSite || clientDataInputs.web}
-                  onChange={(e) => {
-                    handleClientData("webSite", e.target.value);
-                    setClientDataInputs({
-                      ...clientDataInputs,
-                      web: e.target.value,
-                    });
-                  }}
-                  onClick={() =>
-                    setInputsEditing((prev) => ({ ...prev, web: !prev.web }))
-                  }
-                />
 
-                <label>
-                  <div>
-                    <div className={styles.detailsBill}>
-                      <p>Detalles de Facturación</p>
-                      <div>
-                        <button type="button">
-                          Añadir Detalles de Facturación
-                        </button>
-                        <button type="button">
-                          Guardar Detalles de Facturación
-                        </button>
+                  <label>
+                    <div>
+                      <div className={styles.detailsBill}>
+                        <p>Detalles de Facturación</p>
+                        <div>
+                          <button type="button">
+                            Añadir Detalles de Facturación
+                          </button>
+                          <button type="button">
+                            Guardar Detalles de Facturación
+                          </button>
+                        </div>
+                      </div>
+                      <div className={styles.infoBill}>
+                        <span>
+                          Dirección, Población, Provincia, Código Postal, País
+                        </span>
+                        <div
+                          className={styles.button}
+                          onClick={() =>
+                            setInputsEditing((prev) => ({
+                              ...prev,
+                              info: !prev.info,
+                            }))
+                          }
+                        >
+                          Editar
+                        </div>
                       </div>
                     </div>
-                    <div className={styles.infoBill}>
-                      <span>
-                        Dirección, Población, Provincia, Código Postal, País
-                      </span>
-                      <div
-                        className={styles.button}
-                        onClick={() =>
-                          setInputsEditing((prev) => ({
-                            ...prev,
-                            info: !prev.info,
-                          }))
-                        }
-                      >
-                        Editar
+                    <div className={styles.info1}>
+                      <div className={styles.info}>
+                        <span>Dirección</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="000 000"
+                          value={clientData.companyAddress || ''}
+                          onChange={(e) =>
+                            handleClientData('companyAddress', e.target.value)
+                          }
+                        />
                       </div>
                     </div>
-                  </div>
-                  <div className={styles.info1}>
-                    <div className={styles.info}>
-                      <span>Dirección</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                        value={clientData.companyAddress || ""}
-                        onChange={(e) =>
-                          handleClientData("companyAddress", e.target.value)
-                        }
-                      />
+                    <div className={styles.row}>
+                      <div className={styles.info}>
+                        <span>Población</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="000 000"
+                        />
+                      </div>
+                      <div className={styles.info}>
+                        <span>Código Postal</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          value={clientData.clientZip || ''}
+                          placeholder="000 000"
+                          onChange={(e) =>
+                            handleClientData('clientZip', e.target.value)
+                          }
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className={styles.row}>
-                    <div className={styles.info}>
-                      <span>Población</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                      />
+                    <div className={styles.row}>
+                      <div className={styles.info}>
+                        <span>Provincia</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="000 000"
+                          value={clientData.companyProvince || ''}
+                          onChange={(e) =>
+                            handleClientData('companyProvince', e.target.value)
+                          }
+                        />
+                      </div>
+                      <div className={styles.info}>
+                        <span>País</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="000 000"
+                          value={clientData.companyCountry || ''}
+                          onChange={(e) =>
+                            handleClientData('companyCountry', e.target.value)
+                          }
+                        />
+                      </div>
                     </div>
-                    <div className={styles.info}>
-                      <span>Código Postal</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        value={clientData.clientZip || ""}
-                        placeholder="000 000"
-                        onChange={(e) =>
-                          handleClientData("clientZip", e.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.row}>
-                    <div className={styles.info}>
-                      <span>Provincia</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                        value={clientData.companyProvince || ""}
-                        onChange={(e) =>
-                          handleClientData("companyProvince", e.target.value)
-                        }
-                      />
-                    </div>
-                    <div className={styles.info}>
-                      <span>País</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                        value={clientData.companyCountry || ""}
-                        onChange={(e) =>
-                          handleClientData("companyCountry", e.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                </label>
+                  </label>
 
-                <label>
-                  <div>
-                    <div className={styles.detailsBill}>
-                      <p>Métodos de Pago</p>
-                      <div>
-                        <button type="button">Añadir Método de Pago</button>
-                        <button type="button">Guardar Método de Pago</button>
+                  <label>
+                    <div>
+                      <div className={styles.detailsBill}>
+                        <p>Métodos de Pago</p>
+                        <div>
+                          <button type="button">Añadir Método de Pago</button>
+                          <button type="button">Guardar Método de Pago</button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={styles.payMethodContainer}>
-                    <div className={styles.squareContainer}>
-                      <div className={`${styles.square} ${styles.arrow}`}>
-                        <ArrowUp className={styles.icon} />
-                      </div>
-                      <div className={styles.square}>
-                        <span>BANCO</span>
-                        <p>BBVA</p>
-                      </div>
-                      <div
-                        className={`${styles.square} ${styles.accountNumber}`}
-                      >
-                        <span>Número de Cuenta</span>
-                        <p>BBVA</p>
-                      </div>
-                      <div className={styles.square}>
-                        <span>SWIFT/BIC</span>
-                        <p>BBVA</p>
-                      </div>
-                      <div className={styles.square}>
-                        <span>Routing Number</span>
-                        <p>BBVA</p>
-                      </div>
-                      <div className={styles.square}>
-                        <span>Moneda</span>
-                        <p>BBVA</p>
-                      </div>
-                    </div>
-                    <div className={styles.payInfo}>
-                      <div>
-                        <span>Banco</span>
-                        <select>
-                          <option>EE.UU</option>
-                          <option>EE.UU</option>
-                          <option>EE.UU</option>
-                          <option>EE.UU</option>
-                        </select>
-                      </div>
-                      <div>
-                        <span>Número de cuenta</span>
-                        <input type="text" />
-                      </div>
-                      <div>
-                        <span>SWIFT-BIC</span>
-                        <input type="text" />
-                      </div>
-                      <div>
-                        <span>Routing Number</span>
-                        <input type="text" />
-                      </div>
-                      <div>
-                        <span>Moneda</span>
-                        <input type="text" />
-                      </div>
-                    </div>
-                    <div className={styles.defaultBank}>
-                      <div>
-                        <input type="checkbox" />
-                        <p>Banco predeterminado</p>
-                      </div>
-                      <div className={styles.delete}>
-                        <Minus className={styles.icon} />
-                      </div>
-                    </div>
-                  </div>
-                </label>
+                    <PayMethod />
+                  </label>
 
-                <ParametersLabel
-                  parameters={clientDataInputs.parameters}
-                  setClientDataInputs={setClientDataInputs}
-                  editingIndices={editingIndices}
-                  setEditingIndices={setEditingIndices}
-                />
-              </form>
-            </div>
-            <ProfileModalTemplate />
-          </ModalTemplate>
-        </>
-      )}
-    </div>
+                  <ParametersLabel
+                    parameters={clientDataInputs.parameters}
+                    setClientDataInputs={setClientDataInputs}
+                    editingIndices={editingIndices}
+                    setEditingIndices={setEditingIndices}
+                  />
+                </form>
+              </div>
+              <ProfileModalTemplate />
+            </ModalTemplate>
+          </>
+        )}
+      </div>
     </PanelTemplate>
   );
 };

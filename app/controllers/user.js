@@ -275,6 +275,41 @@ const senderEmail = async (req, res) => {
   } catch (error) {
     console.log('Error:', error);
   }
+}
+
+
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+// Configuración de multer para guardar los archivos en "public/pdfs"
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const pdfPath = path.join(
+      __dirname,
+      "../../src/views/Dashboard/assets/pdfs"
+    );
+    // Crear la carpeta "pdfs" si no existe
+    if (!fs.existsSync(pdfPath)) {
+      fs.mkdirSync(pdfPath, { recursive: true });
+    }
+    cb(null, pdfPath); // Asegúrate de que esta carpeta exista
+  },
+  filename: (req, file, cb) => {
+    const filePath = path.join(__dirname, "../../public", file.originalname);
+    // Verificar si el archivo existe y eliminarlo
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+// Controlador para subir el archivo PDF
+const uploadPDF = (req, res) => {
+  res.json({ message: "Archivo PDF guardado correctamente" });
 };
 
 // ==============================================================================
@@ -296,4 +331,9 @@ module.exports = {
   verifyOTPController: catchedAsync(verifyOTPController),
   sendNewsletter: catchedAsync(sendNewsletter),
   updateAccountPasswordController: catchedAsync(updateAccountPasswordController),
+  uploadPDF: catchedAsync(uploadPDF),
+  upload: upload,
+  updateAccountPasswordController: catchedAsync(
+    updateAccountPasswordController
+  ),
 };

@@ -1,3 +1,11 @@
+.bg {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+}
 .addTaxContainer {
   width: 100%;
   max-width: 700px;
@@ -7,13 +15,23 @@
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-  box-shadow: 1px 3px 20px black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
-
+.opacity {
+  display: none;
+}
 .addTaxContent {
   padding: 20px;
-  input[type="checkbox"] {
-    accent-color: #233f39;
+  input[type='checkbox'] {
+    accent-color: #10a37f;
   }
   .taxes {
     display: flex;
@@ -25,12 +43,21 @@
       outline: none;
       padding: 8px 10px;
     }
+    .compuesto {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
   }
   table {
     border-collapse: collapse; /* Asegura que no haya separación entre las celdas */
   }
   table thead {
     font-size: 13px;
+  }
+
+  .small {
+    min-width: 10px;
   }
   .selectedRow {
     background-color: #eeeeef;

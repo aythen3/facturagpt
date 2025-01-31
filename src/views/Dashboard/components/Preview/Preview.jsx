@@ -1,6 +1,6 @@
 import { MoreVertical } from "lucide-react";
 import styles from "./Preview.module.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import sendMail from "../../assets/sendMail.svg";
 import downloadIcon from "../../assets/downloadIcon.svg";
 import tagIcon from "../../assets/tagIcon.svg";
@@ -12,6 +12,22 @@ import wsIcon from "../../assets/whatsappIcon.svg";
 import SendEmailModal from "../SendEmailModal/SendEmailModal";
 import { ReactComponent as EyeWhiteIcon } from "../../assets/eyeWhiteIcon.svg";
 import SeeBill from "./SeeBill/SeeBill";
+import Button from "../Button/Button";
+import EditableRow from "./EditableRow/EditableRow";
+import EditableInput from "../AccountSettings/EditableInput/EditableInput";
+import { ReactComponent as SeleccionarPlantilla } from "../../assets/seleccionar plantilla.svg";
+import { ReactComponent as EditCode } from "../../assets/editCode.svg";
+import { ReactComponent as EditCodeRays } from "../../assets/editCodeRays.svg";
+import AddDiscount from "../AddDiscount/AddDiscount";
+import AddTax from "../AddTax/AddTax";
+let documentoPDF;
+
+try {
+  documentoPDF = require("../../assets/pdfs/document.pdf");
+} catch (error) {
+  console.warn("El archivo document.pdf no existe:", error.message);
+  documentoPDF = null; // Valor por defecto si no existe el archivo
+}
 
 const ButtonActionsWithText = ({ children, classStyle, click }) => {
   return (
@@ -104,19 +120,129 @@ const DocumentPreview = ({ document, companyInfo }) => {
     );
   };
 
+  const Details = () => {
+    const [showTaxModal, setShowTaxModal] = useState(false);
+    const [showDiscountModal, setShowDiscountModal] = useState(false);
+    return (
+      <div className={styles.detailsContainer}>
+        <Button type="white" headerStyle={{ width: "100%" }}>
+          Crea un asiento
+        </Button>
+        <div className={styles.detailsContent}>
+          <div className={styles.containerEditableInput}>
+            <div className={styles.state}>
+              <p>Estado</p>
+              <div>
+                Stripe
+                <select>
+                  <option value="0">Pagado</option>
+                  <option value="1">Pagado</option>
+                </select>
+              </div>
+            </div>
+
+            <EditableRow label="Subtotal" />
+            <EditableRow
+              label="Descuento"
+              buttonLabel="Añadir Descuento"
+              action={() => setShowDiscountModal(true)}
+              hasButton
+              hasPercentage="10%"
+            />
+            <EditableRow
+              label="Impuesto"
+              buttonLabel="Añadir Impuesto"
+              action={() => setShowTaxModal(true)}
+              hasButton
+              hasPercentage="21%"
+            />
+            <EditableRow label="Total" />
+          </div>
+
+          <div className={styles.containerEditableInput}>
+            <EditableInput label="# Factura" placeholder="0001" />
+            <EditableInput label="# Orden de compra" placeholder="Opcional" />
+            <EditableInput label="Fecha" placeholder="25 Dec 2025" />
+            <EditableInput
+              label="Fecha vencimiento"
+              placeholder="25 Dec 2025"
+            />
+          </div>
+          <div className={styles.containerEditableInput}>
+            <EditableInput
+              label="Condiciones y formas de pago"
+              placeholder="ex. Payment is due within 15 days"
+              isTextarea={true}
+            />
+          </div>
+          <div className={styles.btnTemplateContainer}>
+            <Button
+              type="white"
+              headerStyle={{
+                fontWeight: "500",
+                color: "#0D0D0D",
+                width: "100%",
+                alignItem: "center",
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+                padding: "8px",
+              }}
+            >
+              <SeleccionarPlantilla /> Seleccionar Plantilla
+            </Button>
+            <Button
+              type="white"
+              headerStyle={{
+                fontWeight: "500",
+                color: "#0D0D0D",
+                width: "100%",
+                alignItem: "center",
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+                padding: "8px",
+              }}
+            >
+              <EditCode /> Editar Código HTML <EditCodeRays />
+            </Button>
+            {showDiscountModal && (
+              <AddDiscount setShowDiscountModal={setShowDiscountModal} />
+            )}
+            {showTaxModal && <AddTax setShowTaxModal={setShowTaxModal} />}
+          </div>
+        </div>
+      </div>
+    );
+  };
+  const seeBillRef = useRef(); // Referencia al componente SeeBill
+
   return (
     <div className={styles.container}>
       <div className={styles.previewSection}>
         {document ? (
           <div className={styles.documentWrapper}>
-            <img
-              src={document}
-              alt="Document preview"
-              width={400}
-              height={500}
-              className={styles.documentImage}
-            />
-            <div className={styles.visualizar} onClick={() => setSeeBill(true)}>
+            <div className={styles.billContainerPreview}>
+              {!documentoPDF ? (
+                "No existe ninguna factura"
+              ) : (
+                <embed
+                  src={`${documentoPDF}#zoom=10&toolbar=0`}
+                  width="100%"
+                  height="100%"
+                  type="application/pdf"
+                />
+              )}
+            </div>
+            <div
+              className={styles.visualizar}
+              onClick={() => {
+                setSeeBill(true); // Mostrar el modal
+                setTimeout(() => {
+                  seeBillRef.current?.generatePDF(); // Llamar a la función en el hijo
+                }, 300); // Asegurar que el modal está montado
+              }}
+            >
               <EyeWhiteIcon />
               Visualizar
             </div>
@@ -128,7 +254,9 @@ const DocumentPreview = ({ document, companyInfo }) => {
         )}
       </div>
 
-      {seeBill && <SeeBill document={document} setSeeBill={setSeeBill} />}
+      {seeBill && (
+        <SeeBill ref={seeBillRef} document={document} setSeeBill={setSeeBill} />
+      )}
 
       <div className={styles.actionsSection}>
         <div className={styles.actionsContainer}>
@@ -145,11 +273,7 @@ const DocumentPreview = ({ document, companyInfo }) => {
             Acciones
           </button>
         </div>
-        {options === 0 ? (
-          <Actions />
-        ) : (
-          <Actions />
-        )}
+        {options === 0 ? <Details /> : <Actions />}
       </div>
       {mailModal && (
         <SendEmailModal
@@ -165,175 +289,73 @@ const DocumentPreview = ({ document, companyInfo }) => {
 
 export default DocumentPreview;
 
-
-
-
 const Details = () => {
   return (
     <div>
-      ----
-      Estado : stripe Pagado
-
-      Subtotal
-      Editar
-      0,00€
-
-      Descuento
-      Añadir Descuento
-      Editar
-      10%
-      0,00€
-
-      Impuestos
-      Añadir Impuestos
-      Editar
-      21%
-      0,00€
-
-      Total
-      Editar
-      0,00€
-
-
-      #Factura
-      0001
-
-      #Orden de compra
-      0001
-
-      Fecha
-      Editar
-      25 Dec 2025
-
-      Fecha vencimiento
-      25 Dec 2025
-
-      Condiciones y formas de pago
-
-      ex. Payments is due within 15 days
-
-      Logo
-      icon
-      Añade tu Logo
-
-
-      Firma
-      Añade tu Firma
-
-      Seleccionar Plantilla
-
-      Editar Código HTML
-      icon thunder
+      ---- Estado : stripe Pagado Subtotal Editar 0,00€ Descuento Añadir
+      Descuento Editar 10% 0,00€ Impuestos Añadir Impuestos Editar 21% 0,00€
+      Total Editar 0,00€ #Factura 0001 #Orden de compra 0001 Fecha Editar 25 Dec
+      2025 Fecha vencimiento 25 Dec 2025 Condiciones y formas de pago ex.
+      Payments is due within 15 days Logo icon Añade tu Logo Firma Añade tu
+      Firma Seleccionar Plantilla Editar Código HTML icon thunder
     </div>
-  )
-}
-
+  );
+};
 
 const PanelImpuesto = () => {
   return (
     <div>
       <div>
-        <button>
-          =!
-        </button>
-        <h2>
-          Seleccionar Impuesto
-        </h2>
+        <button>=!</button>
+        <h2>Seleccionar Impuesto</h2>
         <div>
-          <button>
-            Cancel
-          </button>
-          <button>
-            Seleccionar
-          </button>
+          <button>Cancel</button>
+          <button>Seleccionar</button>
         </div>
         <div>
-          <div>
-            Nombre del Impuesto
-            [taxname]
-          </div>
-          <div>
-            Tasa de impuesto
-            %
-          </div>
-          <div>
-            icon
-            Impuesto compuesto
-          </div>
+          <div>Nombre del Impuesto [taxname]</div>
+          <div>Tasa de impuesto %</div>
+          <div>icon Impuesto compuesto</div>
         </div>
 
         <div>
           <table>
             <tr>
-              <td>
-                Nombre del Impuesto
-              </td>
-              <td>
-                Tasa del Impuesto
-              </td>
-              <td>
-                Impuesto Compuesto
-              </td>
+              <td>Nombre del Impuesto</td>
+              <td>Tasa del Impuesto</td>
+              <td>Impuesto Compuesto</td>
             </tr>
           </table>
         </div>
-
       </div>
       <div>
         <div>
-          <button>
-            =!
-          </button>
-          <h2>
-            Seleccionar Descuento
-          </h2>
+          <button>=!</button>
+          <h2>Seleccionar Descuento</h2>
         </div>
         <div>
-          <b>
-            Nombre o descripción del descuento
-          </b>
-          <input
-            type="text"
-            placeholder="[discountname]"
-          />
+          <b>Nombre o descripción del descuento</b>
+          <input type="text" placeholder="[discountname]" />
         </div>
         <div>
-          <b>
-            Descuento
-          </b>
-          <input
-            type="text"
-            placeholder="%"
-          />
+          <b>Descuento</b>
+          <input type="text" placeholder="%" />
         </div>
-        <button>
-          Añadir Impuesto
-        </button>
-        <button>
-          Editar
-          10%
-        </button>
+        <button>Añadir Impuesto</button>
+        <button>Editar 10%</button>
         <div>
           <table>
             <tr>
-              <td>
-                Nombre del Impuesto
-              </td>
-              <td>
-                Descuento Aplicado
-              </td>
+              <td>Nombre del Impuesto</td>
+              <td>Descuento Aplicado</td>
             </tr>
             <tr>
-              <td>
-                Descuento Aplicado
-              </td>
-              <td>
-                21.00%
-              </td>
+              <td>Descuento Aplicado</td>
+              <td>21.00%</td>
             </tr>
           </table>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

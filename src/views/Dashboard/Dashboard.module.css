@@ -576,9 +576,10 @@ input:checked + .slider:before {
 }
 
 @media screen and (max-width: 1024px) {
-.statisticsHeader, .homeContent{
-  flex-direction: column;
-}  
+  .statisticsHeader,
+  .homeContent {
+    flex-direction: column;
+  }
 }
 .divider {
   width: 100%;

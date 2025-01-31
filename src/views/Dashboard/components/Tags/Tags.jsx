@@ -1,18 +1,18 @@
-import React from "react";
-import styles from "./Tags.module.css";
+import React from 'react';
+import styles from './Tags.module.css';
 
 const Tags = ({ onTagClick, direction }) => {
   const tagList = [
-    { bgColor: "#222222", label: "1", text: "Etiqueta" },
-    { bgColor: "#0B06FF", label: "2", text: "Etiqueta" },
-    { bgColor: "#FF0000", label: "3", text: "Etiqueta" },
-    { bgColor: "#12A27F", label: "4", text: "Etiqueta" },
-    { bgColor: "#7329A5", label: "5", text: "Etiqueta" },
-    { bgColor: "#7086FD", label: "6", text: "Etiqueta" },
-    { bgColor: "#FF8C00", label: "7", text: "Etiqueta" },
-    { bgColor: "#16C098", label: "8", text: "Etiqueta" },
-    { bgColor: "#C075EE", label: "9", text: "Etiqueta" },
-    { bgColor: "#EEFF00", label: "10", text: "Etiqueta", color: "#222" },
+    { bgColor: '#222222', label: '1', text: 'Etiqueta' },
+    { bgColor: '#0B06FF', label: '2', text: 'Etiqueta' },
+    { bgColor: '#FF0000', label: '3', text: 'Etiqueta' },
+    { bgColor: '#12A27F', label: '4', text: 'Etiqueta' },
+    { bgColor: '#7329A5', label: '5', text: 'Etiqueta' },
+    { bgColor: '#7086FD', label: '6', text: 'Etiqueta' },
+    { bgColor: '#FF8C00', label: '7', text: 'Etiqueta' },
+    { bgColor: '#16C098', label: '8', text: 'Etiqueta' },
+    { bgColor: '#C075EE', label: '9', text: 'Etiqueta' },
+    { bgColor: '#EEFF00', label: '10', text: 'Etiqueta', color: '#222' },
     // ... otras etiquetas
   ];
 
@@ -25,7 +25,8 @@ const Tags = ({ onTagClick, direction }) => {
           style={{
             backgroundColor: tag.bgColor,
             color: tag.color,
-            width: "100%",
+            // width: "100%",
+            // flex: "1",
           }}
           onClick={() => onTagClick(tag.label)}
         >

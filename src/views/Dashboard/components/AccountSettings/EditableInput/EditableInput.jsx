@@ -14,12 +14,12 @@ const EditableInput = ({
   labelOptions = false,
   options = false,
   readOnly,
+  isTextarea = false, // Nueva prop para determinar si es textarea
 }) => {
   const { t } = useTranslation("accountSetting");
 
   const [editable, setEditable] = useState(false);
   const [newValue, setNewValue] = useState(value);
-
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -28,41 +28,37 @@ const EditableInput = ({
   useEffect(() => {
     if (editable) {
       inputRef.current?.focus();
+      if (isTextarea) {
+        inputRef.current.style.height = "auto"; // Reset para recalcular
+        inputRef.current.style.height = inputRef.current.scrollHeight + "px";
+      }
     }
-  }, [editable]);
+  }, [editable, newValue]);
 
   useEffect(() => {
     if (name === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(newValue)) {
-        setEmailError("El correo electrónico no es válido.");
-      } else {
-        setEmailError("");
-      }
+      setEmailError(
+        emailRegex.test(newValue) ? "" : "El correo electrónico no es válido."
+      );
     }
   }, [newValue]);
 
   const handlePasswordVerify = () => {
-    console.log("verifying password", newValue);
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+={}\-;:'",.<>?]{8,}$/;
-    if (!passwordRegex.test(newValue)) {
-      console.log("error..");
-      setPasswordError(
-        "At least 8 characters, containing a letter and a number"
-      );
-    } else {
-      setPasswordError("");
-    }
+    setPasswordError(
+      passwordRegex.test(newValue)
+        ? ""
+        : "At least 8 characters, containing a letter and a number"
+    );
   };
 
   const handleEditClick = () => {
     if (editable) {
       onSave({ name, newValue });
-      setEditable(false);
-    } else {
-      setEditable(true);
     }
+    setEditable(!editable);
   };
 
   return (
@@ -81,25 +77,33 @@ const EditableInput = ({
 
       <div className={styles.editableInput}>
         {initialValue !== "" && <span>{initialValue}</span>}
-        <input
-          placeholder={placeholder}
-          ref={inputRef}
-          name={name}
-          type={type}
-          value={newValue}
-          onChange={(e) => setNewValue(e.target.value)}
-          readOnly={readOnly !== undefined ? readOnly : !editable}
-        />
+        {isTextarea ? (
+          <textarea
+            ref={inputRef}
+            placeholder={placeholder}
+            name={name}
+            value={newValue}
+            onChange={(e) => setNewValue(e.target.value)}
+            readOnly={readOnly !== undefined ? readOnly : !editable}
+            className={styles.textarea} // Agrega estilos específicos si es necesario
+          />
+        ) : (
+          <input
+            ref={inputRef}
+            type={type}
+            placeholder={placeholder}
+            name={name}
+            value={newValue}
+            onChange={(e) => setNewValue(e.target.value)}
+            readOnly={readOnly !== undefined ? readOnly : !editable}
+          />
+        )}
 
-        {verify && (
+        {verify && editable && (
           <span
             className={styles.verify}
             onClick={handlePasswordVerify}
-            // style={{ opacity: !editable ? "0" : "1" }}
-            style={{
-              display: !editable ? "none" : "block",
-              cursor: !editable ? "not-allowed" : "pointer"
-            }}
+            style={{ cursor: "pointer" }}
           >
             {t("verify")}
           </span>

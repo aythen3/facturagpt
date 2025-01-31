@@ -40,7 +40,7 @@
   padding: 22px;
   border-radius: 32px;
   text-align: left;
-  background: #f0f2f5;
+  background: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -50,6 +50,7 @@
   transform: scale(0.9);
   transition: all 0.3s ease;
   box-sizing: border-box;
+  gap: 20px;
 }
 
 .activeCard .clientName,
@@ -58,7 +59,7 @@
   color: #0f0f11;
 }
 .activeCard {
-  background: #f0f2f5;
+  background: white;
   transform: scale(1);
   opacity: 1;
   color: #0f0f11;

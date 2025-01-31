@@ -17,7 +17,7 @@ const ContactForm = () => {
     message: "",
     work: "",
     phone: "",
-    keepInformed: false,
+    keepInformed: true,
   });
   const handleCheckboxChange = () => {
     setFormData((prevFormData) => ({
@@ -195,15 +195,13 @@ const ContactForm = () => {
                   </p>
                 </div>
                 <p className={styles.infoText}>
-                  <span>Responsable del tratamiento:</span> FacturaGPT.{" "}
-                  <span>Finalidad</span>: a) Gestionar tu solicitud y responder
-                  tus consultas. b) Mantener relaciones comerciales con la
-                  entidad a la que representas. c) En caso de que aceptes,
-                  enviarte información sobre productos, servicios y actividades
-                  de FacturaGPT, incluso por medios electrónicos.{" "}
-                  <span>Derechos: </span>
-                  Puedes ejercer tus derechos de acceso, rectificación,
-                  cancelación y oposición enviando un correo a
+                  Responsable del tratamiento: FacturaGPT. Finalidad: a)
+                  Gestionar tu solicitud y responder tus consultas. b) Mantener
+                  relaciones comerciales con la entidad a la que representas. c)
+                  En caso de que aceptes, enviarte información sobre productos,
+                  servicios y actividades de FacturaGPT, incluso por medios
+                  electrónicos. Derechos: Puedes ejercer tus derechos de acceso,
+                  rectificación, cancelación y oposición enviando un correo a
                   <a href=""> info@facturagpt.com</a> o por correo postal. Para
                   más detalles, consulta nuestra{" "}
                   <a href="/terms">Política de Privacidad</a>.

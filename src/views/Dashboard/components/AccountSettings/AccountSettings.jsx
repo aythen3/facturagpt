@@ -26,7 +26,7 @@ const AccountSettings = () => {
   const { t } = useTranslation("accountSetting");
   const { user, updatingUserLoading } = useSelector((state) => state.user);
   // const { logout } = useAuth0();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userData, setUserData] = useState();
 
   const corporativeFileInputRef = useRef(null);
@@ -35,12 +35,11 @@ const AccountSettings = () => {
 
   const [isReadOnly, setIsReadOnly] = useState(false);
 
-
   const logout = () => {
-    localStorage.clear()
+    localStorage.clear();
     // navigate('/login')
-    window.href = '/login'
-  }
+    window.href = "/login";
+  };
 
   const handleAddImageClick = (type) => {
     if (type === "corporativeLogos" && corporativeFileInputRef.current) {
@@ -357,10 +356,12 @@ const AccountSettings = () => {
                     />
                   </>
                 ) : (
-                  <span style={{
-                    color: '#71717a',
-                    marginTop: '10px'
-                  }}>
+                  <span
+                    style={{
+                      color: "#71717a",
+                      marginTop: "10px",
+                    }}
+                  >
                     Desconocido
                   </span>
                 )}
@@ -380,11 +381,11 @@ const AccountSettings = () => {
               </div>
               <span
                 style={{
-                  color: '#71717a',
-                  marginTop: '10px'
+                  color: "#71717a",
+                  marginTop: "10px",
                 }}
               >
-              {t("unknown")}
+                {t("unknown")}
               </span>
               {editingPayMethod && (
                 <>
@@ -584,36 +585,40 @@ const AccountSettings = () => {
                     Añadir
                   </div>
                 </div>
-                {[...Array(facturacionCount)].map((_, index) => (
-                  <div className={styles.facturacion} key={index}>
-                    <input
-                      type="radio"
-                      name="facturacion"
-                      value={`facturacion${index}`}
-                      onChange={() =>
-                        handleChange({
-                          name: "facturacion",
-                          newValue: `facturacion${index}`,
-                        })
-                      }
-                    />
-                    <input
-                      type="text"
-                      value={facturacionInputs[index]?.value || ""}
-                      disabled={!facturacionInputs[index]?.editable}
-                      onChange={(e) => handleInputChange(index, e.target.value)}
-                      placeholder="Email adress, Zip code / Postcode, Country of residence"
-                    />
-                    <div
-                      className={styles.facturacionButtonEdit}
-                      onClick={() => handleEditToggle(index)}
-                    >
-                      {facturacionInputs[index]?.editable
-                        ? "Guardar"
-                        : "Editar"}
-                    </div>
-                  </div>
-                ))}
+                {facturacionCount == 0
+                  ? "Desconocido"
+                  : [...Array(facturacionCount)].map((_, index) => (
+                      <div className={styles.facturacion} key={index}>
+                        <input
+                          type="radio"
+                          name="facturacion"
+                          value={`facturacion${index}`}
+                          onChange={() =>
+                            handleChange({
+                              name: "facturacion",
+                              newValue: `facturacion${index}`,
+                            })
+                          }
+                        />
+                        <input
+                          type="text"
+                          value={facturacionInputs[index]?.value || ""}
+                          disabled={!facturacionInputs[index]?.editable}
+                          onChange={(e) =>
+                            handleInputChange(index, e.target.value)
+                          }
+                          placeholder="Email adress, Zip code / Postcode, Country of residence"
+                        />
+                        <div
+                          className={styles.facturacionButtonEdit}
+                          onClick={() => handleEditToggle(index)}
+                        >
+                          {facturacionInputs[index]?.editable
+                            ? "Guardar"
+                            : "Editar"}
+                        </div>
+                      </div>
+                    ))}
               </div>
               <div className={styles.label}>
                 <div className={styles.headerLabel}>
@@ -656,7 +661,7 @@ const AccountSettings = () => {
 
             <label>
               <EditableInput
-                placeholder="A12345678"
+                placeholder="Desconocido"
                 label={"Número Fiscal"}
                 initialValue={user?.fiscalNumber || ""}
                 value={userData?.fiscalNumber}
@@ -667,7 +672,7 @@ const AccountSettings = () => {
 
             <label>
               <EditableInput
-                placeholder="www.web.com"
+                placeholder="Desconocido"
                 label={"Web o dominio corporativo"}
                 initialValue={user?.userDomain || ""}
                 value={userData?.userDomain}
@@ -814,13 +819,16 @@ const AccountSettings = () => {
                 editable={editingCurrency}
                 editing={editingCurrency}
                 hasObject={true}
-                options={[{
-                  iso: 'es',
-                  label: 'Spanish'
-                }, {
-                  iso: 'en',
-                  label: 'English'
-                }]}
+                options={[
+                  {
+                    iso: "es",
+                    label: "Spanish",
+                  },
+                  {
+                    iso: "en",
+                    label: "English",
+                  },
+                ]}
                 selectedOption={userData?.currency}
                 setSelectedOption={(option) =>
                   handleChange({ name: "currency", newValue: option })

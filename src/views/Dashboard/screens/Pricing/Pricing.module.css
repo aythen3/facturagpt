@@ -39,7 +39,7 @@
   /* margin-bottom: 80px; */
 }
 .plansTitle {
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(28px, 5vw, 40px);
   color: #18181b;
   margin: 0;
@@ -48,7 +48,7 @@
 .plansSubtitle {
   font-weight: 400;
   font-size: clamp(16px, 3vw, 22px);
-  color: #71717a;
+  color: #676767;
   margin: 0;
 }
 
@@ -145,14 +145,14 @@
 .microText {
   font-size: clamp(12px, 2vw, 18px);
   font-weight: 300;
-  color: #b8b8b8;
+  color: #676767;
   margin-top: 10px;
   text-align: center;
 }
 
 .lightText,
 .lightTextSecondary {
-  color: #b8b8b8;
+  color: #676767;
   font-size: clamp(15px, 5vw, 20px);
   font-weight: 400;
   margin-top: 80px;
@@ -246,7 +246,7 @@
   font-weight: 400;
   max-width: 720px;
   margin-top: 5px;
-  color: #71717a;
+  color: #676767;
   text-align: center;
 }
 

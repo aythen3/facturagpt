@@ -10,6 +10,7 @@
   -o-border-radius: 6px;
   cursor: pointer;
   border: 1px solid transparent;
+  cursor: pointer;
 }
 
 .buttonTemplateGreen {
@@ -17,6 +18,11 @@
   color: white;
 }
 
+.buttonTemplateDiscard {
+  background-color: #b30634;
+  color: white;
+  cursor: pointer;
+}
 .buttonTemplateWhite {
   background-color: #ffffff;
   border: 1px solid #cbcbcb;
