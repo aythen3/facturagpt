@@ -162,7 +162,7 @@
 
 .folderItem,
 .fileItem {
-  padding: 0px 16px;
+  padding: 0px 6px;
   height: 44px;
   min-height: 44px;
   display: flex;

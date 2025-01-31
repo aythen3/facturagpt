@@ -3,580 +3,476 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <title>Aythen Premium</title>
     <style type="text/css">
-        html {
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            color: #10a37f;
+            margin: 30px auto;
+        }
+
+        .title {
             width: 100%;
+            text-align: center;
+            margin: 40px 0px;
         }
 
-        body {
-            background-color: #ececec;
-            margin: 0;
-            padding: 0;
-        }
-
-        .ReadMsgBody {
-            background-color: #ececec;
+        .subtitle {
+            color: #3d413d;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
             width: 100%;
+            display: block;
+
         }
 
-        .ExternalClass {
-            background-color: #ececec;
-            width: 100%;
+        .text {
+            color: rgb(123, 123, 123);
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
         }
 
-        td {
-            font-family: Avenir, Helvetica Neue, Helvetica, Arial, sans-serif;
+        .num {
+            background-color: #10a37f;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 50%;
         }
 
-        a {
-            color: #00a0ee;
-            font-weight: normal;
-            text-decoration: none;
+        .button {
+            background-color: black;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
         }
 
-        a:hover {
-            color: #00a0ee;
-            font-weight: normal;
+        .small {
+            font-size: 14px;
+            color: rgb(123, 123, 123);
         }
 
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: none !important;
-            font-size: inherit !important;
-            font-family: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
-        }
-
-        p,
-        div {
-            margin: 0;
-            padding: 0;
-        }
-
-        table {
-            border-collapse: collapse;
-        }
-
-
-        html,
-        body,
-        table,
-        td,
-        a,
-        span {
-            -webkit-text-size-adjust: none;
-        }
-
-        .mbl {
-            display: none;
-            font-size: 0;
-            max-height: 0;
-        }
-
-        .gmailfix {
-            display: none;
-            display: none !important;
-        }
-
-        @media only screen and (max-width:480px) {
-
-            body {
-                width: auto !important;
-            }
-
-            table table,
-            .table-600 {
-                width: 100% !important;
-                height: auto !important;
-            }
-
-            .main-width {
-                min-width: 0 !important;
-                width: 100% !important;
-            }
-
-            .line {
-                width: 90% !important;
-                height: auto !important;
-            }
-
-            .no-mbl {
-                display: none !important;
-            }
-
-            .mbl {
-                display: inline !important;
-                height: auto !important;
-                max-height: none !important;
-                overflow: visible !important;
-                width: 105px !important;
-            }
-
-            .title {
-                padding-top: 8px !important;
-            }
-
-            .text-body {
-                font-size: 20px !important;
-                line-height: 26px !important;
-                padding: 0px 20px 26px !important;
-            }
-
-            .icon {
-                padding-top: 38px !important;
-            }
-
-            .feature-table {
-                text-align: center !important;
-            }
-
-            .features {
-                width: 100% !important;
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-                text-align: center !important;
-            }
-
-            .animation {
-                display: inline-block !important;
-                text-align: center !important;
-                margin: 0 auto;
-                padding-left: 0 !important;
-                display: inline-block !important;
-            }
-
-            .outer-cell {
-                padding: 0 !important;
-            }
-
-            /*** below is style for footer - do not change */
-            .mbl_space1 {
-                padding-bottom: 38px !important;
-            }
-
-            .mbl_space2 {
-                padding-top: 38px !important;
-            }
-
-            #social {
-                width: 84% !important;
-            }
-
-            #social-icons {
-                width: 56px !important;
-            }
-
-            .footer {
-                font-weight: normal !important;
-            }
+        .footer {
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
 
 <body bgcolor="#f4f4f4" style="background-color:#fff;">
-    <div
-        style="display: none; font-size: 0; line-height: 0; max-height: 0; max-width: 0; width: 0; opacity: 0; overflow: hidden;">
-        Administra de forma eficaz tu gestión empresarial de forma autogestionable y escala gracias a las bases de datos
-        vectorizadas.
+    <div style="width: 500px">
+
+        <table align="center" bgcolor="#f4f4f4" cellpadding="0" cellspacing="0"
+            style="margin: 0; padding: 0;text-align: center;" width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; align-items: center; justify-content: center;">
+                                    <img width="100" src="https://facturagpt.com/api/user/get-file/icon-gpt.svg">
+                                    <p style="font-size: 50px; font-weight: bold;    color: #10a37f;">
+                                        FacturaGPT
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <span>
+                                        Tu facturación
+                                    </span>
+                                </td>
+                                <td>
+                                    <img width="200" height="200"
+                                        src="https://facturagpt.com/api/user/get-file/elipse.svg" s
+                                        style="position: absolute; top: 100px; left: 100px;">
+                                    <b>
+                                        automatizada
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <b class="subtitle">
+                                        ¿Estás perdiendo tiempo con procesos manuales?
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <p class="text">
+                                        Con FacturaGPT, automatiza cada paso de tu facturación y optimiza tu negocio
+                                        como nunca antes.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+
+                                    <span class="subtitle">
+                                        ¿Estás listo para simplificar la gestión de tu negocio?
+                                    </span>
+                                </td>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <p class="text">
+                                        ¿Estás perdiendo tiempo con procesos manuales?
+                                        Con FacturaGPT, automatiza cada paso de tu facturación y optimiza tu negocio
+                                        como
+                                        nunca antes.
+                                    </p>
+                                    <b class="subtitle">
+                                        ¿Estás listo para simplificar la gestión de tu negocio?
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <label class="num">
+                                        1
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b class="subtitle">
+                                        Conecta tus documentos y almacena automáticamente los datos de facturación,
+                                        clientes y activos.
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="icon">
+                                        <img src="https://facturagpt.com/api/user/get-file/icon-1.svg">
+
+                                        Entrada
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="text">
+                                        Olvídate del ingreso manual. Conecta fácilmente los canales donde recibes tus
+                                        facturas, como tu bandeja de entrada, y sincronízalos para que FacturaGPT
+                                        procese y automatice todos tus documentos.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <label class="num">
+                                        2
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b class="subtitle">
+                                        Reconoce, organiza y valida tu facturación
+                                        para mantener todo automatizado
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="icon">
+                                        <img src="https://facturagpt.com/api/user/get-file/icon-2.svg">
+                                        Estructuración
+                                    </div>
+                                    <p class="text">
+                                        Mantén todo bajo control con un sistema que procesa, valida y organiza tus
+                                        facturas las 24 horas, los 7 días de la semana.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="https://facturagpt.com/api/user/get-file/factura.png">
+                                    <p>
+                                        Configura notificaciones personalizadas para recibir alertas importantes y estar
+                                        siempre al día.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <label class="num">
+                                        3
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <b class="title">
+                                        Conecta con terceros
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="icon">
+                                        <img src="https://facturagpt.com/api/user/get-file/icon-3.svg">
+                                        Salida
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="text">
+                                        Integra herramientas clave como Excel, Google Drive, Microsoft y muchas más para
+                                        simplificar y automatizar tus flujos de trabajo.
+                                    </p>
+                                    <img width="600" src="https://facturagpt.com/api/user/get-file/logos.png">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <label class="num">
+                                        4
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <b class="subtitle">
+                                        ¿No encuentras tu automatización ideal?
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <p class="text">
+                                        ¡Nos encargamos de configurarlo por ti!
+                                    </p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <div class="icon">
+                                        Contáctenos
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="text">
+                                        Contáctanos si tienes dudas o necesitas personalizar tu sistema. Creamos
+                                        soluciones adaptadas a tus necesidades.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <label class="num">
+                                        5
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <b class="subtitle">
+                                        ¡Chatea con FacturaGPT!
+                                    </b>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="text">
+                                        Haz preguntas sobre tus datos, analiza, compara y recibe insights personalizados
+                                        para tomar mejores decisiones y potenciar tu negocio.
+                                    </p>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <b class="subtitle">
+                                        🌟 FacturaGPT, tu asistente inteligente que entiende y mejora tu negocio.
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img width="600" src="https://facturagpt.com/api/user/get-file/features.png">
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td style="display: flex; justify-content: center;">
+                                    <button class="button">
+                                        ¡Empieza ahora!
+                                        <img width="20"
+                                            src="https://facturagpt.com/api/user/get-file/icon-arrow-bold.svg">
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h2 class="title">
+                                        Calcula tu cuota.
+                                    </h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b class="subtitle">
+                                        Paga solo por lo que utilices
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="text">
+                                        Sencillo, transparente y adaptado a tu negocio.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <img width="600" src="https://facturagpt.com/api/user/get-file/pricing.png">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="small">
+                                        Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en
+                                        cualquier momento.
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        💬
+                                        <p>
+                                            <strong>
+                                                Pro Tip:
+                                            </strong>
+                                            De los registros en papel a la excelencia: simplifique las
+                                            auditorías, eleve los estándares y controle cada proceso de manera eficiente
+                                            y sin errores.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="footer">
+                                        <!-- icon-lock -->
+                                        <img src="https://facturagpt.com/api/user/get-file/icon-lock.svg">
+                                        <b>
+                                            Tu seguridad nos importa
+                                        </b>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
     </div>
-    <table align="center" bgcolor="#f4f4f4" cellpadding="0" cellspacing="0" style="margin: 0; padding: 0;" width="100%">
-        <tbody>
-            <tr>
-                <td>
-                    <center>
-                        <!-- START OF BLUE BACKGROUND OUTER WRAPPER -->
-                        <table width="600" class="table-600" border="0" align="center" cellpadding="0" cellspacing="0"
-                            bgcolor="#ececec">
-                            <tbody>
-                                <tr>
-                                    <td class="main-width" align="center" style="min-width:590px;"
-                                        background="https://data-aythen.s3.fr-par.scw.cloud/data/iconos/2738_bkgr.jpg"
-                                        bgcolor="#00a0ee" width="600" valign="top">
-                                        <!-- START OF MAIN CONTENT BLOCK TOP -->
-                                        <table width="600" border="0" align="center" cellpadding="0" cellspacing="0"
-                                            style="padding:0; margin:0; ">
-                                            <tbody>
-
-
-                                                <tr>
-                                                    <td class="text-body" valign="top" align="center"
-                                                        style="padding:0; font-family:Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align:center; color:#ffffff; font-size:22px; line-height:30px; font-weight:200; padding:17px 20px 20px 20px; letter-spacing:0.005em;">
-                                                        <span style="font-size: 40px;line-height: 40px;">{{t0}}</span><br />
-                                                        {{t1}} <br />
-                                                        {{t_1}}
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td style="display: flex; justify-content: center;width: 100%;">
-                                                        <button
-                                                            style="background-color: #fff; color: #00a0ee; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px;margin-bottom: 20px;cursor: pointer;">
-                                                            Ver video
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF MAIN CONTENT BLOCK TOP -->
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- BLUE BACKGROUND OUTER WRAPPER CLOSE -->
-                        <!-- OUTER WRAPPER OPEN -->
-                        <table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0"
-                            class="table-600" style="max-width:600px;" width="600">
-                            <tbody>
-                                <tr>
-                                    <td align="center" class="main-width" style="max-width:600px;">
-                                        <!-- START OF FEATURE 1-->
-                                        <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="outer-cell">
-                                                        <table align="left" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                                <tr>
-
-                                                                    <td align="left">
-                                                                        <img width="110"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/analisis.png" />
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td align="left">
-                                                                        <img width="130"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/screenPersonalizar.png" />
-
-
-                                                                    <td align="center" class="icon">
-                                                                        <a href="{{apiUrl}}" target="_blank"><img
-                                                                                width="30"
-                                                                                src="https://data-aythen.s3.fr-par.scw.cloud/data/iconos/Ubica.png" />
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td class="outer-cell" style=" padding-top:20px; text-align:left;">
-                                                        <table align="left" border="0" cellspacing="0" cellpadding="0"
-                                                            style="width: 140%;margin-left: -20%;">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td align="center" style="position: relative;">
-                                                                        <img width="40" style="margin-bottom: 20px;"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/iconLambda.png" />
-                                                                        <p style="text-align: center;font-size: 55px;">
-                                                                            Una pequeña muestra de <br />
-                                                                             mi potencial
-                                                                        </p>
-                                                                        <img width="400"
-                                                                            style="position: absolute;top: 165px;left: 24px;"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/elipseNombre.png" />
-                                                                        <img width="80"
-                                                                            style="position: absolute;top: 40px;left: -20px;"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/asteriscoIA.png" />
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td align="center" class="icon">
-                                                                        <img width="450"
-                                                                            style=" margin-left: -50px;margin-right: -100px;"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/mockupDevices.png" />
-
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td class="outer-cell">
-                                                        <table align="left" border="0" cellspacing="0" cellpadding="0">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td align="right" class="icon">
-                                                                        <img width="160"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/nube.png" />
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td align="right">
-                                                                        <img width="140"
-                                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/screenIAs.png" />
-
-
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF FEATURE 1-->
-                                        <!-- START OF LINE -->
-                                        <table align="center" class="line" bgcolor="#ffffff" border="0" cellpadding="0"
-                                            cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <h3
-                                                            style="font-size: 38px;text-align: center; margin-top: 0px;">
-                                                            Un 82%
-                                                        </h3>
-                                                    </td>
-                                                    <td>
-                                                        <img width="200" style="margin-left: -60px;margin-right: -90px;"
-                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/flechaImporta.png" />
-                                                    </td>
-                                                    <td>
-                                                        <h3
-                                                            style="font-size: 38px;text-align: center; margin-top: 0px;">
-                                                            menos de clicks
-                                                        </h3>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td colspan="3" align="center">
-                                                        <img width="500" style="margin-top: 50px;"
-                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/iconsImporta.png" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" align="center"
-                                                        style="padding-top: 20px;padding-left: 40px;padding-right: 40px;font-size: 30px;color: #000;">
-                                                        Reconozco  cualquier documento que
-                                                        llegue a tu bandeja de entrada, pudiendo realizar cualquier acción sobre él e importarlo o
-                                                        exportarlo donde tú me digas.
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" align="center">
-                                                        <img width="500"
-                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/screensImporta.png" />
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" align="center">
-                                                        <img width="80"
-                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/iconReconoce.png" />
-
-
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF LINE -->
-                                        <!-- START OF LINE -->
-                                        <table align="center" class="line" bgcolor="#ffffff" border="0" cellpadding="0"
-                                            cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <h3
-                                                            style="font-size: 38px;text-align: center;margin-top: 50px;">
-                                                            Trabajo con tus variables
-                                                        </h3>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <img width="150"
-                                                                        src="https://data-aythen.s3.fr-par.scw.cloud/data/email/redondaRoja.png" />
-                                                                </td>
-                                                                <td>
-                                                                    <img width="120"
-                                                                        src="https://data-aythen.s3.fr-par.scw.cloud/data/email/redondaVerde.png" />
-                                                                </td>
-                                                                <td>
-                                                                    <img width="120"
-                                                                        src="https://data-aythen.s3.fr-par.scw.cloud/data/email/redondaAmarilla.png" />
-                                                                </td>
-                                                                <td>
-                                                                    <img width="120"
-                                                                        src="https://data-aythen.s3.fr-par.scw.cloud/data/email/cruzAzul.png" />
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" align="center"
-                                                        style="padding-top: 20px;padding-left: 40px;padding-right: 40px;font-size: 30px;color: #000;">
-                                                        Sé que tus procesos de trabajo no son lineales y contemplan múltiples
-                                                        variables, pero no te preocupes, las identifico y
-                                                        ejecuto en función de ellas.
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" align="center">
-                                                        <img width="100"
-                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/iconoConectaterceros.png" />
-
-
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF LINE -->
-                                        <!-- START OF LINE -->
-                                        <table align="center" class="line" bgcolor="#ffffff" border="0" cellpadding="0"
-                                            cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <h3 style="font-size: 38px;text-align: center;">
-                                                        Me conecto <br/> con otras aplicaciones
-                                                    </h3>
-                                                    <img width="500"
-                                                        src="https://data-aythen.s3.fr-par.scw.cloud/data/email/logosConectaTerceros.png" />
-                                                    <p style="  font-size: 34px;text-align: center;margin: 40px 20px;">
-                                                        De este modo puedo alibiar una gran carga de trabajo. 
-                                                        
-                                                        <br/> <br/>63 - 68% de ahorro en tiempo.
-                                                    </p>
-                                                    <img width="80"
-                                                        src="https://data-aythen.s3.fr-par.scw.cloud/data/email/iconoPruebalo.png" />
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF LINE -->
-                                        <!-- START OF LINE -->
-                                        <table align="center" class="line" bgcolor="#ffffff" border="0" cellpadding="0"
-                                            cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <h3
-                                                            style="font-size: 38px;text-align: center;margin-top: 50px;">
-                                                            Conecto tus fuentes de datos e información a mi motor de IA
-                                                        </h3>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td align="center">
-                                                        <img width="400"
-                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/botonSubeTuDoc.png" />
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="center"
-                                                        style="padding-bottom: 20px;padding-left: 40px;padding-right: 40px;font-size: 30px;color: #000;">
-                                                        Para automatizar cualquier flujo de trabajo que me indiques.
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="center">
-                                                        <img width="80"
-                                                            src="https://data-aythen.s3.fr-par.scw.cloud/data/email/iconoConfiguramos.png" />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF LINE -->
-
-                                        <!-- START OF LINE -->
-                                        <table align="center" class="line" bgcolor="#ffffff" border="0" cellpadding="0"
-                                            cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <h3 style="font-size: 38px;text-align: center;margin-bottom: 0px;">
-                                                        ¡Pruébame hoy mismo!
-                                                    </h3>
-                                                    <img width="400" style="margin-bottom: -40px"
-                                                        src="https://data-aythen.s3.fr-par.scw.cloud/data/email/manoConfiguramos.png" />
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF LINE -->
-                                        <!-- START OF LINE -->
-                                        <table align="center" class="line" bgcolor="#ffffff" border="0" cellpadding="0"
-                                            cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center" style="border-top: 2px solid #cccccc;"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF LINE -->
-
-                                        <table align="center" bgcolor="#ffffff" border="0" cellpadding="0"
-                                            cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center">
-                                                        <a href="https://calendly.com/info-geeg/aythen-meeting"
-                                                            id="button2" target="_blank" rel="noopener" align="center"
-                                                            style="border-radius:3px; padding-left: 44px; padding-right: 44px; -webkit-border-radius:3px; -moz-border-radius:6px; color:#ffffff; background-color:#00a0ee; display:inline-block; font-size:30px; font-weight:600; letter-spacing: 0.5px; text-align:center; text-decoration:none; line-height:72px; -webkit-text-size-adjust:none; mso-hide:all;">
-                                                            {{t10}}</a>
-                                                    </td>
-                                                </tr>
-                                                <!-- <tr>
-                                                    <td
-                                                        style="text-align:center;font-family:Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height:18px; color: #000000; padding:15px 25px 20px 25px;">
-                                                        {{t11}}<span class="no-mbl"><br></span>
-                                                    </td>
-                                                </tr> -->
-                                                <tr>
-                                                    <td align="center" class="title"
-                                                        style="padding:20px 0 0 0; font-family:Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px; color:#000;">
-                                                        <label>
-                                                            powered by
-                                                        </label>
-                                                        <b style="font-size: 40px;">
-                                                            Aythen
-                                                        </b>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- END OF MAIN CONTENT BLOCK-->
-                                    </td>
-                                </tr>
-                                <!-- START OF SOCIAL ICONS BLOCK -->
-                            </tbody>
-                        </table>
-                        <!-- END OF SOCIAL ICONS BLOCK -->
-                        <!-- START OF FOOTER AREA BLOCK -->
-                        <table class="table-600" width="600" border="0" align="center" cellpadding="0" cellspacing="0"
-                            bgcolor="#ffffff" style="padding:0; margin:0;">
-                            <tbody>
-                                <tr>
-                                    <td width="600" align="center" valign="top" bgcolor="#ffffff" class="footer"
-                                        style="padding:16px 15px 6px 15px; font-family:Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:14px; color:#979797; font-weight:300; letter-spacing:0.015em;">
-                                        {{t12}}<br>
-                                        <a href="#" style="color:#00adee; text-decoration:none;"
-                                            target="_blank">{{t13}}</a>&nbsp; | &nbsp;<a href="{{apiUrl}}"
-                                            style="color:#00adee; text-decoration:none;"
-                                            target="_blank">{{t14}}</a>&nbsp; | &nbsp;<a href="{{apiUrl}}"
-                                            style="color:#00adee; text-decoration:none;"
-                                            target="_blank">{{t15}}</a><span class="no-mbl">&nbsp;</span>
-
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="600" align="center" valign="top" bgcolor="#ffffff" class="mbl_space1"
-                                        style="padding:8px 15px 50px 15px; font-family:Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:14px; color:#979797; font-weight:300; letter-spacing:0.015em;">
-                                        {{t16}}<br>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- END OF FOOTER AREA BLOCK -->
-                    </center>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <!-- OUTER WRAPPER CLOSE -->
     <div class="gmailfix" style="white-space:nowrap; font:15px courier; line-height:0;">&nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;

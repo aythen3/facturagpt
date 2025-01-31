@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const userManagerRouter = Router();
 const {
+  sendEmail,
+  getEmail,
+  getFile,
+
   createAccountController,
   loginToManagerController,
   addNewClientController,
@@ -31,6 +35,9 @@ userManagerRouter
   .post("/send-otp", generateAndSendOtpController)
   .post("/verify-otp", verifyOTPController)
   .post("/newsletter", sendNewsletter)
+  .post("/send-email", sendEmail)
+  .get("/get-email", getEmail)
+  .get("/get-file/:name", getFile)
   .post("/upload-pdf", upload.single("file"), uploadPDF);
 
 module.exports = userManagerRouter;

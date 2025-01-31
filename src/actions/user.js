@@ -1,6 +1,34 @@
 import apiBackend from "@src/apiBackend.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+
+export const sendEmail =
+createAsyncThunk('user/sendEmail',
+  async ({ id, email }, { dispatch }) => {
+    try {
+      const token = localStorage.getItem('token')
+
+      const resp = await apiBackend.post(
+        `/user/send`,
+        { email },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        }
+      );
+
+      return resp.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
+
+
+// -------------------------------
 export const getEmailsByQuery = createAsyncThunk(
   "emailManager/getEmailsByQuery",
   async ({ userId, email, password, query, tokenGpt, logs, ftpData }) => {
@@ -32,13 +60,15 @@ export const getEmailsByQuery = createAsyncThunk(
 
 export const createAccount = createAsyncThunk(
   "user/createAccount",
-  async ({ nombre, email, password }) => {
-    console.log("data from createAccount", { nombre, email, password });
+  // async ({ nombre, email, password }) => {
+  // async ({ nombre, email, password }) => {
+  async (clientData) => {
+    // console.log("data from createAccount", { nombre, email, password });
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
         `/user/createAccount`,
-        { nombre, email, password },
+        { ...clientData },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -264,7 +294,7 @@ export const verifyOTP = createAsyncThunk(
 );
 
 // Acción para enviar el correo
-export const sendEmail = createAsyncThunk(
+export const sendEmailNewsletter = createAsyncThunk(
   "user/newsletter",
   async ({ name, email, message }, { rejectWithValue }) => {
     console.log("Sending email with:", { name, email, message });

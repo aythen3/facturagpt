@@ -2,44 +2,38 @@ import React, { useState } from "react";
 import styles from "./NavbarAdmin.module.css";
 import star from "../../assets/starPlus.svg";
 import facturaGPT from "../../assets/FacturaGPTBlack.svg";
-// import clientIcon from "../../assets/clientsIcon.svg";
-import spanish_flag from "../../assets/spain_flag.svg";
-import english_flag from "../../assets/english_flag.svg";
 import AccountSettings from "../AccountSettings/AccountSettings";
-import i18n from "../../../../i18";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import UpgradePlan from "../../screens/UpgradePlan/UpgradePlan";
-import time from "../../assets/time.svg";
-import profileIcon from "../../assets/profileIcon.svg";
-import addBlack from "../../assets/addBlack.svg";
 import { ReactComponent as AddPlus } from "../../assets/addPlus.svg";
 import addGreen from "../../assets/addGreen.svg";
-// import chatIcon from "../../assets/chatIcon.svg";
 import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
 import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
-// import boxIcon from "../../assets/boxIcon.svg";
-// import dotsNotification from "../../assets/dotsNotification.svg";
 import { ReactComponent as DotsNotification } from "../../assets/dotsNotification.svg";
 import { ReactComponent as ClientIcon } from "../../assets/clientsIcon.svg";
-// import clientIcon from "../../assets/clientsIcon.svg";
 import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
 import PanelIniAutomate from "../Automate/panelAutomate/IniAutomate";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import UpgradePlanWrapper from "../../screens/UpgradePlan/UpgradePlan";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import NewTag from "../NewTag/NewTag";
 import SelectLocation from "../SelectLocation/SelectLocation";
+
+import { sendEmail } from "@src/actions/user";
+
+
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
-const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
-  const { pathname } = window.location;
-
+const NavbarAdmin = ({ 
+  fromPath, 
+  setFromPath = () => {} 
+}) => {
+  // const { pathname } = window.location;
+  const dispatch = useDispatch()
   // const fromPath = pathname.split("/")[2];
 
   // console.log('languageFromPath', fromPath)
@@ -98,6 +92,16 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
     setMenuOpen(!menuOpen);
   };
 
+
+  const handleSendEmail = async () => {
+    const resp = await dispatch(sendEmail({
+      // id: user.id,
+      email: 'info@aythen.com'
+    }))
+    console.log('resp emails', resp)
+  }
+
+
   return (
     <>
       <Elements stripe={stripePromise}>
@@ -107,6 +111,11 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
+          <button
+            onClick={() => handleSendEmail()}
+          >
+            Enviar email
+          </button>
 
           <div className={styles.hiddenMobile}>
             <button

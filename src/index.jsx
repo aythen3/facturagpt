@@ -24,7 +24,7 @@ import ContactForm from "./views/Dashboard/components/ContactForm/ContactForm.js
 import Clients from "./views/Dashboard/screens/Clients/Clients.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18.js";
-import { Auth0Provider } from "@auth0/auth0-react";
+// import { Auth0Provider } from "@auth0/auth0-react";
 import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 import { AppProvider } from "./context/AppContext.js";
 import ChatView from "./views/Dashboard/screens/ChatView/ChatView.jsx";
@@ -40,8 +40,10 @@ import NavbarAdmin from "./views/Dashboard/components/NavbarAdmin/NavbarAdmin";
 
 
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // import { useSelector } from "react-redux";
+
 
 const Layout = () => {
   // const { user } = useSelector((state) => state.user);
@@ -77,8 +79,20 @@ const Layout = () => {
 
   const ComponentPrivate = () => {
     const { user } = useSelector((state) => state.user);
+    const navigate = useNavigate()
     
+    console.log('user!!', user)
     // const [fromPath, setFromPath] = useState("chat");
+
+
+    useEffect(()=>{
+      console.log('user!!', user)
+      if(user && user.success == false){
+        navigate(`/login`)
+      }
+    },[user])
+
+
 
     return (
       <div>
@@ -97,7 +111,6 @@ const Layout = () => {
           <Route path="/chat" element={<ChatView />} />
           <Route path="/articlestransactions" element={<ArticlesTransactions />} />
           <Route path="/notification" element={<NotificationsView />} />
-
           <Route path="/panel" element={<InvoicePanel />} />
           <Route path="/panel/:id" element={<InvoicePanel />} />
         </Routes>
@@ -107,12 +120,13 @@ const Layout = () => {
 
   return (
     <>
-      <Auth0Provider
+      {/* <Auth0Provider
         domain={process.env.REACT_APP_AUTH0_DOMAIN}
         clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
         redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
         cacheLocation="localstorage"
       >
+      </Auth0Provider> */}
         <Elements stripe={stripePromise}>
           <I18nextProvider i18n={i18n}>
             <DndProvider backend={HTML5Backend}>
@@ -157,7 +171,6 @@ const Layout = () => {
             </DndProvider>
           </I18nextProvider>
         </Elements>
-      </Auth0Provider>
     </>
   );
 };

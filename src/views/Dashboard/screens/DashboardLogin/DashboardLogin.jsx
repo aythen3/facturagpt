@@ -81,7 +81,7 @@ const DashboardLogin = () => {
 
   useEffect(() => {
     console.log("location", location);
-    if (user) navigate('/panel')
+    // if (user) navigate('/panel')
 
     if (location?.pathname === "/login" && mode !== "signin") setMode("signin");
     if (location?.pathname === "/register" && mode !== "signup")
@@ -461,7 +461,7 @@ const DashboardLogin = () => {
     </form>
   );
 
-  console.log("MODE", mode);
+  // console.log("MODE", mode);
 
   const renderForgotPasswordForm = () => (
     <div className={styles.rightContainer}>

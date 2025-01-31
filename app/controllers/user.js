@@ -1,3 +1,6 @@
+const path = require('path')
+const fs = require('fs').promises
+
 const {
   createAccount,
   loginToManagerService,
@@ -11,19 +14,29 @@ const {
   newsletter,
   updateUserPassword,
 } = require("../services/user");
+
 const { catchedAsync } = require("../utils/err");
 const { updateClientService } = require("../services/stripe");
+const { sendEmail, getTemplate } = require("../services/email");
 
 const createAccountController = async (req, res) => {
   try {
-    const { nombre, email, password } = req.body;
-    console.log("data from createAccountController", {
-      nombre,
-      email,
-      password,
-    });
+    const clientData = req.body;
 
-    const resp = await createAccount({ nombre, email, password });
+    console.log('clientData', clientData)
+    // console.log("data from createAccountController", {
+    //   nombre,
+    //   email,
+    //   password,
+    // });
+    // const { nombre, email, password } = req.body;
+    // console.log("data from createAccountController", {
+    //   nombre,
+    //   email,
+    //   password,
+    // });
+
+    const resp = await createAccount(clientData);
 
     return res.status(200).send(resp);
   } catch (err) {
@@ -196,6 +209,75 @@ const sendNewsletter = async (req, res) => {
   }
 };
 
+
+
+const getFile = async (req, res) => {
+  try {
+    // const { file } = req.body
+    // console.log('file', file)
+    const { name } = req.params
+
+    const filePath = path.join(
+      __dirname,
+      "../../src/assets/email",
+      name
+    );
+
+    // Determinar el Content-Type basado en la extensión del archivo
+    const contentType = name.toLowerCase().endsWith('.svg')
+      ? 'image/svg+xml'
+      : name.toLowerCase().endsWith('.png')
+        ? 'image/png'
+        : 'application/octet-stream';
+
+    // Leer como Buffer para archivos binarios, como UTF-8 para texto
+    const fileContent = await fs.readFile(
+      filePath,
+      contentType === 'image/svg+xml' ? 'utf8' : null
+    );
+
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Cache-Control', 'public, max-age=86400'); // Optional: Cache for 24 hours
+
+    return res.status(200).send(fileContent);
+
+  } catch (err) {
+    console.log('Error in sendFile:', err)
+    return res.status(500).send('Error in sendFile')
+  }
+}
+
+const getEmail = async (req, res) => {
+  try {
+    const { html } = await getTemplate('promo-email')
+
+    return res.status(200).send(html)
+  } catch (err) {
+    console.log('Error in getEmail:', err)
+    return res.status(500).send('Error in getEmail')
+  }
+}
+
+
+const senderEmail = async (req, res) => {
+  try {
+    const { user } = req;
+    // const { id } = req.params;
+    const { email } = req.body;
+
+    console.log('SEND EMAIL ID USER', email, user)
+
+    const resp = await sendEmail(email, "form-action", {});
+
+    console.log('resp', resp)
+
+    return res.status(200).send('200')
+  } catch (error) {
+    console.log('Error:', error);
+  }
+}
+
+
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
@@ -233,6 +315,10 @@ const uploadPDF = (req, res) => {
 // ==============================================================================
 
 module.exports = {
+  getFile: catchedAsync(getFile),
+  sendEmail: catchedAsync(senderEmail),
+  getEmail: catchedAsync(getEmail),
+
   createAccountController: catchedAsync(createAccountController),
   loginToManagerController: catchedAsync(loginToManagerController),
   getAllClientsController: catchedAsync(getAllClientsController),
@@ -244,8 +330,9 @@ module.exports = {
   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
   verifyOTPController: catchedAsync(verifyOTPController),
   sendNewsletter: catchedAsync(sendNewsletter),
+  updateAccountPasswordController: catchedAsync(updateAccountPasswordController),
   uploadPDF: catchedAsync(uploadPDF),
-  upload,
+  upload: upload,
   updateAccountPasswordController: catchedAsync(
     updateAccountPasswordController
   ),

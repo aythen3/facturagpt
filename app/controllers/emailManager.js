@@ -94,6 +94,7 @@ const addNewClientController = async (req, res) => {
     const { clientData } = req.body;
     console.log("Client data received:", clientData);
 
+    // const response = await addNewClientService({ clientData });
     const response = await addNewClientService({ clientData });
     return res.status(200).send(response);
   } catch (err) {
