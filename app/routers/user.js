@@ -5,39 +5,46 @@ const {
   getEmail,
   getFile,
 
+  getAllAccountsController,
+  updateAccountPasswordController,
+  deleteAccountController,
   createAccountController,
+
   loginToManagerController,
   addNewClientController,
   getAllClientsController,
   deleteClientController,
   updateClientController,
-  getAllUsersController,
   updateAccountController,
   generateAndSendOtpController,
   verifyOTPController,
   sendNewsletter,
-  updateAccountPasswordController,
   uploadPDF,
   upload,
+  deleteAllDB,
 } = require("../controllers/user");
 
 // -------------------------------
 userManagerRouter
   .post("/createAccount", createAccountController)
+  .get("/getAllAccounts", getAllAccountsController)
+  .put("/updateAccount", updateAccountController)
+  .put("/deleteAccount", deleteAccountController)
+  .post("/updateAccountPassword", updateAccountPasswordController)
+
   .post("/loginToManager", loginToManagerController)
   .post("/addNewClient", addNewClientController)
   .get("/getAllClients", getAllClientsController)
-  .get("/getAllUsers", getAllUsersController)
   .delete("/deleteClient", deleteClientController)
   .put("/updateClient", updateClientController)
-  .put("/updateUser", updateAccountController)
-  .put("/updateUserPassword", updateAccountPasswordController)
+  
   .post("/send-otp", generateAndSendOtpController)
   .post("/verify-otp", verifyOTPController)
   .post("/newsletter", sendNewsletter)
   .post("/send-email", sendEmail)
   .get("/get-email", getEmail)
   .get("/get-file/:name", getFile)
-  .post("/upload-pdf", upload.single("file"), uploadPDF);
+  .post("/upload-pdf", upload.single("file"), uploadPDF)
+  .get("/deleteAllDB", deleteAllDB);
 
 module.exports = userManagerRouter;

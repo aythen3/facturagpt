@@ -220,7 +220,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
 
     const breadcrumbs = [
       <span key="inicio" className={styles.breadcrumb}>
-        <div
+        {/* <div
           onClick={() => {
             setUserFilters();
             handleBreadcrumbClick(`${user.id}/`);
@@ -228,7 +228,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           className={styles.breadcrumbButton}
         >
           Inicio
-        </div>
+        </div> */}
         {pathSegments.length > 0 && (
           <span className={styles.breadcrumbSeparator}> &gt; </span>
         )}

@@ -7,12 +7,12 @@ const { checkOrCreateUserBucket } = require("./scaleway");
 
 const jwt = require("jsonwebtoken");
 
-const createAccount = async ({ nombre, email, password }) => {
-  console.log("Data received in createAccount service:", {
-    nombre,
-    email,
-    password,
-  });
+const createAccount = async (account) => {
+  // console.log("Data received in createAccount service:", {
+  //   nombre,
+  //   email,
+  //   password,
+  // });
 
   const dbName = "db_emailmanager_accounts";
   let db;
@@ -32,39 +32,71 @@ const createAccount = async ({ nombre, email, password }) => {
   try {
     const existingDocs = await db.list({ include_docs: true });
     const accountExists = existingDocs.rows.some(
-      (doc) => doc.doc.email === email
+      (doc) => doc.doc.email === account.email
     );
 
     if (accountExists) {
-      console.log(`Account with email ${email} already exists.`);
+      console.log(`Account with email ${account.email} already exists.`);
       return { success: false, message: "Account already exists." };
     }
 
     const accountId = uuidv4();
-    const docId = `account_${email}_${accountId}`;
 
-    const role = email === "info@aythen.com" ? "superadmin" : "user";
+    console.log('accountId', account)
+    const docId = `account_${account.email}_${accountId}`;
 
-    const hashedPassword = Buffer.from(password).toString("base64");
+    const role = account.email === "info@aythen.com" ? "superadmin" : "user";
+
+    // const password  = '123456'
+    const hashedPassword = Buffer.from(account?.password || '123456').toString("base64");
+
+    console.log('hashedPassword', hashedPassword)
 
     const newAccount = {
+      // _id: docId,
+      // nombre,
+      // email,
+      // password: hashedPassword,
+      // id: docId,
+      // role,
+      // companyName: "",
+      // contactNumber: "",
+      // companyName: 'fvecrdf',
+      // email: '',
+      // phoneNumber: '',
+      // VatId: '',
+      // address: '',
+      // emergencyContact: '',
+      // tokenGPT: '',
+      // tokenEmail: '',
+      // tokenPassword: '',
+      // host: '',
+      // port: '',
+      // tokenUser: '',
+      // tokenUserPassword: '',
+      // firstTag: '',
+      // selectedOption: '0,20€ / 20.000',
+      // accountId: '4a74194a-9227-4bfd-afe5-896798a6dd36',
+      // isPaymentConfigured: false,
+      // emailQueries: [],
+      // nextPaymentDate: '2025-01-31T23:00:00.000Z'
+
+      ...account,
       _id: docId,
-      nombre,
-      email,
-      password: hashedPassword,
       id: docId,
+      password: hashedPassword,
       role,
-      companyName: "",
-      contactNumber: "",
+      bucketCreated: false,
     };
 
+    console.log('newAccount', newAccount)
     const response = await db.insert(newAccount);
     console.log(`Account created successfully:`, response);
 
     return {
       success: true,
       message: "Account created successfully.",
-      account: { nombre, email, docId, role },
+      account: { ...account },
     };
   } catch (error) {
     console.error("Error creating account:", error);
@@ -72,14 +104,12 @@ const createAccount = async ({ nombre, email, password }) => {
   }
 };
 
-const updateAccount = async ({ userId, toUpdate }) => {
-  console.log("Data received in updateAccount service:", { userId, toUpdate });
-
+const deleteAccount = async (account) => {
+  console.log('account delete', account)
   const dbName = "db_emailmanager_accounts";
   let db;
 
   try {
-    // Ensure the database exists
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
       console.log(`Database ${dbName} does not exist.`);
@@ -92,40 +122,91 @@ const updateAccount = async ({ userId, toUpdate }) => {
   }
 
   try {
-    // Fetch the existing user document
-    const existingDoc = await db.get(userId);
-
-    if (!existingDoc) {
-      console.log(`No user found with ID: ${userId}`);
-      return { success: false, message: "User not found." };
-    }
-
-    // Merge the existing document with the updates
-    const updatedDoc = {
-      ...existingDoc,
-      ...toUpdate,
-      _rev: existingDoc._rev, // Ensure the correct revision is used
+    // Get the document using the ID
+    const doc = await db.find({ selector: { id: account } });
+    
+    console.log('doc', doc)
+    // Delete the document using both _id and _rev
+    await db.destroy(doc.docs[0]._id, doc.docs[0]._rev);
+    
+    console.log(`Account deleted successfully: ${account.id}`);
+    return {
+      success: true,
+      message: "Account deleted successfully"
     };
 
-    // Insert the updated document back into the database
-    await db.insert(updatedDoc);
-    console.log(`User with ID ${userId} updated successfully.`);
-
-    // Fetch all users and sanitize the response
-    // const allUsersResponse = await db.list({ include_docs: true });
-    // const allUsers = allUsersResponse.rows.map((row) => {
-    //   const { _id, _rev, ...rest } = row.doc;
-    //   return rest; // Remove internal CouchDB fields (_id and _rev)
-    // });
-
-    return updatedDoc;
   } catch (error) {
     if (error.statusCode === 404) {
-      console.error(`User with ID ${userId} not found.`);
-      return { success: false, message: "User not found." };
+      console.error(`Account with ID ${account.id} not found.`);
+      return { success: false, message: "Account not found." };
     }
-    console.error("Error updating user:", error);
-    throw new Error("Failed to update user");
+    console.error("Error deleting account:", error);
+    throw new Error("Failed to delete account");
+  }
+};
+
+
+
+const updateAccount = async (data) => {
+  console.log("Data received in updateAccount service:", { data });
+
+  const dbName = "db_emailmanager_accounts";
+  let db;
+
+  try {
+    const dbs = await nano.db.list();
+    if (!dbs.includes(dbName)) {
+      console.log(`Database ${dbName} does not exist.`);
+      return { success: false, message: "Database does not exist." };
+    }
+    db = nano.use(dbName);
+  } catch (error) {
+    console.error("Error checking database:", error);
+    throw new Error("Database initialization failed");
+  }
+
+  try {
+    let updatedDoc;
+
+    console.log('data', data)
+    if (data.id) {
+      // Update existing account
+      const existingDoc = await db.get(data.id);
+      
+      if (!existingDoc) {
+        console.log(`No user found with ID: ${data.id}`);
+        return { success: false, message: "User not found." };
+      }
+
+      updatedDoc = {
+        ...existingDoc,
+        ...data,
+        _rev: existingDoc._rev,
+      };
+    } else {
+      // Create new account
+      const accountId = uuidv4();
+      const docId = `account_${data.email}_${accountId}`;
+      
+      updatedDoc = {
+        ...data,
+        _id: docId,
+        id: docId,
+        role: data.email === "info@aythen.com" ? "superadmin" : "user",
+        bucketCreated: false
+      };
+    }
+
+    // Insert/Update the document in the database
+    const response = await db.insert(updatedDoc);
+    console.log(`Account ${data.id ? 'updated' : 'created'} successfully:`, response);
+
+    const { _id, _rev, ...sanitizedDoc } = updatedDoc;
+    return sanitizedDoc;
+
+  } catch (error) {
+    console.error("Error updating/creating account:", error);
+    throw new Error("Failed to update/create account");
   }
 };
 
@@ -189,7 +270,7 @@ const updateUserPassword = async ({ email, newPassword }) => {
   }
 };
 
-const getAllUsers = async () => {
+const getAllAccounts = async () => {
   const dbName = "db_emailmanager_accounts";
   let db;
 
@@ -654,13 +735,14 @@ const newsletter = async ({
 };
 
 module.exports = {
+  deleteAccount: deleteAccount,
+  getAllAccounts: getAllAccounts,
   createAccount: createAccount,
   updateAccount: updateAccount,
   loginToManagerService: loginToManagerService,
   getAllClientsService: getAllClientsService,
   addNewClientService: addNewClientService,
   deleteClientService: deleteClientService,
-  getAllUsers: getAllUsers,
   generateAndSendOtp: generateAndSendOtpService,
   verifyOTP: verifyOTPService,
   newsletter: newsletter,

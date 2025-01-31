@@ -236,3 +236,14 @@
     user-select: none;
   }
 }
+
+
+
+.contentContainer{
+  &.active{
+    display: block;
+  }
+  &.disabled{
+    display: none;
+  }
+}

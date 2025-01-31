@@ -29,9 +29,9 @@ import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
 
 import { useNavigate } from "react-router-dom";
 import {
-  getAllClients,
-  getAllUsers,
-  updateClient,
+  getAllAccounts,
+  // getAllUsers,
+  updateAccount,
   getEmailsByQuery, //
   // getClient
 
@@ -45,7 +45,7 @@ import Payment from "./screens/UserSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
-import UserSettings from "./screens/UserSettings/UserSettings";
+import AccountSettings from "./screens/UserSettings/UserSettings";
 // import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
 import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
@@ -53,20 +53,20 @@ const stripePromise = loadStripe(
 );
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
-import { createClients } from "../../actions/clients";
+import { createAccounts } from "../../actions/user";
 // import FileExplorer from "./components/FileExplorer/FileExplorer";
 import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
 
-const UsersClientsDashboard = () => {
+const AccountsDashboard = () => {
   const { t } = useTranslation("dashboard");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showUserSettings, setShowUserSettings] = useState(false);
+  const [showAccountSettings, setShowAccountSettings] = useState(false);
 
-  const { allClients, allUsers } = useSelector((state) => state.emailManager);
+  const { allAccounts } = useSelector((state) => state.user);
   const { user: userRedux } = useSelector((state) => state.user);
-  const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
+  const [filteredAccounts, setFilteredAccounts] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 
   const [selectedOption, setSelectedOption] = useState("Todos"); // Selected filter
@@ -76,14 +76,14 @@ const UsersClientsDashboard = () => {
   const options = ["Todos", "Activos", "Emails procesados", "Empresa A-Z"];
 
   useEffect(() => {
-    console.log("ALL CLIENTS", allClients);
-  }, [allClients]);
+    console.log("ALL CLIENTS", allAccounts);
+  }, [allAccounts]);
 
   const stats = [
     {
       icon: profiles,
       title: "# Clientes",
-      value: allClients?.length,
+      value: allAccounts?.length,
       change: "16%",
 
       isPositive: true,
@@ -138,15 +138,17 @@ const UsersClientsDashboard = () => {
   ];
 
   useEffect(() => {
-    dispatch(getAllClients());
-    dispatch(getAllUsers());
+    // dispatch(getAccounts());
+    dispatch(getAllAccounts());
   }, [dispatch]);
 
   useEffect(() => {
-    let updatedClients = [...allClients];
+    console.log('allClients', allAccounts)
+    if(!allAccounts) return
+    let updatedAccounts = [...allAccounts];
 
     if (searchQuery) {
-      updatedClients = updatedClients.filter(
+      updatedAccounts = updatedAccounts.filter(
         (client) =>
           client.companyName
             ?.toLowerCase()
@@ -160,16 +162,16 @@ const UsersClientsDashboard = () => {
 
     switch (selectedOption) {
       case "Activos":
-        updatedClients = updatedClients.sort((a, b) => b.active - a.active);
+        updatedAccounts = updatedAccounts.sort((a, b) => b.active - a.active);
         break;
       case "Emails procesados":
-        updatedClients = updatedClients.sort(
+        updatedAccounts = updatedAccounts.sort(
           (a, b) =>
             (b.processedEmails?.length || 0) - (a.processedEmails?.length || 0)
         );
         break;
       case "Empresa A-Z":
-        updatedClients = updatedClients.sort((a, b) =>
+        updatedAccounts = updatedAccounts.sort((a, b) =>
           (a.companyName || "").localeCompare(b.companyName || "")
         );
         break;
@@ -177,23 +179,23 @@ const UsersClientsDashboard = () => {
         break;
     }
 
-    setFilteredClients(updatedClients);
-  }, [allClients, searchQuery, selectedOption]);
+    setFilteredAccounts(updatedAccounts);
+  }, [allAccounts, searchQuery, selectedOption]);
 
   useEffect(() => {
     const checkUserPayments = async () => {
-      for (const client of allClients) {
-        const hasToPay = hasDatePassed(client.nextPaymentDate);
+      for (const account of allAccounts) {
+        const hasToPay = hasDatePassed(account.nextPaymentDate);
         // console.log(
         //   `Checking payment for ${client.tokenEmail}, has to pay?`,
         //   hasToPay
         // );
 
         if (hasToPay) {
-          const startDate = getPreviousPaymentDate(client.nextPaymentDate);
-          const endDate = client.nextPaymentDate;
+          const startDate = getPreviousPaymentDate(account.nextPaymentDate);
+          const endDate = account.nextPaymentDate;
           const paymentData = await checkUserMonthlyPayment(
-            client,
+            account,
             startDate,
             endDate
           );
@@ -205,7 +207,7 @@ const UsersClientsDashboard = () => {
             console.log(
               `This client has to pay ${paymentData.finalPrice} euros`
             );
-            setShowPaymentModal(client.id);
+            setShowPaymentModal(account.id);
             setAmountToPay(paymentData.finalPrice * 100);
             break;
           }
@@ -213,10 +215,10 @@ const UsersClientsDashboard = () => {
       }
     };
 
-    if (allClients?.length) {
+    if (allAccounts?.length) {
       checkUserPayments();
     }
-  }, [allClients]);
+  }, [allAccounts]);
 
   const handleDropdownToggle = () => {
     setIsOpen(!isOpen);
@@ -235,8 +237,8 @@ const UsersClientsDashboard = () => {
     console.log("USERIDDDDDD DASH--------", singleUser);
     // console.log("CLIENT", singleUser);
     dispatch(
-      updateClient({
-        clientId: singleUser.id,
+      updateAcount({
+        accountId: singleUser.id,
         toUpdate: { active: !singleUser.active },
       })
     );
@@ -262,7 +264,7 @@ const UsersClientsDashboard = () => {
       if (response.meta.requestStatus === "fulfilled") {
         // console.log("ENTRE A LA CREACION DE CLIENTES");
 
-        const clientsData = response.payload.processedAttachments.map(
+        const accountsData = response.payload.processedAttachments.map(
           (attachment) => {
             const { xmlContent, ...attachmentWithoutXml } = attachment;
 
@@ -284,14 +286,14 @@ const UsersClientsDashboard = () => {
           }
         );
 
-        const createdClientsResponse = await dispatch(
-          createClients({
+        const createdAccountsResponse = await dispatch(
+          createAccounts({
             userId: userRedux?.id,
-            clientsData: clientsData,
+            clientsData: accountsData,
           })
         );
 
-        console.log("Clientes creados:", createdClientsResponse);
+        console.log("Accounts creados:", createdAccountsResponse);
       }
     }
   };
@@ -304,8 +306,8 @@ const UsersClientsDashboard = () => {
 
   const resetProcessedEmails = (user) => {
     dispatch(
-      updateClient({
-        clientId: user.id,
+      updateAccount({
+        accountId: user.id,
         toUpdate: { processedEmails: ["reset"] },
       })
     );
@@ -536,7 +538,7 @@ const UsersClientsDashboard = () => {
                   {stat.emails && (
                     <span className={`${styles.statChange} ${styles.positive}`}>
                       <MdOutlineMarkEmailRead size={25} color={"#16c098"} />
-                      {`${allClients?.map((client) => client?.processedEmails?.length).reduce((a, b) => a + b, 0)} Emails procesados`}
+                      {`${allAccounts?.map((account) => account?.processedEmails?.length).reduce((a, b) => a + b, 0)} Emails procesados`}
                     </span>
                   )}
                 </div>
@@ -564,7 +566,7 @@ const UsersClientsDashboard = () => {
                 {stat.emails && (
                   <span className={`${styles.statChange} ${styles.positive}`}>
                     <MdOutlineMarkEmailRead size={25} color={"#16c098"} />
-                    {`${allClients?.map((client) => client?.processedEmails?.length).reduce((a, b) => a + b, 0)} Emails procesados`}
+                    {`${allAccounts?.map((account) => account?.processedEmails?.length).reduce((a, b) => a + b, 0)} Emails procesados`}
                   </span>
                 )}
               </div>
@@ -597,11 +599,11 @@ const UsersClientsDashboard = () => {
             )} */}
             <button
               // onClick={() => navigate("/userSettings")}
-              onClick={() => setShowUserSettings(true)}
+              onClick={() => setShowAccountSettings(true)}
               className={styles.addClientButton}
             >
               <img src={plus} alt="Add client" />
-              Alta nuevo cliente
+              Alta nueva cuenta
             </button>
             <div className={styles.filterSearch}>
               <img src={magnify} alt="search" />
@@ -651,21 +653,21 @@ const UsersClientsDashboard = () => {
             <span className={styles.columnPort}>{t("tableCol7")}</span>
             <span className={styles.columnActive}>{t("tableCol8")}</span>
           </div>
-          {filteredClients.length > 0 ? (
-            filteredClients.map((client, index) => (
+          {filteredAccounts.length > 0 ? (
+            filteredAccounts.map((account, index) => (
               <div 
               key={index} 
               className={styles.tableRow}
-              onClick={() => setShowUserSettings(client)}
+              onClick={() => setShowAccountSettings(account)}
               >
                 <span
-                  onClick={() => checkUserMonthlyPayment(client)}
+                  onClick={() => checkUserMonthlyPayment(account)}
                   className={styles.columnName}
                 >
-                  {client.companyName}
+                  {account.companyName}
                 </span>
                 <span className={styles.columnStatus}>
-                  {client.paymentMethodId ? (
+                  {account.paymentMethodId ? (
                     <div
                       // onClick={() => setShowPaymentModal(client.id)}
                       className={styles.greenButton}
@@ -675,7 +677,7 @@ const UsersClientsDashboard = () => {
                   ) : (
                     <div
                       onClick={() => {
-                        setClientIdForPaymentSetup(client.id);
+                        setClientIdForPaymentSetup(account.id);
                         setShowSetPaymentModal(true);
                       }}
                       className={styles.redButton}
@@ -685,32 +687,32 @@ const UsersClientsDashboard = () => {
                   )}
                 </span>
                 <span className={styles.columnContact}>
-                  {client.phoneNumber}
+                  {account.phoneNumber}
                 </span>
                 <span className={styles.columnTokens}>
                   <div className={styles.gapDiv}>
                     <img src={openEmail} alt="Email" className={styles.icon} />
-                    {client.tokenEmail}
+                    {account.tokenEmail}
                   </div>
                   <div className={styles.gapDiv}>
                     <img src={circuit} alt="circuit" className={styles.icon} />
-                    {client.tokenGPT}
+                    {account.tokenGPT}
                   </div>
                 </span>
-                <span className={styles.columnEmail}>{client.tokenEmail}</span>
+                <span className={styles.columnEmail}>{account.tokenEmail}</span>
                 <span
-                  onClick={() => resetProcessedEmails(client)}
+                  onClick={() => resetProcessedEmails(account)}
                   className={styles.columnRecognitions}
                 >
-                  {client.processedEmails?.length}
+                  {account.processedEmails?.length}
                 </span>
-                <span className={styles.columnPort}>{client.port}</span>
+                <span className={styles.columnPort}>{account.port}</span>
                 <span className={styles.columnActive}>
                   <label className={styles.switch}>
                     <input
                       type="checkbox"
-                      checked={client.active || false}
-                      onChange={() => toggleUserActive(client)}
+                      checked={account.active || false}
+                      onChange={() => toggleUserActive(account)}
                     />
                     <span className={styles.slider}></span>
                   </label>
@@ -722,10 +724,10 @@ const UsersClientsDashboard = () => {
           )}
         </div>
       </div>
-      {showUserSettings && (
-        <UserSettings
-          showUserSettings={showUserSettings}
-          setShowUserSettings={setShowUserSettings}
+      {showAccountSettings && (
+        <AccountSettings
+          showAccountSettings={showAccountSettings}
+          setShowAccountSettings={setShowAccountSettings}
         />
       )}
     </div>
@@ -733,4 +735,4 @@ const UsersClientsDashboard = () => {
   );
 };
 
-export default UsersClientsDashboard;
+export default AccountsDashboard;

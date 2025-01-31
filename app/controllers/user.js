@@ -1,14 +1,47 @@
 const path = require('path')
 const fs = require('fs').promises
+// const nano = require('nano')('http://localhost:5984')
+// DELETE
+const nano = require('nano')('http://admin:1234@127.0.0.1:5984') 
+
+
+const multer = require("multer");
+
+// Configuración de multer para guardar los archivos en "public/pdfs"
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const pdfPath = path.join(
+      __dirname,
+      "../../src/views/Dashboard/assets/pdfs"
+    );
+    // Crear la carpeta "pdfs" si no existe
+    if (!fs.existsSync(pdfPath)) {
+      fs.mkdirSync(pdfPath, { recursive: true });
+    }
+    cb(null, pdfPath); // Asegúrate de que esta carpeta exista
+  },
+  filename: (req, file, cb) => {
+    const filePath = path.join(__dirname, "../../public", file.originalname);
+    // Verificar si el archivo existe y eliminarlo
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
 
 const {
   createAccount,
+  deleteAccount,
+  updateAccount,
+  getAllAccounts,
+
   loginToManagerService,
   getAllClientsService,
   addNewClientService,
   deleteClientService,
-  getAllUsers,
-  updateAccount,
   generateAndSendOtp,
   verifyOTP,
   newsletter,
@@ -47,10 +80,12 @@ const createAccountController = async (req, res) => {
 
 const updateAccountController = async (req, res) => {
   try {
-    const { userId, toUpdate } = req.body;
-    console.log("User update data received:", { userId, toUpdate });
+    const { userData } = req.body;
+    // console.log("User update data received:", { userId, toUpdate });
 
-    const response = await updateAccount({ userId, toUpdate });
+    const response = await updateAccount(userData);
+ 
+    console.log('response', response)
 
     return res.status(200).send(response);
   } catch (err) {
@@ -58,6 +93,20 @@ const updateAccountController = async (req, res) => {
     return res.status(500).send("Error updating user");
   }
 };
+
+const deleteAccountController = async (req, res) => {
+  try {
+    const { userData } = req.body;
+    const response = await deleteAccount(userData);
+    console.log('response', response)
+    return res.status(200).send(response);
+  } catch (err) {
+    console.log("Error in deleteAccountController:", err);
+    return res.status(500).send("Error deleting user");
+  }
+};
+
+
 const updateAccountPasswordController = async (req, res) => {
   try {
     const { email, newPassword } = req.body;
@@ -104,13 +153,13 @@ const getAllClientsController = async (req, res) => {
   }
 };
 
-const getAllUsersController = async (req, res) => {
+const getAllAccountsController = async (req, res) => {
   try {
-    const users = await getAllUsers();
-    return res.status(200).send(users);
+    const accounts = await getAllAccounts();
+    return res.status(200).send(accounts);
   } catch (err) {
-    console.log("Error in getAllUsersController:", err);
-    return res.status(500).send("Error fetching clients");
+    console.log("Error in getAllAccountsController:", err);
+    return res.status(500).send("Error fetching accounts");
   }
 };
 
@@ -278,34 +327,7 @@ const senderEmail = async (req, res) => {
 }
 
 
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
 
-// Configuración de multer para guardar los archivos en "public/pdfs"
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const pdfPath = path.join(
-      __dirname,
-      "../../src/views/Dashboard/assets/pdfs"
-    );
-    // Crear la carpeta "pdfs" si no existe
-    if (!fs.existsSync(pdfPath)) {
-      fs.mkdirSync(pdfPath, { recursive: true });
-    }
-    cb(null, pdfPath); // Asegúrate de que esta carpeta exista
-  },
-  filename: (req, file, cb) => {
-    const filePath = path.join(__dirname, "../../public", file.originalname);
-    // Verificar si el archivo existe y eliminarlo
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage });
 
 // Controlador para subir el archivo PDF
 const uploadPDF = (req, res) => {
@@ -314,26 +336,44 @@ const uploadPDF = (req, res) => {
 
 // ==============================================================================
 
+
+///
+
+const deleteAllDB = async (req, res) => {
+
+  try {
+    const dbs = await nano.db.list();
+    for (const db of dbs) {
+      await nano.db.destroy(db);
+    }
+    return res.status(200).send('All databases deleted')
+  } catch (err) {
+    console.log('Error in deleteAllDB:', err)
+    return res.status(500).send('Error deleting all databases')
+  }
+}
+
 module.exports = {
+  deleteAllDB: catchedAsync(deleteAllDB),
+
   getFile: catchedAsync(getFile),
   sendEmail: catchedAsync(senderEmail),
   getEmail: catchedAsync(getEmail),
 
   createAccountController: catchedAsync(createAccountController),
+  getAllAccountsController: catchedAsync(getAllAccountsController),
+  updateAccountController: catchedAsync(updateAccountController),
+  deleteAccountController: catchedAsync(deleteAccountController),
+  updateAccountPasswordController: catchedAsync(updateAccountPasswordController),
+  generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
+  verifyOTPController: catchedAsync(verifyOTPController),
+  sendNewsletter: catchedAsync(sendNewsletter),
+
   loginToManagerController: catchedAsync(loginToManagerController),
   getAllClientsController: catchedAsync(getAllClientsController),
   addNewClientController: catchedAsync(addNewClientController),
   deleteClientController: catchedAsync(deleteClientController),
   updateClientController: catchedAsync(updateClientController),
-  getAllUsersController: catchedAsync(getAllUsersController),
-  updateAccountController: catchedAsync(updateAccountController),
-  generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
-  verifyOTPController: catchedAsync(verifyOTPController),
-  sendNewsletter: catchedAsync(sendNewsletter),
-  updateAccountPasswordController: catchedAsync(updateAccountPasswordController),
   uploadPDF: catchedAsync(uploadPDF),
   upload: upload,
-  updateAccountPasswordController: catchedAsync(
-    updateAccountPasswordController
-  ),
 };

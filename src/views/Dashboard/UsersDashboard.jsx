@@ -26,12 +26,12 @@ import redArrow from "./assets/redArrow.svg";
 
 import { useNavigate } from "react-router-dom";
 import {
-  getAllClients,
-  getAllUsers,
-  updateClient,
+  // getAllClients,
+  getAllAccounts,
+  updateAccount,
   getEmailsByQuery,
-  updateUser,
-} from "../../actions/emailManager";
+  // updateAccount,
+} from "../../actions/user";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -48,7 +48,7 @@ const stripePromise = loadStripe(
 );
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
-import { setUser } from "../../slices/emailManagerSlices";
+// import { setUser } from "../../slices/emailManagerSlices";
 import AddAdminModal from "./components/AddAdminModal/AddAdminModal";
 import {
   createAutomation,
@@ -60,12 +60,12 @@ const UsersDashboard = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showUserSettings, setShowUserSettings] = useState(false);
+  const [showAccountSettings, setShowAccountSettings] = useState(false);
 
-  const { allClients, allUsers } = useSelector((state) => state.emailManager);
-  const { user: userData } = useSelector((state) => state.user);
+  const { user: userData, allAccounts } = useSelector((state) => state.user);
+  // const { user: userData } = useSelector((state) => state.user);
   const { userAutomations } = useSelector((state) => state.automations);
-  const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
+  const [filteredAccounts, setFilteredAccounts] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 
   const [selectedOption, setSelectedOption] = useState("Todos"); // Selected filter
@@ -82,7 +82,7 @@ const UsersDashboard = () => {
       key: "users",
       icon: profiles,
       title: "# Usuarios",
-      value: allUsers?.length,
+      value: allAccounts?.length,
       change: "16%",
 
       isPositive: true,
@@ -144,7 +144,7 @@ const UsersDashboard = () => {
     if (userData) {
       console.log('userrrss', userData)
       if (userData?.role === "user") {
-        navigate("/panel");
+        navigate("/admin/chat");
       }
     }
   }, [userData]);
@@ -176,34 +176,34 @@ const UsersDashboard = () => {
   }, [userAutomations]);
 
   useEffect(() => {
-    dispatch(getAllClients());
-    dispatch(getAllUsers());
+    dispatch(getAllAccounts());
+    // dispatch(getAllUsers());
   }, [dispatch]);
 
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  // const [filteredAccounts, setFilteredAccounts] = useState([]);
 
   useEffect(() => {
-    let updatedUsers = [...allUsers];
+    let updatedAccounts = [...allAccounts];
 
     if (searchQuery) {
-      updatedUsers = updatedUsers.filter((user) =>
-        user.email?.toLowerCase().includes(searchQuery.toLowerCase())
+      updatedAccounts = updatedAccounts.filter((account) =>
+        account.email?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     switch (selectedOption) {
       case "Empresa A-Z":
-        updatedUsers = updatedUsers.sort((a, b) =>
+        updatedAccounts = updatedAccounts.sort((a, b) =>
           (a.email || "").localeCompare(b.email || "")
         );
         break;
       case "Rol":
-        updatedUsers = updatedUsers.sort((a, b) =>
+        updatedAccounts = updatedAccounts.sort((a, b) =>
           (a.role || "").localeCompare(b.role || "")
         );
         break;
       case "Pin":
-        updatedUsers = updatedUsers.sort((a, b) =>
+        updatedAccounts = updatedAccounts.sort((a, b) =>
           (a.pin || "").localeCompare(b.pin || "")
         );
         break;
@@ -211,8 +211,8 @@ const UsersDashboard = () => {
         break;
     }
 
-    setFilteredUsers(updatedUsers);
-  }, [allUsers, searchQuery, selectedOption]);
+    setFilteredAccounts(updatedAccounts);
+  }, [allAccounts, searchQuery, selectedOption]);
 
   const handleDropdownToggle = () => {
     setIsOpen(!isOpen);
@@ -229,7 +229,7 @@ const UsersDashboard = () => {
 
   const toggleUserActive = (user) => {
     dispatch(
-      updateClient({ clientId: user.id, toUpdate: { active: !user.active } })
+      updateAccount({ accountId: account.id, toUpdate: { active: !account.active } })
     );
     if (!user.active) {
       // console.log("dispatching emails by query", {
@@ -267,8 +267,8 @@ const UsersDashboard = () => {
 
   const resetProcessedEmails = (user) => {
     dispatch(
-      updateClient({
-        clientId: user.id,
+      updateAccount({
+        accountId: user.id,
         toUpdate: { processedEmails: ["reset"] },
       })
     );
@@ -365,17 +365,17 @@ const UsersDashboard = () => {
 
   // Fetch all users on mount
   useEffect(() => {
-    dispatch(getAllUsers());
+    dispatch(getAllAccounts());
   }, [dispatch]);
 
   // Initialize userOptions with user roles
   useEffect(() => {
     const initialOptions = {};
-    allUsers.forEach((user) => {
-      initialOptions[user.id] = user.role || "user"; // Default to 'user' if role is not defined
+    allAccounts.forEach((account) => {
+      initialOptions[account.id] = account.role || "user"; // Default to 'user' if role is not defined
     });
     setUserOptions(initialOptions);
-  }, [allUsers]);
+  }, [allAccounts]);
 
   //   useEffect(() => {
   //     if (allUsers.length > 0) {
@@ -521,7 +521,7 @@ const UsersDashboard = () => {
               <h1 className={styles.tableTitle}>
                 Usuarios y permisos{" "}
                 <span
-                  onClick={() => navigate("/admin/clients")}
+                  onClick={() => navigate("/admin/accounts")}
                   className={styles.changeTabButton}
                 >
                   Ir a clientes
@@ -595,35 +595,35 @@ const UsersDashboard = () => {
               <span className={style.columnEmail}>Email</span>
               <span className={style.columnRole}>Rol</span>
             </div>
-            {filteredUsers.filter((user) => user.role !== "user").length > 0 ? (
-              filteredUsers
-                .filter((user) => user.role !== "user")
-                .map((user) => (
-                  <div key={user.id} className={style.tableRow}>
+            {filteredAccounts.filter((account) => account.role !== "user").length > 0 ? (
+              filteredAccounts
+                .filter((account) => account.role !== "user")
+                .map((account) => (
+                  <div key={account.id} className={style.tableRow}>
                     <span className={style.columnName}>
-                      {user.email || "-"}
+                      {account.email || "-"}
                     </span>
-                    <span className={style.columnPin}>{user.pin || "-"}</span>
+                    <span className={style.columnPin}>{account.pin || "-"}</span>
                     <span className={style.columnContact}>
-                      {user.email || "-"}
+                      {account.email || "-"}
                     </span>
                     <span className={style.columnPassword}>-</span>
-                    <span className={style.columnEmail}>{user.email}</span>
-                    {user.email === userData.email ? (
+                    <span className={style.columnEmail}>{account.email}</span>
+                    {account.email === userData.email ? (
                       <span
                         style={{ cursor: "default" }}
                         className={style.filterSort}
                       >
-                        <b>{user.role}</b>
+                        <b>{account.role}</b>
                       </span>
                     ) : userData.role !== "user" ? (
                       <div
                         className={style.filterSort}
-                        onClick={() => handleRoleDropdownToggle(user.id)}
+                        onClick={() => handleRoleDropdownToggle(account.id)}
                       >
-                        <b>{userOptions[user.id]}</b>
+                        <b>{userOptions[account.id]}</b>
                         <FaChevronDown className={style.chevronIcon} />
-                        {openRoleDropdown === user.id && (
+                        {openRoleDropdown === account.id && (
                           <div
                             ref={dropdownRoleRef}
                             className={style.dropdownOptions}
@@ -633,7 +633,7 @@ const UsersDashboard = () => {
                                 key={option}
                                 className={style.dropdownOption}
                                 onClick={() =>
-                                  handleRoleOptionClick(user.id, option)
+                                  handleRoleOptionClick(account.id, option)
                                 }
                                 style={{
                                   borderBottom:
@@ -647,7 +647,7 @@ const UsersDashboard = () => {
                         )}
                       </div>
                     ) : (
-                      <span className={style.filterSort}>{user.role}</span>
+                      <span className={style.filterSort}>{account.role}</span>
                     )}
                   </div>
                 ))
@@ -656,10 +656,10 @@ const UsersDashboard = () => {
             )}
           </div>
         </div>
-        {showUserSettings && (
+        {showAccountSettings && (
           <UserSettings
-            showUserSettings={showUserSettings}
-            setShowUserSettings={setShowUserSettings}
+            showUserSettings={showAccountSettings}
+            setShowUserSettings={setShowAccountSettings}
           />
         )}
       </div>

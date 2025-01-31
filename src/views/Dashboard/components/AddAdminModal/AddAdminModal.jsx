@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./AddAdminModal.module.css";
 import { MdClose } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-import { createAccount } from "../../../../actions/emailManager";
+import { createAccount } from "../../../../actions/user";
 import { useDispatch } from "react-redux";
 
 const AddAdminModal = ({ onClose }) => {

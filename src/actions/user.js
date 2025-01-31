@@ -30,7 +30,7 @@ createAsyncThunk('user/sendEmail',
 
 // -------------------------------
 export const getEmailsByQuery = createAsyncThunk(
-  "emailManager/getEmailsByQuery",
+  "user/getEmailsByQuery",
   async ({ userId, email, password, query, tokenGpt, logs, ftpData }) => {
     try {
       console.log("EMAIL FETCH REQUEST:", { userId, email, query, ftpData });
@@ -38,7 +38,7 @@ export const getEmailsByQuery = createAsyncThunk(
       const token = localStorage.getItem("token");
       // Call your backend endpoint for fetching emails
       const res = await apiBackend.post(
-        "/emailManager/getEmailsByQuery",
+        "/user/getEmailsByQuery",
         { userId, email, password, query, tokenGpt, logs, ftpData },
         {
           headers: {
@@ -109,6 +109,21 @@ export const loginToManager = createAsyncThunk(
   }
 );
 
+export const getAllAccounts = createAsyncThunk("user/getAllAccounts", async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await apiBackend.get(`/user/getAllAccounts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log("Error fetching accounts:", error);
+    throw new Error("Failed to fetch accounts");
+  }
+});
+
 export const getAllClients = createAsyncThunk(
   "user/getAllClients",
   async () => {
@@ -127,20 +142,7 @@ export const getAllClients = createAsyncThunk(
   }
 );
 
-export const getAllUsers = createAsyncThunk("user/getAllUsers", async () => {
-  try {
-    const token = localStorage.getItem("token");
-    const res = await apiBackend.get(`/user/getAllUsers`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (error) {
-    console.log("Error fetching users:", error);
-    throw new Error("Failed to fetch users");
-  }
-});
+
 
 export const addNewClient = createAsyncThunk(
   "user/addNewClient",
@@ -205,14 +207,14 @@ export const updateClient = createAsyncThunk(
   }
 );
 
-export const updateUser = createAsyncThunk(
-  "user/updateUser",
-  async ({ userId, toUpdate }) => {
+export const updateAccount = createAsyncThunk(
+  "user/updateAccount",
+  async (data) => {
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.put(
-        `/user/updateUser`,
-        { userId, toUpdate },
+        `/user/updateAccount`,
+        { userData: data},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -221,14 +223,36 @@ export const updateUser = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      console.log("Error updating user:", error);
-      throw new Error("Failed to update user");
+      console.log("Error updating account:", error);
+      throw new Error("Failed to update account");
     }
   }
 );
 
-export const updateUserPassword = createAsyncThunk(
-  "user/updateUserPassword",
+export const deleteAccount = createAsyncThunk(
+  "user/deleteAccount",
+  async (data) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        `/user/deleteAccount`,
+        { userData: data},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error updating account:", error);
+      throw new Error("Failed to update account");
+    }
+  }
+);
+
+export const updateAccountPassword = createAsyncThunk(
+  "user/updateAccountPassword",
   async ({ email, newPassword }) => {
     console.log("updating password (ACTION)", { email, newPassword });
     try {

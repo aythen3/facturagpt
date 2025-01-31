@@ -320,6 +320,11 @@ const NavbarAdmin = ({
               setShowNewTagModal={setShowNewTagModal}
             />
           )}
+          {/* {true && (
+            <div>
+              hello
+            </div>
+          )} */}
           {isModalAutomate && (
             <Automate
               typeContent={handleShowContentAutomate}
@@ -347,7 +352,9 @@ const NavbarAdmin = ({
             />
           )}
 
-          {true && <PanelIniAutomate />}
+          {true && ( 
+            <PanelIniAutomate />
+          )}
         </div>
       </Elements>
     </>

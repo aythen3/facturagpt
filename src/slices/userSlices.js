@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginToManager, updateUser } from "../actions/user";
+import {
+  loginToManager,
+  updateAccount,
+  getAllAccounts
+} from "../actions/user";
 
 const userSlices = createSlice({
   name: "user",
   initialState: {
     user: null,
-    allUsers: [],
-    updatingUserLoading: false,
+    allAccounts: [],
+    updatingAccountLoading: false,
     loginLoading: false,
     error: false,
   },
@@ -32,27 +36,43 @@ const userSlices = createSlice({
         state.error = action.payload;
         state.loginLoading = false;
       })
-      // USER UPDATE
-      .addCase(updateUser.pending, (state) => {
-        state.updatingUserLoading = true;
+
+      // GET ALL USERS
+
+      .addCase(getAllAccounts.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(getAllAccounts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allAccounts = action.payload;
+      })
+      .addCase(getAllAccounts.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
+
+      // USER UPDATE
+      .addCase(updateAccount.pending, (state) => {
+        state.updatingAccountLoading = true;
+      })
+      .addCase(updateAccount.fulfilled, (state, action) => {
         console.log("action.payload from updateUser", action.payload);
-        state.updatingUserLoading = false;
+        state.updatingAccountLoading = false;
         if (action.payload?.id === state.user?.id) {
           state.user = action.payload;
         } else {
-          state.allUsers = state.allUsers.map((user) => {
-            if (user.id === action.payload.id) {
+          state.allAccounts = state.allAccounts.map((account) => {
+            if (account.id === action.payload.id) {
               return action.payload;
             }
-            return user;
+            return account;
           });
         }
       })
-      .addCase(updateUser.rejected, (state, action) => {
+      .addCase(updateAccount.rejected, (state, action) => {
         state.error = action.payload;
-        state.updatingUserLoading = false;
+        state.updatingAccountLoading = false;
       });
   },
 });

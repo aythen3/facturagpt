@@ -154,7 +154,7 @@ const AccountSettings = () => {
   const handleLogOut = () => {
     const isConfirm = confirm(t("confirmLogout"));
     if (isConfirm) {
-      localStorage.removeItem("user");
+      // localStorage.removeItem("user");
       logout();
     }
   };

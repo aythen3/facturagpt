@@ -11,7 +11,6 @@ import eye from "../../assets/eye.svg";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 // import { addNewClient, createAccount } from "../../../../actions/emailManager";
-import { createAccount } from "../../../../actions/user";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -29,10 +28,16 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 
-const UserSettings = ({
+import { 
+  updateAccount,
+  deleteAccount
+ } from "../../../../actions/user";
+
+ 
+const AccountSettings = ({
   // id, 
-  showUserSettings,
-  setShowUserSettings
+  showAccountSettings,
+  setShowAccountSettings
 }) => {
   const { t } = useTranslation("userSetting");
   const dispatch = useDispatch();
@@ -135,7 +140,7 @@ const UserSettings = ({
     setFieldValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleAddClient = () => {
+  const handleAddAccount = () => {
     const isEmpty = (value) => !value || value.trim() === "";
 
     const requiredFields = {
@@ -191,7 +196,7 @@ const UserSettings = ({
     console.log("Adding new client with:", finalData);
 
     // dispatch(addNewClient({ clientData: finalData }));
-    dispatch(createAccount(finalData));
+    dispatch(updateAccount(finalData));
 
     // =================================================
     // const defaultClient = {
@@ -220,6 +225,12 @@ const UserSettings = ({
     alert("Cliente agregado satisfactoriamente!");
   };
 
+
+  const handleDeleteAccount = () => {
+    dispatch(deleteAccount(showAccountSettings.id));
+  }
+
+  
   const handleTogglePayment = (e) => {
     setIsPaymentConfigured(e.target.checked);
     if (e.target.checked) {
@@ -233,20 +244,21 @@ const UserSettings = ({
 
 
   useEffect(() => {
-    console.log('!!!! showUserSettings', showUserSettings)
-    if (showUserSettings) {
+    console.log('!!!! showUserSettings', showAccountSettings)
+    if (showAccountSettings) {
       // dispatch()
       setFieldValues({
-        companyName: showUserSettings.companyName || "",
-        email: showUserSettings.email || "",
-        phoneNumber: showUserSettings.phoneNumber || "",
-        VatId: showUserSettings.VatId || "",
-        address: showUserSettings.address || "",
-        emergencyContact: showUserSettings.emergencyContact || "",
-        tokenGPT: showUserSettings.tokenGPT || "",
+        companyName: showAccountSettings.companyName || "",
+        email: showAccountSettings.email || "",
+        phoneNumber: showAccountSettings.phoneNumber || "",
+        VatId: showAccountSettings.VatId || "",
+        address: showAccountSettings.address || "",
+        emergencyContact: showAccountSettings.emergencyContact || "",
+        tokenGPT: showAccountSettings.tokenGPT || "",
       })
     }
-  }, [showUserSettings])
+  }, [showAccountSettings])
+  
   return (
     <div>
       <Elements stripe={stripePromise}>
@@ -261,26 +273,35 @@ const UserSettings = ({
             <div className={styles.headerLeft}>
               <div
                 className={styles.arrowGreen}
-                onClick={() => setShowUserSettings(false)}
+                onClick={() => setShowAccountSettings(false)}
               >
                 <ArrowLeft className={styles.arrowGreenIcon} />
               </div>
-              Admin <ArrowGray className={styles.arrowHeaderGray} /> alta nuevo
-              cliente
+              Admin <ArrowGray className={styles.arrowHeaderGray} /> alta nueva
+              cuenta
             </div>
 
             <div style={{ display: "flex", gap: "10px" }}>
               <Button
                 type={"white"}
-                action={() => setShowUserSettings(false)}
+                action={() => setShowAccountSettings(false)}
               >
                 Cancel
               </Button>
               <Button
-                action={handleAddClient}
+                action={handleAddAccount}
               >
-                Dar de alta
+                {showAccountSettings?.id ? "Actualizar" : "Dar de alta"}
+                {/* Dar de alta */}
               </Button>
+              {showAccountSettings?.id && (
+              <Button
+                action={handleDeleteAccount}
+              >
+                {"Eliminar"}
+                {/* Dar de alta */}
+              </Button>
+              )}
             </div>
           </div>
           <div style={{ display: "flex", gap: "40px", height: "100%" }}>
@@ -536,10 +557,10 @@ const UserSettings = ({
       </Elements>
       <div
         className={styles.bgModal}
-        onClick={() => setShowUserSettings(false)}
+        onClick={() => setShowAccountSettings(false)}
       ></div>
     </div>
   );
 };
 
-export default UserSettings;
+export default AccountSettings;
