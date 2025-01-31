@@ -1,17 +1,33 @@
-import { MoreVertical } from 'lucide-react';
-import styles from './Preview.module.css';
-import { useRef, useState } from 'react';
-import sendMail from '../../assets/sendMail.svg';
-import downloadIcon from '../../assets/downloadIcon.svg';
-import tagIcon from '../../assets/tagIcon.svg';
-import moveToFolder from '../../assets/moveToFolderIcon.svg';
-import printIcon from '../../assets/printIcon.svg';
-import gestionaEsPublico from '../../assets/gestionaEsPublicoIcon.svg';
-import stripeIcon from '../../assets/stripeIconText.svg';
-import wsIcon from '../../assets/whatsappIcon.svg';
-import SendEmailModal from '../SendEmailModal/SendEmailModal';
-import { ReactComponent as EyeWhiteIcon } from '../../assets/eyeWhiteIcon.svg';
-import SeeBill from './SeeBill/SeeBill';
+import { MoreVertical } from "lucide-react";
+import styles from "./Preview.module.css";
+import { useRef, useState } from "react";
+import sendMail from "../../assets/sendMail.svg";
+import downloadIcon from "../../assets/downloadIcon.svg";
+import tagIcon from "../../assets/tagIcon.svg";
+import moveToFolder from "../../assets/moveToFolderIcon.svg";
+import printIcon from "../../assets/printIcon.svg";
+import gestionaEsPublico from "../../assets/gestionaEsPublicoIcon.svg";
+import stripeIcon from "../../assets/stripeIconText.svg";
+import wsIcon from "../../assets/whatsappIcon.svg";
+import SendEmailModal from "../SendEmailModal/SendEmailModal";
+import { ReactComponent as EyeWhiteIcon } from "../../assets/eyeWhiteIcon.svg";
+import SeeBill from "./SeeBill/SeeBill";
+import Button from "../Button/Button";
+import EditableRow from "./EditableRow/EditableRow";
+import EditableInput from "../AccountSettings/EditableInput/EditableInput";
+import { ReactComponent as SeleccionarPlantilla } from "../../assets/seleccionar plantilla.svg";
+import { ReactComponent as EditCode } from "../../assets/editCode.svg";
+import { ReactComponent as EditCodeRays } from "../../assets/editCodeRays.svg";
+import AddDiscount from "../AddDiscount/AddDiscount";
+import AddTax from "../AddTax/AddTax";
+let documentoPDF;
+
+try {
+  documentoPDF = require("../../assets/pdfs/document.pdf");
+} catch (error) {
+  console.warn("El archivo document.pdf no existe:", error.message);
+  documentoPDF = null; // Valor por defecto si no existe el archivo
+}
 
 const ButtonActionsWithText = ({ children, classStyle, click }) => {
   return (
@@ -30,58 +46,58 @@ const DocumentPreview = ({ document, companyInfo }) => {
 
   const actions = [
     {
-      text: 'Enviar Correo',
+      text: "Enviar Correo",
       icon: sendMail,
       click: () => {
         setMailModal(true); // Cambia el estado para mostrar el modal
       },
     },
     {
-      text: 'Descargar',
+      text: "Descargar",
       icon: downloadIcon,
       click: () => {
-        console.log('Documento descargado');
+        console.log("Documento descargado");
       },
     },
     {
-      text: 'Añadir Etiqueta',
+      text: "Añadir Etiqueta",
       icon: tagIcon,
       click: () => {
-        console.log('Etiqueta añadida');
+        console.log("Etiqueta añadida");
       },
     },
     {
-      text: 'Mover a Carpeta',
+      text: "Mover a Carpeta",
       icon: moveToFolder,
       click: () => {
-        console.log('Documento movido a carpeta');
+        console.log("Documento movido a carpeta");
       },
     },
     {
-      text: 'Imprimir',
+      text: "Imprimir",
       icon: printIcon,
       click: () => {
-        console.log('Documento enviado a imprimir');
+        console.log("Documento enviado a imprimir");
       },
     },
     {
       icon: stripeIcon,
       click: () => {
-        console.log('Acción de Stripe ejecutada');
+        console.log("Acción de Stripe ejecutada");
       },
       classOption: styles.bgStripe,
     },
     {
       icon: wsIcon,
       click: () => {
-        console.log('Acción de WhatsApp ejecutada');
+        console.log("Acción de WhatsApp ejecutada");
       },
       classOption: styles.bgWs,
     },
     {
       icon: gestionaEsPublico,
       click: () => {
-        console.log('Gestión pública ejecutada');
+        console.log("Gestión pública ejecutada");
       },
       classOption: styles.bgGestiona,
     },
@@ -104,14 +120,101 @@ const DocumentPreview = ({ document, companyInfo }) => {
     );
   };
 
-  const details = () => {
+  const Details = () => {
+    const [showTaxModal, setShowTaxModal] = useState(false);
+    const [showDiscountModal, setShowDiscountModal] = useState(false);
     return (
-      <div>
-        <div>hola</div>
+      <div className={styles.detailsContainer}>
+        <Button type="white" headerStyle={{ width: "100%" }}>
+          Crea un asiento
+        </Button>
+        <div className={styles.detailsContent}>
+          <div className={styles.containerEditableInput}>
+            <div className={styles.state}>
+              <p>Estado</p>
+              <div>
+                Stripe
+                <select>
+                  <option value="0">Pagado</option>
+                  <option value="1">Pagado</option>
+                </select>
+              </div>
+            </div>
+
+            <EditableRow label="Subtotal" />
+            <EditableRow
+              label="Descuento"
+              buttonLabel="Añadir Descuento"
+              action={() => setShowDiscountModal(true)}
+              hasButton
+              hasPercentage="10%"
+            />
+            <EditableRow
+              label="Impuesto"
+              buttonLabel="Añadir Impuesto"
+              action={() => setShowTaxModal(true)}
+              hasButton
+              hasPercentage="21%"
+            />
+            <EditableRow label="Total" />
+          </div>
+
+          <div className={styles.containerEditableInput}>
+            <EditableInput label="# Factura" placeholder="0001" />
+            <EditableInput label="# Orden de compra" placeholder="Opcional" />
+            <EditableInput label="Fecha" placeholder="25 Dec 2025" />
+            <EditableInput
+              label="Fecha vencimiento"
+              placeholder="25 Dec 2025"
+            />
+          </div>
+          <div className={styles.containerEditableInput}>
+            <EditableInput
+              label="Condiciones y formas de pago"
+              placeholder="ex. Payment is due within 15 days"
+              isTextarea={true}
+            />
+          </div>
+          <div className={styles.btnTemplateContainer}>
+            <Button
+              type="white"
+              headerStyle={{
+                fontWeight: "500",
+                color: "#0D0D0D",
+                width: "100%",
+                alignItem: "center",
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+                padding: "8px",
+              }}
+            >
+              <SeleccionarPlantilla /> Seleccionar Plantilla
+            </Button>
+            <Button
+              type="white"
+              headerStyle={{
+                fontWeight: "500",
+                color: "#0D0D0D",
+                width: "100%",
+                alignItem: "center",
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+                padding: "8px",
+              }}
+            >
+              <EditCode /> Editar Código HTML <EditCodeRays />
+            </Button>
+            {showDiscountModal && (
+              <AddDiscount setShowDiscountModal={setShowDiscountModal} />
+            )}
+            {showTaxModal && <AddTax setShowTaxModal={setShowTaxModal} />}
+          </div>
+        </div>
       </div>
     );
   };
-
   const seeBillRef = useRef(); // Referencia al componente SeeBill
 
   return (
@@ -119,13 +222,18 @@ const DocumentPreview = ({ document, companyInfo }) => {
       <div className={styles.previewSection}>
         {document ? (
           <div className={styles.documentWrapper}>
-            <img
-              src={document}
-              alt="Document preview"
-              width={400}
-              height={500}
-              className={styles.documentImage}
-            />
+            <div className={styles.billContainerPreview}>
+              {!documentoPDF ? (
+                "No existe ninguna factura"
+              ) : (
+                <embed
+                  src={`${documentoPDF}#zoom=10&toolbar=0`}
+                  width="100%"
+                  height="100%"
+                  type="application/pdf"
+                />
+              )}
+            </div>
             <div
               className={styles.visualizar}
               onClick={() => {
@@ -154,18 +262,18 @@ const DocumentPreview = ({ document, companyInfo }) => {
         <div className={styles.actionsContainer}>
           <button
             onClick={() => setOptions(0)}
-            className={options === 0 ? styles.btnActionSelected : ''}
+            className={options === 0 ? styles.btnActionSelected : ""}
           >
             Detalles
           </button>
           <button
             onClick={() => setOptions(1)}
-            className={options === 1 ? styles.btnActionSelected : ''}
+            className={options === 1 ? styles.btnActionSelected : ""}
           >
             Acciones
           </button>
         </div>
-        {options === 0 ? <Actions /> : <Actions />}
+        {options === 0 ? <Details /> : <Actions />}
       </div>
       {mailModal && (
         <SendEmailModal

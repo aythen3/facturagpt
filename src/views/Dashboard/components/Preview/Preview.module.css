@@ -22,7 +22,12 @@
   background-color: #f9fafb;
   margin-bottom: 20px;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
+  padding: 20px;
+}
+
+.billContainerPreview {
+  height: 300px;
 }
 
 .documentWrapper {
@@ -32,6 +37,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  border-radius: 10px 10px 20px 20px;
+  -webkit-border-radius: 10px 10px 20px 20px;
+  -moz-border-radius: 10px 10px 20px 20px;
+  -ms-border-radius: 10px 10px 20px 20px;
+  -o-border-radius: 10px 10px 20px 20px;
 }
 
 .visualizar {
@@ -47,6 +58,17 @@
   gap: 10px;
   justify-content: center;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 100ms;
+  -webkit-transition: opacity 100ms;
+  -moz-transition: opacity 100ms;
+  -ms-transition: opacity 100ms;
+  -o-transition: opacity 100ms;
+}
+.previewSection:hover {
+  .visualizar {
+    opacity: 1;
+  }
 }
 .documentImage {
   max-width: 100%;
@@ -359,5 +381,43 @@
     background-color: white;
     color: black;
     border: 1px solid #00000052;
+  }
+}
+
+.detailsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btnTemplateContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detailsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.containerEditableInput {
+  padding: 20px;
+  border: 1px solid #ececf1;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .state {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
