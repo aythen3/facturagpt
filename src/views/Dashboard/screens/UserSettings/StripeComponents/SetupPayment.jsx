@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import SetupCheckoutForm from "./SetupCheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
-import { createSetupIntent } from "../../../../../actions/emailManager";
+import { createSetupIntent } from "../../../../../actions/user";
 import { useDispatch } from "react-redux";
 import styles from "./Payment.module.css";
 

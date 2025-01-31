@@ -12,11 +12,16 @@
 .statsContainer {
   display: flex;
   background-color: #f5f5f5;
-  min-height: 115px;
+  min-height: 80px;
+  height: 80px;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
   overflow-x: scroll;
+  overflow-y: hidden;
+  /* flex-wrap: wrap; */
+  padding-top: 30px;
+
   /* flex-wrap: wrap; */
   &::-webkit-scrollbar {
     display: none;
@@ -41,13 +46,16 @@
   border-right: 1px solid #f0f0f0;
   margin-right: 24px;
   gap: 4px;
+
   &:last-child {
     margin-right: 0px;
   }
 }
+
 .statCard:first-child {
   padding-left: 0px;
 }
+
 .statCard:last-child {
   border-right: 1px solid transparent;
 }
@@ -69,6 +77,7 @@
 }
 
 .statValue {
+  margin-top: 0px;
   font-size: 24px;
   font-weight: 600;
   color: #292d32;
@@ -80,7 +89,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .statChange svg {
@@ -96,11 +105,13 @@
 .negative {
   color: #d0004b;
 }
+
 .avatars {
   display: flex;
   flex-direction: row;
   margin-left: 8px;
 }
+
 .avatars img {
   width: 32px;
   height: 32px;
@@ -173,6 +184,7 @@
   background-color: transparent;
   fill: #fff;
 }
+
 .filterItemActive {
   background: #fff;
   fill: #16c098;
@@ -256,6 +268,7 @@
   flex-direction: column;
   gap: 5px;
 }
+
 .gapDiv {
   display: flex;
   flex-direction: row;
@@ -265,6 +278,7 @@
   white-space: nowrap;
   max-width: calc(100vw * 0.17);
 }
+
 .columnEmail {
   flex: 0.15;
 }
@@ -327,11 +341,11 @@
   transition: 0.4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #16c098;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(14px);
 }
 
@@ -378,6 +392,7 @@ input:checked + .slider:before {
   color: #b5b7c0;
   cursor: pointer;
 }
+
 .tableTopContainer {
   display: flex;
   width: 100%;
@@ -385,12 +400,14 @@ input:checked + .slider:before {
   align-items: center;
   margin-bottom: 20px;
 }
+
 .tableHeaderContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
 }
+
 .addClientButton {
   display: flex;
   flex-direction: row;
@@ -419,12 +436,14 @@ input:checked + .slider:before {
   font-size: 14px;
   font-weight: 400;
 }
+
 .calendarFilterContainer {
   display: flex;
   border-radius: 10px;
   background: #f9fbff;
   padding: 5px;
 }
+
 .dropdownContainer {
   position: relative;
   display: inline-block;
@@ -492,6 +511,7 @@ input:checked + .slider:before {
   color: #838485;
   font-size: 18px;
 }
+
 .redButton {
   width: 100px;
   background-color: #ff5c5c;
@@ -537,9 +557,11 @@ input:checked + .slider:before {
   padding: 10px 10px 0 10px;
   box-sizing: border-box;
   gap: 20px;
+
   p {
     margin: 0;
   }
+
   .statisticCard {
     flex: 1;
     padding: 20px;
@@ -549,11 +571,13 @@ input:checked + .slider:before {
   .title {
     display: flex;
     justify-content: space-between;
+
     p {
       font-size: 20px;
       font-weight: bold;
       text-transform: capitalize;
     }
+
     .icon {
       cursor: pointer;
       transform: rotate(90deg);
@@ -563,11 +587,13 @@ input:checked + .slider:before {
       -o-transform: rotate(90deg);
     }
   }
+
   span {
     color: #a6a6a6;
     font-weight: bold;
     text-transform: uppercase;
   }
+
   .statisticTotal {
     font-size: 30px;
     text-align: end;
@@ -576,11 +602,13 @@ input:checked + .slider:before {
 }
 
 @media screen and (max-width: 1024px) {
+
   .statisticsHeader,
   .homeContent {
     flex-direction: column;
   }
 }
+
 .divider {
   width: 100%;
   height: 8px;
@@ -591,6 +619,7 @@ input:checked + .slider:before {
   -ms-border-radius: 99px;
   -o-border-radius: 99px;
 }
+
 .talkWithFacturaGPT {
   min-width: 250px;
   display: flex;
@@ -607,10 +636,12 @@ input:checked + .slider:before {
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
+
   .icon {
     height: 30px;
     width: 30px;
   }
+
   button {
     cursor: pointer;
     display: flex;
@@ -628,6 +659,7 @@ input:checked + .slider:before {
     -ms-border-radius: 12px;
     -o-border-radius: 12px;
     font-weight: bold;
+
     span {
       color: #10a37f;
       font-weight: bold;
@@ -639,6 +671,7 @@ input:checked + .slider:before {
   display: flex;
   padding: 20px;
 }
+
 .salesSummaryContainer {
   flex: 1;
   display: flex;
@@ -652,15 +685,18 @@ input:checked + .slider:before {
   flex-direction: column;
   gap: 30px;
 }
+
 .salesSummaryHeader {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
   p {
     font-weight: bold;
     font-size: 20px;
     margin: 0;
   }
+
   span {
     color: #a6a6a6;
     font-weight: bold;
@@ -675,6 +711,7 @@ input:checked + .slider:before {
     font-weight: bold;
     font-size: 30px;
   }
+
   span {
     color: #a6a6a6;
     font-weight: bold;
@@ -687,6 +724,7 @@ input:checked + .slider:before {
   display: flex;
   gap: 10px;
   align-items: center;
+
   span {
     text-transform: initial;
     font-size: 16px;
@@ -700,9 +738,11 @@ input:checked + .slider:before {
 
   p::before {
     content: "";
-    height: 2px; /* Ajustado a 5px */
+    height: 2px;
+    /* Ajustado a 5px */
     width: 100%;
-    background-color: #2b0e50; /* Cambiado a azul */
+    background-color: #2b0e50;
+    /* Cambiado a azul */
     display: block;
     position: absolute;
     top: 0px;
@@ -723,22 +763,27 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
   p {
     margin: 0;
   }
+
   .spent {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     .row {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       p {
         color: #000000;
         font-weight: bold;
       }
     }
+
     span {
       color: #22024b;
       min-width: 150px;
@@ -750,11 +795,13 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   gap: 10px;
+
   p {
     font-weight: bold;
     font-size: 20px;
     margin: 0;
   }
+
   span {
     text-transform: initial;
     font-size: 16px;
@@ -767,6 +814,7 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
   .month {
     color: #a6a6a6;
     font-weight: bold;

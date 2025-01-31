@@ -28,7 +28,7 @@ import ProfileModalTemplate from '../../components/ProfileModalTemplate/ProfileM
 import { ParametersLabel } from '../../components/ParametersLabel/ParametersLabel';
 import { clearTransaction } from '../../../../slices/transactionsSlices';
 import FileExplorer from '../../components/FileExplorer/FileExplorer';
-import { getEmailsByQuery } from '../../../../actions/emailManager';
+import { getEmailsByQuery } from '../../../../actions/user';
 import PanelTemplate from '../../components/PanelTemplate/PanelTemplate';
 import PayMethod from '../../components/PayMethod/PayMethod';
 
@@ -47,7 +47,7 @@ const Clients = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { allClients, allUsers } = useSelector((state) => state.emailManager);
+  const { allClients, allUsers } = useSelector((state) => state.user);
 
   const { clients, loading, client } = useSelector((state) => state.clients);
 

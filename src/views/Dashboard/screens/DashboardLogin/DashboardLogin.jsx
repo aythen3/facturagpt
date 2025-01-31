@@ -25,7 +25,7 @@ import { FaLock } from "react-icons/fa";
 import {
   sendRecoveryCode,
   verifyRecoveryCode,
-} from "../../../../actions/emailManager";
+} from "../../../../actions/user";
 
 // import { useSelector } from "react-redux";
 
@@ -81,6 +81,16 @@ const DashboardLogin = () => {
 
   useEffect(() => {
     console.log("location", location);
+
+    console.log('user', user)
+    if (user) {
+      if (user.success) {
+        navigate('/panel')
+      } else {
+        // navigate('/login')
+        localStorage.clear()
+      }
+    }
     // if (user) navigate('/panel')
 
     if (location?.pathname === "/login" && mode !== "signin") setMode("signin");

@@ -1,0 +1,9 @@
+.advertency {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #f5f5f5;
+    padding: 0 10px 0 10px;
+    border-radius: 8px;
+    margin: 25px 0 25px 0;
+  }

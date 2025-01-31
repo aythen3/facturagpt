@@ -90,7 +90,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
       <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info2: !showContent.info2 })}
+          onClick={() => setShowContent({ ...showContent, info1: !showContent.info2 })}
         >
           <GrayChevron />
           <div className={styles.infoContainer}>
@@ -101,7 +101,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             </span>
           </div>
         </div>
-        <div className={`${styles.contentContainer} ${(showContent.info2) ? styles.active : styles.disabled}`}>
+        <div className={`${styles.contentContainer} ${(showContent.info1) ? styles.active : styles.disabled}`}>
           <div className={styles.contentInput}>
             <p className={styles.titleContentInput}>Ubicación</p>
 
@@ -121,23 +121,21 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
       </CustomAutomationsWrapper>
 
       <CustomAutomationsWrapper Icon={<WhiteFolder />}>
-        <div>
-          <p>
-            Ubicación{" "}
-            <span>Configura la ubicación donde Gmail guardará los datos</span>
-          </p>
-          <InputComponent
-            readOnly={true}
-            value={configuration.folderLocation}
-            setValue={(value) =>
-              handleConfigurationChange("folderLocation", value)
-            }
-            textButton="Seleccionar Ubicación"
-            placeholder="/Inicio"
-            icon={<SearchSVG />}
-            action={() => setShowSelectLocation(true)}
-          />
-
+        <div
+          className={styles.infoContainerWrapper}
+          onClick={() => setShowContent({ ...showContent, info2: !showContent.info2 })}
+        >
+          <GrayChevron />
+          <div className={styles.infoContainer}>
+            <div>
+              Selecciona la información a extraer
+            </div>
+            <span>
+              Aplica filtros avanzados para procesar solo los datos que realmente importan.
+            </span>
+          </div>
+        </div>
+        <div className={`${styles.contentContainer} ${(showContent.info2) ? styles.active : styles.disabled}`}>
           <div className={styles.contentInput}>
             <p className={styles.titleContentInput}>Remitentes</p>
 
@@ -278,7 +276,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             setIsChecked={(value) =>
               handleConfigurationChange("changeFileName", value)
             }
-            icon={<TextSVG />}
+            // icon={<TextSVG />}
             text="Cambiar nombre del archivo"
           />
           <InputComponent
@@ -300,7 +298,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
                 handleConfigurationChange("addTags", value)
               }
               icon={<LabelSVG />}
-              text="Añadir etiqueta"
+              text="Configura tus notificaciones personalizadas"
             />
             <InputComponent
               placeholder="Buscar etiqueta"

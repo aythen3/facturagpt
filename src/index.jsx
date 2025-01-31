@@ -31,7 +31,9 @@ import ChatView from "./views/Dashboard/screens/ChatView/ChatView.jsx";
 import NotificationsView from "./views/Dashboard/screens/NotificationsView/NotificationsView.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import UsersClientsDashboard from "./views/Dashboard/UsersClientsDashboard.jsx";
+// import UsersClientsDashboard from "./views/Dashboard/UsersClientsDashboard.jsx";
+import AccountsDashboard from "./views/Dashboard/AccountsDashboard.jsx";
+
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
@@ -89,7 +91,10 @@ const Layout = () => {
       console.log('user!!', user)
       if(user && user.success == false){
         navigate(`/login`)
-      }
+      } 
+      // else if(!user){
+      //   navigate(`/login`)
+      // }
     },[user])
 
 
@@ -103,7 +108,7 @@ const Layout = () => {
         /> */}
         <Routes>
           <Route path="/home" element={<Dashboard />} />
-          <Route path="/clients" element={<UsersClientsDashboard />} />
+          <Route path="/accounts" element={<AccountsDashboard />} />
           <Route path="/users" element={<UsersDashboard />} />
           <Route path="/contacts" element={<Clients />} />
           <Route path="/transactions" element={<Transactions />} />
@@ -113,6 +118,7 @@ const Layout = () => {
           <Route path="/notification" element={<NotificationsView />} />
           <Route path="/panel" element={<InvoicePanel />} />
           <Route path="/panel/:id" element={<InvoicePanel />} />
+          <Route path="*" element={<ChatView />} />
         </Routes>
       </div>
     );

@@ -42,24 +42,21 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
       </div>
 
       <CustomAutomationsWrapper Icon={<WhiteFolder />}>
-        <div className={styles.content_input}>
-          <p className={styles.title_content_input}>
-            Fuente de Datos{" "}
-            <span style={{ color: "#18181B", fontSize: "12px" }}>
-              Conecta la fuente de facturas desde la cual se generarán los XML
-            </span>{" "}
-          </p>
-
-          <InputComponent
-            readOnly={true}
-            value={configuration.filesSource}
-            setValue={(value) => handleConfigurationChange("filesSource", value)}
-            textButton="Seleccionar Ubicación"
-            placeholder="/Inicio"
-            icon={<SearchSVG />}
-            action={() => setShowSelectInputLocation(true)}
-          />
+        <div
+          className={styles.infoContainerWrapper}
+          onClick={() => setShowContent({ ...showContent, info2: !showContent.info2 })}
+        >
+          <GrayChevron />
+          <div className={styles.infoContainer}>
+            <div>
+              Selecciona la información a extraer
+            </div>
+            <span>
+              Aplica filtros avanzados para procesar solo los datos que realmente importan.
+            </span>
+          </div>
         </div>
+
         <p className={styles.title_content_input}>
           Campos a incluidos{" "}
           <span style={{ color: "#18181B", fontSize: "14px" }}>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import styles from "./Payment.module.css";
 import { useDispatch } from "react-redux";
-import { updateClient } from "../../../../../actions/emailManager";
+import { updateClient } from "../../../../../actions/user";
 
 export default function SetupCheckoutForm({ setPaymentId, onClose, clientId }) {
   const dispatch = useDispatch();

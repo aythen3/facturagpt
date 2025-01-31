@@ -33,7 +33,7 @@ import {
   getAllUsers,
   updateClient,
   getEmailsByQuery,
-} from "../../actions/emailManager";
+} from "../../actions/user";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -60,7 +60,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [showUserSettings, setShowUserSettings] = useState(false);
 
-  const { allClients, allUsers } = useSelector((state) => state.emailManager);
+  const { allClients, allUsers } = useSelector((state) => state.user);
   const { user: userRedux } = useSelector((state) => state.user);
   const [filteredClients, setFilteredClients] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query

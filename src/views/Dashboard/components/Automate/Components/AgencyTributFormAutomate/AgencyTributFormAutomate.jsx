@@ -17,11 +17,13 @@ import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import { ReactComponent as AgencyTributIcon } from "../../../../assets/agencia.svg";
+import WarningSVG from "../../svgs/WarningSVG";
+import SearchSVG from "../../svgs/SearchSVG";
 
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-
+import InputComponent from "../../../InputComponent/InputComponent";
 
 import styles from "./AgencyTributFormAutomate.module.css";
 
@@ -33,7 +35,7 @@ const AgencyTributFormAutomate = ({
 }) => {
   const [isAddConnection, setIsAddConnection] = useState(false);
 
-  
+
 
   const [showContent, setShowContent] = useState({
     info1: false,
@@ -181,7 +183,53 @@ const AgencyTributFormAutomate = ({
         ]}
       /> */}
 
-<CustomAutomationsWrapper Icon={<WhiteBell />}>
+
+      <div className={styles.advertency}>
+        <WarningSVG />
+        <p>
+          Si el correo no tiene archivos adjuntos no se guardará ninguna
+          factura
+        </p>
+      </div>
+
+
+
+      <CustomAutomationsWrapper Icon={<WhiteFolder />}>
+        <div
+          className={styles.infoContainerWrapper}
+          onClick={() => setShowContent({ ...showContent, info1: !showContent.info2 })}
+        >
+          <GrayChevron />
+          <div className={styles.infoContainer}>
+            <div>Decide dónde guardar los documentos procesados</div>
+            <span>
+              Elige una ubicación en FacturaGPT para organizar tus archivos
+              procesados
+            </span>
+          </div>
+        </div>
+        <div className={`${styles.contentContainer} ${(showContent.info1) ? styles.active : styles.disabled}`}>
+          <div className={styles.contentInput}>
+            <p className={styles.titleContentInput}>Ubicación</p>
+
+            <InputComponent
+              readOnly={true}
+              value={configuration.folderLocation}
+              setValue={(value) =>
+                handleConfigurationChange("folderLocation", value)
+              }
+              textButton="Seleccionar Ubicación"
+              placeholder="/Inicio"
+              icon={<SearchSVG />}
+              action={() => setShowSelectOutputLocation(true)}
+            />
+          </div>
+        </div>
+      </CustomAutomationsWrapper>
+
+
+
+      <CustomAutomationsWrapper Icon={<WhiteBell />}>
         <div
           style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
@@ -342,7 +390,7 @@ const AgencyTributFormAutomate = ({
           />
         </div>
       </CustomAutomationsWrapper>
-    
+
 
 
       {isAddConnection && (

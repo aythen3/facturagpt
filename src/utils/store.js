@@ -9,7 +9,7 @@ import transactionsSlices from "../slices/transactionsSlices";
 
 const store = configureStore({
   reducer: {
-    emailManager: emailManagerReducer,
+    // emailManager: emailManagerReducer,
     menuAutomate: menuAutomateSlices,
     automations: automationsSlices,
     scaleway: scalewaySlices,

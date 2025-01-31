@@ -96,12 +96,12 @@ const Automate = ({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <div
+              {/* <div
                 onClick={() => setShowLocationModal(true)}
                 className={styles.searchIconsWrappers}
               >
                 <img src={cmd} alt="cmdIcon" />
-              </div>
+              </div> */}
               <div
                 style={{ marginLeft: "7px" }}
                 className={styles.searchIconsWrappers}
