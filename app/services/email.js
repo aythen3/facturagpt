@@ -309,6 +309,7 @@ const sendRecoveryCode = async (email, recoveryCode, language = "es") => {
 };
 
 module.exports = {
+  getTemplate: getTemplate,
   getEmail: getEmail,
   sendGoEmail: sendGoEmail,
   sendEmail: sendEmail,

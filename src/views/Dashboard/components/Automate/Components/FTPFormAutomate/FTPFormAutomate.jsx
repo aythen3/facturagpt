@@ -351,7 +351,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
       </CustomAutomationsWrapper>
-      <CustomAutomationsWrapper Icon={<WhiteBell />}>
+     <CustomAutomationsWrapper Icon={<WhiteBell />}>
         <div
           style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
@@ -512,6 +512,8 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
       </CustomAutomationsWrapper>
+     
+    
       {showSelectInputLocation && (
         <SelectLocation
           onClose={() => setShowSelectInputLocation(false)}

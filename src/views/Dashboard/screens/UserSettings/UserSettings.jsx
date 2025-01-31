@@ -10,7 +10,8 @@ import shield from "../../assets/shield.svg";
 import eye from "../../assets/eye.svg";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { addNewClient } from "../../../../actions/emailManager";
+// import { addNewClient, createAccount } from "../../../../actions/emailManager";
+import { createAccount } from "../../../../actions/user";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -189,7 +190,8 @@ const UserSettings = ({
 
     console.log("Adding new client with:", finalData);
 
-    dispatch(addNewClient({ clientData: finalData }));
+    // dispatch(addNewClient({ clientData: finalData }));
+    dispatch(createAccount(finalData));
 
     // =================================================
     // const defaultClient = {
@@ -213,7 +215,7 @@ const UserSettings = ({
     // };
 
     // console.log('Adding new client with default values:', defaultClient);
-    // dispatch(addNewClient({ clientData: defaultClient }));
+    // dispatch(addNewClient({ c: defaultClient }));
     // navigate("/home");
     alert("Cliente agregado satisfactoriamente!");
   };
