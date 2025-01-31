@@ -90,7 +90,7 @@ const SeeBill = forwardRef(({ document, setSeeBill }, ref) => {
           <div className={styles.pdf}>
             {!documentoPDF && "No existe ninguna factura"}
             <embed
-              src={documentoPDF}
+              src={`${documentoPDF}#zoom=50`}
               width="100%"
               height="100%"
               type="application/pdf"

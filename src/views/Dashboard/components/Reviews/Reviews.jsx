@@ -28,15 +28,7 @@ const Reviews = () => {
         </div>
         <span className={styles.thinSubtitle}>{t("priceFooter")}</span>
       </section>
-      <section
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          width: "100%",
-        }}
-      >
+      <section className={styles.CarrouselContainer}>
         <h2 className={styles.reviewsTitle}>{t("title")}</h2>
         <span className={styles.reviewsDescription}>{t("subTitle")}</span>
         <Carousel />

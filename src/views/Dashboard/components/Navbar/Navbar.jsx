@@ -35,10 +35,9 @@ const Navbar = () => {
     i18n.changeLanguage(lng);
   };
 
-
   const handleProfileClick = () => {
-    navigate('/admin/chat')
-  }
+    navigate("/admin/chat");
+  };
 
   return (
     <nav className={styles.navbar}>
@@ -52,8 +51,9 @@ const Navbar = () => {
         <img src={menuIcon} alt="Menu Icon" />
       </button>
       <div
-        className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : styles.navLinksClosed
-          }`}
+        className={`${styles.navLinks} ${
+          menuOpen ? styles.navLinksOpen : styles.navLinksClosed
+        }`}
       >
         <div className={styles.navFlex}>
           <div className={styles.nav}>
@@ -71,7 +71,7 @@ const Navbar = () => {
 
           {/* <div onClick={() => navigate('/pricing')}>{t('item3')}</div> */}
 
-          <div style={{ display: "flex", gap: "30px" }}>
+          <div className={styles.flagContainer}>
             <img
               onClick={() => handleLanguage("en")}
               src={english_flag}
@@ -97,7 +97,7 @@ const Navbar = () => {
           </div>
         </div>
         {!user ? (
-          <>
+          <div className={styles.btnContainerNavbar}>
             <button
               className={`${styles.button} ${styles.buttonLogIn}`}
               onClick={() => navigate("/login")}
@@ -110,30 +110,26 @@ const Navbar = () => {
             >
               {t("button")}
             </button>
-          </>
+          </div>
         ) : (
-            <div
-              onClick={handleProfileClick}
-              className={styles.profileContainer}
-            >
-              <div className={styles.profileText}>
-                <p>{user?.nombre}</p>
-                <span>{user?.role}</span>
-              </div>
-              {user?.profileImage ? (
-                <img
-                  className={styles.profileImage}
-                  src={user?.profileImage}
-                  alt=""
-                />
-              ) : (
-                <div className={styles.initials}>
-                  {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
-                </div>
-              )}
+          <div onClick={handleProfileClick} className={styles.profileContainer}>
+            <div className={styles.profileText}>
+              <p>{user?.nombre}</p>
+              <span>{user?.role}</span>
             </div>
+            {user?.profileImage ? (
+              <img
+                className={styles.profileImage}
+                src={user?.profileImage}
+                alt=""
+              />
+            ) : (
+              <div className={styles.initials}>
+                {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+              </div>
+            )}
+          </div>
         )}
-
       </div>
     </nav>
   );
