@@ -9,6 +9,7 @@
   -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en dispositivos táctiles */
   width: 100%; /* Asegurar que ocupe el ancho de la pantalla */
   box-sizing: border-box; /* Incluir padding en el ancho total */
+  margin-top: 100px;
 }
 
 .cardContainer:active {

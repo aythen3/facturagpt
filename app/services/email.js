@@ -215,16 +215,25 @@ async function sendOtpEmail(nombre, email, otp, language = "es") {
     `;
   } else {
     htmlContent = `
-   <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
-  <h1 style="color: #4CAF50; text-align: center; font-size: 24px;">Your OTP Code</h1>
-  <p style="font-size: 16px; line-height: 1.5;">Hello,</p>
-  <p style="font-size: 16px; line-height: 1.5;">Your OTP code to access the system is:</p>
-  <div style="text-align: center; margin: 20px 0;">
-    <h2 style="color: #4CAF50; font-size: 32px; letter-spacing: 4px; background-color: #e8f5e9; padding: 10px; border-radius: 8px; display: inline-block;">${otp}</h2>
-  </div>
-  <p style="font-size: 16px; line-height: 1.5; color: #555;">This code will expire in <strong>5 minutes</strong>. If you did not request this code, please ignore this message.</p>
-  <p style="font-size: 16px; line-height: 1.5;">Best regards,<br><strong>The Aythen Team</strong></p>
-</div>
+  <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+      <h1 style="text-align: center; font-size: 24px;">
+        <img src="cid:logo" style="max-width: 65%; height: auto;" />
+      </h1>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hello, ${nombre}</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">To complete the activation process and validate your account, please enter the following 6-digit code on our platform:</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B; font-weight:bold;">Verification Code:</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <h2 style="font-size: 16px; letter-spacing: 4px; color:#0D0D0D; padding: 10px; border-radius: 8px; display: inline-block;">${otp}</h2>
+      </div>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">This code is valid for the next 10 minutes. If the code has expired or you need a new one, you can easily request another one using the "Resend Code" option on the verification page.</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">
+      What's next?
+        <ol style="color:#1F184B;">
+          <li>Enter the code: Copy and paste the code above into the appropriate field on our activation page.</li>
+          <li>Complete the validation: Once the code has been entered, your account will be activated and you will be ready to enjoy all the benefits of Linkeram.</li>
+        </ol>
+      </p>
+    </div>
 
   `;
   }

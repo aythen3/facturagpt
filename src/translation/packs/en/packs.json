@@ -21,7 +21,9 @@
   "reduces2": "Reduce the average error rate by 30%",
   "reduces3": "Reduce response time by 57%",
   "formatsTitle": "Formats and Extensions",
-  "formatsDescription": "You can connect any type of digital format, scan, photo... Available in more than +10 available formats",
+  "formatsDescription1": "You can connect any type of digital format, scanning or photography.",
+  "formatsDescription2": "Compatible with more than 10 different formats...",
   "programsTitle": "Compatible Programs",
-  "programsDescription": "Upload, receive or issue invoices and automate your billing process"
+  "programsDescription1": "Upload, receive or issue billable documents and automate your billing process with ease.",
+  "programsDescription2": "Integrate your apps and services for a seamless workflow."
 }
