@@ -7,6 +7,9 @@ import heart from "../../assets/heart.svg";
 import image from "../../assets/imageIcon.svg";
 import code from "../../assets/codeIcon.svg";
 import txt from "../../assets/fileIcon.svg";
+import imageGreen from "../../assets/imageIconGreen.svg";
+import codeGreen from "../../assets/codeIconGreen.svg";
+import txtGreen from "../../assets/fileIconGreen.svg";
 
 import outlook from "../../assets/outlook.svg";
 import gmail from "../../assets/gmail.svg";
@@ -75,7 +78,24 @@ const Packs = () => {
   const horasTotalesFormatted = numberFormatter.format(horasRedondeadas);
   const valorEnDolaresFormatted = formatNumber(valorEnDolares);
 
-  const cardsData = [image, txt, code];
+  const cardsData = [
+    imageGreen,
+    txtGreen,
+    codeGreen,
+    imageGreen,
+    txtGreen,
+    codeGreen,
+    image,
+    txt,
+    code,
+    imageGreen,
+    txtGreen,
+    codeGreen,
+    ,
+    imageGreen,
+    txtGreen,
+    codeGreen,
+  ];
   const compatiblePrograms = [outlook, gmail, xslx, odoo, logoImage, stripe];
 
   const steps = [
@@ -140,15 +160,7 @@ const Packs = () => {
         <TagsLanding />
       </div>
 
-      <section
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          width: "100%",
-        }}
-      >
+      <section className={styles.sliderWrapperSection}>
         <BillingSlider
           setSliderValue={setSliderValue}
           sliderValue={sliderValue}
@@ -191,15 +203,12 @@ const Packs = () => {
           {/* <img className={styles.flag} src={flag} alt="flag" /> */}
           <h2>{t("formatsTitle")}</h2>
         </div>
-        <span className={styles.regular08}>{t("formatsDescription")}</span>
+        <span className={styles.regular08}>{t("formatsDescription1")}</span>
+        <span className={styles.regular08}>{t("formatsDescription2")}</span>
         <div className={styles.dashedContainer}>
           {cardsData.map((card, index) => (
             <div className={styles.innerCard} key={index}>
-              <img
-                className={index === 1 ? styles.fileIcon : styles.pdfIcon}
-                src={card}
-                alt="card"
-              />
+              <img className={styles.pdfIcon} src={card} alt="card" />
             </div>
           ))}
         </div>

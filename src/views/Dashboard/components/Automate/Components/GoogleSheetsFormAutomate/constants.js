@@ -1,3 +1,11 @@
+export const documentos = [
+  "Id",
+  "Fecha",
+  "Contacto",
+  "Total",
+  "Nota",
+  "Parámetros",
+];
 export const facturas = [
   "Id Factura/ Nº Factura",
   "Fecha",
@@ -10,8 +18,8 @@ export const facturas = [
   "Etiqueta",
 ];
 
-export const clienteProveedores = [
-  "id Cliente",
+export const cliente = [
+  "id",
   "Nombre",
   "Email",
   "Télefono",
@@ -20,6 +28,31 @@ export const clienteProveedores = [
   "Método de Pago",
   "Moneda Preferida",
   "Última Transacción",
+  "Parámetros",
+];
+export const proveedores = [
+  "id",
+  "Nombre",
+  "Email",
+  "Télefono",
+  "Dirección",
+  "Número Fiscal",
+  "Método de Pago",
+  "Moneda Preferida",
+  "Última Transacción",
+  "Parámetros",
+];
+export const trabajadores = [
+  "Id Cliente",
+  "DNI o NIF",
+  "Nombre",
+  "Teléfono",
+  "Sueldo",
+  "MEI/IRPF",
+  "Métodos de Pago",
+  "Moneda Preferida",
+  "Última transacción",
+  "Parámetros",
 ];
 
 export const productosServicios = [

@@ -43,9 +43,9 @@
 
 .navHeaderTitle {
   /* font-size: 66px; */
-  font-size: clamp(20px, 2.5vw, 11vw); /* Tamaño escalable */
+  font-size: clamp(20px, 3vw, 11vw); /* Tamaño escalable */
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
   background: linear-gradient(90deg, #00ffc3 0%, #222222 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -25,13 +25,16 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 10px;
+  /* gap: 10px; */
+  .extensionsTitle {
+    margin-bottom: 20px;
+  }
 }
 
 .packsDescription {
   color: #676767;
   font-size: clamp(18px, 5vw, 22px); /* Ajuste dinámico del tamaño de título */
-  font-weight: 400;
+  font-weight: 300;
   align-items: center;
   justify-content: center;
   max-width: 1006px;
@@ -115,21 +118,21 @@
     1.5vw,
     16px
   ) !important; /* Ajuste dinámico con clamp */
-  font-weight: bold;
+  font-weight: 400;
   padding: 0 5px;
 }
 
 .subtitle {
   color: #676767;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.5;
 }
 
 .regular08 {
   color: #676767;
   font-size: clamp(17px, 5vw, 20px) !important; /* Ajuste dinámico con clamp */
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
   padding: 0 20px;
   margin: 0;
@@ -179,11 +182,11 @@
 
   h2 {
     margin: 0;
-    font-weight: 400;
+    font-weight: 300;
     font-size: clamp(
       20px,
       5vw,
-      50px
+      40px
     ) !important; /* Ajuste dinámico con clamp */
   }
 }
@@ -204,33 +207,28 @@
   border-radius: 9px;
   /* height: clamp(180px, 20vw, 223px); Ajuste dinámico de la altura */
   margin-top: 10px;
-  width: 90%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
   max-width: 1194px; /* Límite máximo para evitar que se expanda demasiado */
   align-items: center;
   justify-content: center;
   padding: 10px; /* Añade algo de espacio en los bordes */
   margin-top: 30px;
+  gap: 20px;
 }
 
 .innerCard {
   border-radius: 16px;
   cursor: pointer;
   user-select: none;
-  width: 50px;
   /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 10px; /* Espaciado entre las cards */
 }
 
 .pdfIcon {
-  height: 50px;
-  width: 50px;
-}
-.fileIcon {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
 }
 
 .compatibleProgramsContainer {
@@ -295,7 +293,16 @@
     4vw,
     20px
   ); /* Ajuste dinámico del tamaño de subtítulo */
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.5;
   margin: 0;
+}
+
+.sliderWrapperSection {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 100px;
 }

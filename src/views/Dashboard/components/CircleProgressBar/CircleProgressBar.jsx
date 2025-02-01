@@ -11,7 +11,7 @@ const CircleProgressBar = () => {
   const progressClasses = [styles.pg0, styles.pg1, styles.pg2, styles.pg3];
 
   return (
-    <section>
+    <section className={styles.CircleProgressSection}>
       <div className={styles.CircleProgress}>
         {skills.map((skill, index) => (
           <div

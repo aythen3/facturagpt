@@ -4,14 +4,14 @@
 }
 
 .title {
-  font-size: clamp(20px, 5vw, 50px) !important; /* Ajuste dinámico con clamp */
+  font-size: clamp(20px, 5vw, 40px) !important; /* Ajuste dinámico con clamp */
   color: #10a37f;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .star {
@@ -52,7 +52,7 @@
   appearance: none;
   width: 30px;
   height: 30px;
-  background: url("../../assets/starSlider.svg") white no-repeat center center;
+  background: white;
   border-radius: 50%;
   background-size: cover;
   cursor: pointer;
@@ -64,7 +64,7 @@
 .slider::-moz-range-thumb {
   width: 30px;
   height: 30px;
-  background: url("../../assets/starSlider.svg") white no-repeat center center;
+  background: white;
   border-radius: 50%;
   background-size: cover;
   cursor: pointer;

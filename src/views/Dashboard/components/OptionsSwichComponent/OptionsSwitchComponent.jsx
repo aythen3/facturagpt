@@ -9,6 +9,7 @@ const OptionsSwitchComponent = ({
   setIsChecked,
   border = "1px solid #E5E5E5",
   marginLeft,
+  subtitle,
 }) => {
   const handleToggle = () => {
     setIsChecked(!isChecked);
@@ -20,10 +21,8 @@ const OptionsSwitchComponent = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        border: border,
         height: "46px",
         borderRadius: "8px",
-        overflow: "hidden",
         paddingRight: "10px",
         marginLeft,
       }}
@@ -37,7 +36,32 @@ const OptionsSwitchComponent = ({
       >
         {icon && <div style={{ backgroundColor: "#233F39" }}>{icon}</div>}
 
-        {text && <p style={{ marginLeft: "15px" }}>{text}</p>}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {text && (
+            <p
+              style={{
+                margin: "0px 0px 0px 15px",
+                color: "#1f184b",
+                fontSize: "12px",
+                fontWeight: "500",
+              }}
+            >
+              {text}
+            </p>
+          )}
+          {subtitle && (
+            <span
+              style={{
+                margin: "0px 0px 0px 15px",
+                color: "#1f184b",
+                fontSize: "12px",
+                fontWeight: "300",
+              }}
+            >
+              {subtitle}
+            </span>
+          )}
+        </div>
       </div>
       {!notSwitch && (
         <label className={styles.switch}>
