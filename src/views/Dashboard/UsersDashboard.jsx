@@ -536,7 +536,7 @@ const UsersDashboard = () => {
                   className={styles.addClientButton}
                 >
                   <img src={plus} alt="Add admin" />
-                  Nuevo Admin
+                  {/* Nuevo Admin */}
                 </button>
               )}
               {/* <button
@@ -555,9 +555,9 @@ const UsersDashboard = () => {
                   value={searchQuery}
                   onChange={handleSearchChange}
                 />
-                <div className={styles.listRight}>
+                {/* <div className={styles.listRight}>
                   <img src={listIcon} alt="listIcon" />
-                </div>
+                </div> */}
               </div>
               <div className={styles.dropdownContainer}>
                 <div

@@ -301,7 +301,7 @@ const Clients = () => {
         getOneClient({ userId: user?.id, clientId })
       ).unwrap();
       console.log('Cliente obtenido:', response);
-      navigate('/transactions');
+      navigate('/admin/transactions');
     } catch (error) {
       console.error('Error al obtener el cliente:', error);
     }

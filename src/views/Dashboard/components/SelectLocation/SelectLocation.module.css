@@ -120,7 +120,7 @@
   padding: 10px 23px;
   max-height: 55vh;
   overflow-y: auto;
-  min-height: 20vh;
+  /* min-height: 20vh; */
 
   .content {
     background-color: white;
