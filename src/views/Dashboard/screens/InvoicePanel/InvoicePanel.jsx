@@ -10,7 +10,7 @@ import Factura from "../../assets/facturaEjemplo.png";
 import { useParams } from "react-router-dom";
 // import PanelAutomate from "../../components/Automate/panelAutomate/PanelAutomate.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import Chat from "../../components/Chat/Chat.jsx";
+// import Chat from "../../components/Chat/Chat.jsx";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
 const company = {
   email: "coolmail@mail.com",

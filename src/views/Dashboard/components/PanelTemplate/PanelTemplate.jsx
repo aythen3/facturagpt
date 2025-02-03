@@ -8,7 +8,7 @@ import { useState } from "react";
 import Automate from "../../components/Automate/Automate.jsx";
 import PanelAutomate from "../../components/Automate/panelAutomate/PanelAutomate.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import Chat from "../../components/Chat/Chat.jsx";
+// import Chat from "../../components/Chat/Chat.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 const PanelTemplate = ({ children }) => {
@@ -42,9 +42,11 @@ const PanelTemplate = ({ children }) => {
     <>
       <NavbarAdmin fromPath={fromPath} setFromPath={setFromPath} />
       <div className={styles.container}>
-        {(fromPath !== 'accounts') && (
-          <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
-        )}
+        {((fromPath !== 'accounts') &&
+          fromPath !== 'chat'
+        ) && (
+            <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
+          )}
         {children}
       </div>
     </>

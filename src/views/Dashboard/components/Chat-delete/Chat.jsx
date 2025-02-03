@@ -174,4 +174,30 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+
+
+const ChatMenu = () => {
+  return (
+    <div>
+      <h1>Chat</h1>
+    </div>
+  )
+}
+
+
+const ChatView = () => {
+  // return (
+  //   <PanelTemplate>
+  //     <Chat />
+  //   </PanelTemplate>
+  // );
+  return (
+    <div style={{ display: 'flex', alignItems: 'center',  height: '100vh' }}>
+      <ChatMenu />
+      <Chat />
+    </div>
+  )
+};
+
+
+export default ChatView;
