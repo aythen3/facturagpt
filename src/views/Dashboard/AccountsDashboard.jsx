@@ -603,7 +603,7 @@ const AccountsDashboard = () => {
               className={styles.addClientButton}
             >
               <img src={plus} alt="Add client" />
-              Alta nueva cuenta
+              {/* Alta nueva cuenta */}
             </button>
             <div className={styles.filterSearch}>
               <img src={magnify} alt="search" />
@@ -613,9 +613,9 @@ const AccountsDashboard = () => {
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
-              <div className={styles.listRight}>
+              {/* <div className={styles.listRight}>
                 <img src={listIcon} alt="listIcon" />
-              </div>
+              </div> */}
             </div>
             <div className={styles.dropdownContainer}>
               <div

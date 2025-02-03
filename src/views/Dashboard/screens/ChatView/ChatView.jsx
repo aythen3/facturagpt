@@ -34,10 +34,39 @@ const buttons = [
 ];
 
 
-export default function ChatView() {
+const ChatMenu = () => {
+
+  const [chats, setChats] = useState([{
+    name: "Chat 1",
+    id: 1,
+  }, {
+    name: "Chat 2",
+    id: 2,
+  }]);
+
+  return (
+    <div>
+      icon search
+      Buscar
+      comand
+
+      <ul>
+        {chats.map((chat, index) => (
+          <li key={index}>
+            {chat.name}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+
+const Chat = () => {
+
   const { user, updatingUserLoading } = useSelector((state) => state.user);
   console.log(`usuario: ${user}`);
-  
+
 
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -55,11 +84,15 @@ export default function ChatView() {
   };
 
 
-  return (
-    <PanelTemplate>
-      {/* <Chat /> */}
+  const handleChat = (fn) => {
+    alert(1)
+  }
 
-      <div className={styles.chatContainer}>
+
+
+
+  return (
+    <div className={styles.chatContainer}>
       <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>
       <div className={styles.messageContainer}>
         {messages.length === 0 && (
@@ -137,28 +170,28 @@ export default function ChatView() {
         {messages.map((message, index) => (
           <>
             {/* <p
-              key={index}
-              className={`${styles.message} ${message.sender === "bot" ? styles.botMessage : styles.userMessage}`}
-            >
-              {message.text}
-            </p> */}
+            key={index}
+            className={`${styles.message} ${message.sender === "bot" ? styles.botMessage : styles.userMessage}`}
+          >
+            {message.text}
+          </p> */}
             {message.sender !== "bot" ? (
               <div className={`${styles.message} ${styles.userMessage}`}>
                 <p>
-                {message.text}
+                  {message.text}
                 </p>
-                <div 
+                <div
                   className={styles.avatar}
                 />
               </div>
             ) : (
               <div className={`${styles.message} ${styles.botMessage}`} >
-              <div 
-                className={styles.avatar}
-              />
-              {message.text}
-            </div>
-          )}
+                <div
+                  className={styles.avatar}
+                />
+                {message.text}
+              </div>
+            )}
           </>
         ))}
       </div>
@@ -166,8 +199,8 @@ export default function ChatView() {
         {messages.length === 0 && (
           <div className={styles.buttonContainer}>
             {buttons.map((button, index) => (
-              <button key={index}>
-                <img src={button.img} alt="Icon" />
+              <button key={index} >
+                <img src={button.img} alt="Icon"  onClick={() => handleChat(button?.fn)} />
                 {button.text}
               </button>
             ))}
@@ -195,6 +228,24 @@ export default function ChatView() {
         </p>
       </div>
     </div>
+  )
+}
+
+
+const ChatView = () => {
+
+
+  return (
+    <PanelTemplate>
+      {/* <Chat /> */}
+
+      <div style={{ display: 'flex', alignItems: 'center', height: '100vh' }}>
+        <ChatMenu />
+        <Chat />
+      </div>
     </PanelTemplate>
   );
 }
+
+
+export default ChatView;
