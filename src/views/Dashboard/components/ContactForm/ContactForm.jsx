@@ -7,6 +7,7 @@ import wsIcon from "../../assets/whatsappIcon.svg";
 import { useTranslation } from "react-i18next";
 import CookiePopup from "../CookiePopup/CookiePopup";
 import FreeTrialButton from "../FreeTrialButton/FreeTrialButton";
+import SubtitleTemplate from "../SubtitleTemplate/SubtitleTemplate";
 
 const ContactForm = () => {
   const { t } = useTranslation("contactForm");
@@ -91,7 +92,8 @@ const ContactForm = () => {
           {/* <img src={handPointer} alt="" className={styles.leftImage} /> */}
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{t("title")}</h2>
-            <p className={styles.subtitle}>{t("subTitle")} </p>
+            <SubtitleTemplate text={t("subTitle")} />
+            {/* <p className={styles.subtitle}>{t("subTitle")} </p> */}
             <button
               type="button"
               className={`${styles.button} ${styles.wsBtn}`}
@@ -224,9 +226,10 @@ const ContactForm = () => {
         )}
         <section className={styles.startNowSection}>
           <h2 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h2>
-          <span className={styles.reviewsDescriptionLast}>
-            ¡Estás un paso más cerca de obtener el mejor servicio!
-          </span>
+          <SubtitleTemplate
+            text={"¡Estás un paso más cerca de obtener el mejor servicio!"}
+          />
+          <span className={styles.reviewsDescriptionLast}></span>
           <FreeTrialButton />
         </section>
       </div>

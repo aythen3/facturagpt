@@ -26,7 +26,7 @@ import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import InputComponent from "../../../InputComponent/InputComponent";
 
 import styles from "./AgencyTributFormAutomate.module.css";
-
+import Advertency from "../Advertency/Advertency";
 
 const AgencyTributFormAutomate = ({
   type,
@@ -34,8 +34,6 @@ const AgencyTributFormAutomate = ({
   setConfiguration,
 }) => {
   const [isAddConnection, setIsAddConnection] = useState(false);
-
-
 
   const [showContent, setShowContent] = useState({
     info1: false,
@@ -45,8 +43,7 @@ const AgencyTributFormAutomate = ({
     info5: false,
     info6: false,
     info7: false,
-  })
-
+  });
 
   const openAddConnection = () => {
     setIsAddConnection(true);
@@ -91,7 +88,7 @@ const AgencyTributFormAutomate = ({
         icon={<AgencyTributIcon />}
       />
 
-      <TitleFormsComponent title="Envía Facturas automáticamente a tu portal de la Agencia Tributaria" />
+      <TitleFormsComponent title="Exporta a la Agéncia Tributaria Española" />
 
       {/* <NotificationsConfirmComponent
         mainState={configuration.notificateAfterExport || false}
@@ -182,19 +179,17 @@ const AgencyTributFormAutomate = ({
           <WhatsAppIcon style={{ width: 25 }} />,
         ]}
       /> */}
-
-
-      <div className={styles.advertency}>
-        <WarningSVG />
-        <p>
-          Si el correo no tiene archivos adjuntos no se guardará ninguna
-          factura
-        </p>
-      </div>
-
-
-
-      <CustomAutomationsWrapper Icon={<WhiteFolder />}>
+      <div className={styles.ateContainer}>
+        <Advertency
+          text={
+            "Al exportar un documento a la Agencia Tributaria, si su estado es diferente de 'Pagado', este cambiará automáticamente a 'Pagado'"
+          }
+        />
+        <div>
+          <p>Nombre de la automatización</p>
+          <input type="text" placeholder="Automatización 1" />
+        </div>
+        {/* <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div
           className={styles.infoContainerWrapper}
           onClick={() => setShowContent({ ...showContent, info1: !showContent.info2 })}
@@ -225,173 +220,252 @@ const AgencyTributFormAutomate = ({
             />
           </div>
         </div>
-      </CustomAutomationsWrapper>
-
-
-
-      <CustomAutomationsWrapper Icon={<WhiteBell />}>
-        <div
-          style={{ marginBottom: "20px" }}
-          className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info6: !showContent.info6 })}
-        >
+      </CustomAutomationsWrapper> */}
+        <CustomAutomationsWrapper Icon={<ArrowSquare />}>
           <div
-            className={styles.infoContainer}
-          >
-            <div>Configura tus notificaciones personalizadas</div>
-            <span>
-              Recibe alertas en tiempo real para mantenerte informado sobre cada
-              proceso.
-            </span>
-          </div>
-          <OptionsSwitchComponent
-            border={"none"}
-            marginLeft={"auto"}
-            isChecked={configuration.enableNotifications || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("enableNotifications", value)
+            className={styles.infoContainerWrapper}
+            onClick={() =>
+              setShowContent({ ...showContent, info1: !showContent.info1 })
             }
-          />
-        </div>
-        <div
-          className={`${styles.contentContainer} ${(showContent.info6) ? styles.active : styles.disabled}`}
-        >
-          <CustomAutomationsWrapper Icon={<WhiteCheck />}>
-            <div
-              style={{ marginBottom: "20px" }}
-              className={styles.infoContainerWrapper}
-            >
-              <div className={styles.infoContainer}>
-                <div>Notificar tras la exportación</div>
-                <span>Configura donde quieres recibir la notificación</span>
-              </div>
-              <OptionsSwitchComponent
-                border={"none"}
-                marginLeft={"auto"}
-                isChecked={configuration.notificateAfterExport || false}
-                setIsChecked={(value) =>
-                  handleConfigurationChange("notificateAfterExport", value)
+          >
+            <GrayChevron />
+            <div className={styles.infoContainer}>
+              <div>Selecciona la información a procesar</div>
+              <span>
+                Configura la ubicación de Factura GPT para exportar los
+                documentos a la ATE
+              </span>
+            </div>
+          </div>
+          <div
+            className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
+          >
+            <div className={styles.contentInput}>
+              <p className={styles.titleContentInput}>Fuente de Datos</p>
+
+              <InputComponent
+                readOnly={true}
+                value={configuration.filesSource}
+                setValue={(value) =>
+                  handleConfigurationChange("folderLocation", value)
                 }
+                textButton="Seleccionar Ubicación"
+                placeholder="/FTP"
+                icon={<SearchSVG />}
+                action={() => setShowSelectOutputLocation(true)}
               />
             </div>
-            <NotificationsConfirmComponent
-              disableSwitch={true}
-              mainState={configuration.notificateAfterExport || false}
-              setMainState={(value) =>
-                handleConfigurationChange("notificateAfterExport", value)
+
+            <p className={styles.titleContentInput}>Campos incluidos</p>
+            <span className={styles.subtitleContentInput}>
+              ID, Fechas, Datos de contacto (nombre, NIF, dirección), Desglose
+              de impuestos (IVA, retenciones, etc.), Total, y más parámetros...
+            </span>
+          </div>
+        </CustomAutomationsWrapper>
+
+        <CustomAutomationsWrapper Icon={<WhiteBell />}>
+          <div
+            style={{ marginBottom: "20px" }}
+            className={styles.infoContainerWrapper}
+            onClick={() =>
+              setShowContent({ ...showContent, info6: !showContent.info6 })
+            }
+          >
+            <div className={styles.infoContainer}>
+              <div>Configura tus notificaciones personalizadas</div>
+              <span>
+                Recibe alertas en tiempo real para mantenerte informado sobre
+                cada proceso.
+              </span>
+            </div>
+            <OptionsSwitchComponent
+              border={"none"}
+              marginLeft={"auto"}
+              isChecked={configuration.enableNotifications || false}
+              setIsChecked={(value) =>
+                handleConfigurationChange("enableNotifications", value)
               }
-              placeholder1="[email],..."
-              placeholder2="[00000000],..."
-              type1="Gmail"
-              type2="WhatsApp"
-              gmailTo={configuration.gmailTo || ""}
-              setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
-              gmailSubject={configuration.gmailSubject || ""}
-              setGmailSubject={(value) =>
-                handleConfigurationChange("gmailSubject", value)
-              }
-              gmailBody={configuration.gmailBody || ""}
-              setGmailBody={(value) =>
-                handleConfigurationChange("gmailBody", value)
-              }
-              state1={configuration.notificateGmail || false}
-              state1Value={configuration.gmailToNotificate || ""}
-              setState1={(value) =>
-                handleConfigurationChange("notificateGmail", value)
-              }
-              setState1Value={(value) =>
-                handleConfigurationChange("gmailToNotificate", value)
-              }
-              state2={configuration.notificateWhatsApp || false}
-              state2Value={configuration.whatsAppToNotificate || ""}
-              setState2={(value) =>
-                handleConfigurationChange("notificateWhatsApp", value)
-              }
-              setState2Value={(value) =>
-                handleConfigurationChange("whatsAppToNotificate", value)
-              }
-              whatsAppMessage={configuration.whatsAppMessage || ""}
-              setWhatsAppMessage={(value) =>
-                handleConfigurationChange("whatsAppMessage", value)
-              }
-              title="Notificar tras la exportación"
-              icons={[
-                <GmailIcon style={{ width: 25 }} />,
-                <WhatsAppIcon style={{ width: 25 }} />,
-              ]}
             />
-          </CustomAutomationsWrapper>
-          <div style={{ marginTop: "20px" }}>
-            <CustomAutomationsWrapper Icon={<WhiteBell />}>
-              <div className={styles.infoContainerWrapper}>
+          </div>
+          <div
+            className={`${styles.contentContainer} ${showContent.info6 ? styles.active : styles.disabled}`}
+          >
+            <CustomAutomationsWrapper Icon={<WhiteCheck />}>
+              <div
+                style={{ marginBottom: "20px" }}
+                className={styles.infoContainerWrapper}
+              >
                 <div className={styles.infoContainer}>
-                  <div>
-                    Activa validaciones avanzadas para notificar posibles errores
-                  </div>
-                  <span>
-                    Asegura la precisión de tus datos con alertas en caso de
-                    inconsistencias.
-                  </span>
+                  <div>Notificar tras la exportación</div>
+                  <span>Configura donde quieres recibir la notificación</span>
                 </div>
                 <OptionsSwitchComponent
                   border={"none"}
                   marginLeft={"auto"}
-                  isChecked={configuration.notificateErrors || false}
+                  isChecked={configuration.notificateAfterExport || false}
                   setIsChecked={(value) =>
-                    handleConfigurationChange("notificateErrors", value)
+                    handleConfigurationChange("notificateAfterExport", value)
                   }
                 />
               </div>
+              <NotificationsConfirmComponent
+                configuration={configuration}
+                disableSwitch={true}
+                mainState={configuration.notificateAfterExport || false}
+                setMainState={(value) =>
+                  handleConfigurationChange("notificateAfterExport", value)
+                }
+                placeholder1="[email],..."
+                placeholder2="[00000000],..."
+                type1="Gmail"
+                type2="WhatsApp"
+                gmailTo={configuration.gmailTo || ""}
+                setGmailTo={(value) =>
+                  handleConfigurationChange("gmailTo", value)
+                }
+                gmailSubject={configuration.gmailSubject || ""}
+                setGmailSubject={(value) =>
+                  handleConfigurationChange("gmailSubject", value)
+                }
+                gmailBody={configuration.gmailBody || ""}
+                setGmailBody={(value) =>
+                  handleConfigurationChange("gmailBody", value)
+                }
+                state1={configuration.notificateGmail || false}
+                state1Value={configuration.gmailToNotificate || ""}
+                setState1={(value) =>
+                  handleConfigurationChange("notificateGmail", value)
+                }
+                setState1Value={(value) =>
+                  handleConfigurationChange("gmailToNotificate", value)
+                }
+                state2={configuration.notificateWhatsApp || false}
+                state2Value={configuration.whatsAppToNotificate || ""}
+                setState2={(value) =>
+                  handleConfigurationChange("notificateWhatsApp", value)
+                }
+                setState2Value={(value) =>
+                  handleConfigurationChange("whatsAppToNotificate", value)
+                }
+                whatsAppMessage={configuration.whatsAppMessage || ""}
+                setWhatsAppMessage={(value) =>
+                  handleConfigurationChange("whatsAppMessage", value)
+                }
+                title="Notificar tras la exportación"
+                icons={[
+                  <GmailIcon style={{ width: 25 }} />,
+                  <WhatsAppIcon style={{ width: 25 }} />,
+                ]}
+              />
+            </CustomAutomationsWrapper>
+            <div style={{ marginTop: "20px" }}>
+              <CustomAutomationsWrapper Icon={<WhiteBell />}>
+                <div className={styles.infoContainerWrapper}>
+                  <div className={styles.infoContainer}>
+                    <div>
+                      Activa validaciones avanzadas para notificar posibles
+                      errores
+                    </div>
+                    <span>
+                      Asegura la precisión de tus datos con alertas en caso de
+                      inconsistencias.
+                    </span>
+                  </div>
+                  <OptionsSwitchComponent
+                    border={"none"}
+                    marginLeft={"auto"}
+                    isChecked={configuration.notificateErrors || false}
+                    setIsChecked={(value) =>
+                      handleConfigurationChange("notificateErrors", value)
+                    }
+                  />
+                </div>
+              </CustomAutomationsWrapper>
+            </div>
+          </div>
+        </CustomAutomationsWrapper>
+        <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+          <div
+            className={styles.infoContainerWrapper}
+            onClick={() =>
+              setShowContent({ ...showContent, info7: !showContent.info7 })
+            }
+          >
+            <div className={styles.infoContainer}>
+              <div>Selecciona el destino de exportación</div>
+              <span>Seleccionar estándar de exportación</span>
+            </div>
+            <OptionsSwitchComponent
+              border={"none"}
+              marginLeft={"auto"}
+              isChecked={configuration.selectStandardExport || false}
+              setIsChecked={(value) =>
+                handleConfigurationChange("selectStandardExport", value)
+              }
+            />
+          </div>
+          <div
+            className={`${styles.contentContainer} ${showContent.info7 ? styles.active : styles.disabled}`}
+          >
+            <p
+              style={{ marginBottom: "10px" }}
+              className={styles.titleContentInput}
+            >
+              Formato del Archivo
+            </p>
+            <CustomDropdown
+              options={["XML", "FacturaE", "UBL", "PEPPOL"]}
+              selectedOption={configuration.selectedStandardExport || []}
+              height="31px"
+              textStyles={{
+                fontWeight: 300,
+                color: "#1E0045",
+                fontSize: "13px",
+                marginLeft: "6px",
+                userSelect: "none",
+              }}
+              setSelectedOption={(selected) =>
+                handleConfigurationChange("selectedStandardExport", selected)
+              }
+            />
+            <CustomAutomationsWrapper Icon={<WhiteFolder />}>
+              <div
+                className={styles.infoContainerWrapper}
+                onClick={() =>
+                  setShowContent({ ...showContent, info1: !showContent.info1 })
+                }
+              >
+                <GrayChevron />
+                <div className={styles.infoContainer}>
+                  <div>Decide dónde guardar los documentos procesados</div>
+                  <span>
+                    Elige una ubicación en A3 para organizar tus archivos
+                    procesados
+                  </span>
+                </div>
+              </div>
+              <div
+                className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
+              >
+                <div className={styles.contentInput}>
+                  <InputComponent
+                    readOnly={true}
+                    value={configuration.filesSource}
+                    setValue={(value) =>
+                      handleConfigurationChange("folderLocation", value)
+                    }
+                    textButton="Seleccionar Ubicación"
+                    placeholder="/FTP"
+                    icon={<SearchSVG />}
+                    action={() => setShowSelectOutputLocation(true)}
+                  />
+                </div>
+              </div>
             </CustomAutomationsWrapper>
           </div>
-        </div>
-      </CustomAutomationsWrapper>
-      <CustomAutomationsWrapper Icon={<ArrowSquare />}>
-        <div
-          className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info7: !showContent.info7 })}
-        >
-          <div className={styles.infoContainer}>
-            <div>Selecciona el destino de exportación</div>
-            <span>Seleccionar estándar de exportación</span>
-          </div>
-          <OptionsSwitchComponent
-            border={"none"}
-            marginLeft={"auto"}
-            isChecked={configuration.selectStandardExport || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("selectStandardExport", value)
-            }
-          />
-        </div>
-        <div
-          className={`${styles.contentContainer} ${(showContent.info7) ? styles.active : styles.disabled}`}
-        >
-          <p
-            style={{ marginBottom: "10px" }}
-            className={styles.titleContentInput}
-          >
-            Formato del Archivo
-          </p>
-          <CustomDropdown
-            options={["XML", "FacturaE", "UBL", "PEPPOL"]}
-            selectedOption={configuration.selectedStandardExport || []}
-            height="31px"
-            textStyles={{
-              fontWeight: 300,
-              color: "#1E0045",
-              fontSize: "13px",
-              marginLeft: "6px",
-              userSelect: "none",
-            }}
-            setSelectedOption={(selected) =>
-              handleConfigurationChange("selectedStandardExport", selected)
-            }
-          />
-        </div>
-      </CustomAutomationsWrapper>
-
-
+        </CustomAutomationsWrapper>
+      </div>
 
       {isAddConnection && (
         <ModalAddConnectionAgencyTribut

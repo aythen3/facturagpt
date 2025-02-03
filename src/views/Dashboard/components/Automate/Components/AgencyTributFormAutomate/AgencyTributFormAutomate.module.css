@@ -1,9 +1,119 @@
 .advertency {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: #f5f5f5;
-    padding: 0 10px 0 10px;
-    border-radius: 8px;
-    margin: 25px 0 25px 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #f5f5f5;
+  padding: 0 10px 0 10px;
+  border-radius: 8px;
+  margin: 25px 0 25px 0;
+}
+
+.infoContainerWrapper {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0;
+  height: 45px;
+}
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 0;
+  div {
+    color: #1f184b;
+    font-size: 12px;
+    font-weight: 500;
   }
+  span {
+    max-width: 360px;
+    color: #1f184b;
+    font-size: 12px;
+    font-weight: 300;
+  }
+}
+
+.contentInput {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleContentInput {
+  color: #1f184b;
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+
+.cardTypesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 9px 0;
+}
+.singleTypeCard {
+  display: flex;
+  gap: 9px;
+  padding: 3px 12px;
+  border-radius: 30px;
+  border: 1px solid #e0e3e6;
+  span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #2a2e32;
+    user-select: none;
+  }
+}
+.minusIcon {
+  height: 13px;
+  margin-top: 1px;
+  width: 13px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 50%;
+  background: #dc3545;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.minusBlackIcon {
+  background: #464646;
+}
+
+.subtitleContentInput {
+  font-weight: 300;
+  font-size: 11;
+  color: #18181b;
+}
+
+.singlePhoneNumber {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  justify-content: space-between;
+  color: #666666;
+  font-size: 12px;
+  font-weight: 500;
+  div {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.contentContainer {
+  &.active {
+    display: block;
+  }
+  &.disabled {
+    display: none;
+  }
+}
+
+.ateContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

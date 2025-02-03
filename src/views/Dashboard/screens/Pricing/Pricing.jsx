@@ -13,6 +13,7 @@ import googleStar from "../../assets/googleStar.svg";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CookiePopup from "../../components/CookiePopup/CookiePopup";
+import SubtitleTemplate from "../../components/SubtitleTemplate/SubtitleTemplate";
 
 const Pricing = () => {
   const navigate = useNavigate();
@@ -157,9 +158,9 @@ const Pricing = () => {
       <div className={styles.containerP}>
         <div className={styles.plansHeader}>
           <h1 className={styles.plansTitle}>Planes de precios</h1>
-          <p className={styles.plansSubtitle}>
-            Elige el mejor plan que se adapte a tus necesidades.
-          </p>
+          <SubtitleTemplate
+            text={"Elige el mejor plan que se adapte a tus necesidades."}
+          />
           <p className={styles.currentPlan}>{currentPlan.documents}</p>
           <input
             type="range"
@@ -186,15 +187,23 @@ const Pricing = () => {
             sliderValue={sliderValue}
           />
         </div>
-        <span className={styles.microText}>
+        <SubtitleTemplate
+          text={
+            "Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en cualquier momento."
+          }
+        />
+        {/* <span className={styles.microText}>
           Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela
           en cualquier momento.
-        </span>
+        </span> */}
       </div>
-      <span className={styles.lightText}>
-        Las empresas tardan entre 2 y 5 minutos en gestionar una factura. Con
-        FacturaGPT, lo haces en segundos...
-      </span>
+      <SubtitleTemplate
+        stylesProp={{ marginTop: "80px" }}
+        text={
+          "Las empresas tardan entre 2 y 5 minutos en gestionar una factura. Con FacturaGPT, lo haces en segundos..."
+        }
+      />
+
       <div className={styles.parent}>
         {cardsData.map((card, index) => (
           <div className={styles[`div${index + 1}`]}>
@@ -215,10 +224,13 @@ const Pricing = () => {
         <img className={styles.star} src={star} alt="star" />
         Valoración
       </h1>
-      <span className={styles.lightTextSecondary}>
-        Escríbenos un email, una reseña en Google, una postal, o incluso puedes
-        donar para ayudar a crear más funcionalidades.
-      </span>
+      <SubtitleTemplate
+        stylesProp={{ maxWidth: "800px" }}
+        text={
+          "Escríbenos un email, una reseña en Google, una postal, o incluso puedes donar para ayudar a crear más funcionalidades."
+        }
+      />
+
       <div className={styles.trustContainer}>
         <div className={styles.googleCard}>
           <div className={styles.starsContainer}>
@@ -280,13 +292,17 @@ const Pricing = () => {
           </div>
         </div>
       </div>
-      <span className={styles.greenLightText}>
-        No te olvides, si ha sido útil, escribe una reseña.
-      </span>
+      <SubtitleTemplate
+        stylesProp={{ maxWidth: "800px" }}
+        text={"No te olvides, si ha sido útil, escribe una reseña."}
+      />
+
       <h1 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h1>
-      <span className={styles.reviewsDescriptionLast}>
-        Estás un paso más cerca de obtener el mejor servicio...
-      </span>
+      <SubtitleTemplate
+        stylesProp={{ maxWidth: "800px" }}
+        text={"Estás un paso más cerca de obtener el mejor servicio..."}
+      />
+
       <a href="/freetrial" className={styles.startButton}>
         Probar Gratis <img src={diagonalArrow} />
       </a>

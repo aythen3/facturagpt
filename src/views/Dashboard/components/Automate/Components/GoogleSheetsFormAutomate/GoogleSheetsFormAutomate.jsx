@@ -636,6 +636,7 @@ const GoogleSheetsFormAutomate = ({
               />
             </div>
             <NotificationsConfirmComponent
+              configuration={configuration}
               disableSwitch={true}
               mainState={configuration.notificateAfterExport || false}
               setMainState={(value) =>

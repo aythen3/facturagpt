@@ -5,6 +5,7 @@ import { ReactComponent as EstructuracionIcon } from "../../assets/estructuracio
 import { ReactComponent as SalidaIcon } from "../../assets/salidaIcon.svg";
 import { ReactComponent as ArrowPointingTop } from "../../assets/arrowPointingTop.svg";
 import { ReactComponent as ArrowPointingBottom } from "../../assets/arrowPointingBottom.svg";
+import SubtitleTemplate from "../SubtitleTemplate/SubtitleTemplate";
 const steps = () => [
   {
     icon: (
@@ -45,7 +46,11 @@ const FlowSection = () => {
         <div key={index} className={styles.steps}>
           <div className={styles.iconContainer}>{step.icon}</div>
           <h3>{step.title}</h3>
-          <p>{step.description}</p>
+          <SubtitleTemplate
+            text={step.description}
+            stylesProp={{ fontSize: "17px" }}
+          />
+          {/* <p>{step.description}</p> */}
         </div>
       ))}
     </section>
