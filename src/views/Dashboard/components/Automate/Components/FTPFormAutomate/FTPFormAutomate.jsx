@@ -23,6 +23,7 @@ import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import minusIcon from "../../../../assets/minusIcon.svg";
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
+import { ReactComponent as FrecuencyIcon } from "../../../../assets/frecuencyIcon.svg";
 
 const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
   const [showAddConnection, setShowAddConnection] = useState(false);
@@ -58,7 +59,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
     info5: false,
     info6: false,
     info7: false,
-  })
+  });
 
   return (
     <div className={styles.sectionWrapper}>
@@ -84,7 +85,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
       <CustomAutomationsWrapper Icon={<ArrowSquare />}>
         <div
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info1: !showContent.info1 })}
+          onClick={() =>
+            setShowContent({ ...showContent, info1: !showContent.info1 })
+          }
         >
           <GrayChevron />
           <div className={styles.infoContainer}>
@@ -95,7 +98,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
             </span>
           </div>
         </div>
-        <div className={`${styles.contentContainer} ${(showContent.info1) ? styles.active : styles.disabled}`}>
+        <div
+          className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
+        >
           <div className={styles.contentInput}>
             <p className={styles.titleContentInput}>Fuente de Datos</p>
 
@@ -184,8 +189,8 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
                   "selectedFileTypes",
                   configuration.selectedFileTypes?.includes(selected)
                     ? configuration.selectedFileTypes.filter(
-                      (option) => option !== selected
-                    )
+                        (option) => option !== selected
+                      )
                     : [...(configuration.selectedFileTypes || []), selected]
                 )
               }
@@ -201,7 +206,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
       <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info2: !showContent.info2 })}
+          onClick={() =>
+            setShowContent({ ...showContent, info2: !showContent.info2 })
+          }
         >
           <GrayChevron />
           <div className={styles.infoContainer}>
@@ -212,7 +219,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
             </span>
           </div>
         </div>
-        <div className={`${styles.contentContainer} ${(showContent.info2) ? styles.active : styles.disabled}`}>
+        <div
+          className={`${styles.contentContainer} ${showContent.info2 ? styles.active : styles.disabled}`}
+        >
           <div className={styles.contentInput}>
             <p className={styles.titleContentInput}>Ubicación</p>
 
@@ -230,6 +239,30 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           </div>
         </div>
       </CustomAutomationsWrapper>
+      {/* <CustomAutomationsWrapper Icon={<FrecuencyIcon />}>
+        <div style={{ display: "grid", gap: "10px" }}>
+          <OptionsSwitchComponent
+            isChecked={configuration.frequency || false}
+            setIsChecked={(value) =>
+              handleConfigurationChange("frequency", value)
+            }
+            // icon={<TextSVG />}
+            text="Selecciona la frecuencia del tiempo que se ejecutará la acción"
+            subtitle="Si no se marca esta opción se ejecutara siempre y de forma inmediata"
+          />
+          <InputComponent
+            typeInput="select"
+            value={configuration.fileName || ""}
+            setValue={(value) => handleConfigurationChange("fileName", value)}
+            options={[
+              { value: "Inmediatamente", label: "Inmediatamente" },
+              { value: "1hr", label: "Cada 1hr" },
+              { value: "5hr", label: "Cada 5hr" },
+            ]}
+          />
+        </div>
+      </CustomAutomationsWrapper> */}
+
       <CustomAutomationsWrapper Icon={<WhiteClock />}>
         <div
           style={{ marginBottom: "20px" }}
@@ -237,13 +270,15 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
         >
           <div
             className={styles.infoContainer}
-            onClick={() => setShowContent({ ...showContent, info3: !showContent.info3 })}
+            onClick={() =>
+              setShowContent({ ...showContent, info3: !showContent.info3 })
+            }
           >
             <div>
               Selecciona la frecuencia del tiempo que se ejecutará la acción
             </div>
             <span>
-              Sin no se marca esta opción se ejecutara siempre y de forma
+              Si no se marca esta opción se ejecutara siempre y de forma
               inmediata
             </span>
           </div>
@@ -256,10 +291,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
               handleConfigurationChange("actionFrequency", value)
             }
           />
-
         </div>
         <div
-          className={`${styles.contentContainer} ${(showContent.info3) ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${showContent.info3 ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Imediatamente", "5 Minutos", "10 Minutos"]}
@@ -282,7 +316,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
         <div
           style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info4: !showContent.info4 })}
+          onClick={() =>
+            setShowContent({ ...showContent, info4: !showContent.info4 })
+          }
         >
           <div className={styles.infoContainer}>
             <div>Modifica el Estado a los Documentos Procesados</div>
@@ -297,7 +333,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${(showContent.info4) ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${showContent.info4 ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Pendiente", "Finalizado", "Anulado"]}
@@ -323,7 +359,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
         >
           <div
             className={styles.infoContainer}
-            onClick={() => setShowContent({ ...showContent, info5: !showContent.info5 })}
+            onClick={() =>
+              setShowContent({ ...showContent, info5: !showContent.info5 })
+            }
           >
             <div>Renombra automáticamente tus archivos</div>
             <span>
@@ -341,7 +379,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${(showContent.info5) ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${showContent.info5 ? styles.active : styles.disabled}`}
         >
           <InputComponent
             placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
@@ -351,15 +389,15 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
       </CustomAutomationsWrapper>
-     <CustomAutomationsWrapper Icon={<WhiteBell />}>
+      <CustomAutomationsWrapper Icon={<WhiteBell />}>
         <div
           style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info6: !showContent.info6 })}
+          onClick={() =>
+            setShowContent({ ...showContent, info6: !showContent.info6 })
+          }
         >
-          <div
-            className={styles.infoContainer}
-          >
+          <div className={styles.infoContainer}>
             <div>Configura tus notificaciones personalizadas</div>
             <span>
               Recibe alertas en tiempo real para mantenerte informado sobre cada
@@ -376,7 +414,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${(showContent.info6) ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${showContent.info6 ? styles.active : styles.disabled}`}
         >
           <CustomAutomationsWrapper Icon={<WhiteCheck />}>
             <div
@@ -407,7 +445,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
               type1="Gmail"
               type2="WhatsApp"
               gmailTo={configuration.gmailTo || ""}
-              setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
+              setGmailTo={(value) =>
+                handleConfigurationChange("gmailTo", value)
+              }
               gmailSubject={configuration.gmailSubject || ""}
               setGmailSubject={(value) =>
                 handleConfigurationChange("gmailSubject", value)
@@ -448,7 +488,8 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
               <div className={styles.infoContainerWrapper}>
                 <div className={styles.infoContainer}>
                   <div>
-                    Activa validaciones avanzadas para notificar posibles errores
+                    Activa validaciones avanzadas para notificar posibles
+                    errores
                   </div>
                   <span>
                     Asegura la precisión de tus datos con alertas en caso de
@@ -471,7 +512,9 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
       <CustomAutomationsWrapper Icon={<ArrowSquare />}>
         <div
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info7: !showContent.info7 })}
+          onClick={() =>
+            setShowContent({ ...showContent, info7: !showContent.info7 })
+          }
         >
           <div className={styles.infoContainer}>
             <div>Selecciona el destino de exportación</div>
@@ -487,7 +530,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${(showContent.info7) ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${showContent.info7 ? styles.active : styles.disabled}`}
         >
           <p
             style={{ marginBottom: "10px" }}
@@ -512,8 +555,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
       </CustomAutomationsWrapper>
-     
-    
+
       {showSelectInputLocation && (
         <SelectLocation
           onClose={() => setShowSelectInputLocation(false)}

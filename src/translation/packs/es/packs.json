@@ -33,7 +33,8 @@
   "reduces2": "Reduce la tasa de error promedio en un 30%",
   "reduces3": "Reduce el tiempo de respuesta en un 57%",
   "formatsTitle": "Formatos y Extensiones",
-  "formatsDescription": "Puedes conectar cualquier tipo de formato digital, escaneado, foto.. Disponible en más de +10 formatos disponibles",
+  "formatsDescription1": "Puedes conectar cualquier tipo de formato digital, escaneado o fotografía.",
+  "formatsDescription2": "Compatible con más de 10 formatos distintos...",
   "programsTitle": "Integra, Automatiza y Factura",
   "programsDescription1": "Sube, recibe o emite documentos facturables y automatiza tu proceso de facturación con facilidad.",
   "programsDescription2": "Integra tus apps y servicios para un flujo de trabajo sin interrupciones."

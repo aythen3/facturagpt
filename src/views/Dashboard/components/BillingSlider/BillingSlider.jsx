@@ -39,18 +39,23 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
   };
 
   const marks = [
-    { value: 1000, label: "1k", position: "calc(1% + 4px)" }, // Mover la primera marca un poco más a la derecha
-    { value: 10000, label: "900k", position: "calc(19% + 2px)" },
-    { value: 2000000, label: "2M", position: "calc(39% + 1px)" },
-    { value: 3000000, label: "3M", position: "calc(58% + 5px)" },
-    { value: 4000000, label: "4M", position: "calc(78% + 4px)" },
-    { value: 5000000, label: "+5M", position: "calc(100% - 10px)" }, // Mover la última marca más a la izquierda
+    { value: 1000, label: "Hasta 20", position: "5%" }, // Inicial
+    { value: 500000, label: "+20", position: "14%" }, // +9%
+    { value: 1000000, label: "+200", position: "23%" }, // +9%
+    { value: 1500000, label: "+500", position: "32%" }, // +9%
+    { value: 2000000, label: "+1K", position: "41%" }, // +9%
+    { value: 2500000, label: "2K", position: "50%" }, // +9%
+    { value: 3000000, label: "5K", position: "59%" }, // +9%
+    { value: 3500000, label: "+10K", position: "68%" }, // +9%
+    { value: 4000000, label: "+20K", position: "77%" }, // +9%
+    { value: 4500000, label: "+50K", position: "86%" }, // +9%
+    { value: 5000000, label: "+100K", position: "95%" }, // +9%
   ];
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>
-        <img className={styles.star} src={star} alt="star" />
+        {/* <img className={styles.star} src={star} alt="star" /> */}
         {t("title")}
       </h2>
 
@@ -75,12 +80,9 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
             <div
               key={mark.value}
               className={styles.mark}
-              style={{
-                left: `${((mark.value - 1000000) / 49000000) * 100}%`,
-                left: mark.position, // Ajusta la posición personalizada para la primera y última marca
-              }}
+              style={{ left: mark.position }}
             >
-              <div className={styles.connector}></div>
+              {/* <div className={styles.connector}></div> */}
               <span className={styles.label}>{mark.label}</span>
             </div>
           ))}

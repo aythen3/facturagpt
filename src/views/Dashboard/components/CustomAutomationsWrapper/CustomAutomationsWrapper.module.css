@@ -3,7 +3,7 @@
   border: 1px solid #ececf1;
   border-radius: 10px;
   display: flex;
-  overflow: hidden;
+  /* overflow: hidden; */
   background: #fff;
 }
 
@@ -12,6 +12,11 @@
   align-items: center;
   justify-content: center;
   width: 46px;
+  border-radius: 10px 0 0 10px;
+  -webkit-border-radius: 10px 0 0 10px;
+  -moz-border-radius: 10px 0 0 10px;
+  -ms-border-radius: 10px 0 0 10px;
+  -o-border-radius: 10px 0 0 10px;
 }
 .rightContainer {
   display: flex;

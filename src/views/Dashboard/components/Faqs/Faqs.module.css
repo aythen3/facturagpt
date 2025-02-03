@@ -5,8 +5,8 @@
   flex-direction: column;
   width: 100%;
   h2 {
-    font-size: clamp(30px, 5vw, 50px) !important;
-    font-weight: 400;
+    font-size: clamp(30px, 5vw, 40px) !important;
+    font-weight: 300;
     color: #18181b;
     text-align: center;
   }
@@ -17,7 +17,7 @@
   max-width: 750px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
-  padding: 10px;
+  padding: 40px 60px;
   background-color: white;
   border-radius: 15px;
   -webkit-border-radius: 15px;

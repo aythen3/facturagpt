@@ -35,7 +35,7 @@ const NotificationsConfirmComponent = ({
 }) => {
   return (
     <div className={styles.container}>
-      {!disableSwitch && (
+      {/* {!disableSwitch && (
         <div className={styles.marginTop}>
           <OptionsSwitchComponent
             isChecked={mainState}
@@ -44,7 +44,7 @@ const NotificationsConfirmComponent = ({
             text={title}
           />
         </div>
-      )}
+      )} */}
       <div className={styles.row}>
         <div className={styles.checkboxRow}>
           <CheckboxComponent

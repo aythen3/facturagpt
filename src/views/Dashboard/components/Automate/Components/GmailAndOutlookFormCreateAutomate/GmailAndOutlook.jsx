@@ -23,7 +23,6 @@ import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
-
 import { ReactComponent as ArrowSquare } from "../../../../assets/whiteArrowSquareIn.svg";
 import { ReactComponent as GrayChevron } from "../../../../assets/grayChevron.svg";
 import { ReactComponent as WhiteFolder } from "../../../../assets/whiteFolder.svg";
@@ -35,13 +34,9 @@ import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 
-
-
-
 const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   const [showAddConnection, setShowAddConnection] = useState(false);
-
 
   const [showContent, setShowContent] = useState({
     info1: false,
@@ -51,8 +46,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
     info5: false,
     info6: false,
     info7: false,
-  })
-
+  });
 
   const handleConfigurationChange = (key, value) => {
     setConfiguration((prev) => ({
@@ -90,7 +84,9 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
       <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info1: !showContent.info2 })}
+          onClick={() =>
+            setShowContent({ ...showContent, info1: !showContent.info2 })
+          }
         >
           <GrayChevron />
           <div className={styles.infoContainer}>
@@ -101,7 +97,9 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             </span>
           </div>
         </div>
-        <div className={`${styles.contentContainer} ${(showContent.info1) ? styles.active : styles.disabled}`}>
+        <div
+          className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
+        >
           <div className={styles.contentInput}>
             <p className={styles.titleContentInput}>Ubicación</p>
 
@@ -123,19 +121,22 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
       <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div
           className={styles.infoContainerWrapper}
-          onClick={() => setShowContent({ ...showContent, info2: !showContent.info2 })}
+          onClick={() =>
+            setShowContent({ ...showContent, info2: !showContent.info2 })
+          }
         >
           <GrayChevron />
           <div className={styles.infoContainer}>
-            <div>
-              Selecciona la información a extraer
-            </div>
+            <div>Selecciona la información a extraer</div>
             <span>
-              Aplica filtros avanzados para procesar solo los datos que realmente importan.
+              Aplica filtros avanzados para procesar solo los datos que
+              realmente importan.
             </span>
           </div>
         </div>
-        <div className={`${styles.contentContainer} ${(showContent.info2) ? styles.active : styles.disabled}`}>
+        <div
+          className={`${styles.contentContainer} ${showContent.info2 ? styles.active : styles.disabled}`}
+        >
           <div className={styles.contentInput}>
             <p className={styles.titleContentInput}>Remitentes</p>
 
@@ -250,8 +251,8 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
                   "selectedTypes",
                   configuration.selectedTypes?.includes(selected)
                     ? configuration.selectedTypes.filter(
-                      (option) => option !== selected
-                    )
+                        (option) => option !== selected
+                      )
                     : [...(configuration.selectedTypes || []), selected]
                 )
               }
@@ -263,8 +264,6 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
                 factura
               </p>
             </div>
-
-
           </div>
         </div>
       </CustomAutomationsWrapper>
