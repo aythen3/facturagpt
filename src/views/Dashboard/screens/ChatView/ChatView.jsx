@@ -1,7 +1,14 @@
 import styles from "./ChatView.module.css";
+import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Chat from "../../components/Chat/Chat.jsx";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
+import l from "../../assets/lIcon.svg";
+
+import { v4 as uuidv4 } from 'uuid';  // Add this import at the top with other imports
+
+import { useParams, useNavigate } from "react-router-dom";
+
 const company = {
   email: "coolmail@mail.com",
   phone: "341-59-15",
@@ -24,13 +31,16 @@ import askClient from "../../assets/askClient.svg";
 import askAssets from "../../assets/askAssets.svg";
 import askHelp from "../../assets/askHelp.svg";
 
+import searchMagnify from "../../assets/searchMagnify.svg";
+
+
 const buttons = [
-  { img: createBill, text: "Crea una Factura" },
-  { img: analizeBill, text: "Analiza tu facturacion" },
-  { img: askDocument, text: "Pregunta sobre tus documentos" },
-  { img: askClient, text: "Pregunta sobre tus clientes" },
-  { img: askAssets, text: "Pregunta sobre tus activos" },
-  { img: askHelp, text: "Pide Ayuda" },
+  { id: 0, img: createBill, text: "Crea una Factura" },
+  { id: 1, img: analizeBill, text: "Analiza tu facturacion" },
+  { id: 2, img: askDocument, text: "Pregunta sobre tus documentos" },
+  { id: 3, img: askClient, text: "Pregunta sobre tus clientes" },
+  { id: 4, img: askAssets, text: "Pregunta sobre tus activos" },
+  { id: 5, img: askHelp, text: "Pide Ayuda" },
 ];
 
 
@@ -44,25 +54,95 @@ const ChatMenu = () => {
     id: 2,
   }]);
 
+
+  const searchInputRef = useRef(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChat = (id) => {
+    console.log('3ri48juj')
+    switch(id){
+      case 0:
+        alert(2)
+        break;
+    }
+  }
+
   return (
-    <div>
-      icon search
-      Buscar
-      comand
+    <div className={styles.chatMenu}>
+      <div className={styles.searchInputWrapper}>
+        <div className={styles.searchIcon}>
+          <img src={searchMagnify} alt="searchMagnify" />
+        </div>
+        <input
+          ref={searchInputRef}
+          type="text"
+          placeholder="Buscar"
+          className={styles.searchInput}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <div
+          style={{ marginLeft: "5px" }}
+          className={styles.searchIconsWrappers}
+        >
+          <img src={l} alt="kIcon" />
+        </div>
+      </div>
 
       <ul>
+        {true ? (
+          <b>
+            7 días anteriores
+          </b>
+        ) : false ? (
+          <b>
+            14 días anteriores
+          </b>
+        ) : (
+          <b>
+            30 días anteriores
+          </b>
+        )}
         {chats.map((chat, index) => (
-          <li key={index}>
-            {chat.name}
+          <li 
+          key={index}
+          onClick={() => handleChat(chat.id)}
+          >
+            <span>
+              {chat.name}
+            </span>
+
+            icon settings
           </li>
         ))}
       </ul>
+
+      {true && (
+        <div className={styles.chatMenuSettings}>
+          <ul>
+            <li>
+              Compartir
+            </li>
+            <li>
+              Cambiar nombre
+            </li>
+            <li>
+              Archivars
+            </li>
+            <li>
+              Eliminar
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
 
 
 const Chat = () => {
+
+  // const { id } = useParams()
 
   const { user, updatingUserLoading } = useSelector((state) => state.user);
   console.log(`usuario: ${user}`);
@@ -73,7 +153,10 @@ const Chat = () => {
 
   const handleSendMessage = () => {
     if (inputValue.trim()) {
-      setMessages([...messages, { text: inputValue, sender: "user" }]);
+      setMessages([
+        ...messages,
+        { text: inputValue, sender: "user" }
+      ]);
       setInputValue("");
     }
   };
@@ -84,16 +167,20 @@ const Chat = () => {
   };
 
 
-  const handleChat = (fn) => {
-    alert(1)
+  const handleChat = (id) => {
+    console.log('3ri48juj')
+    switch(id){
+      case 0:
+        alert(2)
+        break;
+    }
   }
-
-
-
 
   return (
     <div className={styles.chatContainer}>
-      <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>
+      <button onClick={handleSendBotMessage}>
+        Enviar mensaje del bot
+      </button>
       <div className={styles.messageContainer}>
         {messages.length === 0 && (
           <>
@@ -199,8 +286,11 @@ const Chat = () => {
         {messages.length === 0 && (
           <div className={styles.buttonContainer}>
             {buttons.map((button, index) => (
-              <button key={index} >
-                <img src={button.img} alt="Icon"  onClick={() => handleChat(button?.fn)} />
+              <button 
+              key={index} 
+              onClick={() => handleChat(button?.id)}
+              >
+                <img src={button.img} alt="Icon" />
                 {button.text}
               </button>
             ))}
@@ -233,13 +323,22 @@ const Chat = () => {
 
 
 const ChatView = () => {
+  const {id } = useParams()
+  const navigate = useNavigate()
 
+  useEffect(()=>{
+    console.log('id', id)
+    if(!id){
+      const prev_id = uuidv4()
+      navigate(`/admin/chat/${prev_id}`)
+    }
+  },[id])
 
   return (
     <PanelTemplate>
       {/* <Chat /> */}
 
-      <div style={{ display: 'flex', alignItems: 'center', height: '100vh' }}>
+      <div className={styles.chatSection}>
         <ChatMenu />
         <Chat />
       </div>

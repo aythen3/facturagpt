@@ -7,6 +7,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { createRoot } from "react-dom/client";
 
+
+
 import store from "./utils/store";
 
 import Transactions from "./views/Dashboard/screens/Transactions/Transactions.jsx";
@@ -76,7 +78,7 @@ const Layout = () => {
   //     i18n.changeLanguage(currentLanguage);
   // }, [currentLanguage]);
 
-  const [isAuth, setIsAuth] = useState(false);
+  // const [isAuth, setIsAuth] = useState(false);
 
 
   const ComponentPrivate = () => {
@@ -87,15 +89,30 @@ const Layout = () => {
     // const [fromPath, setFromPath] = useState("chat");
 
 
+    const [init, setInit] = useState(false)
     useEffect(()=>{
-      console.log('user!!', user)
-      if(user && user.success == false){
+      console.log('user!!', user, init)
+      setInit(true)
+
+      if(user && user.success == false) { 
         navigate(`/login`)
       } 
       // else if(!user){
       //   navigate(`/login`)
       // }
     },[user])
+
+    useEffect(()=>{
+      console.log('user!!', user, init)
+
+      if(!user && init){ 
+        // navigate(`/login`)
+        // window.location.href = '/login'
+      } 
+      // else if(!user){
+      //   navigate(`/login`)
+      // }
+    },[init, user])
 
 
 
@@ -114,6 +131,7 @@ const Layout = () => {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/products" element={<AllProducts />} />
           <Route path="/chat" element={<ChatView />} />
+          <Route path="/chat/:id" element={<ChatView />} />
           <Route path="/articlestransactions" element={<ArticlesTransactions />} />
           <Route path="/notification" element={<NotificationsView />} />
           <Route path="/panel" element={<InvoicePanel />} />

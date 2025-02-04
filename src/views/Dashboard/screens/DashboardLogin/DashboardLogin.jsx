@@ -85,7 +85,7 @@ const DashboardLogin = () => {
     console.log('user', user)
     if (user) {
       if (user.success) {
-        navigate('/panel')
+        navigate('/admin/chat')
       } else {
         // navigate('/login')
         localStorage.clear()

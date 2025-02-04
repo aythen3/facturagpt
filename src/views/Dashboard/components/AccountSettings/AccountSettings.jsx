@@ -37,8 +37,8 @@ const AccountSettings = () => {
 
   const logout = () => {
     localStorage.clear();
-    // navigate('/login')
-    window.href = "/login";
+    navigate('/login')
+    // window.href = "/login";
   };
 
   const handleAddImageClick = (type) => {

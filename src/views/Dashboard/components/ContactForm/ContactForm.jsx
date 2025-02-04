@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import styles from "./ContactForm.module.css";
-import handPointer from "../../assets/handPointer.svg";
+// import handPointer from "../../assets/handPointer.svg";
 import Navbar from "../Navbar/Navbar";
 import wsIcon from "../../assets/whatsappIcon.svg";
 import { useTranslation } from "react-i18next";
 import CookiePopup from "../CookiePopup/CookiePopup";
 import FreeTrialButton from "../FreeTrialButton/FreeTrialButton";
+
+import apiBackend from "@src/apiBackend.js";
+
 
 const ContactForm = () => {
   const { t } = useTranslation("contactForm");
@@ -43,8 +46,8 @@ const ContactForm = () => {
     setIsMessageVisible(false);
 
     try {
-      const response = await axios.post(
-        "http://localhost:3006/api/user/newsletter",
+      const response = await apiBackend.post(
+        "/user/newsletter",
         formData
       );
 
