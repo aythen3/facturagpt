@@ -5,6 +5,7 @@ import ContactForm from "../ContactForm/ContactForm";
 import FAQ from "../Faqs/Faqs";
 import diagonalArrow from "../../assets/diagonalArrow.svg";
 import { useTranslation } from "react-i18next";
+import SubtitleTemplate from "../SubtitleTemplate/SubtitleTemplate";
 
 const Reviews = () => {
   const { t } = useTranslation("reviews");
@@ -26,11 +27,19 @@ const Reviews = () => {
         <div className={styles.price}>
           €3’99 <span>/{t("priceTime")}</span>
         </div>
-        <span className={styles.thinSubtitle}>{t("priceFooter")}</span>
+        <SubtitleTemplate
+          text={t("priceFooter")}
+          stylesProp={{ padding: "0 20px" }}
+        />
+        {/* <span className={styles.thinSubtitle}>{t("priceFooter")}</span> */}
       </section>
       <section className={styles.CarrouselContainer}>
         <h2 className={styles.reviewsTitle}>{t("title")}</h2>
-        <span className={styles.reviewsDescription}>{t("subTitle")}</span>
+        <SubtitleTemplate
+          text={t("subTitle")}
+          stylesProp={{ padding: "0 20px" }}
+        />
+        {/* <span className={styles.reviewsDescription}>{t("subTitle")}</span> */}
         <Carousel />
       </section>
 
@@ -38,9 +47,13 @@ const Reviews = () => {
       <FAQ />
       <section className={styles.startNowSection}>
         <h2 className={styles.reviewsTitle}>{t("joinUsTitle")}</h2>
-        <span className={styles.reviewsDescriptionLast}>
+        <SubtitleTemplate
+          text={t("joinUsSubTitle")}
+          stylesProp={{ padding: "0 20px" }}
+        />
+        {/* <span className={styles.reviewsDescriptionLast}>
           {t("joinUsSubTitle")}
-        </span>
+        </span> */}
         <a href="/freetrial" className={styles.startButton}>
           {t("joinUsButton")} <img src={diagonalArrow} />
         </a>

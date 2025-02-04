@@ -6,6 +6,7 @@ import ArrowDown from "../../assets/ArrowDown.svg";
 
 import { useTranslation } from "react-i18next";
 import FreeTrialButton from "../FreeTrialButton/FreeTrialButton";
+import SubtitleTemplate from "../SubtitleTemplate/SubtitleTemplate";
 const NavHeader = () => {
   const { t } = useTranslation("navBarHeader");
 
@@ -53,7 +54,11 @@ const NavHeader = () => {
           flexDirection: "column",
         }}
       >
-        <span className={styles.navHeaderDescription}>{t("description")}</span>
+        <SubtitleTemplate
+          text={t("description")}
+          stylesProp={{ padding: "0 20px" }}
+        />
+        {/* <span className={styles.navHeaderDescription}>{t("description")}</span> */}
         <FreeTrialButton />
       </div>
     </div>

@@ -161,7 +161,7 @@
     font-weight: 500;
   }
   span {
-    max-width: 360px;
+    /* max-width: 360px; */
     color: #1f184b;
     font-size: 12px;
     font-weight: 300;
@@ -237,13 +237,17 @@
   }
 }
 
-
-
-.contentContainer{
-  &.active{
+.contentContainer {
+  &.active {
     display: block;
   }
-  &.disabled{
+  &.disabled {
     display: none;
   }
+}
+
+.gmailoutlookContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

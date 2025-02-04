@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
+import { ReactComponent as EyePassword } from "../../assets/eyePassword.svg";
+import { ReactComponent as EyePasswordSlash } from "../../assets/eyePasswordSlash.svg";
 import {
   createAccount,
   loginToManager,
@@ -22,10 +24,7 @@ import { useTranslation } from "react-i18next";
 import sentEmail from "../../assets/sentEmail.svg";
 import i18n from "../../../../i18";
 import { FaLock } from "react-icons/fa";
-import {
-  sendRecoveryCode,
-  verifyRecoveryCode,
-} from "../../../../actions/user";
+import { sendRecoveryCode, verifyRecoveryCode } from "../../../../actions/user";
 
 // import { useSelector } from "react-redux";
 
@@ -80,15 +79,15 @@ const DashboardLogin = () => {
   };
 
   useEffect(() => {
-    console.log("location", location);
+    console.log("locationn", location);
 
-    console.log('user', user)
+    console.log("user", user);
     if (user) {
       if (user.success) {
         navigate('/admin/chat')
       } else {
         // navigate('/login')
-        localStorage.clear()
+        localStorage.clear();
       }
     }
     // if (user) navigate('/panel')
@@ -99,8 +98,6 @@ const DashboardLogin = () => {
     if (location?.pathname === "/recover" && mode !== "forgot-password")
       setMode("forgot-password");
     if (location?.pathname === "/otp" && mode !== "otp") setMode("otp");
-
-
   }, [location, user]);
 
   const handlePasswordChange = (e) => {
@@ -373,6 +370,13 @@ const DashboardLogin = () => {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const renderLogo = () => (
     <div className={styles.logoContainer}>
       <img
@@ -414,18 +418,35 @@ const DashboardLogin = () => {
       </label>
       <label className={styles.label}>
         {t("label2")}
-        <input
-          value={password}
-          onChange={handlePasswordChange}
-          type="password"
-          placeholder={t("placeholder2")}
-          onKeyDown={handleKeyDown}
-          className={styles.input}
-        />
+        <div className={styles.inputWrapper}>
+          <input
+            value={password}
+            onChange={handlePasswordChange}
+            type={showPassword ? "text" : "password"}
+            placeholder={t("placeholder2")}
+            onKeyDown={handleKeyDown}
+            className={styles.input}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+          <span
+            className={`${styles.icon} ${
+              password.length > 0 && isFocused ? styles.visible : ""
+            }`}
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? (
+              <EyePassword className={styles.eye} />
+            ) : (
+              <EyePasswordSlash className={styles.eye} />
+            )}
+          </span>
+        </div>
         <span className={styles.passwordRequirements}>
           {t("conditionPassword")}
         </span>
       </label>
+
       {mode === "signin" && (
         <div className={styles.forgotPasswordContainer}>
           <div className={styles.rememberMe}>
@@ -605,8 +626,9 @@ const DashboardLogin = () => {
             </div>
             <div
               onClick={() => handleVerifyOTP(otp)}
-              className={`${styles.signInButton} ${isLoading ? styles.loading : ""
-                }`}
+              className={`${styles.signInButton} ${
+                isLoading ? styles.loading : ""
+              }`}
             >
               {isLoading ? "Verifying..." : "Next"}
             </div>

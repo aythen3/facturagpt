@@ -413,3 +413,53 @@
     gap: 10px;
   }
 }
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+.inputWrapper {
+  display: flex;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #8897ad;
+  border: none !important;
+  outline: none !important;
+  margin-bottom: 20px;
+  background-color: #f4f4f4;
+  height: 48px;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 15px;
+  .input {
+    margin-bottom: 0;
+    padding: 0;
+  }
+}
+
+.input {
+  flex: 1;
+  padding-right: 40px; /* Espacio para el icono */
+}
+
+.icon {
+  /* position: absolute; */
+  right: 10px;
+  cursor: pointer;
+  opacity: 0;
+  /* transition: opacity 0.2s ease-in-out;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -ms-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out; */
+}
+
+.visible {
+  opacity: 1;
+}
+.eye {
+  width: 20px;
+  height: 20px;
+}

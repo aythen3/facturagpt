@@ -89,11 +89,10 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
         </div>
 
         {/* Output Value */}
-        <p className={styles.subtitle}>
+        {/* <p className={styles.subtitle}>
           {totalFacturasFormatted}{" "}
-          {/* {sliderValue <= 900 ? "" : sliderValue <= 999999 ? "K" : "M"}{" "} */}
           {t("subTitle")}
-        </p>
+        </p> */}
       </div>
     </div>
   );
