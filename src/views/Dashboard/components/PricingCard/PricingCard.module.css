@@ -24,11 +24,12 @@
 .card {
   display: inline-block; /* Asegurar que las tarjetas estén en una sola línea */
   /* min-width: 200px; */
+  /* background-color: #f7f7f7; */
+  cursor: pointer;
   gap: 5px;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  background-color: #f7f7f7;
   text-align: center;
 }
 

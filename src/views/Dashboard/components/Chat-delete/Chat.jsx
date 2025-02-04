@@ -142,7 +142,11 @@ const Chat = () => {
         {messages.length === 0 && (
           <div className={styles.buttonContainer}>
             {buttons.map((button, index) => (
-              <button key={index}>
+              <button 
+              key={index}
+              onClick={() => alert(2)}
+              // onClick={() => handleSendMessage(button.text)}s
+              >
                 <img src={button.img} alt="Icon" />
                 {button.text}
               </button>

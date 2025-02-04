@@ -1,20 +1,20 @@
 .container {
   padding: 20px;
   min-height: 100vh;
+  .clientsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    .searchContainer {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  }
 }
 
-.clientsHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
 
-.searchContainer {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
 
 .inputWrapper {
   position: relative;
@@ -22,32 +22,26 @@
   align-items: center;
   height: 40px;
   border-radius: 0 10px 10px 0;
+  .searchInput {
+    padding: 10px 10px 10px 35px;
+    /*Espacioparaelíconodentro*/
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    width: 250px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    &::placeholder {
+      color: #aaa;
+    }
+  }
 }
 
-.searchInput {
-  padding: 10px 10px 10px 35px;
-  /*Espacioparaelíconodentro*/
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
-  outline: none;
-  width: 250px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-}
 
-.searchInput::placeholder {
-  color: #aaa;
-}
 
-.inputIconInside {
-  position: absolute;
-  left: 10px; /* Ícono dentro del input */
-  font-size: 16px;
-  color: #aaa;
-}
 .inputIconOutsideContainer {
   height: 100%;
   display: flex;
@@ -64,6 +58,13 @@
   -moz-border-radius: 0 10px 10px 0;
   -ms-border-radius: 0 10px 10px 0;
   -o-border-radius: 0 10px 10px 0;
+  
+.inputIconInside {
+  position: absolute;
+  left: 10px; /* Ícono dentro del input */
+  font-size: 16px;
+  color: #aaa;
+}
 }
 
 .infoBtn {
@@ -90,6 +91,7 @@
 .moreBtn {
   width: 40px;
 }
+
 .addButton,
 .moreBtn {
   display: flex;
@@ -148,23 +150,28 @@ tbody {
   p {
     margin: 0;
   }
-}
-th {
-  text-align: start;
-  padding: 10px; /* Añade espacio interno */
-  color: #333; /* Color del texto */
-  font-weight: bold; /* Asegura que los encabezados sean visibles */
-  width: 150px; /* Ajusta la anchura según lo necesario */
+  th {
+    text-align: start;
+    padding: 10px; /* Añade espacio interno */
+    color: #333; /* Color del texto */
+    font-weight: bold; /* Asegura que los encabezados sean visibles */
+    width: 150px; /* Ajusta la anchura según lo necesario */
+  }
+  
+  td {
+    padding: 10px; /* Espaciado interno para las celdas */
+    color: #666666;
+    font-size: 13px;
+    p:first-of-type {
+      margin-bottom: 10px;
+    }
+  }
 }
 
-td {
-  padding: 10px; /* Espaciado interno para las celdas */
-  color: #666666;
-  font-size: 13px;
-}
-
-thead th {
-  min-width: 120px; /* Mínima anchura para garantizar espacio */
+thead {
+  th {
+    min-width: 120px; /* Mínima anchura para garantizar espacio */
+  }
 }
 
 .small {
@@ -174,9 +181,7 @@ thead th {
 .big {
   width: 190px;
 }
-td p:first-of-type {
-  margin-bottom: 10px;
-}
+
 
 .actions {
   display: flex;
@@ -215,9 +220,7 @@ input[type="checkbox"] {
   height: 100vh;
   width: 100vw;
 }
-.newClientContainer::-webkit-scrollbar {
-  display: none;
-}
+
 .newClientContainer {
   position: fixed;
   background-color: white;
@@ -237,6 +240,10 @@ input[type="checkbox"] {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .newClientForm {
     width: 90%;
@@ -551,10 +558,10 @@ input[type="checkbox"] {
   padding: 15px;
   bottom: 20px;
   right: 0;
-}
-
-.item_menu_actions {
-  list-style-type: none;
-  color: white;
-  cursor: pointer;
+  
+  .item_menu_actions {
+    list-style-type: none;
+    color: white;
+    cursor: pointer;
+  }
 }
