@@ -1,0 +1,29 @@
+.AdvertencyContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 5px;
+  padding-left: 20px;
+  border-left: 2px solid #11a380;
+  background-color: #16c09816;
+  color: #4f5660;
+}
+
+.AdvertencyIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #11a380;
+  min-width: 15px;
+  max-width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+
+  .icon {
+    margin: 0 auto;
+  }
+}

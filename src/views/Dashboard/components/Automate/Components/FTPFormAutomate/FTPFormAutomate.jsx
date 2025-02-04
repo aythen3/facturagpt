@@ -82,6 +82,10 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           addConnection={addConnection}
         />
       )}
+      <div>
+        <p style={{ margin: "0" }}>Nombre de la automatización</p>
+        <input type="text" placeholder="Automatización 1" />
+      </div>
       <CustomAutomationsWrapper Icon={<ArrowSquare />}>
         <div
           className={styles.infoContainerWrapper}
@@ -435,6 +439,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
               />
             </div>
             <NotificationsConfirmComponent
+              configuration={configuration}
               disableSwitch={true}
               mainState={configuration.notificateAfterExport || false}
               setMainState={(value) =>

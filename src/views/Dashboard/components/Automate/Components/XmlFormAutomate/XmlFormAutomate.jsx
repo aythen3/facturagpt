@@ -43,7 +43,10 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-      <TitleFormsComponent title="Genera Archivos" type={type} />
+      <TitleFormsComponent
+        title="Genera Archivos"
+        type={type + " para Declaraciones Fiscales"}
+      />
       {/* <div>
         <p>Nombre del archivo</p>
         <InputComponent
@@ -463,7 +466,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
       </CustomAutomationsWrapper>
-      <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+      <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div
           className={styles.infoContainerWrapper}
           onClick={() =>
@@ -472,10 +475,10 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
         >
           <GrayChevron />
           <div className={styles.infoContainer}>
-            <div>Selecciona la información a procesar</div>
+            <div>Decide dónde guardar los documentos procesados</div>
             <span>
-              Conecta la fuente de facturas de FTP desde la cual se subirán a
-              FacturaGPT.
+              Elige una ubicación en FacturaGPT para organizar tus archivos
+              procesados
             </span>
           </div>
         </div>
@@ -545,6 +548,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
               />
             </div>
             <NotificationsConfirmComponent
+              configuration={configuration}
               disableSwitch={true}
               mainState={configuration.notificateAfterExport || false}
               setMainState={(value) =>

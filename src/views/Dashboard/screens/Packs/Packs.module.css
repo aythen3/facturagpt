@@ -37,17 +37,17 @@
   font-weight: 300;
   align-items: center;
   justify-content: center;
-  max-width: 1006px;
+  /* max-width: 1006px; */
+  width: 90%;
   text-align: center;
   padding: 0 20px;
   text-align: center;
-
+  p {
+    margin: 0;
+    line-height: 30px;
+  }
   span {
     color: #16c098;
-    font-weight: bolder;
-  }
-
-  span {
     font-weight: 700;
   }
 }

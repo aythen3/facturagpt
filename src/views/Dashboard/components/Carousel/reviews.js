@@ -1,8 +1,8 @@
-import icon1 from "../../assets/reviewIcon2.svg";
-import icon2 from "../../assets/reviewIcon1.svg";
-import icon3 from "../../assets/reviewIcon3.svg";
-import icon4 from "../../assets/reviewIcon4.svg";
-import icon5 from "../../assets/reviewIcon5.svg";
+import icon5 from "../../assets/reviewIcon2.svg";
+import icon4 from "../../assets/reviewIcon1.svg";
+import icon1 from "../../assets/reviewIcon3.svg";
+import icon2 from "../../assets/reviewIcon4.svg";
+import icon3 from "../../assets/reviewIcon5.svg";
 
 export const reviews = [
   {

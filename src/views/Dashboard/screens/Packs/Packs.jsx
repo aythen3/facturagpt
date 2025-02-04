@@ -29,6 +29,7 @@ import TagsLanding from "../../components/TagsLanding/TagsLanding";
 import CircleProgressBar from "../../components/CircleProgressBar/CircleProgressBar";
 import LinesLandingSection from "../../components/LinesLandingSection/LinesLandingSection";
 import FlowSection from "../../components/FlowSection/FlowSection";
+import SubtitleTemplate from "../../components/SubtitleTemplate/SubtitleTemplate";
 
 const Packs = () => {
   const { t } = useTranslation("packs");
@@ -152,7 +153,8 @@ const Packs = () => {
             <div key={index} className={styles.card}>
               <p className={styles.step}>{step.step}</p>
               <h3 className={styles.title}>{step.title}</h3>
-              <p className={styles.subtitle}>{step.description}</p>
+              <SubtitleTemplate text={step.description} />
+              {/* <p className={styles.subtitle}>{step.description}</p> */}
             </div>
           ))}
         </section>
@@ -166,29 +168,22 @@ const Packs = () => {
           sliderValue={sliderValue}
         />
         <span className={styles.packsDescription}>
-          {/* Las empresas tardan entre 5 y 10 minutos en gestionar una factura. Una
-        empresa con una facturación de{" "} */}
-          {t("resume")}
-          {/* <strong> {sliderValueFormatted} M </strong> */}
-          <span>
+          <p>{t("resume")} </p>
+          <p>
+            {t("resume_strong")} <span> {sliderValueFormatted} </span>
+            {t("resume_strong2")} <span> {totalFacturasFormatted} </span>{" "}
+            {t("resume_strong3")}
+          </p>
+          <p>
             {" "}
-            {/* {sliderValueFormatted} {sliderValue <= 999999 ? 'K' : 'M'}{' '} */}
-            {sliderValueFormatted}{" "}
-            {/* {sliderValue <= 900 ? "" : sliderValue <= 999999 ? "K" : "M"}{" "} */}
-          </span>
-          {/* genera aproximadamente{" "} */}
-          {t("resume_strong")}
-          <span>
-            {" "}
-            {totalFacturasFormatted} {t("resume_strong2")}
-          </span>
-          {/* . Con FacturaGPT, puedes ahorrar más de{" "} */}
-          {t("resume_cont")}
-          <span>
-            {horasTotalesFormatted} {t("resume_hours")}{" "}
-          </span>{" "}
-          {t("resume_end")}
-          <span>{valorEnDolaresFormatted} €</span>.
+            {t("resume_cont")}
+            <span>
+              {" "}
+              {horasTotalesFormatted} {t("resume_hours")}{" "}
+            </span>{" "}
+            {t("resume_end")}
+            <span> {valorEnDolaresFormatted} €</span>.
+          </p>
         </span>
       </section>
       <PricingCards
@@ -203,8 +198,16 @@ const Packs = () => {
           {/* <img className={styles.flag} src={flag} alt="flag" /> */}
           <h2>{t("formatsTitle")}</h2>
         </div>
-        <span className={styles.regular08}>{t("formatsDescription1")}</span>
-        <span className={styles.regular08}>{t("formatsDescription2")}</span>
+        <SubtitleTemplate
+          text={t("formatsDescription1")}
+          // stylesProp={{ fontSize: "17px" }}
+        />
+        {/* <span className={styles.regular08}>{t("formatsDescription1")}</span> */}
+        <SubtitleTemplate
+          text={t("formatsDescription2")}
+          // stylesProp={{ fontSize: "17px" }}
+        />
+        {/* <span className={styles.regular08}>{t("formatsDescription2")}</span> */}
         <div className={styles.dashedContainer}>
           {cardsData.map((card, index) => (
             <div className={styles.innerCard} key={index}>
@@ -229,8 +232,16 @@ const Packs = () => {
             <h2>{t("programsTitle")}</h2>
           </div>
           <div>
-            <p className={styles.regular08}>{t("programsDescription1")}</p>
-            <p className={styles.regular08}>{t("programsDescription2")}</p>
+            <SubtitleTemplate
+              text={t("programsDescription1")}
+              stylesProp={{ padding: "0 20px" }}
+            />
+            {/* <p className={styles.regular08}>{t("programsDescription1")}</p> */}
+            <SubtitleTemplate
+              text={t("programsDescription2")}
+              stylesProp={{ padding: "0 20px" }}
+            />
+            {/* <p className={styles.regular08}>{t("programsDescription2")}</p> */}
           </div>
           <CompatibleProgramsSection />
         </div>
