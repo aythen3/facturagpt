@@ -29,10 +29,14 @@ export default function InvoicePanel() {
   const [fileUploaded, setFileUploaded] = useState(false);
   const [activateChat, setActivateChat] = useState(false);
   const { user, updatingUserLoading } = useSelector((state) => state.user);
+  const [hasNote, setHasNote] = useState(false);
+  const [noteText, setNoteText] = useState("");
+  const [isEditingNote, setIsEditingNote] = useState(false);
+
   console.log(`usuario: ${user}`);
 
   const { id } = useParams();
-  
+
   const openModalAutomate = () => {
     setIsModalAutomate(true);
   };
@@ -68,46 +72,74 @@ export default function InvoicePanel() {
     }
   };
 
+  const handleAddNote = () => {
+    setHasNote(true);
+    setNoteText("");
+  };
+
+  const handleEditNote = () => {
+    setIsEditingNote((prev) => !prev);
+  };
+
+  const handleNoteChange = (e) => {
+    setNoteText(e.target.value);
+  };
+
+  const handleNoteBlur = () => {
+    setIsEditingNote(false);
+  };
 
   useEffect(() => {
-    console.log('id', id)
-    if(id){
-      setFileUploaded(true)
+    console.log("id", id);
+    if (id) {
+      setFileUploaded(true);
     }
-  }, [id])
+  }, [id]);
 
   return (
     <PanelTemplate>
       {/* <NavbarAdmin setIsOpen={setIsOpen} isOpen={isOpen} /> */}
       {/* <div className={styles.container}> */}
-        {/* <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+      {/* <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} /> */}
 
-        {!fileUploaded ? (
-          <div
-            className={styles.inputContainer}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
+      {!fileUploaded ? (
+        <div
+          className={styles.inputContainer}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <input
+            type="file"
+            onChange={handleFileChangeInvoice}
+            placeholder="Selecciona una factura o arrastra"
+            id="InvoiceInput"
+          />
+          <label
+            onClick={() => document.querySelector("#InvoiceInput").click()}
           >
-            <input
-              type="file"
-              onChange={handleFileChangeInvoice}
-              placeholder="Selecciona una factura o arrastra"
-              id="InvoiceInput"
-            />
-            <label
-              onClick={() => document.querySelector("#InvoiceInput").click()}
-            >
-              Selecciona una factura o arrastra y suelta <br /> Digitaliza y
-              gestiona todos tus documentos con FacturaGPT.
-            </label>
-          </div>
-        ) : (
-          <>
-            <InvoiceForm />
-            <Preview companyInfo={company} document={Factura} />
-          </>
-        )}
-        {/* <FloatingMenu
+            Selecciona una factura o arrastra y suelta <br /> Digitaliza y
+            gestiona todos tus documentos con FacturaGPT.
+          </label>
+        </div>
+      ) : (
+        <>
+          <InvoiceForm
+            hasNote={hasNote}
+            handleAddNote={handleAddNote}
+            noteText={noteText}
+            handleNoteChange={handleNoteChange}
+            handleNoteBlur={handleNoteBlur}
+            isEditingNote={isEditingNote}
+            handleEditNote={handleEditNote}
+          />
+          <Preview
+            companyInfo={company}
+            document={Factura}
+            handleAddNote={handleAddNote}
+          />
+        </>
+      )}
+      {/* <FloatingMenu
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           openModalAutomate={openModalAutomate}

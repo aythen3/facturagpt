@@ -21,7 +21,9 @@
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
+  gap: 10px;
 }
+
 .emailsFilterSort {
   font-family: "Inter", sans-serif;
   font-size: 12px;
@@ -39,7 +41,9 @@
   gap: 10px;
   border-left: none;
 }
-
+.transparent {
+  background-color: transparent;
+}
 .chevronIcon {
   margin-top: 1px;
   margin-left: auto;
@@ -66,6 +70,16 @@
   cursor: pointer;
   user-select: none;
   transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  img {
+    width: 15px;
+  }
+  -webkit-transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  -ms-transition: background-color 0.2s;
+  -o-transition: background-color 0.2s;
 }
 
 .dropdownOption:hover {

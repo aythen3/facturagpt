@@ -30,6 +30,48 @@
   border-bottom: 1px solid #11a3813c;
 }
 
+.addNote {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .button {
+    text-decoration: underline;
+    font-weight: 500;
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .note {
+    background-color: #c2f2d3;
+    border: 1px solid #0000001d;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    .text {
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+    span,
+    input {
+      padding: 8px;
+      background-color: transparent;
+      font-family: "Inter", sans-serif;
+      font-size: 13px;
+    }
+    input {
+      background-color: #9bd8b1fd;
+    }
+  }
+}
+
 .titleWrapper {
   display: flex;
   align-items: center;
@@ -74,13 +116,30 @@
   color: #ff4d4f;
 }
 
+.titleContent {
+  width: 100%;
+}
+
 .title {
   font-size: 18px;
   font-weight: 500;
   margin: 0;
   color: #084437;
+  width: 100%;
+  padding: 2px 8px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
 }
 
+.title::placeholder {
+  color: #71717a;
+}
+.transparent {
+  background-color: transparent !important;
+}
 .btnSectionsSelector {
   background-color: #f9f9f9;
   display: flex;

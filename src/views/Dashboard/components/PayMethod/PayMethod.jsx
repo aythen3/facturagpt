@@ -1,65 +1,63 @@
-import React from 'react';
-import styles from './PayMethod.module.css';
-import { ReactComponent as ArrowUp } from '../../assets/arrowDownGray.svg';
-import { ReactComponent as Minus } from '../../assets/minus.svg';
-const PayMethod = () => {
+import React from "react";
+import styles from "./PayMethod.module.css";
+import { ReactComponent as Minus } from "../../assets/minus.svg";
+
+const PayMethod = ({ method, onChange }) => {
   return (
     <div className={styles.payMethodContainer}>
-      <div className={styles.squareContainer}>
-        <div className={`${styles.square} ${styles.arrow}`}>
-          <ArrowUp className={styles.icon} />
-        </div>
-        <div className={styles.square}>
-          <span>BANCO</span>
-          <p>BBVA</p>
-        </div>
-        <div className={`${styles.square} ${styles.accountNumber}`}>
-          <span>Número de Cuenta</span>
-          <p>BBVA</p>
-        </div>
-        <div className={styles.square}>
-          <span>SWIFT/BIC</span>
-          <p>BBVA</p>
-        </div>
-        <div className={styles.square}>
-          <span>Routing Number</span>
-          <p>BBVA</p>
-        </div>
-        <div className={styles.square}>
-          <span>Moneda</span>
-          <p>BBVA</p>
-        </div>
-      </div>
       <div className={styles.payInfo}>
         <div>
           <span>Banco</span>
-          <select>
-            <option>EE.UU</option>
-            <option>EE.UU</option>
-            <option>EE.UU</option>
-            <option>EE.UU</option>
+          <select
+            value={method?.banco || ""}
+            onChange={(e) => onChange("banco", e.target.value)}
+          >
+            <option value="BBVA">BBVA</option>
+            <option value="Santander">Santander</option>
+            <option value="Citibank">Citibank</option>
+            <option value="Chase">Chase</option>
           </select>
         </div>
         <div>
           <span>Número de cuenta</span>
-          <input type="text" />
+          <input
+            type="text"
+            value={method?.numeroCuenta || ""}
+            onChange={(e) => onChange("numeroCuenta", e.target.value)}
+          />
         </div>
         <div>
           <span>SWIFT-BIC</span>
-          <input type="text" />
+          <input
+            type="text"
+            value={method?.swiftBic || ""}
+            onChange={(e) => onChange("swiftBic", e.target.value)}
+          />
         </div>
         <div>
           <span>Routing Number</span>
-          <input type="text" />
+          <input
+            type="text"
+            value={method?.routingNumber || ""}
+            onChange={(e) => onChange("routingNumber", e.target.value)}
+          />
         </div>
         <div>
           <span>Moneda</span>
-          <input type="text" />
+          <input
+            type="text"
+            value={method?.moneda || ""}
+            onChange={(e) => onChange("moneda", e.target.value)}
+          />
         </div>
       </div>
       <div className={styles.defaultBank}>
         <div>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={method?.default || false}
+            onChange={(e) => onChange("default", e.target.checked)}
+          />
           <p>Banco predeterminado</p>
         </div>
         <div className={styles.delete}>
