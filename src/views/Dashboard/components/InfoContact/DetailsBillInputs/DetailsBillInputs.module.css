@@ -1,0 +1,16 @@
+.DetailsBillInputs {
+  width: 100%;
+}
+.row {
+  width: 100%;
+}
+.containerColumn {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 10px;
+  > div {
+    flex: 1;
+    box-sizing: border-box;
+  }
+}

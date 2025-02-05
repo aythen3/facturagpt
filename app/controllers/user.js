@@ -1,9 +1,9 @@
-const path = require('path')
-const fs = require('fs').promises
+const path = require("path");
+// const fs = require("fs").promises;
+const fs = require("fs");
 // const nano = require('nano')('http://localhost:5984')
 // DELETE
-const nano = require('nano')('http://admin:1234@127.0.0.1:5984') 
-
+const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
 const multer = require("multer");
 
@@ -56,7 +56,7 @@ const createAccountController = async (req, res) => {
   try {
     const clientData = req.body;
 
-    console.log('clientData', clientData)
+    console.log("clientData", clientData);
     // console.log("data from createAccountController", {
     //   nombre,
     //   email,
@@ -84,8 +84,8 @@ const updateAccountController = async (req, res) => {
     // console.log("User update data received:", { userId, toUpdate });
 
     const response = await updateAccount(userData);
- 
-    console.log('response', response)
+
+    console.log("response", response);
 
     return res.status(200).send(response);
   } catch (err) {
@@ -98,14 +98,13 @@ const deleteAccountController = async (req, res) => {
   try {
     const { userData } = req.body;
     const response = await deleteAccount(userData);
-    console.log('response', response)
+    console.log("response", response);
     return res.status(200).send(response);
   } catch (err) {
     console.log("Error in deleteAccountController:", err);
     return res.status(500).send("Error deleting user");
   }
 };
-
 
 const updateAccountPasswordController = async (req, res) => {
   try {
@@ -258,55 +257,47 @@ const sendNewsletter = async (req, res) => {
   }
 };
 
-
-
 const getFile = async (req, res) => {
   try {
     // const { file } = req.body
     // console.log('file', file)
-    const { name } = req.params
+    const { name } = req.params;
 
-    const filePath = path.join(
-      __dirname,
-      "../../src/assets/email",
-      name
-    );
+    const filePath = path.join(__dirname, "../../src/assets/email", name);
 
     // Determinar el Content-Type basado en la extensión del archivo
-    const contentType = name.toLowerCase().endsWith('.svg')
-      ? 'image/svg+xml'
-      : name.toLowerCase().endsWith('.png')
-        ? 'image/png'
-        : 'application/octet-stream';
+    const contentType = name.toLowerCase().endsWith(".svg")
+      ? "image/svg+xml"
+      : name.toLowerCase().endsWith(".png")
+        ? "image/png"
+        : "application/octet-stream";
 
     // Leer como Buffer para archivos binarios, como UTF-8 para texto
     const fileContent = await fs.readFile(
       filePath,
-      contentType === 'image/svg+xml' ? 'utf8' : null
+      contentType === "image/svg+xml" ? "utf8" : null
     );
 
-    res.setHeader('Content-Type', contentType);
-    res.setHeader('Cache-Control', 'public, max-age=86400'); // Optional: Cache for 24 hours
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Cache-Control", "public, max-age=86400"); // Optional: Cache for 24 hours
 
     return res.status(200).send(fileContent);
-
   } catch (err) {
-    console.log('Error in sendFile:', err)
-    return res.status(500).send('Error in sendFile')
+    console.log("Error in sendFile:", err);
+    return res.status(500).send("Error in sendFile");
   }
-}
+};
 
 const getEmail = async (req, res) => {
   try {
-    const { html } = await getTemplate('promo-email')
+    const { html } = await getTemplate("promo-email");
 
-    return res.status(200).send(html)
+    return res.status(200).send(html);
   } catch (err) {
-    console.log('Error in getEmail:', err)
-    return res.status(500).send('Error in getEmail')
+    console.log("Error in getEmail:", err);
+    return res.status(500).send("Error in getEmail");
   }
-}
-
+};
 
 const senderEmail = async (req, res) => {
   try {
@@ -314,20 +305,17 @@ const senderEmail = async (req, res) => {
     // const { id } = req.params;
     const { email } = req.body;
 
-    console.log('SEND EMAIL ID USER', email, user)
+    console.log("SEND EMAIL ID USER", email, user);
 
     const resp = await sendEmail(email, "form-action", {});
 
-    console.log('resp', resp)
+    console.log("resp", resp);
 
-    return res.status(200).send('200')
+    return res.status(200).send("200");
   } catch (error) {
-    console.log('Error:', error);
+    console.log("Error:", error);
   }
-}
-
-
-
+};
 
 // Controlador para subir el archivo PDF
 const uploadPDF = (req, res) => {
@@ -336,22 +324,20 @@ const uploadPDF = (req, res) => {
 
 // ==============================================================================
 
-
 ///
 
 const deleteAllDB = async (req, res) => {
-
   try {
     const dbs = await nano.db.list();
     for (const db of dbs) {
       await nano.db.destroy(db);
     }
-    return res.status(200).send('All databases deleted')
+    return res.status(200).send("All databases deleted");
   } catch (err) {
-    console.log('Error in deleteAllDB:', err)
-    return res.status(500).send('Error deleting all databases')
+    console.log("Error in deleteAllDB:", err);
+    return res.status(500).send("Error deleting all databases");
   }
-}
+};
 
 module.exports = {
   deleteAllDB: catchedAsync(deleteAllDB),
@@ -364,7 +350,9 @@ module.exports = {
   getAllAccountsController: catchedAsync(getAllAccountsController),
   updateAccountController: catchedAsync(updateAccountController),
   deleteAccountController: catchedAsync(deleteAccountController),
-  updateAccountPasswordController: catchedAsync(updateAccountPasswordController),
+  updateAccountPasswordController: catchedAsync(
+    updateAccountPasswordController
+  ),
   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
   verifyOTPController: catchedAsync(verifyOTPController),
   sendNewsletter: catchedAsync(sendNewsletter),
