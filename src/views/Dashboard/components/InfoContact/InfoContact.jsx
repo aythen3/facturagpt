@@ -1,69 +1,167 @@
-import React, { useRef, useState } from 'react';
-import styles from './InfoContact.module.css';
-import check from '../../assets/checkProgram.svg';
-import PayMethod from '../PayMethod/PayMethod';
-import { ReactComponent as ImageEmpty } from '../../assets/ImageEmpty.svg';
+import React, { useRef, useState } from "react";
+import styles from "./InfoContact.module.css";
+import check from "../../assets/checkProgram.svg";
+import PayMethod from "../PayMethod/PayMethod";
+import { ReactComponent as ImageEmpty } from "../../assets/ImageEmpty.svg";
+import DeleteButton from "../DeleteButton/DeleteButton";
+import DetailsBillInputs from "./DetailsBillInputs/DetailsBillInputs";
 const InfoContact = () => {
   const inputRefs = useRef({});
   const [sectionSelected, setSectionSelected] = useState(0);
-  const toggleEdit = (field) => {
-    setEditFields((prev) => {
-      const newState = { ...prev, [field]: !prev[field] };
-
-      if (!prev[field]) {
-        setTimeout(() => {
-          inputRefs.current[field]?.focus();
-        }, 0);
-      }
-
-      return newState;
-    });
-  };
-
-  const handleChange = (field, value) => {
-    setFieldValues((prev) => ({ ...prev, [field]: value }));
-  };
-
+  const [editingDetailIndex, setEditingDetailIndex] = useState(null);
+  const [editingPaymentIndex, setEditingPaymentIndex] = useState(null);
   const [fieldValues, setFieldValues] = useState({
-    companyName: '',
-    email: '',
-    phoneNumber: '',
-    web: '',
+    companyName: "",
+    email: "",
+    phoneNumber: [],
+    web: "",
     details: [],
-    taxNumber: '',
-    preferredCurrency: '',
-    paymentMethods: '',
+    paymentMethods: [],
   });
+
   const [editFields, setEditFields] = useState({
     companyName: false,
     email: false,
     phoneNumber: false,
     web: false,
     details: false,
-    taxNumber: false,
-    preferredCurrency: false,
     paymentMethods: false,
   });
 
-  const categoriesTitles = {
-    companyName: 'Nombre de la empresa',
-    email: 'Email',
-    phoneNumber: 'Teléfono',
-    web: 'Web o dominio corporativo',
-    details: 'Detalles de Facturación',
-    taxNumber: 'Número Fiscal',
-    preferredCurrency: 'Moneda Preferida',
-    paymentMethods: 'Métodos de Pago',
+  const toggleEdit = (field) => {
+    setEditFields((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+    if (field === "details") {
+      setEditingDetailIndex(null);
+    }
+    if (field === "paymentMethods") {
+      setEditingPaymentIndex(null);
+    }
   };
-  const placeholdersValues = {
-    companyName: 'John Doe',
-    email: 'john.doe@gmail.com',
-    phoneNumber: 'Desconocido',
-    web: 'www.web.com',
-    details: 'Email adress, Zip code / Postcode, Country of residence',
-    taxNumber: 'Desconocido',
-    preferredCurrency: 'EUR',
-    paymentMethods: 'Desconocido',
+
+  const handleChange = (index, key, value) => {
+    setFieldValues((prev) => {
+      if (key === "number" || key === "countryCode") {
+        const updatedPhoneNumbers = [...prev.phoneNumber];
+        updatedPhoneNumbers[index] = {
+          ...updatedPhoneNumbers[index],
+          [key]: value,
+        };
+        return { ...prev, phoneNumber: updatedPhoneNumbers };
+      } else {
+        const updatedDetails = [...prev.details];
+        updatedDetails[index] = {
+          ...updatedDetails[index],
+          [key]: value,
+        };
+        return { ...prev, details: updatedDetails };
+      }
+    });
+  };
+
+  const handlePaymentMethodChange = (index, key, value) => {
+    setFieldValues((prev) => {
+      const updatedPaymentMethods = [...prev.paymentMethods];
+
+      if (key === "default" && value === true) {
+        // Si se está estableciendo un nuevo método por defecto, actualizar todos los demás a false
+        updatedPaymentMethods.forEach((method, i) => {
+          if (i !== index) {
+            method.default = false;
+          }
+        });
+      }
+
+      updatedPaymentMethods[index] = {
+        ...updatedPaymentMethods[index],
+        [key]: value,
+      };
+
+      return { ...prev, paymentMethods: updatedPaymentMethods };
+    });
+  };
+
+  const handleDetailChange = (index, key, value) => {
+    setFieldValues((prev) => {
+      const updatedDetails = [...prev.details];
+      updatedDetails[index] = {
+        ...updatedDetails[index],
+        [key]: value,
+      };
+      return { ...prev, details: updatedDetails };
+    });
+  };
+
+  const addPhoneNumber = () => {
+    setFieldValues((prev) => ({
+      ...prev,
+      phoneNumber: [...prev.phoneNumber, { countryCode: "+1", number: "" }],
+    }));
+  };
+
+  const removePhoneNumber = (index) => {
+    setFieldValues((prev) => ({
+      ...prev,
+      phoneNumber: prev.phoneNumber.filter((_, i) => i !== index),
+    }));
+  };
+
+  const addInvoice = () => {
+    setFieldValues((prev) => ({
+      ...prev,
+      details: [
+        ...prev.details,
+        {
+          direccion: "",
+          poblacion: "",
+          provincia: "",
+          codigoPostal: "",
+          pais: "",
+        },
+      ],
+    }));
+  };
+
+  const addPaymentMethod = () => {
+    setFieldValues((prev) => ({
+      ...prev,
+      paymentMethods: [
+        ...prev.paymentMethods,
+        {
+          banco: "",
+          numeroCuenta: "",
+          swiftBic: "",
+          routingNumber: "",
+          moneda: "",
+          default: prev.paymentMethods.length === 0 ? true : false, // Si es el primer método, será el default
+        },
+      ],
+    }));
+  };
+
+  const removePaymentMethod = (index) => {
+    setFieldValues((prev) => ({
+      ...prev,
+      paymentMethods: prev.paymentMethods.filter((_, i) => i !== index),
+    }));
+  };
+
+  const removeInvoice = (index) => {
+    setFieldValues((prev) => ({
+      ...prev,
+      details: prev.details.filter((_, i) => i !== index),
+    }));
+  };
+
+  const categoriesTitles = {
+    companyName: "Nombre Completo",
+    email: "Email",
+    phoneNumber: "Teléfono",
+    web: "Web o dominio corporativo",
+    details: "Detalles de Facturación",
+    paymentMethods: "Métodos de Pago",
   };
 
   return (
@@ -81,25 +179,26 @@ const InfoContact = () => {
         <ImageEmpty />
         <div className={styles.btnSectionsSelector}>
           <button
-            className={`${sectionSelected == 0 ? styles.sectionSelect : ''}`}
+            className={`${sectionSelected === 0 ? styles.sectionSelect : ""}`}
             onClick={() => setSectionSelected(0)}
           >
             Trabajador
           </button>
           <button
-            className={`${sectionSelected == 1 ? styles.sectionSelect : ''}`}
+            className={`${sectionSelected === 1 ? styles.sectionSelect : ""}`}
             onClick={() => setSectionSelected(1)}
           >
             Cliente
           </button>
           <button
-            className={`${sectionSelected == 2 ? styles.sectionSelect : ''}`}
+            className={`${sectionSelected === 2 ? styles.sectionSelect : ""}`}
             onClick={() => setSectionSelected(2)}
           >
             Proveedor
           </button>
         </div>
       </div>
+      <div onClick={() => console.log(fieldValues)}>HOLA</div>
       <div className={styles.detailsContainer}>
         {Object.keys(fieldValues).map((field) => (
           <div key={field} className={styles.detailItem}>
@@ -107,35 +206,238 @@ const InfoContact = () => {
               <span className={styles.detailTitle}>
                 {categoriesTitles[field]}
               </span>
-              <span
-                className={styles.detailEdit}
-                onClick={() => toggleEdit(field)}
-              >
-                {editFields[field] ? 'Añadir' : 'Editar'}
-              </span>
+              <div className={styles.optionsContainer}>
+                <span
+                  className={styles.detailEdit}
+                  onClick={() => toggleEdit(field)}
+                >
+                  {editFields[field] ? "Guardar" : "Editar"}
+                </span>
+                {field === "details" && (
+                  <span className={styles.detailEdit} onClick={addInvoice}>
+                    Añadir Factura
+                  </span>
+                )}
+                {field === "phoneNumber" && (
+                  <span className={styles.detailEdit} onClick={addPhoneNumber}>
+                    Añadir {categoriesTitles[field]}
+                  </span>
+                )}
+                {field === "paymentMethods" && (
+                  <span
+                    className={styles.detailEdit}
+                    onClick={addPaymentMethod}
+                  >
+                    Añadir {categoriesTitles[field]}
+                  </span>
+                )}
+              </div>
             </div>
-            <div className={styles.detailContent}>
-              {editFields[field] ? (
+            <div
+              className={`${styles.detailContent} ${
+                field === "phoneNumber" && styles.detailContentColumn
+              }`}
+            >
+              {field === "paymentMethods" ? (
+                <div className={styles.paymentMethodsContainer}>
+                  <div className={styles.paymethodContent}>
+                    {fieldValues.paymentMethods.map((method, index) => (
+                      <div key={index} className={styles.paymentMethodRow}>
+                        <div className={styles.deleteRow}>
+                          <span className={styles.fieldSpan}>
+                            {method.banco || "Banco"},
+                            {method.numeroCuenta || "Número de Cuenta"},
+                            {method.swiftBic || "SWIFT/BIC"},
+                            {method.routingNumber || "Routing Number"},{" "}
+                            {method.moneda || "Moneda"}
+                          </span>
+                          {editFields.paymentMethods && (
+                            <DeleteButton
+                              action={() => removePaymentMethod(index)}
+                            />
+                          )}
+                        </div>
+                        {editFields.paymentMethods && (
+                          <>
+                            <div
+                              className={styles.detailEdit}
+                              onClick={() => {
+                                if (editingPaymentIndex === index) {
+                                  setEditingPaymentIndex(null);
+                                } else {
+                                  setEditingPaymentIndex(index);
+                                }
+                              }}
+                            >
+                              {editingPaymentIndex === index
+                                ? "Guardar"
+                                : "Editar"}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  {editingPaymentIndex !== null &&
+                    fieldValues.paymentMethods.length >= 1 && (
+                      <PayMethod
+                        method={fieldValues.paymentMethods[editingPaymentIndex]}
+                        onChange={(key, value) =>
+                          handlePaymentMethodChange(
+                            editingPaymentIndex,
+                            key,
+                            value
+                          )
+                        }
+                      />
+                    )}
+                </div>
+              ) : field === "phoneNumber" ? (
+                editFields[field] ? (
+                  <div className={styles.phoneContainer}>
+                    {fieldValues.phoneNumber.map((phone, index) => (
+                      <div key={index} className={styles.phoneRow}>
+                        <select
+                          value={phone.countryCode}
+                          onChange={(e) =>
+                            handleChange(index, "countryCode", e.target.value)
+                          }
+                          className={styles.select}
+                        >
+                          <option value="+1">+1 (EE.UU.)</option>
+                          <option value="+44">+44 (Reino Unido)</option>
+                          <option value="+34">+34 (España)</option>
+                          <option value="+52">+52 (México)</option>
+                          <option value="+57">+57 (Colombia)</option>
+                        </select>
+                        <input
+                          type="text"
+                          placeholder="Número de teléfono"
+                          className={styles.inputEdit}
+                          value={phone.number}
+                          onChange={(e) =>
+                            handleChange(index, "number", e.target.value)
+                          }
+                        />
+                        <DeleteButton action={() => removePhoneNumber(index)} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className={styles.phoneDisplayContainer}>
+                    {fieldValues.phoneNumber.length > 0 ? (
+                      fieldValues.phoneNumber.map((phone, index) => (
+                        <span key={index} className={styles.fieldSpan}>
+                          {phone.countryCode} {phone.number}
+                        </span>
+                      ))
+                    ) : (
+                      <span className={styles.fieldSpan}>Desconocido</span>
+                    )}
+                  </div>
+                )
+              ) : field === "details" ? (
+                editFields[field] ? (
+                  <div className={styles.invoiceContainer}>
+                    <div>
+                      {fieldValues.details.map((invoice, index) => (
+                        <div key={index} className={styles.invoiceRow}>
+                          <div className={styles.invoiceDeleteRow}>
+                            <span key={index} className={styles.fieldSpan}>
+                              {invoice.direccion || "Dirección"},{" "}
+                              {invoice.poblacion || "Población"},{" "}
+                              {invoice.provincia || "Provincia"},{" "}
+                              {invoice.codigoPostal || "Codigo Postal"},{" "}
+                              {invoice.pais || "Pais"}
+                            </span>
+
+                            <DeleteButton action={() => removeInvoice(index)} />
+                          </div>
+                          <div
+                            className={styles.detailEdit}
+                            onClick={() => {
+                              if (editingDetailIndex === index) {
+                                setEditingDetailIndex(null);
+                              } else {
+                                setEditingDetailIndex(index);
+                              }
+                            }}
+                          >
+                            {editingDetailIndex === index
+                              ? "Guardar"
+                              : "Editar"}
+                          </div>
+                        </div>
+                      ))}
+                      {editingDetailIndex !== null && (
+                        <DetailsBillInputs
+                          direccion={
+                            fieldValues.details[editingDetailIndex].direccion ||
+                            ""
+                          }
+                          poblacion={
+                            fieldValues.details[editingDetailIndex].poblacion ||
+                            ""
+                          }
+                          provincia={
+                            fieldValues.details[editingDetailIndex].provincia ||
+                            ""
+                          }
+                          codigoPostal={
+                            fieldValues.details[editingDetailIndex]
+                              .codigoPostal || ""
+                          }
+                          pais={
+                            fieldValues.details[editingDetailIndex].pais || ""
+                          }
+                          handleChange={(key, value) =>
+                            handleDetailChange(editingDetailIndex, key, value)
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.invoiceDisplayContainer}>
+                    {fieldValues.details.length > 0 ? (
+                      fieldValues.details.map((invoice, index) => (
+                        <div key={index} className={styles.invoiceRow}>
+                          <span key={index} className={styles.fieldSpan}>
+                            {invoice.direccion || "direccion"},{" "}
+                            {invoice.poblacion || "Poblacion"},{" "}
+                            {invoice.provincia || "provincia"},{" "}
+                            {invoice.codigoPostal || "Codigo Postal"},{" "}
+                            {invoice.pais || "Pais"}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <span className={styles.fieldSpan}>Desconocido</span>
+                    )}
+                  </div>
+                )
+              ) : editFields[field] ? (
                 <input
                   type="text"
-                  placeholder={placeholdersValues[field]}
+                  placeholder="Ingrese un valor"
                   className={styles.inputEdit}
                   value={fieldValues[field]}
-                  onChange={(e) => handleChange(field, e.target.value)}
+                  onChange={(e) =>
+                    setFieldValues({ ...fieldValues, [field]: e.target.value })
+                  }
                   ref={(el) => (inputRefs.current[field] = el)}
                 />
               ) : (
                 <span className={styles.fieldSpan}>
-                  {fieldValues[field].length
+                  {fieldValues[field]?.length
                     ? fieldValues[field]
-                    : placeholdersValues[field]}
+                    : "Desconocido"}
                 </span>
               )}
             </div>
           </div>
         ))}
       </div>
-      <PayMethod />
     </div>
   );
 };

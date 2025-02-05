@@ -20,6 +20,9 @@ import { ReactComponent as EditCode } from "../../assets/editCode.svg";
 import { ReactComponent as EditCodeRays } from "../../assets/editCodeRays.svg";
 import AddDiscount from "../AddDiscount/AddDiscount";
 import AddTax from "../AddTax/AddTax";
+import LogoSelector from "../LogoSelector/LogoSelector";
+import { useDispatch } from "react-redux";
+import { uploadFiles } from "../../../../actions/scaleway";
 let documentoPDF;
 
 try {
@@ -37,7 +40,7 @@ const ButtonActionsWithText = ({ children, classStyle, click }) => {
   );
 };
 
-const DocumentPreview = ({ document, companyInfo }) => {
+const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   const [options, setOptions] = useState(0);
 
   const [mailModal, setMailModal] = useState(false);
@@ -45,6 +48,13 @@ const DocumentPreview = ({ document, companyInfo }) => {
   const [seeBill, setSeeBill] = useState(false);
 
   const actions = [
+    {
+      text: "Compartir",
+      icon: downloadIcon,
+      click: () => {
+        console.log("Documento descargado");
+      },
+    },
     {
       text: "Enviar Correo",
       icon: sendMail,
@@ -54,30 +64,36 @@ const DocumentPreview = ({ document, companyInfo }) => {
     },
     {
       text: "Descargar",
-      icon: downloadIcon,
-      click: () => {
-        console.log("Documento descargado");
-      },
-    },
-    {
-      text: "Añadir Etiqueta",
       icon: tagIcon,
       click: () => {
-        console.log("Etiqueta añadida");
+        const link = document.createElement("a"); // Crea un elemento <a>
+        link.href = documentoPDF; // Establece la URL del PDF
+        link.download = "archivo.pdf"; // Nombre que tendrá el archivo descargado
+        link.click(); // Simula un clic en el enlace
       },
     },
     {
-      text: "Mover a Carpeta",
+      text: "Añadir Nota",
       icon: moveToFolder,
       click: () => {
-        console.log("Documento movido a carpeta");
+        handleAddNote();
+      },
+    },
+    {
+      text: "Mover a carpeta",
+      icon: printIcon,
+      click: () => {
+        console.log("Documento enviado a imprimir");
       },
     },
     {
       text: "Imprimir",
       icon: printIcon,
       click: () => {
-        console.log("Documento enviado a imprimir");
+        const printWindow = window.open(documentoPDF, "_blank"); // Abre el PDF en una nueva ventana o pestaña
+        printWindow.onload = () => {
+          printWindow.print(); // Ejecuta la acción de impresión
+        };
       },
     },
     {
@@ -106,16 +122,24 @@ const DocumentPreview = ({ document, companyInfo }) => {
   const Actions = () => {
     return (
       <div className={styles.buttonActionsContainer}>
-        {actions.map((action) => (
-          <ButtonActionsWithText
-            key={action.text}
-            classStyle={action.text ? styles.btnWithText : action.classOption}
-            click={action.click}
-          >
-            <img src={action.icon} alt="icon" />
-            {action.text}
-          </ButtonActionsWithText>
-        ))}
+        {actions.map((action) =>
+          action.text === "Descargar" ? (
+            <a href={documentoPDF} download="Factura" key={action.text}>
+              {" "}
+              <img src={action.icon} alt="icon" />
+              {action.text}
+            </a>
+          ) : (
+            <ButtonActionsWithText
+              key={action.text}
+              classStyle={action.text ? styles.btnWithText : action.classOption}
+              click={action.click}
+            >
+              <img src={action.icon} alt="icon" />
+              {action.text}
+            </ButtonActionsWithText>
+          )
+        )}
       </div>
     );
   };
@@ -123,6 +147,69 @@ const DocumentPreview = ({ document, companyInfo }) => {
   const Details = () => {
     const [showTaxModal, setShowTaxModal] = useState(false);
     const [showDiscountModal, setShowDiscountModal] = useState(false);
+    const dispatch = useDispatch();
+    const corporativeFileInputRef = useRef(null);
+    const signatureFileInputRef = useRef(null);
+    const profileFileInputRef = useRef(null);
+
+    const [userData, setUserData] = useState({
+      selectedSignatureImage: "",
+      selectedCorporativeLogo: "",
+    });
+
+    const handleAddImageClick = (type) => {
+      if (type === "corporativeLogos" && corporativeFileInputRef.current) {
+        corporativeFileInputRef.current.click();
+      }
+      if (type === "signatureImages" && signatureFileInputRef.current) {
+        signatureFileInputRef.current.click();
+      }
+      if (type === "profileImage" && profileFileInputRef.current) {
+        profileFileInputRef.current.click();
+      }
+    };
+
+    const handleFileChange = (e, type) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const currentPath =
+        type === "corporativeLogos"
+          ? "corporativeLogos/"
+          : type === "signatureImages"
+            ? "signatureImages/"
+            : "profileImages/";
+
+      dispatch(uploadFiles({ files: [file], currentPath }))
+        .unwrap()
+        .then((uploadResponse) => {
+          console.log(`UPLOAD RESPONSE for ${type}`, uploadResponse);
+          const uploadedItem = uploadResponse[0];
+          const newLocation = uploadedItem?.Location;
+
+          if (type === "profileImage") {
+            setUserData({
+              ...userData,
+              profileImage: newLocation,
+            });
+            console.log("Uploaded new profile image:", newLocation);
+          } else {
+            const updatedArray = [...(userData?.[type] || []), newLocation];
+            setUserData({
+              ...userData,
+              [type]: updatedArray,
+            });
+            console.log(`Uploaded new ${type.slice(0, -1)}:`, newLocation);
+          }
+        })
+        .catch((error) => {
+          console.error(`Error uploading new ${type.slice(0, -1)}:`, error);
+        });
+    };
+    const handleChange = ({ name, newValue }) => {
+      console.log(`Setting ${name} to ${newValue}`);
+      setUserData({ ...userData, [name]: newValue });
+    };
     return (
       <div className={styles.detailsContainer}>
         <Button type="white" headerStyle={{ width: "100%" }}>
@@ -175,6 +262,36 @@ const DocumentPreview = ({ document, companyInfo }) => {
               isTextarea={true}
             />
           </div>
+          <LogoSelector
+            text="Logo Corporativo"
+            logos={userData?.corporativeLogos}
+            selectedLogo={userData?.selectedCorporativeLogo}
+            onAddLogo={() => handleAddImageClick("corporativeLogos")}
+            // onDeleteLogo={handleDeleteLogo}
+            onSelectLogo={(logo) =>
+              handleChange({
+                name: "selectedCorporativeLogo",
+                newValue: logo,
+              })
+            }
+            fileInputRef={corporativeFileInputRef}
+            onFileChange={(e) => handleFileChange(e, "corporativeLogos")}
+            buttonDown={true}
+          />
+
+          <LogoSelector
+            text="Firma"
+            logos={userData?.signatureImages}
+            selectedLogo={userData?.selectedSignatureImage}
+            onAddLogo={() => handleAddImageClick("signatureImages")}
+            // onDeleteLogo={handleDeleteLogo}
+            onSelectLogo={(logo) =>
+              handleChange({ name: "selectedSignatureImage", newValue: logo })
+            }
+            fileInputRef={signatureFileInputRef}
+            onFileChange={(e) => handleFileChange(e, "signatureImages")}
+            buttonDown={true}
+          />
           <div className={styles.btnTemplateContainer}>
             <Button
               type="white"

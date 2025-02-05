@@ -6,7 +6,6 @@ import { FaChevronDown } from "react-icons/fa";
 import spanish_flag from "../../assets/spain_flag.svg";
 import english_flag from "../../assets/english_flag.svg";
 
-
 const CustomDropdown = ({
   editing,
   editable = true,
@@ -25,6 +24,7 @@ const CustomDropdown = ({
     marginLeft: "6px",
     userSelect: "none",
   },
+  customStyles,
 }) => {
   const { t } = useTranslation("dashboard");
   const dropdownRef = useRef(null);
@@ -61,7 +61,7 @@ const CustomDropdown = ({
     >
       <div
         style={{ height, borderRadius }}
-        className={`${emailsDropdown ? styles.emailsFilterSort : styles.filterSort} ${!editable && styles.disabledBtn}`}
+        className={`${emailsDropdown ? styles.emailsFilterSort : styles.filterSort} ${!editable && styles.disabledBtn} ${customStyles}`}
         onClick={(e) => {
           e.stopPropagation();
           if (options.length === 0) return;
@@ -99,11 +99,13 @@ const CustomDropdown = ({
                 handleOptionClick(hasObject ? option.value : option)
               }
             >
-              {option.iso == 'es' ? (
-                <img src={spanish_flag} /> 
-              ): option.iso == 'en' ? (
-                <img src={spanish_flag} /> 
-              ): ''}
+              {option.iso == "es" ? (
+                <img src={spanish_flag} />
+              ) : option.iso == "en" ? (
+                <img src={spanish_flag} />
+              ) : (
+                ""
+              )}
 
               {hasObject ? option.label : option}
             </div>

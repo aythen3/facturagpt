@@ -20,6 +20,7 @@ import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { updateUser } from "../../../../actions/user";
 import { uploadFiles } from "../../../../actions/scaleway";
 import { useNavigate } from "react-router-dom";
+import LogoSelector from "../LogoSelector/LogoSelector";
 
 const AccountSettings = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const AccountSettings = () => {
 
   const logout = () => {
     localStorage.clear();
-    navigate('/login')
+    navigate("/login");
     // window.href = "/login";
   };
 
@@ -680,92 +681,36 @@ const AccountSettings = () => {
                 onSave={handleChange}
               />
             </label>
+            <LogoSelector
+              buttonDown={true}
+              text="Logo Corporativo"
+              logos={userData?.corporativeLogos}
+              selectedLogo={userData?.selectedCorporativeLogo}
+              onAddLogo={() => handleAddImageClick("corporativeLogos")}
+              // onDeleteLogo={handleDeleteLogo}
+              onSelectLogo={(logo) =>
+                handleChange({
+                  name: "selectedCorporativeLogo",
+                  newValue: logo,
+                })
+              }
+              fileInputRef={corporativeFileInputRef}
+              onFileChange={(e) => handleFileChange(e, "corporativeLogos")}
+            />
 
-            <label>
-              <div className={styles.row}>
-                <p>Logo corporativo</p>
-                <div
-                  className={styles.editButton}
-                  onClick={() => handleAddImageClick("corporativeLogos")}
-                >
-                  Añadir
-                </div>
-              </div>
-              <div className={styles.logoCorporativo}>
-                {userData?.corporativeLogos.length === 0 && (
-                  <div className={styles.container}>
-                    <span>Aun no has añadido ningun logo corporativo.</span>
-                  </div>
-                )}
-                {userData?.corporativeLogos.map((logo) => (
-                  <div className={styles.container} key={logo}>
-                    <input
-                      checked={userData?.selectedCorporativeLogo === logo}
-                      onChange={(e) =>
-                        handleChange({
-                          name: "selectedCorporativeLogo",
-                          newValue: logo,
-                        })
-                      }
-                      type="radio"
-                      name="corporativeLogo1"
-                    />
-                    <img src={logo} alt="" />
-                    <div className={styles.delete}>-</div>
-                  </div>
-                ))}
-              </div>
-              <input
-                ref={corporativeFileInputRef}
-                type="file"
-                style={{ display: "none" }}
-                accept="image/*"
-                onChange={(e) => handleFileChange(e, "corporativeLogos")}
-              />
-            </label>
-
-            <label>
-              <div className={styles.row}>
-                <p>Firma</p>
-                <div
-                  className={styles.editButton}
-                  onClick={() => handleAddImageClick("signatureImages")}
-                >
-                  Añadir
-                </div>
-              </div>
-              <div className={styles.logoCorporativo}>
-                {userData?.signatureImages.length === 0 && (
-                  <div className={styles.container}>
-                    <span>Aun no has añadido ninguna imagen de firma.</span>
-                  </div>
-                )}
-                {userData?.signatureImages?.map((logo) => (
-                  <div className={styles.container} key={logo}>
-                    <input
-                      checked={userData?.selectedSignatureImage === logo}
-                      onChange={(e) =>
-                        handleChange({
-                          name: "selectedSignatureImage",
-                          newValue: logo,
-                        })
-                      }
-                      type="radio"
-                      name="signatureImage"
-                    />
-                    <img src={logo} alt="" />
-                    <div className={styles.delete}>-</div>
-                  </div>
-                ))}
-              </div>
-              <input
-                ref={signatureFileInputRef}
-                type="file"
-                style={{ display: "none" }}
-                accept="image/*"
-                onChange={(e) => handleFileChange(e, "signatureImages")}
-              />
-            </label>
+            <LogoSelector
+              buttonDown={true}
+              text="Firma"
+              logos={userData?.signatureImages}
+              selectedLogo={userData?.selectedSignatureImage}
+              onAddLogo={() => handleAddImageClick("signatureImages")}
+              // onDeleteLogo={handleDeleteLogo}
+              onSelectLogo={(logo) =>
+                handleChange({ name: "selectedSignatureImage", newValue: logo })
+              }
+              fileInputRef={signatureFileInputRef}
+              onFileChange={(e) => handleFileChange(e, "signatureImages")}
+            />
 
             <label>
               <div className={styles.row}>
