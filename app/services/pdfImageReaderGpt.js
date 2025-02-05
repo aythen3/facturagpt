@@ -51,7 +51,7 @@ const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
 ]);
 
 const connectToImap = (config) => {
-  console.log("config", config);
+  // console.log("config", config);
   return new Promise((resolve, reject) => {
     const imap = new Imap(config);
 
@@ -463,7 +463,9 @@ const getImapConfig = (email, password) => {
     host = "imap-mail.outlook.com"; //'outlook.office365.com'
     port = 993;
   } else {
-    throw new Error(`Unsupported email domain: ${domain}`);
+    // throw new Error(`Unsupported email domain: ${domain}`);
+    host = "imap.gmail.com";
+    port = 993;
   }
 
   return {
@@ -628,17 +630,20 @@ const convertToNumber = (input) => {
 };
 
 const fetchEmailsByQuery = async (req, res) => {
+  // return res.status(200).json({ message: "ok" });
   try {
+
+    console.log('33333333333333333333333333333333333333333')
     const { userId, email, password, query, tokenGpt, logs, ftpData } =
       req.body;
 
-    console.log("On fetchEmailsByQuery", {
-      userId,
-      email,
-      password,
-      query,
-      logs,
-    });
+    // console.log("On fetchEmailsByQuery", {
+    //   userId,
+    //   email,
+    //   password,
+    //   query,
+    //   logs,
+    // });
 
     if (!email || !password || !query) {
       return res.status(400).json({ message: "Missing required parameters" });
@@ -655,6 +660,8 @@ const fetchEmailsByQuery = async (req, res) => {
     // console.log("imapConfig", imapConfig);
 
     try {
+
+      console.log('44444444444444444444444444444444444444444')
       const imap = await connectToImap(imapConfig);
       await openInbox(imap);
 
@@ -664,142 +671,147 @@ const fetchEmailsByQuery = async (req, res) => {
       //   emails
       // );
 
+      console.log('55555555555555555555555555555555555555555')
+
       const filteredEmails = [];
       const processedAttachments = [];
 
-      for (const email of emails) {
-        if (email.attachments && email.attachments.length > 0) {
-          filteredEmails.push(email);
+      console.log('5111', emails)
+      // for (const email of emails) {
+      //   if (email.attachments && email.attachments.length > 0) {
+      //     console.log('funca0')
+      //     filteredEmails.push(email);
 
-          for (const attachment of email.attachments) {
-            let processedData = await getAttachmentData(attachment);
-            console.log(
-              "PRODUCT LIST BEFORE CALCULATING TAXES/DISCOUNTS",
-              processedData.productList
-            );
+      //     for (const attachment of email.attachments) {
+      //       console.log('funca1')
+      //       let processedData = await getAttachmentData(attachment);
+      //       console.log(
+      //         "PRODUCT LIST BEFORE CALCULATING TAXES/DISCOUNTS",
+      //         processedData.productList
+      //       );
 
-            let newProcessedData = await calculateTaxesAndDiscounts(
-              processedData.productList
-            );
-            console.log(
-              "PRODUCT LIST AFTER CALCULATING TAXES/DISCOUNTS",
-              newProcessedData
-            );
-            processedData.partialAmount = convertToNumber(
-              processedData.partialAmount
-            );
-            processedData.productList = newProcessedData;
+      //       let newProcessedData = await calculateTaxesAndDiscounts(
+      //         processedData.productList
+      //       );
+      //       console.log(
+      //         "PRODUCT LIST AFTER CALCULATING TAXES/DISCOUNTS",
+      //         newProcessedData
+      //       );
+      //       processedData.partialAmount = convertToNumber(
+      //         processedData.partialAmount
+      //       );
+      //       processedData.productList = newProcessedData;
 
-            processedData.taxesFromPartialAmount =
-              processedData.partialAmount * 0.21;
+      //       processedData.taxesFromPartialAmount =
+      //         processedData.partialAmount * 0.21;
 
-            processedData = replaceNotFoundWithEmptyString(processedData);
-            console.log("clientCif", processedData.clientCif);
-            processedData.clientCif = extractCIF(processedData.clientCif);
-            console.log("clientNif", processedData.clientNif);
-            processedData.clientNif = extractNIF(processedData.clientNif);
+      //       processedData = replaceNotFoundWithEmptyString(processedData);
+      //       console.log("clientCif", processedData.clientCif);
+      //       processedData.clientCif = extractCIF(processedData.clientCif);
+      //       console.log("clientNif", processedData.clientNif);
+      //       processedData.clientNif = extractNIF(processedData.clientNif);
 
-            let xmlFile;
-            let xmlData;
-            let uploadType;
-            const file_xml = `${attachment.filename.split(".")[0]}.xml`;
-            if (processedData?.documentType === "factura") {
-              xmlFile = facturaXML;
-              uploadType = "notificacion_fraC";
-            } else {
-              xmlFile = albaranXML;
-              uploadType = "notificacion_albC";
-            }
-            // console.log("xmlFile", typeof xmlFile);
-            if (processedData?.documentType && xmlFile) {
-              const json = convert.xml2json(xmlFile, {
-                compact: true,
-                spaces: 4,
-              });
+      //       let xmlFile;
+      //       let xmlData;
+      //       let uploadType;
+      //       const file_xml = `${attachment.filename.split(".")[0]}.xml`;
+      //       if (processedData?.documentType === "factura") {
+      //         xmlFile = facturaXML;
+      //         uploadType = "notificacion_fraC";
+      //       } else {
+      //         xmlFile = albaranXML;
+      //         uploadType = "notificacion_albC";
+      //       }
+      //       // console.log("xmlFile", typeof xmlFile);
+      //       if (processedData?.documentType && xmlFile) {
+      //         const json = convert.xml2json(xmlFile, {
+      //           compact: true,
+      //           spaces: 4,
+      //         });
 
-              xmlData = JSON.parse(json);
-            }
+      //         xmlData = JSON.parse(json);
+      //       }
 
-            // console.log("processedData", processedData);
+      //       // console.log("processedData", processedData);
 
-            const obj = processItems(xmlData, processedData);
+      //       const obj = processItems(xmlData, processedData);
 
-            let text = convert.json2xml(JSON.stringify(obj), {
-              compact: true,
-              spaces: 4,
-            });
+      //       let text = convert.json2xml(JSON.stringify(obj), {
+      //         compact: true,
+      //         spaces: 4,
+      //       });
 
-            xmlFile = {
-              buffer: text,
-              originalname: attachment.filename,
-            };
+      //       xmlFile = {
+      //         buffer: text,
+      //         originalname: attachment.filename,
+      //       };
 
-            const tempFilePath = path.join(__dirname, "./temp/" + file_xml);
+      //       const tempFilePath = path.join(__dirname, "./temp/" + file_xml);
 
-            // Escribe el contenido en el archivo
-            // fs.writeFileSync(tempFilePath, xmlFile.buffer, 'utf-8')
+      //       // Escribe el contenido en el archivo
+      //       // fs.writeFileSync(tempFilePath, xmlFile.buffer, 'utf-8')
 
-            // const localFilePath = path.join(__dirname, file_xml)
-            await fs.promises.writeFile(tempFilePath, xmlFile.buffer);
-            // console.log('Local file path:', localFilePath)
+      //       // const localFilePath = path.join(__dirname, file_xml)
+      //       await fs.promises.writeFile(tempFilePath, xmlFile.buffer);
+      //       // console.log('Local file path:', localFilePath)
 
-            // Subir directamente desde el buffer
+      //       // Subir directamente desde el buffer
 
-            console.log("File uploaded successfully. ");
+      //       console.log("File uploaded successfully. ");
 
-            // COMENTAMOS MOMENTANEAMENTE EL FTP -------------------------------
+      //       // COMENTAMOS MOMENTANEAMENTE EL FTP -------------------------------
 
-            // Tenemos listas las credentials del ftp en ftpData (checkear cuando volvamos al ssh)
+      //       // Tenemos listas las credentials del ftp en ftpData (checkear cuando volvamos al ssh)
 
-            // const ftpClient = new ftp.Client();
-            // // ftpClient.ftp.verbose = true
-            // const host = ftpData.host || "46.183.119.66";
-            // const port = ftpData.port || "21";
-            // const user = ftpData.user || "Aythen";
-            // const pw =  ftpData.password || "Cloud@24";
+      //       // const ftpClient = new ftp.Client();
+      //       // // ftpClient.ftp.verbose = true
+      //       // const host = ftpData.host || "46.183.119.66";
+      //       // const port = ftpData.port || "21";
+      //       // const user = ftpData.user || "Aythen";
+      //       // const pw =  ftpData.password || "Cloud@24";
 
-            // await ftpClient.access({
-            //   host,
-            //   port,
-            //   user,
-            //   password: pw,
-            //   secure: false,
-            //   connTimeout: 120000,
-            //   pasvTimeout: 120000,
-            //   keepalive: 30000,
-            // });
+      //       // await ftpClient.access({
+      //       //   host,
+      //       //   port,
+      //       //   user,
+      //       //   password: pw,
+      //       //   secure: false,
+      //       //   connTimeout: 120000,
+      //       //   pasvTimeout: 120000,
+      //       //   keepalive: 30000,
+      //       // });
 
-            // // console.log('ftpClient', ftpClient)
-            // await ftpClient.uploadFrom(
-            //   tempFilePath,
-            //   `${uploadType}/${file_xml}`
-            // );
+      //       // // console.log('ftpClient', ftpClient)
+      //       // await ftpClient.uploadFrom(
+      //       //   tempFilePath,
+      //       //   `${uploadType}/${file_xml}`
+      //       // );
 
-            // // fileData.Body, // Buffer del archivo
-            // // await fs.promises.unlink(localFilePath)
-            // await ftpClient.close();
-            // ---------------------------------------------------------------------
-            console.log("EMAIL", email);
-            processedAttachments.push({
-              email: {
-                subject: email.subject,
-                fromEmail: email.fromEmail,
-                toEmail: email.toEmail,
-                date: email.attrs.date,
-                subject: attachment.subject,
-              },
-              attachment: {
-                filename: attachment.filename,
-                mimeType: attachment.mimeType,
-                size: attachment.size,
-                emailId: attachment.emailId,
-              },
-              processedData,
-              xmlContent: obj,
-            });
-          }
-        }
-      }
+      //       // // fileData.Body, // Buffer del archivo
+      //       // // await fs.promises.unlink(localFilePath)
+      //       // await ftpClient.close();
+      //       // ---------------------------------------------------------------------
+      //       console.log("EMAIL", email);
+      //       processedAttachments.push({
+      //         email: {
+      //           subject: email.subject,
+      //           fromEmail: email.fromEmail,
+      //           toEmail: email.toEmail,
+      //           date: email.attrs.date,
+      //           subject: attachment.subject,
+      //         },
+      //         attachment: {
+      //           filename: attachment.filename,
+      //           mimeType: attachment.mimeType,
+      //           size: attachment.size,
+      //           emailId: attachment.emailId,
+      //         },
+      //         processedData,
+      //         xmlContent: obj,
+      //       });
+      //     }
+      //   }
+      // }
 
       imap.end();
 
@@ -837,27 +849,28 @@ const fetchEmailsByQuery = async (req, res) => {
         }, {});
       };
 
-      let dataByEmails = processEmailsDetailedData(processedAttachments);
+      console.log('66666666666666666666666666666666666666666')
+      // let dataByEmails = processEmailsDetailedData(processedAttachments);
       // console.log("dataByEmails:", dataByEmails);
-      updateClientService({
-        clientId: userId,
-        toUpdate: { detailedTokenConsumption: dataByEmails },
-      });
+      // updateClientService({
+      //   clientId: userId,
+      //   toUpdate: { detailedTokenConsumption: dataByEmails },
+      // });
 
-      processedAttachments.forEach((attach) => {
-        updateClientService({
-          clientId: userId,
-          toUpdate: {
-            tokensConsumed: attach?.processedData?.totalTokens || 0,
-            totalTokensPrice: attach?.processedData?.totalPrice || 0,
-          },
-        });
-      });
+      // processedAttachments.forEach((attach) => {
+      //   updateClientService({
+      //     clientId: userId,
+      //     toUpdate: {
+      //       tokensConsumed: attach?.processedData?.totalTokens || 0,
+      //       totalTokensPrice: attach?.processedData?.totalPrice || 0,
+      //     },
+      //   });
+      // });
 
-      const filteredEmailsProcessed = await processDataAndAppend(
-        "1Qq_YHkphBhmLzZt4Nyyi4FvIOeEYq75zujj2DIMDg9I",
-        processedAttachments
-      );
+      // const filteredEmailsProcessed = await processDataAndAppend(
+      //   "1Qq_YHkphBhmLzZt4Nyyi4FvIOeEYq75zujj2DIMDg9I",
+      //   processedAttachments
+      // );
 
       return res.status(200).json({
         filteredEmails,
@@ -1670,9 +1683,12 @@ const getAttachmentData = async (attach) => {
       imageBuffers.push(fileBuffer);
     }
 
-    const token =
-      "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";
+    // const token =
+    //   "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";
 
+    const token = "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" 
+
+    console.log("TOKEN", token);
     let allErrors = [];
     let totalTokens = 0; // Track total tokens consumed
     let totalPrice = 0; // Track total price in USD

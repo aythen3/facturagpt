@@ -31,8 +31,8 @@ import { useNavigate } from "react-router-dom";
 import {
   getAllClients,
   getAllUsers,
-  updateClient,
-  getEmailsByQuery,
+  // updateClient,
+  // getEmailsByQuery,
 } from "../../actions/user";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -42,7 +42,7 @@ import Payment from "./screens/UserSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
-import UserSettings from "./screens/UserSettings/UserSettings";
+// import UserSettings from "./screens/UserSettings/UserSettings";
 // import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
 import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
@@ -214,83 +214,83 @@ const Dashboard = () => {
     }
   }, [allClients]);
 
-  const handleDropdownToggle = () => {
-    setIsOpen(!isOpen);
-  };
+  // const handleDropdownToggle = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+  // const handleOptionClick = (option) => {
+  //   setSelectedOption(option);
+  //   setIsOpen(false);
+  // };
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
+  // const handleSearchChange = (event) => {
+  //   setSearchQuery(event.target.value);
+  // };
 
-  const toggleUserActive = async (singleUser) => {
-    console.log("USERIDDDDDD DASH--------", singleUser);
-    // console.log("CLIENT", singleUser);
-    dispatch(
-      updateClient({
-        clientId: singleUser.id,
-        toUpdate: { active: !singleUser.active },
-      })
-    );
-    if (!singleUser.active) {
-      const response = await dispatch(
-        getEmailsByQuery({
-          userId: singleUser?.id || "randomId",
-          email: singleUser.tokenEmail,
-          password: singleUser.tokenPassword,
-          query: singleUser.emailQueries,
-          tokenGpt: singleUser.tokenGPT,
-          logs: singleUser.processedEmails,
-          ftpData: {
-            host: singleUser.host,
-            port: singleUser.port,
-            user: singleUser.tokenUser,
-            password: singleUser.tokenUserPassword,
-          },
-        })
-      );
-      // console.log("REPONSEEEE 1", response);
+  // const toggleUserActive = async (singleUser) => {
+  //   console.log("USERIDDDDDD DASH--------", singleUser);
+  //   // console.log("CLIENT", singleUser);
+  //   dispatch(
+  //     updateClient({
+  //       clientId: singleUser.id,
+  //       toUpdate: { active: !singleUser.active },
+  //     })
+  //   );
+  //   if (!singleUser.active) {
+  //     const response = await dispatch(
+  //       getEmailsByQuery({
+  //         userId: singleUser?.id || "randomId",
+  //         email: singleUser.tokenEmail,
+  //         password: singleUser.tokenPassword,
+  //         query: singleUser.emailQueries,
+  //         tokenGpt: singleUser.tokenGPT,
+  //         logs: singleUser.processedEmails,
+  //         ftpData: {
+  //           host: singleUser.host,
+  //           port: singleUser.port,
+  //           user: singleUser.tokenUser,
+  //           password: singleUser.tokenUserPassword,
+  //         },
+  //       })
+  //     );
+  //     // console.log("REPONSEEEE 1", response);
 
-      if (response.meta.requestStatus === "fulfilled") {
-        // console.log("ENTRE A LA CREACION DE CLIENTES");
+  //     if (response.meta.requestStatus === "fulfilled") {
+  //       // console.log("ENTRE A LA CREACION DE CLIENTES");
 
-        const clientsData = response.payload.processedAttachments.map(
-          (attachment) => {
-            const { xmlContent, ...attachmentWithoutXml } = attachment;
+  //       const clientsData = response.payload.processedAttachments.map(
+  //         (attachment) => {
+  //           const { xmlContent, ...attachmentWithoutXml } = attachment;
 
-            const emailFromAttachment =
-              attachmentWithoutXml.email.fromEmail[0].address;
+  //           const emailFromAttachment =
+  //             attachmentWithoutXml.email.fromEmail[0].address;
 
-            const emailIds = response.payload.filteredEmails
-              .filter(
-                (email) => email.fromEmail[0].address === emailFromAttachment
-              )
-              .map((email) => email.emailId);
+  //           const emailIds = response.payload.filteredEmails
+  //             .filter(
+  //               (email) => email.fromEmail[0].address === emailFromAttachment
+  //             )
+  //             .map((email) => email.emailId);
 
-            return {
-              attachment: attachmentWithoutXml,
-              email: emailFromAttachment,
-              processedData: attachment.processedData,
-              processedemails: emailIds,
-            };
-          }
-        );
+  //           return {
+  //             attachment: attachmentWithoutXml,
+  //             email: emailFromAttachment,
+  //             processedData: attachment.processedData,
+  //             processedemails: emailIds,
+  //           };
+  //         }
+  //       );
 
-        const createdClientsResponse = await dispatch(
-          createClients({
-            userId: userRedux?.id,
-            clientsData: clientsData,
-          })
-        );
+  //       const createdClientsResponse = await dispatch(
+  //         createClients({
+  //           userId: userRedux?.id,
+  //           clientsData: clientsData,
+  //         })
+  //       );
 
-        console.log("Clientes creados:", createdClientsResponse);
-      }
-    }
-  };
+  //       console.log("Clientes creados:", createdClientsResponse);
+  //     }
+  //   }
+  // };
 
   // useEffect(() => {
   //   dispatch(
@@ -298,14 +298,14 @@ const Dashboard = () => {
   //   );
   // }, []);
 
-  const resetProcessedEmails = (user) => {
-    dispatch(
-      updateClient({
-        clientId: user.id,
-        toUpdate: { processedEmails: ["reset"] },
-      })
-    );
-  };
+  // const resetProcessedEmails = (user) => {
+  //   dispatch(
+  //     updateClient({
+  //       clientId: user.id,
+  //       toUpdate: { processedEmails: ["reset"] },
+  //     })
+  //   );
+  // };
 
   const checkUserMonthlyPayment = async (user, start, end) => {
     const getMonthlyCosts = ({

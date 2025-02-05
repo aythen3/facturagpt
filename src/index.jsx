@@ -16,7 +16,7 @@ import ArticlesTransactions from "./views/Dashboard/screens/ArticlesTransactions
 import AllProducts from "./views/Dashboard/screens/AllProducts/AllProducts.jsx";
 import DashboardLogin from "./views/Dashboard/screens/DashboardLogin/DashboardLogin.jsx";
 import Dashboard from "./views/Dashboard/Dashboard.jsx";
-import UserSettings from "./views/Dashboard/screens/UserSettings/UserSettings.jsx";
+// import UserSettings from "./views/Dashboard/screens/UserSettings/UserSettings.jsx";
 import LandingPage from "./views/Dashboard/screens/Landing/Landing.jsx";
 import Pricing from "./views/Dashboard/screens/Pricing/Pricing.jsx";
 import FreeTrial from "./views/Dashboard/screens/FreeTrial/FreeTrial.jsx";
@@ -85,7 +85,7 @@ const Layout = () => {
     const { user } = useSelector((state) => state.user);
     const navigate = useNavigate()
     
-    console.log('user!!', user)
+    // console.log('user!!', user)
     // const [fromPath, setFromPath] = useState("chat");
 
 

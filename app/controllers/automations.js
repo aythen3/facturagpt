@@ -79,11 +79,10 @@ const deleteAutomationController = async (req, res) => {
   }
 };
 
-module.exports = {
-  deleteAutomationController,
-};
+
 
 module.exports = {
+  deleteAutomationController,
   createAutomationController: catchedAsync(createAutomationController),
   getAllUserAutomationsController: catchedAsync(
     getAllUserAutomationsController

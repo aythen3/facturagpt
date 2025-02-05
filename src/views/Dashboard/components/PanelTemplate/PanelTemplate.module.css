@@ -2,20 +2,26 @@
 
 .container {
   display: flex;
-  height: 93vh;
+  height: calc(100vh - 50px);
   margin: 0;
   padding: 0;
-  background-color: #fff;
   font-family: "Inter", serif;
   position: relative;
+  z-index: 0;
+  width: 100%;
+  overflow: hidden;
+  align-items: flex-end;
+  /* background-color: red; */
 }
 
 .inputContainer input[type="file"] {
   display: none;
 }
+
 .inputContainer {
   width: 100%;
 }
+
 .inputContainer label {
   height: 100%;
   width: 100%;
