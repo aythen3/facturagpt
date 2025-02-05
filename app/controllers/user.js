@@ -96,8 +96,9 @@ const updateAccountController = async (req, res) => {
 
 const deleteAccountController = async (req, res) => {
   try {
-    const { userData } = req.body;
-    const response = await deleteAccount(userData);
+    const { id } = req.body;
+    console.log('id', id)
+    const response = await deleteAccount(id);
     console.log('response', response)
     return res.status(200).send(response);
   } catch (err) {

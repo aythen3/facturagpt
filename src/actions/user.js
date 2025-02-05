@@ -231,18 +231,23 @@ export const updateAccount = createAsyncThunk(
 
 export const deleteAccount = createAsyncThunk(
   "user/deleteAccount",
-  async (data) => {
+  async ({ id }) => {
+    console.log("id from deleteAccount")
     try {
+      console.log("id from deleteAccount", id)
+      // console.log("id from deleteAccount", id)
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
         `/user/deleteAccount`,
-        { userData: data},
+        { id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      console.log("res.data from deleteAccount", res.data)
       return res.data;
     } catch (error) {
       console.log("Error updating account:", error);
@@ -317,6 +322,54 @@ export const verifyOTP = createAsyncThunk(
   }
 );
 
+
+export const sendRecoveryCode = createAsyncThunk(
+  "emailManager/send-recovery-code",
+  async ({ email, language }, { rejectWithValue }) => {
+    console.log("Sending recovery code to:", email);
+    try {
+      const res = await apiBackend.post(`/emailManager/send-recovery-code`, {
+        email,
+        language,
+      });
+      return res.data;
+    } catch (error) {
+      console.error(
+        "Error sending recovery code:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(
+        error.response?.data || "Failed to send recovery code"
+      );
+    }
+  }
+);
+
+
+
+export const verifyRecoveryCode = createAsyncThunk(
+  "emailManager/verify-recovery-code",
+  async ({ email, recoveryCode }, { rejectWithValue }) => {
+    console.log("Verifying recovery code for:", email);
+    try {
+      const res = await apiBackend.post(`/emailManager/verify-recovery-code`, {
+        email,
+        recoveryCode,
+      });
+      return res.data;
+    } catch (error) {
+      console.error(
+        "Error verifying recovery code:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(
+        error.response?.data || "Failed to verify recovery code"
+      );
+    }
+  }
+);
+
+
 // Acción para enviar el correo
 export const sendEmailNewsletter = createAsyncThunk(
   "user/newsletter",
@@ -335,6 +388,68 @@ export const sendEmailNewsletter = createAsyncThunk(
         error.response?.data || error.message
       );
       return rejectWithValue(error.response?.data || "Failed to send email");
+    }
+  }
+);
+
+
+
+// Stripe para hacer pagos
+
+
+// ==================================== STRIPE ===========================================
+
+export const createPaymentIntent = createAsyncThunk(
+  "emailManager/createPaymentIntent",
+  async ({ amount, currency, clientId }) => {
+    console.log("=== ON CREATE PAYMENT INTENT ===", {
+      amount,
+      currency,
+      clientId,
+    });
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        `/user/create-payment-intent`,
+        { amount, currency, clientId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error adding new payment intent:", error);
+      throw new Error("Failed to add new payment intent");
+    }
+  }
+);
+
+export const createSetupIntent = createAsyncThunk(
+  "emailManager/createSetupIntent",
+  async (_, { rejectWithValue }) => {
+    console.log("=== ON CREATE SETUP INTENT ===");
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        `/user/create-setup-intent`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.error(
+        "Error creating setup intent:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(
+        error.response?.data || "Failed to create setup intent"
+      );
     }
   }
 );

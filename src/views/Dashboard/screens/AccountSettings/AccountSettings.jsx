@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./UserSettings.module.css";
+import styles from "./AccountSettings.module.css";
 import userAdd from "../../assets/userPlus.svg";
 import openEmail from "../../assets/openEmail.svg";
 import circuit from "../../assets/circuit.svg";
@@ -28,12 +28,12 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 
-import { 
+import {
   updateAccount,
   deleteAccount
- } from "../../../../actions/user";
+} from "../../../../actions/user";
 
- 
+
 const AccountSettings = ({
   // id, 
   showAccountSettings,
@@ -155,6 +155,8 @@ const AccountSettings = ({
       firstTag,
       selectedOption,
       accountId: formattIdAccount,
+      // id: showAccountSettings?.id
+      ...(showAccountSettings?.id && { id: showAccountSettings.id })
     };
 
     const missingFields = Object.entries(requiredFields).filter(
@@ -190,6 +192,7 @@ const AccountSettings = ({
     if (paymentId && isPaymentConfigured) {
       finalData.paymentMethodId = paymentId;
     }
+
     const nextPaymentDate = getNextPaymentDate();
     finalData.nextPaymentDate = nextPaymentDate;
 
@@ -226,11 +229,18 @@ const AccountSettings = ({
   };
 
 
-  const handleDeleteAccount = () => {
-    dispatch(deleteAccount(showAccountSettings.id));
+  const handleDeleteAccount = async () => {
+    console.log("showAccountSettings ID", showAccountSettings)
+    console.log("s!!!!!!!!!!!")
+    const res = await dispatch(deleteAccount({
+      id: showAccountSettings.id
+    }));
+    console.log("res", res)
+
+    setShowAccountSettings(false)
   }
 
-  
+
   const handleTogglePayment = (e) => {
     setIsPaymentConfigured(e.target.checked);
     if (e.target.checked) {
@@ -254,11 +264,29 @@ const AccountSettings = ({
         VatId: showAccountSettings.VatId || "",
         address: showAccountSettings.address || "",
         emergencyContact: showAccountSettings.emergencyContact || "",
-        tokenGPT: showAccountSettings.tokenGPT || "",
+        // tokenGPT: showAccountSettings.tokenGPT || ""
       })
+
+
+      setTokenEmail(showAccountSettings.tokenEmail || "")
+      setTokenPassword(showAccountSettings.tokenPassword || "")
+      setTokenGPT(showAccountSettings.tokenGPT || "")
+      setHost(showAccountSettings.host || "")
+      setPort(showAccountSettings.port || "")
+      setTokenUser(showAccountSettings.tokenUser || "")
+      setTokenUserPassword(showAccountSettings.tokenUserPassword || "")
+      
+      setFirstTag(showAccountSettings.emailQueries[0] || "")
+      setSecondTag(showAccountSettings.emailQueries[1] || "")
+      setThirdTag(showAccountSettings.emailQueries[2] || "")
+      setFourthTag(showAccountSettings.emailQueries[3] || "")
     }
   }, [showAccountSettings])
-  
+
+  const handleTestingButton = () => {
+    console.log("showAccountSettings", showAccountSettings)
+  }
+
   return (
     <div>
       <Elements stripe={stripePromise}>
@@ -295,12 +323,11 @@ const AccountSettings = ({
                 {/* Dar de alta */}
               </Button>
               {showAccountSettings?.id && (
-              <Button
-                action={handleDeleteAccount}
-              >
-                {"Eliminar"}
-                {/* Dar de alta */}
-              </Button>
+                <Button
+                  action={handleDeleteAccount}
+                >
+                  {"Eliminar"}
+                </Button>
               )}
             </div>
           </div>
@@ -421,6 +448,11 @@ const AccountSettings = ({
                 <div className={styles.leftTokensContent}>
                   {" "}
                   <h2 className={styles.title}>Tokens</h2>
+                  <button
+                    onClick={handleTestingButton}
+                  >
+                    Testing button
+                  </button>
                   <div className={styles.tokensWrapper}>
                     <div className={styles.inputGroup}>
                       <img

@@ -104,8 +104,8 @@ const createAccount = async (account) => {
   }
 };
 
-const deleteAccount = async (account) => {
-  console.log('account delete', account)
+const deleteAccount = async (id) => {
+  console.log('account delete', id)
   const dbName = "db_emailmanager_accounts";
   let db;
 
@@ -123,14 +123,15 @@ const deleteAccount = async (account) => {
 
   try {
     // Get the document using the ID
-    const doc = await db.find({ selector: { id: account } });
+    const doc = await db.find({ selector: { id: id } });
     
     console.log('doc', doc)
     // Delete the document using both _id and _rev
     await db.destroy(doc.docs[0]._id, doc.docs[0]._rev);
     
-    console.log(`Account deleted successfully: ${account.id}`);
+    console.log(`Account deleted successfully: ${id}`);
     return {
+      id,
       success: true,
       message: "Account deleted successfully"
     };

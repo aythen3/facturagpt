@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   loginToManager,
   updateAccount,
-  getAllAccounts
+  getAllAccounts,
+  deleteAccount
 } from "../actions/user";
 
 const userSlices = createSlice({
@@ -73,10 +74,23 @@ const userSlices = createSlice({
       .addCase(updateAccount.rejected, (state, action) => {
         state.error = action.payload;
         state.updatingAccountLoading = false;
-      });
+      })
+
+      // USER DELETE
+      // .addCase(deleteAccount.pending, (state) => {
+      //   // state.deletingAccountLoading = true;
+      //   // console.log("action.payload from deleteAccount", action.payload)
+      //   // state.allAccounts = state.allAccounts.filter(account => account.id !== action.payload.id)
+      // })
+
+      .addCase(deleteAccount.fulfilled, (state, action) => {
+        console.log("action.payload from deleteAccount", action.payload)
+        state.allAccounts = state.allAccounts.filter(account => account.id !== action.payload.id)
+      })
   },
 });
 
 export const { setuser } = userSlices.actions;
 
 export default userSlices.reducer;
+

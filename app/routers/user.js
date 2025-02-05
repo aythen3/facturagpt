@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const userManagerRouter = Router();
 const {
+  getEmailsByQuery,
+
   sendEmail,
   getEmail,
   getFile,
@@ -24,12 +26,16 @@ const {
   deleteAllDB,
 } = require("../controllers/user");
 
+const { fetchEmailsByQuery } = require("../services/pdfImageReaderGpt");
+
 // -------------------------------
 userManagerRouter
+  .post("/getEmailsByQuery", fetchEmailsByQuery)
+
   .post("/createAccount", createAccountController)
   .get("/getAllAccounts", getAllAccountsController)
   .put("/updateAccount", updateAccountController)
-  .put("/deleteAccount", deleteAccountController)
+  .post("/deleteAccount", deleteAccountController)
   .post("/updateAccountPassword", updateAccountPasswordController)
 
   .post("/loginToManager", loginToManagerController)

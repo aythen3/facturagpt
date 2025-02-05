@@ -41,7 +41,7 @@ import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import { Elements } from "@stripe/react-stripe-js";
 import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
-import UserSettings from "./screens/UserSettings/UserSettings";
+import AccountSettings from "./screens/AccountSettings/AccountSettings";
 import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
@@ -657,7 +657,7 @@ const UsersDashboard = () => {
           </div>
         </div>
         {showAccountSettings && (
-          <UserSettings
+          <AccountSettings
             showUserSettings={showAccountSettings}
             setShowUserSettings={setShowAccountSettings}
           />

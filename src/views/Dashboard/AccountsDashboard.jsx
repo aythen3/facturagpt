@@ -33,6 +33,7 @@ import {
   // getAllUsers,
   updateAccount,
   getEmailsByQuery, //
+  updateAcount,
   // getClient
 
 // } from "../../actions/emailManager";
@@ -45,7 +46,7 @@ import Payment from "./screens/UserSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
-import AccountSettings from "./screens/UserSettings/UserSettings";
+import AccountSettings from "./screens/AccountSettings/AccountSettings";
 // import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
 import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
@@ -71,6 +72,9 @@ const AccountsDashboard = () => {
 
   const [selectedOption, setSelectedOption] = useState("Todos"); // Selected filter
   const [isOpen, setIsOpen] = useState(false);
+  
+  // const [showActive, setShowActive] = useState(account.active)
+  
   const dropdownRef = useRef(null);
 
   const options = ["Todos", "Activos", "Emails procesados", "Empresa A-Z"];
@@ -234,15 +238,28 @@ const AccountsDashboard = () => {
   };
 
   const toggleUserActive = async (singleUser) => {
-    console.log("USERIDDDDDD DASH--------", singleUser);
+    // console.log("USERIDDDDDD DASH--------", singleUser);
     // console.log("CLIENT", singleUser);
+    
+    
+    setFilteredAccounts(filteredAccounts.map(account => account.id === singleUser.id ? { ...account, active: !account.active } : account))
+    
+    
     dispatch(
-      updateAcount({
-        accountId: singleUser.id,
-        toUpdate: { active: !singleUser.active },
+      // updateAcount({
+      //   accountId: singleUser.id,
+      //   toUpdate: { active: !singleUser.active },
+      // })
+      updateAccount({
+        // accountId: singleUser.id,
+        id: singleUser.id,
+        active: !singleUser.active
       })
     );
+
+    
     if (!singleUser.active) {
+      alert(2)
       const response = await dispatch(
         getEmailsByQuery({
           userId: singleUser?.id || "randomId",
@@ -259,7 +276,7 @@ const AccountsDashboard = () => {
           },
         })
       );
-      // console.log("REPONSEEEE 1", response);
+      console.log("REPONSEEEE 1", response);
 
       if (response.meta.requestStatus === "fulfilled") {
         // console.log("ENTRE A LA CREACION DE CLIENTES");
@@ -286,12 +303,12 @@ const AccountsDashboard = () => {
           }
         );
 
-        const createdAccountsResponse = await dispatch(
-          createAccounts({
-            userId: userRedux?.id,
-            clientsData: accountsData,
-          })
-        );
+        // const createdAccountsResponse = await dispatch(
+        //   createAccounts({
+        //     userId: userRedux?.id,
+        //     clientsData: accountsData,
+        //   })
+        // );
 
         console.log("Accounts creados:", createdAccountsResponse);
       }
@@ -658,13 +675,14 @@ const AccountsDashboard = () => {
               <div 
               key={index} 
               className={styles.tableRow}
-              onClick={() => setShowAccountSettings(account)}
+             
               >
                 <span
-                  onClick={() => checkUserMonthlyPayment(account)}
+                 onClick={() => setShowAccountSettings(account)}
+                  // onClick={() => checkUserMonthlyPayment(account)}
                   className={styles.columnName}
                 >
-                  {account.companyName}
+                  {account.companyName || 'Not Found'}
                 </span>
                 <span className={styles.columnStatus}>
                   {account.paymentMethodId ? (

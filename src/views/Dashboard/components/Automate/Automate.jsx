@@ -13,6 +13,9 @@ import cmd from "../../assets/cmd.svg";
 import searchMagnify from "../../assets/searchMagnify.svg";
 import automation from "../../assets/automation.svg";
 
+import IniAutomate from "./panelAutomate/IniAutomate";
+
+
 const Automate = ({
   close,
   newData,
@@ -26,12 +29,23 @@ const Automate = ({
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+
   const handleDataFilter = (searchTerm) => {
     const filteredData = data.filter((card) =>
       card.automateName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setDataFilter(filteredData);
   };
+
+
+  useEffect(() => {
+    console.log("USER AUTOMATIONS", userAutomations);
+
+    if (true) {
+
+    }
+
+  }, [userAutomations]);
 
   useEffect(() => {
     if (searchTerm === "") {
@@ -40,6 +54,7 @@ const Automate = ({
       handleDataFilter(searchTerm);
     }
   }, [searchTerm]);
+
   const handleCloseNewClient = () => {
     setIsAnimating(true);
     setTimeout(() => {
@@ -70,78 +85,98 @@ const Automate = ({
     <>
       <div className={styles.container} onClick={handleCloseNewClient}></div>
       <div
-        className={`${styles.content} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+        className={`
+          ${styles.content} ${isAnimating ? styles.scaleDown : styles.scaleUp}
+          ${true ? styles.expand : ''}
+          `}
       >
         <div className={styles.headerContainer}>
           <div className={styles.headerLeft}>
             <div onClick={handleCloseNewClient} className={styles.backButton}>
               <img src={chevronLeft} alt="chevronLeft" />
             </div>
-            <h2>Automatiza</h2>
+            <h2>
+              {true ? (
+                '¿Dónde están tus documentos?'
+              ) : (
+                'Automatiza'
+              )}
+            </h2>
+            {true && (
+              <b>
+                Paso 1
+              </b>
+            )}
           </div>
           {/* <div onClick={handleCloseNewClient} className={styles.closeIcon}>
             <img src={closeGray} alt="closeGray" />
           </div> */}
         </div>
-        <div className={styles.automate_content}>
-          <div className={styles.searchContainer}>
-            <div className={styles.searchInputWrapper}>
-              <div className={styles.searchIcon}>
-                <img src={searchMagnify} alt="searchMagnify" />
-              </div>
-              <input
-                type="text"
-                placeholder="Buscar"
-                className={styles.searchInput}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              {/* <div
+        {true ? (
+          <div>
+            <IniAutomate />
+          </div>
+        ) : (
+          <div className={styles.automate_content}>
+            <div className={styles.searchContainer}>
+              <div className={styles.searchInputWrapper}>
+                <div className={styles.searchIcon}>
+                  <img src={searchMagnify} alt="searchMagnify" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Buscar"
+                  className={styles.searchInput}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {/* <div
                 onClick={() => setShowLocationModal(true)}
                 className={styles.searchIconsWrappers}
               >
                 <img src={cmd} alt="cmdIcon" />
               </div> */}
-              <div
-                style={{ marginLeft: "7px" }}
-                className={styles.searchIconsWrappers}
-              >
-                <img src={k} alt="kIcon" />
+                <div
+                  style={{ marginLeft: "7px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={k} alt="kIcon" />
+                </div>
               </div>
             </div>
+            <div className={styles.contentContainer}>
+              {userAutomations.length > 0 &&
+                userAutomations?.map((card, i) => {
+                  console.log("automationData", card.automationData);
+                  const filteredAutomation = data.find(
+                    (automation) =>
+                      automation?.type === card?.automationData?.type
+                  );
+                  console.log("filteredAutomation", filteredAutomation);
+                  return (
+                    <CardAutomate
+                      fullContent={true}
+                      type={filteredAutomation.type}
+                      typeContent={typeContent}
+                      key={card.id}
+                      name={filteredAutomation.automateName}
+                      image={filteredAutomation.image}
+                      contactType={
+                        card?.automationData?.type === "Gmail"
+                          ? card?.automationData?.selectedEmailConnection
+                          : card?.automationData?.type === "WhatsApp"
+                            ? card?.automationData?.selectedWhatsAppConnection
+                            : card?.email
+                      }
+                      automationData={card}
+                      isBorders={true}
+                      last={i === dataFilter.length - 1}
+                    />
+                  );
+                })}
+            </div>
           </div>
-          <div className={styles.contentContainer}>
-            {userAutomations.length > 0 &&
-              userAutomations?.map((card, i) => {
-                console.log("automationData", card.automationData);
-                const filteredAutomation = data.find(
-                  (automation) =>
-                    automation?.type === card?.automationData?.type
-                );
-                console.log("filteredAutomation", filteredAutomation);
-                return (
-                  <CardAutomate
-                    fullContent={true}
-                    type={filteredAutomation.type}
-                    typeContent={typeContent}
-                    key={card.id}
-                    name={filteredAutomation.automateName}
-                    image={filteredAutomation.image}
-                    contactType={
-                      card?.automationData?.type === "Gmail"
-                        ? card?.automationData?.selectedEmailConnection
-                        : card?.automationData?.type === "WhatsApp"
-                          ? card?.automationData?.selectedWhatsAppConnection
-                          : card?.email
-                    }
-                    automationData={card}
-                    isBorders={true}
-                    last={i === dataFilter.length - 1}
-                  />
-                );
-              })}
-          </div>
-        </div>
+        )}
         <div className={styles.container_buttons_footer}>
           <button
             onClick={handleCloseNewClient}

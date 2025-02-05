@@ -14,7 +14,7 @@ import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
-import PanelIniAutomate from "../Automate/panelAutomate/IniAutomate";
+// import PanelIniAutomate from "../Automate/panelAutomate/IniAutomate";
 import { useSelector, useDispatch } from "react-redux";
 import UpgradePlanWrapper from "../../screens/UpgradePlan/UpgradePlan";
 import { Elements } from "@stripe/react-stripe-js";
@@ -352,9 +352,9 @@ const NavbarAdmin = ({
             />
           )}
 
-          {true && ( 
+          {/* {true && ( 
             <PanelIniAutomate />
-          )}
+          )} */}
         </div>
       </Elements>
     </>
