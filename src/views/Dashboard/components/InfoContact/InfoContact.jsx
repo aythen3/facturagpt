@@ -198,7 +198,6 @@ const InfoContact = () => {
           </button>
         </div>
       </div>
-      <div onClick={() => console.log(fieldValues)}>HOLA</div>
       <div className={styles.detailsContainer}>
         {Object.keys(fieldValues).map((field) => (
           <div key={field} className={styles.detailItem}>
