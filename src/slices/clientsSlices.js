@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createClient,
   deleteClients,
-  getAllUserClients,
+  getAllClients,
   getOneClient,
   updateClient,
 } from "../actions/clients";
@@ -39,16 +39,16 @@ const clientsSlices = createSlice({
       })
 
       // GET ALL USER CLIENTS
-      .addCase(getAllUserClients.pending, (state) => {
+      .addCase(getAllClients.pending, (state) => {
         state.error = false;
       })
-      .addCase(getAllUserClients.fulfilled, (state, action) => {
+      .addCase(getAllClients.fulfilled, (state, action) => {
         console.log("action.payload from getAllUserClients", action.payload);
         // state.loading = false;
         state.error = false;
         state.clients = action.payload;
       })
-      .addCase(getAllUserClients.rejected, (state, action) => {
+      .addCase(getAllClients.rejected, (state, action) => {
         state.error = true;
         // state.loading = false;
       })

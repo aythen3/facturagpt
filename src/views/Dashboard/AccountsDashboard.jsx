@@ -267,7 +267,7 @@ const AccountsDashboard = () => {
           password: singleUser.tokenPassword,
           query: singleUser.emailQueries,
           tokenGpt: singleUser.tokenGPT,
-          logs: singleUser.processedEmails,
+          // logs: singleUser.processedEmails,
           ftpData: {
             host: singleUser.host,
             port: singleUser.port,
@@ -278,40 +278,40 @@ const AccountsDashboard = () => {
       );
       console.log("REPONSEEEE 1", response);
 
-      if (response.meta.requestStatus === "fulfilled") {
-        // console.log("ENTRE A LA CREACION DE CLIENTES");
+      // if (response.meta.requestStatus === "fulfilled") {
+      //   // console.log("ENTRE A LA CREACION DE CLIENTES");
 
-        const accountsData = response.payload.processedAttachments.map(
-          (attachment) => {
-            const { xmlContent, ...attachmentWithoutXml } = attachment;
+      //   const accountsData = response.payload.processedAttachments.map(
+      //     (attachment) => {
+      //       const { xmlContent, ...attachmentWithoutXml } = attachment;
 
-            const emailFromAttachment =
-              attachmentWithoutXml.email.fromEmail[0].address;
+      //       const emailFromAttachment =
+      //         attachmentWithoutXml.email.fromEmail[0].address;
 
-            const emailIds = response.payload.filteredEmails
-              .filter(
-                (email) => email.fromEmail[0].address === emailFromAttachment
-              )
-              .map((email) => email.emailId);
+      //       const emailIds = response.payload.filteredEmails
+      //         .filter(
+      //           (email) => email.fromEmail[0].address === emailFromAttachment
+      //         )
+      //         .map((email) => email.emailId);
 
-            return {
-              attachment: attachmentWithoutXml,
-              email: emailFromAttachment,
-              processedData: attachment.processedData,
-              processedemails: emailIds,
-            };
-          }
-        );
+      //       return {
+      //         attachment: attachmentWithoutXml,
+      //         email: emailFromAttachment,
+      //         processedData: attachment.processedData,
+      //         processedemails: emailIds,
+      //       };
+      //     }
+      //   );
 
-        // const createdAccountsResponse = await dispatch(
-        //   createAccounts({
-        //     userId: userRedux?.id,
-        //     clientsData: accountsData,
-        //   })
-        // );
+      //   // const createdAccountsResponse = await dispatch(
+      //   //   createAccounts({
+      //   //     userId: userRedux?.id,
+      //   //     clientsData: accountsData,
+      //   //   })
+      //   // );
 
-        console.log("Accounts creados:", createdAccountsResponse);
-      }
+      //   console.log("Accounts creados:", accountsData);
+      // }
     }
   };
 

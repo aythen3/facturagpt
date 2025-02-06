@@ -127,7 +127,7 @@ const Layout = () => {
           <Route path="/home" element={<Dashboard />} />
           <Route path="/accounts" element={<AccountsDashboard />} />
           <Route path="/users" element={<UsersDashboard />} />
-          <Route path="/contacts" element={<Clients />} />
+          <Route path="/clients" element={<Clients />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/products" element={<AllProducts />} />
           <Route path="/chat" element={<ChatView />} />

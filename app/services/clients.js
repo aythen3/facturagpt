@@ -2,6 +2,8 @@ const { default: axios } = require("axios");
 const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
+const { connectDB } = require("../controllers/utils");
+
 const createClient = async ({ email, userId, clientData }) => {
   const normalizeDatabaseName = (name) => {
     return name
@@ -17,60 +19,67 @@ const createClient = async ({ email, userId, clientData }) => {
 
   const extractedId = extractLastId(userId);
 
-  const dbClientsName = normalizeDatabaseName(
-    `db_emailmanager_clients_${extractedId}`
-  );
-  const dbAccountsName = normalizeDatabaseName("db_emailmanager_accounts");
+  // const dbClientsName = normalizeDatabaseName(
+  //   `db_${extractedId}_clients`
+  // );
+  // const dbAccountsName = normalizeDatabaseName("db_accounts");
   let dbClients, dbAccounts;
 
   try {
-    const dbs = await nano.db.list();
+    // const dbs = await nano.db.list();
 
-    if (!dbs.includes(dbClientsName)) {
-      console.log(`Database ${dbClientsName} does not exist. Creating...`);
-      await nano.db.create(dbClientsName);
-    }
-    dbClients = nano.use(dbClientsName);
+    // if (!dbs.includes(dbClientsName)) {
+    //   console.log(`Database ${dbClientsName} does not exist. Creating...`);
+    //   await nano.db.create(dbClientsName);
+    // }
 
-    if (!dbs.includes(dbAccountsName)) {
-      console.log(`Database ${dbAccountsName} does not exist. Creating...`);
-      await nano.db.create(dbAccountsName);
+
+    dbClients = await connectDB(`db_${extractedId}_clients`);
+    // dbClients = nano.use(dbClientsName);
+    
+    // if (!dbs.includes(dbAccountsName)) {
+    //   console.log(`Database ${dbAccountsName} does not exist. Creating...`);
+    //   await nano.db.create(dbAccountsName);
+    // }
+    // dbAccounts = nano.use(dbAccountsName);
+    dbAccounts = await connectDB(`db_accounts`);
+
+
+    try {
+      const clientId = uuidv4();
+      const clientDoc = {
+        _id: clientId,
+        id: clientId,
+        userId,
+        email,
+        ...clientData,
+      };
+  
+      await dbClients.insert(clientDoc);
+  
+      const userDoc = await dbAccounts.get(userId);
+      if (!userDoc.clients) {
+        userDoc.clients = [];
+      }
+      userDoc.clients.push(clientId);
+  
+      await dbAccounts.insert(userDoc);
+  
+      const clients = await dbClients.find({
+        selector: { userId },
+      });
+  
+      return clients.docs;
+    } catch (error) {
+      console.error("Error creating client:", error);
+      throw new Error("Failed to create client");
     }
-    dbAccounts = nano.use(dbAccountsName);
   } catch (error) {
     console.error("Error checking/creating databases:", error);
     throw new Error("Database initialization failed");
   }
 
-  try {
-    const clientId = uuidv4();
-    const clientDoc = {
-      _id: clientId,
-      id: clientId,
-      userId,
-      email,
-      clientData,
-    };
-
-    await dbClients.insert(clientDoc);
-
-    const userDoc = await dbAccounts.get(userId);
-    if (!userDoc.clients) {
-      userDoc.clients = [];
-    }
-    userDoc.clients.push(clientId);
-
-    await dbAccounts.insert(userDoc);
-
-    const clients = await dbClients.find({
-      selector: { userId },
-    });
-
-    return clients.docs;
-  } catch (error) {
-    console.error("Error creating client:", error);
-    throw new Error("Failed to create client");
-  }
+ 
 };
 
 const createClients = async ({ userId, clientsData }) => {
@@ -89,9 +98,9 @@ const createClients = async ({ userId, clientsData }) => {
   const extractedId = extractLastId(userId);
 
   const dbClientsName = normalizeDatabaseName(
-    `db_emailmanager_clients_${extractedId}`
+    `db_${extractedId}_clients`
   );
-  const dbAccountsName = normalizeDatabaseName("db_emailmanager_accounts");
+  const dbAccountsName = normalizeDatabaseName("db_accounts");
 
   try {
     const dbs = await nano.db.list();
@@ -205,7 +214,7 @@ const getAllUserClients = async ({ userId }) => {
   const extractedId = extractLastId(userId);
 
   const dbClientsName = normalizeDatabaseName(
-    `db_emailmanager_clients_${extractedId}`
+    `db_${extractedId}_clients`
   );
 
   console.log("USER ID EN Service", extractedId);
@@ -235,9 +244,9 @@ const getAllUserClients = async ({ userId }) => {
 
 const deleteClient = async ({ clientIds, userId }) => {
   const userIdUid = userId.split("_")[2];
-  const dbClientsName = `db_emailmanager_clients_${userIdUid}`;
+  const dbClientsName = `db_${userIdUid}_clients`;
 
-  const dbAccountsName = "db_emailmanager_accounts";
+  const dbAccountsName = "db_accounts";
   let dbClients, dbAccounts;
 
   try {
@@ -268,9 +277,9 @@ const deleteClient = async ({ clientIds, userId }) => {
   }
 };
 
-const updateClient = async ({ clientId, userId, toUpdate }) => {
+const updateClient = async ({ clientId, userId, clientData }) => {
   const userIdUid = userId.split("_")[2];
-  const dbClientsName = `db_emailmanager_clients_${userIdUid}`;
+  const dbClientsName = `db_${userIdUid}_clients`;
   let dbClients;
 
   try {
@@ -282,7 +291,7 @@ const updateClient = async ({ clientId, userId, toUpdate }) => {
       ...clientDoc,
       clientData: {
         ...clientDoc.clientData,
-        ...toUpdate,
+        ...clientData,
       },
     };
 
@@ -318,7 +327,7 @@ const getOneClient = async ({ userId, clientId }) => {
   const extractedId = extractLastId(userId);
 
   const dbClientsName = normalizeDatabaseName(
-    `db_emailmanager_clients_${extractedId}`
+    `db_${extractedId}_clients`
   );
 
   let dbClients;

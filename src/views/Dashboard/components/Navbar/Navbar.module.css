@@ -168,6 +168,7 @@
     top: 0;
     height: 100vh;
     z-index: 9999;
+    max-width: 300px;
   }
 
   .navLinksClosed {

@@ -31,7 +31,7 @@ createAsyncThunk('user/sendEmail',
 // -------------------------------
 export const getEmailsByQuery = createAsyncThunk(
   "user/getEmailsByQuery",
-  async ({ userId, email, password, query, tokenGpt, logs, ftpData }) => {
+  async ({ userId, email, password, query, tokenGpt, /*logs,*/ ftpData }) => {
     try {
       console.log("EMAIL FETCH REQUEST:", { userId, email, query, ftpData });
 
@@ -39,7 +39,7 @@ export const getEmailsByQuery = createAsyncThunk(
       // Call your backend endpoint for fetching emails
       const res = await apiBackend.post(
         "/user/getEmailsByQuery",
-        { userId, email, password, query, tokenGpt, logs, ftpData },
+        { userId, email, password, query, tokenGpt, /*logs,*/ ftpData },
         {
           headers: {
             "Content-Type": "application/json",
@@ -141,8 +141,6 @@ export const getAllClients = createAsyncThunk(
     }
   }
 );
-
-
 
 export const addNewClient = createAsyncThunk(
   "user/addNewClient",

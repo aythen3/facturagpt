@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   createClient,
   deleteClients,
-  getAllUserClients,
+  getAllClients,
   getOneClient,
   updateClient,
 } from '../../../../actions/clients';
@@ -47,7 +47,8 @@ const Clients = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { allClients, allUsers } = useSelector((state) => state.user);
+  // const { allClients, allUsers } = useSelector((state) => state.user);
+  const { allClients } = useSelector((state) => state.user);
 
   const { clients, loading, client } = useSelector((state) => state.clients);
 
@@ -70,7 +71,7 @@ const Clients = () => {
   });
 
   useEffect(() => {
-    dispatch(getAllUserClients({ userId: user?.id }));
+    dispatch(getAllClients({ userId: user?.id }));
   }, [loading, user]);
 
   useEffect(() => {
@@ -203,9 +204,10 @@ const Clients = () => {
     if (client && client.clientData) {
       dispatch(
         updateClient({
-          clientId: client?.id,
-          toUpdate: clientData,
           userId: userId,
+          id: client?.id,
+          clientData: clientData,
+          // toUpdate: clientData,
         })
       )
         .then((result) => {
@@ -219,7 +221,11 @@ const Clients = () => {
           console.error('Unexpected error:', error);
         });
     } else {
-      dispatch(createClient({ userId, email, clientData }))
+      dispatch(createClient({ 
+        userId, 
+        email, 
+        clientData 
+      }))
         .then((result) => {
           if (result.meta.requestStatus === 'fulfilled') {
             setShowNewClient(false);
@@ -457,9 +463,9 @@ const Clients = () => {
                       />
                     </td>
                     <td className={styles.name}>
-                      {client.clientData.clientName}
+                      {client.clientName}
                     </td>
-                    <td>{client?.clientData.companyEmail || client.email}</td>
+                    <td>{client?.companyEmail || client.email}</td>
 
                     {/* <td>
                     {Array.isArray(row.email)
@@ -468,13 +474,13 @@ const Clients = () => {
                         ))
                       : row.email}
                   </td> */}
-                    <td>{client.clientData.companyPhoneNumber}</td>
+                    <td>{client.companyPhoneNumber}</td>
                     <td>
-                      {client.clientData.companyAddress}{' '}
-                      {client.clientData.clientProvice}
+                      {client.companyAddress}{' '}
+                      {client.clientProvice}
                     </td>
-                    <td>{client.clientData.taxNumber}</td>
-                    <td>{client.clientData.cardNumber}</td>
+                    <td>{client.taxNumber}</td>
+                    <td>{client.cardNumber}</td>
                     {/* <td>
                     {Array.isArray(row.metodosPago)
                       ? row.metodosPago.map((item, itemIndex) => (
@@ -482,7 +488,7 @@ const Clients = () => {
                         ))
                       : row.metodosPago}
                   </td> */}
-                    <td>{client.clientData.preferredCurrency}</td>
+                    <td>{client.preferredCurrency}</td>
                     <td className={styles.actions}>
                       <div className={styles.transacciones}>
                         <a

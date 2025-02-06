@@ -10,7 +10,7 @@
   z-index: 0;
   width: 100%;
   overflow: hidden;
-  align-items: flex-end;
+  /* align-items: flex-end; */
   /* background-color: red; */
 }
 
