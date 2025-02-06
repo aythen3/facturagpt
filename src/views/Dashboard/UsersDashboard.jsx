@@ -36,10 +36,10 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import Payment from "./screens/UserSettings/StripeComponents/Payment";
+import Payment from "./screens/AccountSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import { Elements } from "@stripe/react-stripe-js";
-import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
+import SetupPayment from "./screens/AccountSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
 import AccountSettings from "./screens/AccountSettings/AccountSettings";
 import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
@@ -142,7 +142,7 @@ const UsersDashboard = () => {
 
   useEffect(() => {
     if (userData) {
-      console.log('userrrss', userData)
+      console.log("userrrss", userData);
       if (userData?.role === "user") {
         navigate("/admin/chat");
       }
@@ -229,7 +229,10 @@ const UsersDashboard = () => {
 
   const toggleUserActive = (user) => {
     dispatch(
-      updateAccount({ accountId: account.id, toUpdate: { active: !account.active } })
+      updateAccount({
+        accountId: account.id,
+        toUpdate: { active: !account.active },
+      })
     );
     if (!user.active) {
       // console.log("dispatching emails by query", {
@@ -595,7 +598,8 @@ const UsersDashboard = () => {
               <span className={style.columnEmail}>Email</span>
               <span className={style.columnRole}>Rol</span>
             </div>
-            {filteredAccounts.filter((account) => account.role !== "user").length > 0 ? (
+            {filteredAccounts.filter((account) => account.role !== "user")
+              .length > 0 ? (
               filteredAccounts
                 .filter((account) => account.role !== "user")
                 .map((account) => (
@@ -603,7 +607,9 @@ const UsersDashboard = () => {
                     <span className={style.columnName}>
                       {account.email || "-"}
                     </span>
-                    <span className={style.columnPin}>{account.pin || "-"}</span>
+                    <span className={style.columnPin}>
+                      {account.pin || "-"}
+                    </span>
                     <span className={style.columnContact}>
                       {account.email || "-"}
                     </span>

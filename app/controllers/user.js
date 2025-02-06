@@ -97,9 +97,9 @@ const updateAccountController = async (req, res) => {
 const deleteAccountController = async (req, res) => {
   try {
     const { id } = req.body;
-    console.log('id', id)
+    console.log("id", id);
     const response = await deleteAccount(id);
-    console.log('response', response)
+    console.log("response", response);
     return res.status(200).send(response);
   } catch (err) {
     console.log("Error in deleteAccountController:", err);
@@ -237,8 +237,9 @@ const verifyOTPController = async (req, res) => {
 
 const sendNewsletter = async (req, res) => {
   try {
-    const { name, email, message, work, phone, keepInformed } = req.body;
-
+    const { name, email, message, work, phone, keepInformed, language } =
+      req.body;
+    console.log(language);
     const response = await newsletter({
       name,
       email,
@@ -246,6 +247,7 @@ const sendNewsletter = async (req, res) => {
       work,
       phone,
       keepInformed,
+      language,
     });
 
     if (response.success) {

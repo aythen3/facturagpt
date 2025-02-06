@@ -23,6 +23,8 @@ import AddTax from "../AddTax/AddTax";
 import LogoSelector from "../LogoSelector/LogoSelector";
 import { useDispatch } from "react-redux";
 import { uploadFiles } from "../../../../actions/scaleway";
+import SelectLocation from "../SelectLocation/SelectLocation";
+import MoveToFolder from "../MoveToFolder/MoveToFolder";
 let documentoPDF;
 
 try {
@@ -42,17 +44,42 @@ const ButtonActionsWithText = ({ children, classStyle, click }) => {
 
 const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   const [options, setOptions] = useState(0);
-
+  const [showMovetoFolder, setShowMovetoFolder] = useState(false);
   const [mailModal, setMailModal] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [seeBill, setSeeBill] = useState(false);
 
+  const handleShare = (item) => {
+    console.log(`${window.location.origin}/document.pdf`);
+    const fileUrl = `${window.location.origin}/document.pdf`;
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Check out this file",
+          text: "Have a look at this file",
+          url: fileUrl,
+        })
+        .catch((err) => {
+          console.error("Error sharing:", err);
+        });
+    } else {
+      navigator.clipboard.writeText(fileUrl).then(
+        () => {
+          alert("Link copied to clipboard!");
+        },
+        (err) => {
+          console.error("Failed to copy link:", err);
+        }
+      );
+    }
+  };
   const actions = [
     {
       text: "Compartir",
       icon: downloadIcon,
       click: () => {
-        console.log("Documento descargado");
+        handleShare();
       },
     },
     {
@@ -83,7 +110,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
       text: "Mover a carpeta",
       icon: printIcon,
       click: () => {
-        console.log("Documento enviado a imprimir");
+        setShowMovetoFolder(true);
       },
     },
     {
@@ -147,6 +174,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   const Details = () => {
     const [showTaxModal, setShowTaxModal] = useState(false);
     const [showDiscountModal, setShowDiscountModal] = useState(false);
+
     const dispatch = useDispatch();
     const corporativeFileInputRef = useRef(null);
     const signatureFileInputRef = useRef(null);
@@ -370,7 +398,9 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
           </div>
         )}
       </div>
-
+      {showMovetoFolder && (
+        <MoveToFolder setShowMovetoFolder={setShowMovetoFolder} />
+      )}
       {seeBill && (
         <SeeBill ref={seeBillRef} document={document} setSeeBill={setSeeBill} />
       )}

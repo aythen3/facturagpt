@@ -75,14 +75,16 @@ const CustomDropdown = ({
               ? placeholder
               : selectedOption || placeholder}
         </div>
-        <FaChevronDown
-          className={styles.chevronIcon}
-          color="#71717A"
-          style={{
-            transform: isOpen ? "rotate(180deg)" : "",
-            transition: "transform 0.3s ease-in-out",
-          }}
-        />
+        {editable && (
+          <FaChevronDown
+            className={styles.chevronIcon}
+            color="#71717A"
+            style={{
+              transform: isOpen ? "rotate(180deg)" : "",
+              transition: "transform 0.3s ease-in-out",
+            }}
+          />
+        )}
       </div>
 
       {isOpen && (

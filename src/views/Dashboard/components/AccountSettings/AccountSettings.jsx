@@ -131,7 +131,7 @@ const AccountSettings = () => {
   const [editingLanguage, setEditingLanguage] = useState(false);
   const [editingPhone, setEditingPhone] = useState(false);
   const [editingPayMethod, setEditingPayMethod] = useState(false);
-
+  const [isEditingDetails, setIsEditingDetails] = useState(false);
   const [facturacionCount, setFacturacionCount] = useState(0);
   const [facturacionInputs, setFacturacionInputs] = useState([
     { value: "", editable: false },
@@ -571,53 +571,72 @@ const AccountSettings = () => {
               <div className={styles.label} style={{ marginBottom: "10px" }}>
                 <div className={styles.row}>
                   <p>Detalles de facturación</p>
-                  <div
-                    className={styles.button}
-                    type="button"
-                    id="addFacturacion"
-                    onClick={() => {
-                      setFacturacionCount(facturacionCount + 1);
-                      setFacturacionInputs([
-                        ...facturacionInputs,
-                        { value: "", editable: false },
-                      ]);
-                    }}
-                  >
-                    Añadir
+                  <div>
+                    <div
+                      className={styles.button}
+                      type="button"
+                      id="addFacturacion"
+                      onClick={() => {
+                        setIsEditingDetails((prev) => !prev);
+                      }}
+                    >
+                      {isEditingDetails ? "Guardar" : "Editar"}
+                    </div>{" "}
+                    <div
+                      className={styles.button}
+                      type="button"
+                      id="addFacturacion"
+                      onClick={() => {
+                        setFacturacionCount(facturacionCount + 1);
+                        setFacturacionInputs([
+                          ...facturacionInputs,
+                          { value: "", editable: false },
+                        ]);
+                      }}
+                    >
+                      Añadir
+                    </div>
                   </div>
                 </div>
                 {facturacionCount == 0
                   ? "Desconocido"
                   : [...Array(facturacionCount)].map((_, index) => (
                       <div className={styles.facturacion} key={index}>
-                        <input
-                          type="radio"
-                          name="facturacion"
-                          value={`facturacion${index}`}
-                          onChange={() =>
-                            handleChange({
-                              name: "facturacion",
-                              newValue: `facturacion${index}`,
-                            })
-                          }
-                        />
+                        {isEditingDetails && (
+                          <input
+                            type="radio"
+                            name="facturacion"
+                            value={`facturacion${index}`}
+                            onChange={() =>
+                              handleChange({
+                                name: "facturacion",
+                                newValue: `facturacion${index}`,
+                              })
+                            }
+                          />
+                        )}
                         <input
                           type="text"
                           value={facturacionInputs[index]?.value || ""}
-                          disabled={!facturacionInputs[index]?.editable}
+                          disabled={
+                            !facturacionInputs[index]?.editable ||
+                            !isEditingDetails
+                          }
                           onChange={(e) =>
                             handleInputChange(index, e.target.value)
                           }
                           placeholder="Email adress, Zip code / Postcode, Country of residence"
                         />
-                        <div
-                          className={styles.facturacionButtonEdit}
-                          onClick={() => handleEditToggle(index)}
-                        >
-                          {facturacionInputs[index]?.editable
-                            ? "Guardar"
-                            : "Editar"}
-                        </div>
+                        {isEditingDetails && (
+                          <div
+                            className={styles.facturacionButtonEdit}
+                            onClick={() => handleEditToggle(index)}
+                          >
+                            {facturacionInputs[index]?.editable
+                              ? "Guardar"
+                              : "Editar"}
+                          </div>
+                        )}
                       </div>
                     ))}
               </div>
@@ -654,7 +673,7 @@ const AccountSettings = () => {
                   labelOptions={false}
                   options={true}
                   label={"Country of residence"}
-                  placeholder={"Spain"}
+                  placeholder={"Desconocido"}
                   readOnly={!isReadOnly}
                 />
               </div>
@@ -741,7 +760,7 @@ const AccountSettings = () => {
                 }
               />
             </label>
-            <label>
+            {/* <label>
               <div className={styles.row}>
                 <p>Idioma</p>
                 <div
@@ -761,8 +780,8 @@ const AccountSettings = () => {
                 </div>
               </div>
               <CustomDropdown
-                editable={editingCurrency}
-                editing={editingCurrency}
+                editable={editingLanguage}
+                editing={editingLanguage}
                 hasObject={true}
                 options={[
                   {
@@ -779,7 +798,7 @@ const AccountSettings = () => {
                   handleChange({ name: "currency", newValue: option })
                 }
               />
-            </label>
+            </label> */}
             <label>
               <div className={styles.row}>
                 <p>Idioma</p>

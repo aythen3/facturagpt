@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Plus } from "lucide-react";
 import styles from "./FloatingMenu.module.css";
 import FolderModal from "../FolderModal/FolderModal";
@@ -9,9 +9,11 @@ import { ReactComponent as TagIcon } from "../../assets/tagIconBW.svg";
 import { ReactComponent as WhatsAppIcon } from "../../assets/wsIconBW.svg";
 import { ReactComponent as CloudIcon } from "../../assets/uploadIconBW.svg";
 import { ReactComponent as CameraIcon } from "../../assets/camIconBW.svg";
-import { ReactComponent as FacturaIcon } from "../../assets/moneyIconBW.svg";
+import { ReactComponent as NewBill } from "../../assets/newBill.svg";
 import { ReactComponent as PlusIcon } from "../../assets/automatizaIconNew.svg";
 import { ReactComponent as ChatGPTIcon } from "../../assets/chatGPTIcon.svg";
+import { ReactComponent as NewContact } from "../../assets/newContact.svg";
+import { ReactComponent as NewAsset } from "../../assets/newAsset.svg";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SelectLocation from "../SelectLocation/SelectLocation";
@@ -25,9 +27,22 @@ export default function FloatingMenu({
   setShowLocationModal,
   showNewTagModal,
   setShowNewTagModal,
+  showNewContact,
+  setShowNewContact,
+  showNewProduct,
+  setShowNewProduct,
+  setShowNewBill,
+  setShowUplaodFile,
 }) {
   const [activeModal, setActiveModal] = useState(null);
   const dispach = useDispatch();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
@@ -43,6 +58,36 @@ export default function FloatingMenu({
     console.log("Selected color:", color);
     closeModal();
   };
+  const videoRef = useRef(null); // Referencia al video para mostrar la vista previa
+  const canvasRef = useRef(null); // Referencia al canvas para capturar la imagen
+  const [isCameraActive, setIsCameraActive] = useState(false); // Estado para saber si la cámara está activa
+
+  const handleCameraAccess = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      console.log("✅ Acceso a la cámara concedido", stream);
+      videoRef.current.srcObject = stream; // Enlazar el stream al elemento video
+      setIsCameraActive(true);
+    } catch (error) {
+      console.error("❌ Acceso a la cámara denegado o error:", error);
+      alert("No se pudo acceder a la cámara. Por favor, revisa los permisos.");
+    }
+  };
+
+  const handleCapture = () => {
+    if (canvasRef.current && videoRef.current) {
+      const context = canvasRef.current.getContext("2d");
+      context.drawImage(
+        videoRef.current,
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
+      const imageData = canvasRef.current.toDataURL("image/png");
+      console.log("Imagen capturada:", imageData); // Aquí puedes hacer algo con la imagen (como subirla, mostrarla, etc.)
+    }
+  };
 
   const menuItems = [
     {
@@ -50,6 +95,22 @@ export default function FloatingMenu({
       text: "Nueva Carpeta",
       action: () => {
         setShowLocationModal(true);
+        setIsOpen(false);
+      },
+    },
+    {
+      icon: <NewContact />,
+      text: "Nuevo Contacto",
+      action: () => {
+        setShowNewContact(true);
+        setIsOpen(false);
+      },
+    },
+    {
+      icon: <NewAsset />,
+      text: "Nuevo activo",
+      action: () => {
+        setShowNewProduct(true);
         setIsOpen(false);
       },
     },
@@ -74,25 +135,37 @@ export default function FloatingMenu({
     {
       icon: <CloudIcon />,
       text: "Subir Archivo",
-      action: () => console.log("Subir Archivo clicked"),
+      action: () => {
+        setShowUplaodFile(true);
+        setIsOpen(false);
+      },
     },
-    {
-      icon: <CameraIcon />,
-      text: "Hacer una Foto",
-      action: () => console.log("Hacer una Foto clicked"),
-    },
+    // {
+    //   icon: <CameraIcon />,
+    //   text: "Hacer una Foto",
+    //   action: () => console.log("Hacer una Foto clicked"),
+    // },
     {
       icon: <PlusIcon />,
       text: "Automatiza",
       action: openModalAutomate,
     },
     {
-      icon: <FacturaIcon />,
+      icon: <NewBill />,
       text: "Nueva Factura",
-      action: () => console.log("Nueva Factura clicked"),
+      action: () => {
+        setShowNewBill(true);
+        setIsOpen(false);
+      },
     },
   ];
-
+  if (isMobile) {
+    menuItems.push({
+      icon: <CameraIcon />,
+      text: "Hacer una Foto",
+      action: handleCameraAccess,
+    });
+  }
   return (
     <>
       <div className={styles.fabContainer}>
@@ -126,7 +199,26 @@ export default function FloatingMenu({
           </div>
         )}
       </div>
-
+      {isCameraActive && (
+        <>
+          <video
+            ref={videoRef}
+            autoPlay
+            width="100%"
+            height="auto"
+            style={{ border: "1px solid #ccc", marginTop: "10px" }}
+          ></video>
+          <button onClick={handleCapture} style={{ marginTop: "10px" }}>
+            Capturar Foto
+          </button>
+          <canvas
+            ref={canvasRef}
+            width="640"
+            height="480"
+            style={{ display: "none" }}
+          ></canvas>
+        </>
+      )}
       <FolderModal isOpen={activeModal === "folder"} onClose={closeModal} />
 
       <TagModal
