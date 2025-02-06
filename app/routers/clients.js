@@ -3,7 +3,7 @@ const clientsRouter = Router();
 
 const {
   createClientController,
-  getAllUserClientsController,
+  getAllClientsController,
   updateClientController,
   deleteClientController,
   getOneClientController,
@@ -13,7 +13,7 @@ const {
 clientsRouter
   .post("/createClient", createClientController)
   .post("/createClients", createClientsController)
-  .get("/getAllUserClients/:userId", getAllUserClientsController)
+  .get("/getAllClients/:userId", getAllClientsController)
   .put("/updateClient/:clientId", updateClientController)
   .delete("/deleteClients", deleteClientController)
   .get("/getClient/:clientId/:userId", getOneClientController);

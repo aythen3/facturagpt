@@ -83,6 +83,7 @@ const AccountSettings = ({
     emergencyContact: "",
     tokenGPT: "",
   });
+
   const categoriesTitles = {
     companyName: t("name"),
     email: t("email"),
@@ -102,8 +103,8 @@ const AccountSettings = ({
     emergencyContact: t("placeholderEmergencyNumer"),
     tokenGPT: "Token GPT",
   };
-  const { user } = useSelector((state) => state.user);
 
+  const { user } = useSelector((state) => state.user);
 
   const [tokenEmail, setTokenEmail] = useState(""); // Email (Bandejas)
   const [tokenPassword, setTokenPassword] = useState(""); // Contraseña a la derecha de bandejas

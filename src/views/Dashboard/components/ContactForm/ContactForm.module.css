@@ -7,7 +7,7 @@
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
   margin-top: 80px;
   background: linear-gradient(180deg, #ffffff 21%, #f5f5f5 100%);
 }
@@ -144,9 +144,9 @@ label {
     justify-content: center;
     gap: 10px;
   }
-}
-.button:hover {
-  background-color: #13a583;
+  &:hover {
+    background-color: #fafafa;
+  }
 }
 
 .infoContact,

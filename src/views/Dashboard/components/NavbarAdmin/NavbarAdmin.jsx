@@ -166,8 +166,8 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               </a>
               <a
                 // href="/admin/contacts"
-                onClick={() => setFromPath("contacts")}
-                className={fromPath == "contacts" ? styles.active : ""}
+                onClick={() => setFromPath("clients")}
+                className={fromPath == "clients" ? styles.active : ""}
               >
                 <ClientIcon />
                 {/* <img src={clientIcon} alt="Icon" /> */}

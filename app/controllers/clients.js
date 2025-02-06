@@ -43,7 +43,7 @@ const createClientsController = async (req, res) => {
   }
 };
 
-const getAllUserClientsController = async (req, res) => {
+const getAllClientsController = async (req, res) => {
   try {
     const { userId } = req.params;
     console.log("Fetching clients for userId (CONTROLLER):", userId);
@@ -60,12 +60,12 @@ const getAllUserClientsController = async (req, res) => {
 const updateClientController = async (req, res) => {
   try {
     const { clientId } = req.params;
-    const { userId, ...toUpdate } = req.body;
+    const { userId, ...clientData } = req.body;
 
     console.log("CONTROLLER CLIENTS CLIENTID---------", clientId);
     console.log("CONTROLLER CLIENTS USER/UPDATE---------", userId, toUpdate);
 
-    const resp = await updateClient({ clientId, toUpdate, userId });
+    const resp = await updateClient({ clientId, clientData, userId });
 
     return res.status(200).send(resp);
   } catch (err) {
@@ -105,7 +105,7 @@ const deleteClientController = async (req, res) => {
 
 module.exports = {
   createClientController: catchedAsync(createClientController),
-  getAllUserClientsController: catchedAsync(getAllUserClientsController),
+  getAllClientsController: catchedAsync(getAllClientsController),
   deleteClientController: catchedAsync(deleteClientController),
   updateClientController: catchedAsync(updateClientController),
   getOneClientController: catchedAsync(getOneClientController),

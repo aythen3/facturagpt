@@ -352,7 +352,7 @@ input:checked + .switchLabel:after {
 
 .tokensContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
   font-family: "Poppins", sans-serif;
@@ -416,7 +416,7 @@ input:checked + .switchLabel:after {
   border: 1px solid #dbdbdb;
   border-radius: 7px;
   width: 100%;
-  width: 170px;
+  max-width: 100%;
   min-width: 170px;
   max-width: 170px;
   padding: 10px;

@@ -2,6 +2,42 @@ const { default: axios } = require("axios");
 const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
+const { connectDB } = require('../controllers/utils')
+
+const addTransaction = async ({ id, transaction }) => {
+  // let db;
+  
+  try {
+    const dbName = id.split('_')[2]
+
+    console.log('add transaction id: ', dbName)
+    
+    const db = await connectDB(`db_${dbName}_processedemails`)
+    // db = await nano.db.list();
+
+    // const processedDbNames = db.filter((dbName) =>
+    //   dbName.includes("_processedemails")
+    // );
+
+    // db = nano.use(processedDbNames);
+
+    console.log(
+      "Bases de datos que contienen '_processedemails':",
+      // db
+    );
+
+    const response = await db.insert(transaction);
+
+    console.log('response 1234567', response)
+
+    return response;
+  } catch (error) {
+    console.error("Error al agregar la transacción:", error);
+    throw new Error("No se pudo agregar la transacción");
+  }
+};
+
+
 const getAllTransactionsByClient = async ({ idsEmails }) => {
   try {
     const allDatabases = await nano.db.list();
@@ -254,6 +290,7 @@ const deleteProductFromTransactions = async ({ transactionId, productRef }) => {
 };
 
 module.exports = {
+  addTransaction,
   getAllTransactionsByClient,
   deleteTransactions,
   deleteProductFromTransactions,

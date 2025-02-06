@@ -62,13 +62,13 @@ export const createClients = createAsyncThunk(
   }
 );
 
-export const getAllUserClients = createAsyncThunk(
-  "clients/getAllUserClients",
+export const getAllClients = createAsyncThunk(
+  "clients/getAllClients",
   async ({ userId }) => {
     console.log("Fetching clients for userId (REDUX):", userId);
     try {
       const token = localStorage.getItem("token");
-      const res = await apiBackend.get(`/clients/getAllUserClients/${userId}`, {
+      const res = await apiBackend.get(`/clients/getAllClients/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -82,13 +82,13 @@ export const getAllUserClients = createAsyncThunk(
 
 export const updateClient = createAsyncThunk(
   "clients/updateClient",
-  async ({ clientId, toUpdate, userId }) => {
-    console.log("Updating client with ID:", clientId, "with data:", toUpdate);
+  async ({ userID, id, clientData }) => {
+    console.log("Updating client with ID:", id, "with data:", clientData);
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.put(
-        `/clients/updateClient/${clientId}`,
-        { ...toUpdate, userId },
+        `/clients/updateClient/${id}`,
+        { userID, id, clientData },
         {
           headers: {
             Authorization: `Bearer ${token}`,

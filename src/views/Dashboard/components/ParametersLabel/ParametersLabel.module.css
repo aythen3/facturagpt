@@ -1,4 +1,4 @@
-button[disabled],
+/* button[disabled],
 input[disabled],
 select[disabled],
 option[disabled],
@@ -16,7 +16,7 @@ textarea {
   background-color: #f4f4f4;
   padding: 12px;
   box-sizing: border-box;
-}
+} */
 
 .button {
   cursor: pointer;
