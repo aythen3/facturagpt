@@ -51,8 +51,11 @@
   transition: all 0.3s ease;
   box-sizing: border-box;
   gap: 20px;
+  height: 240px;
 }
-
+.clientName {
+  font-weight: 300;
+}
 .activeCard .clientName,
 .activeCard .profession,
 .activeCard .text {
@@ -64,6 +67,10 @@
   opacity: 1;
   color: #222222;
   transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
 }
 
 .cardContent {
@@ -112,10 +119,17 @@
 .text {
   font-size: clamp(16px, 1vw, 20px);
   user-select: none;
-  font-weight: 400;
+  font-weight: 300;
   color: #222222;
-  line-height: 1.5;
+  line-height: 1.2;
   padding: 0 5px;
+  width: 100%; /* Ajusta según tu diseño */
+  height: auto; /* Se ajusta automáticamente hasta el límite de líneas */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Número de líneas visibles antes de cortar */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
 
 .controls {

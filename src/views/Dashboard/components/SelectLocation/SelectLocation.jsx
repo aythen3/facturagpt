@@ -9,6 +9,7 @@ import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
 import blackChevron from "../../assets/blackChevron.svg";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import { ReactComponent as HouseContainer } from "../../assets/blackHouse.svg";
+import { ReactComponent as FolderClosed } from "../../assets/folderCloded.svg";
 import Button from "../Button/Button";
 const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
   const { user } = useSelector((state) => state.user);
@@ -114,7 +115,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
             />
             <div
               style={{
-                marginLeft: depth * 40,
+                marginLeft: depth * 40 - 13,
               }}
               className={styles.folderHeader}
             >
@@ -127,8 +128,10 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
               )}
               {path == "" ? (
                 <HouseContainer />
-              ) : (
+              ) : isExpanded ? (
                 <img src={folderIcon} alt="Folder Icon" />
+              ) : (
+                <FolderClosed className={styles.closedFolder} />
               )}
 
               <span>
@@ -141,7 +144,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
               {hasMultipleSubFolders && (
                 <div
                   style={{
-                    left: depth * 40 + 58,
+                    left: depth * 40 + 72,
                   }}
                   className={styles.verticalLine}
                 />
@@ -185,7 +188,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
           <Button type="white" action={handleClose}>
             Cancelar
           </Button>
-          <Button>Guardar</Button>
+          <Button>Seleccionar</Button>
         </HeaderCard>
         {/* Content */}
         <div className={styles.contentContainer}>

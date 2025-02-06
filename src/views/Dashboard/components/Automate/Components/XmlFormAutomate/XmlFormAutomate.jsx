@@ -370,7 +370,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${showContent.info3 ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Imediatamente", "5 Minutos", "10 Minutos"]}
@@ -410,7 +410,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${showContent.info4 ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration.documentStatus ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Pendiente", "Finalizado", "Anulado"]}
@@ -456,7 +456,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${showContent.info5 ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration.renameFiles ? styles.active : styles.disabled}`}
         >
           <InputComponent
             placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
@@ -470,7 +470,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
         <div
           className={styles.infoContainerWrapper}
           onClick={() =>
-            setShowContent({ ...showContent, info1: !showContent.info1 })
+            setShowContent({ ...showContent, info6: !showContent.info6 })
           }
         >
           <GrayChevron />
@@ -483,7 +483,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           </div>
         </div>
         <div
-          className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${showContent.info6 ? styles.active : styles.disabled}`}
         >
           <div className={styles.contentInput}>
             <p className={styles.titleContentInput}>Ubicación</p>
@@ -507,7 +507,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
           onClick={() =>
-            setShowContent({ ...showContent, info6: !showContent.info6 })
+            setShowContent({ ...showContent, info7: !showContent.info7 })
           }
         >
           <div className={styles.infoContainer}>
@@ -527,7 +527,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${showContent.info6 ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
         >
           <CustomAutomationsWrapper Icon={<WhiteCheck />}>
             <div
@@ -547,55 +547,60 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
                 }
               />
             </div>
-            <NotificationsConfirmComponent
-              configuration={configuration}
-              disableSwitch={true}
-              mainState={configuration.notificateAfterExport || false}
-              setMainState={(value) =>
-                handleConfigurationChange("notificateAfterExport", value)
-              }
-              placeholder1="[email],..."
-              placeholder2="[00000000],..."
-              type1="Gmail"
-              type2="WhatsApp"
-              gmailTo={configuration.gmailTo || ""}
-              setGmailTo={(value) =>
-                handleConfigurationChange("gmailTo", value)
-              }
-              gmailSubject={configuration.gmailSubject || ""}
-              setGmailSubject={(value) =>
-                handleConfigurationChange("gmailSubject", value)
-              }
-              gmailBody={configuration.gmailBody || ""}
-              setGmailBody={(value) =>
-                handleConfigurationChange("gmailBody", value)
-              }
-              state1={configuration.notificateGmail || false}
-              state1Value={configuration.gmailToNotificate || ""}
-              setState1={(value) =>
-                handleConfigurationChange("notificateGmail", value)
-              }
-              setState1Value={(value) =>
-                handleConfigurationChange("gmailToNotificate", value)
-              }
-              state2={configuration.notificateWhatsApp || false}
-              state2Value={configuration.whatsAppToNotificate || ""}
-              setState2={(value) =>
-                handleConfigurationChange("notificateWhatsApp", value)
-              }
-              setState2Value={(value) =>
-                handleConfigurationChange("whatsAppToNotificate", value)
-              }
-              whatsAppMessage={configuration.whatsAppMessage || ""}
-              setWhatsAppMessage={(value) =>
-                handleConfigurationChange("whatsAppMessage", value)
-              }
-              title="Notificar tras la exportación"
-              icons={[
-                <GmailIcon style={{ width: 25 }} />,
-                <WhatsAppIcon style={{ width: 25 }} />,
-              ]}
-            />
+            <div
+              className={`${styles.contentContainer} ${configuration.notificateAfterExport ? styles.active : styles.disabled}`}
+            >
+              {" "}
+              <NotificationsConfirmComponent
+                configuration={configuration}
+                disableSwitch={true}
+                mainState={configuration.notificateAfterExport || false}
+                setMainState={(value) =>
+                  handleConfigurationChange("notificateAfterExport", value)
+                }
+                placeholder1="[email],..."
+                placeholder2="[00000000],..."
+                type1="Gmail"
+                type2="WhatsApp"
+                gmailTo={configuration.gmailTo || ""}
+                setGmailTo={(value) =>
+                  handleConfigurationChange("gmailTo", value)
+                }
+                gmailSubject={configuration.gmailSubject || ""}
+                setGmailSubject={(value) =>
+                  handleConfigurationChange("gmailSubject", value)
+                }
+                gmailBody={configuration.gmailBody || ""}
+                setGmailBody={(value) =>
+                  handleConfigurationChange("gmailBody", value)
+                }
+                state1={configuration.notificateGmail || false}
+                state1Value={configuration.gmailToNotificate || ""}
+                setState1={(value) =>
+                  handleConfigurationChange("notificateGmail", value)
+                }
+                setState1Value={(value) =>
+                  handleConfigurationChange("gmailToNotificate", value)
+                }
+                state2={configuration.notificateWhatsApp || false}
+                state2Value={configuration.whatsAppToNotificate || ""}
+                setState2={(value) =>
+                  handleConfigurationChange("notificateWhatsApp", value)
+                }
+                setState2Value={(value) =>
+                  handleConfigurationChange("whatsAppToNotificate", value)
+                }
+                whatsAppMessage={configuration.whatsAppMessage || ""}
+                setWhatsAppMessage={(value) =>
+                  handleConfigurationChange("whatsAppMessage", value)
+                }
+                title="Notificar tras la exportación"
+                icons={[
+                  <GmailIcon style={{ width: 25 }} />,
+                  <WhatsAppIcon style={{ width: 25 }} />,
+                ]}
+              />
+            </div>
           </CustomAutomationsWrapper>
           <div style={{ marginTop: "20px" }}>
             <CustomAutomationsWrapper Icon={<WhiteBell />}>
@@ -644,7 +649,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${showContent.info7 ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration.selectStandardExport ? styles.active : styles.disabled}`}
         >
           <p
             style={{ marginBottom: "10px" }}

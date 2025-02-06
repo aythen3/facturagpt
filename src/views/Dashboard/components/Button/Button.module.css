@@ -26,4 +26,13 @@
 .buttonTemplateWhite {
   background-color: #ffffff;
   border: 1px solid #cbcbcb;
+  color: #0d0d0d;
+}
+
+.buttonTemplateWhite:disabled {
+  /* background-color: #ddddddb0;
+  border: 1px solid #cbcbcb68;
+  color: #0d0d0d60; */
+  opacity: 0.5;
+  cursor: not-allowed;
 }

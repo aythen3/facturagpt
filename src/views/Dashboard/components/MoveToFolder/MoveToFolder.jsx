@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./MoveToFolder.module.css";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
 import InputComponent from "../InputComponent/InputComponent";
 import SearchSVG from "../Automate/svgs/SearchSVG";
-const MoveToFolder = ({ setShowMovetoFolder }) => {
+import SelectLocation from "../SelectLocation/SelectLocation";
+const MoveToFolder = ({
+  setShowMovetoFolder,
+  configuration,
+  setConfiguration,
+}) => {
+  const [showSelectInputLocation, setShowSelectInputLocation] = useState(false);
+  const handleConfigurationChange = (key, value) => {
+    setConfiguration((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
   return (
-    <div>
+    <div className={styles.overlay}>
       <div
         className={styles.bg}
         onClick={() => setShowMovetoFolder(false)}
@@ -22,17 +34,26 @@ const MoveToFolder = ({ setShowMovetoFolder }) => {
 
             <InputComponent
               readOnly={true}
-              //   value={configuration.folderLocation}
-              //   setValue={(value) =>
-              //     handleConfigurationChange("folderLocation", value)
-              //   }
+              value={configuration.folderLocation}
+              setValue={(value) =>
+                handleConfigurationChange("folderLocation", value)
+              }
               textButton="Seleccionar Ubicación"
               placeholder="/Inicio"
               icon={<SearchSVG />}
-              //   action={() => setShowSelectOutputLocation(true)}
+              action={() => setShowSelectInputLocation(true)}
             />
           </div>
         </div>
+        {showSelectInputLocation && (
+          <SelectLocation
+            onClose={() => setShowSelectInputLocation(false)}
+            pickLocation={(location) => {
+              console.log("location", location);
+              handleConfigurationChange("filesSource", location);
+            }}
+          />
+        )}
       </div>
     </div>
   );

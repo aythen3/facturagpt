@@ -1,3 +1,7 @@
+.overlay {
+  z-index: 999;
+  position: absolute;
+}
 .bg {
   position: fixed;
   height: 100vh;
@@ -7,6 +11,7 @@
   left: 0;
 }
 .addTaxContainer {
+  z-index: 999;
   width: 100%;
   max-width: 700px;
   box-sizing: border-box;
@@ -30,7 +35,7 @@
 }
 .addTaxContent {
   padding: 20px;
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     accent-color: #10a37f;
   }
   .taxes {

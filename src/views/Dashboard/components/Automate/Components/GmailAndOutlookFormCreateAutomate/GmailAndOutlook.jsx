@@ -39,7 +39,8 @@ import Advertency from "../Advertency/Advertency";
 const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   const [showAddConnection, setShowAddConnection] = useState(false);
-
+  const [showSelectOutputLocation, setShowSelectOutputLocation] =
+    useState(false);
   const [showContent, setShowContent] = useState({
     info1: false,
     info2: false,
@@ -264,7 +265,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${showContent.info3 ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
           >
             <CustomDropdown
               options={["Imediatamente", "5 Minutos", "10 Minutos"]}
@@ -304,7 +305,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${showContent.info4 ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration.documentStatus ? styles.active : styles.disabled}`}
           >
             <CustomDropdown
               options={["Pendiente", "Finalizado", "Anulado"]}
@@ -368,7 +369,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${showContent.info5 ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration.renameFiles ? styles.active : styles.disabled}`}
           >
             <InputComponent
               placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
@@ -439,7 +440,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${showContent.info6 ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
           >
             <CustomAutomationsWrapper Icon={<WhiteCheck />}>
               <div
@@ -459,56 +460,60 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
                   }
                 />
               </div>
-              <NotificationsConfirmComponent
-                configuration={configuration}
-                icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
-                disableSwitch={true}
-                mainState={configuration.notificateAfterExport || false}
-                setMainState={(value) =>
-                  handleConfigurationChange("notificateAfterExport", value)
-                }
-                placeholder1="[email],..."
-                placeholder2="Número de telefóno o nombre del contacto"
-                type1="Gmail"
-                type2="WhatsApp"
-                gmailTo={configuration.gmailTo || ""}
-                setGmailTo={(value) =>
-                  handleConfigurationChange("gmailTo", value)
-                }
-                gmailSubject={configuration.gmailSubject || ""}
-                setGmailSubject={(value) =>
-                  handleConfigurationChange("gmailSubject", value)
-                }
-                gmailBody={configuration.gmailBody || ""}
-                setGmailBody={(value) =>
-                  handleConfigurationChange("gmailBody", value)
-                }
-                state1={configuration.notificateGmail || false}
-                state1Value={configuration.gmailToNotificate || ""}
-                setState1={(value) =>
-                  handleConfigurationChange("notificateGmail", value)
-                }
-                setState1Value={(value) =>
-                  handleConfigurationChange("gmailToNotificate", value)
-                }
-                state2={configuration.notificateWhatsApp || false}
-                state2Value={configuration.whatsAppToNotificate || ""}
-                setState2={(value) =>
-                  handleConfigurationChange("notificateWhatsApp", value)
-                }
-                setState2Value={(value) =>
-                  handleConfigurationChange("whatsAppToNotificate", value)
-                }
-                whatsAppMessage={configuration.whatsAppMessage || ""}
-                setWhatsAppMessage={(value) =>
-                  handleConfigurationChange("whatsAppMessage", value)
-                }
-                title="Notificar tras la exportación"
-                icons={[
-                  <GmailIcon style={{ width: 25 }} />,
-                  <WhatsAppIcon style={{ width: 25 }} />,
-                ]}
-              />
+              <div
+                className={`${styles.contentContainer} ${configuration.notificateAfterExport ? styles.active : styles.disabled}`}
+              >
+                <NotificationsConfirmComponent
+                  configuration={configuration}
+                  icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
+                  disableSwitch={true}
+                  mainState={configuration.notificateAfterExport || false}
+                  setMainState={(value) =>
+                    handleConfigurationChange("notificateAfterExport", value)
+                  }
+                  placeholder1="[email],..."
+                  placeholder2="Número de telefóno o nombre del contacto"
+                  type1="Gmail"
+                  type2="WhatsApp"
+                  gmailTo={configuration.gmailTo || ""}
+                  setGmailTo={(value) =>
+                    handleConfigurationChange("gmailTo", value)
+                  }
+                  gmailSubject={configuration.gmailSubject || ""}
+                  setGmailSubject={(value) =>
+                    handleConfigurationChange("gmailSubject", value)
+                  }
+                  gmailBody={configuration.gmailBody || ""}
+                  setGmailBody={(value) =>
+                    handleConfigurationChange("gmailBody", value)
+                  }
+                  state1={configuration.notificateGmail || false}
+                  state1Value={configuration.gmailToNotificate || ""}
+                  setState1={(value) =>
+                    handleConfigurationChange("notificateGmail", value)
+                  }
+                  setState1Value={(value) =>
+                    handleConfigurationChange("gmailToNotificate", value)
+                  }
+                  state2={configuration.notificateWhatsApp || false}
+                  state2Value={configuration.whatsAppToNotificate || ""}
+                  setState2={(value) =>
+                    handleConfigurationChange("notificateWhatsApp", value)
+                  }
+                  setState2Value={(value) =>
+                    handleConfigurationChange("whatsAppToNotificate", value)
+                  }
+                  whatsAppMessage={configuration.whatsAppMessage || ""}
+                  setWhatsAppMessage={(value) =>
+                    handleConfigurationChange("whatsAppMessage", value)
+                  }
+                  title="Notificar tras la exportación"
+                  icons={[
+                    <GmailIcon style={{ width: 25 }} />,
+                    <WhatsAppIcon style={{ width: 25 }} />,
+                  ]}
+                />{" "}
+              </div>
             </CustomAutomationsWrapper>
             <div style={{ marginTop: "20px" }}>
               <CustomAutomationsWrapper Icon={<WhiteBell />}>
@@ -526,7 +531,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
                   <OptionsSwitchComponent
                     border={"none"}
                     marginLeft={"auto"}
-                    isChecked={configuration.addTags || false}
+                    isChecked={configuration.notificateErrors || false}
                     setIsChecked={(value) =>
                       handleConfigurationChange("notificateErrors", value)
                     }
@@ -600,9 +605,9 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
       </CustomAutomationsWrapper> */}
       </div>
 
-      {showSelectLocation && (
+      {showSelectOutputLocation && (
         <SelectLocation
-          onClose={() => setShowSelectLocation(false)}
+          onClose={() => setShowSelectOutputLocation(false)}
           pickLocation={(location) => {
             console.log("location", location);
             handleConfigurationChange("folderLocation", location);

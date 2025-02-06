@@ -80,6 +80,7 @@
 }
 .fieldSpan {
   padding: 4px 0px;
+  text-transform: capitalize;
 }
 .detailContent {
   display: flex;

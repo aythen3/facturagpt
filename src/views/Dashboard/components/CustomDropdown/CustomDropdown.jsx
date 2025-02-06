@@ -52,7 +52,7 @@ const CustomDropdown = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
+  console.log(options);
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -69,11 +69,17 @@ const CustomDropdown = ({
         }}
       >
         <div style={textStyles}>
-          {Array.isArray(selectedOption) && selectedOption.length > 0
-            ? selectedOption.join(", ")
-            : Array.isArray(selectedOption) && selectedOption.length === 0
-              ? placeholder
-              : selectedOption || placeholder}
+          {Array.isArray(selectedOption) && selectedOption.length > 0 ? (
+            selectedOption.join(", ")
+          ) : Array.isArray(selectedOption) && selectedOption.length === 0 ? (
+            placeholder
+          ) : selectedOption == "es" ? (
+            <img src={spanish_flag} />
+          ) : selectedOption == "en" ? (
+            <img src={english_flag} />
+          ) : (
+            selectedOption || placeholder
+          )}
         </div>
         {editable && (
           <FaChevronDown
@@ -101,15 +107,17 @@ const CustomDropdown = ({
                 handleOptionClick(hasObject ? option.value : option)
               }
             >
-              {option.iso == "es" ? (
+              {option == "es" ? (
                 <img src={spanish_flag} />
-              ) : option.iso == "en" ? (
-                <img src={spanish_flag} />
+              ) : option == "en" ? (
+                <img src={english_flag} />
+              ) : hasObject ? (
+                option.label
               ) : (
-                ""
+                option
               )}
 
-              {hasObject ? option.label : option}
+              {/* {hasObject ? option.label : option} */}
             </div>
           ))}
         </div>
