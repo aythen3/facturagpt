@@ -4,6 +4,7 @@ const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 const { sendOtpEmail } = require("./email");
 const nodemailer = require("nodemailer");
 const { checkOrCreateUserBucket } = require("./scaleway");
+const path = require("path");
 
 const jwt = require("jsonwebtoken");
 
@@ -42,15 +43,17 @@ const createAccount = async (account) => {
 
     const accountId = uuidv4();
 
-    console.log('accountId', account)
+    console.log("accountId", account);
     const docId = `account_${account.email}_${accountId}`;
 
     const role = account.email === "info@aythen.com" ? "superadmin" : "user";
 
     // const password  = '123456'
-    const hashedPassword = Buffer.from(account?.password || '123456').toString("base64");
+    const hashedPassword = Buffer.from(account?.password || "123456").toString(
+      "base64"
+    );
 
-    console.log('hashedPassword', hashedPassword)
+    console.log("hashedPassword", hashedPassword);
 
     const newAccount = {
       // _id: docId,
@@ -89,7 +92,7 @@ const createAccount = async (account) => {
       bucketCreated: false,
     };
 
-    console.log('newAccount', newAccount)
+    console.log("newAccount", newAccount);
     const response = await db.insert(newAccount);
     console.log(`Account created successfully:`, response);
 
@@ -105,7 +108,7 @@ const createAccount = async (account) => {
 };
 
 const deleteAccount = async (id) => {
-  console.log('account delete', id)
+  console.log("account delete", id);
   const dbName = "db_emailmanager_accounts";
   let db;
 
@@ -124,18 +127,17 @@ const deleteAccount = async (id) => {
   try {
     // Get the document using the ID
     const doc = await db.find({ selector: { id: id } });
-    
-    console.log('doc', doc)
+
+    console.log("doc", doc);
     // Delete the document using both _id and _rev
     await db.destroy(doc.docs[0]._id, doc.docs[0]._rev);
-    
+
     console.log(`Account deleted successfully: ${id}`);
     return {
       id,
       success: true,
-      message: "Account deleted successfully"
+      message: "Account deleted successfully",
     };
-
   } catch (error) {
     if (error.statusCode === 404) {
       console.error(`Account with ID ${account.id} not found.`);
@@ -145,8 +147,6 @@ const deleteAccount = async (id) => {
     throw new Error("Failed to delete account");
   }
 };
-
-
 
 const updateAccount = async (data) => {
   console.log("Data received in updateAccount service:", { data });
@@ -169,11 +169,11 @@ const updateAccount = async (data) => {
   try {
     let updatedDoc;
 
-    console.log('data', data)
+    console.log("data", data);
     if (data.id) {
       // Update existing account
       const existingDoc = await db.get(data.id);
-      
+
       if (!existingDoc) {
         console.log(`No user found with ID: ${data.id}`);
         return { success: false, message: "User not found." };
@@ -188,23 +188,25 @@ const updateAccount = async (data) => {
       // Create new account
       const accountId = uuidv4();
       const docId = `account_${data.email}_${accountId}`;
-      
+
       updatedDoc = {
         ...data,
         _id: docId,
         id: docId,
         role: data.email === "info@aythen.com" ? "superadmin" : "user",
-        bucketCreated: false
+        bucketCreated: false,
       };
     }
 
     // Insert/Update the document in the database
     const response = await db.insert(updatedDoc);
-    console.log(`Account ${data.id ? 'updated' : 'created'} successfully:`, response);
+    console.log(
+      `Account ${data.id ? "updated" : "created"} successfully:`,
+      response
+    );
 
     const { _id, _rev, ...sanitizedDoc } = updatedDoc;
     return sanitizedDoc;
-
   } catch (error) {
     console.error("Error updating/creating account:", error);
     throw new Error("Failed to update/create account");
@@ -704,21 +706,90 @@ const newsletter = async ({
   work,
   phone,
   keepInformed,
+  language = "es",
 }) => {
   console.log("desde actions");
 
+  let mailToAythenContent, mailFromAythenContent;
+
+  mailToAythenContent = `
+  <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+    <h1 style="text-align: center; font-size: 24px;">
+      <img src="cid:logo" style="max-width: 65%; height: auto;" />
+    </h1>
+    <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hola, ${name}</p>
+    <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}</p>
+  </div>`;
+  if (language === "es") {
+    // mailToAythenContent = `
+    // <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+    //   <h1 style="text-align: center; font-size: 24px;">
+    //     <img src="cid:logo" style="max-width: 65%; height: auto;" />
+    //   </h1>
+    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hola, ${name}</p>
+    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}</p>
+    // </div>`;
+
+    mailFromAythenContent = `
+    <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+      <h1 style="text-align: center; font-size: 24px;">
+        <img src="cid:logo" style="max-width: 65%; height: auto;" />
+      </h1>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hola, ${name}</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Gracias por querer estar en contacto con el equipo de FacturaGPT!</p>
+    </div>`;
+  } else {
+    // mailToAythenContent = `
+    // <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+    //   <h1 style="text-align: center; font-size: 24px;">
+    //     <img src="cid:logo" style="max-width: 65%; height: auto;" />
+    //   </h1>
+    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hello, ${name}</p>
+    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">You have received a new contact message.\n\nName: ${name}\nEmail: ${email}\n\nMessage:${message}\n\nWorks at:${work}\n\nPhone:${phone}\n\nKeep Informed:${keepInformed}</p>
+    // </div>`;
+
+    mailFromAythenContent = `
+    <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
+      <h1 style="text-align: center; font-size: 24px;">
+        <img src="cid:logo" style="max-width: 65%; height: auto;" />
+      </h1>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hello, ${name}</p>
+      <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Thank you for wanting to be in contact with the FacturaGPT team!</p>
+    </div>`;
+  }
+
   const mailToAythen = {
-    from: email, // El correo del usuario que llenó el formulario
-    to: "yyeremi15@gmail.com", // Tu correo donde recibirás los mensajes
-    subject: `Nuevo mensaje de ${name}`,
-    text: `Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}`,
+    from: email,
+    to: "yyeremi15@gmail.com",
+    subject: `Nuevo Mensaje de ${name}`,
+    // language === "es"
+    //   ? `Nuevo mensaje de ${name}`
+    //   : `New message from ${name}`,
+    html: mailToAythenContent,
+    attachments: [
+      {
+        filename: "GreenLogo.png",
+        path: path.join(__dirname, "assets/GreenLogo.png"),
+        cid: "logo",
+      },
+    ],
   };
 
   const mailFromAythen = {
-    from: "yyeremi15@gmail.com", // Tu correo
-    to: email, // Correo del usuario que llenó el formulario
-    subject: `Confirmación de recepción de mensaje de ${name}`,
-    text: `Hola ${name},\n\nGracias por tu mensaje. Hemos recibido tu consulta y nos pondremos en contacto contigo pronto.\n\nMensaje recibido:\n${message}\n\nSaludos,\nEl equipo.`,
+    from: "yyeremi15@gmail.com",
+    to: email,
+    subject:
+      language === "es"
+        ? `Confirmación de recepción de mensaje de ${name}`
+        : `Message receipt confirmation from ${name}`,
+    html: mailFromAythenContent,
+    attachments: [
+      {
+        filename: "GreenLogo.png",
+        path: path.join(__dirname, "assets/GreenLogo.png"),
+        cid: "logo",
+      },
+    ],
   };
 
   try {
@@ -728,10 +799,18 @@ const newsletter = async ({
     const infoFromAythen = await transporter.sendMail(mailFromAythen);
     console.log("Correo enviado al usuario:", infoFromAythen.response);
 
-    return { success: true, message: "Emails sent correctly" };
+    return {
+      success: true,
+      message:
+        language === "es"
+          ? "Correos enviados correctamente"
+          : "Emails sent correctly",
+    };
   } catch (error) {
     console.error("Error sending mail:", error);
-    throw new Error("Error sending mail");
+    throw new Error(
+      language === "es" ? "Error al enviar el correo" : "Error sending mail"
+    );
   }
 };
 

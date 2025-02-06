@@ -10,7 +10,8 @@ import FreeTrialButton from "../FreeTrialButton/FreeTrialButton";
 import SubtitleTemplate from "../SubtitleTemplate/SubtitleTemplate";
 
 import apiBackend from "@src/apiBackend.js";
-
+import HeaderCard from "../HeaderCard/HeaderCard";
+import Button from "../Button/Button";
 
 const ContactForm = () => {
   const { t } = useTranslation("contactForm");
@@ -22,6 +23,7 @@ const ContactForm = () => {
     work: "",
     phone: "",
     keepInformed: true,
+    lenguage: "es",
   });
   const handleCheckboxChange = () => {
     setFormData((prevFormData) => ({
@@ -32,13 +34,13 @@ const ContactForm = () => {
 
   const [statusMessage, setStatusMessage] = useState("");
   const [isMessageVisible, setIsMessageVisible] = useState(false);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -47,10 +49,14 @@ const ContactForm = () => {
     setIsMessageVisible(false);
 
     try {
-      const response = await apiBackend.post(
-        "/user/newsletter",
-        formData
-      );
+      const language = await localStorage.getItem("language");
+
+      const requestData = {
+        ...formData,
+        language, // Agregar language solo en el submit
+      };
+
+      const response = await apiBackend.post("/user/newsletter", requestData);
 
       if (response.status === 200) {
         setFormData({
@@ -216,17 +222,25 @@ const ContactForm = () => {
           </div>
         </div>
 
-        {isMessageVisible && (
-          <div
-            className={`${styles.statusMessage} ${
-              statusMessage.includes("exitosamente")
-                ? styles.success
-                : styles.error
-            }`}
-          >
-            {statusMessage}
-          </div>
-        )}
+        {isMessageVisible &&
+          (!statusMessage.includes("exitosamente") ? (
+            <div className={`${styles.statusMessage} ${styles.success}`}>
+              <HeaderCard title={"¡Gracias por contactarnos!"}>
+                <Button>Aceptar</Button>
+              </HeaderCard>
+              <div>
+                <p>
+                  Hemos recibido tu mensaje y nos pondremos en contacto contigo
+                  lo antes posible.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className={`${styles.statusMessage} ${styles.error}`}>
+              {statusMessage}
+            </div>
+          ))}
+
         <section className={styles.startNowSection}>
           <h2 className={styles.reviewsTitle}>¡Únase a nosotros hoy!</h2>
           <SubtitleTemplate

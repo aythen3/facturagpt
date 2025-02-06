@@ -5,6 +5,7 @@ import facturaGPT from "../../assets/FacturaGPTBlack.svg";
 import AccountSettings from "../AccountSettings/AccountSettings";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as AddPlus } from "../../assets/addPlus.svg";
+import { ReactComponent as AddPlusWhite } from "../../assets/addPlusWhite.svg";
 import addGreen from "../../assets/addGreen.svg";
 import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
 import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
@@ -23,17 +24,17 @@ import NewTag from "../NewTag/NewTag";
 import SelectLocation from "../SelectLocation/SelectLocation";
 
 import { sendEmail } from "@src/actions/user";
-
+import NewContact from "../NewContact/NewContact";
+import NewProduct from "../NewProduct/NewProduct";
+import NewBIll from "../NewBIll/NewBIll";
+import UploadFIle from "../UploadFIle/UploadFIle";
 
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
-const NavbarAdmin = ({ 
-  fromPath, 
-  setFromPath = () => {} 
-}) => {
+const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   // const { pathname } = window.location;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const fromPath = pathname.split("/")[2];
 
   // console.log('languageFromPath', fromPath)
@@ -45,6 +46,10 @@ const NavbarAdmin = ({
   // console.log(user);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [showNewTagModal, setShowNewTagModal] = useState(false);
+  const [showNewContact, setShowNewContact] = useState(false);
+  const [showNewProduct, setShowNewProduct] = useState(false);
+  const [showNewBill, setShowNewBill] = useState(false);
+  const [showUploadFile, setShowUplaodFile] = useState(false);
   const [selectedAutomationData, setSelectedAutomationData] = useState(null);
 
   const [showPlusModal, setShowPlusModal] = useState(false);
@@ -92,15 +97,15 @@ const NavbarAdmin = ({
     setMenuOpen(!menuOpen);
   };
 
-
   const handleSendEmail = async () => {
-    const resp = await dispatch(sendEmail({
-      // id: user.id,
-      email: 'info@aythen.com'
-    }))
-    console.log('resp emails', resp)
-  }
-
+    const resp = await dispatch(
+      sendEmail({
+        // id: user.id,
+        email: "info@aythen.com",
+      })
+    );
+    console.log("resp emails", resp);
+  };
 
   return (
     <>
@@ -111,11 +116,7 @@ const NavbarAdmin = ({
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
-          <button
-            onClick={() => handleSendEmail()}
-          >
-            Enviar email
-          </button>
+          <button onClick={() => handleSendEmail()}>Enviar email</button>
 
           <div className={styles.hiddenMobile}>
             <button
@@ -129,7 +130,10 @@ const NavbarAdmin = ({
               <img src={addBlack} alt="Icon" />
             </a> */}
               {!isOpen ? (
-                <a onClick={() => setIsOpen((prev) => !prev)}>
+                <a
+                  onClick={() => setIsOpen((prev) => !prev)}
+                  className={styles.addIcon}
+                >
                   <AddPlus />
                   {/* <img
                     src={addPlus}
@@ -142,12 +146,14 @@ const NavbarAdmin = ({
                   /> */}
                 </a>
               ) : (
-                <a>
-                  <img
+                <a className={`${styles.addIconGreen} ${styles.addIcon}`}>
+                  <AddPlusWhite />
+                  {/* <img
+                    className={styles.addIcon}
                     src={addGreen}
                     alt="Icon"
                     onClick={() => setIsOpen((prev) => !prev)}
-                  />
+                  /> */}
                 </a>
               )}
               <a
@@ -318,6 +324,12 @@ const NavbarAdmin = ({
               setShowLocationModal={setShowLocationModal}
               showNewTagModal={showNewTagModal}
               setShowNewTagModal={setShowNewTagModal}
+              showNewContact={showNewContact}
+              setShowNewContact={setShowNewContact}
+              showNewProduct={showNewProduct}
+              setShowNewProduct={setShowNewProduct}
+              setShowNewBill={setShowNewBill}
+              setShowUplaodFile={setShowUplaodFile}
             />
           )}
           {/* {true && (
@@ -351,10 +363,16 @@ const NavbarAdmin = ({
               isAnimating={isAnimating}
             />
           )}
-
-          {/* {true && ( 
-            <PanelIniAutomate />
-          )} */}
+          {showNewContact && (
+            <NewContact setShowNewContact={setShowNewContact} />
+          )}
+          {showNewProduct && (
+            <NewProduct setShowNewProduct={setShowNewProduct} />
+          )}
+          {showNewBill && <NewBIll setShowNewBill={setShowNewBill} />}
+          {showUploadFile && (
+            <UploadFIle setShowUplaodFile={setShowUplaodFile} />
+          )}
         </div>
       </Elements>
     </>

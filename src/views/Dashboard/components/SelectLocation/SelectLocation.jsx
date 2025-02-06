@@ -8,8 +8,9 @@ import CustomCheckboxWithLabel from "../CustomCheckboxWithLabel/CustomCheckboxWi
 import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
 import blackChevron from "../../assets/blackChevron.svg";
 import HeaderCard from "../HeaderCard/HeaderCard";
+import { ReactComponent as HouseContainer } from "../../assets/blackHouse.svg";
 import Button from "../Button/Button";
-const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
+const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
   const { user } = useSelector((state) => state.user);
   const { userFiles } = useSelector((state) => state.scaleway);
   const [isClosing, setIsClosing] = useState(false);
@@ -58,17 +59,23 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
       return newSet;
     });
   };
+  // Verifica si la ruta está vacía o si es la ruta seleccionada para expandir
 
   const renderFolders = (folders, path = "", depth = 0) => {
     return Object.keys(folders).map((folderName) => {
+      console.log("HOLA" + folderName);
+      console.log("CHAO" + path);
       const currentPath = `${path}${folderName}/`;
-      const isExpanded = expandedPaths.has(currentPath);
+      const isExpanded = expandedPaths.has(currentPath) || currentPath === "";
       const subFolders = folders[folderName].__folders;
       const hasMultipleSubFolders = Object.keys(subFolders).length > 1;
+      // Si currentPath es vacío, siempre aplicar 'expanded'
+      const shouldExpand = path === "" || isExpanded;
+
       return (
         <div
           key={currentPath}
-          className={`${styles.folderItem} ${isExpanded ? styles.expanded : ""}`}
+          className={`${styles.folderItem} ${shouldExpand ? styles.expanded : ""}`}
         >
           <div
             style={{
@@ -78,7 +85,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
             className={styles.folderInnerContainer}
             onClick={() => {
               toggleFolder(currentPath);
-              console.log(`currentPath ${currentPath}`);
+              // console.log(`currentPath ${currentPath}`);
             }}
           >
             {subFolders &&
@@ -118,13 +125,18 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
                   alt="Curved Line"
                 />
               )}
-              <img src={folderIcon} alt="Folder Icon" />
+              {path == "" ? (
+                <HouseContainer />
+              ) : (
+                <img src={folderIcon} alt="Folder Icon" />
+              )}
+
               <span>
                 {folderName === `${user?.id}` ? "/Inicio" : `/${folderName}`}
               </span>
             </div>
           </div>
-          {isExpanded && (
+          {(path === "" || isExpanded) && (
             <div className={styles.subFolders}>
               {hasMultipleSubFolders && (
                 <div
@@ -169,7 +181,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
             <img src={closeGray} alt="closeGray" />
           </div>
         </div> */}
-        <HeaderCard title={"Seleccionar Ubicación"}>
+        <HeaderCard title={"Seleccionar Ubicación"} setState={handleClose}>
           <Button type="white" action={handleClose}>
             Cancelar
           </Button>
@@ -178,6 +190,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
         {/* Content */}
         <div className={styles.contentContainer}>
           <div className={styles.content}>
+            {renderFolders(folderStructure)}
             <div
               onClick={() => {
                 console.log("Creating new folder on", selectedLocation);
@@ -187,7 +200,6 @@ const SelectLocation = ({ onClose, pickLocation = () => {} }) => {
             >
               Nueva Carpeta
             </div>
-            {renderFolders(folderStructure)}
           </div>
         </div>
         {/* Buttons */}

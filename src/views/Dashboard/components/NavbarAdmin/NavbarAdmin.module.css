@@ -61,7 +61,22 @@
   align-items: center;
   gap: 10px;
 }
+.addIcon {
+  height: 18px;
+  width: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
 
+.addIconGreen {
+  background-color: #10a37f;
+}
 .profile {
   display: flex;
   align-items: center;
@@ -160,7 +175,9 @@
   overflow-y: scroll;
   background-color: white;
   z-index: 1000;
-  transition: right 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    right 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
   color: black;
   scrollbar-width: none;
   box-shadow: 6px 0px 44px -24px black;
@@ -179,7 +196,6 @@
 .sidebarContent {
   padding: 20px;
 }
-
 
 .hiddenMobile {
   display: flex;
@@ -239,7 +255,8 @@
     justify-content: center;
     gap: 10px;
 
-    li, a {
+    li,
+    a {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -258,7 +275,6 @@
 }
 
 @media screen and (max-width: 768px) {
-
   .hiddenMobile {
     display: none;
   }
