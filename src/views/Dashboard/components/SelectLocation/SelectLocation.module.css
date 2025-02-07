@@ -99,7 +99,11 @@
   cursor: pointer;
   user-select: none;
   margin: 10px 0;
-  font-weight: 600;
+  font-weight: 500;
+}
+.closedFolder {
+  height: 15px;
+  width: 15px;
 }
 .selectButton {
   display: flex;
@@ -179,7 +183,7 @@
 }
 .curvedLine {
   position: absolute;
-  left: -33px;
+  left: -20px;
   top: 0;
 }
 .folderItem {

@@ -1,5 +1,16 @@
 .DetailsBillInputs {
   width: 100%;
+  input {
+    outline: none;
+    border: none;
+    background-color: #f4f4f4;
+    color: #757575;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  input::placeholder {
+    color: #757575;
+  }
 }
 .row {
   width: 100%;

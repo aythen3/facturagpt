@@ -2,7 +2,7 @@
   padding: 5px 20px;
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .seeHistoryContainer {
@@ -14,6 +14,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  position: sticky;
+  top: 0px;
+  padding-top: 0px;
+  background-color: white;
+  height: 100%;
+  z-index: 99;
   p {
     color: black;
     margin: 0;
@@ -368,6 +374,39 @@
       opacity: 1;
     }
   }
+
+  .btnContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .factContainer {
+    .factHeader {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    p {
+      margin: 0 auto;
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: #27272a;
+      font-weight: 300;
+      span {
+        text-transform: capitalize;
+      }
+    }
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   .info {
     display: flex;
     flex-direction: column;
@@ -466,7 +505,7 @@
 .saveButtonContainer {
   background-color: white;
   position: sticky;
-  bottom: 0px;
+  bottom: -1px;
   right: 0;
   display: flex;
   width: 100%;

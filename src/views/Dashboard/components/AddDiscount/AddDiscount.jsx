@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import HeaderCard from '../HeaderCard/HeaderCard';
-import styles from './AddDiscount.module.css';
-import DeleteButton from '../DeleteButton/DeleteButton';
-import Button from '../Button/Button';
-import DiscardChange from '../DiscardChange/DiscardChange';
+import React, { useState } from "react";
+import HeaderCard from "../HeaderCard/HeaderCard";
+import styles from "./AddDiscount.module.css";
+import DeleteButton from "../DeleteButton/DeleteButton";
+import Button from "../Button/Button";
+import DiscardChange from "../DiscardChange/DiscardChange";
 
 const AddDiscount = ({ setShowDiscountModal }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [discounts, setDiscounts] = useState([]);
-  const [discountName, setDiscountName] = useState('');
-  const [discountRate, setDiscountRate] = useState('');
+  const [discountName, setDiscountName] = useState("");
+  const [discountRate, setDiscountRate] = useState("");
 
   const handleRowClick = (index) => {
     setSelectedRow(index === selectedRow ? null : index);
   };
 
   const handleAddDiscount = () => {
-    if (discountName.trim() === '' || discountRate.trim() === '') return;
+    if (discountName.trim() === "" || discountRate.trim() === "") return;
 
     const newDiscount = {
       name: discountName,
@@ -24,8 +24,8 @@ const AddDiscount = ({ setShowDiscountModal }) => {
     };
 
     setDiscounts([...discounts, newDiscount]);
-    setDiscountName('');
-    setDiscountRate('');
+    setDiscountName("");
+    setDiscountRate("");
   };
 
   const handleDeleteDiscount = (index) => {
@@ -35,7 +35,7 @@ const AddDiscount = ({ setShowDiscountModal }) => {
   const [showDiscardChange, setShowDiscardChange] = useState(false);
 
   return (
-    <div>
+    <div className={styles.overlay}>
       <div
         className={styles.bg}
         onClick={() => setShowDiscountModal(false)}
@@ -53,7 +53,7 @@ const AddDiscount = ({ setShowDiscountModal }) => {
         className={`${styles.addTaxContainer} ${showDiscardChange && styles.opacity}`}
       >
         <HeaderCard
-          title={'Seleccionar Descuento'}
+          title={"Seleccionar Descuento"}
           setState={setShowDiscountModal}
         >
           <Button type="white" action={() => setShowDiscardChange(true)}>
@@ -97,9 +97,9 @@ const AddDiscount = ({ setShowDiscountModal }) => {
                 {discounts.map((discount, index) => (
                   <tr
                     key={index}
-                    className={selectedRow === index ? styles.selectedRow : ''}
+                    className={selectedRow === index ? styles.selectedRow : ""}
                     onClick={() => handleRowClick(index)}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                   >
                     <td className={styles.small}>
                       <input

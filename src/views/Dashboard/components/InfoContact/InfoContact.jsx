@@ -366,34 +366,39 @@ const InfoContact = () => {
                               ? "Guardar"
                               : "Editar"}
                           </div>
+                          {editingDetailIndex === index && (
+                            <DetailsBillInputs
+                              direccion={
+                                fieldValues.details[editingDetailIndex]
+                                  .direccion || ""
+                              }
+                              poblacion={
+                                fieldValues.details[editingDetailIndex]
+                                  .poblacion || ""
+                              }
+                              provincia={
+                                fieldValues.details[editingDetailIndex]
+                                  .provincia || ""
+                              }
+                              codigoPostal={
+                                fieldValues.details[editingDetailIndex]
+                                  .codigoPostal || ""
+                              }
+                              pais={
+                                fieldValues.details[editingDetailIndex].pais ||
+                                ""
+                              }
+                              handleChange={(key, value) =>
+                                handleDetailChange(
+                                  editingDetailIndex,
+                                  key,
+                                  value
+                                )
+                              }
+                            />
+                          )}
                         </div>
                       ))}
-                      {editingDetailIndex !== null && (
-                        <DetailsBillInputs
-                          direccion={
-                            fieldValues.details[editingDetailIndex].direccion ||
-                            ""
-                          }
-                          poblacion={
-                            fieldValues.details[editingDetailIndex].poblacion ||
-                            ""
-                          }
-                          provincia={
-                            fieldValues.details[editingDetailIndex].provincia ||
-                            ""
-                          }
-                          codigoPostal={
-                            fieldValues.details[editingDetailIndex]
-                              .codigoPostal || ""
-                          }
-                          pais={
-                            fieldValues.details[editingDetailIndex].pais || ""
-                          }
-                          handleChange={(key, value) =>
-                            handleDetailChange(editingDetailIndex, key, value)
-                          }
-                        />
-                      )}
                     </div>
                   </div>
                 ) : (
