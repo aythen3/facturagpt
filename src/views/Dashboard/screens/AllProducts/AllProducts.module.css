@@ -14,8 +14,6 @@
   }
 }
 
-
-
 .inputWrapper {
   position: relative;
   display: flex;
@@ -40,8 +38,6 @@
   }
 }
 
-
-
 .inputIconOutsideContainer {
   height: 100%;
   display: flex;
@@ -58,13 +54,13 @@
   -moz-border-radius: 0 10px 10px 0;
   -ms-border-radius: 0 10px 10px 0;
   -o-border-radius: 0 10px 10px 0;
-  
-.inputIconInside {
-  position: absolute;
-  left: 10px; /* Ícono dentro del input */
-  font-size: 16px;
-  color: #aaa;
-}
+
+  .inputIconInside {
+    position: absolute;
+    left: 10px; /* Ícono dentro del input */
+    font-size: 16px;
+    color: #aaa;
+  }
 }
 
 .infoBtn {
@@ -92,34 +88,34 @@
   width: 40px;
 }
 
-.addButton,
-.moreBtn {
+.addButton {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   height: 40px;
-  background-color: #233f39;
+  width: 40px;
+  background-color: #10a37f;
   color: white;
   border: none;
-  /*padding: 12px;
-  */
   cursor: pointer;
   font-size: 16px;
-  border-radius: 13px;
-  -webkit-border-radius: 13px;
-  -moz-border-radius: 13px;
-  -ms-border-radius: 13px;
-  -o-border-radius: 13px;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
   img {
     width: 15px;
     height: 15px;
   }
+  &:hover {
+    background-color: #122521;
+  }
 }
-.addButton:hover {
-  background-color: #122521;
+.btnNewClient {
+  width: auto;
 }
-
 .addIconOutside {
   font-size: 18px; /* Ícono fuera del input */
 }
@@ -157,7 +153,7 @@ tbody {
     font-weight: bold; /* Asegura que los encabezados sean visibles */
     width: 150px; /* Ajusta la anchura según lo necesario */
   }
-  
+
   td {
     padding: 10px; /* Espaciado interno para las celdas */
     color: #666666;
@@ -181,7 +177,6 @@ thead {
 .big {
   width: 190px;
 }
-
 
 .actions {
   display: flex;
@@ -558,10 +553,21 @@ input[type="checkbox"] {
   padding: 15px;
   bottom: 20px;
   right: 0;
-  
+
   .item_menu_actions {
     list-style-type: none;
     color: white;
     cursor: pointer;
   }
+}
+.searchIconsWrappers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #ececf1;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 3px;
 }

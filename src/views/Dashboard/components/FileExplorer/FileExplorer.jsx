@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import styles from "./FileExplorer.module.css";
-import folderIcon from "../../assets/S3/folderIcon.svg";
+import folderIcon from "../../assets/folderClosed.svg";
 import imageIcon from "../../assets/S3/imageIcon.svg";
 import codeIcon from "../../assets/S3/codeIcon.svg";
 import fileIcon from "../../assets/S3/fileIcon.svg";
@@ -28,13 +28,14 @@ import {
 import SelectLocation from "../SelectLocation/SelectLocation";
 import FileOptionsPopup from "./FileOptionsPopup";
 import { FaUpload } from "react-icons/fa";
-import searchMagnify from "../../assets/searchMagnify.svg";
+
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
+import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
 
 export default function FileExplorer({ isOpen, setIsOpen }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { currentPath, userFiles, getFilesLoading, uploadingFilesLoading } =
     useSelector((state) => state.scaleway);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -177,6 +178,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
   // ==================================================================================================================
 
   const handleOptionsClick = (index, event) => {
+    console.log("index", index);
     event.stopPropagation();
     if (activePopup !== index) {
       setActivePopup(index);
@@ -504,7 +506,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
     // console.log(userFilters.keyWord !== "");
   };
 
-
   // ---------------------------------------------------
 
   const searchInputRef = useRef(null);
@@ -522,8 +523,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-
-  
   return (
     <div
       className={styles.container}
@@ -532,54 +531,48 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
       onDragOver={handleContainerDragOver}
       onDragLeave={() => setDragingOverContainer(false)}
     >
-      <div className={styles.searchContainer}>
-        <div className={styles.searchInputWrapper}>
-          <div className={styles.searchIcon}>
-            <img src={searchMagnify} alt="searchMagnify" />
-          </div>
-          <input
-          ref={searchInputRef}
-            type="text"
-            placeholder="Buscar"
-            className={styles.searchInput}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {/* <div
-            onClick={() => setShowLocationModal(true)}
-            className={styles.searchIconsWrappers}
-          >
-            <img src={cmd} alt="cmdIcon" />
-          </div> */}
+      {/* <div className={styles.searchContainer}> */}
+      <SearchIconWithIcon
+        ref={searchInputRef}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        iconRight={
+          userFilters &&
+          Object.keys(userFilters).length > 0 &&
+          userFilters.keyWord !== ""
+            ? filterIconGreen
+            : filterIcon
+        }
+        classNameIconRight={styles.searchContainerL}
+        onClickIconRight={() => setIsFilterOpen(true)}
+      >
+        <>
           <div
             style={{ marginLeft: "5px" }}
             className={styles.searchIconsWrappers}
           >
             <img src={l} alt="kIcon" />
           </div>
-        </div>
-        <div
+        </>
+      </SearchIconWithIcon>
+      {/* <div
           // ${userFilters && Object.keys(userFilters).length > 0 && userFilters.keyWord !== "" ? styles.greenBackground : ""}
           className={`${styles.searchContainerL}`}
           onClick={() => setIsFilterOpen(true)}
           style={{ cursor: "pointer" }}
         >
           {userFilters &&
-            Object.keys(userFilters).length > 0 &&
-            userFilters.keyWord !== "" ? (
+          Object.keys(userFilters).length > 0 &&
+          userFilters.keyWord !== "" ? (
             <img src={filterIconGreen} alt="filterIcon" />
           ) : (
             <img src={filterIcon} alt="filterIcon" />
           )}
-        </div>
-        {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
+        </div> */}
+      {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
+      {/* </div> */}
 
-      </div>
-
-     
-      <div 
-      className={styles.fileList}
-      >
+      <div className={styles.fileList}>
         {getFilesLoading ? (
           <div className={styles.loaderContainer}>
             <MutatingDots
@@ -607,6 +600,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             const fileName = isFolder
               ? item.Key.split("/").slice(-2, -1)[0]
               : item.Key.split("/").pop();
+            console.log("item.key", fileName);
 
             return (
               <div
@@ -616,11 +610,11 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                     dispatch(setCurrentPath(item.Key));
                   }
 
-                  if(isFolder){
-                    navigate('/admin/panel')
-                  }else{
-                    console.log('item.Key', item)
-                    navigate('/admin/panel/' + item.ETag)
+                  if (isFolder) {
+                    navigate("/admin/panel");
+                  } else {
+                    console.log("item.Key", item);
+                    navigate("/admin/panel/" + item.ETag);
                   }
                 }}
                 key={index}
@@ -689,10 +683,12 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         )}
       </div>
 
-     
       <div className={styles.bottomMenu}>
-        <HouseContainer /> 
-         {/* <span>2025</span> */}
+        <HouseContainer
+          onClick={() => dispatch(setCurrentPath(user.id + "/"))}
+          className={styles.icon}
+        />
+        {/* <span>2025</span> */}
 
         {renderBreadcrumbs()}
       </div>
@@ -705,7 +701,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         handleApplyFilters={handleApplyFilters}
         isFilterOpen={isFilterOpen}
       />
-
     </div>
   );
 }

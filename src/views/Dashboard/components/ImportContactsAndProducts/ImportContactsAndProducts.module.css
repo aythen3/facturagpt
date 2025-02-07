@@ -1,0 +1,74 @@
+.overlay {
+  z-index: 999;
+  position: absolute;
+}
+.bg {
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.importContainer {
+  background-color: white;
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  h2 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 25px;
+  }
+  p {
+    margin: 0;
+    color: #391c77;
+    font-weight: bold;
+  }
+  header {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+.dropZone {
+  border: 2px dashed #ccc;
+  padding: 30px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.uploadButton {
+  background-color: transparent;
+  color: #2ebc89;
+  padding: 10px 20px;
+  border: 1px solid #2ebc89;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dragging {
+  border-color: #2ebc89;
+}

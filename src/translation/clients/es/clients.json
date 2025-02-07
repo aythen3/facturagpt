@@ -1,6 +1,6 @@
 {
   "title": "Gestión de Contactos",
-  "buttonNewClient": "Nuevo Cliente",
+  "buttonNewClient": "Nuevo Contacto",
   "placeholderSearch": "Buscar",
   "tableCol1": "Nombre",
   "tableCol2": "Correo",

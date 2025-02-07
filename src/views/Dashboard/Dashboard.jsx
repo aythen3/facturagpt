@@ -30,7 +30,7 @@ import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
 import { useNavigate } from "react-router-dom";
 import {
   getAllClients,
-  getAllUsers,
+  // getAllUsers,
   // updateClient,
   // getEmailsByQuery,
 } from "../../actions/user";
@@ -38,9 +38,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import Payment from "./screens/UserSettings/StripeComponents/Payment";
+import Payment from "./screens/AccountSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
-import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
+import SetupPayment from "./screens/AccountSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
 // import UserSettings from "./screens/UserSettings/UserSettings";
 // import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
@@ -135,7 +135,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAllClients());
-    dispatch(getAllUsers());
+    // dispatch(getAllUsers());
   }, [dispatch]);
 
   useEffect(() => {
@@ -474,7 +474,6 @@ const Dashboard = () => {
     },
   ];
 
-
   // const [fromPath, setFromPath] = useState("chat");
 
   return (
@@ -512,7 +511,7 @@ const Dashboard = () => {
             <div className={styles.talkWithFacturaGPT}>
               <FacturaGPTIcon className={styles.icon} />
               <p>Datos y Analíticas en el Chat</p>
-              <button onClick={() => navigate('/chat')}>
+              <button onClick={() => navigate("/chat")}>
                 <ChatGPTIconGreen /> Habla con FacturaGPT
               </button>
             </div>
@@ -591,14 +590,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-
-
-
-
-
-
-
-      
       {/* <div className={styles.container}>
         {showPaymentModal && amountToPay && (
           <Payment

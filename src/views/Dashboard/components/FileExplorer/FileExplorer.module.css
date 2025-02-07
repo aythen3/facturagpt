@@ -28,6 +28,7 @@
   align-items: center;
   justify-content: center;
   padding: 8px;
+  cursor: pointer;
   img {
     transition: filter 0.1s ease;
     -webkit-transition: filter 0.1s ease;
@@ -327,5 +328,8 @@
   color: #2222226d;
   span {
     color: #222222;
+  }
+  .icon {
+    cursor: pointer;
   }
 }

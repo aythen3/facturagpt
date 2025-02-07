@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-
 .container {
   display: flex;
   height: 93vh;
@@ -11,7 +10,7 @@
   position: relative;
 }
 
-.chatSection{
+.chatSection {
   display: flex;
   align-items: flex-start;
   height: 100vh;
@@ -36,13 +35,7 @@
   }
 }
 
-
-
-
-
 /**/
-
-
 
 .chatContainer {
   width: 100%;
@@ -126,7 +119,7 @@
     .img {
       background-color: #073f31;
       height: 40px;
-      width: 40px;
+      min-width: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -200,7 +193,9 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: red;
+    background: #10a37f;
+    padding: 8px;
+    box-sizing: border-box;
   }
 }
 
@@ -215,14 +210,48 @@
   /* Mensajes del bot a la izquierda */
 }
 
-
-
-
-.chatMenu{
+.chatMenu {
   background: #f5f5f5;
   height: 100%;
   width: 100%;
   max-width: 300px;
+
+  .chatsContainer {
+    height: 85%;
+    overflow-y: scroll;
+    padding: 10px;
+    box-sizing: border-box;
+    h3 {
+      font-weight: 500;
+      margin: 0;
+      font-size: 15px;
+    }
+    ul {
+      padding-left: 15px;
+      li {
+        list-style: none;
+        padding: 12px;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .icon {
+        opacity: 0;
+      }
+      li:hover .icon {
+        opacity: 1;
+      }
+    }
+    .active {
+      background-color: #ececf1;
+    }
+  }
   .searchInputWrapper {
     display: flex;
     align-items: center;
@@ -237,7 +266,7 @@
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
     width: 100%;
-  
+
     .searchIcon {
       display: flex;
       align-items: center;
@@ -246,7 +275,7 @@
       height: 24px;
       color: #666;
     }
-  
+
     .searchInput {
       flex: 1;
       padding: 8px;
@@ -255,15 +284,14 @@
       font-size: 14px;
       outline: none;
       width: 100%;
-  
+
       &::placeholder {
         color: #666;
       }
     }
-  
   }
 
-  .chatMenuSettings{
+  .chatMenuSettings {
     position: absolute;
     top: 0;
     left: 0;
@@ -272,17 +300,43 @@
     width: 100%;
     height: 100%;
     display: none;
-    ul{
+    ul {
       display: flex;
       flex-direction: column;
       gap: 10px;
       list-style: none;
-      li{
+      li {
         padding: 10px;
         border-radius: 10px;
         background: #fff;
         cursor: pointer;
       }
     }
+  }
+}
+.searchIconsWrappers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #ececf1;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 3px;
+}
+
+.searchContainerL {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+  img {
+    transition: filter 0.1s ease;
+    -webkit-transition: filter 0.1s ease;
+    -moz-transition: filter 0.1s ease;
+    -ms-transition: filter 0.1s ease;
+    -o-transition: filter 0.1s ease;
   }
 }

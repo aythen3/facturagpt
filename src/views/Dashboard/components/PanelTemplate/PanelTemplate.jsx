@@ -44,7 +44,8 @@ const PanelTemplate = ({ children }) => {
     <>
       <NavbarAdmin fromPath={fromPath} setFromPath={setFromPath} />
       <div className={styles.container}>
-        {fromPath !== "accounts" && fromPath !== "chat" && (
+        {/* {fromPath !== "accounts" && fromPath !== "chat" && ( */}
+        {fromPath !== "accounts" && (
           <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
         )}
         <div className={styles.contentTemplate}>{children}</div>

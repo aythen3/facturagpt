@@ -120,7 +120,9 @@ const Pricing = () => {
   ];
 
   useEffect(() => {
-    const index = Math.min(Math.floor(sliderValue / 10), cardsData.length - 1);
+    const index = cardsData.findIndex(
+      (card) => sliderValue >= card.min && sliderValue <= card.max
+    );
     const card = cardsData[index];
     if (card) {
       setCurrentPlan({
@@ -129,6 +131,7 @@ const Pricing = () => {
       });
       setSelectedCard(index);
     }
+    console.log(card);
   }, [sliderValue]);
 
   const handleSliderChange = (event) => {
@@ -136,10 +139,10 @@ const Pricing = () => {
   };
 
   const getSelectedPlanIndex = () => {
-    if (sliderValue <= 9) return 0;
-    if (sliderValue <= 49) return 1;
-    if (sliderValue <= 69) return 2;
-    if (sliderValue <= 99) return 3;
+    if (sliderValue <= 9000) return 0;
+    if (sliderValue <= 49000) return 1;
+    if (sliderValue <= 69000) return 2;
+    if (sliderValue <= 99000) return 3;
     return 4;
   };
 
@@ -149,7 +152,7 @@ const Pricing = () => {
   const calculateProgress = () => {
     const min = 0;
     const max = 100;
-    return ((sliderValue - min) / (max - min)) * 100; // Calcula el progreso en porcentaje
+    return (sliderValue - min) / (max - min) / 10; // Calcula el progreso en porcentaje
   };
 
   return (
@@ -161,11 +164,15 @@ const Pricing = () => {
           <SubtitleTemplate
             text={"Elige el mejor plan que se adapte a tus necesidades."}
           />
-          <p className={styles.currentPlan}>{currentPlan.documents}</p>
+          {/* <p className={styles.currentPlan}>{currentPlan.documents}</p> */}
+          <p className={styles.currentPlan}>
+            {sliderValue.toLocaleString("es-ES")} Documentos
+          </p>
+
           <input
             type="range"
             min="0"
-            max="100"
+            max="100000"
             value={sliderValue}
             onChange={handleSliderChange}
             className={styles.slider}
