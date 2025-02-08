@@ -13,35 +13,35 @@ const PricingPlanCard = ({
 }) => {
   const navigate = useNavigate();
   const getDocumentPrice = () => {
-    if (sliderValue <= 9) return 0;
-    if (sliderValue <= 19) return 0.2;
-    if (sliderValue <= 29) return 0.19;
-    if (sliderValue <= 39) return 0.18;
-    if (sliderValue <= 49) return 0.16;
-    if (sliderValue <= 59) return 0.15;
-    if (sliderValue <= 69) return 0.13;
-    if (sliderValue <= 79) return 0.12;
-    if (sliderValue <= 89) return 0.11;
-    if (sliderValue <= 94) return 0.09;
-    if (sliderValue <= 99) return 0.05;
+    if (sliderValue <= 9000) return 0;
+    if (sliderValue <= 19000) return 0.2;
+    if (sliderValue <= 29000) return 0.19;
+    if (sliderValue <= 39000) return 0.18;
+    if (sliderValue <= 49000) return 0.16;
+    if (sliderValue <= 59000) return 0.15;
+    if (sliderValue <= 69000) return 0.13;
+    if (sliderValue <= 79000) return 0.12;
+    if (sliderValue <= 89000) return 0.11;
+    if (sliderValue <= 94000) return 0.09;
+    if (sliderValue <= 99000) return 0.05;
     return 0.05;
   };
   const documentPrice = getDocumentPrice();
   const calculatePrice = () => {
-    // if (sliderValue <= 10) return "0,00";
+    // if (sliderValue <= 10000) return "0,00";
     if (sliderValue == 100) return "¿Aún más?";
     console.log(sliderValue);
-    if (sliderValue <= 9) return 0;
-    if (sliderValue <= 19) return "4";
-    if (sliderValue <= 29) return "38";
-    if (sliderValue <= 39) return "92";
-    if (sliderValue <= 49) return "172";
-    if (sliderValue <= 59) return "322";
-    if (sliderValue <= 69) return "712";
-    if (sliderValue <= 79) return "1.312";
-    if (sliderValue <= 89) return "2.412";
-    if (sliderValue <= 94) return "5.112";
-    if (sliderValue <= 99) return "7.612";
+    if (sliderValue <= 9000) return 0;
+    if (sliderValue <= 19000) return "4";
+    if (sliderValue <= 29000) return "38";
+    if (sliderValue <= 39000) return "92";
+    if (sliderValue <= 49000) return "172";
+    if (sliderValue <= 59000) return "322";
+    if (sliderValue <= 69000) return "712";
+    if (sliderValue <= 79000) return "1.312";
+    if (sliderValue <= 89000) return "2.412";
+    if (sliderValue <= 94000) return "5.112";
+    if (sliderValue <= 99000) return "7.612";
     // if (sliderValue <= 94) return "7.612";
     // console.log((documentos * documentPrice).toFixed(2).replace('.', ','));
     // return (documentos * documentPrice).toFixed(2).replace('.', ',');
@@ -64,7 +64,7 @@ const PricingPlanCard = ({
           )}
         </p>
         {priceTag && <span className={styles.priceTag}>{priceTag}</span>}
-        {sliderValue > 9 && sliderValue <= 99 && (
+        {sliderValue > 9 && sliderValue <= 99000 && (
           <p className={styles.docPrice}>
             {getDocumentPrice().toFixed(2)}€ por documento
           </p>

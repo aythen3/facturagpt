@@ -11,6 +11,9 @@ import optionDots from "../../assets/optionDots.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
 import LastTransactions from "../../components/LastTransactions/LastTransactions";
+import winIcon from "../../assets/winIcon.svg";
+import KIcon from "../../assets/KIcon.svg";
+import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
 
 import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
 import EditableInput from "../Clients/EditableInput/EditableInput";
@@ -24,6 +27,10 @@ import {
 } from "../../../../actions/transactions";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
+import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
+import Button from "../../components/Button/Button";
+import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
+import NewProduct from "../../components/NewProduct/NewProduct";
 
 const AllProducts = () => {
   const { t } = useTranslation("clients");
@@ -31,6 +38,8 @@ const AllProducts = () => {
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showImportAssets, setShowImportAssets] = useState(false);
+  const [newClient, setShowNewClient] = useState(false);
   const { transactionByClient, loading } = useSelector(
     (state) => state.transactions
   );
@@ -159,7 +168,7 @@ const AllProducts = () => {
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
           <h2>Articulos</h2>
-          <div className={styles.searchContainer}>
+          {/* <div className={styles.searchContainer}>
             <button
               className={styles.addButton}
               onClick={() => setShowModal(true)}
@@ -190,9 +199,72 @@ const AllProducts = () => {
             <button className={styles.moreBtn}>
               <img src={plusIcon} />
             </button>
+          </div> */}
+          <div className={styles.searchContainer}>
+            <button
+              className={`${styles.addButton} ${styles.btnNewClient}`}
+              onClick={() => setShowNewClient(true)}
+            >
+              <img src={plusIcon} alt="Nuevo cliente" />
+              Nuevo Activo
+            </button>
+            <Button
+              type="white"
+              headerStyle={{ padding: "6px 10px" }}
+              action={() => setShowImportAssets(true)}
+            >
+              <DownloadIcon />
+            </Button>
+            <SearchIconWithIcon
+            // ref={searchInputRef}
+            // searchTerm={searchTerm}
+            // setSearchTerm={setSearchTerm}
+            // iconRight={pencilSquareIcon}
+            // classNameIconRight={styles.searchContainerL}
+            // onClickIconRight={() => setIsFilterOpen(true)}
+            >
+              <>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={winIcon} alt="kIcon" />
+                </div>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={KIcon} alt="kIcon" />
+                </div>
+              </>
+            </SearchIconWithIcon>
+            {/* <div className={styles.inputWrapper}>
+              <img src={searchGray} className={styles.inputIconInside} />
+              <input
+                type="text"
+                placeholder={t("placeholderSearch")}
+                value={search}
+                onChange={handleSearchChange}
+                className={styles.searchInput}
+              />
+          
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={l} alt="kIcon" />
+              </div>
+            </div>
+             */}
           </div>
         </div>
-
+        {showImportAssets && (
+          <ImportContactsAndProducts
+            state={setShowImportAssets}
+            text="productos"
+          />
+        )}
+        {newClient && <NewProduct setShowNewProduct={setShowNewClient} />}
         <div className={styles.clientsTable} style={{ overflow: "auto" }}>
           <table className={styles.table}>
             <thead>
@@ -289,10 +361,7 @@ const AllProducts = () => {
           </table>
         </div>
         {showModal && (
-          <LastTransactions
-            setShowModal={setShowModal}
-            showModal={showModal}
-          />
+          <LastTransactions setShowModal={setShowModal} showModal={showModal} />
         )}
         {newProductModal && (
           <ModalTemplate onClick={closeNewProductModal}>
@@ -320,10 +389,11 @@ const AllProducts = () => {
                   <div
                     className={`
                     ${styles.typeClient}
-                    ${inputsEditing.name
+                    ${
+                      inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
-                      }
+                    }
                       `}
                   >
                     <button

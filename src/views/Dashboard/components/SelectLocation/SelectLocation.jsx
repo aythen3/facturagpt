@@ -9,7 +9,7 @@ import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
 import blackChevron from "../../assets/blackChevron.svg";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import { ReactComponent as HouseContainer } from "../../assets/blackHouse.svg";
-import { ReactComponent as FolderClosed } from "../../assets/folderCloded.svg";
+import FolderClosed from "../../assets/folderClosed.svg";
 import Button from "../Button/Button";
 const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
   const { user } = useSelector((state) => state.user);
@@ -131,7 +131,8 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
               ) : isExpanded ? (
                 <img src={folderIcon} alt="Folder Icon" />
               ) : (
-                <FolderClosed className={styles.closedFolder} />
+                <img src={FolderClosed} alt="Folder Icon" />
+                // <FolderClosed className={styles.closedFolder} />
               )}
 
               <span>
