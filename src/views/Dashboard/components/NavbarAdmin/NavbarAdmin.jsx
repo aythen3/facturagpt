@@ -116,7 +116,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
-          <button onClick={() => handleSendEmail()}>Enviar email</button>
+          {/* <button onClick={() => handleSendEmail()}>Enviar email</button> */}
 
           <div className={styles.hiddenMobile}>
             <button
@@ -305,6 +305,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
             </>
           )}
 
+        </div>
           {/* PopUps */}
           <div
             className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}
@@ -332,11 +333,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               setShowUplaodFile={setShowUplaodFile}
             />
           )}
-          {/* {true && (
-            <div>
-              hello
-            </div>
-          )} */}
           {isModalAutomate && (
             <Automate
               typeContent={handleShowContentAutomate}
@@ -373,7 +369,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
           {showUploadFile && (
             <UploadFIle setShowUplaodFile={setShowUplaodFile} />
           )}
-        </div>
       </Elements>
     </>
   );

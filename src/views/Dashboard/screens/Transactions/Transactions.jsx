@@ -22,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { clearClient } from "../../../../slices/clientsSlices";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
+import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
 
 const Transactions = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -246,469 +247,467 @@ const Transactions = () => {
   console.log("TRANSACTIONS SELECTED IDS----", selectedTransactionIds);
 
   return (
-    <div>
-      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div style={{ display: "flex" }}>
-        <FileExplorer />
-
-        <div className={styles.container} onClick={() => setShowSidebar(false)}>
-          <div className={styles.clientsHeader}>
-            <div className={styles.infoClient}>
-              <div className={styles.contactInfo}>
-                <h3>{client?.clientData?.clientName}</h3>
-                <span>{client?.email}</span>
-                <span>
-                  {client?.clientData?.codeCountry}{" "}
-                  {client?.clientData?.numberPhone}
-                </span>
-              </div>
-              <div className={styles.info}>
-                <p>Número Fiscal</p>
-                <span>{client?.clientData?.taxNumber}</span>
-              </div>
-              <div className={styles.info}>
-                <p>ID Cliente</p>
-                <span>{client?.id.slice(-21, -16)}</span>
-              </div>
+    <PanelTemplate>
+      <div className={styles.container} onClick={() => setShowSidebar(false)}>
+        <div className={styles.clientsHeader}>
+          <div className={styles.infoClient}>
+            <div className={styles.contactInfo}>
+              <h3>{client?.clientData?.clientName}</h3>
+              <span>{client?.email}</span>
+              <span>
+                {client?.clientData?.codeCountry}{" "}
+                {client?.clientData?.numberPhone}
+              </span>
             </div>
-            <div className={styles.searchContainer}>
-              <button
-                className={styles.infoBtn}
-                onClick={() => setShowNewClient(true)}
-              >
-                <img src={plusIcon} alt="" />
-                Nueva transacción
-              </button>
+            <div className={styles.info}>
+              <p>Número Fiscal</p>
+              <span>{client?.clientData?.taxNumber}</span>
+            </div>
+            <div className={styles.info}>
+              <p>ID Cliente</p>
+              <span>{client?.id.slice(-21, -16)}</span>
+            </div>
+          </div>
+          <div className={styles.searchContainer}>
+            <button
+              className={styles.infoBtn}
+              onClick={() => setShowNewClient(true)}
+            >
+              <img src={plusIcon} alt="" />
+              Nueva transacción
+            </button>
 
-              <div className={styles.inputWrapper}>
-                <img src={searchGray} className={styles.inputIconInside} />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={search}
-                  onChange={handleSearchChange}
-                  className={styles.searchInput}
-                />
-                <div className={styles.inputIconOutsideContainer}>
-                  <img src={filterSearch} className={styles.inputIconOutside} />
-                </div>
+            <div className={styles.inputWrapper}>
+              <img src={searchGray} className={styles.inputIconInside} />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={search}
+                onChange={handleSearchChange}
+                className={styles.searchInput}
+              />
+              <div className={styles.inputIconOutsideContainer}>
+                <img src={filterSearch} className={styles.inputIconOutside} />
               </div>
             </div>
           </div>
+        </div>
 
-          <div style={{ overflow: "auto" }}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th className={styles.small}>
+        <div className={styles.clientsTable}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.small}>
+                  <input
+                    type="checkbox"
+                    name="clientSelected"
+                    checked={
+                      clientSelected.length == tableData.length ? true : false
+                    }
+                    onClick={selectAllClients}
+                  />
+                </th>
+                {tableHeaders.map((header, index) => (
+                  <th key={index} className={index == 8 ? styles.small : ""}>
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {transactionsByClient.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  <td>
                     <input
                       type="checkbox"
                       name="clientSelected"
+                      onChange={() => toggleTransactionSelection(row.id)}
+                      onClick={() => selectClient(rowIndex)}
                       checked={
-                        clientSelected.length == tableData.length ? true : false
+                        clientSelected.includes(rowIndex) ? true : false
                       }
-                      onClick={selectAllClients}
                     />
-                  </th>
-                  {tableHeaders.map((header, index) => (
-                    <th key={index} className={index == 8 ? styles.small : ""}>
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {transactionsByClient.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="clientSelected"
-                        onChange={() => toggleTransactionSelection(row.id)}
-                        onClick={() => selectClient(rowIndex)}
-                        checked={
-                          clientSelected.includes(rowIndex) ? true : false
-                        }
-                      />
-                    </td>
-                    <td className={styles.idContainer}>
-                      <img src={pdf} className={styles.pdfIcon} />
-                      {row.id.slice(10, 15)}
-                    </td>
-                    {/* <td>
+                  </td>
+                  <td className={styles.idContainer}>
+                    <img src={pdf} className={styles.pdfIcon} />
+                    {row.id.slice(10, 15)}
+                  </td>
+                  {/* <td>
                     {Array.isArray(row.desc)
                       ? row.desc.map((item, itemIndex) => (
                           <p key={itemIndex}>{item}</p>
                         ))
                       : row.desc}
                   </td> */}
-                    <td>
-                      <p>
-                        {row?.doc?.totalData?.description
-                          ? row?.doc?.totalData?.description
-                          : "Sin descripción"}
-                      </p>
-                    </td>
-                    <td>
-                      <div className={styles.tags}>
-                        <span className={`${styles.tag} ${styles.tagBlack}`}>
-                          Etiqueta
-                        </span>
-                        <span className={`${styles.tag} ${styles.tagBlue}`}>
-                          Etiqueta
-                        </span>
-                        <span className={`${styles.tag} ${styles.tagRed}`}>
-                          Etiqueta
-                        </span>
-                        <span className={`${styles.tag} ${styles.tagGreen}`}>
-                          Etiqueta
-                        </span>
-                      </div>
-                    </td>
-                    <td>{row?.doc?.totalData?.totalAmount}</td>
-                    <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
-                    <td>
-                      {row?.doc?.totalData?.expirationDateYear}-
-                      {row?.doc?.totalData?.expirationDateMonth}-
-                      {row?.doc?.totalData?.expirationDateDay}
-                    </td>
-                    <td>
-                      {row.doc?.totalData?.payMethod
-                        ? row.doc?.totalData?.payMethod
-                        : "Sin especificar"}
-                    </td>
-                    <td>
+                  <td>
+                    <p>
+                      {row?.doc?.totalData?.description
+                        ? row?.doc?.totalData?.description
+                        : "Sin descripción"}
+                    </p>
+                  </td>
+                  <td>
+                    <div className={styles.tags}>
+                      <span className={`${styles.tag} ${styles.tagBlack}`}>
+                        Etiqueta
+                      </span>
+                      <span className={`${styles.tag} ${styles.tagBlue}`}>
+                        Etiqueta
+                      </span>
+                      <span className={`${styles.tag} ${styles.tagRed}`}>
+                        Etiqueta
+                      </span>
+                      <span className={`${styles.tag} ${styles.tagGreen}`}>
+                        Etiqueta
+                      </span>
+                    </div>
+                  </td>
+                  <td>{row?.doc?.totalData?.totalAmount}</td>
+                  <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
+                  <td>
+                    {row?.doc?.totalData?.expirationDateYear}-
+                    {row?.doc?.totalData?.expirationDateMonth}-
+                    {row?.doc?.totalData?.expirationDateDay}
+                  </td>
+                  <td>
+                    {row.doc?.totalData?.payMethod
+                      ? row.doc?.totalData?.payMethod
+                      : "Sin especificar"}
+                  </td>
+                  <td>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      {/* <span className={getStateClass(row.state[0])}>
+                        &bull;
+                      </span> */}
+                      <span>
+                        {row?.doc?.totalData?.status
+                          ? row?.doc?.totalData?.status
+                          : "pendiente"}
+                      </span>
                       <div
                         style={{
                           display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
+                          flexDirection: "column-reverse",
                         }}
                       >
-                        {/* <span className={getStateClass(row.state[0])}>
-                        &bull;
-                      </span> */}
-                        <span>
-                          {row?.doc?.totalData?.status
-                            ? row?.doc?.totalData?.status
-                            : "pendiente"}
-                        </span>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column-reverse",
-                          }}
-                        >
-                          {Array.isArray(row.state) ? (
-                            row.state.map((item, itemIndex) => (
-                              <p
-                                key={itemIndex}
-                                style={{
-                                  color: itemIndex === 1 ? "blue" : "",
-                                  fontWeight:
-                                    itemIndex === 1 ? "600" : "inherit",
-                                  margin: "0",
-                                }}
-                                className={getStateClass(row.state[0])}
-                              >
-                                {item}
-                              </p>
-                            ))
-                          ) : (
-                            <p>{row.state}</p>
-                          )}
-                        </div>
+                        {Array.isArray(row.state) ? (
+                          row.state.map((item, itemIndex) => (
+                            <p
+                              key={itemIndex}
+                              style={{
+                                color: itemIndex === 1 ? "blue" : "",
+                                fontWeight:
+                                  itemIndex === 1 ? "600" : "inherit",
+                                margin: "0",
+                              }}
+                              className={getStateClass(row.state[0])}
+                            >
+                              {item}
+                            </p>
+                          ))
+                        ) : (
+                          <p>{row.state}</p>
+                        )}
                       </div>
-                    </td>
-                    <td className={styles.actions}>
-                      <div className={styles.transacciones}>
-                        <a
-                          onClick={() => {
-                            navigate("/allproducts");
-                            dispatch(setTransaction(row));
-                          }}
-                          href="#"
-                        >
-                          Ver
-                        </a>
-                        <span>(2.345)</span>
-                      </div>
-                      <div
+                    </div>
+                  </td>
+                  <td className={styles.actions}>
+                    <div className={styles.transacciones}>
+                      <a
                         onClick={() => {
-                          toggleTransactionSelection(row.id);
-                          handleActions(rowIndex, row);
+                          navigate("/allproducts");
+                          dispatch(setTransaction(row));
                         }}
+                        href="#"
                       >
-                        <img src={optionDots} />
-                      </div>
-                      {selectedRowIndex === rowIndex && (
-                        <ul className={styles.content_menu_actions}>
-                          <li
-                            onClick={() => {
-                              setShowNewClient(true);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Editar
-                          </li>
-                          <li
-                            onClick={(e) => {
-                              handleDeleteTransactions(e);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Eliminar
-                          </li>
-                        </ul>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                        Ver
+                      </a>
+                      <span>(2.345)</span>
+                    </div>
+                    <div
+                      onClick={() => {
+                        toggleTransactionSelection(row.id);
+                        handleActions(rowIndex, row);
+                      }}
+                    >
+                      <img src={optionDots} />
+                    </div>
+                    {selectedRowIndex === rowIndex && (
+                      <ul className={styles.content_menu_actions}>
+                        <li
+                          onClick={() => {
+                            setShowNewClient(true);
+                            setSelectedRowIndex(null);
+                          }}
+                          className={styles.item_menu_actions}
+                        >
+                          Editar
+                        </li>
+                        <li
+                          onClick={(e) => {
+                            handleDeleteTransactions(e);
+                            setSelectedRowIndex(null);
+                          }}
+                          className={styles.item_menu_actions}
+                        >
+                          Eliminar
+                        </li>
+                      </ul>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
-      {showNewClient && (
-        <>
-          <div className={styles.bg} onClick={handleCloseNewClient}></div>
-          <div
-            className={`${styles.billContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
-          >
-            <div className={styles.billHeader}>
-              <h3>Nueva Factura</h3>
-              <span onClick={handleCloseNewClient}>
-                <img src="/static/media/closeMenu.3c187347ca475028b4f31ab3e491fb44.svg" />
-              </span>
-            </div>
-            <div className={styles.billContent}>
-              <div className={styles.name}>
-                <div className={styles.column}>
-                  <span>Título</span>
-                  <input type="text" placeholder="Nueva Factura" />
-                </div>
-                <div className={styles.column}>
-                  <span>Guardar en</span>
-                  <div
-                    className={`${styles.inputWrapper} ${styles.inputWrapperBill}`}
-                  >
-                    <img src={searchGray} className={styles.inputIconInside} />
-                    <input type="text" placeholder="/Nombredelacuenta" />
-                    <button className={styles.buttonInside}>
-                      Seleccionar Ubicación
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.iva}>
-                <div className={styles.column}>
-                  <div className={styles.row}>
-                    <span>Subtotal</span>
-                    <span>0,00€</span>
-                  </div>
-                  <div className={styles.row}>
-                    <span>Impuestos</span>
-                    <div>
-                      <input type="text" placeholder="%" />
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.column}>
-                  <div className={styles.row}>
-                    <select className={styles.btnBill}>
-                      <option value="eur">EUR</option>
-                    </select>
-                    <p className={styles.stateContainer}>
-                      Estado:{" "}
-                      <select className={styles.state}>
-                        <option value="eur">Pendiente</option>
-                      </select>
-                    </p>
-                  </div>
-                  <div className={styles.row}>
-                    <span>Total</span>
-                    <span>0,00€</span>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.billTo}>
-                <div className={styles.column}>
-                  <span>De</span>
-                  <textarea placeholder="Su empresa o nombre, y dirección" />
-                </div>
-                <div
-                  className={styles.column}
-                  style={{ justifyContent: "start" }}
-                >
-                  <div className={styles.row}>
-                    <span>Facturar a </span>
-                    <img src={searchGray} alt="" />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Dirección de facturación de su cliente"
-                    style={{ height: "100%" }}
-                  />
-                  <div
-                    className={`${styles.inputWrapper} ${styles.inputWrapperBill}`}
-                  >
-                    <img src={searchGray} className={styles.inputIconInside} />
-                    <input type="text" placeholder="Buscar..." />
-                  </div>
-                </div>
-              </div>
-              <div className={styles.bill}>
-                <div className={styles.column}>
-                  <div className={styles.row}>
-                    <div style={{ gap: "10px" }}>
-                      <span># Factura</span>
-                      <input type="text" placeholder="0001" />
-                    </div>
-                    <div style={{ gap: "10px" }}>
-                      <span># Orden de compra</span>
-                      <input type="text" placeholder="opcional" />
-                    </div>
-                  </div>
-                  <div className={styles.row}>
-                    <div>
-                      <span>Fecha</span>
-                      <select>
-                        <option value="25dec25">25 Dec 2025</option>
-                      </select>
-                    </div>
-                    <div>
-                      <span>Fecha vencimiento</span>
-                      <select>
-                        <option value="25dec25">25 Dec 2025</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.column} style={{ gap: "10px" }}>
-                  <span>Condiciones y formas de pago</span>
-                  <textarea placeholder="ex. Payment is due within 15 days"></textarea>
-                </div>
-              </div>
-              <div className={styles.signContainer}>
-                <div className={styles.logoCorporativo}>
-                  Logo
-                  <div style={{ display: "flex" }}>
-                    <div className={styles.containerLogo}>
-                      <input type="radio" name="corporativeLogo1" />
-                      <img
-                        src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                        alt=""
-                      />
-                      <div className={styles.delete}>-</div>
-                    </div>
-                    <div className={styles.containerLogo}>
-                      <input type="radio" name="corporativeLogo1" />
-                      <img
-                        src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                        alt=""
-                      />
-                      <div className={styles.delete}>-</div>
-                    </div>
-                  </div>
-                  <button>Añade tu Logo</button>
-                </div>
-                <div className={styles.logoCorporativo}>
-                  Firma
-                  <div style={{ display: "flex" }}>
-                    <div className={styles.containerLogo}>
-                      <input type="radio" name="corporativeLogo2" />
-                      <img
-                        src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                        alt=""
-                      />
-                      <div className={styles.delete}>-</div>
-                    </div>
-                    <div className={styles.containerLogo}>
-                      <input type="radio" name="corporativeLogo2" />
-                      <img
-                        src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                        alt=""
-                      />
-                      <div className={styles.delete}>-</div>
-                    </div>
-                  </div>
-                  <button>Añade tu firma</button>
-                </div>
-              </div>
-              <div className={styles.addArticle}>
-                <button>Añadir artículo nuevo</button>
-                <span>
-                  <img src={arrow} alt="" />
-                  Artículos (2)
+      <div>
+
+        {showNewClient && (
+          <>
+            <div className={styles.bg} onClick={handleCloseNewClient}></div>
+            <div
+              className={`${styles.billContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+            >
+              <div className={styles.billHeader}>
+                <h3>Nueva Factura</h3>
+                <span onClick={handleCloseNewClient}>
+                  <img src="/static/media/closeMenu.3c187347ca475028b4f31ab3e491fb44.svg" />
                 </span>
               </div>
-              <div className={styles.articleBill}>
-                <div className={styles.articleTitle}>
-                  <span>Articulo 1</span>
-                  <div className={styles.deleteContainer}>
-                    <a href="#">Editar</a>
+              <div className={styles.billContent}>
+                <div className={styles.name}>
+                  <div className={styles.column}>
+                    <span>Título</span>
+                    <input type="text" placeholder="Nueva Factura" />
+                  </div>
+                  <div className={styles.column}>
+                    <span>Guardar en</span>
                     <div
-                      className={`${styles.delete} ${styles.positionDelete}`}
+                      className={`${styles.inputWrapper} ${styles.inputWrapperBill}`}
                     >
-                      -
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.articleBody}>
-                  <img
-                    src="https://materialescomsa.com/wp-content/uploads/2019/07/22079.jpg"
-                    alt=""
-                  />
-                  <div className={styles.info}>
-                    <div>
-                      <span className={styles.light}>Nombre o Descripción</span>
-                      <span className={styles.light}>PVP (Recomendado):</span>
-                    </div>
-                    <div>
-                      <span>Artículo 1</span>
-                      <span className={styles.light}>00,00 EUR</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.articleTaxs}>
-                  <div className={styles.column}>
-                    <p>Cant.</p>
-                    <input type="text" placeholder="1.0" />
-                  </div>
-                  <div className={styles.column}>
-                    <p>Precio unit.</p>
-                    <div className={styles.unitPrice}>
-                      <input
-                        type="text"
-                        placeholder="Dejar vacío para rellenar con PVP"
-                        disabled={!isEditing}
-                      />
-                      <button onClick={() => setIsEditing(!isEditing)}>
-                        Editar
+                      <img src={searchGray} className={styles.inputIconInside} />
+                      <input type="text" placeholder="/Nombredelacuenta" />
+                      <button className={styles.buttonInside}>
+                        Seleccionar Ubicación
                       </button>
                     </div>
                   </div>
+                </div>
+                <div className={styles.iva}>
                   <div className={styles.column}>
-                    <p>Importe</p>
-                    <span className={styles.light}>0.0 €</span>
+                    <div className={styles.row}>
+                      <span>Subtotal</span>
+                      <span>0,00€</span>
+                    </div>
+                    <div className={styles.row}>
+                      <span>Impuestos</span>
+                      <div>
+                        <input type="text" placeholder="%" />
+                      </div>
+                    </div>
                   </div>
                   <div className={styles.column}>
-                    <p>Impuesto</p>
-                    <button className={styles.addTax}>Añadir Impuesto</button>
+                    <div className={styles.row}>
+                      <select className={styles.btnBill}>
+                        <option value="eur">EUR</option>
+                      </select>
+                      <p className={styles.stateContainer}>
+                        Estado:{" "}
+                        <select className={styles.state}>
+                          <option value="eur">Pendiente</option>
+                        </select>
+                      </p>
+                    </div>
+                    <div className={styles.row}>
+                      <span>Total</span>
+                      <span>0,00€</span>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.billTo}>
+                  <div className={styles.column}>
+                    <span>De</span>
+                    <textarea placeholder="Su empresa o nombre, y dirección" />
+                  </div>
+                  <div
+                    className={styles.column}
+                    style={{ justifyContent: "start" }}
+                  >
+                    <div className={styles.row}>
+                      <span>Facturar a </span>
+                      <img src={searchGray} alt="" />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Dirección de facturación de su cliente"
+                      style={{ height: "100%" }}
+                    />
+                    <div
+                      className={`${styles.inputWrapper} ${styles.inputWrapperBill}`}
+                    >
+                      <img src={searchGray} className={styles.inputIconInside} />
+                      <input type="text" placeholder="Buscar..." />
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.bill}>
+                  <div className={styles.column}>
+                    <div className={styles.row}>
+                      <div style={{ gap: "10px" }}>
+                        <span># Factura</span>
+                        <input type="text" placeholder="0001" />
+                      </div>
+                      <div style={{ gap: "10px" }}>
+                        <span># Orden de compra</span>
+                        <input type="text" placeholder="opcional" />
+                      </div>
+                    </div>
+                    <div className={styles.row}>
+                      <div>
+                        <span>Fecha</span>
+                        <select>
+                          <option value="25dec25">25 Dec 2025</option>
+                        </select>
+                      </div>
+                      <div>
+                        <span>Fecha vencimiento</span>
+                        <select>
+                          <option value="25dec25">25 Dec 2025</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.column} style={{ gap: "10px" }}>
+                    <span>Condiciones y formas de pago</span>
+                    <textarea placeholder="ex. Payment is due within 15 days"></textarea>
+                  </div>
+                </div>
+                <div className={styles.signContainer}>
+                  <div className={styles.logoCorporativo}>
+                    Logo
+                    <div style={{ display: "flex" }}>
+                      <div className={styles.containerLogo}>
+                        <input type="radio" name="corporativeLogo1" />
+                        <img
+                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
+                          alt=""
+                        />
+                        <div className={styles.delete}>-</div>
+                      </div>
+                      <div className={styles.containerLogo}>
+                        <input type="radio" name="corporativeLogo1" />
+                        <img
+                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
+                          alt=""
+                        />
+                        <div className={styles.delete}>-</div>
+                      </div>
+                    </div>
+                    <button>Añade tu Logo</button>
+                  </div>
+                  <div className={styles.logoCorporativo}>
+                    Firma
+                    <div style={{ display: "flex" }}>
+                      <div className={styles.containerLogo}>
+                        <input type="radio" name="corporativeLogo2" />
+                        <img
+                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
+                          alt=""
+                        />
+                        <div className={styles.delete}>-</div>
+                      </div>
+                      <div className={styles.containerLogo}>
+                        <input type="radio" name="corporativeLogo2" />
+                        <img
+                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
+                          alt=""
+                        />
+                        <div className={styles.delete}>-</div>
+                      </div>
+                    </div>
+                    <button>Añade tu firma</button>
+                  </div>
+                </div>
+                <div className={styles.addArticle}>
+                  <button>Añadir artículo nuevo</button>
+                  <span>
+                    <img src={arrow} alt="" />
+                    Artículos (2)
+                  </span>
+                </div>
+                <div className={styles.articleBill}>
+                  <div className={styles.articleTitle}>
+                    <span>Articulo 1</span>
+                    <div className={styles.deleteContainer}>
+                      <a href="#">Editar</a>
+                      <div
+                        className={`${styles.delete} ${styles.positionDelete}`}
+                      >
+                        -
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.articleBody}>
+                    <img
+                      src="https://materialescomsa.com/wp-content/uploads/2019/07/22079.jpg"
+                      alt=""
+                    />
+                    <div className={styles.info}>
+                      <div>
+                        <span className={styles.light}>Nombre o Descripción</span>
+                        <span className={styles.light}>PVP (Recomendado):</span>
+                      </div>
+                      <div>
+                        <span>Artículo 1</span>
+                        <span className={styles.light}>00,00 EUR</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.articleTaxs}>
+                    <div className={styles.column}>
+                      <p>Cant.</p>
+                      <input type="text" placeholder="1.0" />
+                    </div>
+                    <div className={styles.column}>
+                      <p>Precio unit.</p>
+                      <div className={styles.unitPrice}>
+                        <input
+                          type="text"
+                          placeholder="Dejar vacío para rellenar con PVP"
+                          disabled={!isEditing}
+                        />
+                        <button onClick={() => setIsEditing(!isEditing)}>
+                          Editar
+                        </button>
+                      </div>
+                    </div>
+                    <div className={styles.column}>
+                      <p>Importe</p>
+                      <span className={styles.light}>0.0 €</span>
+                    </div>
+                    <div className={styles.column}>
+                      <p>Impuesto</p>
+                      <button className={styles.addTax}>Añadir Impuesto</button>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className={styles.btnContainerBills}>
+                <button className={styles.btnCancel}>Cancel</button>
+                <button className={styles.btnSave}>Guardar</button>
+              </div>
             </div>
-            <div className={styles.btnContainerBills}>
-              <button className={styles.btnCancel}>Cancel</button>
-              <button className={styles.btnSave}>Guardar</button>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </PanelTemplate>
   );
 };
 

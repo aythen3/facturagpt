@@ -1,6 +1,7 @@
 .container {
   padding: 20px;
   min-height: 100vh;
+  max-width: calc(100% - 240px);
   .clientsHeader {
     display: flex;
     justify-content: space-between;

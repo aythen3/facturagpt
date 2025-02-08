@@ -42,9 +42,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import Payment from "./screens/UserSettings/StripeComponents/Payment";
+import Payment from "./screens/AccountSettings/StripeComponents/Payment";
 import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
-import SetupPayment from "./screens/UserSettings/StripeComponents/SetupPayment";
+import SetupPayment from "./screens/AccountSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
 import AccountSettings from "./screens/AccountSettings/AccountSettings";
 // import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";

@@ -62,7 +62,8 @@ const ChatMenu = () => {
     console.log('3ri48juj')
     switch(id){
       case 0:
-        alert(2)
+        // alert(2)
+      
         break;
     }
   }
@@ -169,12 +170,18 @@ const Chat = () => {
 
   const handleChat = (id) => {
     console.log('3ri48juj')
-    switch(id){
-      case 0:
-        alert(2)
-        break;
-    }
+    setInputValue(buttons[id].text)
+    // switch(id){
+    //   case 0:
+    //     break;
+    // }
   }
+
+  useEffect(() => {
+    if(inputValue !== "") {
+      handleSendMessage()
+    }
+  }, [inputValue])
 
   return (
     <div className={styles.chatContainer}>
@@ -269,13 +276,17 @@ const Chat = () => {
                 </p>
                 <div
                   className={styles.avatar}
-                />
+                >
+                  {'A'}
+                </div>
               </div>
             ) : (
               <div className={`${styles.message} ${styles.botMessage}`} >
                 <div
                   className={styles.avatar}
-                />
+                >
+                  {'A'}
+                </div>
                 {message.text}
               </div>
             )}

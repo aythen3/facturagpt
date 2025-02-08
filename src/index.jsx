@@ -117,12 +117,6 @@ const Layout = () => {
 
 
     return (
-      <div>
-        {/* <h2>Bienvenido, {user?.name || 'Usuario'}</h2> */}
-        {/* <NavbarAdmin
-          fromPath={fromPath}
-          setFromPath={setFromPath}
-        /> */}
         <Routes>
           <Route path="/home" element={<Dashboard />} />
           <Route path="/accounts" element={<AccountsDashboard />} />
@@ -138,7 +132,6 @@ const Layout = () => {
           <Route path="/panel/:id" element={<InvoicePanel />} />
           <Route path="*" element={<ChatView />} />
         </Routes>
-      </div>
     );
   }
 
