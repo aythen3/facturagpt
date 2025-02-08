@@ -1,49 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import styles from './Clients.module.css';
-import NavbarAdmin from '../../components/NavbarAdmin/NavbarAdmin';
-import searchGray from '../../assets/searchGray.png';
-import { ReactComponent as ArrowUp } from '../../assets/arrowDownGray.svg';
-import plusIcon from '../../assets/Plus Icon.png';
-import optionDots from '../../assets/optionDots.svg';
-import closeIcon from '../../assets/closeMenu.svg';
-import filterSearch from '../../assets/Filters Search.png';
-import { useTranslation } from 'react-i18next';
-import { ReactComponent as Minus } from '../../assets/minus.svg';
+import React, { useEffect, useState } from "react";
+import styles from "./Clients.module.css";
+import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
+import searchGray from "../../assets/searchGray.png";
+import { ReactComponent as ArrowUp } from "../../assets/arrowDownGray.svg";
+import plusIcon from "../../assets/Plus Icon.png";
+import optionDots from "../../assets/optionDots.svg";
+import closeIcon from "../../assets/closeMenu.svg";
+import filterSearch from "../../assets/Filters Search.png";
+import { useTranslation } from "react-i18next";
+import { ReactComponent as Minus } from "../../assets/minus.svg";
 
-import l from '../../assets/lIcon.svg';
+import l from "../../assets/lIcon.svg";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import {
   createClient,
   deleteClients,
   getAllClients,
   getOneClient,
   updateClient,
-} from '../../../../actions/clients';
-import { clearClient, setClient } from '../../../../slices/clientsSlices';
-import { useNavigate } from 'react-router-dom';
-import EditableInput from './EditableInput/EditableInput';
-import ModalTemplate from '../../components/ModalTemplate/ModalTemplate';
-import ProfileModalTemplate from '../../components/ProfileModalTemplate/ProfileModalTemplate';
-import { ParametersLabel } from '../../components/ParametersLabel/ParametersLabel';
-import { clearTransaction } from '../../../../slices/transactionsSlices';
-import FileExplorer from '../../components/FileExplorer/FileExplorer';
+} from "../../../../actions/clients";
+import { clearClient, setClient } from "../../../../slices/clientsSlices";
+import { useNavigate } from "react-router-dom";
+import EditableInput from "./EditableInput/EditableInput";
+import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
+import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
+import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
+import { clearTransaction } from "../../../../slices/transactionsSlices";
+import FileExplorer from "../../components/FileExplorer/FileExplorer";
 // import { getEmailsByQuery } from '../../../../actions/user';
-import PanelTemplate from '../../components/PanelTemplate/PanelTemplate';
-import PayMethod from '../../components/PayMethod/PayMethod';
-
+import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
+import PayMethod from "../../components/PayMethod/PayMethod";
+import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
+import KIcon from "../../assets/KIcon.svg";
+import Button from "../../components/Button/Button";
+import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
+import winIcon from "../../assets/winIcon.svg";
+import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 const Clients = () => {
-  const { t } = useTranslation('clients');
+  const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState("");
   const [selectedClientIds, setSelectedClientIds] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-
+  const [showImportContacts, setShowImportContacts] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -53,21 +58,21 @@ const Clients = () => {
   const { clients, loading, client } = useSelector((state) => state.clients);
 
   const [clientData, setClientData] = useState({
-    clientName: '',
-    companyEmail: '',
-    companyPhoneNumber: '',
-    codeCountry: '',
-    webSite: '',
-    billingEmail: '',
-    clientZip: '',
-    country: '',
-    clientCif: '',
-    preferredCurrency: '',
-    cardNumber: '',
-    companyAddress: '',
-    companyCity: '',
-    companyProvince: '',
-    companyCountry: '',
+    clientName: "",
+    companyEmail: "",
+    companyPhoneNumber: "",
+    codeCountry: "",
+    webSite: "",
+    billingEmail: "",
+    clientZip: "",
+    country: "",
+    clientCif: "",
+    preferredCurrency: "",
+    cardNumber: "",
+    companyAddress: "",
+    companyCity: "",
+    companyProvince: "",
+    companyCountry: "",
   });
 
   useEffect(() => {
@@ -77,46 +82,46 @@ const Clients = () => {
   useEffect(() => {
     if (client?.clientData) {
       setClientData({
-        clientName: client.clientData.clientName || '',
-        companyEmail: client.clientData.companyEmail || '',
-        companyPhoneNumber: client.clientData.companyPhoneNumber || '',
-        codeCountry: client.clientData.codeCountry || '',
-        webSite: client.clientData.webSite || '',
-        billingEmail: client.email || '',
-        clientZip: client.clientData.clientZip || '',
-        country: client.clientData.country || '',
-        clientCif: client.clientData.clientCif || '',
-        preferredCurrency: client.clientData.preferredCurrency || '',
-        cardNumber: client.clientData.cardNumber || '',
-        companyAddress: client.clientData.companyAddress || '',
-        companyCity: client.clientData.companyCity || '',
-        companyProvince: client.clientData.companyProvince || '',
-        companyCountry: client.clientData.companyCountry || '',
+        clientName: client.clientData.clientName || "",
+        companyEmail: client.clientData.companyEmail || "",
+        companyPhoneNumber: client.clientData.companyPhoneNumber || "",
+        codeCountry: client.clientData.codeCountry || "",
+        webSite: client.clientData.webSite || "",
+        billingEmail: client.email || "",
+        clientZip: client.clientData.clientZip || "",
+        country: client.clientData.country || "",
+        clientCif: client.clientData.clientCif || "",
+        preferredCurrency: client.clientData.preferredCurrency || "",
+        cardNumber: client.clientData.cardNumber || "",
+        companyAddress: client.clientData.companyAddress || "",
+        companyCity: client.clientData.companyCity || "",
+        companyProvince: client.clientData.companyProvince || "",
+        companyCountry: client.clientData.companyCountry || "",
       });
     } else {
       setClientData({
-        clientName: '',
-        companyEmail: '',
-        companyPhoneNumber: '',
-        codeCountry: '',
-        webSite: '',
-        billingEmail: '',
-        clientZip: '',
-        country: '',
-        clientCif: '',
-        preferredCurrency: '',
-        cardNumber: '',
-        companyAddress: '',
-        companyCity: '',
-        companyProvince: '',
-        companyCountry: '',
+        clientName: "",
+        companyEmail: "",
+        companyPhoneNumber: "",
+        codeCountry: "",
+        webSite: "",
+        billingEmail: "",
+        clientZip: "",
+        country: "",
+        clientCif: "",
+        preferredCurrency: "",
+        cardNumber: "",
+        companyAddress: "",
+        companyCity: "",
+        companyProvince: "",
+        companyCountry: "",
       });
     }
   }, [client]);
 
   const handleClientData = (field, value) => {
     const formattedValue =
-      field === 'cardNumber' ? formatCardNumber(value) : value;
+      field === "cardNumber" ? formatCardNumber(value) : value;
 
     setClientData((prev) => ({
       ...prev,
@@ -153,45 +158,45 @@ const Clients = () => {
   };
 
   const tableHeaders = [
-    t('tableCol1'),
-    t('tableCol2'),
-    t('tableCol3'),
-    t('tableCol4'),
-    t('tableCol5'),
-    t('tableCol6'),
-    t('tableCol7'),
-    t('tableCol8'),
+    t("tableCol1"),
+    t("tableCol2"),
+    t("tableCol3"),
+    t("tableCol4"),
+    t("tableCol5"),
+    t("tableCol6"),
+    t("tableCol7"),
+    t("tableCol8"),
   ];
 
   const tableData = [
     {
-      nombre: 'Aythen',
-      email: ['info@aythen.com', 'support@aythen.com'],
-      telefono: '+34600789012',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      nombre: "Aythen",
+      email: ["info@aythen.com", "support@aythen.com"],
+      telefono: "+34600789012",
+      direccion: "Calle A, Barcelona",
+      numeroFiscal: "ES123456789",
+      metodosPago: ["Visa ****1234", "Paypal: juan@gmail.com"],
+      moneda: "EUR",
     },
     {
-      nombre: 'Aythen',
-      email: 'info@aythen.com',
-      telefono: '+584243356112',
-      direccion: 'Calle A, Barcelona',
-      numeroFiscal: 'ES123456789',
-      metodosPago: ['Visa ****1234', 'Paypal: juan@gmail.com'],
-      moneda: 'EUR',
+      nombre: "Aythen",
+      email: "info@aythen.com",
+      telefono: "+584243356112",
+      direccion: "Calle A, Barcelona",
+      numeroFiscal: "ES123456789",
+      metodosPago: ["Visa ****1234", "Paypal: juan@gmail.com"],
+      moneda: "EUR",
     },
   ];
 
   const formatCardNumber = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
   };
 
   const formatPhoneNumber = (phoneNumber) => {
     return phoneNumber?.replace(
       /(\+\d{2})(\d{3})(\d{3})(\d{3})/,
-      '$1 $2 $3 $4'
+      "$1 $2 $3 $4"
     );
   };
 
@@ -200,7 +205,7 @@ const Clients = () => {
     const userId = user?.id;
     const email = user?.email;
 
-    console.log('CLIENTESSSSSSSSSS', clientData);
+    console.log("CLIENTESSSSSSSSSS", clientData);
     if (client && client.clientData) {
       dispatch(
         updateClient({
@@ -211,30 +216,32 @@ const Clients = () => {
         })
       )
         .then((result) => {
-          if (result.meta.requestStatus === 'fulfilled') {
+          if (result.meta.requestStatus === "fulfilled") {
             setShowNewClient(false);
           } else {
-            console.error('Error creating client:', result.error);
+            console.error("Error creating client:", result.error);
           }
         })
         .catch((error) => {
-          console.error('Unexpected error:', error);
+          console.error("Unexpected error:", error);
         });
     } else {
-      dispatch(createClient({ 
-        userId, 
-        email, 
-        clientData 
-      }))
+      dispatch(
+        createClient({
+          userId,
+          email,
+          clientData,
+        })
+      )
         .then((result) => {
-          if (result.meta.requestStatus === 'fulfilled') {
+          if (result.meta.requestStatus === "fulfilled") {
             setShowNewClient(false);
           } else {
-            console.error('Error creating client:', result.error);
+            console.error("Error creating client:", result.error);
           }
         })
         .catch((error) => {
-          console.error('Unexpected error:', error);
+          console.error("Unexpected error:", error);
         });
     }
   };
@@ -245,9 +252,9 @@ const Clients = () => {
         ? prev.filter((id) => id !== clientId)
         : [...prev, clientId]
     );
-    console.log('users', allUsers);
-    console.log('toggling clientId', clientId);
-    console.log('allClients', allClients);
+    console.log("users", allUsers);
+    console.log("toggling clientId", clientId);
+    console.log("allClients", allClients);
     let singleUser = allClients[0];
     // const response = await dispatch(
     //   getEmailsByQuery({
@@ -278,15 +285,15 @@ const Clients = () => {
       })
     )
       .then((result) => {
-        if (result.meta.requestStatus === 'fulfilled') {
-          console.log('Clients deleted successfully');
+        if (result.meta.requestStatus === "fulfilled") {
+          console.log("Clients deleted successfully");
           setSelectedClientIds([]);
         } else {
-          console.error('Error deleting clients:', result.error);
+          console.error("Error deleting clients:", result.error);
         }
       })
       .catch((error) => {
-        console.error('Unexpected error:', error);
+        console.error("Unexpected error:", error);
       });
   };
 
@@ -300,16 +307,16 @@ const Clients = () => {
   };
 
   const handleGetOneClient = async (clientId) => {
-    console.log('CLIENTIDDD', clientId);
+    console.log("CLIENTIDDD", clientId);
 
     try {
       const response = await dispatch(
         getOneClient({ userId: user?.id, clientId })
       ).unwrap();
-      console.log('Cliente obtenido:', response);
-      navigate('/admin/transactions');
+      console.log("Cliente obtenido:", response);
+      navigate("/admin/transactions");
     } catch (error) {
-      console.error('Error al obtener el cliente:', error);
+      console.error("Error al obtener el cliente:", error);
     }
   };
 
@@ -324,7 +331,7 @@ const Clients = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape' && showNewClient) {
+      if (event.key === "Escape" && showNewClient) {
         setIsAnimating(true);
         setTimeout(() => {
           dispatch(clearClient());
@@ -334,23 +341,23 @@ const Clients = () => {
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [showNewClient]);
 
-  console.log('CLIENTSSSS', clients);
+  console.log("CLIENTSSSS", clients);
   const handleChange = ({ name, newValue }) => {
     console.log(`Setting ${name} to ${newValue}`);
   };
 
   const [clientDataInputs, setClientDataInputs] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    web: '',
+    name: "",
+    email: "",
+    phone: "",
+    web: "",
     info: [],
     parameters: [],
   });
@@ -365,7 +372,7 @@ const Clients = () => {
   const addParameter = () => {
     setClientDataInputs((prev) => ({
       ...prev,
-      parameters: [...prev.parameters, { name: '', value: '' }],
+      parameters: [...prev.parameters, { name: "", value: "" }],
     }));
   };
 
@@ -383,47 +390,77 @@ const Clients = () => {
   };
 
   const [editingIndices, setEditingIndices] = useState([]);
-  console.log('DATAAAAA--------', clientData);
+  console.log("DATAAAAA--------", clientData);
 
   return (
     <PanelTemplate>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <div className={styles.clientsHeader}>
-          <h2>{t('title')}</h2>
+          <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
             <button
               className={`${styles.addButton} ${styles.btnNewClient}`}
               onClick={() => setShowNewClient(true)}
             >
               <img src={plusIcon} alt="Nuevo cliente" />
-              {t('buttonNewClient')}
+              {t("buttonNewClient")}
             </button>
-            {/* <button className={styles.infoBtn}>Analíticas</button> */}
-            <div className={styles.inputWrapper}>
+            <Button
+              type="white"
+              headerStyle={{ padding: "6px 10px" }}
+              action={() => setShowImportContacts(true)}
+            >
+              <DownloadIcon />
+            </Button>
+            <SearchIconWithIcon
+            // ref={searchInputRef}
+            // searchTerm={searchTerm}
+            // setSearchTerm={setSearchTerm}
+            // iconRight={pencilSquareIcon}
+            // classNameIconRight={styles.searchContainerL}
+            // onClickIconRight={() => setIsFilterOpen(true)}
+            >
+              <>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={winIcon} alt="kIcon" />
+                </div>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={KIcon} alt="kIcon" />
+                </div>
+              </>
+            </SearchIconWithIcon>
+            {/* <div className={styles.inputWrapper}>
               <img src={searchGray} className={styles.inputIconInside} />
               <input
                 type="text"
-                placeholder={t('placeholderSearch')}
+                placeholder={t("placeholderSearch")}
                 value={search}
                 onChange={handleSearchChange}
                 className={styles.searchInput}
               />
-              {/* <div className={styles.inputIconOutsideContainer}>
-                  <img src={filterSearch} className={styles.inputIconOutside} />
-                </div> */}
+          
               <div
-                style={{ marginLeft: '5px' }}
+                style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}
               >
                 <img src={l} alt="kIcon" />
               </div>
             </div>
-            {/* <button className={styles.addButton}>
-                <img src={plusIcon} />
-              </button> */}
+             */}
           </div>
         </div>
-
+        {showImportContacts && (
+          <ImportContactsAndProducts
+            state={setShowImportContacts}
+            text="contactos"
+          />
+        )}
         <div className={styles.clientsTable}>
           <table className={styles.table}>
             <thead>
@@ -457,14 +494,12 @@ const Clients = () => {
                         name="clientSelected"
                         // onClick={() => selectClient(rowIndex, row)}
                         onChange={() => toggleClientSelection(client?.id)}
-                      // checked={
-                      //   clientSelected.includes(rowIndex) ? true : false
-                      // }
+                        // checked={
+                        //   clientSelected.includes(rowIndex) ? true : false
+                        // }
                       />
                     </td>
-                    <td className={styles.name}>
-                      {client.clientName}
-                    </td>
+                    <td className={styles.name}>{client.clientName}</td>
                     <td>{client?.companyEmail || client.email}</td>
 
                     {/* <td>
@@ -476,8 +511,7 @@ const Clients = () => {
                   </td> */}
                     <td>{client.companyPhoneNumber}</td>
                     <td>
-                      {client.companyAddress}{' '}
-                      {client.clientProvice}
+                      {client.companyAddress} {client.clientProvice}
                     </td>
                     <td>{client.taxNumber}</td>
                     <td>{client.cardNumber}</td>
@@ -539,6 +573,7 @@ const Clients = () => {
           <ModalTemplate
             actionSave={handleCreateClient}
             onClick={handleCloseNewClient}
+            text="contacto"
           >
             <div
               className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
@@ -555,9 +590,9 @@ const Clients = () => {
                 onSubmit={handleCreateClient}
               >
                 <EditableInput
-                  label={'Nombre completo'}
-                  nameInput={'nombre'}
-                  placeholderInput={clientData.clientName || 'yeremi'}
+                  label={"Nombre completo"}
+                  nameInput={"nombre"}
+                  placeholderInput={clientData.clientName || "yeremi"}
                   isEditing={inputsEditing.name}
                   value={clientData.clientName || clientDataInputs.name}
                   onChange={(e) => {
@@ -565,7 +600,7 @@ const Clients = () => {
                       ...clientDataInputs,
                       name: e.target.value,
                     });
-                    handleClientData('clientName', e.target.value);
+                    handleClientData("clientName", e.target.value);
                   }}
                   onClick={() =>
                     setInputsEditing((prev) => ({
@@ -577,10 +612,11 @@ const Clients = () => {
                   <div
                     className={`
                     ${styles.typeClient}
-                    ${inputsEditing.name
+                    ${
+                      inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
-                      }
+                    }
                       `}
                   >
                     <button
@@ -603,9 +639,9 @@ const Clients = () => {
                 </EditableInput>
 
                 <EditableInput
-                  label={'Email'}
-                  nameInput={'email'}
-                  placeholderInput={'johndoe@gmail.com'}
+                  label={"Email"}
+                  nameInput={"email"}
+                  placeholderInput={"johndoe@gmail.com"}
                   isEditing={inputsEditing.email}
                   value={clientData.companyEmail || clientDataInputs.email}
                   onChange={(e) => {
@@ -613,7 +649,7 @@ const Clients = () => {
                       ...clientDataInputs,
                       email: e.target.value,
                     });
-                    handleClientData('companyEmail', e.target.value);
+                    handleClientData("companyEmail", e.target.value);
                   }}
                   onClick={() =>
                     setInputsEditing((prev) => ({
@@ -660,28 +696,28 @@ const Clients = () => {
                   <input
                     type="text"
                     placeholder="000 000 000"
-                    value={clientData.companyPhoneNumber || ''}
+                    value={clientData.companyPhoneNumber || ""}
                     onChange={(e) =>
-                      handleClientData('companyPhoneNumber', e.target.value)
+                      handleClientData("companyPhoneNumber", e.target.value)
                     }
-                  /*disabled={!isEditing}*/
+                    /*disabled={!isEditing}*/
                   />
                   <div
                     className={styles.delete}
-                  // onClick={onDelete}
-                  /*style={{ background: !isEditing && "#dd7a84" }}*/
+                    // onClick={onDelete}
+                    /*style={{ background: !isEditing && "#dd7a84" }}*/
                   >
                     <Minus className={styles.icon} />
                   </div>
                 </div>
                 <EditableInput
-                  label={'Web o dominio corporativo'}
-                  nameInput={'web'}
-                  placeholderInput={'www.web.com'}
+                  label={"Web o dominio corporativo"}
+                  nameInput={"web"}
+                  placeholderInput={"www.web.com"}
                   isEditing={inputsEditing.web}
                   value={clientData.webSite || clientDataInputs.web}
                   onChange={(e) => {
-                    handleClientData('webSite', e.target.value);
+                    handleClientData("webSite", e.target.value);
                     setClientDataInputs({
                       ...clientDataInputs,
                       web: e.target.value,
@@ -729,9 +765,9 @@ const Clients = () => {
                         type="text"
                         disabled={!inputsEditing.info}
                         placeholder="000 000"
-                        value={clientData.companyAddress || ''}
+                        value={clientData.companyAddress || ""}
                         onChange={(e) =>
-                          handleClientData('companyAddress', e.target.value)
+                          handleClientData("companyAddress", e.target.value)
                         }
                       />
                     </div>
@@ -750,10 +786,10 @@ const Clients = () => {
                       <input
                         type="text"
                         disabled={!inputsEditing.info}
-                        value={clientData.clientZip || ''}
+                        value={clientData.clientZip || ""}
                         placeholder="000 000"
                         onChange={(e) =>
-                          handleClientData('clientZip', e.target.value)
+                          handleClientData("clientZip", e.target.value)
                         }
                       />
                     </div>
@@ -765,9 +801,9 @@ const Clients = () => {
                         type="text"
                         disabled={!inputsEditing.info}
                         placeholder="000 000"
-                        value={clientData.companyProvince || ''}
+                        value={clientData.companyProvince || ""}
                         onChange={(e) =>
-                          handleClientData('companyProvince', e.target.value)
+                          handleClientData("companyProvince", e.target.value)
                         }
                       />
                     </div>
@@ -777,9 +813,9 @@ const Clients = () => {
                         type="text"
                         disabled={!inputsEditing.info}
                         placeholder="000 000"
-                        value={clientData.companyCountry || ''}
+                        value={clientData.companyCountry || ""}
                         onChange={(e) =>
-                          handleClientData('companyCountry', e.target.value)
+                          handleClientData("companyCountry", e.target.value)
                         }
                       />
                     </div>

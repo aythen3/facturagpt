@@ -44,17 +44,14 @@
   flex-direction: column;
   width: 100%;
   gap: 8.5px;
-  .textarea {
-    resize: none;
-    width: 100%;
-    font-family: "Inter", sans-serif;
-  }
+
   span {
     font-size: 14px;
     font-weight: 400;
     color: #717171;
   }
-  input {
+  input,
+  .textarea {
     border: none;
     outline: none;
     font-size: 14px;
@@ -65,8 +62,14 @@
     background-color: #f4f4f4;
     border-radius: 5px;
     padding: 0px 9px;
+    box-sizing: border-box;
   }
-
+  .textarea {
+    resize: none;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+    min-height: 60px;
+  }
   input:disabled,
   select:disabled,
   option:disabled,

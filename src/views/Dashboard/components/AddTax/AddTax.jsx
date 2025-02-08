@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import HeaderCard from '../HeaderCard/HeaderCard';
-import styles from './AddTax.module.css';
-import DeleteButton from '../DeleteButton/DeleteButton';
-import Button from '../Button/Button';
-import DiscardChange from '../DiscardChange/DiscardChange';
+import React, { useState } from "react";
+import HeaderCard from "../HeaderCard/HeaderCard";
+import styles from "./AddTax.module.css";
+import DeleteButton from "../DeleteButton/DeleteButton";
+import Button from "../Button/Button";
+import DiscardChange from "../DiscardChange/DiscardChange";
 const AddTax = ({ setShowTaxModal }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [taxes, setTaxes] = useState([]);
-  const [taxName, setTaxName] = useState('');
-  const [taxRate, setTaxRate] = useState('');
+  const [taxName, setTaxName] = useState("");
+  const [taxRate, setTaxRate] = useState("");
   const [isCompound, setIsCompound] = useState(false);
 
   const handleRowClick = (index) => {
@@ -16,17 +16,17 @@ const AddTax = ({ setShowTaxModal }) => {
   };
 
   const handleAddTax = () => {
-    if (taxName.trim() === '' || taxRate.trim() === '') return;
+    if (taxName.trim() === "" || taxRate.trim() === "") return;
 
     const newTax = {
       name: taxName,
       rate: `${taxRate}%`,
-      compound: isCompound ? 'Si' : 'No',
+      compound: isCompound ? "Si" : "No",
     };
 
     setTaxes([...taxes, newTax]);
-    setTaxName('');
-    setTaxRate('');
+    setTaxName("");
+    setTaxRate("");
     setIsCompound(false);
   };
 
@@ -37,7 +37,7 @@ const AddTax = ({ setShowTaxModal }) => {
   const [showDiscardChange, setShowDiscardChange] = useState(false);
 
   return (
-    <div>
+    <div className={styles.overlay}>
       <div className={styles.bg} onClick={() => setShowTaxModal(false)}></div>
       {showDiscardChange && (
         <DiscardChange
@@ -51,7 +51,7 @@ const AddTax = ({ setShowTaxModal }) => {
       <div
         className={`${styles.addTaxContainer} ${showDiscardChange && styles.opacity}`}
       >
-        <HeaderCard title={'Seleccionar Impuesto'} setState={setShowTaxModal}>
+        <HeaderCard title={"Seleccionar Impuesto"} setState={setShowTaxModal}>
           <Button type="white" action={() => setShowDiscardChange(true)}>
             Cancel
           </Button>
@@ -102,9 +102,9 @@ const AddTax = ({ setShowTaxModal }) => {
                 {taxes.map((tax, index) => (
                   <tr
                     key={index}
-                    className={selectedRow === index ? styles.selectedRow : ''}
+                    className={selectedRow === index ? styles.selectedRow : ""}
                     onClick={() => handleRowClick(index)}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                   >
                     <td className={styles.small}>
                       <input

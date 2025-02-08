@@ -3,7 +3,7 @@ import axios from "axios";
 // http://212.47.230.77:5984/
 
 const axiosInstance = axios.create({
-  baseURL: 'https://facturagpt.com/api',
+  baseURL: "https://facturagpt.com/api",
   // baseURL: "http://localhost:3006/api",
   maxContentLength: Infinity,
   maxBodyLength: Infinity,

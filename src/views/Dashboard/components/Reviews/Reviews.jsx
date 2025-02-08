@@ -37,7 +37,7 @@ const Reviews = () => {
         <h2 className={styles.reviewsTitle}>{t("title")}</h2>
         <SubtitleTemplate
           text={t("subTitle")}
-          stylesProp={{ padding: "0 20px" }}
+          stylesProp={{ padding: "0 20px", maxWidth: "100%" }}
         />
         {/* <span className={styles.reviewsDescription}>{t("subTitle")}</span> */}
         <Carousel />

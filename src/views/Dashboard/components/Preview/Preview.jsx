@@ -49,6 +49,11 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [seeBill, setSeeBill] = useState(false);
 
+  const [XMLConfiguration, setXMLConfiguration] = useState({
+    filesSource: "/Inicio/",
+    folderLocation: "/Inicio/",
+  });
+
   const handleShare = (item) => {
     console.log(`${window.location.origin}/document.pdf`);
     const fileUrl = `${window.location.origin}/document.pdf`;
@@ -325,7 +330,6 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
               type="white"
               headerStyle={{
                 fontWeight: "500",
-                color: "#0D0D0D",
                 width: "100%",
                 alignItem: "center",
                 display: "flex",
@@ -333,6 +337,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
                 gap: "10px",
                 padding: "8px",
               }}
+              disabledOption={true}
             >
               <SeleccionarPlantilla /> Seleccionar Plantilla
             </Button>
@@ -340,7 +345,6 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
               type="white"
               headerStyle={{
                 fontWeight: "500",
-                color: "#0D0D0D",
                 width: "100%",
                 alignItem: "center",
                 display: "flex",
@@ -348,6 +352,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
                 gap: "10px",
                 padding: "8px",
               }}
+              disabledOption={true}
             >
               <EditCode /> Editar Código HTML <EditCodeRays />
             </Button>
@@ -399,7 +404,11 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
         )}
       </div>
       {showMovetoFolder && (
-        <MoveToFolder setShowMovetoFolder={setShowMovetoFolder} />
+        <MoveToFolder
+          setShowMovetoFolder={setShowMovetoFolder}
+          configuration={XMLConfiguration}
+          setConfiguration={setXMLConfiguration}
+        />
       )}
       {seeBill && (
         <SeeBill ref={seeBillRef} document={document} setSeeBill={setSeeBill} />

@@ -122,7 +122,6 @@ const Dashboard = () => {
   ];
 
 
-
   return (
     <PanelTemplate>
       {/* <Elements stripe={stripePromise}>  */}
@@ -162,7 +161,7 @@ const Dashboard = () => {
             <div className={styles.talkWithFacturaGPT}>
               <FacturaGPTIcon className={styles.icon} />
               <p>Datos y Analíticas en el Chat</p>
-              <button onClick={() => navigate('/chat')}>
+              <button onClick={() => navigate("/chat")}>
                 <ChatGPTIconGreen /> Habla con FacturaGPT
               </button>
             </div>

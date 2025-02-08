@@ -21,6 +21,7 @@ import { updateUser } from "../../../../actions/user";
 import { uploadFiles } from "../../../../actions/scaleway";
 import { useNavigate } from "react-router-dom";
 import LogoSelector from "../LogoSelector/LogoSelector";
+import DetailsBillInputs from "../InfoContact/DetailsBillInputs/DetailsBillInputs";
 
 const AccountSettings = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ const AccountSettings = () => {
   // const { logout } = useAuth0();
   const navigate = useNavigate();
   const [userData, setUserData] = useState();
+  const [initialUserData, setInitialUserData] = useState(null);
+  const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(false);
 
   const corporativeFileInputRef = useRef(null);
   const signatureFileInputRef = useRef(null);
@@ -117,10 +120,13 @@ const AccountSettings = () => {
         selectedCorporativeLogo: user?.selectedCorporativeLogo || "",
         fiscalNumber: user?.fiscalNumber || "",
         currency: user?.currency || "EUR",
-        language: user?.language || "ES",
+        language: user?.language || "es",
       };
-      console.log("setting user to ", newUserData);
+      // console.log("setting user to ", newUserData);
       setUserData(newUserData);
+      setInitialUserData(newUserData); // Guardamos la copia inicial
+      console.log("userData", userData);
+      console.log("newUserData", newUserData);
     }
   }, [user]);
 
@@ -134,9 +140,27 @@ const AccountSettings = () => {
   const [isEditingDetails, setIsEditingDetails] = useState(false);
   const [facturacionCount, setFacturacionCount] = useState(0);
   const [facturacionInputs, setFacturacionInputs] = useState([
-    { value: "", editable: false },
+    {
+      direccion: "direccion",
+      poblacion: "poblacion",
+      provincia: "provincia",
+      codigoPostal: "codigoPostal",
+      pais: "pais",
+      editable: false,
+    },
   ]);
   const [addingPhone, setAddingPhone] = useState(false);
+
+  const handleDetailChange = (index, key, value) => {
+    setFieldValues((prev) => {
+      const updatedDetails = [...prev.details];
+      updatedDetails[index] = {
+        ...updatedDetails[index],
+        [key]: value,
+      };
+      return { ...prev, details: updatedDetails };
+    });
+  };
 
   const handleEditToggle = (index) => {
     setFacturacionInputs((prev) =>
@@ -146,9 +170,9 @@ const AccountSettings = () => {
     );
   };
 
-  const handleInputChange = (index, value) => {
+  const handleInputChange = (index, key, value) => {
     setFacturacionInputs((prev) =>
-      prev.map((input, i) => (i === index ? { ...input, value } : input))
+      prev.map((input, i) => (i === index ? { ...input, [key]: value } : input))
     );
   };
 
@@ -162,10 +186,17 @@ const AccountSettings = () => {
 
   const handleChange = ({ name, newValue }) => {
     console.log(`Setting ${name} to ${newValue}`);
-    setUserData({ ...userData, [name]: newValue });
+    const updatedData = { ...userData, [name]: newValue };
+    setUserData(updatedData);
+
+    // Verificamos si hay diferencias con el estado inicial
+    setIsSaveButtonVisible(
+      JSON.stringify(updatedData) !== JSON.stringify(initialUserData)
+    );
   };
 
   const handleSave = async () => {
+    setIsSaveButtonVisible(false);
     const userDataToSave = {
       ...userData,
       paymentMethod: {
@@ -571,7 +602,7 @@ const AccountSettings = () => {
               <div className={styles.label} style={{ marginBottom: "10px" }}>
                 <div className={styles.row}>
                   <p>Detalles de facturación</p>
-                  <div>
+                  <div className={styles.btnContainer}>
                     <div
                       className={styles.button}
                       type="button"
@@ -590,7 +621,15 @@ const AccountSettings = () => {
                         setFacturacionCount(facturacionCount + 1);
                         setFacturacionInputs([
                           ...facturacionInputs,
-                          { value: "", editable: false },
+                          {
+                            direccion: "direccion",
+                            poblacion: "poblacion",
+                            provincia: "provincia",
+                            codigoPostal: "codigo Postal",
+                            pais: "pais",
+                            editable: false,
+                            editable: false,
+                          },
                         ]);
                       }}
                     >
@@ -598,47 +637,88 @@ const AccountSettings = () => {
                     </div>
                   </div>
                 </div>
-                {facturacionCount == 0
-                  ? "Desconocido"
-                  : [...Array(facturacionCount)].map((_, index) => (
-                      <div className={styles.facturacion} key={index}>
-                        {isEditingDetails && (
-                          <input
-                            type="radio"
-                            name="facturacion"
-                            value={`facturacion${index}`}
-                            onChange={() =>
-                              handleChange({
-                                name: "facturacion",
-                                newValue: `facturacion${index}`,
-                              })
-                            }
-                          />
-                        )}
-                        <input
-                          type="text"
-                          value={facturacionInputs[index]?.value || ""}
-                          disabled={
-                            !facturacionInputs[index]?.editable ||
-                            !isEditingDetails
-                          }
-                          onChange={(e) =>
-                            handleInputChange(index, e.target.value)
-                          }
-                          placeholder="Email adress, Zip code / Postcode, Country of residence"
-                        />
-                        {isEditingDetails && (
-                          <div
-                            className={styles.facturacionButtonEdit}
-                            onClick={() => handleEditToggle(index)}
-                          >
-                            {facturacionInputs[index]?.editable
-                              ? "Guardar"
-                              : "Editar"}
+                <div className={styles.fact}>
+                  {facturacionCount == 0
+                    ? "Desconocido"
+                    : [...Array(facturacionCount)].map((_, index) => (
+                        <div className={styles.facturacion} key={index}>
+                          <div className={styles.factContainer}>
+                            <div className={styles.factHeader}>
+                              {isEditingDetails && (
+                                <input
+                                  type="radio"
+                                  name="facturacion"
+                                  value={`facturacion${index}`}
+                                  onChange={() =>
+                                    handleChange({
+                                      name: "facturacion",
+                                      newValue: `facturacion${index}`,
+                                    })
+                                  }
+                                />
+                              )}
+                              <p>
+                                <span>
+                                  {" "}
+                                  {facturacionInputs[index].direccion},
+                                </span>
+                                <span>
+                                  {" "}
+                                  {facturacionInputs[index].poblacion},
+                                </span>
+                                <span>
+                                  {" "}
+                                  {facturacionInputs[index].provincia},
+                                </span>
+                                <span>
+                                  {" "}
+                                  {facturacionInputs[index].provincia},
+                                </span>
+                                <span>
+                                  {facturacionInputs[index].codigoPostal},
+                                </span>
+                                <span>{facturacionInputs[index].pais}</span>
+                              </p>
+                            </div>
+                            {isEditingDetails && (
+                              <>
+                                {console.log(facturacionInputs)}
+                                {facturacionInputs[index]?.editable && (
+                                  <DetailsBillInputs
+                                    direccion={
+                                      facturacionInputs[index].direccion || ""
+                                    }
+                                    poblacion={
+                                      facturacionInputs[index].poblacion || ""
+                                    }
+                                    provincia={
+                                      facturacionInputs[index].provincia || ""
+                                    }
+                                    codigoPostal={
+                                      facturacionInputs[index].codigoPostal ||
+                                      ""
+                                    }
+                                    pais={facturacionInputs[index].pais || ""}
+                                    handleChange={(key, value) =>
+                                      handleInputChange(index, key, value)
+                                    }
+                                  />
+                                )}
+
+                                <div
+                                  className={styles.facturacionButtonEdit}
+                                  onClick={() => handleEditToggle(index)}
+                                >
+                                  {facturacionInputs[index]?.editable
+                                    ? "Guardar"
+                                    : "Editar"}
+                                </div>
+                              </>
+                            )}
                           </div>
-                        )}
-                      </div>
-                    ))}
+                        </div>
+                      ))}
+                </div>
               </div>
               <div className={styles.label}>
                 <div className={styles.headerLabel}>
@@ -701,7 +781,7 @@ const AccountSettings = () => {
               />
             </label>
             <LogoSelector
-              buttonDown={true}
+              buttonDown={false}
               text="Logo Corporativo"
               logos={userData?.corporativeLogos}
               selectedLogo={userData?.selectedCorporativeLogo}
@@ -718,7 +798,7 @@ const AccountSettings = () => {
             />
 
             <LogoSelector
-              buttonDown={true}
+              buttonDown={false}
               text="Firma"
               logos={userData?.signatureImages}
               selectedLogo={userData?.selectedSignatureImage}
@@ -760,45 +840,7 @@ const AccountSettings = () => {
                 }
               />
             </label>
-            {/* <label>
-              <div className={styles.row}>
-                <p>Idioma</p>
-                <div
-                  className={styles.editButton}
-                  onClick={() => {
-                    console.log("clicking on edit button...");
-                    if (editingCurrency) {
-                      setEditingCurrency(false);
-                    } else {
-                      setEditingCurrency(true);
-                    }
-                  }}
-                  type="button"
-                  style={{ cursor: "pointer", userSelect: "none" }}
-                >
-                  {editingCurrency ? "Guardar" : "Editar"}
-                </div>
-              </div>
-              <CustomDropdown
-                editable={editingLanguage}
-                editing={editingLanguage}
-                hasObject={true}
-                options={[
-                  {
-                    iso: "es",
-                    label: "Spanish",
-                  },
-                  {
-                    iso: "en",
-                    label: "English",
-                  },
-                ]}
-                selectedOption={userData?.currency}
-                setSelectedOption={(option) =>
-                  handleChange({ name: "currency", newValue: option })
-                }
-              />
-            </label> */}
+
             <label>
               <div className={styles.row}>
                 <p>Idioma</p>
@@ -818,7 +860,16 @@ const AccountSettings = () => {
                   {editingLanguage ? "Guardar" : "Editar"}
                 </div>
               </div>
-              <div>
+              <CustomDropdown
+                editable={editingLanguage}
+                editing={editingLanguage}
+                options={["es", "en"]}
+                selectedOption={userData?.language}
+                setSelectedOption={(option) =>
+                  handleChange({ name: "language", newValue: option })
+                }
+              />
+              {/* <div>
                 <div className={styles.flagContainers}>
                   <img
                     onClick={() => {
@@ -837,17 +888,19 @@ const AccountSettings = () => {
                     src={english_flag}
                   />
                 </div>
-              </div>
+              </div> */}
             </label>
-            <div className={styles.saveButtonContainer}>
-              <button
-                onClick={handleSave}
-                className={styles.save}
-                type="submit"
-              >
-                {updatingUserLoading ? "Guardando..." : t("saveChange")}
-              </button>
-            </div>
+            {isSaveButtonVisible && (
+              <div className={styles.saveButtonContainer}>
+                <button
+                  onClick={handleSave}
+                  className={styles.save}
+                  type="submit"
+                >
+                  {updatingUserLoading ? "Guardando..." : t("saveChange")}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
