@@ -9,6 +9,7 @@ export const ParametersLabel = ({
   editingIndices,
   setEditingIndices,
   addUnit,
+  isCategory = false,
 }) => {
   const [isParametersVisible, setIsParametersVisible] = useState(true);
   const [isUnitChecked, setIsUnitChecked] = useState(false); // Estado para el checkbox
@@ -101,6 +102,52 @@ export const ParametersLabel = ({
                 </div>
               </div>
               <div className={styles.parameter}>
+                {isCategory && (
+                  <div>
+                    <span>Categoria</span>
+                    {/* <input type="text" placeholder={`Parámetro ${index + 1}`} /> */}
+                    <select
+                      value={param.category || ""} // Asegurar que no sea undefined
+                      onChange={(e) => {
+                        const newParameters = [...parameters];
+                        newParameters[index].category = e.target.value;
+                        setClientDataInputs((prev) => ({
+                          ...prev,
+                          parameters: newParameters,
+                        }));
+                      }}
+                      disabled={!isEditing}
+                    >
+                      <option value="">Seleccione una categoría</option>
+                      <option value="Identificación del Activo">
+                        Identificación del Activo
+                      </option>
+                      <option value="Clasificación del Activo">
+                        Clasificación del Activo
+                      </option>
+                      <option value="Información Financiera">
+                        Información Financiera
+                      </option>
+                      <option value="Mantenimiento">Mantenimiento</option>
+                      <option value="Operaciones">Operaciones</option>
+                      <option value="Gestión de Inventarios">
+                        Gestión de Inventarios
+                      </option>
+                      <option value="Riesgos y Cumplimiento">
+                        Riesgos y Cumplimiento
+                      </option>
+                      <option value="Datos IoT y Monitorización">
+                        Datos IoT y Monitorización
+                      </option>
+                      <option value="Retiro o Sustitución">
+                        Retiro o Sustitución
+                      </option>
+                      <option value="Indicadores Clave (KPIs)">
+                        Indicadores Clave (KPIs)
+                      </option>
+                    </select>
+                  </div>
+                )}
                 <div>
                   <span>Nombre del Parametro</span>
                   <input
@@ -148,7 +195,11 @@ export const ParametersLabel = ({
                     <p>Añadir Unidad de medida</p>
                   </div>
                   {isUnitChecked && ( // Renderiza el input solo si el checkbox está marcado
-                    <input type="text" disabled={!isEditing} />
+                    <input
+                      type="text"
+                      disabled={!isEditing}
+                      placeholder="Unidad de medida"
+                    />
                   )}
                 </div>
               )}

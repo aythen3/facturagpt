@@ -266,7 +266,6 @@ const AgencyTributFormAutomate = ({
 
         <CustomAutomationsWrapper Icon={<WhiteBell />}>
           <div
-            style={{ marginBottom: "20px" }}
             className={styles.infoContainerWrapper}
             onClick={() =>
               setShowContent({ ...showContent, info6: !showContent.info6 })
@@ -292,10 +291,7 @@ const AgencyTributFormAutomate = ({
             className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
           >
             <CustomAutomationsWrapper Icon={<WhiteCheck />}>
-              <div
-                style={{ marginBottom: "20px" }}
-                className={styles.infoContainerWrapper}
-              >
+              <div className={styles.infoContainerWrapper}>
                 <div className={styles.infoContainer}>
                   <div>Notificar tras la exportación</div>
                   <span>Configura donde quieres recibir la notificación</span>

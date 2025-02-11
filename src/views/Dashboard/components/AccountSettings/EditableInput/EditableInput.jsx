@@ -15,8 +15,12 @@ const EditableInput = ({
   options = false,
   readOnly,
   isTextarea = false, // Nueva prop para determinar si es textarea
+  typeclient = false,
+  info,
 }) => {
   const { t } = useTranslation("accountSetting");
+  const [sectionSelected, setSectionSelected] = useState(0);
+  const [nameEditing, setNameEditing] = useState(false);
 
   const [editable, setEditable] = useState(false);
   const [newValue, setNewValue] = useState(value);
@@ -64,7 +68,11 @@ const EditableInput = ({
   return (
     <div className={styles.editableInputContainer}>
       <div className={styles.editableInputHeader}>
-        {!labelOptions && <span>{label}</span>}
+        <p>
+          {" "}
+          {!labelOptions && <span>{label}</span>}{" "}
+          {info && <span className={styles.info}>{info}</span>}
+        </p>
         {!options && (
           <div
             onClick={handleEditClick}
@@ -88,15 +96,38 @@ const EditableInput = ({
             className={styles.textarea} // Agrega estilos específicos si es necesario
           />
         ) : (
-          <input
-            ref={inputRef}
-            type={type}
-            placeholder={placeholder}
-            name={name}
-            value={newValue}
-            onChange={(e) => setNewValue(e.target.value)}
-            readOnly={readOnly !== undefined ? readOnly : !editable}
-          />
+          <div className={styles.typeclient}>
+            {" "}
+            <input
+              ref={inputRef}
+              type={type}
+              placeholder={placeholder}
+              name={name}
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+              readOnly={readOnly !== undefined ? readOnly : !editable}
+            />
+            {typeclient && (
+              <div className={styles.btnSectionsSelector}>
+                <button
+                  type="button"
+                  className={`${sectionSelected === 0 ? styles.sectionSelect : ""}`}
+                  onClick={() => setSectionSelected(0)}
+                  disabled={readOnly !== undefined ? readOnly : !editable}
+                >
+                  Servicio
+                </button>
+                <button
+                  type="button"
+                  className={`${sectionSelected === 1 ? styles.sectionSelect : ""}`}
+                  onClick={() => setSectionSelected(1)}
+                  disabled={readOnly !== undefined ? readOnly : !editable}
+                >
+                  Producto
+                </button>
+              </div>
+            )}
+          </div>
         )}
 
         {verify && editable && (
