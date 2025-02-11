@@ -125,6 +125,7 @@ label {
 }
 
 .buttonForm {
+  width: 100%;
   height: 48px;
   min-height: 48px;
   padding: 4px 35px;
@@ -135,7 +136,7 @@ label {
   background-color: #ffffff;
   border: 1px solid #dcdcdc;
   margin-top: 40px;
-  width: 65%;
+  width: 100%;
   color: #676767;
   font-weight: 500;
   p {

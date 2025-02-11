@@ -1,16 +1,10 @@
 import styles from "./InvoicePanel.module.css";
-import FileExplorer from "../../components/FileExplorer/FileExplorer.jsx";
 import InvoiceForm from "../../components/InvoiceForm/InvoiceForm.jsx";
 import Preview from "../../components/Preview/Preview.jsx";
-import FloatingMenu from "../../components/FloatingMenu/FloatingMenu.jsx";
-import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin.jsx";
 import { useState, useEffect } from "react";
-import Automate from "../../components/Automate/Automate.jsx";
 import Factura from "../../assets/facturaEjemplo.png";
 import { useParams } from "react-router-dom";
-// import PanelAutomate from "../../components/Automate/panelAutomate/PanelAutomate.jsx";
 import { useDispatch, useSelector } from "react-redux";
-// import Chat from "../../components/Chat/Chat.jsx";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
 const company = {
   email: "coolmail@mail.com",
@@ -24,10 +18,7 @@ const company = {
 export default function InvoicePanel() {
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [fileUploaded, setFileUploaded] = useState(false);
-  const [activateChat, setActivateChat] = useState(false);
   const { user, updatingUserLoading } = useSelector((state) => state.user);
   const [hasNote, setHasNote] = useState(false);
   const [noteText, setNoteText] = useState("");
@@ -139,32 +130,7 @@ export default function InvoicePanel() {
           />
         </>
       )}
-      {/* <FloatingMenu
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          openModalAutomate={openModalAutomate}
-          closeModalAutomate={closeModalAutomate}
-        /> */}
-      {/* </div> */}
-
-      {/* {isModalAutomate && (
-        <Automate
-          typeContent={handleShowContentAutomate}
-          close={closeModalAutomate}
-          isModalAutomate={isModalAutomate}
-          setIsModalAutomate={setIsModalAutomate}
-          isAnimating={isAnimating}
-          setIsAnimating={setIsAnimating}
-        />
-      )}
-
-      {typeContentAutomate && (
-        <PanelAutomate
-          typeContent={handleShowContentAutomate}
-          close={handleCloseContentAutomate}
-          type={typeContentAutomate}
-        />
-      )} */}
+  
     </PanelTemplate>
   );
 }

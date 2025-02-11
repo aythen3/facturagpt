@@ -50,7 +50,7 @@ const PanelTemplate = ({ children }) => {
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <NavbarAdmin fromPath={fromPath} setFromPath={setFromPath} />
       <div className={styles.container}>
-        {pagePath !== "accounts" && pagePath !== "chat" && (
+        {pagePath !== "accounts" && pagePath !== "chat" && pagePath !== "users" &&  (
           <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
         )}
         <div className={styles.contentTemplate}>{children}</div>

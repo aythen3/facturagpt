@@ -6,7 +6,7 @@ const CircleProgressBar = () => {
     { id: 1, percentage: "+90%", label: "De ahorro en tiempo" },
     { id: 2, percentage: "+80%", label: "Optimización del trabajo" },
     { id: 2, percentage: "+90%", label: "Mejora la productividad" },
-    { id: 2, percentage: "-70%", label: "Errores humanos" },
+    // { id: 2, percentage: "-70%", label: "Errores humanos" },
   ];
   const progressClasses = [styles.pg0, styles.pg1, styles.pg2, styles.pg3];
 

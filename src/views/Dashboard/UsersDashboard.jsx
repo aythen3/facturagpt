@@ -24,6 +24,8 @@ import monitorIcon from "./assets/monitorIcon.svg";
 import greenArrow from "./assets/greenArrow.svg";
 import redArrow from "./assets/redArrow.svg";
 
+import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
+
 import { useNavigate } from "react-router-dom";
 import {
   // getAllClients,
@@ -213,6 +215,31 @@ const UsersDashboard = () => {
 
     setFilteredAccounts(updatedAccounts);
   }, [allAccounts, searchQuery, selectedOption]);
+
+
+  useEffect(() => {
+    // Función para obtener los datos filtrados y ordenados del backend
+    const fetchFilteredAccounts = async () => {
+      try {
+        const queryParams = new URLSearchParams({
+          search: searchQuery || '',
+          sortBy: selectedOption || '',
+        });
+
+        const response = await fetch(`/api/accounts/filter?${queryParams}`);
+        const data = await response.json();
+        
+        setAllAccounts(data);
+      } catch (error) {
+        console.error('Error fetching filtered accounts:', error);
+      }
+    };
+
+    // fetchFilteredAccounts();
+  }, [searchQuery, selectedOption]);
+
+
+  
 
   const handleDropdownToggle = () => {
     setIsOpen(!isOpen);
@@ -425,10 +452,12 @@ const UsersDashboard = () => {
 
   if (!userData) return null;
 
+    // <Elements stripe={stripePromise}>
+    //   <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+    //   </Elements>  
   return (
-    <Elements stripe={stripePromise}>
-      <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <div className={styles.container} onClick={() => setShowSidebar(false)}>
+    <PanelTemplate>
+    <div className={styles.container} onClick={() => setShowSidebar(false)}>
         {showPaymentModal && amountToPay && (
           <Payment
             onClose={() => setShowPaymentModal(false)}
@@ -542,14 +571,7 @@ const UsersDashboard = () => {
                   {/* Nuevo Admin */}
                 </button>
               )}
-              {/* <button
-                // onClick={() => navigate("/userSettings")}
-                onClick={() => setShowUserSettings(true)}
-                className={styles.addClientButton}
-              >
-                <img src={plus} alt="Add client" />
-                Alta nuevo cliente
-              </button> */}
+
               <div className={styles.filterSearch}>
                 <img src={magnify} alt="search" />
                 <input
@@ -558,9 +580,6 @@ const UsersDashboard = () => {
                   value={searchQuery}
                   onChange={handleSearchChange}
                 />
-                {/* <div className={styles.listRight}>
-                  <img src={listIcon} alt="listIcon" />
-                </div> */}
               </div>
               <div className={styles.dropdownContainer}>
                 <div
@@ -672,7 +691,7 @@ const UsersDashboard = () => {
       {showAddAdminModal && (
         <AddAdminModal onClose={() => setShowAddAdminModal(false)} />
       )}
-    </Elements>
+    </PanelTemplate>
   );
 };
 

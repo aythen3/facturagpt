@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Packs.module.css";
 import PricingCards from "../../components/PricingCard/PricingCard";
 import BillingSlider from "../../components/BillingSlider/BillingSlider";
-import flag from "../../assets/flag.svg";
-import heart from "../../assets/heart.svg";
 import image from "../../assets/imageIcon.svg";
 import code from "../../assets/codeIcon.svg";
 import txt from "../../assets/fileIcon.svg";

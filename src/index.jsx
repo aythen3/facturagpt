@@ -78,16 +78,12 @@ const Layout = () => {
   //     i18n.changeLanguage(currentLanguage);
   // }, [currentLanguage]);
 
-  // const [isAuth, setIsAuth] = useState(false);
 
 
   const ComponentPrivate = () => {
     const { user } = useSelector((state) => state.user);
     const navigate = useNavigate()
     
-    // console.log('user!!', user)
-    // const [fromPath, setFromPath] = useState("chat");
-
 
     const [init, setInit] = useState(false)
     useEffect(()=>{
@@ -97,22 +93,9 @@ const Layout = () => {
       if(user && user.success == false) { 
         navigate(`/login`)
       } 
-      // else if(!user){
-      //   navigate(`/login`)
-      // }
+  
     },[user])
 
-    useEffect(()=>{
-      console.log('user!!', user, init)
-
-      if(!user && init){ 
-        // navigate(`/login`)
-        // window.location.href = '/login'
-      } 
-      // else if(!user){
-      //   navigate(`/login`)
-      // }
-    },[init, user])
 
 
 
@@ -137,13 +120,7 @@ const Layout = () => {
 
   return (
     <>
-      {/* <Auth0Provider
-        domain={process.env.REACT_APP_AUTH0_DOMAIN}
-        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-        redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
-        cacheLocation="localstorage"
-      >
-      </Auth0Provider> */}
+
         <Elements stripe={stripePromise}>
           <I18nextProvider i18n={i18n}>
             <DndProvider backend={HTML5Backend}>
@@ -163,23 +140,7 @@ const Layout = () => {
                       <Route path="/otp" element={<DashboardLogin />} />
 
                       <Route path="/admin/*" element={<ComponentPrivate />} />
-                      {/* Admin */}
-                      {/* <Route path="/userSettings" element={<UserSettings />} /> */}
-                      {/*
-                      <Route path="/home" element={<Dashboard />} />
-                      <Route path="/panel" element={<InvoicePanel />} />
-                      <Route path="/freetrial" element={<FreeTrial />} />
-                      <Route path="/admin/clients" element={<UsersClientsDashboard />} />
-                      <Route path="/admin/users" element={<UsersDashboard />} />
-
-                      <Route path="/clients" element={<Clients />} />
-                      <Route path="/transactions" element={<Transactions />} />
-                      <Route path="/products" element={<AllProducts />} />
-                      <Route path="/chat" element={<ChatView />} />
-
-                      <Route path="/articlestransactions" element={<ArticlesTransactions />} />
-                      <Route path="/notification" element={<NotificationsView />} /> */}
-
+   
                       <Route path="*" element={<LandingPage />} />
                     </Routes>
                   </BrowserRouter>

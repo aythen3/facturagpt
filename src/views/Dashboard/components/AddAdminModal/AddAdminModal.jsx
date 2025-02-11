@@ -29,7 +29,12 @@ const AddAdminModal = ({ onClose }) => {
       return;
     }
     try {
-      await dispatch(createAccount({ nombre, email, password, role: "admin" }));
+      await dispatch(createAccount({ 
+        nombre, 
+        email, 
+        password, 
+        role: "admin" 
+      }));
     } catch (error) {
       console.log("error", error);
     } finally {

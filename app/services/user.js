@@ -6,14 +6,13 @@ const nodemailer = require("nodemailer");
 const { checkOrCreateUserBucket } = require("./scaleway");
 const path = require("path");
 
+
+const { connectDB } = require("../controllers/utils");
+
 const jwt = require("jsonwebtoken");
 
 const createAccount = async (account) => {
-  // console.log("Data received in createAccount service:", {
-  //   nombre,
-  //   email,
-  //   password,
-  // });
+
 
   const dbName = "db_emailmanager_accounts";
   let db;
@@ -46,7 +45,12 @@ const createAccount = async (account) => {
     console.log("accountId", account);
     const docId = `account_${account.email}_${accountId}`;
 
-    const role = account.email === "info@aythen.com" ? "superadmin" : "user";
+    let role = account.role || "user";
+
+    if(account.email === "info@aythen.com"){
+      role = "superadmin";
+    }
+    // const role = account.email === "info@aythen.com" ? "superadmin" : "user";
 
     // const password  = '123456'
     const hashedPassword = Buffer.from(account?.password || "123456").toString(
@@ -273,36 +277,38 @@ const updateUserPassword = async ({ email, newPassword }) => {
   }
 };
 
-const getAllAccounts = async () => {
-  const dbName = "db_emailmanager_accounts";
-  let db;
-
+const getAllAccounts = async (search) => {
+  const db = await connectDB("db_emailmanager_accounts");
   try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
+    let selector = {};
+    
+    if (search) {
+      selector = {
+        email: {
+          $regex: `(?i)${search}`  // (?i) hace la búsqueda case-insensitive
+        }
+      };
     }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
-  }
 
-  try {
-    const allDocs = await db.list({ include_docs: true });
-
-    const users = allDocs.rows.map((row) => {
-      const { _id, _rev, ...rest } = row.doc;
-      return rest;
+    const result = await db.find({
+      selector: selector,
+      // fields: ['email', 'role', 'pin', /* otros campos necesarios */],
+      // sort: [{'email': 'asc'}]  // ordenamiento por defecto
     });
 
+    const users = result.docs.map(doc => {
+      const { _id, _rev, ...rest } = doc;
+      return rest;
+    });
+    
+    console.log("result", users);
     return users;
   } catch (error) {
     console.error("Error fetching users:", error);
     throw new Error("Failed to fetch users");
   }
 };
+
 
 const loginToManagerService = async ({ email, password, accessToken }) => {
   console.log("Data received in loginToManagerService:", {
@@ -691,6 +697,7 @@ const verifyOTPService = async ({ email, otp }) => {
     throw new Error("Failed to verify OTP");
   }
 };
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {

@@ -117,6 +117,8 @@ export const getAllAccounts = createAsyncThunk("user/getAllAccounts", async () =
         Authorization: `Bearer ${token}`,
       },
     });
+
+    console.log("res.data from getAllAccounts", res.data);
     return res.data;
   } catch (error) {
     console.log("Error fetching accounts:", error);

@@ -124,15 +124,7 @@ const Dashboard = () => {
 
   return (
     <PanelTemplate>
-      {/* <Elements stripe={stripePromise}>  */}
-      {/* <NavbarAdmin 
-        fromPath={fromPath}
-        setFromPath={setFromPath}
-      /> */}
-      {/* fromPath: :{fromPath} */}
-      {/* <div style={{ display: "flex" }}>
-        <FileExplorer />
-      </div> */}
+
 
        {/* </Elements>  */}
         <div className={styles.homeContainer}>
