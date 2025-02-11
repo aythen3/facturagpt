@@ -1,22 +1,24 @@
-/* button[disabled],
-input[disabled],
-select[disabled],
-option[disabled],
-textarea[disabled] {
-  background-color: transparent;
-}
+.parametersLabel {
+  button[disabled],
+  input[disabled],
+  select[disabled],
+  option[disabled],
+  textarea[disabled] {
+    background-color: transparent;
+  }
 
-button,
-input,
-select,
-option,
-textarea {
-  border: none;
-  outline: none;
-  background-color: #f4f4f4;
-  padding: 12px;
-  box-sizing: border-box;
-} */
+  button,
+  input,
+  select,
+  option,
+  textarea {
+    border: none;
+    outline: none;
+    background-color: #f4f4f4;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+}
 
 .button {
   cursor: pointer;
@@ -139,4 +141,5 @@ input {
   input {
     width: 49%;
   }
+  accent-color: #10a37f;
 }

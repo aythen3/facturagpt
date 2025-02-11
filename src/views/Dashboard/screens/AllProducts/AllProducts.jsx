@@ -31,6 +31,7 @@ import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWi
 import Button from "../../components/Button/Button";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 import NewProduct from "../../components/NewProduct/NewProduct";
+import NewTag from "../../components/NewTag/NewTag";
 
 const AllProducts = () => {
   const { t } = useTranslation("clients");
@@ -49,7 +50,9 @@ const AllProducts = () => {
   const closeNewProductModal = () => {
     setNewProductModal(false);
   };
-
+  const [showAddTags, setShowAddTags] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, setTags] = useState([]);
   // useEffect(() => {
   //   dispatch(getOneTransactionById({ transactionId: transactionByClient?.id }));
   // }, [loading]);
@@ -264,7 +267,25 @@ const AllProducts = () => {
             text="productos"
           />
         )}
-        {newClient && <NewProduct setShowNewProduct={setShowNewClient} />}
+        {newClient && (
+          <NewProduct
+            setShowNewProduct={setShowNewClient}
+            setShowAddTags={setShowAddTags}
+            setSelectedTags={setSelectedTags}
+            selectedTags={selectedTags}
+            setTags={setTags}
+            tags={tags}
+          />
+        )}
+        {showAddTags && (
+          <NewTag
+            setShowNewTagModal={setShowAddTags}
+            setSelectedTags={setSelectedTags}
+            selectedTags={selectedTags}
+            setTags={setTags}
+            tags={tags}
+          />
+        )}
         <div className={styles.clientsTable} style={{ overflow: "auto" }}>
           <table className={styles.table}>
             <thead>
@@ -436,7 +457,6 @@ const AllProducts = () => {
                     }))
                   }
                 />
-
                 <label>
                   <p>Proveedor por defecto</p>
                   <div>
@@ -450,7 +470,6 @@ const AllProducts = () => {
                     placeholder="Busca y selecciona proveedores"
                   />
                 </label>
-
                 <EditableInput
                   label={"Retail Price (PVP)"}
                   nameInput={"retailPrice"}
@@ -472,7 +491,6 @@ const AllProducts = () => {
                     }))
                   }
                 />
-
                 <label className={styles.impuestos}>
                   <div>
                     <p>Impuesto</p>
@@ -483,7 +501,6 @@ const AllProducts = () => {
                     <div>Editar</div>
                   </div>
                 </label>
-
                 <label className={styles.sku}>
                   <div>
                     <p># (SKU)</p>
@@ -494,7 +511,6 @@ const AllProducts = () => {
                   </div>
                   <input type="text" placeholder="#" />
                 </label>
-
                 <ParametersLabel
                   parameters={clientDataInputs.parameters}
                   setClientDataInputs={setClientDataInputs}

@@ -12,7 +12,6 @@
 }
 .newClientContainer {
   background-color: white;
-  height: 80vh;
   box-sizing: border-box;
   width: 75%;
   padding: 10px;
@@ -97,56 +96,123 @@
     justify-content: space-between;
   }
 }
-.btnSectionsSelector {
-  flex: 1;
-  background-color: #f9f9f9;
-  display: flex;
-  padding: 4px;
-  border-radius: 12px;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  -ms-border-radius: 12px;
-  -o-border-radius: 12px;
-  width: 100%;
-  button {
-    flex: 1;
-    border-radius: 8px;
-    height: 30px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    border: 1px solid transparent;
-    background-color: transparent;
-    color: #b4b4b4;
-    padding: 0;
-  }
-  .sectionSelect {
-    background-color: #ffffff;
-    color: #0d0d0d;
-    border: 1px solid #0000002b;
-  }
-}
 
 .infoContact {
   .row {
     display: flex;
     gap: 20px;
+    > div {
+      flex: 1;
+      p {
+        margin: 0;
+        color: #222222;
+        font-weight: 500;
+      }
+      span {
+        font-size: 14px;
+        color: #71717a;
+      }
+      .edit {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
   }
   .CheckedInput {
     flex: 1;
     box-sizing: border-box;
 
+    input[type="checkbox"] {
+      accent-color: #10a37f;
+    }
+    input[type="text"] {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-weight: 400;
+      color: #757575;
+      height: 31px;
+      min-height: 31px;
+      background-color: #f4f4f4;
+      border-radius: 5px;
+      padding: 0px 9px;
+      box-sizing: border-box;
+      width: 100%;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
+    }
     p {
       margin: 0;
-      color: #1e0045;
+      color: #222222;
       font-weight: 500;
     }
     span {
       font-size: 14px;
       color: #71717a;
+    }
+  }
+}
+
+.formNewProduct .label {
+  border-bottom: 1px solid #11a3811f;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+.baseImportContainer {
+  display: flex;
+  gap: 10px;
+  > div {
+    flex: 1;
+  }
+}
+
+.ButtonLabelCommponent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .edit {
+    display: flex;
+    gap: 10px;
+    span {
+      user-select: none;
+      color: #71717a;
+    }
+    .button {
+      text-decoration: underline;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #222222;
+    }
+  }
+}
+.productsCategory {
+  display: flex;
+  gap: 20px;
+  box-sizing: border-box;
+  .column {
+    flex: 1;
+
+    .acr {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-weight: 400;
+      color: #757575;
+      height: 31px;
+      min-height: 31px;
+      background-color: #f4f4f4;
+      border-radius: 5px;
+      padding: 0px 9px;
+      box-sizing: border-box;
+      width: 100%;
     }
   }
 }

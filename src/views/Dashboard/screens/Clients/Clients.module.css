@@ -359,6 +359,19 @@ input[type="checkbox"] {
     span {
       color: #717171;
     }
+    .infoBillContainer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .info {
+      display: flex;
+      width: 100%;
+      span {
+        width: fit-content;
+        color: #717171;
+      }
+    }
     .button {
       width: fit-content;
       background-color: transparent;

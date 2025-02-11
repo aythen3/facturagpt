@@ -37,6 +37,7 @@ import Button from "../../components/Button/Button";
 import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
 import winIcon from "../../assets/winIcon.svg";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
+import DeleteButton from "../../components/DeleteButton/DeleteButton";
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -73,6 +74,7 @@ const Clients = () => {
     companyCity: "",
     companyProvince: "",
     companyCountry: "",
+    infoBill: [],
   });
 
   useEffect(() => {
@@ -97,6 +99,7 @@ const Clients = () => {
         companyCity: client.clientData.companyCity || "",
         companyProvince: client.clientData.companyProvince || "",
         companyCountry: client.clientData.companyCountry || "",
+        infoBill: client.clientData.infoBill || "",
       });
     } else {
       setClientData({
@@ -115,6 +118,7 @@ const Clients = () => {
         companyCity: "",
         companyProvince: "",
         companyCountry: "",
+        infoBill: [],
       });
     }
   }, [client]);
@@ -367,6 +371,7 @@ const Clients = () => {
     phone: false,
     web: false,
     info: false,
+    billingDetails: [],
   });
 
   const addParameter = () => {
@@ -391,6 +396,66 @@ const Clients = () => {
 
   const [editingIndices, setEditingIndices] = useState([]);
   console.log("DATAAAAA--------", clientData);
+  const handleAddBillingDetail = () => {
+    setClientData((prevData) => ({
+      ...prevData,
+      infoBill: [
+        ...prevData.infoBill,
+        {
+          direccion: "",
+          Población: "",
+          Provincia: "",
+          codigoPostal: "",
+          pais: "",
+        },
+      ],
+    }));
+  };
+  const [selectedBillIndex, setSelectedBillIndex] = useState(null); // Índice del detalle que se está editando
+  const [currentBill, setCurrentBill] = useState({
+    direccion: "",
+    Población: "",
+    Provincia: "",
+    codigoPostal: "",
+    pais: "",
+  });
+
+  const handleDeleteBillingDetail = (index) => {
+    setClientData((prev) => {
+      const updatedInfoBill = prev.infoBill.filter((_, i) => i !== index); // Elimina el índice seleccionado
+      return { ...prev, infoBill: updatedInfoBill };
+    });
+
+    // Si se está editando el mismo detalle que se eliminó, restablece la edición
+    if (selectedBillIndex === index) {
+      setSelectedBillIndex(null);
+      setInputsEditing((prev) => ({ ...prev, info: false }));
+    }
+  };
+
+  const handleEditBillingDetail = (index) => {
+    setSelectedBillIndex(index); // Establece el índice del detalle seleccionado
+    setCurrentBill({ ...clientData.infoBill[index] }); // Carga los datos en los inputs
+    setInputsEditing((prev) => ({ ...prev, info: true })); // Habilita la edición
+  };
+
+  const handleBillingDetailChange = (field, value) => {
+    setCurrentBill((prev) => ({ ...prev, [field]: value })); // Actualiza el detalle seleccionado
+  };
+
+  const handleSaveBillingDetail = () => {
+    if (selectedBillIndex !== null) {
+      setClientData((prev) => {
+        const updatedInfoBill = [...prev.infoBill];
+        updatedInfoBill[selectedBillIndex] = { ...currentBill }; // Guarda cambios en el detalle seleccionado
+
+        return { ...prev, infoBill: updatedInfoBill };
+      });
+
+      setInputsEditing((prev) => ({ ...prev, info: false })); // Deshabilita edición
+      setSelectedBillIndex(null); // Reinicia selección
+    }
+  };
 
   return (
     <PanelTemplate>
@@ -733,32 +798,135 @@ const Clients = () => {
                     <div className={styles.detailsBill}>
                       <p>Detalles de Facturación</p>
                       <div>
-                        <button type="button">
+                        <div onClick={handleAddBillingDetail}>
                           Añadir Detalles de Facturación
-                        </button>
-                        <button type="button">
+                        </div>
+
+                        <button type="button" onClick={handleSaveBillingDetail}>
                           Guardar Detalles de Facturación
                         </button>
                       </div>
                     </div>
                     <div className={styles.infoBill}>
-                      <span>
-                        Dirección, Población, Provincia, Código Postal, País
-                      </span>
-                      <div
-                        className={styles.button}
-                        onClick={() =>
-                          setInputsEditing((prev) => ({
-                            ...prev,
-                            info: !prev.info,
-                          }))
-                        }
-                      >
-                        Editar
-                      </div>
+                      {clientData.infoBill?.length > 0 ? (
+                        clientData.infoBill.map((bill, index) => (
+                          <div key={index} className={styles.infoBillContainer}>
+                            <div className={styles.info}>
+                              <p>
+                                {" "}
+                                <span> {bill.direccion || "Dirección"},</span>
+                                <span> {bill.Población || "Población"},</span>
+                                <span> {bill.Provincia || "Provincia"},</span>
+                                <span>
+                                  {bill.codigoPostal || "Código Postal"},
+                                </span>
+                                <span> {bill.pais || "País"}</span>
+                              </p>
+
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  selectedBillIndex === index
+                                    ? handleSaveBillingDetail()
+                                    : handleEditBillingDetail(index);
+                                }}
+                                className={styles.button}
+                              >
+                                {selectedBillIndex === index
+                                  ? "Guardar"
+                                  : "Editar"}
+                              </button>
+                            </div>
+                            <DeleteButton
+                              action={() => handleDeleteBillingDetail(index)}
+                            >
+                              Eliminar
+                            </DeleteButton>
+                          </div>
+                        ))
+                      ) : (
+                        <p>No hay detalles de facturación disponibles.</p>
+                      )}
                     </div>
                   </div>
-                  <div className={styles.info1}>
+                  {selectedBillIndex !== null && (
+                    <div>
+                      <div className={styles.info}>
+                        <span>Dirección</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="Dirección"
+                          value={currentBill.direccion}
+                          onChange={(e) =>
+                            handleBillingDetailChange(
+                              "direccion",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                      <div className={styles.info}>
+                        <span>Población</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="Población"
+                          value={currentBill.Población}
+                          onChange={(e) =>
+                            handleBillingDetailChange(
+                              "Población",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                      <div className={styles.info}>
+                        <span>Provincia</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="Provincia"
+                          value={currentBill.Provincia}
+                          onChange={(e) =>
+                            handleBillingDetailChange(
+                              "Provincia",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                      <div className={styles.info}>
+                        <span>Código Postal</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="Código Postal"
+                          value={currentBill.codigoPostal}
+                          onChange={(e) =>
+                            handleBillingDetailChange(
+                              "codigoPostal",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                      <div className={styles.info}>
+                        <span>País</span>
+                        <input
+                          type="text"
+                          disabled={!inputsEditing.info}
+                          placeholder="País"
+                          value={currentBill.pais}
+                          onChange={(e) =>
+                            handleBillingDetailChange("pais", e.target.value)
+                          }
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* <div className={styles.info1}>
                     <div className={styles.info}>
                       <span>Dirección</span>
                       <input
@@ -819,7 +987,7 @@ const Clients = () => {
                         }
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </label>
 
                 <label>
