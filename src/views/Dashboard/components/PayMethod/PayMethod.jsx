@@ -9,8 +9,8 @@ const PayMethod = ({ method, onChange }) => {
         <div>
           <span>Banco</span>
           <select
-            value={method?.banco || ""}
-            onChange={(e) => onChange("banco", e.target.value)}
+            value={method?.bank || ""}
+            onChange={(e) => onChange("bank", e.target.value)}
           >
             <option value="BBVA">BBVA</option>
             <option value="Santander">Santander</option>
@@ -22,16 +22,16 @@ const PayMethod = ({ method, onChange }) => {
           <span>Número de cuenta</span>
           <input
             type="text"
-            value={method?.numeroCuenta || ""}
-            onChange={(e) => onChange("numeroCuenta", e.target.value)}
+            value={method?.accountNumber || ""}
+            onChange={(e) => onChange("accountNumber", e.target.value)}
           />
         </div>
         <div>
           <span>SWIFT-BIC</span>
           <input
             type="text"
-            value={method?.swiftBic || ""}
-            onChange={(e) => onChange("swiftBic", e.target.value)}
+            value={method?.swift || ""}
+            onChange={(e) => onChange("swift", e.target.value)}
           />
         </div>
         <div>
@@ -46,8 +46,8 @@ const PayMethod = ({ method, onChange }) => {
           <span>Moneda</span>
           <input
             type="text"
-            value={method?.moneda || ""}
-            onChange={(e) => onChange("moneda", e.target.value)}
+            value={method?.currency || ""}
+            onChange={(e) => onChange("currency", e.target.value)}
           />
         </div>
       </div>

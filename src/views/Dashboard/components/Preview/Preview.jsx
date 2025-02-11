@@ -370,7 +370,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   return (
     <div className={styles.container}>
       <div className={styles.previewSection}>
-        {document ? (
+        {documentoPDF ? (
           <div className={styles.documentWrapper}>
             <div className={styles.billContainerPreview}>
               {!documentoPDF ? (

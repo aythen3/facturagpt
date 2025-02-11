@@ -268,10 +268,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
       </CustomAutomationsWrapper> */}
 
       <CustomAutomationsWrapper Icon={<WhiteClock />}>
-        <div
-          style={{ marginBottom: "20px" }}
-          className={styles.infoContainerWrapper}
-        >
+        <div className={styles.infoContainerWrapper}>
           <div
             className={styles.infoContainer}
             onClick={() =>
@@ -318,7 +315,6 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
       </CustomAutomationsWrapper>
       <CustomAutomationsWrapper Icon={<WhiteBolt />}>
         <div
-          style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
           onClick={() =>
             setShowContent({ ...showContent, info4: !showContent.info4 })
@@ -357,10 +353,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
         </div>
       </CustomAutomationsWrapper>
       <CustomAutomationsWrapper Icon={<WhiteText />}>
-        <div
-          style={{ marginBottom: "20px" }}
-          className={styles.infoContainerWrapper}
-        >
+        <div className={styles.infoContainerWrapper}>
           <div
             className={styles.infoContainer}
             onClick={() =>
@@ -395,7 +388,6 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
       </CustomAutomationsWrapper>
       <CustomAutomationsWrapper Icon={<WhiteBell />}>
         <div
-          style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
           onClick={() =>
             setShowContent({ ...showContent, info6: !showContent.info6 })
@@ -421,10 +413,7 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
         >
           <CustomAutomationsWrapper Icon={<WhiteCheck />}>
-            <div
-              style={{ marginBottom: "20px" }}
-              className={styles.infoContainerWrapper}
-            >
+            <div className={styles.infoContainerWrapper}>
               <div className={styles.infoContainer}>
                 <div>Notificar tras la exportación</div>
                 <span>Configura donde quieres recibir la notificación</span>

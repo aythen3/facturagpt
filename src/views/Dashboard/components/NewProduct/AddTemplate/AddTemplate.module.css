@@ -1,0 +1,58 @@
+.AddTemplateContainer {
+  margin-top: 30px;
+}
+.nameArticle {
+  display: flex;
+  gap: 10px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  img {
+    width: 30px;
+  }
+}
+
+.tableAddTemplate {
+  width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+.bodyAddTemplate {
+  input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #757575;
+    height: 31px;
+    min-height: 31px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    padding: 0px 9px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  input:disabled {
+    background-color: transparent;
+  }
+  input::placeholder {
+    color: #757575;
+  }
+}
+.optionsContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  .button {
+    text-decoration: underline;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #222222;
+  }
+}

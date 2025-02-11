@@ -23,6 +23,7 @@ import facturaEjemplo from "../../assets/facturaEjemplo.png";
 import Button from "../Button/Button";
 import HeaderFormsComponent from "../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as DropboxIcon } from "../../assets/dropbox-icon.svg";
+import HeaderCard from "../HeaderCard/HeaderCard";
 const SendEmailModal = ({
   mailModal,
   setMailModal,
@@ -101,7 +102,23 @@ const SendEmailModal = ({
       <div
         className={`${styles.sendEmailModal} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
-        <header className={styles.sendEmailHeader}>
+        <HeaderCard
+          title={"Send Email"}
+          setState={handleCloseNewClient}
+          headerStyle={{
+            position: "sticky",
+            top: "0",
+            background: "white",
+            zIndex: "999",
+          }}
+        >
+          <Button action={handleCloseNewClient} type="white">
+            Cancelar
+          </Button>
+          <Button>Enviar</Button>
+          <Button>Aceptar</Button>
+        </HeaderCard>
+        {/* <header className={styles.sendEmailHeader}>
           <Button
             headerStyle={{
               padding: "4px",
@@ -120,13 +137,9 @@ const SendEmailModal = ({
           </Button>
           <h2>Send Email</h2>
           <div className={styles.options}>
-            <Button action={handleCloseNewClient} type="white">
-              Cancelar
-            </Button>
-            <Button>Enviar</Button>
-            <Button>Aceptar</Button>
+           
           </div>
-        </header>
+        </header> */}
         <div className={styles.sendEmailContent}>
           <HeaderFormsComponent
             placeholder="Añade una cuenta de Dropbox"

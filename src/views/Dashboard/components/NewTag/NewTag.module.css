@@ -1,15 +1,28 @@
 .bg {
   background-color: rgba(0, 0, 0, 0.2);
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
 }
+.hola {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
 
 .newTagContainer {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   box-sizing: border-box;
   border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -17,16 +30,17 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   background-color: white;
-  /* border: 1px solid #22222273; */
+  /*border: 1px solid #22222273;
+  */
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 999;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
-  z-index: 999;
   .newTagHeader {
     display: flex;
     justify-content: space-between;
@@ -62,6 +76,7 @@
       -moz-border-radius: 7px;
       -ms-border-radius: 7px;
       -o-border-radius: 7px;
+      box-sizing: border-box;
     }
     .circle {
       height: 25px;
@@ -78,48 +93,28 @@
     }
   }
 }
-
-.circleBlack {
-  background-color: #222222;
+.tagsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.circleViolet {
-  background-color: #7329a5;
+.tagWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  accent-color: #10a37f;
+  align-items: center;
 }
-.circleLilac {
-  background-color: #c075ee;
+.tag {
+  border-radius: 6px;
+  width: 100%;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  padding: 2px 6px;
+  box-sizing: border-box;
 }
-.circleBlue {
-  background-color: #0b06ff;
-}
-.circleLightBlue {
-  background-color: #7086fd;
-}
-.circleRed {
-  background-color: #ff0000;
-}
-.circleOrange {
-  background-color: #ff8c00;
-}
-.circleGreen {
-  background-color: #12a27f;
-}
-.circleLightGreen {
-  background-color: #16c098;
-}
-.circleYellow {
-  background-color: #eeff00;
-}
-.circlePickColor {
-  background: conic-gradient(
-    #ff9e3d 13%,
-    #eeff00 34%,
-    #7bff79 50%,
-    #1400cc 68%,
-    #b30095 85%,
-    #990003 100%
-  );
-}
-
 .newTagBtnContainer {
   display: flex;
   justify-content: space-between;

@@ -340,10 +340,7 @@ const GoogleSheetsFormAutomate = ({
       </CustomAutomationsWrapper> */}
 
       <CustomAutomationsWrapper Icon={<FrecuencyIcon />}>
-        <div
-          style={{ marginBottom: "20px" }}
-          className={styles.infoContainerWrapper}
-        >
+        <div className={styles.infoContainerWrapper}>
           <div
             className={styles.infoContainer}
             onClick={() =>
@@ -412,7 +409,6 @@ const GoogleSheetsFormAutomate = ({
       </CustomAutomationsWrapper> */}
       <CustomAutomationsWrapper Icon={<ModifyState />}>
         <div
-          style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
           onClick={() =>
             setShowContent({ ...showContent, info4: !showContent.info4 })
@@ -471,10 +467,7 @@ const GoogleSheetsFormAutomate = ({
         </div>
       </CustomAutomationsWrapper> */}
       <CustomAutomationsWrapper Icon={<RenameFile />}>
-        <div
-          style={{ marginBottom: "20px" }}
-          className={styles.infoContainerWrapper}
-        >
+        <div className={styles.infoContainerWrapper}>
           <div
             className={styles.infoContainer}
             onClick={() =>
@@ -595,7 +588,6 @@ const GoogleSheetsFormAutomate = ({
       </CustomAutomationsWrapper> */}
       <CustomAutomationsWrapper Icon={<CustomNotifications />}>
         <div
-          style={{ marginBottom: "20px" }}
           className={styles.infoContainerWrapper}
           onClick={() =>
             setShowContent({ ...showContent, info6: !showContent.info6 })
@@ -621,10 +613,7 @@ const GoogleSheetsFormAutomate = ({
           className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
         >
           <CustomAutomationsWrapper Icon={<NotifyWhenUpdate />}>
-            <div
-              style={{ marginBottom: "20px" }}
-              className={styles.infoContainerWrapper}
-            >
+            <div className={styles.infoContainerWrapper}>
               <div className={styles.infoContainer}>
                 <div>Notificar tras la exportación</div>
                 <span>Configura donde quieres recibir la notificación</span>
@@ -720,10 +709,7 @@ const GoogleSheetsFormAutomate = ({
       </CustomAutomationsWrapper>
 
       <CustomAutomationsWrapper Icon={<SelectDestination />}>
-        <div
-          style={{ marginBottom: "20px" }}
-          className={styles.infoContainerWrapper}
-        >
+        <div className={styles.infoContainerWrapper}>
           <div
             className={styles.infoContainer}
             onClick={() =>
