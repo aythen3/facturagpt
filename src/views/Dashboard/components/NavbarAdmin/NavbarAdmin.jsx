@@ -116,8 +116,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
-          <button onClick={() => handleSendEmail()}>Enviar email</button>
-
+ 
           <div className={styles.hiddenMobile}>
             <button
               onClick={() => setShowPlusModal(true)}
@@ -126,34 +125,16 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               {t("buttonGetPlus")} <img src={star} alt="Icon" />
             </button>
             <div className={styles.profile}>
-              {/* <a href="/clients">
-              <img src={addBlack} alt="Icon" />
-            </a> */}
               {!isOpen ? (
                 <a
                   onClick={() => setIsOpen((prev) => !prev)}
                   className={styles.addIcon}
                 >
                   <AddPlus />
-                  {/* <img
-                    src={addPlus}
-                    alt="Icon"
-                    onClick={() => setIsOpen((prev) => !prev)}
-                    style={{
-                      width: '13px',
-                      height: '13px'
-                    }}
-                  /> */}
                 </a>
               ) : (
                 <a className={`${styles.addIconGreen} ${styles.addIcon}`}>
                   <AddPlusWhite />
-                  {/* <img
-                    className={styles.addIcon}
-                    src={addGreen}
-                    alt="Icon"
-                    onClick={() => setIsOpen((prev) => !prev)}
-                  /> */}
                 </a>
               )}
               <a
@@ -162,32 +143,25 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
                 className={fromPath == "chat" ? styles.active : ""}
               >
                 <ChatIcon />
-                {/* <img src={chatIcon} alt="Icon" /> */}
               </a>
               <a
-                // href="/admin/contacts"
                 onClick={() => setFromPath("clients")}
                 className={fromPath == "clients" ? styles.active : ""}
               >
                 <ClientIcon />
-                {/* <img src={clientIcon} alt="Icon" /> */}
               </a>
               <a
-                // href="/admin/products"
                 onClick={() => setFromPath("products")}
                 className={fromPath == "products" ? styles.active : ""}
               >
-                {/* <img src={boxIcon} alt="Icon" /> */}
                 <BoxIcon />
               </a>
               <a
-                //href="/admin/notification"
                 className={`${styles.number} 
                 ${fromPath == "notification" ? styles.active : ""}`}
                 onClick={() => setFromPath("notification")}
               >
                 <DotsNotification />
-                {/* <img src={dotsNotification} alt="Icon" /> */}
                 {numNotification !== 0 && <span>{numNotification}</span>}
               </a>
 
@@ -305,7 +279,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
             </>
           )}
 
-          {/* PopUps */}
+        </div>
           <div
             className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}
           >
@@ -332,11 +306,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               setShowUplaodFile={setShowUplaodFile}
             />
           )}
-          {/* {true && (
-            <div>
-              hello
-            </div>
-          )} */}
           {isModalAutomate && (
             <Automate
               typeContent={handleShowContentAutomate}
@@ -373,7 +342,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
           {showUploadFile && (
             <UploadFIle setShowUplaodFile={setShowUplaodFile} />
           )}
-        </div>
       </Elements>
     </>
   );

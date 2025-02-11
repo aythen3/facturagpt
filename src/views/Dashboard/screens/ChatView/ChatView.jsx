@@ -268,6 +268,12 @@ const Chat = () => {
     }
   };
 
+  useEffect(() => {
+    if(inputValue !== "") {
+      handleSendMessage()
+    }
+  }, [inputValue])
+
   return (
     <div className={styles.chatContainer}>
       <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>

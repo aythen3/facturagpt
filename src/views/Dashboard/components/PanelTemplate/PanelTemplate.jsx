@@ -31,9 +31,15 @@ const PanelTemplate = ({ children }) => {
     const savedPath = localStorage.getItem("lastPath");
     const currentPath = window.location.pathname.split("/admin/")[1];
     return currentPath && currentPath !== savedPath
-      ? currentPath
-      : savedPath || "chat";
+    ? currentPath
+    : savedPath || "chat";
   });
+  
+  const [pagePath, setPagePath] = useState(() => {
+    const path = window.location.pathname.split("/")[2];
+
+    return path
+  })
 
   useEffect(() => {
     localStorage.setItem("lastPath", fromPath);
@@ -41,16 +47,15 @@ const PanelTemplate = ({ children }) => {
   }, [fromPath]);
 
   return (
-    <>
+    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <NavbarAdmin fromPath={fromPath} setFromPath={setFromPath} />
       <div className={styles.container}>
-        {/* {fromPath !== "accounts" && fromPath !== "chat" && ( */}
-        {fromPath !== "accounts" && (
+        {pagePath !== "accounts" && pagePath !== "chat" && pagePath !== "users" &&  (
           <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} />
         )}
         <div className={styles.contentTemplate}>{children}</div>
       </div>
-    </>
+    </div>
   );
 };
 

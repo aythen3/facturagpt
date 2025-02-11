@@ -8,8 +8,8 @@
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  position: sticky;
-  top: 50px;
+  /* position: sticky; */
+  /* top: 50px; */
   left: 0;
   z-index: 1;
 }

@@ -17,11 +17,6 @@ const FreeTrial = () => {
   const { t } = useTranslation("freeTrial");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     navigate("/home");
-  //   }
-  // }, [isAuthenticated]);
 
   return (
     <div className={styles.container}>
@@ -29,7 +24,6 @@ const FreeTrial = () => {
       <div className={styles.content}>
         <div id={styles.logo}>
           <img src={facturaLogo} alt="FacturaGPT" id={styles.LogoGPT} />
-          {/* <img src={facturaText} alt="FacturaGPT" /> */}
           <p>
             Factura<span>GPT</span>
           </p>

@@ -112,7 +112,7 @@ const Automate = ({
             <img src={closeGray} alt="closeGray" />
           </div> */}
         </div>
-        {true ? (
+        {!true ? (
           <div>
             <IniAutomate />
           </div>

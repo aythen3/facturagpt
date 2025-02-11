@@ -183,7 +183,7 @@ const ContactForm = () => {
                     required
                   />
                 </div>
-                <div style={{ width: "48%" }}>
+                <div>
                   <button
                     type="submit"
                     className={`${styles.button} ${styles.buttonForm}`}

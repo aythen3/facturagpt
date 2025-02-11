@@ -170,19 +170,7 @@ const AccountSettings = ({
       (item) => item && item.length > 0
     );
 
-    // if (missingFields.length > 0) {
-    //   console.log(
-    //     "Missing Fields:",
-    //     missingFields.map(([key]) => key)
-    //   );
-    //   alert("Completa todos los campos requeridos.");
-    //   return;
-    // }
 
-    // if (emailQueries.length === 0) {
-    //   alert("Debes agregar por lo menos una etiqueta.");
-    //   return;
-    // }
 
     let finalData = {
       ...requiredFields,
@@ -277,10 +265,12 @@ const AccountSettings = ({
       setTokenUser(showAccountSettings.tokenUser || "")
       setTokenUserPassword(showAccountSettings.tokenUserPassword || "")
       
-      setFirstTag(showAccountSettings.emailQueries[0] || "")
-      setSecondTag(showAccountSettings.emailQueries[1] || "")
-      setThirdTag(showAccountSettings.emailQueries[2] || "")
-      setFourthTag(showAccountSettings.emailQueries[3] || "")
+      if(showAccountSettings.emailQueries && showAccountSettings.emailQueries.length > 0){  
+        setFirstTag(showAccountSettings.emailQueries[0] || "")
+        setSecondTag(showAccountSettings.emailQueries[1] || "")
+        setThirdTag(showAccountSettings.emailQueries[2] || "")
+        setFourthTag(showAccountSettings.emailQueries[3] || "")
+      }
     }
   }, [showAccountSettings])
 
@@ -366,49 +356,12 @@ const AccountSettings = ({
                   <p>{t("titleRight2")}</p>
                   <span>{t("subTitle2")}</span>
                 </div>
-                {/* <div className={styles.faqItem}>
-                  <img src={eye} alt="Eye" />
-                  <p>{t("titleRight3")}</p>
-                  <span>{t("subTitle3")}</span>
-                  <div
-                    className={styles.filterSort}
-                    onClick={handleDropdownToggle}
-                    ref={dropdownRef}
-                  >
-                    <b>{selectedOption}</b> {t("documents")}
-                    <FaChevronDown className={styles.chevronIcon} />
-                    {isOpen && (
-                      <div className={styles.dropdownOptions}>
-                        {options.map((option, index) => (
-                          <div
-                            key={index}
-                            className={styles.dropdownOption}
-                            onClick={() => handleOptionClick(option)}
-                          >
-                            {option}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div
-                    onClick={handleAddClient}
-                    className={styles.signInButton}
-                  >
-                    {t("buttonActive")}
-                  </div>
-                </div> */}
+
               </div>
             </div>
             {/* Right Side */}
             <div className={styles.rightSection}>
-              {/* <div className={styles.breadcrumb}>
-                <span onClick={() => navigate("/home")}>Admin</span>{" "}
-                <FaChevronRight /> <span>{t("newRegistration")}</span>
-              </div> */}
-              {/* <div className={styles.userIconContainer}>
-                <img src={userAdd} alt="User Add" className={styles.userIcon} />
-              </div> */}
+
               <div className={styles.detailsContainer}>
                 {Object.keys(fieldValues).map((field) => (
                   <div key={field} className={styles.detailItem}>
