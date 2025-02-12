@@ -111,7 +111,7 @@ const NewTag = ({
 
           {/* Lista de etiquetas con checkbox y botón de eliminar */}
           <div className={styles.tagsContainer}>
-            {tags.map((tag) => (
+            {tags && tags.map((tag) => (
               <div key={tag.id} className={styles.tagWrapper}>
                 <input
                   type="checkbox"
