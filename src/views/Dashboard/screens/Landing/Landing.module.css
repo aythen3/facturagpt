@@ -8,5 +8,12 @@
 }
 
 section {
-  margin-top: 200px;
+  /* margin-top: 200px; */
+  height: 100vh;
+  max-height: 1260px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }

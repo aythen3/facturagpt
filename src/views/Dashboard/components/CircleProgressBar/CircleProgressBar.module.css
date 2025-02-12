@@ -2,6 +2,8 @@
   margin-top: 50px;
   width: 90%;
   flex-wrap: wrap;
+  height: fit-content !important;
+  margin: 50px 0;
 }
 .CircleProgress {
   display: flex;

@@ -68,7 +68,7 @@ const TagsLanding = () => {
     </>,
   ];
   return (
-    <section className={styles.TagsLandingContainer}>
+    <div className={styles.TagsLandingContainer}>
       <div className={styles.tagLanding}>
         {tags1.map((tag) => (
           <div className={styles.tag}>
@@ -90,7 +90,7 @@ const TagsLanding = () => {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

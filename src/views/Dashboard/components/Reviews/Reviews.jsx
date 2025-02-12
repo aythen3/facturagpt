@@ -34,8 +34,8 @@ const Reviews = () => {
           stylesProp={{ padding: "0 20px" }}
         />
         {/* <span className={styles.thinSubtitle}>{t("priceFooter")}</span> */}
+        <TagsLanding />
       </section>
-      <TagsLanding />
       <section className={styles.CarrouselContainer}>
         <h2 className={styles.reviewsTitle}>{t("title")}</h2>
         <SubtitleTemplate
