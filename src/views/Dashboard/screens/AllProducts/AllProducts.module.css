@@ -121,6 +121,12 @@
   font-size: 18px; /* Ícono fuera del input */
 }
 
+.clientsTable{
+  overflow: auto;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}
 .table {
   width: 100%;
   text-align: start;

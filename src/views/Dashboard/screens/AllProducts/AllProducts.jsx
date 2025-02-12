@@ -286,7 +286,7 @@ const AllProducts = () => {
             tags={tags}
           />
         )}
-        <div className={styles.clientsTable} style={{ overflow: "auto" }}>
+        <div className={styles.clientsTable} >
           <table className={styles.table}>
             <thead>
               <tr>
