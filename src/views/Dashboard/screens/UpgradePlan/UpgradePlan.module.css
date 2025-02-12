@@ -24,7 +24,7 @@
   flex-direction: column;
   width: 100%;
   max-height: 90vh;
-  max-width: 864px;
+  max-width: 1065px;
   font-family: "Inter", sans-serif;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   transform: scale(1);
@@ -66,7 +66,7 @@
   padding: 0 24px;
   height: 64px;
   border-bottom: 1px solid #e3e3e3;
-  background: #F5F5F5;
+  background: #f5f5f5;
 }
 .headerLeft {
   display: flex;
@@ -81,12 +81,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 31px;
-  height: 31px;
+  /* width: 31px;
+  height: 31px; */
   cursor: pointer;
   border-radius: 4px;
   background: #f6f6f6;
   user-select: none;
+  text-decoration: underline;
 }
 .upgradePlanTitle {
   font-size: 16px;
@@ -101,8 +102,9 @@
   height: 100%;
   max-height: calc(90vh - 65px);
   overflow: hidden;
-  background: #F5F5F5;
-  border: 1px solid #ECECF1;
+  background: #f5f5f5;
+  border: 1px solid #ececf1;
+  box-sizing: border-box;
 }
 
 /* ==================================================================================== */
@@ -120,11 +122,20 @@
   margin: 20px;
   background: #fff;
 }
+
+.leftContainer input::placeholder {
+  color: #757575;
+}
+
 .leftContainer::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
+.titleWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 .leftContainer::-webkit-scrollbar-thumb {
   background-color: #e2e2e2;
   border-radius: 12px;
@@ -193,13 +204,14 @@
 .paymentMethodsContainer {
   display: grid;
   align-items: flex-start;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
   gap: 20px;
   margin-top: -12px;
   flex-direction: column;
+}
+.paymentMethodsContainerGrid {
   grid-template-columns: 1fr 1fr;
 }
-
 .planPlusTitle {
   color: #222222;
   font-size: 13px;
@@ -261,6 +273,9 @@
   color: #71717a;
   background-color: transparent;
   font-weight: 400;
+}
+.validateInput::placeholder {
+  color: #71717a;
 }
 
 .validateInput::-webkit-inner-spin-button,

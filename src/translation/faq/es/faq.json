@@ -10,11 +10,11 @@
   "ask6": "¿Factura GPT realiza cálculos de impuestos?",
   "ask7": "¿Factura GPT se actualiza automáticamente?",
 
-  "answer1": "FacturaGPT es una herramienta de gestión y análisis financiero que utiliza inteligencia artificial para simplificar y optimizar el análisis de facturas y datos contables. FacturaGPT és una solución basada en la nube, accesible desde cualquier dispositivo con conexión a internet.",
-  "answer2": "Aceptamos archivos Excel, CSV y PDF, entre otros formatos estándar.",
-  "answer3": "Proporciona insights clave como márgenes de ganancia, patrones de gasto y recomendaciones personalizadas.",
-  "answer4": "Sí, es compatible con ERP y sistemas de contabilidad populares como SAP, QuickBooks y Odoo.",
-  "answer5": "Sí, identifica discrepancias y posibles errores en las facturas automáticamente.",
-  "answer6": "Sí, identifica y calcula automáticamente impuestos aplicables en las facturas.",
+  "answer1": "FacturaGPT es una solución en la nube impulsada por inteligencia artificial, diseñada para optimizar y simplificar la gestión documental financiera. Su sistema avanzado de automatización permite la validación de datos, aplicación de filtros inteligentes y alertas en tiempo real, asegurando precisión, eficiencia y reducción de errores en cada operación.\n\nTotalmente compatible con ERP, CRM y sistemas contables, facilita la transferencia y sincronización de datos, minimizando la carga operativa y mejorando la integración entre plataformas.\n\nAdemás, ofrece análisis predictivos y comparativos para una gestión más estratégica y basada en datos. Accesible desde cualquier dispositivo con conexión a internet, FacturaGPT proporciona un control financiero preciso, adaptable y siempre actualizado.",
+  "answer2": "Aceptamos imágenes, archivos Excel, CSV, PDF, XML y otros formatos estándar, garantizando compatibilidad con múltiples sistemas y facilitando la gestión documental.",
+  "answer3": "FacturaGPT conoce al detalle tu empresa y, por ello, puede ofrecerte insights clave como márgenes de ganancia, patrones de gasto, comparativas, predicciones y recomendaciones personalizadas, ayudándote a optimizar tu gestión financiera. Solo tienes que pedírselo.\n\nGracias a su automatización inteligente, analiza datos en tiempo real, optimiza la gestión financiera sin esfuerzo y actúa como una herramienta colaborativa, permitiendo a equipos y departamentos un sistema centralizado de los datos.",
+  "answer4": "Sí, FacturaGPT es compatible con ERP, CRM, sistemas de contabilidad y plataformas heredadas.\n\nSi no encuentras la integración que necesitas, contacta con nuestro equipo de ventas y te ayudaremos a conectarlo.",
+  "answer5": "Sí, identifica discrpancias y posibles errores en las facturas automáticamente.",
+  "answer6": "Sí, identifica y calcula automáticamente impuestos aplicables en las facturas y simplifica auditorías.",
   "answer7": "Sí, todas las actualizaciones y mejoras se implementan automáticamente sin costo adicional."
 }

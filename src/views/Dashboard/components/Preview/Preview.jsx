@@ -399,7 +399,16 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
           </div>
         ) : (
           <div className={styles.emptyPreview}>
-            <span>Drop your document here</span>
+            <span
+              onClick={() => {
+                setSeeBill(true); // Mostrar el modal
+                setTimeout(() => {
+                  seeBillRef.current?.generatePDF(); // Llamar a la función en el hijo
+                }, 300); // Asegurar que el modal está montado
+              }}
+            >
+              Drop your document here
+            </span>
           </div>
         )}
       </div>

@@ -24,6 +24,7 @@ import minusIcon from "../../../../assets/minusIcon.svg";
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import { ReactComponent as FrecuencyIcon } from "../../../../assets/frecuencyIcon.svg";
+import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 
 const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
   const [showAddConnection, setShowAddConnection] = useState(false);
@@ -82,10 +83,15 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
           addConnection={addConnection}
         />
       )}
-      <div>
-        <p style={{ margin: "0" }}>Nombre de la automatización</p>
-        <input type="text" placeholder="Automatización 1" />
-      </div>
+      <EditableInput
+        label={"Nombre de la Automatización"}
+        // value={userData?.nombre}
+        name="automatization"
+        // onSave={handleChange}
+        placeholder="Automatización 1"
+        options={true}
+        readOnly={false}
+      />
       <CustomAutomationsWrapper Icon={<ArrowSquare />}>
         <div
           className={styles.infoContainerWrapper}

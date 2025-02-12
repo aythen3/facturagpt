@@ -27,6 +27,7 @@ import InputComponent from "../../../InputComponent/InputComponent";
 
 import styles from "./AgencyTributFormAutomate.module.css";
 import Advertency from "../Advertency/Advertency";
+import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 
 const AgencyTributFormAutomate = ({
   type,
@@ -185,10 +186,15 @@ const AgencyTributFormAutomate = ({
             "Al exportar un documento a la Agencia Tributaria, si su estado es diferente de 'Pagado', este cambiará automáticamente a 'Pagado'"
           }
         />
-        <div>
-          <p>Nombre de la automatización</p>
-          <input type="text" placeholder="Automatización 1" />
-        </div>
+        <EditableInput
+          label={"Nombre de la Automatización"}
+          // value={userData?.nombre}
+          name="automatization"
+          // onSave={handleChange}
+          placeholder="Automatización 1"
+          options={true}
+          readOnly={false}
+        />
         {/* <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div
           className={styles.infoContainerWrapper}

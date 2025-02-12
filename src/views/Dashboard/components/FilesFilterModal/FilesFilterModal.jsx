@@ -8,8 +8,16 @@ import CheckboxWithText from "../CheckboxWithText/CheckboxWithText";
 import minusIcon from "../../assets/minusIcon.svg";
 import { FaChevronDown } from "react-icons/fa";
 import searchGray from "../../assets/searchGray.svg";
+import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
 
-const FilesFilterModal = ({ onClose, handleApplyFilters, isFilterOpen }) => {
+const FilesFilterModal = ({
+  onClose,
+  handleApplyFilters,
+  isFilterOpen,
+  setShowSelectCurrencyPopup,
+  setSelectedCurrency,
+  selectedCurrency,
+}) => {
   const colors = [
     "#0B06FF",
     "#FF0000",
@@ -28,11 +36,9 @@ const FilesFilterModal = ({ onClose, handleApplyFilters, isFilterOpen }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [minValue, setMinValue] = useState("");
   const [maxValue, setMaxValue] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("EUR");
-  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+
   const [selectedTags, setSelectedTags] = useState([]);
   const [tag, setTag] = useState("");
-
   const handleClose = () => {
     setIsClosing(false);
     setTimeout(() => {
@@ -205,20 +211,22 @@ const FilesFilterModal = ({ onClose, handleApplyFilters, isFilterOpen }) => {
               <div className={styles.currencyContainer}>
                 <div
                   className={styles.currencyDropdownButton}
-                  onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+                  onClick={() => setShowSelectCurrencyPopup(true)}
                 >
-                  <span>{selectedCurrency}</span>
+                  <span style={{ textTransform: "uppercase" }}>
+                    {selectedCurrency}
+                  </span>
                   <FaChevronDown
                     className={styles.chevronIcon}
                     color="#71717A"
                     size={12}
-                    style={{
-                      transform: showCurrencyDropdown ? "rotate(180deg)" : "",
-                      transition: "transform 0.3s ease-in-out",
-                    }}
+                    // style={{
+                    //   transform: showCurrencyDropdown ? "rotate(180deg)" : "",
+                    //   transition: "transform 0.3s ease-in-out",
+                    // }}
                   />
                 </div>
-                {showCurrencyDropdown && (
+                {/* {showCurrencyDropdown && (
                   <div className={styles.currencyDropdown}>
                     <span
                       onClick={() => {
@@ -237,7 +245,10 @@ const FilesFilterModal = ({ onClose, handleApplyFilters, isFilterOpen }) => {
                       EUR
                     </span>
                   </div>
-                )}
+                )} */}
+                {/* <div className={styles.currencyDropdown}>
+                  {selectedCurrency}
+                </div> */}
               </div>
             </div>
             <div className={styles.amountContainer}>

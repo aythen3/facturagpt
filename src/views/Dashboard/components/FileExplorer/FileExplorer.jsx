@@ -31,7 +31,7 @@ import { FaUpload } from "react-icons/fa";
 
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
-
+import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
 export default function FileExplorer({ isOpen, setIsOpen }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -46,7 +46,8 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
   const optionsButtonRefs = useRef([]);
   const fileExplorerRef = useRef(null);
   const breadCrumbsRef = useRef(null);
-
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
   const handleMouseDown = (e) => {
     const element = breadCrumbsRef.current;
     element.isDragging = true;
@@ -548,7 +549,32 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           classNameIconRight={styles.searchContainerL}
           onClickIconRight={() => setIsFilterOpen(true)}
         >
-          <>
+          {userFilters &&
+          Object.keys(userFilters).length > 0 &&
+          userFilters.keyWord !== "" ? (
+            <img src={filterIconGreen} alt="filterIcon" />
+          ) : (
+            <img src={filterIcon} alt="filterIcon" />
+          )}
+        </div> */}
+      {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
+      {/* </div> */}
+      <div className={styles.fileList}>
+        {getFilesLoading ? (
+          <div className={styles.loaderContainer}>
+            <MutatingDots
+              visible={true}
+              height="100"
+              width="100"
+              color="#000"
+              secondaryColor="#3f3f3f"
+              radius="10"
+              ariaLabel="mutating-dots-loading"
+            />
+          </div>
+        ) : (
+          (filteredFiles.length === 0 && (
+
             <div
               style={{ marginLeft: "5px" }}
               className={styles.searchIconsWrappers}
@@ -652,45 +678,73 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                     />
                   )}
                 </div>
-              );
-            })
-          )}
-          {uploadingFilesLoading && (
-            <div className={styles.bottomLoaderContainer}>
-              <MutatingDots
-                visible={true}
-                height="100"
-                width="100"
-                color="#000"
-                secondaryColor="#3f3f3f"
-                radius="10"
-                ariaLabel="mutating-dots-loading"
-              />
-            </div>
-          )}
-        </div>
 
-        <div className={styles.bottomMenu}>
-          <HouseContainer
-            onClick={() => dispatch(setCurrentPath(user.id + "/"))}
-            className={styles.icon}
-          />
-          {/* <span>2025</span> */}
-
-          {renderBreadcrumbs()}
-        </div>
-
+                {activePopup === index && !isFolder && (
+                  <FileOptionsPopup
+                    parentRef={optionsButtonRefs.current[index]}
+                    onDownload={() => handleDownload(item)}
+                    onShare={() => handleShare(item)}
+                    onDelete={() => handleDelete(item)}
+                    onClose={() => setActivePopup(null)}
+                    style={{
+                      position: "fixed",
+                      top:
+                        optionsButtonRefs.current[index].getBoundingClientRect()
+                          .top + optionsButtonRefs.current[index].offsetHeight,
+                      left: optionsButtonRefs.current[
+                        index
+                      ].getBoundingClientRect().left,
+                    }}
+                  />
+                )}
+              </div>
+            );
+          })
+        )}
+        {uploadingFilesLoading && (
+          <div className={styles.bottomLoaderContainer}>
+            <MutatingDots
+              visible={true}
+              height="100"
+              width="100"
+              color="#000"
+              secondaryColor="#3f3f3f"
+              radius="10"
+              ariaLabel="mutating-dots-loading"
+            />
+          </div>
+        )}
       </div>
-      <FilesFilterModal
-        onClose={() => setIsFilterOpen(false)}
-        handleApplyFilters={handleApplyFilters}
-        isFilterOpen={isFilterOpen}
-      />
+      <div className={styles.bottomMenu}>
+        <HouseContainer
+          onClick={() => dispatch(setCurrentPath(user.id + "/"))}
+          className={styles.icon}
+        />
+        {/* <span>2025</span> */}
 
+        {renderBreadcrumbs()}
+      </div>
       {showLocationModal && (
         <SelectLocation onClose={() => setShowLocationModal(false)} />
       )}
 
-    </>
+      <FilesFilterModal
+        onClose={() => setIsFilterOpen(false)}
+        handleApplyFilters={handleApplyFilters}
+        isFilterOpen={isFilterOpen}
+
+        setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+        setSelectedCurrency={setSelectedCurrency}
+        selectedCurrency={selectedCurrency}
+      />{" "}
+      {showSelectCurrencyPopup && (
+        <SelectCurrencyPopup
+          setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+          setSelectedCurrency={setSelectedCurrency}
+          selectedCurrency={selectedCurrency}
+        />
+      )}
+    </div>
+
   );
 }

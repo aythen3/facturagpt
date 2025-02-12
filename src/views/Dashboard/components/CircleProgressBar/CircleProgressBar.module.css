@@ -1,5 +1,9 @@
 .CircleProgressSection {
   margin-top: 50px;
+  width: 90%;
+  flex-wrap: wrap;
+  height: fit-content !important;
+  margin: 50px 0;
 }
 .CircleProgress {
   display: flex;
@@ -29,7 +33,8 @@
 
 .label {
   text-align: center;
-  width: 39%;
+  width: 100%;
+  max-width: 130px;
   margin-left: -35px;
 }
 .outer {
@@ -101,6 +106,11 @@ circle {
 
   .cardPBContainer {
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .label {
+    margin-left: 0;
   }
 }
 

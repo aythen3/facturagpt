@@ -19,6 +19,7 @@
   align-items: center;
   padding: 0 10px;
   margin-bottom: 50px;
+  height: fit-content !important;
 }
 .reviewsTitle {
   font-size: clamp(20px, 5vw, 40px) !important; /* Ajuste dinámico con clamp */

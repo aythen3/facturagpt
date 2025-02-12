@@ -32,7 +32,7 @@ export const paymentMethods = [
   },
   {
     icons: [metamaskIcon],
-    name: "crypto",
+    name: "metamask",
   },
   {
     icons: [coinbaseIcon],

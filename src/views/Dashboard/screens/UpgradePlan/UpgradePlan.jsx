@@ -13,6 +13,7 @@ import uncheckedCircle from "../../assets/uncheckedCircle.svg";
 import checkedCircle from "../../assets/checkedCircle.svg";
 import PlanUpdatedModal from "../../components/PlanUpdatedModal/PlanUpdatedModal";
 import { useDispatch, useSelector } from "react-redux";
+import HeaderCard from "../../components/HeaderCard/HeaderCard";
 import { updateUser } from "../../../../actions/user";
 import {
   attachCustomPaymentMethod,
@@ -171,21 +172,36 @@ const UpgradePlan = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()}
         className={`${styles.upgradePlanContainer} ${isClosing ? styles.scaleDown : ""}`}
       >
-        <div className={styles.upgradePlanHeader}>
+        {/* <div className={styles.upgradePlanHeader}>
           <div className={styles.headerLeft}>
             <img src={greenStar} alt="greenStar" />
             <h2>Mejorar Plan</h2>
           </div>
           <div onClick={handleClose} className={styles.closeIcon}>
-            <img src={closeGray} alt="closeGray" />
+            Editar
           </div>
-        </div>
+        </div> */}
+        <HeaderCard
+          title={
+            <div className={styles.titleWithIcon}>
+              <h2>Mejorar Plan</h2>
+              <img src={greenStar} alt="greenStar" />
+            </div>
+          }
+          setState={handleClose}
+        >
+          <div className={styles.upgradePlanHeader}>
+            <div className={styles.headerLeft}></div>
+            <div onClick={handleClose} className={styles.closeIcon}>
+              Editar
+            </div>
+          </div>
+        </HeaderCard>
         {/* ================ CONTENT ================ */}
         <div className={styles.content}>
           {/* ================ LEFT ================ */}
-          <div style={{ borderLeft: "none" }} className={styles.leftContainer}>
+          <div style={{ borderLeft: "none" }} className={styles.rightContainer}>
             <span className={styles.lightText}>
-              e
               La facturación se realiza el primer día de cada mes, según los
               documentos reconocidos durante el mes anterior
             </span>
@@ -202,7 +218,7 @@ const UpgradePlan = ({ onClose }) => {
             </div>
             <span className={styles.planPlusTitle}>
               Plan {selectedPlan}{" "}
-              <strong
+              {/* <strong
                 onClick={() => setShowPlansModal(true)}
                 style={{
                   textDecoration: "underline",
@@ -213,7 +229,7 @@ const UpgradePlan = ({ onClose }) => {
                 }}
               >
                 Cambiar plan
-              </strong>
+              </strong> */}
             </span>
             <div className={styles.spacedBetween}>
               <span>{plansPricing[selectedPlan].docs}</span>
@@ -285,7 +301,7 @@ const UpgradePlan = ({ onClose }) => {
             style={{ borderRight: "1px solid #E3E3E3", paddingBottom: "24px" }}
             className={styles.leftContainer}
           >
-            <h2 className={styles.upgradePlanTitle}>Froma de pago</h2>
+            <h2 className={styles.upgradePlanTitle}>Forma de pago</h2>
             <div
               style={{ marginTop: "-24px", marginBottom: "12px" }}
               className={styles.spacedBetween}
@@ -339,7 +355,6 @@ const UpgradePlan = ({ onClose }) => {
               Añadir detalles de facturación
             </strong>
           </div>
-       
         </div>
       </div>
     );
@@ -351,15 +366,31 @@ const UpgradePlan = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()}
         className={`${styles.upgradePlanContainer} ${isClosing ? styles.scaleDown : ""}`}
       >
-        <div className={styles.upgradePlanHeader}>
+        {/* <div className={styles.upgradePlanHeader}>
           <div className={styles.headerLeft}>
             <img src={greenStar} alt="greenStar" />
             <h2>Mejorar Plan</h2>
           </div>
           <div onClick={handleClose} className={styles.closeIcon}>
-            <img src={closeGray} alt="closeGray" />
+            
           </div>
-        </div>
+        </div> */}
+        <HeaderCard
+          title={
+            <div className={styles.titleWithIcon}>
+              <h2>Mejorar Plan</h2>
+              <img src={greenStar} alt="greenStar" />
+            </div>
+          }
+          setState={handleClose}
+        >
+          <div className={styles.upgradePlanHeader}>
+            <div className={styles.headerLeft}></div>
+            <div onClick={handleClose} className={styles.closeIcon}>
+              Cambiar Plan
+            </div>
+          </div>
+        </HeaderCard>
         {/* ================ CONTENT ================ */}
         <div className={styles.content}>
           {/* ================ LEFT ================ */}
@@ -374,7 +405,7 @@ const UpgradePlan = ({ onClose }) => {
             </span>
             <h2 className={styles.upgradePlanTitle}>
               Forma de pago{" "}
-              <strong
+              {/* <strong
                 onClick={() => setSelectedModal("paymentMethods")}
                 style={{
                   textDecoration: "underline",
@@ -385,9 +416,11 @@ const UpgradePlan = ({ onClose }) => {
                 }}
               >
                 Ver metodos de pago configurados
-              </strong>
+              </strong> */}
             </h2>
-            <div className={styles.paymentMethodsContainer}>
+            <div
+              className={`${styles.paymentMethodsContainer} ${styles.paymentMethodsContainerGrid}`}
+            >
               {paymentMethods?.map((method, index) => (
                 <PaymentSingleOption
                   key={index}
@@ -399,7 +432,7 @@ const UpgradePlan = ({ onClose }) => {
             </div>
             <span className={styles.planPlusTitle}>
               Plan {selectedPlan}{" "}
-              <strong
+              {/* <strong
                 onClick={() => setShowPlansModal(true)}
                 style={{
                   textDecoration: "underline",
@@ -410,7 +443,7 @@ const UpgradePlan = ({ onClose }) => {
                 }}
               >
                 Cambiar plan
-              </strong>
+              </strong> */}
             </span>
             <div className={styles.spacedBetween}>
               <span>{plansPricing[selectedPlan].docs}</span>
@@ -559,7 +592,7 @@ const UpgradePlan = ({ onClose }) => {
               onChange={(e) => setCountry(e.target.value)}
               placeholder="España"
             />
-            <button
+            {/* <button
               onClick={() => {
                 console.log("Saving card data..");
                 handleSaveCardData();
@@ -568,9 +601,8 @@ const UpgradePlan = ({ onClose }) => {
               className={styles.upgradePlanButton}
             >
               <span>Guardar datos de facturación</span>
-            </button>
+            </button> */}
           </div>
-         
         </div>
       </div>
     );

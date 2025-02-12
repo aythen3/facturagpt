@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import stripePurple from '../../assets/stripePurple.svg';
-import styles from './InfoBill.module.css';
-import arrowDown from '../../assets/arrowDownBold.svg';
-import minus from '../../assets/minus.svg';
-import Tags from '../Tags/Tags';
-import tagIcon from '../../assets/tagIcon.svg';
-import InfoClientBill from './InfoClientBill/InfoClientBill';
-import profileImage from '../../assets/profileIcon.svg';
-import { ReactComponent as GrabIcon } from '../../assets/grabIcon.svg';
-import AddTax from '../AddTax/AddTax';
-import AddDiscount from '../AddDiscount/AddDiscount';
+import React, { useState } from "react";
+import stripePurple from "../../assets/stripePurple.svg";
+import styles from "./InfoBill.module.css";
+import arrowDown from "../../assets/arrowDownBold.svg";
+import minus from "../../assets/minus.svg";
+import Tags from "../Tags/Tags";
+import tagIcon from "../../assets/tagIcon.svg";
+import InfoClientBill from "./InfoClientBill/InfoClientBill";
+import profileImage from "../../assets/profileIcon.svg";
+import { ReactComponent as GrabIcon } from "../../assets/grabIcon.svg";
+import AddTax from "../AddTax/AddTax";
+import AddDiscount from "../AddDiscount/AddDiscount";
 const InfoBill = ({ isEditing, setIsEditing }) => {
   const [parametersEditing, setParametersEditing] = useState({});
   const [articlesEditing, setArticlesEditing] = useState({});
@@ -73,8 +73,8 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
     const newActivo = {
       id: articles.length + 1,
       quantity: 1.0,
-      baseImport: '0.0€',
-      amount: '0.0 €',
+      baseImport: "0.0€",
+      amount: "0.0 €",
       id: articles.length + 1,
       name: `Articulo ${articles.length + 1}`,
       description: `Descripción del Articulo ${articles.length + 1}`,
@@ -125,9 +125,9 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
         <div
           className={styles.parametersInfo}
           style={{
-            height: seeParameters ? 'auto' : '0px',
-            padding: seeParameters ? '20px 0' : '0px',
-            borderBottom: !seeParameters && '1px solid transparent',
+            height: seeParameters ? "auto" : "0px",
+            padding: seeParameters ? "20px 0" : "0px",
+            borderBottom: !seeParameters && "1px solid transparent",
           }}
         >
           {parameters.map((param) => (
@@ -135,22 +135,24 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
               <div className={styles.articleTitle}>
                 <span>{param.name}</span>
                 <div
-                  style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
                 >
                   <p onClick={() => toggleEditing(param.id)}>
-                    {parametersEditing[param.id] ? 'Guardar' : 'Editar'}
+                    {parametersEditing[param.id] ? "Guardar" : "Editar"}
                   </p>
-                  <img
-                    src={minus}
-                    alt="Icon"
-                    className={styles.delete}
-                    onClick={() => handleDeleteParameter(param.id)}
-                  />
+                  {parametersEditing[param.id] && (
+                    <img
+                      src={minus}
+                      alt="Icon"
+                      className={styles.delete}
+                      onClick={() => handleDeleteParameter(param.id)}
+                    />
+                  )}
                 </div>
               </div>
               <div className={styles.parametersInfoContainer}>
                 <div className={styles.column}>
-                  <p>Nombre del Parámetro</p>
+                  {parametersEditing[param.id] && <p>Nombre del Parámetro</p>}
                   <input
                     type="text"
                     placeholder={param.name}
@@ -158,7 +160,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   />
                 </div>
                 <div className={styles.column}>
-                  <p>Valor del Parámetro</p>
+                  {parametersEditing[param.id] && <p>Valor del Parámetro</p>}
                   <input
                     type="text"
                     placeholder={param.value}
@@ -189,9 +191,9 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
         <div
           className={styles.articleBill}
           style={{
-            height: seeArticles ? 'auto' : '0px',
-            padding: seeArticles ? '20px 0' : '0px',
-            borderBottom: !seeArticles && '1px solid transparent',
+            height: seeArticles ? "auto" : "0px",
+            padding: seeArticles ? "20px 0" : "0px",
+            borderBottom: !seeArticles && "1px solid transparent",
           }}
         >
           {articles.map((article) => (
@@ -199,10 +201,10 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
               <div className={styles.articleTitle}>
                 <span></span>
                 <div
-                  style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
                 >
                   <p onClick={() => toggleArticleEditing(article.id)}>
-                    {articlesEditing[article.id] ? 'Guardar' : 'Editar'}
+                    {articlesEditing[article.id] ? "Guardar" : "Editar"}
                   </p>
                   <img
                     src={minus}
@@ -263,9 +265,9 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   <div className={styles.unitPrice}>
                     <div
                       style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px',
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
                       }}
                     >
                       <input
@@ -275,7 +277,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                       />
                       {articlesEditing[article.id] && (
                         <span onClick={() => handleEditBaseImport(article.id)}>
-                          {editBaseImport[article.id] ? 'Guardar' : 'Editar'}
+                          {editBaseImport[article.id] ? "Guardar" : "Editar"}
                         </span>
                       )}
                     </div>
@@ -317,9 +319,9 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   <div className={styles.unitPrice}>
                     <div
                       style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px',
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
                       }}
                     >
                       <input
@@ -329,7 +331,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                       />
                       {articlesEditing[article.id] && (
                         <span onClick={() => handleEditBaseImport(article.id)}>
-                          {editBaseImport[article.id] ? 'Guardar' : 'Editar'}
+                          {editBaseImport[article.id] ? "Guardar" : "Editar"}
                         </span>
                       )}
                     </div>

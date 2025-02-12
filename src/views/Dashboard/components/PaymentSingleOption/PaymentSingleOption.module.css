@@ -16,13 +16,13 @@
 
 .iconWrapper {
   display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 28px;
-      background: #fdfdfc;
-      border-radius: 3px;
-      border: 1px solid #e2e2e2;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 28px;
+  background: #fdfdfc;
+  border-radius: 3px;
+  border: 1px solid #e2e2e2;
 }
 
 .paymentSingleOptionText {
@@ -61,7 +61,9 @@
   font-weight: 400;
   margin-left: auto;
 }
-
+.cvcInput::placeholder {
+  color: #757575;
+}
 .cvcInput::-webkit-inner-spin-button,
 .cvcInput::-webkit-outer-spin-button {
   -webkit-appearance: none;

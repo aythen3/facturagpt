@@ -145,22 +145,28 @@ const Packs = () => {
   return (
     <div className={styles.packsContainer}>
       <div className={styles.stepsContainer} id="facturation">
-        <LinesLandingSection />
         <section className={styles.wrapper}>
-          {steps.map((step, index) => (
-            <div key={index} className={styles.card}>
-              <p className={styles.step}>{step.step}</p>
-              <h3 className={styles.title}>{step.title}</h3>
-              <SubtitleTemplate text={step.description} />
-              {/* <p className={styles.subtitle}>{step.description}</p> */}
+          <div className={styles.stepContainer}>
+            <div>
+              <h2>¿Recibes documentos de distintos canales? </h2>
+              <h3>Te ayudamos.</h3>
             </div>
-          ))}
+            <div className={styles.stepsContent}>
+              {steps.map((step, index) => (
+                <div key={index} className={styles.card}>
+                  <p className={styles.step}>{step.step}</p>
+                  <h4 className={styles.title}>{step.title}</h4>
+                  <SubtitleTemplate text={step.description} />
+                  {/* <p className={styles.subtitle}>{step.description}</p> */}
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
-        <FlowSection />
-        <TagsLanding />
+        <LinesLandingSection />
       </div>
 
-      <section className={styles.sliderWrapperSection}>
+      {/* <section className={styles.sliderWrapperSection}>
         <BillingSlider
           setSliderValue={setSliderValue}
           sliderValue={sliderValue}
@@ -183,29 +189,20 @@ const Packs = () => {
             <span> {valorEnDolaresFormatted} €</span>.
           </p>
         </span>
-      </section>
-      <PricingCards
+      </section> */}
+      {/* <PricingCards
         facturasTotales={facturasTotales}
         setSliderValue={setSliderValue}
         sliderValue={sliderValue}
         setFacturasTotales={setFacturasTotales}
-      />
-
+      /> */}
+      {/* 
       <section className={styles.extensionsContainer}>
         <div className={styles.extensionsTitle}>
-          {/* <img className={styles.flag} src={flag} alt="flag" /> */}
           <h2>{t("formatsTitle")}</h2>
         </div>
-        <SubtitleTemplate
-          text={t("formatsDescription1")}
-          // stylesProp={{ fontSize: "17px" }}
-        />
-        {/* <span className={styles.regular08}>{t("formatsDescription1")}</span> */}
-        <SubtitleTemplate
-          text={t("formatsDescription2")}
-          // stylesProp={{ fontSize: "17px" }}
-        />
-        {/* <span className={styles.regular08}>{t("formatsDescription2")}</span> */}
+        <SubtitleTemplate text={t("formatsDescription1")} />
+        <SubtitleTemplate text={t("formatsDescription2")} />
         <div className={styles.dashedContainer}>
           {cardsData.map((card, index) => (
             <div className={styles.innerCard} key={index}>
@@ -213,7 +210,7 @@ const Packs = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <section>
         <div
@@ -235,22 +232,19 @@ const Packs = () => {
               stylesProp={{ padding: "0 20px" }}
             />
             {/* <p className={styles.regular08}>{t("programsDescription1")}</p> */}
-            <SubtitleTemplate
-              text={t("programsDescription2")}
-              stylesProp={{ padding: "0 20px" }}
-            />
+
             {/* <p className={styles.regular08}>{t("programsDescription2")}</p> */}
           </div>
-          <CompatibleProgramsSection />
+          <FlowSection />
+          {/* <CompatibleProgramsSection /> */}
         </div>
       </section>
-      <CircleProgressBar />
 
-      <section className={styles.banner}>
+      {/* <section className={styles.banner}>
         <h3 className={styles.bannerTitle}>{t("reduces1")}</h3>
         <h3 className={styles.bannerTitle}>{t("reduces2")}</h3>
         <h3 className={styles.bannerTitle}>{t("reduces3")}</h3>
-      </section>
+      </section> */}
       <Reviews />
     </div>
   );

@@ -33,6 +33,7 @@ import SearchSVG from "../../svgs/SearchSVG";
 import FiltersIconAutomate from "./FiltersIconAutomate";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
+import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 const GoogleSheetsFormAutomate = ({
   type,
   configuration,
@@ -132,10 +133,15 @@ const GoogleSheetsFormAutomate = ({
         icon={<GoogleSheetsIcon />}
       />
       <TitleFormsComponent title="Actualiza tu" type={type} />
-      <div>
-        <p>Nombre de la automatización</p>
-        <input type="text" placeholder="Automatización 1" />
-      </div>
+      <EditableInput
+        label={"Nombre de la Automatización"}
+        // value={userData?.nombre}
+        name="automatization"
+        // onSave={handleChange}
+        placeholder="Automatización 1"
+        options={true}
+        readOnly={false}
+      />
       <CustomAutomationsWrapper Icon={<FiltersIconAutomate />}>
         <div
           className={styles.infoContainerWrapper}

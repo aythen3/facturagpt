@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Faqs.module.css";
-import arrow from "../../assets/arrowlit.svg";
+import showMoreIcon from "../../assets/showMoreIcon.svg";
 import arrowDown from "../../assets/arrowRightContact.png";
 import { useTranslation } from "react-i18next";
 const FAQ = () => {
@@ -59,11 +59,13 @@ const FAQ = () => {
             >
               <span>{faq.question}</span>
               <span
-                className={`${styles.icon} ${
-                  activeIndexes.includes(index) ? styles.open : ""
-                }`}
+                className={`${styles.icon} 
+                `}
+                // ${
+                //   activeIndexes.includes(index) ? styles.open : ""
+                // }
               >
-                <img src={arrow} alt="" />
+                <img src={showMoreIcon} alt="" />
               </span>
             </button>
             <div
@@ -71,7 +73,14 @@ const FAQ = () => {
                 activeIndexes.includes(index) ? styles.show : ""
               }`}
             >
-              <span>{faq.answer}</span>
+              <span>
+                {faq.answer.split("\n").map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
+              </span>
             </div>
           </div>
         ))}

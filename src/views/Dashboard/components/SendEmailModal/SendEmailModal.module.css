@@ -10,14 +10,14 @@
 
 .sendEmailModal {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  width: 53%;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 850px;
   height: 52vh;
   padding-bottom: 20px;
   overflow-y: scroll;
-  background-color: white;
-  transform: translate(0%, 0%) scale(1);
+  background-color: #f5f5f5;
   z-index: 999;
   border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -26,10 +26,11 @@
   -o-border-radius: 10px;
   animation: scaleUp 300ms ease-out forwards;
   -webkit-animation: scaleUp 300ms ease-out forwards;
-  -webkit-transform: translate(0%, 0%) scale(1);
-  -moz-transform: translate(0%, 0%) scale(1);
-  -ms-transform: translate(0%, 0%) scale(1);
-  -o-transform: translate(0%, 0%) scale(1);
+  transform: translate(50%, 50%) scale(1);
+  -webkit-transform: translate(50%, 50%) scale(1);
+  -moz-transform: translate(50%, 50%) scale(1);
+  -ms-transform: translate(50%, 50%) scale(1);
+  -o-transform: translate(50%, 50%) scale(1);
 }
 .sendEmailModal::-webkit-scrollbar {
   display: none;
@@ -68,6 +69,15 @@
 
 .sendEmailContent {
   padding: 20px;
+  width: 95%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 .infOptions {
@@ -121,6 +131,11 @@
   align-items: center;
   gap: 5px;
   padding-left: 20px;
+
+  .icon {
+    height: 30px;
+    width: 30px;
+  }
 }
 
 .attach {
@@ -171,37 +186,32 @@
   animation: scaleDown 300ms ease-in forwards;
   -webkit-animation: scaleDown 300ms ease-in forwards;
 }
-
 @keyframes scaleUp {
   from {
-    transform: translate(0%, 0%) scale(0);
-    -webkit-transform: translate(0%, 0%) scale(0);
-    -moz-transform: translate(0%, 0%) scale(0);
-    -ms-transform: translate(0%, 0%) scale(0);
-    -o-transform: translate(0%, 0%) scale(0);
+    transform: translate(-50%, -50%) scale(0);
+    -webkit-transform: translate(-50%, -50%) scale(0);
+    -moz-transform: translate(-50%, -50%) scale(0);
+    -ms-transform: translate(-50%, -50%) scale(0);
+    -o-transform: translate(-50%, -50%) scale(0);
   }
   to {
-    transform: translate(0%, 0%) scale(1);
-    -webkit-transform: translate(0%, 0%) scale(1);
-    -moz-transform: translate(0%, 0%) scale(1);
-    -ms-transform: translate(0%, 0%) scale(1);
-    -o-transform: translate(0%, 0%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    -moz-transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+    -o-transform: translate(-50%, -50%) scale(1);
   }
 }
 
 @keyframes scaleDown {
   from {
-    transform: translate(0%, 0%) scale(1);
-    -webkit-transform: translate(0%, 0%) scale(1);
-    -moz-transform: translate(0%, 0%) scale(1);
-    -ms-transform: translate(0%, 0%) scale(1);
-    -o-transform: translate(0%, 0%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
   to {
-    transform: translate(0%, 0%) scale(0);
-    -webkit-transform: translate(0%, 0%) scale(0);
-    -moz-transform: translate(0%, 0%) scale(0);
-    -ms-transform: translate(0%, 0%) scale(0);
-    -o-transform: translate(0%, 0%) scale(0);
+    transform: translate(-50%, -50%) scale(0);
+    -webkit-transform: translate(-50%, -50%) scale(0);
+    -moz-transform: translate(-50%, -50%) scale(0);
+    -ms-transform: translate(-50%, -50%) scale(0);
+    -o-transform: translate(-50%, -50%) scale(0);
   }
 }

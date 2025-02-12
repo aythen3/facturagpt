@@ -74,19 +74,57 @@ export default function InvoiceForm({
             <CustomDropdown
               customStyles={styles.transparent}
               hasObject={true}
+              textStyles={{
+                display: "flex",
+                // align: "center",
+
+                gap: "5px",
+                fontWeight: 500,
+                color: "#3d3c42",
+                marginLeft: "6px",
+                userSelect: "none",
+              }}
+              placeholder={
+                <>
+                  Seleccionar Categoria{" "}
+                  <img src={AiIcon2} alt="Icono" height={"15px"} />
+                </>
+              }
               options={[
                 {
-                  value: "IngresoServicios",
-                  label: (
-                    <>
-                      Ingreso - Servicios <img src={AiIcon2} alt="Icono" />
-                    </>
-                  ),
+                  value: "Identificación del Activo",
+                  label: "Identificación del Activo",
                 },
-                { value: "IngresoServicios", label: "Ingreso - Servicios" },
-                { value: "IngresoServicios", label: "Ingreso - Servicios" },
-                { value: "IngresoServicios", label: "Ingreso - Servicios" },
-                { value: "IngresoServicios", label: "Ingreso - Servicios" },
+                {
+                  value: "Clasificación del Activo",
+                  label: "Clasificación del Activo",
+                },
+                {
+                  value: "Información Financiera",
+                  label: "Información Financiera",
+                },
+                { value: "Mantenimiento", label: "Mantenimiento" },
+                { value: "Operaciones", label: "Operaciones" },
+                {
+                  value: "Gestión de Inventarios",
+                  label: "Gestión de Inventarios",
+                },
+                {
+                  value: "Riesgos y Cumplimiento",
+                  label: "Riesgos y Cumplimiento",
+                },
+                {
+                  value: "Datos IoT y Monitorización",
+                  label: "Datos IoT y Monitorización",
+                },
+                {
+                  value: "Retiro o Sustitución",
+                  label: "Retiro o Sustitución",
+                },
+                {
+                  value: "Indicadores Clave (KPIs)",
+                  label: "Indicadores Clave (KPIs)",
+                },
               ]}
             />
           </div>
