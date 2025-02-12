@@ -8,35 +8,26 @@ import {
 } from "react-icons/fa";
 import styles from "./Dashboard.module.css";
 
-import userTick from "./assets/profile-tick.svg";
-import userPlus from "./assets/userPlus.svg";
-import monitor from "./assets/monitor.svg";
 import profilePlus from "./assets/profilePlus.svg";
 import circuit from "./assets/circuit.svg";
 import magnify from "./assets/magnify.svg";
 import openEmail from "./assets/openEmail.svg";
 import plus from "./assets/plus.svg";
-import listIcon from "./assets/listIcon.svg";
 import profiles from "./assets/profiles.svg";
 import dbIcon from "./assets/dbIcon.svg";
 import analyticsIcon from "./assets/analyticsIcon.svg";
 import monitorIcon from "./assets/monitorIcon.svg";
 import greenArrow from "./assets/greenArrow.svg";
 import redArrow from "./assets/redArrow.svg";
-import { ReactComponent as Dots } from "./assets/optionDots.svg";
-import { ReactComponent as ChatGPTIconGreen } from "./assets/chatGPTIconGreen.svg";
-import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
 
 import { useNavigate } from "react-router-dom";
 import {
   getAllAccounts,
-  // getAllUsers,
   updateAccount,
   getEmailsByQuery, //
   updateAcount,
+  // getAllUsers,
   // getClient
-
-  // } from "../../actions/emailManager";
 } from "../../actions/user";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -47,15 +38,12 @@ import { getPreviousPaymentDate, hasDatePassed } from "./utils/constants";
 import SetupPayment from "./screens/AccountSettings/StripeComponents/SetupPayment";
 import { loadStripe } from "@stripe/stripe-js";
 import AccountSettings from "./screens/AccountSettings/AccountSettings";
-// import NavbarAdmin from "./components/NavbarAdmin/NavbarAdmin";
-import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18";
 import { createAccounts } from "../../actions/user";
-// import FileExplorer from "./components/FileExplorer/FileExplorer";
 import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
 
 const AccountsDashboard = () => {
@@ -67,13 +55,12 @@ const AccountsDashboard = () => {
 
   const { allAccounts } = useSelector((state) => state.user);
   const { user: userRedux } = useSelector((state) => state.user);
-  const [filteredAccounts, setFilteredAccounts] = useState([]); // Store filtered and sorted clients
-  const [searchQuery, setSearchQuery] = useState(""); // Store search query
+  const [filteredAccounts, setFilteredAccounts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); 
 
-  const [selectedOption, setSelectedOption] = useState("Todos"); // Selected filter
+  const [selectedOption, setSelectedOption] = useState("Todos"); 
   const [isOpen, setIsOpen] = useState(false);
 
-  // const [showActive, setShowActive] = useState(account.active)
 
   const dropdownRef = useRef(null);
 
@@ -142,12 +129,10 @@ const AccountsDashboard = () => {
   ];
 
   useEffect(() => {
-    // dispatch(getAccounts());
     dispatch(getAllAccounts());
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("allClients", allAccounts);
     if (!allAccounts) return;
     let updatedAccounts = [...allAccounts];
 
@@ -182,6 +167,8 @@ const AccountsDashboard = () => {
       default:
         break;
     }
+
+    console.log("updatedAccounts updatedAccounts", updatedAccounts);
 
     setFilteredAccounts(updatedAccounts);
   }, [allAccounts, searchQuery, selectedOption]);
@@ -671,9 +658,7 @@ const AccountsDashboard = () => {
             <div className={styles.tableHeader}>
               <span className={styles.columnName}>{t("tableCol1")}</span>
               <span className={styles.columnStatus}>{t("tableCol2")}</span>
-              <span className={styles.columnContact}>{t("tableCol3")}</span>
               <span className={styles.columnTokens}>{t("tableCol4")}</span>
-              <span className={styles.columnEmail}>{t("tableCol5")}</span>
               <span className={styles.columnRecognitions}>
                 {t("tableCol6")}
               </span>
@@ -688,7 +673,7 @@ const AccountsDashboard = () => {
                     // onClick={() => checkUserMonthlyPayment(account)}
                     className={styles.columnName}
                   >
-                    {account.companyName || "Not Found"}
+                    {account.email || "Not Found"}
                   </span>
                   <span className={styles.columnStatus}>
                     {account.paymentMethodId ? (
@@ -731,9 +716,9 @@ const AccountsDashboard = () => {
                       {account.tokenGPT}
                     </div>
                   </span>
-                  <span className={styles.columnEmail}>
-                    {account.tokenEmail}
-                  </span>
+                    {/* <span className={styles.columnEmail}>
+                      {account.tokenEmail}
+                    </span> */}
                   <span
                     onClick={() => resetProcessedEmails(account)}
                     className={styles.columnRecognitions}

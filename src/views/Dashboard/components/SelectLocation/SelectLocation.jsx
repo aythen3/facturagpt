@@ -176,15 +176,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
         }}
         className={`${styles.modalContent} ${isClosing ? styles.scaleDown : ""}`}
       >
-        {/* Header */}
-        {/* <div className={styles.headerContainer}>
-          <div className={styles.headerLeft}>
-            <h2>Seleccionar Ubicación</h2>
-          </div>
-          <div onClick={handleClose} className={styles.closeIcon}>
-            <img src={closeGray} alt="closeGray" />
-          </div>
-        </div> */}
+
         <HeaderCard title={"Seleccionar Ubicación"} setState={handleClose}>
           <Button type="white" action={handleClose}>
             Cancelar
@@ -206,29 +198,7 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
             </div>
           </div>
         </div>
-        {/* Buttons */}
-        {/* <div className={styles.footerContainer}>
-          <div
-            onClick={() => {
-              console.log("Creating new folder on", selectedLocation);
-              setShowCreateFolderModal(true);
-            }}
-            className={styles.newFolderButton}
-          >
-            Nueva Carpeta
-          </div>
-          <div
-            onClick={() => {
-              pickLocation(
-                `/${selectedLocation.replace(`${user.id}`, "Inicio")}`
-              );
-              handleClose();
-            }}
-            className={styles.selectButton}
-          >
-            Seleccionar
-          </div>
-        </div> */}
+       
       </div>
       {showCreateFolderModal && (
         <CreateFolderModal
