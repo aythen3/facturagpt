@@ -526,7 +526,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
 
   return (
 
-    <>
       <div
         className={styles.container}
         ref={fileExplorerRef}
@@ -550,38 +549,38 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           onClickIconRight={() => setIsFilterOpen(true)}
         >
           {userFilters &&
-          Object.keys(userFilters).length > 0 &&
-          userFilters.keyWord !== "" ? (
+            Object.keys(userFilters).length > 0 &&
+            userFilters.keyWord !== "" ? (
             <img src={filterIconGreen} alt="filterIcon" />
           ) : (
             <img src={filterIcon} alt="filterIcon" />
           )}
-        </div> */}
-      {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
-      {/* </div> */}
-      <div className={styles.fileList}>
-        {getFilesLoading ? (
-          <div className={styles.loaderContainer}>
-            <MutatingDots
-              visible={true}
-              height="100"
-              width="100"
-              color="#000"
-              secondaryColor="#3f3f3f"
-              radius="10"
-              ariaLabel="mutating-dots-loading"
-            />
-          </div>
-        ) : (
-          (filteredFiles.length === 0 && (
+          {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
+          {/* </div> */}
+          <div className={styles.fileList}>
+            {getFilesLoading ? (
+              <div className={styles.loaderContainer}>
+                <MutatingDots
+                  visible={true}
+                  height="100"
+                  width="100"
+                  color="#000"
+                  secondaryColor="#3f3f3f"
+                  radius="10"
+                  ariaLabel="mutating-dots-loading"
+                />
+              </div>
+            ) : (
+              (filteredFiles.length === 0 && (
 
-            <div
-              style={{ marginLeft: "5px" }}
-              className={styles.searchIconsWrappers}
-            >
-              <img src={l} alt="kIcon" />
-            </div>
-          </>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={l} alt="kIcon" />
+                </div>
+              )))}
+          </div>
         </SearchIconWithIcon>
 
 
@@ -678,8 +677,10 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                     />
                   )}
                 </div>
-
-                {activePopup === index && !isFolder && (
+              )
+            }))}
+                {
+                activePopup === index && !isFolder && (
                   <FileOptionsPopup
                     parentRef={optionsButtonRefs.current[index]}
                     onDownload={() => handleDownload(item)}
@@ -696,11 +697,10 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                       ].getBoundingClientRect().left,
                     }}
                   />
-                )}
-              </div>
-            );
-          })
-        )}
+                )
+              }
+             
+    
         {uploadingFilesLoading && (
           <div className={styles.bottomLoaderContainer}>
             <MutatingDots
@@ -744,7 +744,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           selectedCurrency={selectedCurrency}
         />
       )}
-    </div>
+    </div >
 
   );
 }
