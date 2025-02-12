@@ -245,9 +245,9 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
     };
     return (
       <div className={styles.detailsContainer}>
-        <Button type="white" headerStyle={{ width: "100%" }}>
+        {/* <Button type="white" headerStyle={{ width: "100%" }}>
           Crea un asiento
-        </Button>
+        </Button> */}
         <div className={styles.detailsContent}>
           <div className={styles.containerEditableInput}>
             <div className={styles.state}>
@@ -264,14 +264,14 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
             <EditableRow label="Subtotal" />
             <EditableRow
               label="Descuento"
-              buttonLabel="Añadir Descuento"
+              buttonLabel="Añadir"
               action={() => setShowDiscountModal(true)}
               hasButton
               hasPercentage="10%"
             />
             <EditableRow
               label="Impuesto"
-              buttonLabel="Añadir Impuesto"
+              buttonLabel="Añadir"
               action={() => setShowTaxModal(true)}
               hasButton
               hasPercentage="21%"

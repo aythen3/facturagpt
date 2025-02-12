@@ -99,6 +99,14 @@ export default function FloatingMenu({
       },
     },
     {
+      icon: <NewBill />,
+      text: "Nueva Factura",
+      action: () => {
+        setShowNewBill(true);
+        setIsOpen(false);
+      },
+    },
+    {
       icon: <NewContact />,
       text: "Nuevo Contacto",
       action: () => {
@@ -106,32 +114,33 @@ export default function FloatingMenu({
         setIsOpen(false);
       },
     },
+ 
     {
       icon: <NewAsset />,
-      text: "Nuevo activo",
+      text: "Nuevo Activo",
       action: () => {
         setShowNewProduct(true);
         setIsOpen(false);
       },
     },
-    {
-      icon: <TagIcon />,
-      text: "Nueva Etiqueta",
-      action: () => {
-        setShowNewTagModal(true);
-        setIsOpen(false);
-      },
-    },
+    // {
+    //   icon: <TagIcon />,
+    //   text: "Nuevo Tag",
+    //   action: () => {
+    //     setShowNewTagModal(true);
+    //     setIsOpen(false);
+    //   },
+    // },
     {
       icon: <WhatsAppIcon />,
       text: "Abrir Whatsapp",
       action: () => window.open("https://wa.me/584243356112", "_blank"), // Reemplaza 1234567890 con el número de WhatsApp deseado
     },
-    {
-      icon: <ChatGPTIcon />,
-      text: "ChatGPT",
-      action: () => navigate("/admin/chat"), // Cambia a la ruta deseada
-    },
+    // {
+    //   icon: <ChatGPTIcon />,
+    //   text: "ChatGPT",
+    //   action: () => navigate("/admin/chat"), // Cambia a la ruta deseada
+    // },
     {
       icon: <CloudIcon />,
       text: "Subir Archivo",
@@ -150,14 +159,7 @@ export default function FloatingMenu({
       text: "Automatiza",
       action: openModalAutomate,
     },
-    {
-      icon: <NewBill />,
-      text: "Nueva Factura",
-      action: () => {
-        setShowNewBill(true);
-        setIsOpen(false);
-      },
-    },
+
   ];
   if (isMobile) {
     menuItems.push({

@@ -413,7 +413,7 @@
 }
 
 .containerEditableInput {
-  padding: 20px;
+  padding: 0px 10px 10px ;
   border: 1px solid #ececf1;
   border-radius: 10px;
   -webkit-border-radius: 10px;
