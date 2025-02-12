@@ -11,6 +11,7 @@
   left: 0;
 }
 .addTaxContainer {
+  overflow: hidden;
   width: 100%;
   max-width: 700px;
   box-sizing: border-box;

@@ -30,6 +30,8 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   background-color: white;
+      /* border: 1px solid #22222273; */
+    overflow: hidden;
   /*border: 1px solid #22222273;
   */
   position: fixed;

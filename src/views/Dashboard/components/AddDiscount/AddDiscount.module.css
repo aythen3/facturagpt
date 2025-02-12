@@ -16,6 +16,7 @@
   max-width: 700px;
   box-sizing: border-box;
   border-radius: 10px;
+  overflow: hidden;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
