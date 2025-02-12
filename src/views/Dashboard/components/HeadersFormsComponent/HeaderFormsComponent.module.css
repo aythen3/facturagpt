@@ -18,6 +18,8 @@
   border-bottom-left-radius: 8px;
   height: 27px;
   width: 30px;
+  /* padding: 2px; */
+  /* box-sizing: border-box; */
 }
 
 .addConnection {

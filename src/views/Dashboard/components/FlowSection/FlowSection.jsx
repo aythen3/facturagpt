@@ -10,7 +10,7 @@ const steps = () => [
   {
     icon: (
       <>
-        <ArrowPointingTop className={`${styles.Arrow} ${styles.arrow1}`} />
+        {/* <ArrowPointingTop className={`${styles.Arrow} ${styles.arrow1}`} /> */}
         <EntradaIcon className={styles.icon} />
       </>
     ),
@@ -20,7 +20,7 @@ const steps = () => [
   {
     icon: (
       <>
-        <ArrowPointingBottom className={`${styles.Arrow} ${styles.arrow2}`} />
+        {/* <ArrowPointingBottom className={`${styles.Arrow} ${styles.arrow2}`} /> */}
         <EstructuracionIcon className={styles.icon} />
       </>
     ),
@@ -30,9 +30,9 @@ const steps = () => [
   {
     icon: (
       <>
-        <ArrowPointingTop className={`${styles.Arrow} ${styles.arrow3}`} />
+        {/* <ArrowPointingTop className={`${styles.Arrow} ${styles.arrow3}`} /> */}
         <SalidaIcon className={styles.icon} />
-        <ArrowPointingBottom className={`${styles.Arrow} ${styles.arrow4}`} />
+        {/* <ArrowPointingBottom className={`${styles.Arrow} ${styles.arrow4}`} /> */}
       </>
     ),
     title: "Salida",
@@ -41,7 +41,7 @@ const steps = () => [
 ];
 const FlowSection = () => {
   return (
-    <section className={styles.stepsContainer}>
+    <div className={styles.stepsContainer}>
       {steps().map((step, index) => (
         <div key={index} className={styles.steps}>
           <div className={styles.iconContainer}>{step.icon}</div>
@@ -53,7 +53,7 @@ const FlowSection = () => {
           {/* <p>{step.description}</p> */}
         </div>
       ))}
-    </section>
+    </div>
   );
 };
 

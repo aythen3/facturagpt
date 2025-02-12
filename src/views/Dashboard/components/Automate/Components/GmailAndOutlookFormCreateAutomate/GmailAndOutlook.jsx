@@ -31,10 +31,11 @@ import { ReactComponent as WhiteClock } from "../../../../assets/whiteClock.svg"
 import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
 import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg";
 import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
-import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
+import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.svg";
 import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import Advertency from "../Advertency/Advertency";
+import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 
 const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
@@ -84,10 +85,16 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
       />
       <TitleFormsComponent type={type} title="Sube tus facturas de" />
       <div className={styles.gmailoutlookContainer}>
-        <div>
-          <p style={{ margin: "0" }}>Nombre de la automatización</p>
-          <input type="text" placeholder="Automatización 1" />
-        </div>
+        <EditableInput
+          label={"Nombre de la Automatización"}
+          // value={userData?.nombre}
+          name="automatization"
+          // onSave={handleChange}
+          placeholder="Automatización 1"
+          options={true}
+          readOnly={false}
+        />
+
         <CustomAutomationsWrapper Icon={<ArrowSquare />}>
           <div
             className={styles.infoContainerWrapper}

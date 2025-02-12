@@ -24,12 +24,37 @@ import Button from "../Button/Button";
 import HeaderFormsComponent from "../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as DropboxIcon } from "../../assets/dropbox-icon.svg";
 import HeaderCard from "../HeaderCard/HeaderCard";
+import DeleteButton from "../DeleteButton/DeleteButton";
+// let documentoPDF;
+
+// try {
+//   documentoPDF = require("../../assets/pdfs/document.pdf");
+// } catch (error) {
+//   console.warn("El archivo document.pdf no existe:", error.message);
+//   documentoPDF = null; // Valor por defecto si no existe el archivo
+// }
+
 const SendEmailModal = ({
   mailModal,
   setMailModal,
   isAnimating,
   setIsAnimating,
 }) => {
+  const [documentoPDF, setDocumentoPDF] = useState(null);
+
+  useEffect(() => {
+    try {
+      const pdfFile = require("../../assets/pdfs/document.pdf");
+      setDocumentoPDF(pdfFile);
+    } catch (error) {
+      console.warn("El archivo document.pdf no existe:", error.message);
+      setDocumentoPDF(null);
+    }
+  }, []);
+
+  const handleDeletePDF = () => {
+    setDocumentoPDF(null);
+  };
   const files = [
     {
       img: pdf,
@@ -108,7 +133,7 @@ const SendEmailModal = ({
           headerStyle={{
             position: "sticky",
             top: "0",
-            background: "white",
+            // background: "white",
             zIndex: "999",
           }}
         >
@@ -174,24 +199,30 @@ const SendEmailModal = ({
               <div style={{ color: "#1F184B" }}>Añadir Adjunto</div>
               <Button type="white">Seleccionar Documento</Button>
             </div>
-            <div className={styles.addFileRow}>
-              <div className={styles.fileIcon}>
-                <FolderIcon />
-                <FileIcon />
-                <CodeIcon />
-                <ImageIcon />
-                <p className={styles.titleFile}>Titulo del archivo</p>
-              </div>
-              <span className={styles.weight}>
-                557 KB
-                <div className={styles.delete}>
-                  <img src={minus} alt="Icon" />
+            {documentoPDF && (
+              <>
+                <div className={styles.addFileRow}>
+                  <div className={styles.fileIcon}>
+                    <FolderIcon className={styles.icon} />
+                    <FileIcon className={styles.icon} />
+                    <CodeIcon className={styles.icon} />
+                    <ImageIcon className={styles.icon} />
+                    <p className={styles.titleFile}>Titulo del archivo</p>
+                  </div>
+                  <span className={styles.weight}>
+                    557 KB
+                    <DeleteButton action={handleDeletePDF} />
+                  </span>
                 </div>
-              </span>
-            </div>
-            <div>
-              <img src={facturaEjemplo} />
-            </div>
+                <div>
+                  <embed
+                    src={`${documentoPDF}#zoom=35`}
+                    type=""
+                    height={"400px"}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

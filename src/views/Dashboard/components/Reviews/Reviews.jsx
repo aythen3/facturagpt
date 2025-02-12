@@ -6,6 +6,8 @@ import FAQ from "../Faqs/Faqs";
 import diagonalArrow from "../../assets/diagonalArrow.svg";
 import { useTranslation } from "react-i18next";
 import SubtitleTemplate from "../SubtitleTemplate/SubtitleTemplate";
+import TagsLanding from "../TagsLanding/TagsLanding";
+import CircleProgressBar from "../CircleProgressBar/CircleProgressBar";
 
 const Reviews = () => {
   const { t } = useTranslation("reviews");
@@ -33,6 +35,7 @@ const Reviews = () => {
         />
         {/* <span className={styles.thinSubtitle}>{t("priceFooter")}</span> */}
       </section>
+      <TagsLanding />
       <section className={styles.CarrouselContainer}>
         <h2 className={styles.reviewsTitle}>{t("title")}</h2>
         <SubtitleTemplate
@@ -43,8 +46,10 @@ const Reviews = () => {
         <Carousel />
       </section>
 
-      {/* <ContactForm /> */}
       <FAQ />
+      {/* <ContactForm /> */}
+      <CircleProgressBar />
+
       <section className={styles.startNowSection}>
         <h2 className={styles.reviewsTitle}>{t("joinUsTitle")}</h2>
         <SubtitleTemplate

@@ -35,6 +35,9 @@
     color: #222222;
     opacity: 0;
   }
+  p {
+    margin: 5px 0;
+  }
 }
 .editableInputContainer:hover {
   .editableInputHeader {

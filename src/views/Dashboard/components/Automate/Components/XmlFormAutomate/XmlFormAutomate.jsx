@@ -19,6 +19,7 @@ import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
+import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 
 const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
   const [showSelectInputLocation, setShowSelectInputLocation] = useState(false);
@@ -294,10 +295,15 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           />
         </CustomAutomationsWrapper>
       </div> */}
-      <div>
-        <p style={{ margin: "0" }}>Nombre de la automatización</p>
-        <input type="text" placeholder="Automatización 1" />
-      </div>
+      <EditableInput
+        label={"Nombre de la Automatización"}
+        // value={userData?.nombre}
+        name="automatization"
+        // onSave={handleChange}
+        placeholder="Automatización 1"
+        options={true}
+        readOnly={false}
+      />
       <CustomAutomationsWrapper Icon={<ArrowSquare />}>
         <div
           className={styles.infoContainerWrapper}

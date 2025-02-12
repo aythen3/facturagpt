@@ -15,7 +15,6 @@ import automation from "../../assets/automation.svg";
 
 import IniAutomate from "./panelAutomate/IniAutomate";
 
-
 const Automate = ({
   close,
   newData,
@@ -37,14 +36,11 @@ const Automate = ({
     setDataFilter(filteredData);
   };
 
-
   useEffect(() => {
     console.log("USER AUTOMATIONS", userAutomations);
 
     if (true) {
-
     }
-
   }, [userAutomations]);
 
   useEffect(() => {
@@ -87,7 +83,7 @@ const Automate = ({
       <div
         className={`
           ${styles.content} ${isAnimating ? styles.scaleDown : styles.scaleUp}
-          ${true ? styles.expand : ''}
+          ${true ? styles.expand : ""}
           `}
       >
         <div className={styles.headerContainer}>
@@ -95,24 +91,14 @@ const Automate = ({
             <div onClick={handleCloseNewClient} className={styles.backButton}>
               <img src={chevronLeft} alt="chevronLeft" />
             </div>
-            <h2>
-              {true ? (
-                '¿Dónde están tus documentos?'
-              ) : (
-                'Automatiza'
-              )}
-            </h2>
-            {true && (
-              <b>
-                Paso 1
-              </b>
-            )}
+            <h2>{true ? "¿Dónde están tus documentos?" : "Automatiza"}</h2>
+            {true && <b>Paso 1</b>}
           </div>
           {/* <div onClick={handleCloseNewClient} className={styles.closeIcon}>
             <img src={closeGray} alt="closeGray" />
           </div> */}
         </div>
-        {!true ? (
+        {userAutomations.length <= 0 ? (
           <div>
             <IniAutomate />
           </div>

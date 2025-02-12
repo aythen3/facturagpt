@@ -31,7 +31,7 @@ import { FaUpload } from "react-icons/fa";
 
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
-
+import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
 export default function FileExplorer({ isOpen, setIsOpen }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -46,7 +46,8 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
   const optionsButtonRefs = useRef([]);
   const fileExplorerRef = useRef(null);
   const breadCrumbsRef = useRef(null);
-
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
   const handleMouseDown = (e) => {
     const element = breadCrumbsRef.current;
     element.isDragging = true;
@@ -571,7 +572,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         </div> */}
       {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
       {/* </div> */}
-
       <div className={styles.fileList}>
         {getFilesLoading ? (
           <div className={styles.loaderContainer}>
@@ -682,7 +682,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           </div>
         )}
       </div>
-
       <div className={styles.bottomMenu}>
         <HouseContainer
           onClick={() => dispatch(setCurrentPath(user.id + "/"))}
@@ -695,12 +694,21 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
       {showLocationModal && (
         <SelectLocation onClose={() => setShowLocationModal(false)} />
       )}
-
       <FilesFilterModal
         onClose={() => setIsFilterOpen(false)}
         handleApplyFilters={handleApplyFilters}
         isFilterOpen={isFilterOpen}
-      />
+        setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+        setSelectedCurrency={setSelectedCurrency}
+        selectedCurrency={selectedCurrency}
+      />{" "}
+      {showSelectCurrencyPopup && (
+        <SelectCurrencyPopup
+          setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+          setSelectedCurrency={setSelectedCurrency}
+          selectedCurrency={selectedCurrency}
+        />
+      )}
     </div>
   );
 }
