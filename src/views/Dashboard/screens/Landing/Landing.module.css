@@ -9,11 +9,17 @@
 
 section {
   /* margin-top: 200px; */
-  height: 100vh;
-  max-height: 1260px;
+  min-height: 100vh;
+  /* max-height: 1760px; */
   display: flex;
   flex-direction: column;
   gap: 20px;
   justify-content: center;
   align-items: center;
+}
+
+@media (width >1800px) {
+  section {
+    min-height: 30vh;
+  }
 }

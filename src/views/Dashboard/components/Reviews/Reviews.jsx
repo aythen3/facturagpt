@@ -31,7 +31,7 @@ const Reviews = () => {
         </div>
         <SubtitleTemplate
           text={t("priceFooter")}
-          stylesProp={{ padding: "0 20px" }}
+          stylesProp={{ padding: "0 20px", fontWeight: "200" }}
         />
         {/* <span className={styles.thinSubtitle}>{t("priceFooter")}</span> */}
         <TagsLanding />

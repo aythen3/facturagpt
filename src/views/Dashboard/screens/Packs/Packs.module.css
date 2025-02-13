@@ -10,7 +10,11 @@
   align-self: center;
   overflow: hidden;
 }
-
+@media (width <= 500px) {
+  .packsContainer {
+    gap: 50px;
+  }
+}
 .stepsContainer {
   justify-content: center;
   align-items: center;
@@ -39,6 +43,7 @@
   display: flex;
   justify-content: center;
   gap: 40px;
+  flex-wrap: wrap;
 }
 .extensionsContainer {
   /* height: 95vh; */
@@ -278,12 +283,15 @@
   width: 88%;
   flex-wrap: wrap; /* Permite que las cards se ajusten en varias filas si es necesario */
   align-items: center;
+  min-height: fit-content;
 }
 
 /* Individual Card */
 .card {
-  max-width: clamp(200px, 30%, 330px); /* Tamaño dinámico con clamp */
+  /* max-width: clamp(200px, 30%, 330px); */
   min-width: 280px;
+  /* width: 100%; */
+  max-width: 330px;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px; /* Añadir espacio entre las cards */
@@ -293,7 +301,12 @@
     font-weight: 500;
   }
 }
-
+@media (width <= 660px) {
+  .stepsContent {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 .card:nth-child(3) {
   max-width: clamp(210px, 32%, 300px); /* Ajuste para la tercera card */
 }

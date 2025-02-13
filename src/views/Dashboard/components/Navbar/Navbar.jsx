@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
-import chevDown from "../../assets/chevDown.svg";
+import { ReactComponent as ChevDown } from "../../assets/arrowDownGray.svg";
 import facturaLogo from "../../assets/FacturaGPTBlack.svg";
 import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import { useNavigate, useLocation } from "react-router-dom";
@@ -24,9 +24,23 @@ const Navbar = () => {
   const [t] = useTranslation("navBar");
 
   const [menuOpen, setMenuOpen] = useState(false); // Estado para el menú
+  const [showSolutions, setShowSolutions] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    // Detectar tamaño de pantalla para saber si es móvil
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Define el breakpoint para mobile
+    };
+    handleResize(); // Verificar al cargar la página
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // console.log(user);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -159,25 +173,56 @@ const Navbar = () => {
                   {...(link !== "soluciones"
                     ? { onClick: () => navigate(`/${link}`) }
                     : {})}
-                  className={`${location.pathname.slice(1) !== link ? styles.disabledBtn : ""}`}
+                  className={`${
+                    location.pathname.slice(1) !== link
+                      ? styles.disabledBtn
+                      : ""
+                  }`}
                 >
                   {link === "soluciones" ? (
-                    <div className={styles.solucionesWrapper}>
+                    <div
+                      className={styles.solucionesWrapper}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowSolutions(true);
+                      }}
+                    >
                       <span className={styles.solucionesHover}>
                         {t(`item${index + 1}`)}
                         <ArrowGray className={styles.icon} />
                       </span>
-                      <div className={styles.solutionsContainer}>
-                        {solutions.map((solution, index) => (
-                          <div key={index}>
-                            <p>{solution.title}</p>
-                            <span>{solution.desc}</span>
-                          </div>
-                        ))}
+                      <div
+                        className={`${styles.solutionsContainer} ${
+                          showSolutions
+                            ? styles.display
+                            : isMobile
+                              ? styles.none
+                              : ""
+                        }`}
+                      >
+                        <div className={styles.buttonContainer}>
+                          <button
+                            className={styles.toggleButton}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setShowSolutions(false);
+                            }}
+                          >
+                            <ChevDown className={styles.icon} />
+                          </button>
+                        </div>
+                        <div className={styles.showGrid}>
+                          {solutions.map((solution, index) => (
+                            <div key={index}>
+                              <p>{solution.title}</p>
+                              <span>{solution.desc}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   ) : (
-                    t(`item${index + 1}`)
+                    <div className={styles.test}>{t(`item${index + 1}`)}</div>
                   )}
                 </div>
               )

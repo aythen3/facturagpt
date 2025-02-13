@@ -5,6 +5,7 @@
   flex-direction: column;
   width: 100%;
   height: fit-content !important;
+  max-height: fit-content !important;
   h2 {
     font-size: clamp(30px, 5vw, 40px) !important;
     font-weight: 300;
@@ -103,7 +104,7 @@
 }
 
 .faqAnswer.show {
-  max-height: 240px; /* Adjust based on your content */
+  max-height: 1000px;
 
   padding: 15px;
 }
