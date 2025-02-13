@@ -34,122 +34,181 @@ import pencilSquareIcon from "../../assets/pencilSquareIcon.svg";
 import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon.jsx";
 import KIcon from "../../assets/KIcon.svg";
 import winIcon from "../../assets/winIcon.svg";
-const buttons = [
-  { id: 0, img: createBill, text: "Crea una Factura" },
-  { id: 1, img: analizeBill, text: "Analiza tu facturacion" },
-  { id: 2, img: askDocument, text: "Pregunta sobre tus documentos" },
-  { id: 3, img: askClient, text: "Pregunta sobre tus clientes" },
-  { id: 4, img: askAssets, text: "Pregunta sobre tus activos" },
-  { id: 5, img: askHelp, text: "Pide Ayuda" },
+
+import {
+  fetchByMenu,
+  fetchByChat,
+  sendMessage,
+  deleteChat
+} from "@src/actions/chat";
+
+import { clearCurrentChat } from "@src/slices/chatSlices";
+
+const actions = [
+  {
+    id: 0,
+    img: createBill,
+    text: "Crea una Factura"
+  },
+  {
+    id: 1,
+    img: analizeBill,
+    text: "Analiza tu facturacion"
+  },
+  {
+    id: 2,
+    img: askDocument,
+    text: "Pregunta sobre tus documentos"
+  },
+  {
+    id: 3,
+    img: askClient,
+    text: "Pregunta sobre tus clientes"
+  },
+  {
+    id: 4,
+    img: askAssets,
+    text: "Pregunta sobre tus activos"
+  },
+  {
+    id: 5,
+    img: askHelp,
+    text: "Pide Ayuda"
+  },
 ];
 
 const ChatMenu = ({ id }) => {
-  const [chats, setChats] = useState([
-    {
-      name: "React Hooks",
-      id: "chat-1",
-      older: 0,
-    },
-    {
-      name: "JavaScript Async/Await",
-      id: "chat-2",
-      older: 1,
-    },
-    {
-      name: "CSS Flexbox y Grid",
-      id: "chat-3",
-      older: 1,
-    },
-    {
-      name: "Node.js y Express",
-      id: "chat-4",
-      older: 0,
-    },
-    {
-      name: "APIs REST y GraphQL",
-      id: "chat-5",
-      older: 6,
-    },
-    {
-      name: "MongoDB y Mongoose",
-      id: "chat-6",
-      older: 13,
-    },
-    {
-      name: "Next.js vs. Remix",
-      id: "chat-7",
-      older: 28,
-    },
-    {
-      name: "Optimización Web",
-      id: "chat-8",
-      older: 98,
-    },
-    {
-      name: "Seguridad en Web Apps",
-      id: "chat-9",
-      older: 58,
-    },
-    {
-      name: "Testing con Jest",
-      id: "chat-10",
-      older: 0,
-    },
-    {
-      name: "TypeScript en React",
-      id: "chat-11",
-      older: 1,
-    },
-    {
-      name: "Redux vs. Zustand",
-      id: "chat-12",
-      older: 1,
-    },
-    {
-      name: "Mejorando el SEO",
-      id: "chat-13",
-      older: 0,
-    },
-    {
-      name: "Tailwind CSS en proyectos",
-      id: "chat-14",
-      older: 6,
-    },
-    {
-      name: "Accesibilidad en la Web",
-      id: "chat-15",
-      older: 13,
-    },
-    {
-      name: "Deploy con Vercel",
-      id: "chat-16",
-      older: 28,
-    },
-    {
-      name: "Microservicios con Docker",
-      id: "chat-17",
-      older: 98,
-    },
-    {
-      name: "GraphQL vs. REST",
-      id: "chat-18",
-      older: 58,
-    },
-  ]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { chatList, searchTerm: searchTermState, loading } = useSelector((state) => state.chat);
+
+  useEffect(() => {
+    dispatch(fetchByMenu({ query: searchTermState }));
+  }, [searchTermState, dispatch]);
+
+
+  const [chats, setChats] = useState([
+    // {
+    //   name: "React Hooks",
+    //   id: "chat-1",
+    //   older: 0,
+    // },
+    // {
+    //   name: "JavaScript Async/Await",
+    //   id: "chat-2",
+    //   older: 1,
+    // },
+    // {
+    //   name: "CSS Flexbox y Grid",
+    //   id: "chat-3",
+    //   older: 1,
+    // },
+    // {
+    //   name: "Node.js y Express",
+    //   id: "chat-4",
+    //   older: 0,
+    // },
+    // {
+    //   name: "APIs REST y GraphQL",
+    //   id: "chat-5",
+    //   older: 6,
+    // },
+    // {
+    //   name: "MongoDB y Mongoose",
+    //   id: "chat-6",
+    //   older: 13,
+    // },
+    // {
+    //   name: "Next.js vs. Remix",
+    //   id: "chat-7",
+    //   older: 28,
+    // },
+    // {
+    //   name: "Optimización Web",
+    //   id: "chat-8",
+    //   older: 98,
+    // },
+    // {
+    //   name: "Seguridad en Web Apps",
+    //   id: "chat-9",
+    //   older: 58,
+    // },
+    // {
+    //   name: "Testing con Jest",
+    //   id: "chat-10",
+    //   older: 0,
+    // },
+    // {
+    //   name: "TypeScript en React",
+    //   id: "chat-11",
+    //   older: 1,
+    // },
+    // {
+    //   name: "Redux vs. Zustand",
+    //   id: "chat-12",
+    //   older: 1,
+    // },
+    // {
+    //   name: "Mejorando el SEO",
+    //   id: "chat-13",
+    //   older: 0,
+    // },
+    // {
+    //   name: "Tailwind CSS en proyectos",
+    //   id: "chat-14",
+    //   older: 6,
+    // },
+    // {
+    //   name: "Accesibilidad en la Web",
+    //   id: "chat-15",
+    //   older: 13,
+    // },
+    // {
+    //   name: "Deploy con Vercel",
+    //   id: "chat-16",
+    //   older: 28,
+    // },
+    // {
+    //   name: "Microservicios con Docker",
+    //   id: "chat-17",
+    //   older: 98,
+    // },
+    // {
+    //   name: "GraphQL vs. REST",
+    //   id: "chat-18",
+    //   older: 58,
+    // },
+  ]);
+
+  useEffect(() => {
+    if (chatList.length > 0) {
+      setChats(chatList);
+      console.log("!!!chatList", chatList);
+    }
+  }, [chatList]);
+
+
+
   const sortChat = Object.groupBy(chats, ({ older }) => older);
 
   const searchInputRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleChat = (id) => {
-    console.log("3ri48juj");
-    switch (id) {
-      case 0:
-        alert(2);
-        break;
-    }
-  };
+  const addMessage = () => {
+    console.log("addMessage");
+    dispatch(clearCurrentChat())
+    navigate(`/admin/chat/${uuidv4()}`);
+  }
+
+
+  const [isOpenMenu, setIsOpenMenu] = useState({});
+
+  const handleDeleteMessage = async (chatId) => {
+    console.log("handleDeleteMessage", chatId);
+    // dispatch(deleteChat({ chatId }));
+
+    const resp = await dispatch(deleteChat({ chatId }));
+  }
 
   return (
     <div className={styles.chatMenu}>
@@ -159,7 +218,8 @@ const ChatMenu = ({ id }) => {
         setSearchTerm={setSearchTerm}
         iconRight={pencilSquareIcon}
         classNameIconRight={styles.searchContainerL}
-        // onClickIconRight={() => setIsFilterOpen(true)}
+        onClickIconRight={() => addMessage()}
+      // onClickIconRight={() => setIsFilterOpen(true)}
       >
         <>
           <div
@@ -171,6 +231,7 @@ const ChatMenu = ({ id }) => {
           <div
             style={{ marginLeft: "5px" }}
             className={styles.searchIconsWrappers}
+
           >
             <img src={KIcon} alt="kIcon" />
           </div>
@@ -192,16 +253,34 @@ const ChatMenu = ({ id }) => {
             <div key={group}>
               <h3>{groupTitle}</h3>
               <ul>
-                {chatArray.map((chat) => (
-                  <li
-                    key={chat.id}
-                    className={`${id == chat.id && styles.active}`}
-                    onClick={() => navigate(`/admin/chat/${chat.id}`)}
-                  >
-                    {chat.name}
-                    <DotsOptions className={styles.icon} />
-                  </li>
-                ))}
+                {chatArray.map((chat) => {
+
+                  return (
+                    <li
+                      key={chat.id}
+                      className={`${id == chat.id && styles.active}`}
+                      onClick={() => navigate(`/admin/chat/${chat.id}`)}
+                    >
+                      {chat.name}
+                      <div className={styles.chatMenuSettings}>
+                        <button onClick={() => setIsOpenMenu({ ...isOpenMenu, [chat.id]: !isOpenMenu[chat.id] })}>
+                          <DotsOptions className={styles.icon} />
+                        </button>
+                        <ul className={isOpenMenu[chat.id] ? styles.active : ""}>
+                          <li onClick={() => handleDeleteMessage(chat.id)}>
+                            Eliminar chat
+                          </li>
+                          <li>
+                            Cambiar nombre
+                          </li>
+                          <li>
+                            Fijat chat
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           );
@@ -238,45 +317,24 @@ const ChatMenu = ({ id }) => {
   );
 };
 
-const Chat = () => {
+const ChatBody = ({
+  handleChat,
+  messages,
+  inputValue,
+  setInputValue
+}) => {
   // const { id } = useParams()
 
-  const { user, updatingUserLoading } = useSelector((state) => state.user);
-  console.log(`usuario: ${user}`);
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const { currentChat, loading } = useSelector((state) => state.chat);
+  // const { id } = useParams();
+  // const { user, updatingUserLoading } = useSelector((state) => state.user);
 
-  const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-
-  const handleSendMessage = () => {
-    if (inputValue.trim()) {
-      setMessages([...messages, { text: inputValue, sender: "user" }]);
-      setInputValue("");
-    }
-  };
-
-  const handleSendBotMessage = () => {
-    const botMessage = "Este es un mensaje del bot.";
-    setMessages([...messages, { text: botMessage, sender: "bot" }]);
-  };
-
-  const handleChat = (id) => {
-    console.log("3ri48juj");
-    switch (id) {
-      case 0:
-        alert(2);
-        break;
-    }
-  };
-
-  useEffect(() => {
-    if(inputValue !== "") {
-      handleSendMessage()
-    }
-  }, [inputValue])
 
   return (
     <div className={styles.chatContainer}>
-      <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>
+
       <div className={styles.messageContainer}>
         {messages.length === 0 && (
           <>
@@ -352,16 +410,13 @@ const Chat = () => {
         )}
         {messages.map((message, index) => (
           <>
-            {/* <p
-            key={index}
-            className={`${styles.message} ${message.sender === "bot" ? styles.botMessage : styles.userMessage}`}
-          >
-            {message.text}
-          </p> */}
+
             {message.sender !== "bot" ? (
               <div className={`${styles.message} ${styles.userMessage}`}>
                 <p>{message.text}</p>
-                {/* <div className={styles.avatar} /> */}
+                <div className={styles.avatar}>
+                  {'A'}
+                </div>
               </div>
             ) : (
               <div className={`${styles.message} ${styles.botMessage}`}>
@@ -375,10 +430,13 @@ const Chat = () => {
       <div className={styles.chatTextContainer}>
         {messages.length === 0 && (
           <div className={styles.buttonContainer}>
-            {buttons.map((button, index) => (
-              <button key={index} onClick={() => handleChat(button?.id)}>
-                <img src={button.img} alt="Icon" />
-                {button.text}
+            {actions.map((action, index) => (
+              <button
+                key={index}
+                onClick={() => handleChat(action?.text)}
+              >
+                <img src={action.img} alt="Icon" />
+                {action.text}
               </button>
             ))}
           </div>
@@ -389,14 +447,24 @@ const Chat = () => {
             placeholder="Habla con FacturaGPT"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault(); // Evita el salto de línea
-                handleSendMessage();
+                e.preventDefault(); // Prevents newline
+                handleChat(inputValue);
               }
             }}
+          // onKeyPress={(e) => {
+          //   if (e.key === "Enter" && !e.shiftKey) {
+          //     e.preventDefault(); // Evita el salto de línea
+          //     // handleSendMessage();
+          //     // handleThinkMessage();
+          //   }
+          // }}
           />
-          <div className={styles.img} onClick={handleSendMessage}>
+          <div
+            className={styles.img}
+            onClick={() => handleChat(inputValue)}
+          >
             <img src={arrowUp} alt="Icon" />
           </div>
         </div>
@@ -411,22 +479,238 @@ const Chat = () => {
 const ChatView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+
+  const { currentChat, loading } = useSelector((state) => state.chat);
 
   useEffect(() => {
-    console.log("id", id);
-    if (!id) {
-      const prev_id = uuidv4();
-      navigate(`/admin/chat/${prev_id}`);
+    const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+    if (!id || !uuidV4Regex.test(id)) {
+      const new_id = uuidv4();
+      console.log("new_id", new_id);
+      navigate(`/admin/chat/${new_id}`);
+    } else {
+      console.log("loading id", id);
+      dispatch(fetchByChat({ chatId: id }));
     }
   }, [id]);
+
+
+  useEffect(() => {
+    console.log("currentChat!1", currentChat);
+    if (currentChat.messages.length > 0) {
+      setMessages(currentChat.messages);
+    } else {
+      setMessages([]);
+    }
+  }, [currentChat]);
+
+
+
+  useEffect(() => {
+
+    // const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+    // if (!id || !uuidV4Regex.test(id)) {
+    //   const new_id = uuidv4();
+    //   console.log("new_id", new_id);
+    //   navigate(`/admin/chat/${new_id}`);
+    // } else {
+    // }
+    // dispatch(fetchByChat({ chatId: id }));
+  }, [id, dispatch]);
+
+
+
+
+  // useEffect(() => {
+  //   console.log("id", id);
+  //   if (!id) {
+  //     const prev_id = uuidv4();
+  //     navigate(`/admin/chat/${prev_id}`);
+  //   }
+  // }, [id]);
+
+
+
+
+  // const handleSendMessage = async (text = false) => {
+  //   try {
+
+  //     const response = await dispatch(sendMessage({
+  //       text: text || inputValue,
+  //       chatId: id
+  //     }));
+  //     console.log("response", response);
+  //     if (text || inputValue.trim()) {
+  //       setMessages([...messages, { text: text || inputValue, sender: "user" }]);
+  //       setInputValue("");
+  //     }
+  //   } catch (error) {
+  //     console.log("error handleSendMessage", error);
+  //   }
+
+  // };
+
+
+
+  const handleSendMessage = async (text = false) => {
+    try {
+
+      const resp = await dispatch(sendMessage({
+        text: text || inputValue,
+        chatId: id
+      }));
+
+      const response = resp.payload;
+
+
+      // const user = localStorage.getItem("user");
+      // const userJson = JSON.parse(user);
+      // const token = userJson.accessToken;
+
+      console.log('!WOOORKKK', response)
+      // const response = await fetch(`https://facturagpt.com/api/chat/${id}/messages`, {
+      //   method: 'POST',
+      //   body: JSON.stringify({
+      //     text: text || inputValue,
+      //     chatId: id
+      //   }),
+      //   headers: {
+      //     'Content-Type': 'application/octet-stream',
+      //     'Authorization': `Bearer ${token}`
+      //   }
+      // }).then(response => {
+      //   if (response.ok) {
+      //     const reader = response.body.getReader();
+      //     const decoder = new TextDecoder();
+      //     let accumulatedChunks = '';
+
+      //     const processStream = async () => {
+      //       while (true) {
+      //         const { done, value } = await reader.read();
+      //         if (done) break;
+
+      //         const chunk = decoder.decode(value, { stream: true });
+      //         accumulatedChunks += chunk;
+
+      //         let lines = accumulatedChunks.split('\n');
+      //         accumulatedChunks = lines.pop();
+
+      //         for (const line of lines) {
+      //           if (line.trim()) {
+      //             try {
+      //               const data = JSON.parse(line);
+      //               console.log('data', data)
+      //               insertData(data)
+      //             } catch (error) {
+      //               console.error('Failed to parse JSON:', error);
+      //             }
+      //           }
+      //         }
+      //       }
+
+      //       if (accumulatedChunks.trim()) {
+      //         try {
+      //           const data = JSON.parse(accumulatedChunks);
+
+      //           console.log('data', data)
+      //           insertData(data)
+      //         } catch (error) {
+      //           console.error('Failed to parse final JSON:', error);
+      //         }
+      //       }
+      //     };
+
+      //     processStream().then(() => {
+      //     }).catch(console.error);
+      //   }
+      // })
+
+
+
+
+
+      console.log("responsechat!!", response);
+      if (text || inputValue.trim()) {
+        setMessages([
+          ...messages, 
+          { text: text || inputValue, sender: "user" },
+          { text: response.botMessage.text, sender: "bot" }
+        ]);
+        setInputValue("");
+      }
+    } catch (error) {
+      console.log("error handleSendMessage", error);
+    }
+
+  };
+
+  const handleSendBotMessage = () => {
+    const botMessage = "Este es un mensaje del bot.";
+    setMessages([...messages, { text: botMessage, sender: "bot" }]);
+  };
+
+  const handleChat = (text) => {
+    console.log("3ri48juj");
+    // handleSendMessage(actions[id].text);
+    handleSendMessage(text);
+  };
 
   return (
     <PanelTemplate>
       {/* <Chat /> */}
+      <div style={{ display: "flex", flexDirection: "column" }}>
 
+        <button onClick={handleSendBotMessage}>
+          Enviar mensaje del bot
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Enviar grafica del bot
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Enviar code block del bot
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Enviar formulario del bot
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Crear conexion del bot
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Crear  conocimiento
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Crear calculadora
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Insertar cliente
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Insertar producto
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Insertar activo
+        </button>
+        <button onClick={handleSendBotMessage}>
+          Nueva factura
+        </button>
+      </div>
       <div className={styles.chatSection}>
-        <ChatMenu id={id} />
-        <Chat />
+        <ChatMenu
+          id={id}
+        />
+        <ChatBody
+          handleChat={handleChat}
+          messages={messages}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+        />
       </div>
     </PanelTemplate>
   );

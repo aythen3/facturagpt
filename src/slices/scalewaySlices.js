@@ -47,7 +47,6 @@ const scalewaySlices = createSlice({
         state.getFilesLoading = true;
       })
       .addCase(getUserFiles.fulfilled, (state, action) => {
-        console.log("action.payload from getUserFiles", action.payload);
         state.getFilesLoading = false;
         state.userFiles = action.payload;
       })

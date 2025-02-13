@@ -87,7 +87,6 @@ const Layout = () => {
 
     const [init, setInit] = useState(false)
     useEffect(()=>{
-      console.log('user!!', user, init)
       setInit(true)
 
       if(user && user.success == false) { 
@@ -105,7 +104,7 @@ const Layout = () => {
           <Route path="/accounts" element={<AccountsDashboard />} />
           <Route path="/users" element={<UsersDashboard />} />
           <Route path="/clients" element={<Clients />} />
-          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/clients/:id" element={<Transactions />} />
           <Route path="/products" element={<AllProducts />} />
           <Route path="/chat" element={<ChatView />} />
           <Route path="/chat/:id" element={<ChatView />} />

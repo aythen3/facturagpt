@@ -9,7 +9,9 @@ const automationsRouter = require("./automations");
 const scalewayRouter = require("./scaleway");
 const clientRouter = require("./clients");
 const transactionsByClientRouter = require("./transactions");
+const chatRouter = require("./chat");
 
+mainRouter.use("/chat", chatRouter);
 mainRouter.use("/emailManager", routerEmailManager);
 mainRouter.use("/reseller", routerReseller);
 mainRouter.use("/stripe", routerStripe);

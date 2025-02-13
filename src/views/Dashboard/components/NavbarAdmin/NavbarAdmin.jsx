@@ -173,7 +173,8 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               </a>
               <a
                 onClick={() => setFromPath("clients")}
-                className={fromPath == "clients" ? styles.active : ""}
+                // className={(fromPath == "clients" || formPath == "clients/:id")? styles.active : ""}
+                className={fromPath?.startsWith("clients") ? styles.active : ""}
               >
                 <ClientIcon />
               </a>

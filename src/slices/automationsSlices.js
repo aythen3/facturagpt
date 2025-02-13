@@ -38,10 +38,6 @@ const automationsSlices = createSlice({
         state.loading = true;
       })
       .addCase(getAllUserAutomations.fulfilled, (state, action) => {
-        console.log(
-          "action.payload from getAllUserAutomations",
-          action.payload
-        );
         state.loading = false;
         state.userAutomations = action.payload;
       })

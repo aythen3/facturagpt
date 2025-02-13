@@ -71,7 +71,6 @@ const emailManagerSlices = createSlice({
         state.loading = true;
       })
       .addCase(loginToManager.fulfilled, (state, action) => {
-        console.log("action.payload from loginToManager", action.payload);
         state.loading = false;
         if (action.payload.success && action.payload.account) {
           const { id, email, role } = action.payload.account;

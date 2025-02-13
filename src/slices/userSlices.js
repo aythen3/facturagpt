@@ -27,7 +27,6 @@ const userSlices = createSlice({
         state.loginLoading = true;
       })
       .addCase(loginToManager.fulfilled, (state, action) => {
-        console.log("action.payload from loginToManager", action.payload);
         state.loginLoading = false;
         if (action.payload) {
           state.user = action.payload;

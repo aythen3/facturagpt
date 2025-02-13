@@ -27,7 +27,6 @@ const createAutomationController = async (req, res) => {
 const getAllUserAutomationsController = async (req, res) => {
   try {
     const { userId } = req.params;
-    console.log("Fetching automations for userId (CONTROLLER):", userId);
 
     const resp = await getAllUserAutomations({ userId });
 

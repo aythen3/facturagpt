@@ -85,11 +85,7 @@ export const createAccount = createAsyncThunk(
 export const loginToManager = createAsyncThunk(
   "user/loginToManager",
   async ({ email, password, accessToken }) => {
-    console.log("Data from loginToManager action:", {
-      email,
-      password,
-      accessToken,
-    });
+
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(

@@ -52,7 +52,6 @@ const CustomDropdown = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  console.log(options);
   return (
     <div
       onClick={(e) => e.stopPropagation()}

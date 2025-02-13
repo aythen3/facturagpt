@@ -25,7 +25,6 @@ export const checkOrCreateUserBucket = createAsyncThunk(
 export const getUserFiles = createAsyncThunk(
   "scaleway/getUserFiles",
   async ({ userId }) => {
-    console.log("data from getUserFiles", { userId });
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.get(`/scaleway/get-user-files/${userId}`, {
