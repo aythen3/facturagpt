@@ -42,8 +42,6 @@ const Dashboard = () => {
 
   const { allClients, allUsers } = useSelector((state) => state.user);
 
-
-
   const statistics = [
     {
       title: "ventas",

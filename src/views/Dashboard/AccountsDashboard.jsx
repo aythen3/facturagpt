@@ -695,9 +695,9 @@ const AccountsDashboard = () => {
                       </div>
                     )}
                   </span>
-                  <span className={styles.columnContact}>
+                  {/* <span className={styles.columnContact}>
                     {account.phoneNumber}
-                  </span>
+                  </span> */}
                   <span className={styles.columnTokens}>
                     <div className={styles.gapDiv}>
                       <img
@@ -716,9 +716,6 @@ const AccountsDashboard = () => {
                       {account.tokenGPT}
                     </div>
                   </span>
-                    {/* <span className={styles.columnEmail}>
-                      {account.tokenEmail}
-                    </span> */}
                   <span
                     onClick={() => resetProcessedEmails(account)}
                     className={styles.columnRecognitions}

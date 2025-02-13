@@ -1,6 +1,7 @@
 import mail from "../../../assets/gmail.svg";
 import outlook from "../../../assets/outlook.svg";
 import drive from "../../../assets/drive.svg";
+import telematel from "../../../assets/telematel.svg";
 import dropbox from "../../../assets/droopbox.svg";
 import whatsApp from "../../../assets/whatsappIcon.svg";
 import esPublico from "../../../assets/espublico-icon.svg";
@@ -31,7 +32,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "Outlook",
     role: "input",
-    available: false
+    available: true
   },
   {
     id: 3,
@@ -70,13 +71,22 @@ export const data = [
     available: false
   },
   {
+    id: 18,
+    automateName: "Actualiza tu Telematel",
+    image: telematel,
+    contactType: "Directo a Telematel",
+    type: "Telematel",
+    role: "output",
+    available: true
+  },
+  {
     id: 7,
     automateName: "Actualiza tu Google Sheets",
     image: googleSheets,
     contactType: "Título de la hoja.xls",
     type: "Google Sheets",
     role: "output",
-    available: true
+    available: false
   },
   {
     id: 16,
@@ -85,7 +95,7 @@ export const data = [
     contactType: "682",
     type: "FTP",
     role: "output",
-    available: true
+    available: false
   },
   {
     id: 8,
@@ -94,7 +104,7 @@ export const data = [
     contactType: "example@gmail.com",
     type: "XML",
     role: "output",
-    available: true
+    available: false
   },
   {
     id: 11,
@@ -104,7 +114,7 @@ export const data = [
     contactType: "example@gmail.com ",
     type: "Agencia Tributaria",
     role: "output",
-    available: true
+    available: false
   },
   {
     id: 9,
@@ -136,7 +146,7 @@ export const data = [
   },
   {
     id: 13,
-    automateName: "Procesa Pagos Automáticamente con Stripe",
+    automateName: "Procesa Pagos con Stripe",
     image: stripe,
     contactType: "+00000000",
     type: "Stripe",
@@ -154,7 +164,7 @@ export const data = [
   },
   {
     id: 15,
-    automateName: "Genera y Envía Informes PDF Personalizados",
+    automateName: "Genera y Envía Informes PDF",
     image: acrobat,
     contactType: "+00000000",
     type: "Acrobat",

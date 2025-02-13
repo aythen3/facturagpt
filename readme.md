@@ -1,5 +1,10 @@
 sudo certbot certonly --standalone -d facturagpt.com -d www.facturagpt.com
 
+
+git credential reject https://github.com
+git pull --tags origin test-carlos
+
+
 kill -9 $(lsof -t -i:3004)
 
 

@@ -161,8 +161,8 @@
 .folderItem,
 .fileItem {
   padding: 0px 6px;
-  height: 44px;
-  min-height: 44px;
+  height: 34px;
+  min-height: 34px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -176,7 +176,11 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 8px;
+  padding: 0px;
+  img{
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .folderItem:hover,
@@ -185,7 +189,7 @@
 }
 
 .itemText {
-  font-size: 16px;
+  font-size: 12px;
   color: #333;
   font-weight: 600;
   white-space: nowrap;
@@ -210,12 +214,13 @@
   align-items: center;
 }
 .moreButton {
+  display: none;
   border: none;
   background: none;
   padding: 4px;
   cursor: pointer;
   opacity: 0;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s ease-in-out;
@@ -224,6 +229,7 @@
 
 .fileItem:hover .moreButton {
   opacity: 0.7;
+  display: flex;
 }
 
 .moreButton:hover {

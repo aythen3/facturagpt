@@ -21,47 +21,53 @@ const PanelIniAutomate = () => {
     icon: <IconGmail />,
     name: 'Sube tus Documentos de Gmail',
     description: 'lorem ipsum',
+    available: true,
     button: true
   },{
     icon: <IconOutlook />,
     name: 'Sube tus Documentos de Oulook',
     description: 'lorem ipsum',
+    available: false,
     button: true
   }, {
     icon: <IconDrive />,
     name: 'Sube tus Documentos de Google Drive',
     description: 'lorem ipsum',
+    available: false,
     button: true
   }, {
     icon: <IconSharePoint />,
     name: 'Sube tus Documentos de Microsoft Sharepoint',
     description: 'lorem ipsum',
+    available: false,
     button: true
   }, {
     icon: <IconOneDrive />,
     name: 'Sube tus Documentos de Microsoft One Drive',
     description: 'lorem ipsum',
+    available: false,
     button: true
   }, {
     icon: <IconDropbox />,
     name: 'Sube tus Documentos de Dropbox',
     description: 'lorem ipsum',
+    available: false,
     button: true
   }]
 
   return (
     <div className={styles.container}>
-      <div className={styles.description}>
+      {/* <div className={styles.description}>
         <b>
           Selecciona dónde tienes tus documentos
         </b>
         <p>
           Asegúrate de que FacturaGPT tenga acceso a los documentos que necesitas procesar.
         </p>
-      </div>
+      </div> */}
       <ul className={styles.automates}>
         {automates.map((automate, index) => (
-          <li>
+          <li className={automate.available ? styles.available : styles.disabled}>
             <div className={styles.top}>
               <div className={styles.header}>
                 <div className={styles.icon}>
@@ -70,22 +76,7 @@ const PanelIniAutomate = () => {
                     <IconStar />
                   </div>
                 </div>
-                <button>
-                  Añadir Conexión
-                </button>
-              </div>
-              <div className={styles.subheader}>
-                {automate.icon}
-                <span>
-                  example@gmail.com
-                </span>
-                <div className={styles.arrow}>
-                  <IconArrow />
-                </div>
-              </div>
-            </div>
-            <div className={styles.bottom}>
-              <div className={styles.info}>
+                <div className={styles.info}>
                 <b>
                   Sube tus Documentos de Gmail
                 </b>
@@ -93,15 +84,20 @@ const PanelIniAutomate = () => {
                   lorem ipsum
                 </p>
               </div>
+              </div>
+             
+            </div>
+            <div className={styles.bottom}>
+             
               <div className={styles.buttons}>
                 <button className={styles.button_connect}>
                   Conectar
                   <IconArrowConnect />
                 </button>
-                <button className={styles.button_added}>
+                {/* <button className={styles.button_added}>
                   Añadido
                   <IconSuccess />
-                </button>
+                </button> */}
               </div>
             </div>
           </li>

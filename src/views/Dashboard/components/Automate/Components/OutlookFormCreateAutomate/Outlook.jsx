@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./gmailAndOutlook.module.css";
+import styles from "./Outlook.module.css";
 import SearchSVG from "../../svgs/SearchSVG";
 import WarningSVG from "../../svgs/WarningSVG";
 import SelectComponent from "../../../SelectComponent/SelectComponent";
@@ -13,7 +13,7 @@ import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
 import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
-import ModalAddConnectionGmailAndOutlook from "./ModalAddConnectionGmailAndOutlook";
+import ModalAddConnectionOutlook from "./ModalAddConnectionOutlook";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
@@ -37,7 +37,7 @@ import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.
 import Advertency from "../Advertency/Advertency";
 import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 
-const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
+const Outlook = ({ type, configuration, setConfiguration }) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectOutputLocation, setShowSelectOutputLocation] =
@@ -611,7 +611,7 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
         />
       )}
       {showAddConnection && (
-        <ModalAddConnectionGmailAndOutlook
+        <ModalAddConnectionOutlook
           close={() => setShowAddConnection(false)}
           addConnection={addConnection}
         />
@@ -620,4 +620,4 @@ const GmailAndOutlook = ({ type, configuration, setConfiguration }) => {
   );
 };
 
-export default GmailAndOutlook;
+export default Outlook;

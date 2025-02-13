@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
-import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
+import styles from "../GmailFormCreateAutomate/gmail.module.css";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import InputComponent from "../../../InputComponent/InputComponent";
 import SearchSVG from "../../svgs/SearchSVG";

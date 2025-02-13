@@ -17,6 +17,7 @@ import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
 // import PanelIniAutomate from "../Automate/panelAutomate/IniAutomate";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import UpgradePlanWrapper from "../../screens/UpgradePlan/UpgradePlan";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -35,6 +36,7 @@ const stripePromise = loadStripe(
 const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   // const { pathname } = window.location;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const fromPath = pathname.split("/")[2];
 
   // console.log('languageFromPath', fromPath)
@@ -68,9 +70,34 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
     }, 300);
   };
   // =======================
+  const [clickCount, setClickCount] = useState(0);
+  const [clickTimer, setClickTimer] = useState(null);
+
   const handleProfileClick = () => {
-    setShowSidebar(!showSidebar);
+    setClickCount(prev => prev + 1);
+    
+    if (clickTimer) {
+      clearTimeout(clickTimer);
+    }
+
+    const timer = setTimeout(() => {
+      if (clickCount === 0) {
+        // Single click
+        setShowSidebar(!showSidebar);
+      } else {
+        // Double click
+        // window.location.href = "/admin/home";
+        navigate("/admin/home");
+      }
+      setClickCount(0);
+    }, 300); // 300ms window for double click
+
+    setClickTimer(timer);
   };
+
+  // const handleProfileClick = () => {
+  //   setShowSidebar(!showSidebar);
+  // };
   const openModalAutomate = () => {
     setIsModalAutomate(true);
     setIsOpen(false);

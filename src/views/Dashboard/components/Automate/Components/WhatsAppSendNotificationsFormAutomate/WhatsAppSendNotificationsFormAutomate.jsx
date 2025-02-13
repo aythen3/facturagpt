@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import InputComponent from "../../../InputComponent/InputComponent";
-import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
+import styles from "../GmailFormCreateAutomate/gmail.module.css";
 import SearchSVG from "../../svgs/SearchSVG";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
 import CheckboxComponent from "../../shared/CheckboxComponent";

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./panelAutomate.module.css";
 import CardAutomate from "../Components/CardAutomate/CardAutomate";
 import { data } from "../utils/automatesJson";
-import GmailAndOutlook from "../Components/GmailAndOutlookFormCreateAutomate/GmailAndOutlook";
+import GmailCreateAutomate from "../Components/GmailFormCreateAutomate/Gmail";
+import OutlookCreateAutomate from "../Components/OutlookFormCreateAutomate/Outlook";
 import GoogleDriveFormCreateAutomate from "../Components/GoogleDriveFormCreateAutomate/GoogleDriveFormCreateAutomate";
 import WhatsAppFormCreateAutomate from "../Components/WhatsAppFormCreateAutomate/WhatsAppFormCreateAutomate";
 import EsPublicoGestionaFormAutomate from "../Components/EsPublicoGestionaFormAutomate/EsPublicoGestionaFormAutomate";
@@ -25,6 +26,7 @@ import CustomSearchbar from "../../CustomSearchbar/CustomSearchbar";
 import DropboxFormCreateAutomate from "../Components/DropboxFormCreateAutomate/DropboxFormCreateAutomate";
 import HoldedFormAutomate from "../Components/HoldedFormAutomate/HoldedFormAutomate";
 import FTPFormAutomate from "../Components/FTPFormAutomate/FTPFormAutomate";
+import TelematelFormAutomate from "../Components/TelamatelFormAutomate/TelematelFormAutomate";
 
 const PanelAutomate = ({
   type,
@@ -50,7 +52,32 @@ const PanelAutomate = ({
 
   //   ================================ INPUT CONFIGS =====================================
 
-  const [gmailAndOutlookConfiguration, setGmailAndOutlookConfiguration] =
+  const [gmailConfiguration, setGmailConfiguration] =
+    useState({
+      folderLocation: "/Inicio/",
+      includeAllRemitents: true,
+      subjectExactMatch: true,
+      bodyExactMatch: true,
+      attachmentExactMatch: true,
+      selectedTypes: [],
+      addedRemitents: [],
+      subjectKeyWords: [],
+      bodyKeyWords: [],
+      emailConnectionData: [],
+      selectedEmailConnection: "",
+      fileName: "",
+      tags: "",
+      notificateAfterExport: false,
+      notificateGmail: false,
+      notificateWhatsApp: false,
+      gmailTo: "",
+      gmailSubject: "",
+      gmailBody: "",
+      whatsAppToNotificate: "",
+      whatsAppMessage: "",
+    });
+
+  const [outlookConfiguration, setOutlookConfiguration] =
     useState({
       folderLocation: "/Inicio/",
       includeAllRemitents: true,
@@ -332,6 +359,21 @@ const PanelAutomate = ({
     fileName: "",
   });
 
+  
+
+  const [telematelConfiguration, setTelematelConfiguration] = useState({
+    type: "Telematel",
+    filesSource: "/Telematel",
+    selectedTelematelConnection: "",
+    telematelConnectionData: [],
+    filesKeyWords: [],
+    filesKeyWordsExactMatch: true,
+    selectedFileTypes: [],
+    allowAllFileTypes: true,
+    changeFileName: false,
+    fileName: "",
+  });
+
   //   =====================================================================================
 
   useEffect(() => {
@@ -348,7 +390,7 @@ const PanelAutomate = ({
           "Setting gmailAndOutlookConfiguration",
           automationData.automationData
         );
-        setGmailAndOutlookConfiguration(automationData.automationData);
+        setGmailConfiguration(automationData.automationData);
       } else if (automationData.automationData.type === "Google Drive") {
         console.log(
           "Setting googleDriveConfiguration",
@@ -415,9 +457,9 @@ const PanelAutomate = ({
   useEffect(() => {
     console.log(
       "gmailAndOutlookConfiguration changed to:",
-      gmailAndOutlookConfiguration
+      gmailConfiguration
     );
-  }, [gmailAndOutlookConfiguration]);
+  }, [gmailConfiguration]);
   //   ==============================================================================
   useEffect(() => {
     if (searchTerm === "") {
@@ -447,12 +489,12 @@ const PanelAutomate = ({
 
     if (type === "Gmail") {
       selectedAutomationData = {
-        ...gmailAndOutlookConfiguration,
+        ...gmailConfiguration,
         type: type,
       };
     } else if (type === "Outlook") {
       selectedAutomationData = {
-        ...gmailAndOutlookConfiguration,
+        ...outlookConfiguration,
         type: type,
       };
     } else if (type === "WhatsApp") {
@@ -515,13 +557,12 @@ const PanelAutomate = ({
         ...ftpConfiguration,
         type: "FTP",
       };
+    } else if (type === "Acrobat") {
+      selectedAutomationData = {
+        ...acrobatConfiguration,
+        type: "Acrobat",
+      };
     }
-    // else if (type === "Acrobat") {
-    //   selectedAutomationData = {
-    //     ...acrobatConfiguration,
-    //     type: "Acrobat",
-    //   };
-    // }
     // Por el momento testeamos con gmail y outlook
 
     if (user && selectedAutomationData?.id) {
@@ -681,11 +722,18 @@ const PanelAutomate = ({
               {(() => {
                 switch (type) {
                   case "Gmail":
+                    return (
+                      <GmailCreateAutomate
+                        configuration={gmailConfiguration}
+                        setConfiguration={setGmailConfiguration}
+                        type={type}
+                      />
+                    );
                   case "Outlook":
                     return (
-                      <GmailAndOutlook
-                        configuration={gmailAndOutlookConfiguration}
-                        setConfiguration={setGmailAndOutlookConfiguration}
+                      <OutlookCreateAutomate
+                        configuration={outlookConfiguration}
+                        setConfiguration={setOutlookConfiguration}
                         type={type}
                       />
                     );
@@ -783,6 +831,14 @@ const PanelAutomate = ({
                         type={type}
                         configuration={ftpConfiguration}
                         setConfiguration={setFtpConfiguration}
+                      />
+                    );
+                  case "Telematel":
+                    return (
+                      <TelematelFormAutomate
+                        type={type}
+                        configuration={telematelConfiguration}
+                        setConfiguration={setTelematelConfiguration}
                       />
                     );
                   default:
