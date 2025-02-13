@@ -5,9 +5,9 @@ import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as EmailIcon } from "../../../../assets/email-icon-connection.svg";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-import styles from "./ModalAddConnectionGmailAndOutlook.module.css";
+import styles from "./ModalAddConnectionOutlook.module.css";
 
-const ModalAddConnectionGmailAndOutlook = ({ close, addConnection }) => {
+const ModalAddConnectionOutlook = ({ close, addConnection }) => {
   const [email, setEmail] = useState("");
   const [appPassword, setAppPassword] = useState("");
   const [imapServer, setImapServer] = useState("");
@@ -71,36 +71,13 @@ const ModalAddConnectionGmailAndOutlook = ({ close, addConnection }) => {
   return (
     <AddConnectionModal close={close} type="Email" icon={<EmailIcon />}>
       <div className={styles.gridContainer}>
-        <div className={styles.signInOption}>
-          <GmailIcon width={28} height={28} />
-          <p>Sign in with Gmail</p>
-        </div>
 
         <div className={styles.signInOption}>
           <OutlookIcon width={28} height={28} />
           <p>Sign in with Outlook</p>
         </div>
 
-        <div className={styles.signInOption}>
-          <EmailIcon width={28} height={28} />
-          <p>Conexión de Email (IMAP/SMTP)</p>
-        </div>
 
-        <LabelInputComponent
-          value={email}
-          setValue={setEmail}
-          label="Usuario"
-          placeholder="Tu dirección de email"
-          inputType="email"
-        />
-
-        <LabelInputComponent
-          value={appPassword}
-          setValue={setAppPassword}
-          label="Contraseña"
-          placeholder="Contraseña de tu cuenta"
-          inputType="password"
-        />
 
         <div className={styles.serverConfigContainer}>
           <LabelInputComponent
@@ -173,4 +150,4 @@ const ModalAddConnectionGmailAndOutlook = ({ close, addConnection }) => {
   );
 };
 
-export default ModalAddConnectionGmailAndOutlook;
+export default ModalAddConnectionOutlook;

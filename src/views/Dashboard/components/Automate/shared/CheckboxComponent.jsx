@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../Components/GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
+// import styles from "../Components/GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const CheckboxComponent = ({ state, setState, color = "#0A5B48" }) => {

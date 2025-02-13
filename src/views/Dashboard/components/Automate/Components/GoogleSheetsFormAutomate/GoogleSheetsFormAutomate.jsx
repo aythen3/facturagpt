@@ -3,7 +3,7 @@ import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComp
 import { ReactComponent as GoogleSheetsIcon } from "../../../../assets/excel.svg";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import InputComponent from "../../../InputComponent/InputComponent";
-import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
+import styles from "../GmailFormCreateAutomate/gmail.module.css";
 import CheckboxComponent from "../../shared/CheckboxComponent";
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 import NotificationsSVG from "../../svgs/NotificationsSVG";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
-import styles from "../GmailAndOutlookFormCreateAutomate/gmailAndOutlook.module.css";
+import styles from "../GmailFormCreateAutomate/gmail.module.css";
 import { ReactComponent as DriveIcon } from "../../../../assets/drive.svg";
 import SelectComponent from "../../../SelectComponent/SelectComponent";
 import InputComponent from "../../../InputComponent/InputComponent";

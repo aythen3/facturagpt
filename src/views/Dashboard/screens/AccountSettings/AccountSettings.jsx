@@ -75,9 +75,9 @@ const AccountSettings = ({
   });
 
   const [fieldValues, setFieldValues] = useState({
-    companyName: "",
     email: "",
     phoneNumber: "",
+    companyName: "",
     VatId: "",
     address: "",
     emergencyContact: "",

@@ -50,6 +50,7 @@
   font-weight: 300;
   padding: 0px;
   font-size: 13px;
+  outline: none;
   &::placeholder {
     color: #1e0045;
   }

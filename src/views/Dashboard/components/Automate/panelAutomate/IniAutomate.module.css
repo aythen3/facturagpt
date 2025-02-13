@@ -32,12 +32,21 @@
     gap: 10px;
     padding: 10px;
     list-style: none;
+    align-items: center;
 
     li {
+        cursor: pointer;
         padding: 8px 12px;
         border-radius: 12px;
         border: 1px solid #e4dfdf;
         background: #fff;
+        &.disabled{
+            opacity: 0.5;
+            cursor: not-allowed;
+            button{
+                display: none !important;
+            }
+        }
     }
 
     .top {
@@ -50,10 +59,12 @@
         .header {
             display: flex;
             align-items: flex-start;
+            gap: 16px;
             justify-content: space-between;
             width: 100%;
 
             .icon {
+                min-width: 50px;
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
@@ -78,53 +89,32 @@
                 }
             }
 
-            button {
-                border: none;
-                font-size: 14px;
-                font-weight: 600;
-                color: #10A37F;
-                padding: 0px;
-                background: transparent;
-            }
-        }
-
-        .subheader {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #cacaca;
-            border-radius: 6px;
-            margin-top: -24px;
-            margin-bottom: 4px;
-            padding: 2px;
-            gap: 5px;
-
-            span {
-                font-size: 14px;
-                font-weight: 600;
-                color: #646e8a;
-            }
-
-            svg {
-                min-width: 20px;
-                min-height: 20px;
-                width: 10px;
-                height: 10px;
-            }
-
-            .arrow {
-                width: 20px;
-                height: 20px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-
-                svg {
-                    min-width: 10px;
-                    min-height: 10px;
+            .info {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                /* align-items: center; */
+                justify-content: flex-start;
+                gap: 6px;
+    
+                b {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #000;
+                }
+    
+                p {
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #323234;
+                    margin: 2px 0px;
                 }
             }
+
+
         }
+
+    
     }
 
     .bottom {
@@ -135,27 +125,7 @@
         gap: 10px;
         margin-top: 10px;
 
-        .info {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            /* align-items: center; */
-            justify-content: flex-start;
-            gap: 6px;
-
-            b {
-                font-size: 14px;
-                font-weight: 600;
-                color: #000;
-            }
-
-            p {
-                font-size: 16px;
-                font-weight: 400;
-                color: #323234;
-                margin: 2px 0px;
-            }
-        }
+   
 
         .buttons {
             display: flex;
@@ -169,6 +139,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                max-height: 28px;
                 gap: 8px;
                 padding: 10px 12px;
 

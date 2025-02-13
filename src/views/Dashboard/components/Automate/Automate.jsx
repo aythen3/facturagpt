@@ -91,8 +91,8 @@ const Automate = ({
             <div onClick={handleCloseNewClient} className={styles.backButton}>
               <img src={chevronLeft} alt="chevronLeft" />
             </div>
-            <h2>{true ? "¿Dónde están tus documentos?" : "Automatiza"}</h2>
-            {true && <b>Paso 1</b>}
+            <h2>{true ? "Donde están tus documentos" : "Automatiza"}</h2>
+            {true && <b>Empieza ahora</b>}
           </div>
           {/* <div onClick={handleCloseNewClient} className={styles.closeIcon}>
             <img src={closeGray} alt="closeGray" />

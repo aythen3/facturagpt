@@ -166,7 +166,7 @@ const SendEmailModal = ({
           </div>
         </header> */}
         <div className={styles.sendEmailContent}>
-          <HeaderFormsComponent
+          {/* <HeaderFormsComponent
             placeholder="Añade una cuenta de Dropbox"
             // selectedEmailConnection={configuration.selectedDropboxConnection}
             // setSelectedEmailConnection={(value) =>
@@ -183,7 +183,7 @@ const SendEmailModal = ({
               flexDirection: "column",
               alignItems: "end",
             }}
-          />
+          /> */}
           <div className={styles.infOptions}>
             <input type="text" placeholder="Para: [email], ..." />
             <input type="text" placeholder="Asunto: [document_title]" />
