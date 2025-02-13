@@ -30,7 +30,6 @@ export const createAutomation = createAsyncThunk(
 export const getAllUserAutomations = createAsyncThunk(
   "automations/getAllUserAutomations",
   async ({ userId }) => {
-    console.log("Fetching automations for userId (REDUX):", userId);
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.get(

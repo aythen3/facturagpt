@@ -65,7 +65,6 @@ const createAutomation = async ({ userId, email, automationData }) => {
 };
 
 const getAllUserAutomations = async ({ userId }) => {
-  console.log("Fetching automations for userId (SERVICE):", userId);
 
   const dbAutomationsName = "db_automations";
   let dbAutomations;

@@ -16,71 +16,55 @@ const authenticateToken = async (req, res, next) => {
       throw new ClientError("Authorization token missing", 401);
     }
 
-    const decodedToken = jwt.verify(
-      token,
-      "keySecret156754asdas897fav45646xz4c65z899sa4fa654fas65f4sa65sadasf"
-    );
+
+    const decodedToken = jwt.verify(token, "your-secret-key"); // TODO: Move secret to env vars
 
 
-    const query = {
-      "selector": {
-        "_id": decodedToken._id,
-        "user": decodedToken.user,
-        "isverified": true
-      }
-    };
+    // console.log("token", token);
 
-    let db_account = await connectDB(`db_account`)
-    const resp = await db_account.find(query)
+    // const decodedToken = jwt.verify(
+    //   token,
+    //   "your-secret-key"
+    // );
 
-    if (resp.docs.length == 0) {
-      throw new ClientError("User not found", 404);
-    }
+    // console.log("decodedToken", decodedToken);
 
-    const user = resp.docs[0]
+
+    // const query = {
+    //   "selector": {
+    //     "_id": decodedToken._id,
+    //     "user": decodedToken.user,
+    //     "isverified": true
+    //   }
+    // };
+
+    // let db_account = await connectDB(`db_account`)
+    // const resp = await db_account.find(query)
+
+    // console.log("resp", resp);
+
+    // if (resp.docs.length == 0) {
+    //   throw new ClientError("User not found", 404);
+    // }
+
+    // const user = resp.docs[0]
 
    
 
 
-    if (user.token_login !== token) {
+    // if (user.token_login !== token) {
+    //   return res.status(409).send({ message: 'Session has been logged out on another device' });
+    // }
 
-      const db_log = await connectDB('db_log')
-      const agent = useragent.parse(req.headers['user-agent']);
-      const browser = agent.family;         
-      const version = agent.toVersion();  
-      const osFamily = agent.os.family; 
-      const osVersion  = agent.os.toVersion();   
-  
-      await db_log.insert({
-        name: 'Acceso detectado',
-        status: 200,
-        browser: browser,
-        version: version,
-        system: osFamily,
-        version: osVersion,
-        type: 'login',
-        createdat: new Date()
-      });
-
-      return res.status(409).send({ message: 'Session has been logged out on another device' });
-    }
-
-    delete user.avatar;
-    delete user.banner;
+    // delete user.avatar;
+    // delete user.banner;
 
 
-    req.user = user;
-
-    // Comprobamos si el token contiene la variable `iam`
-    if (decodedToken.iam) {
-      // Si la variable `iam` es true, se permite continuar, pero agregamos la verificación de método y ruta
-      detectIAMMiddleware(req, res, next, decodedToken.iam);
-    } else {
-      next();
-    }
+    req.user = decodedToken;
 
 
-    // next();
+    next();
+
   } catch (error) {
     console.log("Invalid token: ", error);
     return res.status(501).send("Invalid token");

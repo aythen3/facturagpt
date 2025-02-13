@@ -125,8 +125,7 @@ const AccountSettings = () => {
       // console.log("setting user to ", newUserData);
       setUserData(newUserData);
       setInitialUserData(newUserData); // Guardamos la copia inicial
-      console.log("userData", userData);
-      console.log("newUserData", newUserData);
+
     }
   }, [user]);
 

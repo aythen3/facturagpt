@@ -6,6 +6,7 @@ import scalewaySlices from "../slices/scalewaySlices";
 import clientsSlices from "../slices/clientsSlices";
 import userSlices from "../slices/userSlices";
 import transactionsSlices from "../slices/transactionsSlices";
+import chatSlices from "../slices/chatSlices";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     scaleway: scalewaySlices,
     clients: clientsSlices,
     user: userSlices,
+    chat: chatSlices,
     transactions: transactionsSlices,
   },
   middleware: (getDefaultMiddleware) =>

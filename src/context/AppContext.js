@@ -12,7 +12,6 @@ export const AppProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("CONTEXT RENDER");
     const checkUser = async () => {
       let user = await localStorage.getItem("user");
 
@@ -32,7 +31,6 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("===USER===", user);
     if (user && user.id) {
       dispatch(getAllClients());
       dispatch(getUserFiles({ userId: user.id }));
