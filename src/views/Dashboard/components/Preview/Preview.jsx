@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 import { uploadFiles } from "../../../../actions/scaleway";
 import SelectLocation from "../SelectLocation/SelectLocation";
 import MoveToFolder from "../MoveToFolder/MoveToFolder";
+import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
 let documentoPDF;
 
 try {
@@ -48,6 +49,43 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   const [mailModal, setMailModal] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [seeBill, setSeeBill] = useState(false);
+  const [selectedAutomationData, setSelectedAutomationData] = useState(null);
+  const [isModalAutomate, setIsModalAutomate] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // =======================
+  const [typeContentAutomate, setTypeContentAutomate] = useState("");
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setTypeContentAutomate(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+  // =======================
+
+  const handleShowContentAutomate = (type, automationData) => {
+    setIsModalAutomate(false);
+    setTypeContentAutomate(type);
+    setSelectedAutomationData(automationData);
+  };
+
+  const handleCloseContentAutomate = (type) => {
+    setIsModalAutomate(false);
+    setTypeContentAutomate("");
+  };
+
+  // ========================
+
+  const handleSendEmail = async () => {
+    const resp = await dispatch(
+      sendEmail({
+        // id: user.id,
+        email: "info@aythen.com",
+      })
+    );
+    console.log("resp emails", resp);
+  };
 
   const [XMLConfiguration, setXMLConfiguration] = useState({
     filesSource: "/Inicio/",
@@ -131,21 +169,21 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
     {
       icon: stripeIcon,
       click: () => {
-        console.log("Acción de Stripe ejecutada");
+        handleShowContentAutomate("Gmail");
       },
       classOption: styles.bgStripe,
     },
     {
       icon: wsIcon,
       click: () => {
-        console.log("Acción de WhatsApp ejecutada");
+        handleShowContentAutomate("Google Sheets");
       },
       classOption: styles.bgWs,
     },
     {
       icon: gestionaEsPublico,
       click: () => {
-        console.log("Gestión pública ejecutada");
+        handleShowContentAutomate("XML");
       },
       classOption: styles.bgGestiona,
     },
@@ -243,6 +281,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
       console.log(`Setting ${name} to ${newValue}`);
       setUserData({ ...userData, [name]: newValue });
     };
+
     return (
       <div className={styles.detailsContainer}>
         {/* <Button type="white" headerStyle={{ width: "100%" }}>
@@ -365,8 +404,31 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
       </div>
     );
   };
-  const seeBillRef = useRef(); // Referencia al componente SeeBill
+  const [fileUser, setFile] = useState(null); // Para almacenar el archivo PDF subido
+  const seeBillRef = useRef();
 
+  // Manejador para el cambio de archivo
+  const handleFileChangePdf = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile); // Guardar el archivo en el estado
+      handleVisualizar();
+    }
+  };
+
+  // Mostrar el modal y generar el PDF dependiendo del archivo subido
+  const handleVisualizar = () => {
+    setSeeBill(true); // Mostrar el modal
+
+    if (fileUser) {
+      // Si hay un archivo PDF subido, usar ese archivo
+      const fileUrl = URL.createObjectURL(fileUser);
+      seeBillRef.current?.generatePDF(fileUrl); // Generar PDF desde el archivo subido
+    } else {
+      // Si no hay archivo, usar el componente FacturaTemplate
+      seeBillRef.current?.generatePDF(); // Generar PDF desde FacturaTemplate
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.previewSection}>
@@ -384,31 +446,24 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
                 />
               )}
             </div>
-            <div
-              className={styles.visualizar}
-              onClick={() => {
-                setSeeBill(true); // Mostrar el modal
-                setTimeout(() => {
-                  seeBillRef.current?.generatePDF(); // Llamar a la función en el hijo
-                }, 300); // Asegurar que el modal está montado
-              }}
-            >
+            <div className={styles.visualizar} onClick={handleVisualizar}>
               <EyeWhiteIcon />
               Visualizar
             </div>
           </div>
         ) : (
           <div className={styles.emptyPreview}>
-            <span
-              onClick={() => {
-                setSeeBill(true); // Mostrar el modal
-                setTimeout(() => {
-                  seeBillRef.current?.generatePDF(); // Llamar a la función en el hijo
-                }, 300); // Asegurar que el modal está montado
-              }}
-            >
-              Drop your document here
-            </span>
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={handleFileChangePdf}
+            />
+            <span>Drop your document here</span>
+            {fileUser && <p>{fileUser.name}</p>}
+            <div className={styles.visualizar} onClick={handleVisualizar}>
+              <EyeWhiteIcon />
+              Visualizar
+            </div>
           </div>
         )}
       </div>
@@ -420,7 +475,12 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
         />
       )}
       {seeBill && (
-        <SeeBill ref={seeBillRef} document={document} setSeeBill={setSeeBill} />
+        <SeeBill
+          ref={seeBillRef}
+          document={document}
+          setSeeBill={setSeeBill}
+          fileUser={fileUser}
+        />
       )}
 
       <div className={styles.actionsSection}>
@@ -439,6 +499,16 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
           </button>
         </div>
         {options === 0 ? <Details /> : <Actions />}
+        {typeContentAutomate && (
+          <PanelAutomate
+            automationData={selectedAutomationData}
+            typeContent={handleShowContentAutomate}
+            setIsModalAutomate={setIsModalAutomate}
+            close={handleCloseNewClient}
+            type={typeContentAutomate}
+            isAnimating={isAnimating}
+          />
+        )}
       </div>
       {mailModal && (
         <SendEmailModal

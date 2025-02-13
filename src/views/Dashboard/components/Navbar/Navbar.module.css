@@ -42,6 +42,7 @@
   margin: 0;
   padding: 0;
   align-items: center;
+  height: 100%;
 }
 .btnContainerNavbar {
   display: flex;
@@ -104,22 +105,37 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
+  height: 100%;
+  > div {
+    display: flex;
+    /* align-items: center; */
+  }
+  .test {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
 }
 
 .nav {
   cursor: pointer;
   display: flex;
   gap: 30px;
+  height: 100%;
+  display: flex;
+  /* align-items: center; */
 }
 
 .solucionesWrapper {
   position: relative;
   display: inline-block;
+  height: 100%;
 }
 .solucionesHover {
   display: flex;
   gap: 10px;
   align-items: center;
+  height: 100%;
   .icon {
     transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
@@ -138,15 +154,9 @@
   padding: 20px;
   box-sizing: border-box;
   width: 100%;
-  /* max-width: 1100px; */
-
   z-index: 100;
-
   display: none;
-  /* display: grid; */
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-  grid-auto-rows: auto; /* Altura automática de las filas */
-  gap: 20px; /* Espaciado entre elementos */
+
   p {
     margin: 10px 0;
     color: #4f5660;
@@ -156,22 +166,80 @@
     font-weight: 200;
   }
 }
-
-/* Hacerlo responsive */
+.display {
+  display: block;
+}
+.showGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.toggleButton {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  /* display: none; */
+  .icon {
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+  }
+}
+/* Media Queries */
+@media (min-width: 769px) {
+  .solucionesHover:hover + .solutionsContainer,
+  .solucionesWrapper:hover .solutionsContainer {
+    display: grid;
+  }
+}
+/* @media (width<=1000px) {
+  .toggleButton {
+    display: initial;
+  }
+} */
 @media (max-width: 768px) {
-  .solutionsContainer {
-    grid-template-columns: repeat(
-      2,
-      1fr
-    ); /* 2 columnas en pantallas medianas */
+  .showGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .solutionsContainer {
-    grid-template-columns: repeat(1, 1fr); /* 1 columna en pantallas pequeñas */
+  .showGrid {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
+.solucionesHover + .none,
+.solucionesWrapper .none {
+  display: none !important;
+}
+/* @media (max-width: 768px) {
+  .showGrid {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  .showGrid {
+    grid-template-columns: repeat(1, 1fr); 
+  }
+} */
 
 .solucionesHover:hover + .solutionsContainer,
 .solucionesWrapper:hover .solutionsContainer {

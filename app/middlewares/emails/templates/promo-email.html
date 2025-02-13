@@ -3,9 +3,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <title>Aythen Premium</title>
     <style type="text/css">
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
         * {
-            font-family: 'Roboto', sans-serif;
+            /* font-family: 'Roboto', sans-serif; */
+            font-family: "Inter", sans-serif;
         }
+
+        table {
+            margin-top: 40px;
+        }
+
 
         .icon {
             display: flex;
@@ -15,47 +23,95 @@
             gap: 2px;
             color: #10a37f;
             margin: 30px auto;
+
+            img {
+                height: 40px;
+            }
         }
 
-        .title {
-            width: 100%;
+        .title,
+        .subtitleStrong {
+            width: 95%;
             text-align: center;
-            margin: 40px 0px;
+            margin: 40px auto;
+            display: block;
+            font-weight: bold;
+            font-size: 25px;
+
+        }
+
+        .subtitleStrong {
+            font-weight: inherit;
         }
 
         .subtitle {
-            color: #3d413d;
+            color: #000000;
             font-size: 20px;
-            font-weight: bold;
+            font-weight: 300;
+            font-style: italic;
             text-align: center;
             width: 100%;
             display: block;
+        }
 
+        .subtitleBold {
+            color: #000000;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            width: 100%;
+            display: block;
         }
 
         .text {
-            color: rgb(123, 123, 123);
+            color: #676767;
             font-size: 20px;
-            font-weight: 500;
+            font-weight: 400;
             text-align: center;
+            width: 90%;
+            margin: 0 auto;
+
         }
 
         .num {
             background-color: #10a37f;
             color: white;
-            font-size: 20px;
+            font-size: 25px;
             font-weight: bold;
             padding: 10px;
             border-radius: 50%;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .button {
+        .button,
+        .buttonGreen {
             background-color: black;
             color: white;
             font-size: 20px;
             font-weight: bold;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            img {
+                width: 15px;
+            }
+        }
+
+        .buttonGreen {
+            background-color: #10A37F;
+            margin: 10px 0;
+
+            img {
+                width: 18px;
+                transform: rotate(225deg);
+            }
         }
 
         .small {
@@ -80,10 +136,10 @@
             <tbody>
                 <tr>
                     <td>
-                        <table width="100%">
+                        <table width="100%" style="margin: 0; padding: 0;text-align: center;" width="100%">
                             <tr>
                                 <td style="display: flex; align-items: center; justify-content: center;">
-                                    <img width="100" src="https://facturagpt.com/api/user/get-file/icon-gpt.svg">
+                                    <img width="100" src="http://localhost:3006/api/user/get-file/icon-gpt.svg">
                                     <p style="font-size: 50px; font-weight: bold;    color: #10a37f;">
                                         FacturaGPT
                                     </p>
@@ -95,21 +151,27 @@
 
                 <tr>
                     <td>
-                        <table width="100%">
-                            <tr>
-                                <td>
+                        <table width="100%" style="margin: 0; padding: 0;text-align: center;" width="100%">
+                            <tr style="font-size: 50px ;">
+                                <!-- <td>
                                     <span>
                                         Tu facturación
                                     </span>
                                 </td>
-                                <td>
-                                    <img width="200" height="200"
-                                        src="https://facturagpt.com/api/user/get-file/elipse.svg" s
-                                        style="position: absolute; top: 100px; left: 100px;">
+                                <td style="position: relative;">
+                                    <img width="380" src="http://localhost:3006/api/user/get-file/elipse.svg"
+                                        style="position: absolute; top: -25px; left: -30px; ">
                                     <b>
                                         automatizada
                                     </b>
-                                </td>
+                                </td> -->
+                                <div
+                                    style="font-size: 45px; display: flex; align-items: center;gap: 30px; justify-content: center; color: #1D273F;">
+                                    Tu facturación
+                                    <span style="position: relative; font-weight: bold;">automatizada <img width="350"
+                                            src="http://localhost:3006/api/user/get-file/elipse.svg"
+                                            style="position: absolute; top: -25px; left: -19px; "></span>
+                                </div>
                             </tr>
                         </table>
                     </td>
@@ -117,16 +179,16 @@
 
                 <tr>
                     <td>
-                        <table width="100%">
+                        <table width="100%" style="margin-top: 50px;">
                             <tr>
-                                <td style="display: flex; justify-content: center;">
-                                    <b class="subtitle">
+                                <td style="display: flex; justify-content: center; ">
+                                    <span class="subtitle">
                                         ¿Estás perdiendo tiempo con procesos manuales?
-                                    </b>
+                                    </span>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="display: flex; justify-content: center;">
+                                <td style="display: flex; justify-content: center; margin: 30px 0;">
                                     <p class="text">
                                         Con FacturaGPT, automatiza cada paso de tu facturación y optimiza tu negocio
                                         como nunca antes.
@@ -144,25 +206,6 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        <table width="100%">
-                            <tr>
-                                <td>
-                                    <p class="text">
-                                        ¿Estás perdiendo tiempo con procesos manuales?
-                                        Con FacturaGPT, automatiza cada paso de tu facturación y optimiza tu negocio
-                                        como
-                                        nunca antes.
-                                    </p>
-                                    <b class="subtitle">
-                                        ¿Estás listo para simplificar la gestión de tu negocio?
-                                    </b>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
 
                 <tr>
                     <td>
@@ -176,16 +219,16 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <b class="subtitle">
+                                    <span class="title">
                                         Conecta tus documentos y almacena automáticamente los datos de facturación,
                                         clientes y activos.
-                                    </b>
+                                    </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="icon">
-                                        <img src="https://facturagpt.com/api/user/get-file/icon-1.svg">
+                                        <img src="http://localhost:3006/api/user/get-file/icon-1.svg">
 
                                         Entrada
                                     </div>
@@ -215,16 +258,16 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <b class="subtitle">
+                                    <span class="title">
                                         Reconoce, organiza y valida tu facturación
                                         para mantener todo automatizado
-                                    </b>
+                                    </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="icon">
-                                        <img src="https://facturagpt.com/api/user/get-file/icon-2.svg">
+                                        <img src="http://localhost:3006/api/user/get-file/icon-2.svg">
                                         Estructuración
                                     </div>
                                     <p class="text">
@@ -235,8 +278,8 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <img src="https://facturagpt.com/api/user/get-file/factura.png">
-                                    <p>
+                                    <img src="http://localhost:3006/api/user/get-file/factura.png">
+                                    <p class="text">
                                         Configura notificaciones personalizadas para recibir alertas importantes y estar
                                         siempre al día.
                                     </p>
@@ -258,26 +301,27 @@
                             </tr>
                             <tr>
                                 <td style="display: flex; justify-content: center;">
-                                    <b class="title">
+                                    <span class="title">
                                         Conecta con terceros
-                                    </b>
+                                    </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="icon">
-                                        <img src="https://facturagpt.com/api/user/get-file/icon-3.svg">
+                                        <img src="http://localhost:3006/api/user/get-file/icon-3.svg">
                                         Salida
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td
+                                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 10px;">
                                     <p class="text">
                                         Integra herramientas clave como Excel, Google Drive, Microsoft y muchas más para
                                         simplificar y automatizar tus flujos de trabajo.
                                     </p>
-                                    <img width="600" src="https://facturagpt.com/api/user/get-file/logos.png">
+                                    <img width="600" src="http://localhost:3006/api/user/get-file/logos.png">
                                 </td>
                             </tr>
                         </table>
@@ -296,9 +340,9 @@
                             </tr>
                             <tr>
                                 <td style="display: flex; justify-content: center;">
-                                    <b class="subtitle">
+                                    <span class="title">
                                         ¿No encuentras tu automatización ideal?
-                                    </b>
+                                    </span>
                                 </td>
                             </tr>
                             <tr>
@@ -311,8 +355,9 @@
                             </tr>
                             <tr>
                                 <td style="display: flex; justify-content: center;">
-                                    <div class="icon">
+                                    <div class="buttonGreen">
                                         Contáctenos
+                                        <img src="http://localhost:3006/api/user/get-file/icon-arrow.svg">
                                     </div>
                                 </td>
                             </tr>
@@ -340,9 +385,9 @@
                             </tr>
                             <tr>
                                 <td style="display: flex; justify-content: center;">
-                                    <b class="subtitle">
-                                        ¡Chatea con FacturaGPT!
-                                    </b>
+                                    <span class="subtitleStrong">
+                                        <strong> ¡Chatea</strong> con Factura<strong>GPT!</strong>
+                                    </span>
 
                                 </td>
                             </tr>
@@ -364,14 +409,18 @@
                         <table width="100%">
                             <tr>
                                 <td>
-                                    <b class="subtitle">
+                                    <span class="title">
                                         🌟 FacturaGPT, tu asistente inteligente que entiende y mejora tu negocio.
-                                    </b>
+                                    </span>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <img width="600" src="https://facturagpt.com/api/user/get-file/features.png">
+                                <td style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">
+                                    <img width="600" src="http://localhost:3006/api/user/get-file/features.png">
 
                                 </td>
                             </tr>
@@ -387,7 +436,7 @@
                                     <button class="button">
                                         ¡Empieza ahora!
                                         <img width="20"
-                                            src="https://facturagpt.com/api/user/get-file/icon-arrow-bold.svg">
+                                            src="http://localhost:3006/api/user/get-file/icon-arrow-bold.svg">
                                     </button>
                                 </td>
                             </tr>
@@ -421,12 +470,20 @@
                     <td>
                         <table width="100%">
                             <tr>
-                                <td>
-                                    <img width="600" src="https://facturagpt.com/api/user/get-file/pricing.png">
+                                <td style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">
+                                    <img width="600" src="http://localhost:3006/api/user/get-file/pricing.png">
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">
                                     <span class="small">
                                         Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en
                                         cualquier momento.
@@ -443,9 +500,9 @@
                             <tr>
                                 <td>
                                     <div style="display: flex; align-items: center; justify-content: center;">
-                                        💬
-                                        <p>
+                                        <p class="text">
                                             <strong>
+                                                💬
                                                 Pro Tip:
                                             </strong>
                                             De los registros en papel a la excelencia: simplifique las
@@ -456,10 +513,17 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td
+                                    style="display: flex; justify-content: center; align-items: center; margin:40 0 20px 0;">
+                                    <img height="20" src="http://localhost:3006/api/user/get-file/facturaGPTBlack.svg">
+                                </td>
+                            </tr>
+                            <tr>
+
                                 <td>
                                     <div class="footer">
                                         <!-- icon-lock -->
-                                        <img src="https://facturagpt.com/api/user/get-file/icon-lock.svg">
+                                        <img src="http://localhost:3006/api/user/get-file/icon-lock.svg">
                                         <b>
                                             Tu seguridad nos importa
                                         </b>
