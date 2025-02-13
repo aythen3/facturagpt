@@ -260,10 +260,39 @@ const sendNewsletter = async (req, res) => {
   }
 };
 
+// const getFile = async (req, res) => {
+//   try {
+//     // const { file } = req.body
+//     // console.log('file', file)
+//     const { name } = req.params;
+
+//     const filePath = path.join(__dirname, "../../src/assets/email", name);
+
+//     // Determinar el Content-Type basado en la extensión del archivo
+//     const contentType = name.toLowerCase().endsWith(".svg")
+//       ? "image/svg+xml"
+//       : name.toLowerCase().endsWith(".png")
+//         ? "image/png"
+//         : "application/octet-stream";
+
+//     // Leer como Buffer para archivos binarios, como UTF-8 para texto
+//     const fileContent = await fs.readFile(
+//       filePath,
+//       contentType === "image/svg+xml" ? "utf8" : null
+//     );
+
+//     res.setHeader("Content-Type", contentType);
+//     res.setHeader("Cache-Control", "public, max-age=86400"); // Optional: Cache for 24 hours
+
+//     return res.status(200).send(fileContent);
+//   } catch (err) {
+//     console.log("Error in sendFile:", err);
+//     return res.status(500).send("Error in sendFile");
+//   }
+// };
+
 const getFile = async (req, res) => {
   try {
-    // const { file } = req.body
-    // console.log('file', file)
     const { name } = req.params;
 
     const filePath = path.join(__dirname, "../../src/assets/email", name);
@@ -275,14 +304,16 @@ const getFile = async (req, res) => {
         ? "image/png"
         : "application/octet-stream";
 
-    // Leer como Buffer para archivos binarios, como UTF-8 para texto
-    const fileContent = await fs.readFile(
-      filePath,
-      contentType === "image/svg+xml" ? "utf8" : null
-    );
+    // Leer el archivo correctamente según el tipo de contenido
+    let fileContent;
+    if (contentType === "image/svg+xml") {
+      fileContent = await fs.promises.readFile(filePath, "utf8"); // Leer como texto (UTF-8) para SVG
+    } else {
+      fileContent = await fs.promises.readFile(filePath); // Leer como binario para imágenes u otros archivos
+    }
 
     res.setHeader("Content-Type", contentType);
-    res.setHeader("Cache-Control", "public, max-age=86400"); // Optional: Cache for 24 hours
+    res.setHeader("Cache-Control", "public, max-age=86400"); // Cache para 24 horas
 
     return res.status(200).send(fileContent);
   } catch (err) {
@@ -290,7 +321,6 @@ const getFile = async (req, res) => {
     return res.status(500).send("Error in sendFile");
   }
 };
-
 const getEmail = async (req, res) => {
   try {
     const { html } = await getTemplate("promo-email");

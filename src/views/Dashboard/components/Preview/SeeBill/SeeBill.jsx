@@ -3,27 +3,77 @@ import React, {
   useRef,
   forwardRef,
   useImperativeHandle,
+  useEffect,
 } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import styles from "./SeeBill.module.css";
 import HeaderCard from "../../HeaderCard/HeaderCard";
 import FacturaTemplate from "../../FacturaTemplate/FacturaTemplate";
-// import documentoPDF from "../../../assets/pdfs/document.pdf";
+
 let documentoPDF;
 
 try {
   documentoPDF = require("../../../assets/pdfs/document.pdf");
 } catch (error) {
   console.warn("El archivo document.pdf no existe:", error.message);
-  documentoPDF = null; // Valor por defecto si no existe el archivo
+  documentoPDF = null;
 }
 
-const SeeBill = forwardRef(({ document, setSeeBill }, ref) => {
+const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
   const [pdfUrl, setPdfUrl] = useState(null);
-  const contentRef = useRef();
+  const [uploadedPdf, setUploadedPdf] = useState(null);
+  const contentRef = useRef(null); // Aquí inicializamos el ref
 
+  // Manejar la carga de un archivo PDF
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "application/pdf") {
+      const url = URL.createObjectURL(file);
+      setUploadedPdf(url);
+    } else {
+      alert("Por favor, seleccione un archivo PDF válido.");
+    }
+  };
+
+  // Subir el archivo PDF al servidor
+  const uploadPDF = async (pdfBlob) => {
+    const formData = new FormData();
+    formData.append(
+      "file",
+      new File([pdfBlob], "document.pdf", { type: "application/pdf" })
+    );
+
+    const response = await fetch("http://localhost:3006/api/user/upload-pdf", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log("PDF subido exitosamente");
+    } else {
+      alert("Error al guardar el archivo PDF.");
+    }
+  };
+
+  // Generar PDF
   const handleGeneratePDF = async () => {
+    console.log("AAAAAAAAAAAAAA");
+    if (fileUser) {
+      // Si hay un archivo PDF subido, simplemente usalo
+      const fileUrl = URL.createObjectURL(fileUser);
+      setPdfUrl(fileUrl);
+      uploadPDF(fileUser); // Aquí llamamos a la función para subir el archivo PDF
+      return;
+    }
+
+    if (uploadedPdf) {
+      // Si se ha cargado un PDF, simplemente úsalo
+      setPdfUrl(uploadedPdf);
+      return;
+    }
+
+    // Si no hay un PDF cargado, genera uno desde FacturaTemplate
     const element = contentRef.current;
     const canvas = await html2canvas(element, { scale: 2 });
     const imgData = canvas.toDataURL("image/png");
@@ -38,28 +88,20 @@ const SeeBill = forwardRef(({ document, setSeeBill }, ref) => {
     pdf.addImage(imgData, "PNG", 0, 0, imgWidth * ratio, imgHeight * ratio);
 
     const pdfBlob = pdf.output("blob");
-    const formData = new FormData();
-    formData.append(
-      "file",
-      new File([pdfBlob], "document.pdf", { type: "application/pdf" })
-    );
+    setPdfUrl(URL.createObjectURL(pdfBlob)); // Aquí se actualiza la URL del PDF generado
 
-    const response = await fetch("http://localhost:3006/api/user/upload-pdf", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      setPdfUrl(true);
-    } else {
-      alert("Error al guardar el archivo PDF.");
-    }
+    // Llamamos a la función para subir el archivo PDF generado
+    uploadPDF(pdfBlob);
   };
 
   // Exponer la función al componente padre
   useImperativeHandle(ref, () => ({
     generatePDF: handleGeneratePDF,
   }));
+  // Ejecutar handleGeneratePDF cuando el componente se monta
+  useEffect(() => {
+    handleGeneratePDF();
+  }, []); // El array vacío [] asegura que solo se ejecute una vez
 
   return (
     <div className={styles.seeBillContainer}>
@@ -67,30 +109,26 @@ const SeeBill = forwardRef(({ document, setSeeBill }, ref) => {
       <div className={styles.seeBillContent}>
         <HeaderCard title={""} setState={setSeeBill} />
 
-        <div className={styles.none}>
-          <FacturaTemplate ref={contentRef} document={document} />
-        </div>
+        {!fileUser && (
+          <div className={styles.none}>
+            {/* Aquí pasamos contentRef a FacturaTemplate */}
+            <FacturaTemplate ref={contentRef} document={document} />
+          </div>
+        )}
 
-        {/* <button
-          onClick={handleGeneratePDF}
-          style={{
-            marginTop: "20px",
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Crear PDF y Guardar en el Servidor
-        </button> */}
+        <div className={styles.uploadSection}>
+          <span>Drop your document here</span>
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+          />
+        </div>
 
         {pdfUrl ? (
           <div className={styles.pdf}>
-            {!documentoPDF && "No existe ninguna factura"}
             <embed
-              src={`${documentoPDF}#zoom=50`}
+              src={`${pdfUrl}#zoom=50`}
               width="100%"
               height="100%"
               type="application/pdf"
@@ -99,6 +137,10 @@ const SeeBill = forwardRef(({ document, setSeeBill }, ref) => {
         ) : (
           "Loading..."
         )}
+
+        {/* <div className={styles.generateButton}>
+          <button onClick={handleGeneratePDF}>Generar PDF</button>
+        </div> */}
       </div>
     </div>
   );

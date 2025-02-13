@@ -122,13 +122,8 @@
   color: #222222;
   line-height: 1.2;
   padding: 0 5px;
-  width: 100%; /* Ajusta según tu diseño */
-  height: auto; /* Se ajusta automáticamente hasta el límite de líneas */
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 4; /* Número de líneas visibles antes de cortar */
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
+  width: 100%;
+  height: auto;
   margin: 0;
 }
 
