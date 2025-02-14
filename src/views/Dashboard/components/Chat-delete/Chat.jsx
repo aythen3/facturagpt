@@ -120,21 +120,15 @@ const Chat = () => {
             </p> */}
             {message.sender !== "bot" ? (
               <div className={`${styles.message} ${styles.userMessage}`}>
-                <p>
-                {message.text}
-                </p>
-                <div 
-                  className={styles.avatar}
-                />
+                <p>{message.text}</p>
+                <div className={styles.avatar} />
               </div>
             ) : (
-              <div className={`${styles.message} ${styles.botMessage}`} >
-              <div 
-                className={styles.avatar}
-              />
-              {message.text}
-            </div>
-          )}
+              <div className={`${styles.message} ${styles.botMessage}`}>
+                <div className={styles.avatar} />
+                {message.text}
+              </div>
+            )}
           </>
         ))}
       </div>
@@ -142,10 +136,10 @@ const Chat = () => {
         {messages.length === 0 && (
           <div className={styles.buttonContainer}>
             {buttons.map((button, index) => (
-              <button 
-              key={index}
-              onClick={() => alert(2)}
-              // onClick={() => handleSendMessage(button.text)}s
+              <button
+                key={index}
+                onClick={() => alert(2)}
+                // onClick={() => handleSendMessage(button.text)}s
               >
                 <img src={button.img} alt="Icon" />
                 {button.text}
@@ -171,23 +165,20 @@ const Chat = () => {
           </div>
         </div>
         <p className={styles.errorAlert}>
-          FacturaGPT puede cometer errores. Revise la info importante.
+          FacturaGPT puede cometer errores. Revise la información importante.
         </p>
       </div>
     </div>
   );
 };
 
-
-
 const ChatMenu = () => {
   return (
     <div>
       <h1>Chat</h1>
     </div>
-  )
-}
-
+  );
+};
 
 const ChatView = () => {
   // return (
@@ -196,12 +187,11 @@ const ChatView = () => {
   //   </PanelTemplate>
   // );
   return (
-    <div style={{ display: 'flex', alignItems: 'center',  height: '100vh' }}>
+    <div style={{ display: "flex", alignItems: "center", height: "100vh" }}>
       <ChatMenu />
       <Chat />
     </div>
-  )
+  );
 };
-
 
 export default ChatView;

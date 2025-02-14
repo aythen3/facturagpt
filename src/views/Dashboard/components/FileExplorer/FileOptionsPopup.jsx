@@ -1,15 +1,10 @@
+// src/components/Popups/FileOptionsPopup.js
 import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import styles from "./FileExplorer.module.css";
 
-const FileOptionsPopup = ({
-  onClose,
-  style,
-  onDownload,
-  onShare,
-  onDelete,
-  parentRef,
-}) => {
+// 🔹 Componente Base Reutilizable
+const PopupBase = ({ onClose, style, options, parentRef }) => {
   const popupRef = useRef(null);
 
   useEffect(() => {
@@ -25,30 +20,20 @@ const FileOptionsPopup = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [onClose]);
-
-  const options = ["Descargar", "Compartir", "Eliminar"];
+  }, [onClose, parentRef]);
 
   return ReactDOM.createPortal(
     <div ref={popupRef} className={styles.optionsPopup} style={style}>
-      {options.map((option) => (
+      {options.map(({ label, onClick }) => (
         <button
-          key={option}
+          key={label}
           className={styles.optionItem}
           onClick={() => {
-            if (option === "Descargar") {
-              onDownload();
-              onClose();
-            } else if (option === "Compartir") {
-              onShare();
-              onClose();
-            } else if (option === "Eliminar") {
-              onDelete();
-              onClose();
-            }
+            onClick();
+            onClose();
           }}
         >
-          {option}
+          {label}
         </button>
       ))}
     </div>,
@@ -56,4 +41,52 @@ const FileOptionsPopup = ({
   );
 };
 
-export default FileOptionsPopup;
+// 🔹 Componente para Archivos
+export const FileOptionsPopup = ({
+  onClose,
+  style,
+  onDownload,
+  onShare,
+  onDelete,
+  parentRef,
+}) => {
+  const fileOptions = [
+    { label: "Descargar", onClick: onDownload },
+    { label: "Compartir", onClick: onShare },
+    { label: "Eliminar", onClick: onDelete },
+  ];
+
+  return (
+    <PopupBase
+      onClose={onClose}
+      style={style}
+      options={fileOptions}
+      parentRef={parentRef}
+    />
+  );
+};
+
+// 🔹 Componente para Carpetas
+export const FolderOptionsPopup = ({
+  onClose,
+  style,
+  onRename,
+  action,
+  onDelete,
+  parentRef,
+}) => {
+  const folderOptions = [
+    { label: "Renombrar", onClick: onRename },
+    { label: "Eliminar Carpeta", onClick: onDelete },
+    { label: "Añadir Etiqueta", onClick: action },
+  ];
+
+  return (
+    <PopupBase
+      onClose={onClose}
+      style={style}
+      options={folderOptions}
+      parentRef={parentRef}
+    />
+  );
+};

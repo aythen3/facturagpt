@@ -11,6 +11,7 @@ import filterIconGreen from "../../assets/filtersIconBarGreen.svg";
 import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { ReactComponent as HouseContainer } from "../../assets/HouseContainerIcon.svg";
+import { ReactComponent as ArrowRightText } from "../../assets/arrowRightText.svg";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +27,7 @@ import {
   uploadFiles,
 } from "../../../../actions/scaleway";
 import SelectLocation from "../SelectLocation/SelectLocation";
-import FileOptionsPopup from "./FileOptionsPopup";
+import { FileOptionsPopup, FolderOptionsPopup } from "./FileOptionsPopup";
 import { FaUpload } from "react-icons/fa";
 
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
@@ -233,7 +234,10 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           Inicio
         </div> */}
         {pathSegments.length > 0 && (
-          <span className={styles.breadcrumbSeparator}> &gt; </span>
+          <span className={styles.breadcrumbSeparator}>
+            {" "}
+            <ArrowRightText />{" "}
+          </span>
         )}
       </span>,
     ];
@@ -246,12 +250,15 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         <span key={partialPath} className={styles.breadcrumb}>
           <div
             onClick={() => handleBreadcrumbClick(partialPath)}
-            className={styles.breadcrumbButton}
+            className={`${index == pathSegments.length - 1 && styles.finalBreadcrumbButton} ${styles.breadcrumbButton}`}
           >
             {segment}
           </div>
           {index < pathSegments.length - 1 && (
-            <span className={styles.breadcrumbSeparator}> &gt; </span>
+            <span className={styles.breadcrumbSeparator}>
+              {" "}
+              <ArrowRightText />{" "}
+            </span>
           )}
         </span>
       );
@@ -279,14 +286,13 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
   useEffect(() => {
     console.log("userFiles CHANGED", userFiles);
   }, [userFiles]);
-
   const filteredFiles = useMemo(() => {
     if (!userFiles) return [];
 
     if (!userFilters) {
       const lowerSearchTerm = searchTerm.trim().toLowerCase();
 
-      return userFiles.filter((item) => {
+      const result = userFiles.filter((item) => {
         const isFolder = item.Key.endsWith("/");
         const fileName = isFolder
           ? item.Key.split("/").slice(-2, -1)[0]
@@ -317,6 +323,17 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           nameMatches
         );
       });
+
+      //  Ordenar carpetas primero
+      result.sort((a, b) => {
+        const isFolderA = a.Key.endsWith("/");
+        const isFolderB = b.Key.endsWith("/");
+        if (isFolderA && !isFolderB) return -1; //  (Carpeta antes que archivo)
+        if (!isFolderA && isFolderB) return 1; //  (Archivo después de carpeta)
+        return 0; // (Sin cambio si ambos son iguales)
+      });
+
+      return result;
     }
 
     const {
@@ -412,6 +429,15 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
       }
 
       return true;
+    });
+
+    //  Ordenar carpetas primero
+    finalFiltered.sort((a, b) => {
+      const isFolderA = a.Key.endsWith("/");
+      const isFolderB = b.Key.endsWith("/");
+      if (isFolderA && !isFolderB) return -1; //  (Carpeta antes que archivo)
+      if (!isFolderA && isFolderB) return 1; //  (Archivo después de carpeta)
+      return 0; //  (Sin cambio si ambos son iguales)
     });
 
     return finalFiltered;
@@ -525,7 +551,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
   }, []);
 
   return (
-
     <div
       className={styles.container}
       ref={fileExplorerRef}
@@ -540,8 +565,8 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         setSearchTerm={setSearchTerm}
         iconRight={
           userFilters &&
-            Object.keys(userFilters).length > 0 &&
-            userFilters.keyWord !== ""
+          Object.keys(userFilters).length > 0 &&
+          userFilters.keyWord !== ""
             ? filterIconGreen
             : filterIcon
         }
@@ -549,11 +574,19 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         onClickIconRight={() => setIsFilterOpen(true)}
       >
         {userFilters &&
-          Object.keys(userFilters).length > 0 &&
-          userFilters.keyWord !== "" ? (
-          <img src={filterIconGreen} alt="filterIcon" />
+        Object.keys(userFilters).length > 0 &&
+        userFilters.keyWord !== "" ? (
+          <img
+            src={l}
+            alt="filterIcon"
+            className={styles.searchContainerIcon}
+          />
         ) : (
-          <img src={filterIcon} alt="filterIcon" />
+          <img
+            src={l}
+            alt="filterIcon"
+            className={styles.searchContainerIcon}
+          />
         )}
         {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
         {/* </div> */}
@@ -569,21 +602,20 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                 radius="10"
                 ariaLabel="mutating-dots-loading"
               />
+              a
             </div>
           ) : (
-            (filteredFiles.length === 0 && (
-
+            filteredFiles.length === 0 && (
               <div
                 style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}
               >
                 <img src={l} alt="kIcon" />
               </div>
-            )))}
+            )
+          )}
         </div>
       </SearchIconWithIcon>
-
-
       <div className={styles.fileList}>
         {getFilesLoading ? (
           <div className={styles.loaderContainer}>
@@ -647,37 +679,59 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
                     className={styles.fileIcon}
                   />
                   <span className={styles.itemText}>{fileName}</span>
-                  {!isFolder && (
-                    <button
-                      ref={(el) => (optionsButtonRefs.current[index] = el)}
-                      className={styles.moreButton}
-                      aria-label="More options"
-                      onClick={(e) => handleOptionsClick(index, e)}
-                    >
-                      <img src={horizontalDots} alt="horizontalDots" />{" "}
-                    </button>
-                  )}
+
+                  <button
+                    ref={(el) => (optionsButtonRefs.current[index] = el)}
+                    className={styles.moreButton}
+                    aria-label="More options"
+                    onClick={(e) => handleOptionsClick(index, e)}
+                  >
+                    <img src={horizontalDots} alt="horizontalDots" />{" "}
+                  </button>
                 </div>
-                {activePopup === index && !isFolder && (
-                  <FileOptionsPopup
-                    parentRef={optionsButtonRefs.current[index]}
-                    onDownload={() => handleDownload(item)}
-                    onShare={() => handleShare(item)}
-                    onDelete={() => handleDelete(item)}
-                    onClose={() => setActivePopup(null)}
-                    style={{
-                      position: "fixed",
-                      top:
-                        optionsButtonRefs.current[index].getBoundingClientRect()
-                          .top + optionsButtonRefs.current[index].offsetHeight,
-                      left: optionsButtonRefs.current[
-                        index
-                      ].getBoundingClientRect().left,
-                    }}
-                  />
-                )}
+                {activePopup === index &&
+                  (isFolder ? (
+                    <FolderOptionsPopup
+                      parentRef={optionsButtonRefs.current[index]}
+                      onClose={() => setActivePopup(null)}
+                      onRename={() => console.log("renombrar")}
+                      onDelete={() => handleDelete(item)}
+                      action={() => console.log("añadir etiqueta")}
+                      // onClose={() => console.log("cerrar")}
+                      style={{
+                        position: "fixed",
+                        top:
+                          optionsButtonRefs.current[
+                            index
+                          ].getBoundingClientRect().top +
+                          optionsButtonRefs.current[index].offsetHeight,
+                        left: optionsButtonRefs.current[
+                          index
+                        ].getBoundingClientRect().left,
+                      }}
+                    />
+                  ) : (
+                    <FileOptionsPopup
+                      parentRef={optionsButtonRefs.current[index]}
+                      onDownload={() => handleDownload(item)}
+                      onShare={() => handleShare(item)}
+                      onDelete={() => handleDelete(item)}
+                      onClose={() => setActivePopup(null)}
+                      style={{
+                        position: "fixed",
+                        top:
+                          optionsButtonRefs.current[
+                            index
+                          ].getBoundingClientRect().top +
+                          optionsButtonRefs.current[index].offsetHeight,
+                        left: optionsButtonRefs.current[
+                          index
+                        ].getBoundingClientRect().left,
+                      }}
+                    />
+                  ))}
               </div>
-            )
+            );
 
             // {
             //   activePopup === index && !isFolder && (
@@ -699,8 +753,8 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
             //     />
             //   )
             // }
-          }))}
-
+          })
+        )}
 
         {uploadingFilesLoading && (
           <div className={styles.bottomLoaderContainer}>
@@ -728,12 +782,10 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
       {showLocationModal && (
         <SelectLocation onClose={() => setShowLocationModal(false)} />
       )}
-
       <FilesFilterModal
         onClose={() => setIsFilterOpen(false)}
         handleApplyFilters={handleApplyFilters}
         isFilterOpen={isFilterOpen}
-
         setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
         setSelectedCurrency={setSelectedCurrency}
         selectedCurrency={selectedCurrency}
@@ -745,7 +797,6 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           selectedCurrency={selectedCurrency}
         />
       )}
-    </div >
-
+    </div>
   );
 }

@@ -109,7 +109,7 @@ const NewProduct = ({
     <div className={styles.overlay}>
       <div className={styles.bg} onClick={() => setShowNewProduct(false)}></div>
       <div className={styles.newProductContainer}>
-        <ModalTemplate text="Activo" onClick={() => setShowNewProduct(false)}>
+        <ModalTemplate text="Activoa" onClick={() => setShowNewProduct(false)}>
           <div
             className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
           >

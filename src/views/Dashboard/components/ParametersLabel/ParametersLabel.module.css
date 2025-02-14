@@ -51,6 +51,8 @@ input {
   align-items: center;
   box-sizing: border-box;
   cursor: pointer;
+  color: #222222;
+  font-weight: 500;
 }
 .parametersCounter {
   margin: 10px 0;

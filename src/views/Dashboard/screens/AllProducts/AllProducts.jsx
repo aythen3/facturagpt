@@ -286,7 +286,7 @@ const AllProducts = () => {
             tags={tags}
           />
         )}
-        <div className={styles.clientsTable} >
+        <div className={styles.clientsTable}>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -389,6 +389,54 @@ const AllProducts = () => {
             <div className={styles.allProductC}>
               <form className={styles.formAllProduct}>
                 <EditableInput
+                  label={"Nombre completo"}
+                  nameInput={"nombre"}
+                  placeholderInput={clientData.clientName || "yeremi"}
+                  isEditing={inputsEditing.name}
+                  value={clientData.clientName || clientDataInputs.name}
+                  onChange={(e) => {
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      name: e.target.value,
+                    });
+                    handleClientData("clientName", e.target.value);
+                  }}
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      name: !prev.name,
+                    }))
+                  }
+                >
+                  <div
+                    className={`
+                    ${styles.typeClient}
+                    ${
+                      inputsEditing.name
+                        ? styles.typeClientActivate
+                        : styles.typeClientDisabled
+                    }
+                      `}
+                  >
+                    <button
+                      className={selectTypeClient == 0 && styles.selected}
+                      onClick={() => setSelectTypeClient(0)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Proveedor{inputsEditing.name ? "enable" : "disable"}
+                    </button>
+                    <button
+                      className={selectTypeClient == 1 && styles.selected}
+                      onClick={() => setSelectTypeClient(1)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Cliente
+                    </button>
+                  </div>
+                </EditableInput>
+                {/* <EditableInput
                   label={"Nombre"}
                   nameInput={"nombre"}
                   placeholderInput={"Añade un nombre a tu producto"}
@@ -434,7 +482,7 @@ const AllProducts = () => {
                       Producto
                     </button>
                   </div>
-                </EditableInput>
+                </EditableInput> */}
                 <EditableInput
                   label={"Descripción"}
                   nameInput={"description"}

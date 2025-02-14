@@ -53,6 +53,12 @@
 .payInfo {
   display: flex;
   gap: 10px;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #222222;
+  }
 }
 
 .defaultBank {

@@ -316,7 +316,7 @@
   button,
   a {
     font-size: 12px;
-    padding: 12px;
+    padding: 6px;
     border: 1px solid #d9d9d9;
     background-color: #fafafa;
     outline: none;
@@ -337,24 +337,28 @@
     display: flex;
     align-items: center;
     gap: 15px;
+
     font-weight: bold;
   }
   .bgStripe {
     background: linear-gradient(45deg, #5f64f8 0%, #5054d9 100%);
+    justify-content: center;
     img {
-      height: 20px;
+      height: 15px;
     }
   }
-  .bgWs {
-    background: linear-gradient(45deg, #3ad656 0%, #5bf876 100%);
+  .hubspot {
+    background: #ff7a59;
+    justify-content: center;
     img {
-      height: 20px;
+      height: 15px;
     }
   }
   .bgGestiona {
     background: linear-gradient(45deg, #ee7a01 43%, #ffa927 100%);
+    justify-content: center;
     img {
-      height: 20px;
+      height: 15px;
     }
   }
 }
@@ -413,7 +417,7 @@
 }
 
 .containerEditableInput {
-  padding: 0px 10px 10px ;
+  padding: 0px 10px 10px;
   border: 1px solid #ececf1;
   border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -429,4 +433,27 @@
     justify-content: space-between;
     align-items: center;
   }
+}
+.searchContainerIcon {
+  background-color: #ececf1;
+  padding: 4px;
+  border-radius: 4px;
+  height: 10px;
+  width: 10px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  cursor: pointer;
+}
+.searchIconsWrappers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #ececf1;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 3px;
 }

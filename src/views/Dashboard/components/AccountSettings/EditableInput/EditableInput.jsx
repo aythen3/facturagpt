@@ -96,7 +96,7 @@ const EditableInput = ({
             className={styles.textarea} // Agrega estilos específicos si es necesario
           />
         ) : (
-          <div className={styles.typeclient}>
+          <div style={{ display: "flex", gap: "20px", height: "50px" }}>
             {" "}
             <input
               ref={inputRef}
@@ -106,24 +106,27 @@ const EditableInput = ({
               value={newValue}
               onChange={(e) => setNewValue(e.target.value)}
               readOnly={readOnly !== undefined ? readOnly : !editable}
+              className={styles.inputTypeClient}
             />
             {typeclient && (
-              <div className={styles.btnSectionsSelector}>
+              <div
+                className={`${styles.typeClient} ${editable ? styles.typeClientActivate : styles.typeClientDisabled}`}
+              >
                 <button
-                  type="button"
-                  className={`${sectionSelected === 0 ? styles.sectionSelect : ""}`}
+                  className={sectionSelected == 0 && styles.selected}
                   onClick={() => setSectionSelected(0)}
-                  disabled={readOnly !== undefined ? readOnly : !editable}
+                  type="button"
+                  disabled={!editable}
                 >
-                  Servicio
+                  servicio
                 </button>
                 <button
-                  type="button"
-                  className={`${sectionSelected === 1 ? styles.sectionSelect : ""}`}
+                  className={sectionSelected == 1 && styles.selected}
                   onClick={() => setSectionSelected(1)}
-                  disabled={readOnly !== undefined ? readOnly : !editable}
+                  type="button"
+                  disabled={!editable}
                 >
-                  Producto
+                  producto
                 </button>
               </div>
             )}

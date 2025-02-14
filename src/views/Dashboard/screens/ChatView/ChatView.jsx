@@ -39,7 +39,7 @@ import {
   fetchByMenu,
   fetchByChat,
   sendMessage,
-  deleteChat
+  deleteChat,
 } from "@src/actions/chat";
 
 import { clearCurrentChat } from "@src/slices/chatSlices";
@@ -48,44 +48,47 @@ const actions = [
   {
     id: 0,
     img: createBill,
-    text: "Crea una Factura"
+    text: "Crea una Factura",
   },
   {
     id: 1,
     img: analizeBill,
-    text: "Analiza tu facturacion"
+    text: "Analiza tu facturacion",
   },
   {
     id: 2,
     img: askDocument,
-    text: "Pregunta sobre tus documentos"
+    text: "Pregunta sobre tus documentos",
   },
   {
     id: 3,
     img: askClient,
-    text: "Pregunta sobre tus clientes"
+    text: "Pregunta sobre tus clientes",
   },
   {
     id: 4,
     img: askAssets,
-    text: "Pregunta sobre tus activos"
+    text: "Pregunta sobre tus activos",
   },
   {
     id: 5,
     img: askHelp,
-    text: "Pide Ayuda"
+    text: "Pide Ayuda",
   },
 ];
 
 const ChatMenu = ({ id }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { chatList, searchTerm: searchTermState, loading } = useSelector((state) => state.chat);
+  const {
+    chatList,
+    searchTerm: searchTermState,
+    loading,
+  } = useSelector((state) => state.chat);
 
   useEffect(() => {
     dispatch(fetchByMenu({ query: searchTermState }));
   }, [searchTermState, dispatch]);
-
 
   const [chats, setChats] = useState([
     // {
@@ -187,8 +190,6 @@ const ChatMenu = ({ id }) => {
     }
   }, [chatList]);
 
-
-
   const sortChat = Object.groupBy(chats, ({ older }) => older);
 
   const searchInputRef = useRef(null);
@@ -196,10 +197,9 @@ const ChatMenu = ({ id }) => {
 
   const addMessage = () => {
     console.log("addMessage");
-    dispatch(clearCurrentChat())
+    dispatch(clearCurrentChat());
     navigate(`/admin/chat/${uuidv4()}`);
-  }
-
+  };
 
   const [isOpenMenu, setIsOpenMenu] = useState({});
 
@@ -208,7 +208,7 @@ const ChatMenu = ({ id }) => {
     // dispatch(deleteChat({ chatId }));
 
     const resp = await dispatch(deleteChat({ chatId }));
-  }
+  };
 
   return (
     <div className={styles.chatMenu}>
@@ -219,7 +219,7 @@ const ChatMenu = ({ id }) => {
         iconRight={pencilSquareIcon}
         classNameIconRight={styles.searchContainerL}
         onClickIconRight={() => addMessage()}
-      // onClickIconRight={() => setIsFilterOpen(true)}
+        // onClickIconRight={() => setIsFilterOpen(true)}
       >
         <>
           <div
@@ -231,7 +231,6 @@ const ChatMenu = ({ id }) => {
           <div
             style={{ marginLeft: "5px" }}
             className={styles.searchIconsWrappers}
-
           >
             <img src={KIcon} alt="kIcon" />
           </div>
@@ -254,7 +253,6 @@ const ChatMenu = ({ id }) => {
               <h3>{groupTitle}</h3>
               <ul>
                 {chatArray.map((chat) => {
-
                   return (
                     <li
                       key={chat.id}
@@ -263,23 +261,28 @@ const ChatMenu = ({ id }) => {
                     >
                       {chat.name}
                       <div className={styles.chatMenuSettings}>
-                        <button onClick={() => setIsOpenMenu({ ...isOpenMenu, [chat.id]: !isOpenMenu[chat.id] })}>
+                        <button
+                          onClick={() =>
+                            setIsOpenMenu({
+                              ...isOpenMenu,
+                              [chat.id]: !isOpenMenu[chat.id],
+                            })
+                          }
+                        >
                           <DotsOptions className={styles.icon} />
                         </button>
-                        <ul className={isOpenMenu[chat.id] ? styles.active : ""}>
+                        <ul
+                          className={isOpenMenu[chat.id] ? styles.active : ""}
+                        >
                           <li onClick={() => handleDeleteMessage(chat.id)}>
                             Eliminar chat
                           </li>
-                          <li>
-                            Cambiar nombre
-                          </li>
-                          <li>
-                            Fijat chat
-                          </li>
+                          <li>Cambiar nombre</li>
+                          <li>Fijat chat</li>
                         </ul>
                       </div>
                     </li>
-                  )
+                  );
                 })}
               </ul>
             </div>
@@ -317,12 +320,7 @@ const ChatMenu = ({ id }) => {
   );
 };
 
-const ChatBody = ({
-  handleChat,
-  messages,
-  inputValue,
-  setInputValue
-}) => {
+const ChatBody = ({ handleChat, messages, inputValue, setInputValue }) => {
   // const { id } = useParams()
 
   // const navigate = useNavigate();
@@ -331,10 +329,8 @@ const ChatBody = ({
   // const { id } = useParams();
   // const { user, updatingUserLoading } = useSelector((state) => state.user);
 
-
   return (
     <div className={styles.chatContainer}>
-
       <div className={styles.messageContainer}>
         {messages.length === 0 && (
           <>
@@ -410,13 +406,10 @@ const ChatBody = ({
         )}
         {messages.map((message, index) => (
           <>
-
             {message.sender !== "bot" ? (
               <div className={`${styles.message} ${styles.userMessage}`}>
                 <p>{message.text}</p>
-                <div className={styles.avatar}>
-                  {'A'}
-                </div>
+                <div className={styles.avatar}>{"A"}</div>
               </div>
             ) : (
               <div className={`${styles.message} ${styles.botMessage}`}>
@@ -431,10 +424,7 @@ const ChatBody = ({
         {messages.length === 0 && (
           <div className={styles.buttonContainer}>
             {actions.map((action, index) => (
-              <button
-                key={index}
-                onClick={() => handleChat(action?.text)}
-              >
+              <button key={index} onClick={() => handleChat(action?.text)}>
                 <img src={action.img} alt="Icon" />
                 {action.text}
               </button>
@@ -453,23 +443,20 @@ const ChatBody = ({
                 handleChat(inputValue);
               }
             }}
-          // onKeyPress={(e) => {
-          //   if (e.key === "Enter" && !e.shiftKey) {
-          //     e.preventDefault(); // Evita el salto de línea
-          //     // handleSendMessage();
-          //     // handleThinkMessage();
-          //   }
-          // }}
+            // onKeyPress={(e) => {
+            //   if (e.key === "Enter" && !e.shiftKey) {
+            //     e.preventDefault(); // Evita el salto de línea
+            //     // handleSendMessage();
+            //     // handleThinkMessage();
+            //   }
+            // }}
           />
-          <div
-            className={styles.img}
-            onClick={() => handleChat(inputValue)}
-          >
+          <div className={styles.img} onClick={() => handleChat(inputValue)}>
             <img src={arrowUp} alt="Icon" />
           </div>
         </div>
         <p className={styles.errorAlert}>
-          FacturaGPT puede cometer errores. Revise la info importante.
+          FacturaGPT puede cometer errores. Revise la información importante.
         </p>
       </div>
     </div>
@@ -481,14 +468,14 @@ const ChatView = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
   const { currentChat, loading } = useSelector((state) => state.chat);
 
   useEffect(() => {
-    const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const uuidV4Regex =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
     if (!id || !uuidV4Regex.test(id)) {
       const new_id = uuidv4();
@@ -500,7 +487,6 @@ const ChatView = () => {
     }
   }, [id]);
 
-
   useEffect(() => {
     console.log("currentChat!1", currentChat);
     if (currentChat.messages.length > 0) {
@@ -510,12 +496,8 @@ const ChatView = () => {
     }
   }, [currentChat]);
 
-
-
   useEffect(() => {
-
     // const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
     // if (!id || !uuidV4Regex.test(id)) {
     //   const new_id = uuidv4();
     //   console.log("new_id", new_id);
@@ -525,9 +507,6 @@ const ChatView = () => {
     // dispatch(fetchByChat({ chatId: id }));
   }, [id, dispatch]);
 
-
-
-
   // useEffect(() => {
   //   console.log("id", id);
   //   if (!id) {
@@ -535,9 +514,6 @@ const ChatView = () => {
   //     navigate(`/admin/chat/${prev_id}`);
   //   }
   // }, [id]);
-
-
-
 
   // const handleSendMessage = async (text = false) => {
   //   try {
@@ -557,24 +533,22 @@ const ChatView = () => {
 
   // };
 
-
-
   const handleSendMessage = async (text = false) => {
     try {
-
-      const resp = await dispatch(sendMessage({
-        text: text || inputValue,
-        chatId: id
-      }));
+      const resp = await dispatch(
+        sendMessage({
+          text: text || inputValue,
+          chatId: id,
+        })
+      );
 
       const response = resp.payload;
-
 
       // const user = localStorage.getItem("user");
       // const userJson = JSON.parse(user);
       // const token = userJson.accessToken;
 
-      console.log('!WOOORKKK', response)
+      console.log("!WOOORKKK", response);
       // const response = await fetch(`https://facturagpt.com/api/chat/${id}/messages`, {
       //   method: 'POST',
       //   body: JSON.stringify({
@@ -632,23 +606,18 @@ const ChatView = () => {
       //   }
       // })
 
-
-
-
-
       console.log("responsechat!!", response);
       if (text || inputValue.trim()) {
         setMessages([
-          ...messages, 
+          ...messages,
           { text: text || inputValue, sender: "user" },
-          { text: response.botMessage.text, sender: "bot" }
+          { text: response.botMessage.text, sender: "bot" },
         ]);
         setInputValue("");
       }
     } catch (error) {
       console.log("error handleSendMessage", error);
     }
-
   };
 
   const handleSendBotMessage = () => {
@@ -666,45 +635,24 @@ const ChatView = () => {
     <PanelTemplate>
       {/* <Chat /> */}
       <div style={{ display: "flex", flexDirection: "column" }}>
-
-        <button onClick={handleSendBotMessage}>
-          Enviar mensaje del bot
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Enviar grafica del bot
-        </button>
+        <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>
+        <button onClick={handleSendBotMessage}>Enviar grafica del bot</button>
         <button onClick={handleSendBotMessage}>
           Enviar code block del bot
         </button>
         <button onClick={handleSendBotMessage}>
           Enviar formulario del bot
         </button>
-        <button onClick={handleSendBotMessage}>
-          Crear conexion del bot
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Crear  conocimiento
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Crear calculadora
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Insertar cliente
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Insertar producto
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Insertar activo
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Nueva factura
-        </button>
+        <button onClick={handleSendBotMessage}>Crear conexion del bot</button>
+        <button onClick={handleSendBotMessage}>Crear conocimiento</button>
+        <button onClick={handleSendBotMessage}>Crear calculadora</button>
+        <button onClick={handleSendBotMessage}>Insertar cliente</button>
+        <button onClick={handleSendBotMessage}>Insertar producto</button>
+        <button onClick={handleSendBotMessage}>Insertar activo</button>
+        <button onClick={handleSendBotMessage}>Nueva factura</button>
       </div>
       <div className={styles.chatSection}>
-        <ChatMenu
-          id={id}
-        />
+        <ChatMenu id={id} />
         <ChatBody
           handleChat={handleChat}
           messages={messages}
