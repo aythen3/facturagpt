@@ -133,6 +133,7 @@ const AllProducts = () => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
   };
   const [editingIndices, setEditingIndices] = useState([]);
+
   const [clientDataInputs, setClientDataInputs] = useState({
     name: "",
     desc: "",
@@ -166,6 +167,8 @@ const AllProducts = () => {
     // dispatch(setClient(client));
     setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
   };
+
+  const [creatingBill, setCreatingBill] = useState(true);
   return (
     <PanelTemplate>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
@@ -206,7 +209,10 @@ const AllProducts = () => {
           <div className={styles.searchContainer}>
             <button
               className={`${styles.addButton} ${styles.btnNewClient}`}
-              onClick={() => setShowNewClient(true)}
+              onClick={() => {
+                setCreatingBill(true);
+                setShowNewClient(true);
+              }}
             >
               <img src={plusIcon} alt="Nuevo cliente" />
               Nuevo Activo
@@ -275,6 +281,7 @@ const AllProducts = () => {
             selectedTags={selectedTags}
             setTags={setTags}
             tags={tags}
+            creatingBill={creatingBill}
           />
         )}
         {showAddTags && (
@@ -286,7 +293,7 @@ const AllProducts = () => {
             tags={tags}
           />
         )}
-        <div className={styles.clientsTable} >
+        <div className={styles.clientsTable}>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -389,6 +396,54 @@ const AllProducts = () => {
             <div className={styles.allProductC}>
               <form className={styles.formAllProduct}>
                 <EditableInput
+                  label={"Nombre completo"}
+                  nameInput={"nombre"}
+                  placeholderInput={clientData.clientName || "yeremi"}
+                  isEditing={inputsEditing.name}
+                  value={clientData.clientName || clientDataInputs.name}
+                  onChange={(e) => {
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      name: e.target.value,
+                    });
+                    handleClientData("clientName", e.target.value);
+                  }}
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      name: !prev.name,
+                    }))
+                  }
+                >
+                  <div
+                    className={`
+                    ${styles.typeClient}
+                    ${
+                      inputsEditing.name
+                        ? styles.typeClientActivate
+                        : styles.typeClientDisabled
+                    }
+                      `}
+                  >
+                    <button
+                      className={selectTypeClient == 0 && styles.selected}
+                      onClick={() => setSelectTypeClient(0)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Proveedor{inputsEditing.name ? "enable" : "disable"}
+                    </button>
+                    <button
+                      className={selectTypeClient == 1 && styles.selected}
+                      onClick={() => setSelectTypeClient(1)}
+                      type="button"
+                      disabled={!inputsEditing.name}
+                    >
+                      Cliente
+                    </button>
+                  </div>
+                </EditableInput>
+                {/* <EditableInput
                   label={"Nombre"}
                   nameInput={"nombre"}
                   placeholderInput={"Añade un nombre a tu producto"}
@@ -434,7 +489,7 @@ const AllProducts = () => {
                       Producto
                     </button>
                   </div>
-                </EditableInput>
+                </EditableInput> */}
                 <EditableInput
                   label={"Descripción"}
                   nameInput={"description"}
@@ -457,6 +512,7 @@ const AllProducts = () => {
                     }))
                   }
                 />
+
                 <label>
                   <p>Proveedor por defecto</p>
                   <div>

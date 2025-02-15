@@ -93,7 +93,7 @@
     height: 50px;
     background-color: #f4f4f4;
     display: flex;
-    padding-right: 8px;
+    padding-right: 4px;
     left: 50%;
     margin: 0 auto;
     justify-content: center;
@@ -118,7 +118,11 @@
       border: none;
       padding-left: 20px;
       resize: none;
+      font-family: "Inter", serif;
       padding-top: 15px;
+    }
+    textarea::placeholder {
+      font-family: "Inter", serif;
     }
 
     .img {
@@ -219,14 +223,12 @@
   /* Mensajes del bot a la izquierda */
 }
 
-
-
-
 .chatMenu {
   background: #f5f5f5;
   height: 100%;
   width: 100%;
-  max-width: 200px;
+  /* max-width: 200px; */
+  min-width: 200px;
 
   .chatsContainer {
     height: 85%;

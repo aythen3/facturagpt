@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./NewProduct.module.css";
 import PayMethod from "../PayMethod/PayMethod";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
-import EditableInput from "../../components/AccountSettings/EditableInput/EditableInput";
+import EditableInput from "../../screens/Clients/EditableInput/EditableInput";
 import ProfileModalTemplate from "../ProfileModalTemplate/ProfileModalTemplate";
 import { ParametersLabel } from "../ParametersLabel/ParametersLabel";
 import Button from "../Button/Button";
@@ -82,6 +82,7 @@ const NewProduct = ({
   selectedTags,
   setTags,
   tags,
+  creatingBill,
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [userData, setUserData] = useState();
@@ -105,6 +106,36 @@ const NewProduct = ({
     parameters: [],
   });
 
+  const [inputsEditing, setInputsEditing] = useState({
+    name: false,
+    description: false,
+    unitPrice: false,
+    sku: false,
+    baseImport: false,
+    retailPrice: false,
+    parameters: false,
+  });
+
+  useEffect(() => {
+    const handleEditAll = (value) => {
+      setInputsEditing((prevState) => {
+        const updatedState = {};
+        Object.keys(prevState).forEach((key) => {
+          if (Array.isArray(prevState[key])) {
+            updatedState[key] = prevState[key];
+          } else {
+            updatedState[key] = value;
+          }
+        });
+        console.log("Nuevo estado:", updatedState);
+        return updatedState;
+      });
+    };
+
+    handleEditAll(creatingBill);
+  }, [creatingBill]);
+
+  const [selectTypeClient, setSelectTypeClient] = useState(0);
   return (
     <div className={styles.overlay}>
       <div className={styles.bg} onClick={() => setShowNewProduct(false)}></div>
@@ -116,31 +147,128 @@ const NewProduct = ({
             <form className={styles.formNewProduct}>
               <div className={styles.label}>
                 {" "}
-                <div className={styles.typeClient}>
-                  <EditableInput
+                <div>
+                  {/* <EditableInput
                     label={"Nombre"}
                     value={userData?.nombre}
                     name="nombre"
                     onSave={handleChange}
                     placeholder="Añade un nombre a tu producto"
                     typeclient={true}
+                    readOnly={true}
+                  /> */}
+
+                  <EditableInput
+                    label={"Nombre "}
+                    nameInput={"nombre"}
+                    placeholderInput={userData?.nombre || "yeremi"}
+                    isEditing={inputsEditing.name}
+                    value={userData?.nombre || clientDataInputs.name}
+                    onChange={(e) => {
+                      setClientDataInputs({
+                        ...clientDataInputs,
+                        name: e.target.value,
+                      });
+                      // handleClientData("clientName", e.target.value);
+                    }}
+                    onClick={() =>
+                      setInputsEditing((prev) => ({
+                        ...prev,
+                        name: !prev.name,
+                      }))
+                    }
+                  >
+                    <div
+                      className={`
+                    ${styles.typeClient}
+                    ${
+                      inputsEditing.name
+                        ? styles.typeClientActivate
+                        : styles.typeClientDisabled
+                    }
+                      `}
+                    >
+                      <button
+                        className={selectTypeClient == 0 && styles.selected}
+                        onClick={() => setSelectTypeClient(0)}
+                        type="button"
+                        disabled={!inputsEditing.name}
+                      >
+                        Servicio
+                      </button>
+                      <button
+                        className={selectTypeClient == 1 && styles.selected}
+                        onClick={() => setSelectTypeClient(1)}
+                        type="button"
+                        disabled={!inputsEditing.name}
+                      >
+                        Producto
+                      </button>
+                      <button
+                        className={selectTypeClient == 3 && styles.selected}
+                        onClick={() => setSelectTypeClient(3)}
+                        type="button"
+                        disabled={!inputsEditing.name}
+                      >
+                        Suscripción
+                      </button>
+                    </div>
+                  </EditableInput>
+                  <EditableInput
+                    type="categories"
+                    options={false}
+                    label={"Categoría"}
+                    nameInput={"category"}
+                    isEditing={inputsEditing.name}
+                    value={userData?.category || clientDataInputs.category}
+                    onChange={(e) => {
+                      setClientDataInputs({
+                        ...clientDataInputs,
+                        category: e.target.value,
+                      });
+                      // handleClientData("category", e.target.value);
+                    }}
                   />
                 </div>
               </div>
               <div className={styles.label}>
-                <EditableInput
+                {/* <EditableInput
                   label={"Descripcion"}
                   value={userData?.description}
                   name="description"
                   onSave={handleChange}
                   placeholder="Especifica las características del artículo"
                   isTextarea={true}
+                /> */}
+
+                <EditableInput
+                  label={"Descripcion"}
+                  nameInput={"descripcion"}
+                  placeholderInput={
+                    "Especifica las características del artículo"
+                  }
+                  type="textarea"
+                  isEditing={inputsEditing.description}
+                  value={userData?.description || clientDataInputs.description}
+                  onChange={(e) => {
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      description: e.target.value,
+                    });
+                    // handleClientData("description", e.target.value);
+                  }}
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      description: !prev.description,
+                    }))
+                  }
                 />
               </div>
               <div className={styles.label}>
                 <div>
                   {" "}
-                  <EditableInput
+                  {/* <EditableInput
                     label={"Base Importe"}
                     value={userData?.baseImport}
                     name="baseImport"
@@ -149,18 +277,50 @@ const NewProduct = ({
                     options={true}
                     readOnly={false}
                     info="Precio de venta al público sin IVA"
+                  /> */}
+                  <EditableInput
+                    label={"Base Importe"}
+                    nameInput={"baseImport"}
+                    placeholderInput={"0.0"}
+                    isEditing={inputsEditing.baseImport}
+                    value={userData?.baseImport || clientDataInputs.baseImport}
+                    rigthText="Precio de venta al público sin IVA"
+                    onChange={(e) => {
+                      setClientDataInputs({
+                        ...clientDataInputs,
+                        baseImport: e.target.value,
+                      });
+                      // handleClientData("baseImport", e.target.value);
+                    }}
+                    onClick={() =>
+                      setInputsEditing((prev) => ({
+                        ...prev,
+                        baseImport: !prev.baseImport,
+                      }))
+                    }
                   />
                 </div>
                 <div className={styles.baseImportContainer}>
                   <EditableInput
                     label={"Base Importe"}
-                    value={userData?.baseImport}
-                    name="baseImport"
-                    onSave={handleChange}
-                    placeholder="Base Importe"
-                    options={true}
-                    readOnly={false}
-                    info="Precio de venta al público sin IVA"
+                    nameInput={"baseImport"}
+                    placeholderInput={"0.0"}
+                    isEditing={inputsEditing.baseImport}
+                    rigthText="Precio de venta al público sin IVA"
+                    value={userData?.baseImport || clientDataInputs.baseImport}
+                    onChange={(e) => {
+                      setClientDataInputs({
+                        ...clientDataInputs,
+                        baseImport: e.target.value,
+                      });
+                      // handleClientData("baseImport", e.target.value);
+                    }}
+                    onClick={() =>
+                      setInputsEditing((prev) => ({
+                        ...prev,
+                        baseImport: !prev.baseImport,
+                      }))
+                    }
                   />
                   <ButtonLabelCommponentWithButton
                     textHeader={"Impuesto"}
@@ -206,17 +366,39 @@ const NewProduct = ({
                 <div className={styles.label}>
                   {" "}
                   <div className={styles.row}>
-                    <EditableInput
+                    {/* <EditableInput
                       label={"# (SKU)"}
                       value={userData?.sku}
                       name="sku"
                       onSave={handleChange}
                       placeholder="#"
+                    /> */}
+
+                    <EditableInput
+                      label={"# (SKU)"}
+                      nameInput={"sku"}
+                      placeholderInput={"#"}
+                      isEditing={inputsEditing.sku}
+                      value={userData?.sku || clientDataInputs.sku}
+                      onChange={(e) => {
+                        setClientDataInputs({
+                          ...clientDataInputs,
+                          sku: e.target.value,
+                        });
+                        // handleClientData("sku", e.target.value);
+                      }}
+                      onClick={() =>
+                        setInputsEditing((prev) => ({
+                          ...prev,
+                          sku: !prev.sku,
+                        }))
+                      }
                     />
-                    <LabelCommponent
+
+                    <ButtonLabelCommponentWithButton
                       textHeader={"Tienda o Almacén"}
                       buttonText={"Añadir Ubicación"}
-                      placeholder={"Almacen"}
+                      placeholder={"Almacén"}
                     />
                   </div>
                 </div>
@@ -234,7 +416,7 @@ const NewProduct = ({
                 <div className={styles.label}>
                   {" "}
                   <div className={styles.productsCategory}>
-                    <div className={styles.column}>
+                    {/* <div className={styles.column}>
                       <ButtonLabelCommponentWithoutButton
                         textHeader={"Categoria"}
                       >
@@ -258,8 +440,8 @@ const NewProduct = ({
                           selectedOption={userData?.productsCategory}
                         />
                       </ButtonLabelCommponentWithoutButton>
-                    </div>
-                    <div className={styles.column}>
+                    </div> */}
+                    {/* <div className={styles.column}>
                       <ButtonLabelCommponentWithoutButton
                         textHeader={"Asiento Contable Relacionado"}
                       >
@@ -297,7 +479,7 @@ const NewProduct = ({
                           className={styles.acr}
                         />
                       </ButtonLabelCommponentWithoutButton>
-                    </div>
+                    </div> */}
                     <div className={styles.column}>
                       <ButtonLabelCommponentWithButton
                         textHeader={"Retención"}

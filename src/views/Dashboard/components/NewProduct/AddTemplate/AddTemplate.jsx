@@ -47,7 +47,7 @@ const AddTemplate = ({ textButton, setState, state = [] }) => {
               <th>Previo Unitario (PVP)</th>
               <th>SKU</th>
               <th>Impuesto</th>
-              <th>Acciones</th>
+              <th className={styles.small}>Acciones</th>
             </tr>
           </thead>
           <tbody className={styles.bodyAddTemplate}>
@@ -111,7 +111,7 @@ const AddTemplate = ({ textButton, setState, state = [] }) => {
                     placeholder="21.00%"
                   />
                 </td>
-                <td>
+                <td className={styles.small}>
                   <div className={styles.optionsContainer}>
                     <div
                       onClick={() => handleEditToggle(item.id)}

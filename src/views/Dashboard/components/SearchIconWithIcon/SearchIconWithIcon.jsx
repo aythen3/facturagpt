@@ -9,9 +9,11 @@ const SearchIconWithIcon = ({
   iconRight,
   classNameIconRight,
   onClickIconRight,
+  placeholder = "Buscar",
+  stylesComponent = {},
 }) => {
   return (
-    <div className={styles.searchContainer}>
+    <div className={styles.searchContainer} style={{ ...stylesComponent }}>
       <div className={styles.searchInputWrapper}>
         <div className={styles.searchIcon}>
           <img src={searchMagnify} alt="searchMagnify" />
@@ -19,7 +21,7 @@ const SearchIconWithIcon = ({
         <input
           ref={searchInputRef}
           type="text"
-          placeholder="Buscar"
+          placeholder={placeholder}
           className={styles.searchInput}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

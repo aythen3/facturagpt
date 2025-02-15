@@ -1,9 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 .labelEditableInput {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  font-family: "Inter", sans-serif;
+
   p {
     margin: 0;
+    color: #222222;
   }
 
   .row {
@@ -31,6 +37,7 @@
     background-color: #f4f4f4;
     padding: 12px;
     box-sizing: border-box;
+    font-family: "Inter", sans-serif;
   }
 
   .button {
@@ -38,6 +45,7 @@
     background-color: transparent;
     text-decoration: underline;
     font-weight: 600;
+    color: #18181b;
   }
   input,
   textarea {
@@ -49,8 +57,17 @@
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
   }
+  input::placeholder,
+  select::placeholder,
+  option::placeholder,
+  input::placeholder,
+  select::placeholder,
+  option::placeholder,
+  input::placeholder,
+  select::placeholder {
+    color: #757575;
+  }
 }
-
 .phoneContainer {
   width: 100%;
   display: flex;
