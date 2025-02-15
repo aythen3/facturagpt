@@ -25,6 +25,7 @@
   transform: scale(1);
   animation: scaleUp 300ms ease-out forwards;
   font-family: "Inter", sans-serif;
+  overflow: hidden;
 }
 
 .scaleDown {

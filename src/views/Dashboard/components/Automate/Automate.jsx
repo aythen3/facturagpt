@@ -142,11 +142,11 @@ const Automate = ({
                   return (
                     <CardAutomate
                       fullContent={true}
-                      type={filteredAutomation.type}
+                      type={filteredAutomation?.type}
                       typeContent={typeContent}
                       key={card.id}
-                      name={filteredAutomation.automateName}
-                      image={filteredAutomation.image}
+                      name={filteredAutomation?.automateName}
+                      image={filteredAutomation?.image}
                       contactType={
                         card?.automationData?.type === "Gmail"
                           ? card?.automationData?.selectedEmailConnection
