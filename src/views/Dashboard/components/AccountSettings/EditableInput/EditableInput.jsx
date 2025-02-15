@@ -110,13 +110,13 @@ const EditableInput = ({
             />
             {typeclient && (
               <div
-                className={`${styles.typeClient} ${editable ? styles.typeClientActivate : styles.typeClientDisabled}`}
+                className={`${styles.typeClient} ${readOnly ? styles.typeClientActivate : styles.typeClientDisabled}`}
               >
                 <button
                   className={sectionSelected == 0 && styles.selected}
                   onClick={() => setSectionSelected(0)}
                   type="button"
-                  disabled={!editable}
+                  disabled={readOnly}
                 >
                   servicio
                 </button>
@@ -124,7 +124,7 @@ const EditableInput = ({
                   className={sectionSelected == 1 && styles.selected}
                   onClick={() => setSectionSelected(1)}
                   type="button"
-                  disabled={!editable}
+                  disabled={readOnly}
                 >
                   producto
                 </button>

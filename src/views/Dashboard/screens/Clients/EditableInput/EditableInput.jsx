@@ -25,6 +25,22 @@ const PhoneNumberInput = ({ isEditing, onDelete, onChange }) => {
     </div>
   );
 };
+const Categories = ({ onChange, isEditing }) => {
+  return (
+    <div>
+      <select onChange={onChange} disabled={!isEditing}>
+        <option value="34">España, (+34)</option>
+        <option value="1">Estados Unidos, (+1)</option>
+        <option value="52">México, (+52)</option>
+        <option value="54">Argentina, (+54)</option>
+        <option value="55">Brasil, (+55)</option>
+        <option value="44">Reino Unido, (+44)</option>
+        <option value="33">Francia, (+33)</option>
+        <option value="49">Alemania, (+49)</option>
+      </select>
+    </div>
+  );
+};
 
 const EditableInput = ({
   label,
@@ -38,6 +54,7 @@ const EditableInput = ({
   onChange,
   options = true,
   phone = false,
+  rigthText,
 }) => {
   const [phoneInputs, setPhoneInputs] = useState([]);
 
@@ -67,7 +84,10 @@ const EditableInput = ({
   return (
     <label className={styles.labelEditableInput}>
       <div className={styles.row}>
-        <p>{label}</p>
+        <p>
+          <strong>{label} </strong>
+          {rigthText && rigthText}
+        </p>
         <div style={{ display: "flex", gap: "10px" }}>
           {options && (
             <div className={styles.button} onClick={toggleEditing}>
@@ -88,7 +108,9 @@ const EditableInput = ({
           flexDirection: phone && "column",
         }}
       >
-        {phone === true ? (
+        {type === "categories" ? (
+          <Categories onChange={onChange} isEditing={isEditing} />
+        ) : phone === true ? (
           <>
             {phoneInputs.map((input, index) => (
               <PhoneNumberInput

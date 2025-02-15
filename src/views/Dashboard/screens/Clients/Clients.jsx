@@ -389,12 +389,6 @@ const Clients = () => {
     }));
   };
 
-  const [isParametersVisible, setIsParametersVisible] = useState(true);
-
-  const toggleParametersVisibility = () => {
-    setIsParametersVisible((prev) => !prev);
-  };
-
   const [editingIndices, setEditingIndices] = useState([]);
   console.log("DATAAAAA--------", clientData);
   const handleAddBillingDetail = () => {

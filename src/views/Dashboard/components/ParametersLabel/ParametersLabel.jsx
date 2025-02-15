@@ -65,7 +65,8 @@ export const ParametersLabel = ({
                     alignItems: "center",
                   }}
                 >
-                  <GrabIcon /> <p>Parametro {index + 1}</p>
+                  <GrabIcon /> <ArrowDown className={`${styles.icon}`} />
+                  <p>Parametro {index + 1}</p>
                 </div>
                 <div
                   style={{

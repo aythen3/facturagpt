@@ -33,6 +33,7 @@ import searchMagnify from "../../assets/searchMagnify.svg";
 import pencilSquareIcon from "../../assets/pencilSquareIcon.svg";
 import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon.jsx";
 import KIcon from "../../assets/KIcon.svg";
+import l from "../../assets/lIcon.svg";
 import winIcon from "../../assets/winIcon.svg";
 
 import {
@@ -77,7 +78,7 @@ const actions = [
   },
 ];
 
-const ChatMenu = ({ id }) => {
+const ChatMenu = ({ id, leftWidth }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -211,7 +212,7 @@ const ChatMenu = ({ id }) => {
   };
 
   return (
-    <div className={styles.chatMenu}>
+    <div className={styles.chatMenu} style={{ maxWidth: `${leftWidth}px` }}>
       <SearchIconWithIcon
         ref={searchInputRef}
         searchTerm={searchTerm}
@@ -222,7 +223,7 @@ const ChatMenu = ({ id }) => {
         // onClickIconRight={() => setIsFilterOpen(true)}
       >
         <>
-          <div
+          {/* <div
             style={{ marginLeft: "5px" }}
             className={styles.searchIconsWrappers}
           >
@@ -233,6 +234,12 @@ const ChatMenu = ({ id }) => {
             className={styles.searchIconsWrappers}
           >
             <img src={KIcon} alt="kIcon" />
+          </div> */}
+          <div
+            style={{ marginLeft: "5px" }}
+            className={styles.searchIconsWrappers}
+          >
+            <img src={l} alt="kIcon" />
           </div>
         </>
       </SearchIconWithIcon>
@@ -630,7 +637,41 @@ const ChatView = () => {
     // handleSendMessage(actions[id].text);
     handleSendMessage(text);
   };
+  const [leftWidth, setLeftWidth] = useState(50); // Establecer el ancho inicial al 50%
+  const isResizing = useRef(false); // Para detectar cuando el usuario está arrastrando
+  const startX = useRef(0); // Almacenar la posición inicial del ratón
 
+  // Lógica de redimensionamiento
+  const handleMouseDown = (e) => {
+    isResizing.current = true;
+    startX.current = e.clientX;
+    // Cambiar el cursor a 'ew-resize' durante el redimensionamiento
+    document.body.style.cursor = "ew-resize";
+    // Deshabilitar la selección de texto mientras se está redimensionando
+    document.body.style.userSelect = "none";
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isResizing.current) return;
+
+    const offset = e.clientX - startX.current; // Calculamos el desplazamiento
+    const newWidth = leftWidth + (offset / window.innerWidth) * 2000; // Ajustamos el ancho en porcentaje
+
+    if (newWidth > 200 && newWidth < 700) {
+      setLeftWidth(newWidth); // Actualizamos el ancho solo si está dentro de los límites
+    }
+  };
+
+  const handleMouseUp = () => {
+    isResizing.current = false;
+    // Restaurar el cursor y la selección de texto
+    document.body.style.cursor = "auto";
+    document.body.style.userSelect = "auto";
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
   return (
     <PanelTemplate>
       {/* <Chat /> */}
@@ -652,7 +693,11 @@ const ChatView = () => {
         <button onClick={handleSendBotMessage}>Nueva factura</button>
       </div>
       <div className={styles.chatSection}>
-        <ChatMenu id={id} />
+        <ChatMenu id={id} leftWidth={leftWidth} />
+        <div
+          style={{ height: "100%", width: "8px" }}
+          onMouseDown={handleMouseDown}
+        ></div>
         <ChatBody
           handleChat={handleChat}
           messages={messages}

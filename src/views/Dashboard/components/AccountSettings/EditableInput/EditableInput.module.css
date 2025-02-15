@@ -95,6 +95,16 @@
   select::placeholder {
     color: #757575; /* Color rojo para texto deshabilitado */
   }
+  input::placeholder,
+  select::placeholder,
+  option::placeholder,
+  input::placeholder,
+  select::placeholder,
+  option::placeholder,
+  input::placeholder,
+  select::placeholder {
+    color: #757575; /* Color rojo para texto deshabilitado */
+  }
 
   input,
   select,

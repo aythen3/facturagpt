@@ -133,6 +133,7 @@ const AllProducts = () => {
     return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
   };
   const [editingIndices, setEditingIndices] = useState([]);
+
   const [clientDataInputs, setClientDataInputs] = useState({
     name: "",
     desc: "",
@@ -166,6 +167,8 @@ const AllProducts = () => {
     // dispatch(setClient(client));
     setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
   };
+
+  const [creatingBill, setCreatingBill] = useState(true);
   return (
     <PanelTemplate>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
@@ -206,7 +209,10 @@ const AllProducts = () => {
           <div className={styles.searchContainer}>
             <button
               className={`${styles.addButton} ${styles.btnNewClient}`}
-              onClick={() => setShowNewClient(true)}
+              onClick={() => {
+                setCreatingBill(true);
+                setShowNewClient(true);
+              }}
             >
               <img src={plusIcon} alt="Nuevo cliente" />
               Nuevo Activo
@@ -275,6 +281,7 @@ const AllProducts = () => {
             selectedTags={selectedTags}
             setTags={setTags}
             tags={tags}
+            creatingBill={creatingBill}
           />
         )}
         {showAddTags && (
@@ -505,6 +512,7 @@ const AllProducts = () => {
                     }))
                   }
                 />
+
                 <label>
                   <p>Proveedor por defecto</p>
                   <div>

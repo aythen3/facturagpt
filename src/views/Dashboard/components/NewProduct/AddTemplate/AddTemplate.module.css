@@ -1,5 +1,9 @@
 .AddTemplateContainer {
-  margin-top: 30px;
+  /* margin-top: 30px; */
+  .small {
+    min-width: 10px;
+    max-width: fit-content;
+  }
 }
 .nameArticle {
   display: flex;
@@ -19,6 +23,12 @@
   width: 100%;
   overflow-x: auto;
   box-sizing: border-box;
+  table {
+    width: 100%;
+    th {
+      font-size: 12px;
+    }
+  }
 }
 .bodyAddTemplate {
   input {

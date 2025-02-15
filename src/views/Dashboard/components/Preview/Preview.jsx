@@ -462,6 +462,11 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   };
   const [fileUser, setFile] = useState(null); // Para almacenar el archivo PDF subido
   const seeBillRef = useRef();
+  const fileInputRef = useRef(null);
+
+  const handleClick = () => {
+    fileInputRef.current.click();
+  };
 
   // Manejador para el cambio de archivo
   const handleFileChangePdf = (e) => {
@@ -475,16 +480,17 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   // Mostrar el modal y generar el PDF dependiendo del archivo subido
   const handleVisualizar = () => {
     setSeeBill(true); // Mostrar el modal
-
     if (fileUser) {
       // Si hay un archivo PDF subido, usar ese archivo
       const fileUrl = URL.createObjectURL(fileUser);
       seeBillRef.current?.generatePDF(fileUrl); // Generar PDF desde el archivo subido
     } else {
       // Si no hay archivo, usar el componente FacturaTemplate
+      console.log("desde preview");
       seeBillRef.current?.generatePDF(); // Generar PDF desde FacturaTemplate
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.previewSection}>
@@ -508,18 +514,19 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
             </div>
           </div>
         ) : (
-          <div className={styles.emptyPreview}>
+          <div className={styles.emptyPreview} onClick={handleClick}>
             <input
               type="file"
               accept="application/pdf"
+              ref={fileInputRef} // Usando useRef para referenciar el input
               onChange={handleFileChangePdf}
+              style={{ display: "none" }} // Oculta el input
             />
             <span>Drop your document here</span>
-            {fileUser && <p>{fileUser.name}</p>}
-            <div className={styles.visualizar} onClick={handleVisualizar}>
+            {/* <div className={styles.visualizar} onClick={handleVisualizar}>
               <EyeWhiteIcon />
-              Visualizar
-            </div>
+              {documentoPDF ? "Visualizar" : "Crear PDF"}
+            </div> */}
           </div>
         )}
       </div>
