@@ -141,7 +141,7 @@ const SendEmailModal = ({
             Cancelar
           </Button>
           <Button>Enviar</Button>
-          <Button>Aceptar</Button>
+          {/* <Button>Aceptar</Button> */}
         </HeaderCard>
         {/* <header className={styles.sendEmailHeader}>
           <Button

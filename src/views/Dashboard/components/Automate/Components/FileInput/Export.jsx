@@ -1,0 +1,277 @@
+
+import React, { useState } from "react";
+
+import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
+
+import styles from "./FileInput.module.css";
+
+import { ReactComponent as ArrowSquare } from "../../../../assets/whiteArrowSquareIn.svg";
+import { ReactComponent as GrayChevron } from "../../../../assets/grayChevron.svg";
+import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
+import { ReactComponent as WhiteClock } from "../../../../assets/whiteClock.svg";
+
+import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
+
+import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
+import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
+import InputComponent from "../../../InputComponent/InputComponent";
+import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
+
+import Advertency from "../Advertency/Advertency";
+
+
+const Export = ({
+    handleConfigurationChange,
+    configuration
+}) => {
+
+
+    
+    const [showContent, setShowContent] = useState({
+        info2: false,
+    });
+
+    // const [configuration, setConfiguration] = useState({
+    //     addedRemitents: [],
+    // });
+
+    return (
+        <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+            <div
+                className={styles.infoContainerWrapper}
+                onClick={() =>
+                    setShowContent({ ...showContent, info2: !showContent.info2 })
+                }
+            >
+                <GrayChevron />
+                <div className={styles.infoContainer}>
+                    <div>Selecciona la información a extraer</div>
+                    <span>
+                        Aplica filtros avanzados para procesar solo los datos que
+                        realmente importan.
+                    </span>
+                </div>
+            </div>
+            <div
+                className={`${styles.contentContainer} ${showContent.info2 ? styles.active : styles.disabled}`}
+            >
+                <div className={styles.contentInput}>
+                    <p className={styles.titleContentInput}>Remitentes</p>
+
+                    <AddEmailsInput
+                        addedEmails={configuration.addedRemitents || []}
+                        setAddedEmails={(value) =>
+                            handleConfigurationChange("addedRemitents", value)
+                        }
+                        placeholder="ejemplo@email.com"
+                    />
+                    <CheckboxWithText
+                        color="#10A37F"
+                        marginTop="10px"
+                        state={configuration.includeAllRemitents || false}
+                        setState={(value) =>
+                            handleConfigurationChange("includeAllRemitents", value)
+                        }
+                        text="Incluir todos los remitentes"
+                    />
+                </div>
+
+                <div className={styles.contentInput}>
+                    <p className={styles.titleContentInput}>Asunto Contiene</p>
+
+                    <InputComponent
+                        value={configuration.subjectKeyWords}
+                        setValue={(value) =>
+                            handleConfigurationChange("subjectKeyWords", value)
+                        }
+                        placeholder="Palabras clave separadas por coma"
+                        typeInput="text"
+                    />
+
+                    <CheckboxWithText
+                        marginTop="10px"
+                        color="#10A37F"
+                        state={configuration.subjectExactMatch || false}
+                        setState={(value) =>
+                            handleConfigurationChange("subjectExactMatch", value)
+                        }
+                        text="Match exacto"
+                    />
+                </div>
+
+                <div className={styles.contentInput}>
+                    <p className={styles.titleContentInput}>Mensaje Contiene</p>
+                    <InputComponent
+                        value={configuration.bodyKeyWords}
+                        setValue={(value) =>
+                            handleConfigurationChange("bodyKeyWords", value)
+                        }
+                        placeholder="Palabras clave separadas por coma"
+                        typeInput="text"
+                    />
+
+                    <CheckboxWithText
+                        color="#10A37F"
+                        marginTop="10px"
+                        state={configuration.bodyExactMatch || false}
+                        setState={(value) =>
+                            handleConfigurationChange("bodyExactMatch", value)
+                        }
+                        text="Match exacto"
+                    />
+                </div>
+
+                <div className={styles.contentInput}>
+                    <p className={styles.titleContentInput}>Tipos de Archivo</p>
+
+                    <CheckboxWithText
+                        marginTop="10px"
+                        color="#10A37F"
+                        state={configuration.attachmentExactMatch || false}
+                        setState={(value) =>
+                            handleConfigurationChange("attachmentExactMatch", value)
+                        }
+                        text="Incluir todos los tipos de archivos"
+                    />
+                    <div className={styles.cardTypesContainer}>
+                        {(configuration.selectedTypes || []).map((type) => (
+                            <div className={styles.singleTypeCard} key={type}>
+                                <span>{type}</span>
+                                <div
+                                    onClick={() =>
+                                        handleConfigurationChange(
+                                            "selectedTypes",
+                                            (configuration.selectedTypes || []).filter(
+                                                (option) => option !== type
+                                            )
+                                        )
+                                    }
+                                    className={styles.minusIcon}
+                                >
+                                    <img src={minusIcon} alt="minusIcon" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <CustomDropdown
+                        options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
+                        selectedOption={configuration.selectedTypes || []}
+                        height="31px"
+                        textStyles={{
+                            fontWeight: 300,
+                            color: "#1E0045",
+                            fontSize: "13px",
+                            marginLeft: "6px",
+                            userSelect: "none",
+                        }}
+                        setSelectedOption={(selected) =>
+                            handleConfigurationChange(
+                                "selectedTypes",
+                                configuration.selectedTypes?.includes(selected)
+                                    ? configuration.selectedTypes.filter(
+                                        (option) => option !== selected
+                                    )
+                                    : [...(configuration.selectedTypes || []), selected]
+                            )
+                        }
+                    />
+                    <Advertency
+                        text={
+                            "Si el correo no tiene archivos adjuntos no se guardará ninguna factura"
+                        }
+                    />
+                </div>
+
+                <CustomAutomationsWrapper Icon={<WhiteText />}>
+                    <div className={styles.infoContainerWrapper}>
+                        <div
+                            className={styles.infoContainer}
+                            onClick={() =>
+                                setShowContent({ ...showContent, info5: !showContent.info5 })
+                            }
+                        >
+                            <div>Renombra automáticamente tus archivos</div>
+                            <span>
+                                Configura nombres claros y personalizados para mantener todo
+                                organizado.
+                            </span>
+                        </div>
+                        <OptionsSwitchComponent
+                            border={"none"}
+                            marginLeft={"auto"}
+                            isChecked={configuration.renameFiles || false}
+                            setIsChecked={(value) =>
+                                handleConfigurationChange("renameFiles", value)
+                            }
+                        />
+                    </div>
+                    <div
+                        className={`${styles.contentContainer} ${configuration.renameFiles ? styles.active : styles.disabled}`}
+                    >
+                        <InputComponent
+                            placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
+                            typeInput="text"
+                            value={configuration.fileName || ""}
+                            setValue={(value) => handleConfigurationChange("fileName", value)}
+                        />
+                    </div>
+                </CustomAutomationsWrapper>
+
+
+                <CustomAutomationsWrapper Icon={<WhiteClock />}>
+                    <div className={styles.infoContainerWrapper}>
+                        <div
+                            className={styles.infoContainer}
+                            onClick={() =>
+                                setShowContent({ ...showContent, info3: !showContent.info3 })
+                            }
+                        >
+                            <div>
+                                Selecciona la frecuencia del tiempo que se ejecutará la acción
+                            </div>
+                            <span>
+                                Si no se marca esta opción se ejecutara siempre y de forma
+                                inmediata
+                            </span>
+                        </div>
+
+                        <OptionsSwitchComponent
+                            border={"none"}
+                            marginLeft={"auto"}
+                            isChecked={configuration.actionFrequency || false}
+                            setIsChecked={(value) =>
+                                handleConfigurationChange("actionFrequency", value)
+                            }
+                        />
+                    </div>
+                    <div
+                        className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
+                    >
+                        <CustomDropdown
+                            options={["Imediatamente", "5 Minutos", "10 Minutos"]}
+                            selectedOption={configuration.selectedActionFrequency || []}
+                            height="31px"
+                            textStyles={{
+                                fontWeight: 300,
+                                color: "#1E0045",
+                                fontSize: "13px",
+                                marginLeft: "6px",
+                                userSelect: "none",
+                            }}
+                            setSelectedOption={(selected) =>
+                                handleConfigurationChange("selectedActionFrequency", selected)
+                            }
+                        />
+                    </div>
+                </CustomAutomationsWrapper>
+            </div>
+
+
+
+
+        </CustomAutomationsWrapper>
+
+    )
+}
+
+export default Export;
