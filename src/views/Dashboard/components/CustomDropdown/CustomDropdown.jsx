@@ -24,7 +24,10 @@ const CustomDropdown = ({
     marginLeft: "6px",
     userSelect: "none",
   },
+  multioption,
   customStyles,
+  stateStripe,
+  biggerWidth,
 }) => {
   const { t } = useTranslation("dashboard");
   const dropdownRef = useRef(null);
@@ -52,6 +55,15 @@ const CustomDropdown = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  const colorMap = {
+    Pagado: "#009F7A",
+    Pendiente: "#FF9D00",
+    Incumplido: "#FF5500",
+    Vencido: "#C5221F",
+    Anulado: "#8A0300",
+  };
+
+  const [selectedColor, setSelectedColor] = useState("#009F7A");
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -59,7 +71,11 @@ const CustomDropdown = ({
       ref={dropdownRef}
     >
       <div
-        style={{ height, borderRadius }}
+        style={{
+          height,
+          borderRadius,
+          background: stateStripe && "transparent",
+        }}
         className={`${emailsDropdown ? styles.emailsFilterSort : styles.filterSort} ${!editable && styles.disabledBtn} ${customStyles}`}
         onClick={(e) => {
           e.stopPropagation();
@@ -67,7 +83,7 @@ const CustomDropdown = ({
           handleToggle(e);
         }}
       >
-        <div style={textStyles}>
+        <div style={{ textStyles, color: stateStripe && selectedColor }}>
           {Array.isArray(selectedOption) && selectedOption.length > 0 ? (
             selectedOption.join(", ")
           ) : Array.isArray(selectedOption) && selectedOption.length === 0 ? (
@@ -83,7 +99,7 @@ const CustomDropdown = ({
         {editable && (
           <FaChevronDown
             className={styles.chevronIcon}
-            color="#71717A"
+            color={stateStripe ? selectedColor : "#71717A"}
             style={{
               transform: isOpen ? "rotate(180deg)" : "",
               transition: "transform 0.3s ease-in-out",
@@ -91,34 +107,50 @@ const CustomDropdown = ({
           />
         )}
       </div>
-
       {isOpen && (
-        <div className={styles.dropdownOptions}>
-          {options.map((option, index) => (
-            <div
-              key={index}
-              style={{
-                color: textStyles.color,
-                fontWeight: textStyles.fontWeight,
-              }}
-              className={styles.dropdownOption}
-              onClick={() =>
-                handleOptionClick(hasObject ? option.value : option)
-              }
-            >
-              {option == "es" ? (
-                <img src={spanish_flag} />
-              ) : option == "en" ? (
-                <img src={english_flag} />
-              ) : hasObject ? (
-                option.label
-              ) : (
-                option
-              )}
-
-              {/* {hasObject ? option.label : option} */}
-            </div>
-          ))}
+        <div
+          className={styles.dropdownOptions}
+          style={{ width: biggerWidth && "150%" }}
+        >
+          {multioption
+            ? options.map((category, index) => (
+                <div key={index}>
+                  {/* Título de la subcategoría */}
+                  <div className={styles.subcategoryTitle}>
+                    {category.title}
+                  </div>
+                  {/* Opciones de la subcategoría */}
+                  {category.items.map((item, subIndex) => (
+                    <div
+                      key={subIndex}
+                      style={{
+                        color: textStyles.color,
+                        fontWeight: textStyles.fontWeight,
+                      }}
+                      className={styles.dropdownOption}
+                      onClick={() => handleOptionClick(item.value)}
+                    >
+                      {item.label}
+                    </div>
+                  ))}
+                </div>
+              ))
+            : options.map((option, index) => (
+                <div
+                  key={index}
+                  style={{
+                    fontWeight: textStyles.fontWeight,
+                    color: stateStripe ? colorMap[option] : textStyles.color,
+                  }}
+                  className={styles.dropdownOption}
+                  onClick={() => {
+                    handleOptionClick(hasObject ? option.value : option);
+                    setSelectedColor(colorMap[option]);
+                  }}
+                >
+                  {hasObject ? option.label : option}
+                </div>
+              ))}
         </div>
       )}
     </div>

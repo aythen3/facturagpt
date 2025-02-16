@@ -18,7 +18,10 @@ const EditableRow = ({
         {hasButton && (
           <Button
             type="white"
-            headerStyle={{ padding: "8px 4px", fontSize: "13px" }}
+            headerStyle={{
+              padding: "2px 4px",
+              fontSize: "13px",
+            }}
             action={action}
           >
             {buttonLabel}

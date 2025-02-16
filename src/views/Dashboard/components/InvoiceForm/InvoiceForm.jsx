@@ -32,6 +32,7 @@ export default function InvoiceForm({
   handleNoteBlur,
   isEditingNote,
   handleEditNote,
+  customStyles = {},
 }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Factura");
@@ -44,7 +45,7 @@ export default function InvoiceForm({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={customStyles}>
       <header className={styles.header}>
         <div className={styles.titleWrapper}>
           <div className={styles.titleContent}>
@@ -61,12 +62,54 @@ export default function InvoiceForm({
             <CustomDropdown
               customStyles={styles.transparent}
               hasObject={true}
+              biggerWidth={true}
               options={[
-                { value: "facturaemitida", label: "Factura Emitida" },
-                { value: "facturaemitida", label: "Factura Emitida" },
-                { value: "facturaemitida", label: "Factura Emitida" },
-                { value: "facturaemitida", label: "Factura Emitida" },
-                { value: "facturaemitida", label: "Factura Emitida" },
+                {
+                  value: "facturaordinaria",
+                  label: (
+                    <div className={styles.facturaContainer}>
+                      <p>Factura Ordinaria</p>
+                      <span>
+                        La más común, refleja una operación de venta o servicio.
+                      </span>
+                    </div>
+                  ),
+                },
+                {
+                  value: "facturasimplificada",
+                  label: (
+                    <div className={styles.facturaContainer}>
+                      <p>Factura Simplificada</p>
+                      <span>
+                        Usada en operaciones de bajo importe (tickets de caja)
+                      </span>
+                    </div>
+                  ),
+                },
+                {
+                  value: "facturarectificativa",
+                  label: (
+                    <div className={styles.facturaContainer}>
+                      <p>Factura Rectificativa</p>
+                      <span>
+                        Corrige errores o realiza devoluciones sobre facturas
+                        previas.
+                      </span>
+                    </div>
+                  ),
+                },
+                {
+                  value: "facturarecapitulativa",
+                  label: (
+                    <div className={styles.facturaContainer}>
+                      <p>Factura Recapitulativa </p>
+                      <span>
+                        Agrupa varias operaciones de un mismo cliente en un
+                        período.
+                      </span>
+                    </div>
+                  ),
+                },
               ]}
             />
           </div>
@@ -90,40 +133,58 @@ export default function InvoiceForm({
                   <img src={AiIcon2} alt="Icono" height={"15px"} />
                 </>
               }
+              multioption={true}
               options={[
                 {
-                  value: "Identificación del Activo",
-                  label: "Identificación del Activo",
+                  title: "Ingreso",
+                  items: [
+                    {
+                      value: "Ventas de Productos",
+                      label: "Ventas de Productos",
+                    },
+                    {
+                      value: "Servicios",
+                      label: "Servicios",
+                    },
+                    {
+                      value: "Ingresos Recurrentes",
+                      label: "Ingresos Recurrentes",
+                    },
+                    { value: "Otros Ingresos", label: "Otros Ingresos" },
+                  ],
                 },
                 {
-                  value: "Clasificación del Activo",
-                  label: "Clasificación del Activo",
-                },
-                {
-                  value: "Información Financiera",
-                  label: "Información Financiera",
-                },
-                { value: "Mantenimiento", label: "Mantenimiento" },
-                { value: "Operaciones", label: "Operaciones" },
-                {
-                  value: "Gestión de Inventarios",
-                  label: "Gestión de Inventarios",
-                },
-                {
-                  value: "Riesgos y Cumplimiento",
-                  label: "Riesgos y Cumplimiento",
-                },
-                {
-                  value: "Datos IoT y Monitorización",
-                  label: "Datos IoT y Monitorización",
-                },
-                {
-                  value: "Retiro o Sustitución",
-                  label: "Retiro o Sustitución",
-                },
-                {
-                  value: "Indicadores Clave (KPIs)",
-                  label: "Indicadores Clave (KPIs)",
+                  title: "Gasto",
+                  items: [
+                    {
+                      value: "Operativos",
+                      label: "Operativos",
+                    },
+                    {
+                      value: "Administrativos",
+                      label: "Administrativos",
+                    },
+                    {
+                      value: "Comerciales",
+                      label: "Comerciales",
+                    },
+                    {
+                      value: "Financieros",
+                      label: "Financieros",
+                    },
+                    {
+                      value: "Personales",
+                      label: "Personales",
+                    },
+                    {
+                      value: "Infraestructura",
+                      label: "Infraestructura",
+                    },
+                    {
+                      value: "Otro Gastos",
+                      label: "Otro Gastos",
+                    },
+                  ],
                 },
               ]}
             />

@@ -8,7 +8,7 @@
   margin: 0 auto;
   padding: 20px 10px 0 10px;
   font-family: "Inter", sans-serif;
-  max-height: 100vh;
+  /* max-height: 100vh; */
   overflow-y: auto;
   box-sizing: border-box;
   -ms-overflow-style: none;
@@ -128,12 +128,14 @@
   color: #084437;
   width: 100%;
   border-radius: 8px;
-  padding: 2px 8px;
+  padding: 6px;
   border: none;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
+  background-color: #f4f4f4;
+  outline: none;
 }
 
 .title::placeholder {
@@ -172,6 +174,14 @@
   }
 }
 
+.facturaContainer {
+  p {
+    font-size: 12px;
+  }
+  span {
+    font-size: 9px;
+  }
+}
 /* 
 .saveButton {
   background-color: #11a380;

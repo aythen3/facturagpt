@@ -59,6 +59,16 @@
     justify-content: space-between;
     color: #222222;
   }
+  input,
+  select,
+  option {
+    outline: none;
+    border: none;
+    background-color: #f4f4f4;
+    color: #757575;
+    padding: 12px;
+    box-sizing: border-box;
+  }
 }
 
 .defaultBank {

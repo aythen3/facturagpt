@@ -108,8 +108,8 @@ export default function FloatingMenu({
       text: "Nueva Factura",
       action: () => {
         navigate("/admin/panel");
-        // setShowNewBill(true);
-        // setIsOpen(false);
+        setShowNewBill(true);
+        setIsOpen(false);
       },
     },
     {
@@ -128,7 +128,7 @@ export default function FloatingMenu({
         setIsOpen(false);
       },
     },
- 
+
     // {
     //   icon: <NewAsset />,
     //   text: "Nuevo Activo",
@@ -155,14 +155,12 @@ export default function FloatingMenu({
     //   text: "ChatGPT",
     //   action: () => navigate("/admin/chat"), // Cambia a la ruta deseada
     // },
-    
+
     // {
     //   icon: <CameraIcon />,
     //   text: "Hacer una Foto",
     //   action: () => console.log("Hacer una Foto clicked"),
     // },
-  
-
   ];
   if (isMobile) {
     menuItems.push({

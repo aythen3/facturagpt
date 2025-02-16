@@ -40,3 +40,9 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.buttonTemplateGray {
+  background-color: #6f6f81;
+  border: 1px solid #6f6f81;
+  color: #ffffff;
+}

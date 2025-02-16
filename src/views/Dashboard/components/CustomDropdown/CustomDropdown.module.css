@@ -89,3 +89,10 @@
 .disabledBtn {
   background-color: transparent;
 }
+.subcategoryTitle {
+  font-size: 13px;
+  padding: 6px;
+  color: #222222;
+  font-weight: 700;
+  cursor: initial;
+}

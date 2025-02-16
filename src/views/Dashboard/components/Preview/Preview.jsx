@@ -34,6 +34,8 @@ import SelectLocation from "../SelectLocation/SelectLocation";
 import MoveToFolder from "../MoveToFolder/MoveToFolder";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
 import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
+import CustomDropdown from "../CustomDropdown/CustomDropdown";
+import { ReactComponent as StripeText } from "../../assets/stripePurple.svg";
 let documentoPDF;
 
 try {
@@ -51,7 +53,12 @@ const ButtonActionsWithText = ({ children, classStyle, click }) => {
   );
 };
 
-const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
+const DocumentPreview = ({
+  document,
+  companyInfo,
+  handleAddNote,
+  customStyles,
+}) => {
   const [options, setOptions] = useState(0);
   const [showMovetoFolder, setShowMovetoFolder] = useState(false);
   const [mailModal, setMailModal] = useState(false);
@@ -337,6 +344,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
       console.log(`Setting ${name} to ${newValue}`);
       setUserData({ ...userData, [name]: newValue });
     };
+    const [stateStripe, setStateStripe] = useState("Pagado");
 
     return (
       <div className={styles.detailsContainer}>
@@ -346,27 +354,40 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
         <div className={styles.detailsContent}>
           <div className={styles.containerEditableInput}>
             <div className={styles.state}>
-              <p>Estado</p>
-              <div>
-                Stripe
-                <select>
-                  <option value="0">Pagado</option>
-                  <option value="1">Pagado</option>
-                </select>
+              <p>Estado:</p>
+              <div className={styles.stateStripeContainer}>
+                <StripeText />
+                <CustomDropdown
+                  editable={true}
+                  editing={true}
+                  options={[
+                    "Pagado",
+                    "Pendiente",
+                    "Incumplido",
+                    "Vencido",
+                    "Anulado",
+                  ]}
+                  stateStripe={true}
+                  selectedOption={stateStripe}
+                  setSelectedOption={(option) => {
+                    console.log("optionooooooooooooooooo", option);
+                    setStateStripe(option);
+                  }}
+                />
               </div>
             </div>
 
             <EditableRow label="Subtotal" />
             <EditableRow
               label="Descuento"
-              buttonLabel="Añadir"
+              buttonLabel="Añadir Descuento"
               action={() => setShowDiscountModal(true)}
               hasButton
               hasPercentage="10%"
             />
             <EditableRow
               label="Impuesto"
-              buttonLabel="Añadir"
+              buttonLabel="Añadir Impuesto"
               action={() => setShowTaxModal(true)}
               hasButton
               hasPercentage="21%"
@@ -492,7 +513,7 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={customStyles}>
       <div className={styles.previewSection}>
         {documentoPDF ? (
           <div className={styles.documentWrapper}>
