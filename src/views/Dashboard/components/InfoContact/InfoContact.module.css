@@ -92,6 +92,9 @@
     font-weight: 400;
     color: #717171;
   }
+  input {
+    background-color: #f4f4f4;
+  }
 }
 
 .detailContentColumn {

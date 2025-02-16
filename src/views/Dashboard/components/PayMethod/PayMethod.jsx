@@ -3,14 +3,18 @@ import styles from "./PayMethod.module.css";
 import { ReactComponent as Minus } from "../../assets/minus.svg";
 
 const PayMethod = ({ method, onChange }) => {
+  const handleInputChange = (key, value) => {
+    onChange(key, value); // Asegúrate de pasar correctamente el key y el value
+  };
+  console.log("methooooood", method);
   return (
     <div className={styles.payMethodContainer}>
       <div className={styles.payInfo}>
         <div>
           <span>Banco</span>
           <select
-            value={method?.bank || ""}
-            onChange={(e) => onChange("bank", e.target.value)}
+            value={method?.banco || ""}
+            onChange={(e) => handleInputChange("banco", e.target.value)}
           >
             <option value="BBVA">BBVA</option>
             <option value="Santander">Santander</option>
@@ -22,16 +26,16 @@ const PayMethod = ({ method, onChange }) => {
           <span>Número de cuenta</span>
           <input
             type="text"
-            value={method?.accountNumber || ""}
-            onChange={(e) => onChange("accountNumber", e.target.value)}
+            value={method?.numeroCuenta || ""}
+            onChange={(e) => handleInputChange("numeroCuenta", e.target.value)}
           />
         </div>
         <div>
           <span>SWIFT-BIC</span>
           <input
             type="text"
-            value={method?.swift || ""}
-            onChange={(e) => onChange("swift", e.target.value)}
+            value={method?.swiftBic || ""}
+            onChange={(e) => handleInputChange("swiftBic", e.target.value)}
           />
         </div>
         <div>
@@ -39,15 +43,15 @@ const PayMethod = ({ method, onChange }) => {
           <input
             type="text"
             value={method?.routingNumber || ""}
-            onChange={(e) => onChange("routingNumber", e.target.value)}
+            onChange={(e) => handleInputChange("routingNumber", e.target.value)}
           />
         </div>
         <div>
           <span>Moneda</span>
           <input
             type="text"
-            value={method?.currency || ""}
-            onChange={(e) => onChange("currency", e.target.value)}
+            value={method?.moneda || ""}
+            onChange={(e) => handleInputChange("moneda", e.target.value)}
           />
         </div>
       </div>
@@ -56,7 +60,7 @@ const PayMethod = ({ method, onChange }) => {
           <input
             type="checkbox"
             checked={method?.default || false}
-            onChange={(e) => onChange("default", e.target.checked)}
+            onChange={(e) => handleInputChange("default", e.target.checked)}
           />
           <p>Banco predeterminado</p>
         </div>

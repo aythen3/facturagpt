@@ -232,7 +232,7 @@
 
   .chatsContainer {
     height: 85%;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     padding: 10px;
     box-sizing: border-box;
 
@@ -320,7 +320,12 @@
 
   .chatMenuSettings {
     position: relative;
-
+    button {
+      background-color: transparent;
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
     ul {
       flex-direction: column;
       gap: 10px;
@@ -332,7 +337,7 @@
       max-width: 200px;
       width: 200px;
       /* height: 100%; */
-      top: -10px;
+      top: 23px;
       z-index: 999;
       background: red;
       display: none;

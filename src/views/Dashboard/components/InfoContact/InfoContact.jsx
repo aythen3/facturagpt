@@ -5,6 +5,7 @@ import PayMethod from "../PayMethod/PayMethod";
 import { ReactComponent as ImageEmpty } from "../../assets/ImageEmpty.svg";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import DetailsBillInputs from "./DetailsBillInputs/DetailsBillInputs";
+import CustomDropdown from "../CustomDropdown/CustomDropdown";
 const InfoContact = () => {
   const inputRefs = useRef({});
   const [sectionSelected, setSectionSelected] = useState(0);
@@ -60,26 +61,15 @@ const InfoContact = () => {
       }
     });
   };
-
   const handlePaymentMethodChange = (index, key, value) => {
+    console.log(value);
     setFieldValues((prev) => {
-      const updatedPaymentMethods = [...prev.paymentMethods];
-
-      if (key === "default" && value === true) {
-        // Si se está estableciendo un nuevo método por defecto, actualizar todos los demás a false
-        updatedPaymentMethods.forEach((method, i) => {
-          if (i !== index) {
-            method.default = false;
-          }
-        });
-      }
-
-      updatedPaymentMethods[index] = {
-        ...updatedPaymentMethods[index],
-        [key]: value,
+      return {
+        ...prev,
+        paymentMethods: prev.paymentMethods.map((method, i) =>
+          i === index ? { ...method, [key]: value } : method
+        ),
       };
-
-      return { ...prev, paymentMethods: updatedPaymentMethods };
     });
   };
 
@@ -296,19 +286,23 @@ const InfoContact = () => {
                   <div className={styles.phoneContainer}>
                     {fieldValues.phoneNumber.map((phone, index) => (
                       <div key={index} className={styles.phoneRow}>
-                        <select
-                          value={phone.countryCode}
-                          onChange={(e) =>
-                            handleChange(index, "countryCode", e.target.value)
+                        <CustomDropdown
+                          editable={true}
+                          setSelectedOption={(value) =>
+                            handleChange(index, "countryCode", value)
                           }
-                          className={styles.select}
-                        >
-                          <option value="+1">+1 (EE.UU.)</option>
-                          <option value="+44">+44 (Reino Unido)</option>
-                          <option value="+34">+34 (España)</option>
-                          <option value="+52">+52 (México)</option>
-                          <option value="+57">+57 (Colombia)</option>
-                        </select>
+                          editing={true}
+                          hasObject={true}
+                          options={[
+                            { value: "+34", label: "Spain (+34)" },
+                            { value: "+1", label: "United States (+1)" },
+                            { value: "+44", label: "United Kingdom (+44)" },
+                            { value: "+52", label: "Mexico (+52)" },
+                            { value: "+91", label: "India (+91)" },
+                          ]}
+                          selectedOption={phone.countryCode}
+                        />
+
                         <input
                           type="text"
                           placeholder="Número de teléfono"

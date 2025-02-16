@@ -11,7 +11,7 @@ const Button = ({
     <button
       onClick={action}
       type="button"
-      className={`${styles.buttonTemplate} ${type == "green" && styles.buttonTemplateGreen} ${type == "white" && styles.buttonTemplateWhite} ${type == "discard" && styles.buttonTemplateDiscard} `}
+      className={`${styles.buttonTemplate} ${type == "green" && styles.buttonTemplateGreen} ${type == "white" && styles.buttonTemplateWhite} ${type == "gray" && styles.buttonTemplateGray}  ${type == "discard" && styles.buttonTemplateDiscard} `}
       style={headerStyle}
       disabled={disabledOption}
     >

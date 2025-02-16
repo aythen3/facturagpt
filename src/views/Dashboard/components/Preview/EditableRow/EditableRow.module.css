@@ -1,14 +1,10 @@
 .editableRow {
-  >div {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    /* display: flex; */
+  > div {
+    display: flex;
     justify-content: end;
     align-items: center;
     gap: 5px;
-    div,input{
-      margin-left: auto;
-    }
+
     input {
       width: 60px;
     }

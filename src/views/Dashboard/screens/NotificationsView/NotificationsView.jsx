@@ -70,40 +70,38 @@ const notifications = [
 ];
 
 const ButtonsOptions = ({ option, index }) => {
-
   const shareOption = async () => {
     try {
       if (navigator.share) {
         await navigator.share({
-          title: 'Compartir documento',
-          text: 'Mira este documento',
+          title: "Compartir documento",
+          text: "Mira este documento",
           url: window.location.href,
         });
       } else {
-        alert('La función de compartir no está disponible en este dispositivo');
+        alert("La función de compartir no está disponible en este dispositivo");
       }
     } catch (error) {
-      console.error('Error al compartir:', error);
+      console.error("Error al compartir:", error);
     }
-  }
+  };
 
   const handleClick = (value) => {
     switch (value) {
-      case 'Reenviar':
-        alert(1)
+      case "Reenviar":
+        alert(1);
         break;
-      case 'Responder':
-        alert(1)
+      case "Responder":
+        alert(1);
         break;
-      case 'Compartir':
-        shareOption()
+      case "Compartir":
+        shareOption();
         break;
-      case 'Ver Email':
-        alert(1)
+      case "Ver Email":
+        alert(1);
         break;
-
     }
-  }
+  };
   return (
     <button
       onClick={() => handleClick(option)}
@@ -120,21 +118,40 @@ const ButtonsOptions = ({ option, index }) => {
 
 const NotificationsView = () => {
   const [unreadEmails, setUnreadEmails] = useState(true);
+  const [expandedNotifications, setExpandedNotifications] = useState({});
+
+  const toggleNotification = (id) => {
+    setExpandedNotifications((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   return (
     <PanelTemplate>
       <div className={styles.notificationCoontainer}>
         {notifications.map((notification) => (
-          <div key={notification.id} className={styles.notification}>
+          <div
+            key={notification.id}
+            className={styles.notification}
+            onClick={() => toggleNotification(notification.id)}
+          >
             <div className={styles.notificationHeader}>
               <div>
                 {notification.icon} <p>{notification.title}</p>
               </div>
-              <div>
-                {notification.options.map((option, index) => (
-                  <ButtonsOptions option={option} index={index} />
-                ))}
-              </div>
+            </div>
+            <div
+              className={styles.notifications}
+              style={{
+                height: expandedNotifications[notification.id] ? "auto" : "0",
+                overflow: "hidden",
+                transition: "height 0.3s ease-out", // Smooth transition for height
+              }}
+            >
+              {notification.options.map((option, index) => (
+                <ButtonsOptions option={option} index={index} />
+              ))}
             </div>
             {notification.notifications.map((noti) => (
               <div className={styles.notificationContent} key={noti.email}>

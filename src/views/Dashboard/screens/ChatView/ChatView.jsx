@@ -637,7 +637,7 @@ const ChatView = () => {
     // handleSendMessage(actions[id].text);
     handleSendMessage(text);
   };
-  const [leftWidth, setLeftWidth] = useState(50); // Establecer el ancho inicial al 50%
+  const [leftWidth, setLeftWidth] = useState(200); // Establecer el ancho inicial al 50%
   const isResizing = useRef(false); // Para detectar cuando el usuario está arrastrando
   const startX = useRef(0); // Almacenar la posición inicial del ratón
 
@@ -695,7 +695,11 @@ const ChatView = () => {
       <div className={styles.chatSection}>
         <ChatMenu id={id} leftWidth={leftWidth} />
         <div
-          style={{ height: "100%", width: "8px" }}
+          style={{
+            height: "100%",
+            width: "8px",
+            cursor: "ew-resize",
+          }}
           onMouseDown={handleMouseDown}
         ></div>
         <ChatBody
