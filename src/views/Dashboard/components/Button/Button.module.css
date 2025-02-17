@@ -11,6 +11,10 @@
   cursor: pointer;
   border: 1px solid transparent;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
 }
 
 .buttonTemplateGreen {

@@ -6,9 +6,16 @@ import downloadIcon from "../../assets/downloadIcon.svg";
 import tagIcon from "../../assets/tagIcon.svg";
 import moveToFolder from "../../assets/moveToFolderIcon.svg";
 import printIcon from "../../assets/printIcon.svg";
+import addNoteGray from "../../assets/addNoteGray.svg";
+import downloadIconUpdated from "../../assets/downloadIconUpdated.svg";
+import doubleIcon from "../../assets/doubleIcon.svg";
+import shareDiagonalIcon from "../../assets/shareDiagonalIcon.svg";
 import gestionaEsPublico from "../../assets/gestionaEsPublicoIcon.svg";
 import stripeIcon from "../../assets/stripeIconText.svg";
-import wsIcon from "../../assets/whatsappIcon.svg";
+import winIcon from "../../assets/winIcon.svg";
+import KIcon from "../../assets/KIcon.svg";
+
+import hubSpot from "../../assets/hubspotIcon.svg";
 import SendEmailModal from "../SendEmailModal/SendEmailModal";
 import { ReactComponent as EyeWhiteIcon } from "../../assets/eyeWhiteIcon.svg";
 import SeeBill from "./SeeBill/SeeBill";
@@ -26,6 +33,7 @@ import { uploadFiles } from "../../../../actions/scaleway";
 import SelectLocation from "../SelectLocation/SelectLocation";
 import MoveToFolder from "../MoveToFolder/MoveToFolder";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
+import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
 let documentoPDF;
 
 try {
@@ -120,21 +128,28 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   const actions = [
     {
       text: "Compartir",
-      icon: downloadIcon,
+      icon: shareDiagonalIcon,
       click: () => {
         handleShare();
+      },
+    },
+    {
+      text: "Duplicar",
+      icon: doubleIcon,
+      click: () => {
+        console.log("duplicar");
       },
     },
     {
       text: "Enviar Correo",
       icon: sendMail,
       click: () => {
-        setMailModal(true); // Cambia el estado para mostrar el modal
+        setMailModal(true);
       },
     },
     {
       text: "Descargar",
-      icon: tagIcon,
+      icon: downloadIconUpdated,
       click: () => {
         const link = document.createElement("a"); // Crea un elemento <a>
         link.href = documentoPDF; // Establece la URL del PDF
@@ -144,14 +159,14 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
     },
     {
       text: "Añadir Nota",
-      icon: moveToFolder,
+      icon: addNoteGray,
       click: () => {
         handleAddNote();
       },
     },
     {
       text: "Mover a carpeta",
-      icon: printIcon,
+      icon: moveToFolder,
       click: () => {
         setShowMovetoFolder(true);
       },
@@ -159,6 +174,32 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
     {
       text: "Imprimir",
       icon: printIcon,
+      componente: (
+        <SearchIconWithIcon
+          // ref={searchInputRef}
+          // searchTerm={searchTerm}
+          // setSearchTerm={setSearchTerm}
+          classNameIconRight={styles.searchContainerL}
+          onClickIconRight={() => setIsFilterOpen(true)}
+          placeholder="Buscar automatizaciones..."
+          stylesComponent={{ padding: "0" }}
+        >
+          <>
+            <div
+              style={{ marginLeft: "5px" }}
+              className={styles.searchIconsWrappers}
+            >
+              <img src={winIcon} alt="kIcon" />
+            </div>
+            <div
+              style={{ marginLeft: "5px" }}
+              className={styles.searchIconsWrappers}
+            >
+              <img src={KIcon} alt="kIcon" />
+            </div>
+          </>
+        </SearchIconWithIcon>
+      ),
       click: () => {
         const printWindow = window.open(documentoPDF, "_blank"); // Abre el PDF en una nueva ventana o pestaña
         printWindow.onload = () => {
@@ -167,6 +208,14 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
       },
     },
     {
+      text: "Buscar",
+      icon: printIcon,
+      click: () => {
+        console.log("hola");
+      },
+    },
+
+    {
       icon: stripeIcon,
       click: () => {
         handleShowContentAutomate("Gmail");
@@ -174,11 +223,11 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
       classOption: styles.bgStripe,
     },
     {
-      icon: wsIcon,
+      icon: hubSpot,
       click: () => {
         handleShowContentAutomate("Google Sheets");
       },
-      classOption: styles.bgWs,
+      classOption: styles.hubspot,
     },
     {
       icon: gestionaEsPublico,
@@ -192,24 +241,31 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   const Actions = () => {
     return (
       <div className={styles.buttonActionsContainer}>
-        {actions.map((action) =>
-          action.text === "Descargar" ? (
-            <a href={documentoPDF} download="Factura" key={action.text}>
-              {" "}
-              <img src={action.icon} alt="icon" />
-              {action.text}
-            </a>
-          ) : (
-            <ButtonActionsWithText
-              key={action.text}
-              classStyle={action.text ? styles.btnWithText : action.classOption}
-              click={action.click}
-            >
-              <img src={action.icon} alt="icon" />
-              {action.text}
-            </ButtonActionsWithText>
-          )
-        )}
+        {actions.map((action) => {
+          if (action.componente) {
+            return action.componente;
+          } else if (action.text === "Descargar") {
+            return (
+              <a href={documentoPDF} download="Factura" key={action.text}>
+                <img src={action.icon} alt="icon" />
+                {action.text}
+              </a>
+            );
+          } else {
+            return (
+              <ButtonActionsWithText
+                key={action.text}
+                classStyle={
+                  action.text ? styles.btnWithText : action.classOption
+                }
+                click={action.click}
+              >
+                <img src={action.icon} alt="icon" />
+                {action.text}
+              </ButtonActionsWithText>
+            );
+          }
+        })}
       </div>
     );
   };
@@ -406,6 +462,11 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   };
   const [fileUser, setFile] = useState(null); // Para almacenar el archivo PDF subido
   const seeBillRef = useRef();
+  const fileInputRef = useRef(null);
+
+  const handleClick = () => {
+    fileInputRef.current.click();
+  };
 
   // Manejador para el cambio de archivo
   const handleFileChangePdf = (e) => {
@@ -419,16 +480,17 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
   // Mostrar el modal y generar el PDF dependiendo del archivo subido
   const handleVisualizar = () => {
     setSeeBill(true); // Mostrar el modal
-
     if (fileUser) {
       // Si hay un archivo PDF subido, usar ese archivo
       const fileUrl = URL.createObjectURL(fileUser);
       seeBillRef.current?.generatePDF(fileUrl); // Generar PDF desde el archivo subido
     } else {
       // Si no hay archivo, usar el componente FacturaTemplate
+      console.log("desde preview");
       seeBillRef.current?.generatePDF(); // Generar PDF desde FacturaTemplate
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.previewSection}>
@@ -452,18 +514,19 @@ const DocumentPreview = ({ document, companyInfo, handleAddNote }) => {
             </div>
           </div>
         ) : (
-          <div className={styles.emptyPreview}>
+          <div className={styles.emptyPreview} onClick={handleClick}>
             <input
               type="file"
               accept="application/pdf"
+              ref={fileInputRef} // Usando useRef para referenciar el input
               onChange={handleFileChangePdf}
+              style={{ display: "none" }} // Oculta el input
             />
             <span>Drop your document here</span>
-            {fileUser && <p>{fileUser.name}</p>}
-            <div className={styles.visualizar} onClick={handleVisualizar}>
+            {/* <div className={styles.visualizar} onClick={handleVisualizar}>
               <EyeWhiteIcon />
-              Visualizar
-            </div>
+              {documentoPDF ? "Visualizar" : "Crear PDF"}
+            </div> */}
           </div>
         )}
       </div>

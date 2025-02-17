@@ -24,7 +24,7 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
   const [pdfUrl, setPdfUrl] = useState(null);
   const [uploadedPdf, setUploadedPdf] = useState(null);
   const contentRef = useRef(null); // Aquí inicializamos el ref
-
+  const [hasGeneratedPDF, setHasGeneratedPDF] = useState(false); // Nueva bandera
   // Manejar la carga de un archivo PDF
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -58,7 +58,12 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
 
   // Generar PDF
   const handleGeneratePDF = async () => {
+    if (hasGeneratedPDF) return;
+
+    setHasGeneratedPDF(true); // Marcamos que se generó el PDF
+
     console.log("AAAAAAAAAAAAAA");
+
     if (fileUser) {
       // Si hay un archivo PDF subido, simplemente usalo
       const fileUrl = URL.createObjectURL(fileUser);
@@ -100,14 +105,17 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
   }));
   // Ejecutar handleGeneratePDF cuando el componente se monta
   useEffect(() => {
-    handleGeneratePDF();
-  }, []); // El array vacío [] asegura que solo se ejecute una vez
+    // Ejecutar handleGeneratePDF solo una vez
+    if (!hasGeneratedPDF) {
+      handleGeneratePDF();
+    }
+  }, [hasGeneratedPDF]); // Usar hasGeneratedPDF como dependencia para evitar bucles
 
   return (
     <div className={styles.seeBillContainer}>
       <div className={styles.bg} onClick={() => setSeeBill(false)}></div>
       <div className={styles.seeBillContent}>
-        <HeaderCard title={""} setState={setSeeBill} />
+        {/* <HeaderCard title={""} setState={setSeeBill} /> */}
 
         {!fileUser && (
           <div className={styles.none}>
@@ -115,15 +123,6 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
             <FacturaTemplate ref={contentRef} document={document} />
           </div>
         )}
-
-        <div className={styles.uploadSection}>
-          <span>Drop your document here</span>
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-          />
-        </div>
 
         {pdfUrl ? (
           <div className={styles.pdf}>

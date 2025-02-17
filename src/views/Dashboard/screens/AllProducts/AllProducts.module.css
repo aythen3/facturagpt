@@ -121,9 +121,9 @@
   font-size: 18px; /* Ícono fuera del input */
 }
 
-.clientsTable{
+.clientsTable {
   overflow: auto;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 }
@@ -477,23 +477,6 @@ input[type="checkbox"] {
   }
 }
 
-.typeClientActivate {
-  button {
-    background-color: transparent;
-    cursor: pointer;
-    color: #999999;
-  }
-  .selected {
-    background-color: white;
-    box-shadow: 0px 3px 8px rgb(172, 172, 172);
-    color: black;
-  }
-}
-
-.typeClientDisabled {
-  background-color: transparent;
-}
-
 .impuestos,
 .sku {
   display: flex;
@@ -577,4 +560,28 @@ input[type="checkbox"] {
   cursor: pointer;
   user-select: none;
   border-radius: 3px;
+}
+.typeClientActivate {
+  button {
+    background-color: transparent;
+    cursor: pointer;
+    color: #999999;
+  }
+  .selected {
+    background-color: white;
+    box-shadow: 0px 3px 8px rgb(172, 172, 172);
+    color: black;
+  }
+}
+
+.typeClientDisabled {
+  background-color: transparent;
+}
+
+button[disabled],
+input[disabled],
+select[disabled],
+option[disabled],
+textarea[disabled] {
+  background-color: transparent;
 }

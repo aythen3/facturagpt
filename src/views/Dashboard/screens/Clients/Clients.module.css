@@ -332,10 +332,23 @@ input[type="checkbox"] {
 .typeClientDisabled {
   background-color: transparent;
 }
+.button {
+  cursor: pointer;
+  background-color: transparent;
+  text-decoration: underline;
+  font-weight: 600;
+  color: #18181b;
+  /* color: red; */
+  font-size: 14px;
+}
 .newClientForm {
   label {
     border-bottom: 1px solid #11a3812c;
     padding: 10px 0;
+    p {
+      color: #222222;
+      font-weight: 400;
+    }
   }
   .detailsBill {
     display: flex;
@@ -349,8 +362,26 @@ input[type="checkbox"] {
       text-decoration: underline;
       cursor: pointer;
     }
+    .optionsDetailsBill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: end;
+    }
   }
-
+  .billInfoInputs {
+    display: flex;
+    flex-direction: column;
+    > div {
+      display: flex;
+      flex: 1;
+      gap: 10px;
+      box-sizing: border-box;
+      .info {
+        width: 100%;
+      }
+    }
+  }
   .infoBill {
     display: flex;
     flex-direction: column;
@@ -363,6 +394,10 @@ input[type="checkbox"] {
       width: 100%;
       display: flex;
       align-items: center;
+      .info {
+        flex-direction: column;
+        align-items: start;
+      }
     }
     .info {
       display: flex;
@@ -388,12 +423,19 @@ input[type="checkbox"] {
   }
   .info {
     display: flex;
-    flex-direction: column;
     margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+
     span {
-      color: #1e0045;
+      color: #717171;
       font-weight: bold;
     }
+  }
+  .billInfoInputs .info {
+    flex-direction: column;
+    align-items: start;
+    flex-wrap: wrap;
   }
   .row {
     display: flex;
@@ -422,13 +464,14 @@ input[type="checkbox"] {
     padding: 12px;
     box-sizing: border-box;
   }
-
-  .button {
-    cursor: pointer;
-    background-color: transparent;
-    text-decoration: underline;
-    font-weight: 600;
+  button::placeholder,
+  input::placeholder,
+  select::placeholder,
+  option::placeholder,
+  textarea::placeholder {
+    color: #757575;
   }
+
   input {
     width: 100%;
 
@@ -438,7 +481,9 @@ input[type="checkbox"] {
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
   }
-
+  input[type="checkbox"] {
+    width: fit-content;
+  }
   .squareContainer {
     display: flex;
 
@@ -606,13 +651,44 @@ input[type="checkbox"] {
     interpolate-size: allow-keywords;
   }
 }
-
+.headerPhoneNumer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.unknown {
+  font-size: 14px;
+  font-weight: 400;
+  color: #717171;
+}
+.phoneNumber {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+}
+.buttonPhoneContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.phoneContainerUnknown {
+  display: flex;
+  width: 100%;
+}
 .phoneContainer {
   width: 100%;
   display: flex;
   gap: 10px;
   align-items: center;
-  height: 30px;
+  flex-direction: column;
+  .phoneRow {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .delete {
     background-color: #dc3545;
     height: 20px;

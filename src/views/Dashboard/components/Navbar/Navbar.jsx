@@ -34,7 +34,7 @@ const Navbar = () => {
   useEffect(() => {
     // Detectar tamaño de pantalla para saber si es móvil
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Define el breakpoint para mobile
+      setIsMobile(window.innerWidth <= 1000); // Define el breakpoint para mobile
     };
     handleResize(); // Verificar al cargar la página
     window.addEventListener("resize", handleResize);
@@ -184,7 +184,7 @@ const Navbar = () => {
                       className={styles.solucionesWrapper}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setShowSolutions(true);
+                        isMobile && setShowSolutions(true);
                       }}
                     >
                       <span className={styles.solucionesHover}>
@@ -200,17 +200,19 @@ const Navbar = () => {
                               : ""
                         }`}
                       >
-                        <div className={styles.buttonContainer}>
-                          <button
-                            className={styles.toggleButton}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setShowSolutions(false);
-                            }}
-                          >
-                            <ChevDown className={styles.icon} />
-                          </button>
-                        </div>
+                        {isMobile && (
+                          <div className={styles.buttonContainer}>
+                            <button
+                              className={styles.toggleButton}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setShowSolutions(false);
+                              }}
+                            >
+                              <ChevDown className={styles.icon} />
+                            </button>
+                          </div>
+                        )}
                         <div className={styles.showGrid}>
                           {solutions.map((solution, index) => (
                             <div key={index}>

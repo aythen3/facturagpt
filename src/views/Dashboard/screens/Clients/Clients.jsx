@@ -61,7 +61,7 @@ const Clients = () => {
   const [clientData, setClientData] = useState({
     clientName: "",
     companyEmail: "",
-    companyPhoneNumber: "",
+    companyPhoneNumber: [],
     codeCountry: "",
     webSite: "",
     billingEmail: "",
@@ -75,6 +75,7 @@ const Clients = () => {
     companyProvince: "",
     companyCountry: "",
     infoBill: [],
+    paymethod: [],
   });
 
   useEffect(() => {
@@ -99,13 +100,14 @@ const Clients = () => {
         companyCity: client.clientData.companyCity || "",
         companyProvince: client.clientData.companyProvince || "",
         companyCountry: client.clientData.companyCountry || "",
-        infoBill: client.clientData.infoBill || "",
+        infoBill: client.clientData.infoBill || [],
+        paymethod: client.clientData.paymethod || [],
       });
     } else {
       setClientData({
         clientName: "",
         companyEmail: "",
-        companyPhoneNumber: "",
+        companyPhoneNumber: [],
         codeCountry: "",
         webSite: "",
         billingEmail: "",
@@ -119,6 +121,7 @@ const Clients = () => {
         companyProvince: "",
         companyCountry: "",
         infoBill: [],
+        paymethod: [],
       });
     }
   }, [client]);
@@ -308,6 +311,7 @@ const Clients = () => {
 
   const handleEditClient = () => {
     setShowNewClient(true);
+    handleEditAll(false);
   };
 
   const handleGetOneClient = async (clientId) => {
@@ -353,9 +357,6 @@ const Clients = () => {
   }, [showNewClient]);
 
   console.log("CLIENTSSSS", clients);
-  const handleChange = ({ name, newValue }) => {
-    console.log(`Setting ${name} to ${newValue}`);
-  };
 
   const [clientDataInputs, setClientDataInputs] = useState({
     name: "",
@@ -386,12 +387,6 @@ const Clients = () => {
       ...prev,
       parameters: prev.parameters.filter((_, i) => i !== index),
     }));
-  };
-
-  const [isParametersVisible, setIsParametersVisible] = useState(true);
-
-  const toggleParametersVisibility = () => {
-    setIsParametersVisible((prev) => !prev);
   };
 
   const [editingIndices, setEditingIndices] = useState([]);
@@ -456,7 +451,109 @@ const Clients = () => {
       setSelectedBillIndex(null); // Reinicia selección
     }
   };
+  const handleEditAll = (value) => {
+    setInputsEditing((prevState) => {
+      const updatedState = {};
+      Object.keys(prevState).forEach((key) => {
+        if (Array.isArray(prevState[key])) {
+          updatedState[key] = prevState[key]; // Mantiene los arrays intactos
+        } else {
+          updatedState[key] = value;
+        }
+      });
+      console.log("Nuevo estado:", updatedState); // Verifica el nuevo estado aquí
+      return updatedState;
+    });
+  };
 
+  const handleChangePhoneNumbers = (index, field, value) => {
+    const updatedNumbers = [...clientData.companyPhoneNumber];
+    updatedNumbers[index][field] = value;
+    handleClientData("companyPhoneNumber", updatedNumbers);
+  };
+
+  const addPhoneNumber = () => {
+    handleClientData("companyPhoneNumber", [
+      ...clientData.companyPhoneNumber,
+      { countryCode: "+34", number: "" }, // Por defecto con España, ajusta según tus necesidades
+    ]);
+  };
+
+  const removePhoneNumber = (index) => {
+    const updatedNumbers = clientData.companyPhoneNumber.filter(
+      (_, i) => i !== index
+    );
+    handleClientData("companyPhoneNumber", updatedNumbers);
+  };
+  const [currentPayMethod, setCurrentPayMethod] = useState({
+    bank: "",
+    accountNumber: "",
+    swift: "",
+    routingNumber: "",
+    currency: "",
+    default: false,
+  });
+  const [editingIndexPayMethod, setEditingIndexPayMethod] = useState(null);
+
+  // Añadir un nuevo método de pago vacío
+  const addPayMethod = () => {
+    setClientData((prevData) => ({
+      ...prevData,
+      paymethod: [...prevData.paymethod, { ...currentPayMethod }],
+    }));
+    setCurrentPayMethod({
+      bank: "",
+      accountNumber: "",
+      swift: "",
+      routingNumber: "",
+      currency: "",
+      default: false,
+    });
+    {
+      console.log(editingIndexPayMethod);
+    }
+  };
+  // Manejar cambios en el método de pago que se está editando
+  const handlePayMethodChange = (field, value) => {
+    setCurrentPayMethod((prev) => {
+      const updatedPayMethod = { ...prev, [field]: value };
+
+      // Si estamos marcando un banco como predeterminado, desmarcamos los demás
+      if (field === "default" && value) {
+        // Desmarcar todos los métodos de pago, excepto el actual
+        setClientData((prevData) => ({
+          ...prevData,
+          paymethod: prevData.paymethod.map((method) =>
+            method === updatedPayMethod
+              ? { ...method, default: true }
+              : { ...method, default: false }
+          ),
+        }));
+      }
+
+      return updatedPayMethod;
+    });
+  };
+
+  // Guardar el método de pago actualizado
+  const savePayMethod = (index) => {
+    setClientData((prevData) => {
+      const updatedMethods = [...prevData.paymethod];
+      updatedMethods[index] = currentPayMethod;
+      return {
+        ...prevData,
+        paymethod: updatedMethods,
+      };
+    });
+    setCurrentPayMethod({
+      bank: "",
+      accountNumber: "",
+      swift: "",
+      routingNumber: "",
+      currency: "",
+      default: false,
+    });
+  };
   return (
     <PanelTemplate>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
@@ -465,7 +562,10 @@ const Clients = () => {
           <div className={styles.searchContainer}>
             <button
               className={`${styles.addButton} ${styles.btnNewClient}`}
-              onClick={() => setShowNewClient(true)}
+              onClick={() => {
+                handleEditAll(true);
+                setShowNewClient(true);
+              }}
             >
               <img src={plusIcon} alt="Nuevo cliente" />
               {t("buttonNewClient")}
@@ -702,7 +802,6 @@ const Clients = () => {
                     </button>
                   </div>
                 </EditableInput>
-
                 <EditableInput
                   label={"Email"}
                   nameInput={"email"}
@@ -723,7 +822,6 @@ const Clients = () => {
                     }))
                   }
                 />
-
                 {/* <EditableInput
                   label={"Teléfono"}
                   nameInput={"phone"}
@@ -747,34 +845,81 @@ const Clients = () => {
                     }))
                   }
                 /> */}
-                <div className={styles.phoneContainer}>
-                  <select /*disabled={!isEditing}*/>
-                    <option value="34">España, (+34)</option>
-                    <option value="1">Estados Unidos, (+1)</option>
-                    <option value="52">México, (+52)</option>
-                    <option value="54">Argentina, (+54)</option>
-                    <option value="55">Brasil, (+55)</option>
-                    <option value="44">Reino Unido, (+44)</option>
-                    <option value="33">Francia, (+33)</option>
-                    <option value="49">Alemania, (+49)</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="000 000 000"
-                    value={clientData.companyPhoneNumber || ""}
-                    onChange={(e) =>
-                      handleClientData("companyPhoneNumber", e.target.value)
-                    }
-                    /*disabled={!isEditing}*/
-                  />
-                  <div
-                    className={styles.delete}
-                    // onClick={onDelete}
-                    /*style={{ background: !isEditing && "#dd7a84" }}*/
-                  >
-                    <Minus className={styles.icon} />
+
+                <label className={styles.phoneNumber}>
+                  <div className={styles.headerPhoneNumer}>
+                    {" "}
+                    <p>Teléfono</p>
+                    <div className={styles.buttonPhoneContainer}>
+                      <div
+                        className={styles.button}
+                        onClick={() =>
+                          setInputsEditing((prev) => ({
+                            ...prev,
+                            phone: !prev.phone,
+                          }))
+                        }
+                      >
+                        {inputsEditing.phone ? "Guardar" : "Editar"}
+                      </div>
+                      <div className={styles.button} onClick={addPhoneNumber}>
+                        Añadir número
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  <div
+                    className={
+                      clientData.companyPhoneNumber.length >= 1
+                        ? styles.phoneContainer
+                        : styles.phoneContainerUnknown
+                    }
+                  >
+                    {clientData.companyPhoneNumber.length >= 1 ? (
+                      clientData.companyPhoneNumber.map((phone, index) => (
+                        <div key={index} className={styles.phoneRow}>
+                          <select
+                            value={phone.countryCode}
+                            onChange={(e) =>
+                              handleChangePhoneNumbers(
+                                index,
+                                "countryCode",
+                                e.target.value
+                              )
+                            }
+                            className={styles.select}
+                            disabled={!inputsEditing.phone}
+                          >
+                            <option value="+1">+1 (EE.UU.)</option>
+                            <option value="+44">+44 (Reino Unido)</option>
+                            <option value="+34">+34 (España)</option>
+                            <option value="+52">+52 (México)</option>
+                            <option value="+57">+57 (Colombia)</option>
+                          </select>
+                          <input
+                            type="text"
+                            disabled={!inputsEditing.phone}
+                            placeholder="Número de teléfono"
+                            className={styles.inputEdit}
+                            value={phone.number}
+                            onChange={(e) =>
+                              handleChangePhoneNumbers(
+                                index,
+                                "number",
+                                e.target.value
+                              )
+                            }
+                          />
+                          <DeleteButton
+                            action={() => removePhoneNumber(index)}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div className={styles.unknown}>Desconocido</div>
+                    )}
+                  </div>
+                </label>
+
                 <EditableInput
                   label={"Web o dominio corporativo"}
                   nameInput={"web"}
@@ -792,19 +937,24 @@ const Clients = () => {
                     setInputsEditing((prev) => ({ ...prev, web: !prev.web }))
                   }
                 />
-
                 <label>
                   <div>
                     <div className={styles.detailsBill}>
                       <p>Detalles de Facturación</p>
-                      <div>
-                        <div onClick={handleAddBillingDetail}>
+                      <div className={styles.optionsDetailsBill}>
+                        <div
+                          className={styles.button}
+                          onClick={handleAddBillingDetail}
+                        >
                           Añadir Detalles de Facturación
                         </div>
 
-                        <button type="button" onClick={handleSaveBillingDetail}>
+                        <div
+                          className={styles.button}
+                          onClick={handleSaveBillingDetail}
+                        >
                           Guardar Detalles de Facturación
-                        </button>
+                        </div>
                       </div>
                     </div>
                     <div className={styles.infoBill}>
@@ -839,18 +989,16 @@ const Clients = () => {
                             </div>
                             <DeleteButton
                               action={() => handleDeleteBillingDetail(index)}
-                            >
-                              Eliminar
-                            </DeleteButton>
+                            />
                           </div>
                         ))
                       ) : (
-                        <p>No hay detalles de facturación disponibles.</p>
+                        <span>No hay detalles de facturación disponibles.</span>
                       )}
                     </div>
                   </div>
                   {selectedBillIndex !== null && (
-                    <div>
+                    <div className={styles.billInfoInputs}>
                       <div className={styles.info}>
                         <span>Dirección</span>
                         <input
@@ -866,141 +1014,172 @@ const Clients = () => {
                           }
                         />
                       </div>
-                      <div className={styles.info}>
-                        <span>Población</span>
-                        <input
-                          type="text"
-                          disabled={!inputsEditing.info}
-                          placeholder="Población"
-                          value={currentBill.Población}
-                          onChange={(e) =>
-                            handleBillingDetailChange(
-                              "Población",
-                              e.target.value
-                            )
-                          }
-                        />
+                      <div>
+                        {" "}
+                        <div className={styles.info}>
+                          <span>Población</span>
+                          <input
+                            type="text"
+                            disabled={!inputsEditing.info}
+                            placeholder="Población"
+                            value={currentBill.Población}
+                            onChange={(e) =>
+                              handleBillingDetailChange(
+                                "Población",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
+                        <div className={styles.info}>
+                          <span>Provincia</span>
+                          <input
+                            type="text"
+                            disabled={!inputsEditing.info}
+                            placeholder="Provincia"
+                            value={currentBill.Provincia}
+                            onChange={(e) =>
+                              handleBillingDetailChange(
+                                "Provincia",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
                       </div>
-                      <div className={styles.info}>
-                        <span>Provincia</span>
-                        <input
-                          type="text"
-                          disabled={!inputsEditing.info}
-                          placeholder="Provincia"
-                          value={currentBill.Provincia}
-                          onChange={(e) =>
-                            handleBillingDetailChange(
-                              "Provincia",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </div>
-                      <div className={styles.info}>
-                        <span>Código Postal</span>
-                        <input
-                          type="text"
-                          disabled={!inputsEditing.info}
-                          placeholder="Código Postal"
-                          value={currentBill.codigoPostal}
-                          onChange={(e) =>
-                            handleBillingDetailChange(
-                              "codigoPostal",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </div>
-                      <div className={styles.info}>
-                        <span>País</span>
-                        <input
-                          type="text"
-                          disabled={!inputsEditing.info}
-                          placeholder="País"
-                          value={currentBill.pais}
-                          onChange={(e) =>
-                            handleBillingDetailChange("pais", e.target.value)
-                          }
-                        />
+                      <div>
+                        <div className={styles.info}>
+                          <span>Código Postal</span>
+                          <input
+                            type="text"
+                            disabled={!inputsEditing.info}
+                            placeholder="Código Postal"
+                            value={currentBill.codigoPostal}
+                            onChange={(e) =>
+                              handleBillingDetailChange(
+                                "codigoPostal",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
+                        <div className={styles.info}>
+                          <span>País</span>
+                          <input
+                            type="text"
+                            disabled={!inputsEditing.info}
+                            placeholder="País"
+                            value={currentBill.pais}
+                            onChange={(e) =>
+                              handleBillingDetailChange("pais", e.target.value)
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                   )}
-
-                  {/* <div className={styles.info1}>
-                    <div className={styles.info}>
-                      <span>Dirección</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                        value={clientData.companyAddress || ""}
-                        onChange={(e) =>
-                          handleClientData("companyAddress", e.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.row}>
-                    <div className={styles.info}>
-                      <span>Población</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                      />
-                    </div>
-                    <div className={styles.info}>
-                      <span>Código Postal</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        value={clientData.clientZip || ""}
-                        placeholder="000 000"
-                        onChange={(e) =>
-                          handleClientData("clientZip", e.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.row}>
-                    <div className={styles.info}>
-                      <span>Provincia</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                        value={clientData.companyProvince || ""}
-                        onChange={(e) =>
-                          handleClientData("companyProvince", e.target.value)
-                        }
-                      />
-                    </div>
-                    <div className={styles.info}>
-                      <span>País</span>
-                      <input
-                        type="text"
-                        disabled={!inputsEditing.info}
-                        placeholder="000 000"
-                        value={clientData.companyCountry || ""}
-                        onChange={(e) =>
-                          handleClientData("companyCountry", e.target.value)
-                        }
-                      />
-                    </div>
-                  </div> */}
                 </label>
-
                 <label>
-                  <div>
+                  <div style={{ marginBottom: "30px" }}>
                     <div className={styles.detailsBill}>
                       <p>Métodos de Pago</p>
-                      <div>
-                        <button type="button">Añadir Método de Pago</button>
-                        <button type="button">Guardar Método de Pago</button>
+                      <div className={styles.optionsDetailsBill}>
+                        <div className={styles.button} onClick={addPayMethod}>
+                          Añadir Método de Pago
+                        </div>
+                        <div
+                          onClick={() => {
+                            setClientData((prev) => {
+                              const updatedPayMethods = [...prev.paymethod];
+                              if (editingIndexPayMethod !== null) {
+                                // Actualiza el método de pago en el índice correspondiente
+                                updatedPayMethods[editingIndexPayMethod] =
+                                  currentPayMethod;
+                              }
+                              return {
+                                ...prev,
+                                paymethod: updatedPayMethods,
+                              };
+                            });
+                            setEditingIndexPayMethod(null); // Reset al índice después de guardar
+                            setCurrentPayMethod({
+                              bank: "",
+                              accountNumber: "",
+                              swift: "",
+                              routingNumber: "",
+                              currency: "",
+                              default: false,
+                            });
+                          }}
+                          className={styles.button}
+                        >
+                          Guardar Método de Pago
+                        </div>
                       </div>
                     </div>
+
+                    {Array.isArray(clientData.paymethod) &&
+                      clientData.paymethod.map((method, index) => (
+                        <div key={index} className={styles.infoBillContainer}>
+                          <div className={styles.info}>
+                            <p>
+                              <span>{method.bank || "Banco"}, </span>
+                              <span>
+                                {method.accountNumber || "Número de Cuenta"},{" "}
+                              </span>
+                              <span> {method.swift || "SWIFT/BIC"}, </span>
+                              <span>
+                                {method.routingNumber || "Routing Number"},{" "}
+                              </span>
+                              <span> {method.currency || "Moneda"}</span>
+                            </p>
+                            <DeleteButton />
+                          </div>
+                          <div
+                            className={styles.button}
+                            onClick={() => {
+                              if (editingIndexPayMethod === index) {
+                                // Si ya estamos editando este índice, guarda los cambios
+                                setClientData((prev) => {
+                                  const updatedPayMethods = [...prev.paymethod];
+                                  updatedPayMethods[editingIndexPayMethod] =
+                                    currentPayMethod;
+                                  return {
+                                    ...prev,
+                                    paymethod: updatedPayMethods,
+                                  };
+                                });
+
+                                setEditingIndexPayMethod(null); // Reset al índice después de guardar
+                                setCurrentPayMethod({
+                                  bank: "",
+                                  accountNumber: "",
+                                  swift: "",
+                                  routingNumber: "",
+                                  currency: "",
+                                  default: false,
+                                });
+                              } else {
+                                // Si no estamos editando este índice, entonces pasamos a modo edición
+                                setCurrentPayMethod(method);
+                                setEditingIndexPayMethod(index);
+                              }
+                            }}
+                          >
+                            {editingIndexPayMethod == index
+                              ? "Guardar"
+                              : "Editar"}
+                          </div>
+                        </div>
+                      ))}
                   </div>
-                  <PayMethod />
+
+                  {editingIndexPayMethod !== null && (
+                    <PayMethod
+                      method={currentPayMethod}
+                      onChange={handlePayMethodChange}
+                    />
+                  )}
                 </label>
 
                 <ParametersLabel

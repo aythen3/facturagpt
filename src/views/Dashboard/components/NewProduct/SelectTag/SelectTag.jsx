@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import styles from "./SelectTag.module.css";
+import { ReactComponent as SelectTagOutlineBlack } from "../../../assets/selectTagOutlineBlack.svg";
 import Button from "../../Button/Button";
 import NewTag from "../../NewTag/NewTag";
-import styles from "./SelectTag.module.css";
 import DeleteButton from "../../DeleteButton/DeleteButton";
 const SelectTag = ({
   selectedTags,
@@ -18,9 +19,10 @@ const SelectTag = ({
   };
   return (
     <div>
-      <header>
+      <header className={styles.headerContainerSelectTag}>
         <p>Etiquetas</p>
         <Button type="white" action={() => setShowAddTags(true)}>
+          <SelectTagOutlineBlack />
           Añadir Etiqueta
         </Button>
       </header>
