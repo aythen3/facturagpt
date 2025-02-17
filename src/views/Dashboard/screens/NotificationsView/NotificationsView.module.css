@@ -5,6 +5,8 @@
   align-items: center;
   gap: 30px;
   padding-top: 20px;
+  min-height: 100vh;
+  overflow-y: scroll;
 }
 
 .notification {

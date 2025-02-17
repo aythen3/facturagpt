@@ -8,7 +8,10 @@ import filterSearch from "../../assets/Filters Search.png";
 import creditCard from "../../assets/creditCardIcon.png";
 import closeIcon from "../../assets/closeMenu.svg";
 import pdf from "../../assets/pdfIcon.png";
+import KIcon from "../../assets/KIcon.svg";
 import arrow from "../../assets/arrow.svg";
+import winIcon from "../../assets/winIcon.svg";
+import emptyimage from "../../assets/ImageEmpty.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTransactions,
@@ -23,29 +26,16 @@ import { useNavigate } from "react-router-dom";
 import { clearClient } from "../../../../slices/clientsSlices";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
+import NewBIll from "../../components/NewBIll/NewBIll";
+import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
+import Button from "../../components/Button/Button";
+import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
+import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
 
 const Transactions = () => {
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [web, setWeb] = useState("");
-  const [countryCode, setCountryCode] = useState("+34");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [residence, setResidence] = useState("");
-  const [fiscalNumber, setFiscalNumber] = useState("");
-  const [preferredCurrency, setPreferredCurrency] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+
   const [selectedTransactionIds, setSelectedTransactionIds] = useState([]);
 
   const dispatch = useDispatch();
@@ -80,10 +70,6 @@ const Transactions = () => {
       const allClientIndexes = tableData.map((_, index) => index); // Crear un arreglo con los índices
       setClientSelected(allClientIndexes);
     }
-  };
-
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
   };
 
   const getStateClass = (state) => {
@@ -163,25 +149,6 @@ const Transactions = () => {
     },
   ];
 
-  const formatCardNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
-  };
-
-  const formatPhoneNumber = (phoneNumber) => {
-    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
-  };
-
-  const handleEmailChange = (e) => {
-    const emailValue = e.target.value;
-    setEmail(emailValue);
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(emailValue)) {
-    //   setEmailError('El correo electrónico no es válido.');
-    // } else {
-    //   setEmailError('');
-    // }
-  };
-
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape" && showNewClient) {
@@ -200,13 +167,6 @@ const Transactions = () => {
     };
   }, [showNewClient]);
 
-  const handleCloseNewClient = () => {
-    setIsAnimating(true);
-    setTimeout(() => {
-      setShowNewClient(false);
-      setIsAnimating(false);
-    }, 300);
-  };
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const handleActions = (rowIndex) => {
@@ -246,38 +206,130 @@ const Transactions = () => {
 
   console.log("TRANSACTIONS SELECTED IDS----", selectedTransactionIds);
 
+  const [mockTransactions, setMockTransactions] = useState([]);
+
+  useEffect(() => {
+    // Si transactionsByClient está vacío, usamos datos de ejemplo
+    if (transactionsByClient.length === 0) {
+      setMockTransactions([
+        {
+          id: "M001",
+          doc: {
+            totalData: {
+              description: ["Gasto", "Gastos Operativos"],
+              totalAmount: "150,00 EUR",
+              invoiceIssueDate: "2025-01-15",
+              expirationDateYear: "2025",
+              expirationDateMonth: "02",
+              expirationDateDay: "15",
+              payMethod: "Visa ****1234",
+              status: "Pendiente",
+            },
+          },
+          state: ["Pendiente"],
+        },
+        {
+          id: "M002",
+          doc: {
+            totalData: {
+              description: ["Gasto", "Gastos Operativos"],
+              totalAmount: "1.200,00 EUR",
+              invoiceIssueDate: "2025-01-10",
+              expirationDateYear: "2025",
+              expirationDateMonth: "02",
+              expirationDateDay: "10",
+              payMethod: "Transferencia bancaria",
+              status: "Pagada",
+            },
+          },
+          state: ["Pagada"],
+        },
+        {
+          id: "M003",
+          doc: {
+            totalData: {
+              description: ["Gasto", "Gastos Operativos"],
+              totalAmount: "3.500,00 EUR",
+              invoiceIssueDate: "2024-12-01",
+              expirationDateYear: "2025",
+              expirationDateMonth: "01",
+              expirationDateDay: "01",
+              payMethod: "Mastercard ****5678",
+              status: "Vencida",
+            },
+          },
+          state: ["Vencida"],
+        },
+      ]);
+    }
+  }, [transactionsByClient]);
+
   return (
     <PanelTemplate>
-      <div className={styles.container} onClick={() => setShowSidebar(false)}>
+      <div className={styles.container}>
         <div className={styles.clientsHeader}>
           <div className={styles.infoClient}>
-            <div className={styles.contactInfo}>
-              <h3>{client?.clientData?.clientName}</h3>
-              <span>{client?.email}</span>
-              <span>
-                {client?.clientData?.codeCountry}{" "}
-                {client?.clientData?.numberPhone}
-              </span>
+            <div className={styles.arrowContainer}>
+              <div
+                className={styles.iconContainer}
+                onClick={() => navigate("/admin/clients")}
+              >
+                <Arrow />
+              </div>
             </div>
-            <div className={styles.info}>
-              <p>Número Fiscal</p>
-              <span>{client?.clientData?.taxNumber}</span>
-            </div>
-            <div className={styles.info}>
-              <p>ID Cliente</p>
-              <span>{client?.id.slice(-21, -16)}</span>
+            <img src={emptyimage} alt="" />
+            <div className={styles.clientInfo}>
+              <div className={styles.contactInfo}>
+                <h3>{client?.clientData?.clientName || "Aythen"}</h3>
+                <span>{client?.email || "info@aythen.com"}</span>
+                <span>
+                  {client?.clientData?.codeCountry || "+34"}{" "}
+                  {client?.clientData?.numberPhone || "600 798 012"}
+                </span>
+              </div>
+              <div className={styles.info}>
+                <p>Número Fiscal</p>
+                <span>{client?.clientData?.taxNumber || "Desconocido"}</span>
+              </div>
+              <div className={styles.info}>
+                <p># Transacciones</p>
+                <span>0</span>
+                <p>Total</p>
+                <span>0,0 EUR en los últimos 30 días</span>
+              </div>
             </div>
           </div>
           <div className={styles.searchContainer}>
-            <button
-              className={styles.infoBtn}
-              onClick={() => setShowNewClient(true)}
-            >
+            <div className={styles.button}>Editar Contacto</div>
+            <Button action={() => setShowNewClient(true)}>
               <img src={plusIcon} alt="" />
               Nueva transacción
-            </button>
+            </Button>
 
-            <div className={styles.inputWrapper}>
+            <SearchIconWithIcon
+            // ref={searchInputRef}
+            // searchTerm={searchTerm}
+            // setSearchTerm={setSearchTerm}
+            // iconRight={pencilSquareIcon}
+            // classNameIconRight={styles.searchContainerL}
+            // onClickIconRight={() => setIsFilterOpen(true)}
+            >
+              <>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={winIcon} alt="kIcon" />
+                </div>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={KIcon} alt="kIcon" />
+                </div>
+              </>
+            </SearchIconWithIcon>
+            {/* <div className={styles.inputWrapper}>
               <img src={searchGray} className={styles.inputIconInside} />
               <input
                 type="text"
@@ -289,423 +341,209 @@ const Transactions = () => {
               <div className={styles.inputIconOutsideContainer}>
                 <img src={filterSearch} className={styles.inputIconOutside} />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
-
-        <div className={styles.clientsTable}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.small}>
-                  <input
-                    type="checkbox"
-                    name="clientSelected"
-                    checked={
-                      clientSelected.length == tableData.length ? true : false
-                    }
-                    onClick={selectAllClients}
-                  />
-                </th>
-                {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 8 ? styles.small : ""}>
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {transactionsByClient.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
+        {transactionsByClient.length >= 0 ? (
+          <div className={styles.clientsTable}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.small}>
                     <input
                       type="checkbox"
                       name="clientSelected"
-                      onChange={() => toggleTransactionSelection(row.id)}
-                      onClick={() => selectClient(rowIndex)}
                       checked={
-                        clientSelected.includes(rowIndex) ? true : false
+                        clientSelected.length == tableData.length ? true : false
                       }
+                      onClick={selectAllClients}
                     />
-                  </td>
-                  <td className={styles.idContainer}>
-                    <img src={pdf} className={styles.pdfIcon} />
-                    {row.id.slice(10, 15)}
-                  </td>
-                  {/* <td>
-                    {Array.isArray(row.desc)
-                      ? row.desc.map((item, itemIndex) => (
-                          <p key={itemIndex}>{item}</p>
-                        ))
-                      : row.desc}
-                  </td> */}
-                  <td>
-                    <p>
-                      {row?.doc?.totalData?.description
-                        ? row?.doc?.totalData?.description
-                        : "Sin descripción"}
-                    </p>
-                  </td>
-                  <td>
-                    <div className={styles.tags}>
-                      <span className={`${styles.tag} ${styles.tagBlack}`}>
-                        Etiqueta
-                      </span>
-                      <span className={`${styles.tag} ${styles.tagBlue}`}>
-                        Etiqueta
-                      </span>
-                      <span className={`${styles.tag} ${styles.tagRed}`}>
-                        Etiqueta
-                      </span>
-                      <span className={`${styles.tag} ${styles.tagGreen}`}>
-                        Etiqueta
-                      </span>
-                    </div>
-                  </td>
-                  <td>{row?.doc?.totalData?.totalAmount}</td>
-                  <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
-                  <td>
-                    {row?.doc?.totalData?.expirationDateYear}-
-                    {row?.doc?.totalData?.expirationDateMonth}-
-                    {row?.doc?.totalData?.expirationDateDay}
-                  </td>
-                  <td>
-                    {row.doc?.totalData?.payMethod
-                      ? row.doc?.totalData?.payMethod
-                      : "Sin especificar"}
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      {/* <span className={getStateClass(row.state[0])}>
-                        &bull;
-                      </span> */}
-                      <span>
-                        {row?.doc?.totalData?.status
-                          ? row?.doc?.totalData?.status
-                          : "pendiente"}
-                      </span>
+                  </th>
+                  {tableHeaders.map((header, index) => (
+                    <th key={index} className={index == 8 ? styles.small : ""}>
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(transactionsByClient.length > 0
+                  ? transactionsByClient
+                  : mockTransactions
+                ).map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name="clientSelected"
+                        onChange={() => toggleTransactionSelection(row.id)}
+                        onClick={() => selectClient(rowIndex)}
+                        checked={
+                          clientSelected.includes(rowIndex) ? true : false
+                        }
+                      />
+                    </td>
+                    <td className={styles.idContainer}>
+                      <img src={pdf} className={styles.pdfIcon} />
+                      {row.id}
+                    </td>
+                    {/* <td>
+               {Array.isArray(row.desc)
+                 ? row.desc.map((item, itemIndex) => (
+                     <p key={itemIndex}>{item}</p>
+                   ))
+                 : row.desc}
+             </td> */}
+                    <td>
+                      <p>
+                        {row?.doc?.totalData?.description
+                          ? row?.doc?.totalData?.description
+                          : "Sin descripción"}
+                      </p>
+                    </td>
+                    <td>
+                      <div className={styles.tags}>
+                        <span
+                          className={`${styles.tag} ${styles.tagWhite}`}
+                        ></span>
+                        <span
+                          className={`${styles.tag} ${styles.tagRed}`}
+                        ></span>
+                        <span
+                          className={`${styles.tag} ${styles.tagOrange}`}
+                        ></span>
+                        <span
+                          className={`${styles.tag} ${styles.tagYellow}`}
+                        ></span>
+                        <span
+                          className={`${styles.tag} ${styles.tagGreen}`}
+                        ></span>
+                        <span
+                          className={`${styles.tag} ${styles.tagBlue}`}
+                        ></span>
+                        <span
+                          className={`${styles.tag} ${styles.tagViolet}`}
+                        ></span>
+                        <span
+                          className={`${styles.tag} ${styles.tagPink}`}
+                        ></span>
+                      </div>
+                    </td>
+                    <td>{row?.doc?.totalData?.totalAmount}</td>
+                    <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
+                    <td>
+                      {row?.doc?.totalData?.expirationDateYear}-
+                      {row?.doc?.totalData?.expirationDateMonth}-
+                      {row?.doc?.totalData?.expirationDateDay}
+                    </td>
+                    <td>
+                      {row.doc?.totalData?.payMethod
+                        ? row.doc?.totalData?.payMethod
+                        : "Sin especificar"}
+                    </td>
+                    <td>
                       <div
                         style={{
                           display: "flex",
-                          flexDirection: "column-reverse",
+                          alignItems: "center",
+                          gap: "5px",
                         }}
                       >
-                        {Array.isArray(row.state) ? (
-                          row.state.map((item, itemIndex) => (
-                            <p
-                              key={itemIndex}
-                              style={{
-                                color: itemIndex === 1 ? "blue" : "",
-                                fontWeight:
-                                  itemIndex === 1 ? "600" : "inherit",
-                                margin: "0",
-                              }}
-                              className={getStateClass(row.state[0])}
-                            >
-                              {item}
-                            </p>
-                          ))
-                        ) : (
-                          <p>{row.state}</p>
-                        )}
+                        {/* <span className={getStateClass(row.state[0])}>
+                   &bull;
+                 </span> */}
+                        <span>
+                          {row?.doc?.totalData?.status
+                            ? row?.doc?.totalData?.status
+                            : "pendiente"}
+                        </span>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column-reverse",
+                          }}
+                        >
+                          {Array.isArray(row.state) ? (
+                            row.state.map((item, itemIndex) => (
+                              <p
+                                key={itemIndex}
+                                style={{
+                                  color: itemIndex === 1 ? "blue" : "",
+                                  fontWeight:
+                                    itemIndex === 1 ? "600" : "inherit",
+                                  margin: "0",
+                                }}
+                                className={getStateClass(row.state[0])}
+                              >
+                                {item}
+                              </p>
+                            ))
+                          ) : (
+                            <p>{row.state}</p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className={styles.actions}>
-                    <div className={styles.transacciones}>
-                      <a
-                        onClick={() => {
-                          navigate("/allproducts");
-                          dispatch(setTransaction(row));
-                        }}
-                        href="#"
-                      >
-                        Ver
-                      </a>
-                      <span>(2.345)</span>
-                    </div>
-                    <div
-                      onClick={() => {
-                        toggleTransactionSelection(row.id);
-                        handleActions(rowIndex, row);
-                      }}
-                    >
-                      <img src={optionDots} />
-                    </div>
-                    {selectedRowIndex === rowIndex && (
-                      <ul className={styles.content_menu_actions}>
-                        <li
+                    </td>
+                    <td className={styles.actions}>
+                      <div className={styles.transacciones}>
+                        <a
                           onClick={() => {
-                            setShowNewClient(true);
-                            setSelectedRowIndex(null);
+                            navigate("/allproducts");
+                            dispatch(setTransaction(row));
                           }}
-                          className={styles.item_menu_actions}
+                          href="#"
                         >
-                          Editar
-                        </li>
-                        <li
-                          onClick={(e) => {
-                            handleDeleteTransactions(e);
-                            setSelectedRowIndex(null);
-                          }}
-                          className={styles.item_menu_actions}
-                        >
-                          Eliminar
-                        </li>
-                      </ul>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                          Ver Articulos
+                        </a>
+                        <span>(2.345)</span>
+                      </div>
+                      <div
+                        onClick={() => {
+                          toggleTransactionSelection(row.id);
+                          handleActions(rowIndex, row);
+                        }}
+                      >
+                        <img src={optionDots} />
+                      </div>
+                      {selectedRowIndex === rowIndex && (
+                        <ul className={styles.content_menu_actions}>
+                          <li
+                            onClick={() => {
+                              setShowNewClient(true);
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Editar
+                          </li>
+                          <li
+                            onClick={(e) => {
+                              handleDeleteTransactions(e);
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Eliminar
+                          </li>
+                        </ul>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <SkeletonScreen
+            labelText="No se han encontrado documentos con este contacto"
+            helperText="Todas las transacciones con este cliente o proveedor estarán listadas aquí."
+            showInput={true}
+            enableLabelClick={false}
+          />
+        )}
       </div>
       <div>
-
-        {showNewClient && (
-          <>
-            <div className={styles.bg} onClick={handleCloseNewClient}></div>
-            <div
-              className={`${styles.billContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
-            >
-              <div className={styles.billHeader}>
-                <h3>Nueva Factura</h3>
-                <span onClick={handleCloseNewClient}>
-                  <img src="/static/media/closeMenu.3c187347ca475028b4f31ab3e491fb44.svg" />
-                </span>
-              </div>
-              <div className={styles.billContent}>
-                <div className={styles.name}>
-                  <div className={styles.column}>
-                    <span>Título</span>
-                    <input type="text" placeholder="Nueva Factura" />
-                  </div>
-                  <div className={styles.column}>
-                    <span>Guardar en</span>
-                    <div
-                      className={`${styles.inputWrapper} ${styles.inputWrapperBill}`}
-                    >
-                      <img src={searchGray} className={styles.inputIconInside} />
-                      <input type="text" placeholder="/Nombredelacuenta" />
-                      <button className={styles.buttonInside}>
-                        Seleccionar Ubicación
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.iva}>
-                  <div className={styles.column}>
-                    <div className={styles.row}>
-                      <span>Subtotal</span>
-                      <span>0,00€</span>
-                    </div>
-                    <div className={styles.row}>
-                      <span>Impuestos</span>
-                      <div>
-                        <input type="text" placeholder="%" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.column}>
-                    <div className={styles.row}>
-                      <select className={styles.btnBill}>
-                        <option value="eur">EUR</option>
-                      </select>
-                      <p className={styles.stateContainer}>
-                        Estado:{" "}
-                        <select className={styles.state}>
-                          <option value="eur">Pendiente</option>
-                        </select>
-                      </p>
-                    </div>
-                    <div className={styles.row}>
-                      <span>Total</span>
-                      <span>0,00€</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.billTo}>
-                  <div className={styles.column}>
-                    <span>De</span>
-                    <textarea placeholder="Su empresa o nombre, y dirección" />
-                  </div>
-                  <div
-                    className={styles.column}
-                    style={{ justifyContent: "start" }}
-                  >
-                    <div className={styles.row}>
-                      <span>Facturar a </span>
-                      <img src={searchGray} alt="" />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Dirección de facturación de su cliente"
-                      style={{ height: "100%" }}
-                    />
-                    <div
-                      className={`${styles.inputWrapper} ${styles.inputWrapperBill}`}
-                    >
-                      <img src={searchGray} className={styles.inputIconInside} />
-                      <input type="text" placeholder="Buscar..." />
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.bill}>
-                  <div className={styles.column}>
-                    <div className={styles.row}>
-                      <div style={{ gap: "10px" }}>
-                        <span># Factura</span>
-                        <input type="text" placeholder="0001" />
-                      </div>
-                      <div style={{ gap: "10px" }}>
-                        <span># Orden de compra</span>
-                        <input type="text" placeholder="opcional" />
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div>
-                        <span>Fecha</span>
-                        <select>
-                          <option value="25dec25">25 Dec 2025</option>
-                        </select>
-                      </div>
-                      <div>
-                        <span>Fecha vencimiento</span>
-                        <select>
-                          <option value="25dec25">25 Dec 2025</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.column} style={{ gap: "10px" }}>
-                    <span>Condiciones y formas de pago</span>
-                    <textarea placeholder="ex. Payment is due within 15 days"></textarea>
-                  </div>
-                </div>
-                <div className={styles.signContainer}>
-                  <div className={styles.logoCorporativo}>
-                    Logo
-                    <div style={{ display: "flex" }}>
-                      <div className={styles.containerLogo}>
-                        <input type="radio" name="corporativeLogo1" />
-                        <img
-                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                          alt=""
-                        />
-                        <div className={styles.delete}>-</div>
-                      </div>
-                      <div className={styles.containerLogo}>
-                        <input type="radio" name="corporativeLogo1" />
-                        <img
-                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                          alt=""
-                        />
-                        <div className={styles.delete}>-</div>
-                      </div>
-                    </div>
-                    <button>Añade tu Logo</button>
-                  </div>
-                  <div className={styles.logoCorporativo}>
-                    Firma
-                    <div style={{ display: "flex" }}>
-                      <div className={styles.containerLogo}>
-                        <input type="radio" name="corporativeLogo2" />
-                        <img
-                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                          alt=""
-                        />
-                        <div className={styles.delete}>-</div>
-                      </div>
-                      <div className={styles.containerLogo}>
-                        <input type="radio" name="corporativeLogo2" />
-                        <img
-                          src="https://www.surforma.com/media/filer_public_thumbnails/filer_public/25/c7/25c793ae-4b50-40f3-a954-1fdc52c999fd/l4068.jpg__800x600_q95_crop_subsampling-2_upscale.jpg"
-                          alt=""
-                        />
-                        <div className={styles.delete}>-</div>
-                      </div>
-                    </div>
-                    <button>Añade tu firma</button>
-                  </div>
-                </div>
-                <div className={styles.addArticle}>
-                  <button>Añadir artículo nuevo</button>
-                  <span>
-                    <img src={arrow} alt="" />
-                    Artículos (2)
-                  </span>
-                </div>
-                <div className={styles.articleBill}>
-                  <div className={styles.articleTitle}>
-                    <span>Articulo 1</span>
-                    <div className={styles.deleteContainer}>
-                      <a href="#">Editar</a>
-                      <div
-                        className={`${styles.delete} ${styles.positionDelete}`}
-                      >
-                        -
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.articleBody}>
-                    <img
-                      src="https://materialescomsa.com/wp-content/uploads/2019/07/22079.jpg"
-                      alt=""
-                    />
-                    <div className={styles.info}>
-                      <div>
-                        <span className={styles.light}>Nombre o Descripción</span>
-                        <span className={styles.light}>PVP (Recomendado):</span>
-                      </div>
-                      <div>
-                        <span>Artículo 1</span>
-                        <span className={styles.light}>00,00 EUR</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.articleTaxs}>
-                    <div className={styles.column}>
-                      <p>Cant.</p>
-                      <input type="text" placeholder="1.0" />
-                    </div>
-                    <div className={styles.column}>
-                      <p>Precio unit.</p>
-                      <div className={styles.unitPrice}>
-                        <input
-                          type="text"
-                          placeholder="Dejar vacío para rellenar con PVP"
-                          disabled={!isEditing}
-                        />
-                        <button onClick={() => setIsEditing(!isEditing)}>
-                          Editar
-                        </button>
-                      </div>
-                    </div>
-                    <div className={styles.column}>
-                      <p>Importe</p>
-                      <span className={styles.light}>0.0 €</span>
-                    </div>
-                    <div className={styles.column}>
-                      <p>Impuesto</p>
-                      <button className={styles.addTax}>Añadir Impuesto</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.btnContainerBills}>
-                <button className={styles.btnCancel}>Cancel</button>
-                <button className={styles.btnSave}>Guardar</button>
-              </div>
-            </div>
-          </>
-        )}
+        {showNewClient && <NewBIll setShowNewBill={setShowNewClient} />}
       </div>
     </PanelTemplate>
   );

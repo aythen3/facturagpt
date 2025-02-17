@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import styles from "./ImportContactsAndProducts.module.css";
 import { ReactComponent as DownloadIcon } from "../../assets/uploadIconGreen.svg";
+import HeaderCard from "../HeaderCard/HeaderCard";
+import Button from "../Button/Button";
 const ImportContactsAndProducts = ({ state, text }) => {
   const fileInputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
@@ -42,35 +44,43 @@ const ImportContactsAndProducts = ({ state, text }) => {
       <div className={styles.bg} onClick={() => state(false)}></div>
 
       <div className={styles.importContainer}>
-        <header>
-          <h2>Importar {text}</h2>
-          <p>
+        <HeaderCard title={`Importar ${text}`} setState={state}>
+          <Button type="white" action={() => setShowDiscardChange(true)}>
+            Cancel
+          </Button>
+          <Button>Importar</Button>
+        </HeaderCard>
+
+        <div className={styles.importContent}>
+          <div className={styles.dropZoneContainer}>
+            <div
+              className={`${styles.dropZone} ${dragging ? styles.dragging : ""}`}
+              onClick={handleButtonClick}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <DownloadIcon />
+              <button
+                type="button"
+                className={styles.uploadButton}
+                onClick={handleButtonClick}
+              >
+                Subir archivo
+              </button>
+              <p>Selecciona o arrastra tu archivo</p>
+              <input
+                type="file"
+                ref={fileInputRef}
+                className={styles.hiddenInput}
+                onChange={handleFileChange}
+              />
+            </div>
+          </div>
+          <p className={styles.descText}>
             Descarga una muestra del archivo XLSX para ver el formato de
             importación
           </p>
-        </header>
-        <div
-          className={`${styles.dropZone} ${dragging ? styles.dragging : ""}`}
-          onClick={handleButtonClick}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <DownloadIcon />
-          <button
-            type="button"
-            className={styles.uploadButton}
-            onClick={handleButtonClick}
-          >
-            Subir archivo
-          </button>
-          <p>Selecciona o arrastra tu archivo</p>
-          <input
-            type="file"
-            ref={fileInputRef}
-            className={styles.hiddenInput}
-            onChange={handleFileChange}
-          />
         </div>
       </div>
     </div>

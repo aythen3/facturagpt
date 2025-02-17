@@ -6,6 +6,8 @@ import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as EmailIcon } from "../../../../assets/email-icon-connection.svg";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import styles from "./ModalAddConnectionOutlook.module.css";
+import { ReactComponent as Outlook } from "../../../../assets/outlook-icon.svg";
+import Button from "../../../Button/Button";
 
 const ModalAddConnectionOutlook = ({ close, addConnection }) => {
   const [email, setEmail] = useState("");
@@ -69,15 +71,17 @@ const ModalAddConnectionOutlook = ({ close, addConnection }) => {
   };
 
   return (
-    <AddConnectionModal close={close} type="Email" icon={<EmailIcon />}>
+    <AddConnectionModal
+      close={close}
+      type="Outlook"
+      icon={<EmailIcon />}
+      iconHeader={Outlook}
+    >
       <div className={styles.gridContainer}>
-
         <div className={styles.signInOption}>
-          <OutlookIcon width={28} height={28} />
+          <Outlook width={28} height={28} />
           <p>Sign in with Outlook</p>
         </div>
-
-
 
         <div className={styles.serverConfigContainer}>
           <LabelInputComponent
@@ -138,13 +142,9 @@ const ModalAddConnectionOutlook = ({ close, addConnection }) => {
             />
           </div>
         </div>
-        <button
-          onClick={handleAddConnection}
-          className={styles.addConnectionButton}
-        >
-          <EmailIcon />
+        <Button action={handleAddConnection}>
           <span>Add Connection</span>
-        </button>
+        </Button>
       </div>
     </AddConnectionModal>
   );

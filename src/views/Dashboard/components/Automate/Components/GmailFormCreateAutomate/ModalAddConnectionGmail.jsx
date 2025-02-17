@@ -6,7 +6,8 @@ import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as EmailIcon } from "../../../../assets/email-icon-connection.svg";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import styles from "./ModalAddConnectionGmail.module.css";
-
+import { ReactComponent as Gmail } from "../../../../assets/gmail-icon.svg";
+import Button from "../../../Button/Button";
 const ModalAddConnectionGmail = ({ close, addConnection }) => {
   const [email, setEmail] = useState("");
   const [appPassword, setAppPassword] = useState("");
@@ -69,10 +70,15 @@ const ModalAddConnectionGmail = ({ close, addConnection }) => {
   };
 
   return (
-    <AddConnectionModal close={close} type="Email" icon={<EmailIcon />}>
+    <AddConnectionModal
+      close={close}
+      type="Gmail"
+      icon={<EmailIcon />}
+      iconHeader={Gmail}
+    >
       <div className={styles.gridContainer}>
         <div className={styles.signInOption}>
-          <GmailIcon width={28} height={28} />
+          <Gmail width={28} height={28} />
           <p>Sign in with Gmail</p>
         </div>
 
@@ -162,13 +168,9 @@ const ModalAddConnectionGmail = ({ close, addConnection }) => {
             />
           </div>
         </div> */}
-        <button
-          onClick={handleAddConnection}
-          className={styles.addConnectionButton}
-        >
-          <EmailIcon />
+        <Button action={handleAddConnection}>
           <span>Add Connection</span>
-        </button>
+        </Button>
       </div>
     </AddConnectionModal>
   );
