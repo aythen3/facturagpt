@@ -1,8 +1,6 @@
 .container {
   /* padding: 20px; */
-  min-height: 100vh;
   width: 100%;
-  max-width: calc(100% - 240px);
 }
 
 .clientsHeader {
@@ -15,8 +13,10 @@
 }
 .infoClient {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   color: #666666;
+  /* align-items: center; */
+  gap: 10px;
   h3,
   p {
     margin: 0;
@@ -30,7 +30,34 @@
     font-weight: bold;
   }
 }
-
+.arrowContainer {
+  height: 100%;
+}
+.iconContainer {
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 4px;
+  display: flex;
+  background-color: #10a37f;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  box-sizing: border-box;
+  height: 25px;
+  width: 25px;
+}
+.clientInfo {
+  display: flex;
+  flex-direction: column;
+}
 .contactInfo,
 .info {
   display: flex;
@@ -49,36 +76,58 @@
 
 .tags {
   display: flex;
-  flex-direction: column;
   gap: 5px;
 }
 
 .tag {
   text-align: center;
-  padding: 2px 20px;
   color: white;
   width: fit-content;
-  border-radius: 40px;
-  -webkit-border-radius: 40px;
-  -moz-border-radius: 40px;
-  -ms-border-radius: 40px;
-  -o-border-radius: 40px;
+  border-radius: 999px;
+  height: 20px;
+  width: 20px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+  margin-left: -20px;
 }
 
-.tagBlack {
-  background-color: #222222;
+.tag:nth-child(1) {
+  margin-left: 0;
 }
 
-.tagBlue {
-  background-color: #0b06ff;
+.tagWhite {
+  background-color: #ffffff;
+  border: 2px solid #af8f8c;
 }
-
 .tagRed {
-  background-color: #ff0000;
+  background-color: #f2c6c2;
+  border: 2px solid #af8f8c;
 }
-
+.tagOrange {
+  background-color: #f2cfc2;
+  border: 2px solid #af958c;
+}
+.tagYellow {
+  background-color: #f2e3c2;
+  border: 2px solid #b6ab92;
+}
 .tagGreen {
-  background-color: #12a27f;
+  background-color: #c2f2d3;
+  border: 2px solid #8caf98;
+}
+.tagBlue {
+  background-color: #c2d8f2;
+  border: 2px solid #8c9caf;
+}
+.tagViolet {
+  background-color: #d7c5f6;
+  border: 2px solid #a194b7;
+}
+.tagPink {
+  background-color: #f0c2f2;
+  border: 2px solid #ad8caf;
 }
 
 .pdfIcon {
@@ -136,6 +185,11 @@
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+  .button {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #222222;
+  }
 }
 
 .searchInput {
@@ -228,7 +282,7 @@
   font-size: 18px; /* Ícono fuera del input */
 }
 
-.clientsTable{
+.clientsTable {
   overflow: auto;
   &:scrollbar {
     display: none;
@@ -236,7 +290,8 @@
 }
 
 .table {
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
   text-align: start;
   border-collapse: collapse; /* Asegura que las celdas se vean uniformes */
 }
@@ -791,4 +846,15 @@ input[type="radio"]:checked {
   list-style-type: none;
   color: white;
   cursor: pointer;
+}
+.searchIconsWrappers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #ececf1;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 3px;
 }

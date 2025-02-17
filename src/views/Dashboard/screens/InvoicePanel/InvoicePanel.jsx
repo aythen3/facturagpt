@@ -6,6 +6,7 @@ import Factura from "../../assets/facturaEjemplo.png";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
+import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen.jsx";
 const company = {
   email: "coolmail@mail.com",
   phone: "341-59-15",
@@ -94,25 +95,35 @@ export default function InvoicePanel() {
       {/* <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} /> */}
 
       {!fileUploaded ? (
-        <div
-          className={styles.inputContainer}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <input
-            type="file"
-            onChange={handleFileChangeInvoice}
-            placeholder="Selecciona una factura o arrastra"
-            id="InvoiceInput"
-          />
-          <label
-            onClick={() => document.querySelector("#InvoiceInput").click()}
-          >
-            Selecciona una factura o arrastra y suelta <br /> Digitaliza y
-            gestiona todos tus documentos con FacturaGPT.
-          </label>
-        </div>
+        <SkeletonScreen
+          handleDragOver={handleDragOver}
+          handleDrop={handleDrop}
+          handleFileChange={handleFileChangeInvoice}
+          inputId="InvoiceInput"
+          labelText="Selecciona una factura o arrastra y suelta"
+          helperText="Digitaliza y gestiona todos tus documentos con FacturaGPT."
+          showInput={true} // Puedes cambiarlo a false para ocultar el input
+          enableLabelClick={true} // Puedes cambiarlo a false para desactivar el click en el label/>
+        />
       ) : (
+        // <div
+        //   className={styles.inputContainer}
+        //   onDragOver={handleDragOver}
+        //   onDrop={handleDrop}
+        // >
+        //   <input
+        //     type="file"
+        //     onChange={handleFileChangeInvoice}
+        //     placeholder="Selecciona una factura o arrastra"
+        //     id="InvoiceInput"
+        //   />
+        //   <label
+        //     onClick={() => document.querySelector("#InvoiceInput").click()}
+        //   >
+        //     Selecciona una factura o arrastra y suelta <br /> Digitaliza y
+        //     gestiona todos tus documentos con FacturaGPT.
+        //   </label>
+        // </div>
         <>
           <InvoiceForm
             hasNote={hasNote}
@@ -130,7 +141,6 @@ export default function InvoicePanel() {
           />
         </>
       )}
-  
     </PanelTemplate>
   );
 }

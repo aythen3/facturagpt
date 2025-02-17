@@ -6,7 +6,26 @@
   border-radius: 8px;
   align-items: center;
   position: relative;
-  overflow-x: auto;
+  min-height: 60px;
+  overflow-x: scroll;
+}
+
+.editorToolbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.editorToolbar::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1; /* Color del thumb */
+  border-radius: 4px;
+}
+
+.editorToolbar::-webkit-scrollbar-thumb:hover {
+  background-color: #ababab;
+}
+
+.editorToolbar::-webkit-scrollbar-track {
+  /* background-color: #2c2c2c; */
 }
 
 .buttonGroup {
@@ -137,7 +156,7 @@ select.formatBtn {
 }
 
 .colorOptions {
-  position: absolute;
+  position: fixed;
   display: flex;
   background-color: white;
   padding: 5px;

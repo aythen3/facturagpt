@@ -33,9 +33,9 @@ import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
 import PayMethod from "../../components/PayMethod/PayMethod";
 import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
 import KIcon from "../../assets/KIcon.svg";
+import winIcon from "../../assets/winIcon.svg";
 import Button from "../../components/Button/Button";
 import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
-import winIcon from "../../assets/winIcon.svg";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 import DeleteButton from "../../components/DeleteButton/DeleteButton";
 const Clients = () => {
@@ -674,7 +674,10 @@ const Clients = () => {
                         ))
                       : row.email}
                   </td> */}
-                    <td>{client.companyPhoneNumber}</td>
+                    <td>
+                      {client.countryCode}
+                      {client.number}
+                    </td>
                     <td>
                       {client.companyAddress} {client.clientProvice}
                     </td>

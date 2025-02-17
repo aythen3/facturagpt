@@ -305,7 +305,7 @@ const Toolbar = () => {
             }}
           >
             <div>
-              <AIcon />
+              A
               <div
                 style={{
                   backgroundColor: selectedColor,
