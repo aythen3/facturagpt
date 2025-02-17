@@ -1,6 +1,7 @@
 .searchContainer {
   padding: 2px 8px;
   display: flex;
+  width: 100%;
 }
 .searchInputWrapper {
   display: flex;

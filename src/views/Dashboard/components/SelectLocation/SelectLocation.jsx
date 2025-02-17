@@ -176,7 +176,6 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
         }}
         className={`${styles.modalContent} ${isClosing ? styles.scaleDown : ""}`}
       >
-
         <HeaderCard title={"Seleccionar Ubicación"} setState={handleClose}>
           <Button type="white" action={handleClose}>
             Cancelar
@@ -198,7 +197,6 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
             </div>
           </div>
         </div>
-       
       </div>
       {showCreateFolderModal && (
         <CreateFolderModal

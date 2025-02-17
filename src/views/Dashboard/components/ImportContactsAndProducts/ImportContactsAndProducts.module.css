@@ -50,6 +50,8 @@
   padding: 10px 0;
   .descText {
     font-size: 14px;
+    text-align: center;
+    cursor: pointer;
   }
 }
 .dropZoneContainer {

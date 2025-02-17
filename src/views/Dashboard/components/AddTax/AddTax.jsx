@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import styles from "./AddTax.module.css";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import Button from "../Button/Button";
 import DiscardChange from "../DiscardChange/DiscardChange";
-const AddTax = ({ setShowTaxModal }) => {
+const AddTax = ({
+  showTaxModal,
+  setShowTaxModal,
+  isAnimating,
+
+  setIsAnimating,
+}) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [taxes, setTaxes] = useState([]);
   const [taxName, setTaxName] = useState("");
@@ -35,24 +41,49 @@ const AddTax = ({ setShowTaxModal }) => {
     setSelectedRow(null);
   };
   const [showDiscardChange, setShowDiscardChange] = useState(false);
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setShowTaxModal(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && showTaxModal) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setShowTaxModal(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showTaxModal]);
 
   return (
     <div className={styles.overlay}>
-      <div className={styles.bg} onClick={() => setShowTaxModal(false)}></div>
+      <div className={styles.bg} onClick={() => handleCloseNewClient()}></div>
       {showDiscardChange && (
         <DiscardChange
-          actionSave={() => setShowDiscardChange(false)}
+          actionSave={() => handleCloseNewClient()}
           actionDiscard={() => {
             setShowDiscardChange(false);
-            setShowTaxModal(false);
+            handleCloseNewClient();
           }}
         />
       )}
       <div
-        className={`${styles.addTaxContainer} ${showDiscardChange && styles.opacity}`}
+        className={`${styles.addTaxContainer}  ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
         <HeaderCard title={"Seleccionar Impuesto"} setState={setShowTaxModal}>
-          <Button type="white" action={() => setShowDiscardChange(true)}>
+          <Button type="white" action={() => handleCloseNewClient()}>
             Cancel
           </Button>
           <Button>Seleccionar</Button>
