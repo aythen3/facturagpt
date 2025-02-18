@@ -3,7 +3,7 @@ import styles from "./SearchIconWithIcon.module.css";
 import searchMagnify from "../../assets/searchMagnify.svg";
 const SearchIconWithIcon = ({
   children,
-  searchInputRef,
+  hola,
   searchTerm,
   setSearchTerm,
   iconRight,
@@ -11,6 +11,7 @@ const SearchIconWithIcon = ({
   onClickIconRight,
   placeholder = "Buscar",
   stylesComponent = {},
+  ref,
 }) => {
   return (
     <div className={styles.searchContainer} style={{ ...stylesComponent }}>
@@ -19,7 +20,7 @@ const SearchIconWithIcon = ({
           <img src={searchMagnify} alt="searchMagnify" />
         </div>
         <input
-          ref={searchInputRef}
+          ref={ref}
           type="text"
           placeholder={placeholder}
           className={styles.searchInput}

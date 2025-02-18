@@ -14,8 +14,8 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
   const [parametersEditing, setParametersEditing] = useState({});
   const [articlesEditing, setArticlesEditing] = useState({});
   const [editBaseImport, setEditBaseImport] = useState({});
-  const [seeParameters, setSeeParameters] = useState(false);
-  const [seeArticles, setSeeArticles] = useState(false);
+  const [seeParameters, setSeeParameters] = useState(true);
+  const [seeArticles, setSeeArticles] = useState(true);
   const [articlesTags, setArticlesTags] = useState({});
   const [parameters, setParameters] = useState([]);
   const [articles, setArticles] = useState([]);
@@ -138,9 +138,9 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   style={{ display: "flex", alignItems: "center", gap: "10px" }}
                 >
                   <p onClick={() => toggleEditing(param.id)}>
-                    {parametersEditing[param.id] ? "Guardar" : "Editar"}
+                    {!parametersEditing[param.id] ? "Guardar" : "Editar"}
                   </p>
-                  {parametersEditing[param.id] && (
+                  {!parametersEditing[param.id] && (
                     <img
                       src={minus}
                       alt="Icon"
@@ -152,19 +152,19 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
               </div>
               <div className={styles.parametersInfoContainer}>
                 <div className={styles.column}>
-                  {parametersEditing[param.id] && <p>Nombre del Parámetro</p>}
+                  {!parametersEditing[param.id] && <p>Nombre del Parámetro</p>}
                   <input
                     type="text"
                     placeholder={param.name}
-                    disabled={!parametersEditing[param.id]}
+                    disabled={parametersEditing[param.id]}
                   />
                 </div>
                 <div className={styles.column}>
-                  {parametersEditing[param.id] && <p>Valor del Parámetro</p>}
+                  {!parametersEditing[param.id] && <p>Valor del Parámetro</p>}
                   <input
                     type="text"
                     placeholder={param.value}
-                    disabled={!parametersEditing[param.id]}
+                    disabled={parametersEditing[param.id]}
                   />
                 </div>
               </div>
@@ -204,7 +204,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   style={{ display: "flex", alignItems: "center", gap: "10px" }}
                 >
                   <p onClick={() => toggleArticleEditing(article.id)}>
-                    {articlesEditing[article.id] ? "Guardar" : "Editar"}
+                    {articlesEditing[article.id] ? "Editar" : "Guardar"}
                   </p>
                   <img
                     src={minus}
@@ -257,7 +257,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   <input
                     type="text"
                     placeholder={article.quantity}
-                    disabled={!articlesEditing[article.id]}
+                    disabled={articlesEditing[article.id]}
                   />
                 </div>
                 <div className={styles.column}>
@@ -288,7 +288,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   <p>Retención</p>
                   <button
                     className={styles.addTax}
-                    disabled={!articlesEditing[article.id]}
+                    disabled={articlesEditing[article.id]}
                   >
                     Añadir Retención
                   </button>
@@ -297,7 +297,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   <p>Impuesto</p>
                   <button
                     className={styles.addTax}
-                    disabled={!articlesEditing[article.id]}
+                    disabled={articlesEditing[article.id]}
                     onClick={() => setShowTaxModal(true)}
                   >
                     Añadir Impuesto
@@ -307,7 +307,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
                   <p>Descuento</p>
                   <button
                     className={styles.addTax}
-                    disabled={!articlesEditing[article.id]}
+                    disabled={articlesEditing[article.id]}
                     onClick={() => setShowDiscountModal(true)}
                   >
                     Añadir Descuento

@@ -1,5 +1,8 @@
 .DetailsBillInputs {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   input {
     outline: none;
     border: none;

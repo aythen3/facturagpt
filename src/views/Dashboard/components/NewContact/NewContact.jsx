@@ -5,7 +5,8 @@ import ModalTemplate from "../ModalTemplate/ModalTemplate";
 import EditableInput from "../AccountSettings/EditableInput/EditableInput";
 import { ParametersLabel } from "../ParametersLabel/ParametersLabel";
 import Tags from "../Tags/Tags";
-const NewContact = ({ setShowNewContact }) => {
+const NewContact = ({ setShowNewContact, showNewContact }) => {
+  const [isAnimating, setIsAnimating] = useState(false);
   const [inputsEditing, setInputsEditing] = useState({
     name: false,
     desc: false,
@@ -58,11 +59,42 @@ const NewContact = ({ setShowNewContact }) => {
     parameters: [],
   });
 
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      dispatch(clearClient());
+      setShowNewContact(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && showNewContact) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          dispatch(clearClient());
+          setShowNewContact(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showNewContact]);
+
   return (
     <div>
-      <div className={styles.bg} onClick={() => setShowNewContact(false)}></div>
+      <div className={styles.bg} onClick={() => handleCloseNewClient()}></div>
       <div className={styles.newContactContainer}>
-        <ModalTemplate onClick={() => setShowNewContact(false)}>
+        <ModalTemplate
+          onClick={() => handleCloseNewClient()}
+          isAnimating={isAnimating}
+        >
           <div className={styles.allProductC}>
             <form className={styles.formAllProduct}>
               <EditableInput

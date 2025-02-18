@@ -8,6 +8,7 @@ import { Search } from "lucide-react";
 import horizontalDots from "../../assets/S3/horizontalDots.svg";
 import filterIcon from "../../assets/S3/filterIconBars.svg";
 import filterIconGreen from "../../assets/filtersIconBarGreen.svg";
+import { ReactComponent as Plusgreen } from "../../assets/plusIconGreen2.svg";
 import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { ReactComponent as HouseContainer } from "../../assets/HouseContainerIcon.svg";
@@ -34,6 +35,8 @@ import { FaUpload } from "react-icons/fa";
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
 import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
+import useFocusShortcut from "../../../../utils/useFocusShortcut";
+import GetPlusButton from "../GetPlusButton/GetPlusButton";
 export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -539,17 +542,17 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
   const searchInputRef = useRef(null);
 
   // Add this useEffect to handle the keyboard shortcut
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.shiftKey && e.key === "/") {
-        e.preventDefault();
-        searchInputRef.current?.focus();
-      }
-    };
+  // useEffect(() => {
+  //   const handleKeyDown = (e) => {
+  //     if (e.shiftKey && e.key === "/") {
+  //       e.preventDefault();
+  //       searchInputRef.current?.focus();
+  //     }
+  //   };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  //   document.addEventListener("keydown", handleKeyDown);
+  //   return () => document.removeEventListener("keydown", handleKeyDown);
+  // }, []);
   const [left, setLeft] = useState(-100); // Inicialmente oculto a la izquierda
   const startTouch = useRef(0); // Para almacenar la posición inicial del toque o el mouse
   const isMouseDown = useRef(false); // Detecta si el mouse está presionado
@@ -682,6 +685,22 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
     setLeft(-100);
   };
 
+  // Llama a la función y pasa la referencia
+  useFocusShortcut(searchInputRef, "/");
+
+  useEffect(() => {
+    console.log(userFilters);
+  }, [userFilters]);
+  const hasActiveFilters =
+    userFilters &&
+    (userFilters.keyWord !== "" ||
+      userFilters.maxValue !== "" ||
+      userFilters.minValue !== "" ||
+      userFilters.selectedCategory !== "" ||
+      userFilters.selectedCurrency !== "" ||
+      (userFilters.selectedTags && userFilters.selectedTags.length > 0) ||
+      (userFilters.selectedTypes && userFilters.selectedTypes.length > 0));
+
   return (
     <>
       {/* Div invisible para detectar swipe hacia la derecha */}
@@ -723,6 +742,7 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
           left: `${left}vw`, // Aplicar el left dinámico
           width: "80vw",
           height: "92vh",
+          height: "calc(100vh - 50px)",
           backgroundColor: "white",
           transition: "left 0.3s ease",
           boxSizing: "border-box",
@@ -754,7 +774,7 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
             iconRight={
               userFilters &&
               Object.keys(userFilters).length > 0 &&
-              userFilters.keyWord !== ""
+              hasActiveFilters
                 ? filterIconGreen
                 : filterIcon
             }
@@ -763,7 +783,7 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
           >
             {userFilters &&
             Object.keys(userFilters).length > 0 &&
-            userFilters.keyWord !== "" ? (
+            hasActiveFilters ? (
               <img
                 src={l}
                 alt="filterIcon"
@@ -806,6 +826,14 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
           </SearchIconWithIcon>
         </div>
         <div className={styles.filesContainer}>
+          {isMobile && (
+            <div className={styles.fileExplorerGetPlusContainer}>
+              <div className={styles.moreGreen}>
+                <Plusgreen />
+              </div>
+              <GetPlusButton />
+            </div>
+          )}
           <div className={styles.fileList}>
             {getFilesLoading ? (
               <div className={styles.loaderContainer}>
@@ -820,6 +848,16 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
                 />
               </div>
             ) : (
+              (filteredFiles.length === 0 &&
+                (hasActiveFilters || searchTerm !== "") && (
+                  <div className={styles.noFilesContainerMessage}>
+                    <h4>
+                      No se han encontrado resultados con estas
+                      especificaciones.
+                    </h4>
+                    <h4>Para añadir un documento, arrástrelo aquí.</h4>
+                  </div>
+                )) ||
               (filteredFiles.length === 0 && (
                 <div
                   style={{ background: dragingOverContainer && "#ECECF1" }}

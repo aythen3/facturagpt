@@ -6,9 +6,10 @@ import FloatingMenu from "../../components/FloatingMenu/FloatingMenu.jsx";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin.jsx";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import star from "../../assets/starPlus.svg";
 import { ReactComponent as AddPlus } from "../../assets/addPlus.svg";
 import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
+import { ReactComponent as PanelMobileIcon } from "../../assets/panelMobileIcon.svg";
+import { ReactComponent as FileMobileIcon } from "../../assets/fileIcon.svg";
 import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
 import { ReactComponent as DotsNotification } from "../../assets/dotsNotification.svg";
 import { ReactComponent as ClientIcon } from "../../assets/clientsIcon.svg";
@@ -18,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import Chat from "../../components/Chat/Chat.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import GetPlusButton from "../GetPlusButton/GetPlusButton.jsx";
 const PanelTemplate = ({ children }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -110,7 +112,6 @@ const PanelTemplate = ({ children }) => {
                 <AddPlus />
                 Automatizar
               </li> */}
-
               <li>
                 <a
                   href="/admin/chat"
@@ -125,7 +126,7 @@ const PanelTemplate = ({ children }) => {
                   href="/admin/panel"
                   className={fromPath == "panel" ? styles.active : ""}
                 >
-                  <ChatIcon />
+                  <PanelMobileIcon />
                   Panel
                 </a>
               </li>
@@ -134,7 +135,7 @@ const PanelTemplate = ({ children }) => {
                   href="/admin/documents"
                   className={fromPath == "documents" ? styles.active : ""}
                 >
-                  <ChatIcon />
+                  <FileMobileIcon />
                   Documentos
                 </a>
               </li>
@@ -146,7 +147,7 @@ const PanelTemplate = ({ children }) => {
                   <ClientIcon />
                   Contactos
                 </a>
-              </li>
+              </li>{" "}
               <li>
                 <a
                   href="/admin/products"
@@ -155,7 +156,7 @@ const PanelTemplate = ({ children }) => {
                   <BoxIcon />
                   Activos
                 </a>
-              </li>
+              </li>{" "}
               <li>
                 <a
                   href="/admin/notification"
@@ -163,34 +164,40 @@ const PanelTemplate = ({ children }) => {
                 ${fromPath == "notification" ? styles.active : ""}`}
                 >
                   <DotsNotification />
-                  Notificacions
+                  Notificaciones
                   {numNotification !== 0 && <span>{numNotification}</span>}
                 </a>
               </li>
-            </ul>
-            <div
-              onClick={handleProfileClick}
-              className={styles.profileContainer}
-            >
-              <div className={styles.profileText}>
-                <p>{user?.nombre || "Not found"}</p>
-                <span>{user?.role || "Not found"}</span>
-              </div>
-              {user?.profileImage ? (
-                <img
-                  className={styles.profileImage}
-                  src={user?.profileImage}
-                  alt=""
-                />
-              ) : (
-                <div className={styles.initials}>
-                  {user?.nombre?.split(" ").map((letter) => letter?.[0] || "U")}
+              <li>
+                {" "}
+                <div
+                  onClick={handleProfileClick}
+                  className={styles.profileContainer}
+                >
+                  {user?.profileImage ? (
+                    <img
+                      className={styles.profileImage}
+                      src={user?.profileImage}
+                      alt=""
+                    />
+                  ) : (
+                    <div className={styles.initials}>
+                      {user?.nombre
+                        ?.split(" ")
+                        .map((letter) => letter?.[0] || "U")}
+                    </div>
+                  )}{" "}
+                  <div className={styles.profileText}>
+                    <p>{user?.nombre || "Not found"}</p>
+                    <span>{user?.role || "Not found"}</span>
+                  </div>
                 </div>
-              )}
-            </div>
-            <button>
-              {t("buttonGetPlus")} <img src={star} alt="Icon" />
-            </button>
+              </li>
+              <li>
+                {" "}
+                <GetPlusButton />
+              </li>
+            </ul>
           </div>
         </>
         <div className={styles.contentTemplate}>{children}</div>

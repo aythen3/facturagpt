@@ -350,8 +350,18 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
             isAnimating={isAnimating}
           />
         )}
-        {showNewContact && <NewContact setShowNewContact={setShowNewContact} />}
-        {showNewProduct && <NewProduct setShowNewProduct={setShowNewProduct} />}
+        {showNewContact && (
+          <NewContact
+            setShowNewContact={setShowNewContact}
+            showNewContact={showNewContact}
+          />
+        )}
+        {showNewProduct && (
+          <NewProduct
+            setShowNewProduct={setShowNewProduct}
+            showNewProduct={showNewProduct}
+          />
+        )}
         {showNewBill && <NewBIll setShowNewBill={setShowNewBill} />}
         {showUploadFile && <UploadFIle setShowUplaodFile={setShowUplaodFile} />}
       </Elements>

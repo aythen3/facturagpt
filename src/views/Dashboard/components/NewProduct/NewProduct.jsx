@@ -75,6 +75,7 @@ const CheckedInput = ({ text, title }) => {
 };
 
 const NewProduct = ({
+  showNewProduct,
   setShowNewProduct,
   setShowAddTags,
   setShowNewTagModal,
@@ -90,6 +91,7 @@ const NewProduct = ({
   const [editingProductsCategory, setEditingProductsCategory] = useState(true);
   const [suppliesData, setSuppliesData] = useState([]);
   const [alternateData, setAlternateData] = useState([]);
+
   // Etiquetas seleccionadas
   const handleChange = ({ name, newValue }) => {
     console.log(`Setting ${name} to ${newValue}`);
@@ -136,11 +138,42 @@ const NewProduct = ({
   }, [creatingBill]);
 
   const [selectTypeClient, setSelectTypeClient] = useState(0);
+
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setShowNewProduct(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && showNewProduct) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setShowNewProduct(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showNewProduct]);
+
   return (
     <div className={styles.overlay}>
-      <div className={styles.bg} onClick={() => setShowNewProduct(false)}></div>
+      <div className={styles.bg} onClick={() => handleCloseNewClient()}></div>
       <div className={styles.newProductContainer}>
-        <ModalTemplate text="Activo" onClick={() => setShowNewProduct(false)}>
+        <ModalTemplate
+          text="Activo"
+          onClick={() => handleCloseNewClient()}
+          isAnimating={isAnimating}
+        >
           <div
             className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
           >
