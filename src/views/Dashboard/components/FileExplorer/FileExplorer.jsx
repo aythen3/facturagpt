@@ -12,7 +12,8 @@ import { MutatingDots } from "react-loader-spinner";
 import Filter from "./Filters";
 import { ReactComponent as HouseContainer } from "../../assets/HouseContainerIcon.svg";
 import { ReactComponent as ArrowRightText } from "../../assets/arrowRightText.svg";
-
+import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
+import ImageEmpty from "../../assets/ImageEmpty.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -33,7 +34,7 @@ import { FaUpload } from "react-icons/fa";
 import FilesFilterModal from "../FilesFilterModal/FilesFilterModal";
 import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
 import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
-export default function FileExplorer({ isOpen, setIsOpen }) {
+export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -549,7 +550,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
-  const [left, setLeft] = useState(-80); // Inicialmente oculto a la izquierda
+  const [left, setLeft] = useState(-100); // Inicialmente oculto a la izquierda
   const startTouch = useRef(0); // Para almacenar la posición inicial del toque o el mouse
   const isMouseDown = useRef(false); // Detecta si el mouse está presionado
 
@@ -583,7 +584,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
 
     // Ocultar el menú si el usuario hace swipe a la izquierda
     if (difference < -30) {
-      setLeft(-80);
+      setLeft(-100);
     }
   };
   const handleInvisibleMouseDown = (e) => {
@@ -635,7 +636,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
     if (difference > 30) {
       setLeft(0); // Mostrar el menú
     } else if (difference < -30) {
-      setLeft(-80); // Ocultar el menú
+      setLeft(-100); // Ocultar el menú
     }
   };
 
@@ -678,8 +679,9 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
   const isMobile = windowWidth <= 768; // Usar el ancho de la ventana actualizado
   // Manejador para ocultar el menú
   const handleMenuClose = () => {
-    setLeft(-80);
+    setLeft(-100);
   };
+
   return (
     <>
       {/* Div invisible para detectar swipe hacia la derecha */}
@@ -720,7 +722,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           top: 0,
           left: `${left}vw`, // Aplicar el left dinámico
           width: "80vw",
-          height: "100vh",
+          height: "92vh",
           backgroundColor: "white",
           transition: "left 0.3s ease",
           boxSizing: "border-box",
@@ -738,39 +740,45 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
         onMouseMove={handleMouseMoveResize}
         onMouseUp={handleMouseUp}
       >
-        {/* <div className={styles.searchContainer}> */}
-        <SearchIconWithIcon
-          ref={searchInputRef}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          iconRight={
-            userFilters &&
-            Object.keys(userFilters).length > 0 &&
-            userFilters.keyWord !== ""
-              ? filterIconGreen
-              : filterIcon
-          }
-          classNameIconRight={styles.searchContainerL}
-          onClickIconRight={() => setIsFilterOpen(true)}
-        >
-          {userFilters &&
-          Object.keys(userFilters).length > 0 &&
-          userFilters.keyWord !== "" ? (
-            <img
-              src={l}
-              alt="filterIcon"
-              className={styles.searchContainerIcon}
-            />
-          ) : (
-            <img
-              src={l}
-              alt="filterIcon"
-              className={styles.searchContainerIcon}
-            />
+        <div className={styles.searchContainer}>
+          {isMobile && (
+            <div className={styles.showMobile}>
+              <img src={ImageEmpty} alt="" onClick={toggleMenu} />
+            </div>
           )}
-          {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
-          {/* </div> */}
-          {/* <div className={styles.fileList}>
+          {/* <div className={styles.searchContainer}> */}
+          <SearchIconWithIcon
+            ref={searchInputRef}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            iconRight={
+              userFilters &&
+              Object.keys(userFilters).length > 0 &&
+              userFilters.keyWord !== ""
+                ? filterIconGreen
+                : filterIcon
+            }
+            classNameIconRight={styles.searchContainerL}
+            onClickIconRight={() => setIsFilterOpen(true)}
+          >
+            {userFilters &&
+            Object.keys(userFilters).length > 0 &&
+            userFilters.keyWord !== "" ? (
+              <img
+                src={l}
+                alt="filterIcon"
+                className={styles.searchContainerIcon}
+              />
+            ) : (
+              <img
+                src={l}
+                alt="filterIcon"
+                className={styles.searchContainerIcon}
+              />
+            )}
+            {/* <Filter isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} /> */}
+            {/* </div> */}
+            {/* <div className={styles.fileList}>
      {getFilesLoading ? (
        <div className={styles.loaderContainer}>
          <MutatingDots
@@ -795,169 +803,173 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
        )
      )}
    </div> */}
-        </SearchIconWithIcon>
-        <div className={styles.fileList}>
-          {getFilesLoading ? (
-            <div className={styles.loaderContainer}>
-              <MutatingDots
-                visible={true}
-                height="100"
-                width="100"
-                color="#000"
-                secondaryColor="#3f3f3f"
-                radius="10"
-                ariaLabel="mutating-dots-loading"
-              />
-            </div>
-          ) : (
-            (filteredFiles.length === 0 && (
-              <div
-                style={{ background: dragingOverContainer && "#ECECF1" }}
-                className={styles.noFilesContainer}
-              >
-                <h3>Arrastra aquí tus archivos para subirlos.</h3>
-                <FaUpload size={50} color="#3a3a3a" />
-              </div>
-            )) ||
-            filteredFiles?.map((item, index) => {
-              const isFolder = item.Key.endsWith("/");
-              const fileName = isFolder
-                ? item.Key.split("/").slice(-2, -1)[0]
-                : item.Key.split("/").pop();
-              console.log("item.key", fileName);
-
-              return (
-                <div
-                  onClick={() => {
-                    if (isFolder) {
-                      console.log("setting current path to", item.Key);
-                      dispatch(setCurrentPath(item.Key));
-                    }
-
-                    if (isFolder) {
-                      navigate("/admin/panel");
-                    } else {
-                      console.log("item.Key", item);
-                      navigate("/admin/panel/" + item.ETag);
-                    }
-                  }}
-                  key={index}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, item)}
-                  onDragOver={(e) => handleDragOver(e, item)}
-                  onDrop={(e) => {
-                    console.log("triggering drop", item);
-                    handleDrop(e, item);
-                  }}
-                  onDragEnd={handleDragEnd}
-                  className={styles.fileItem}
-                >
-                  <div className={styles.itemInner}>
-                    <img
-                      src={getFileIcon(item.Key)}
-                      alt="file-icon"
-                      className={styles.fileIcon}
-                    />
-                    <span className={styles.itemText}>{fileName}</span>
-
-                    <button
-                      ref={(el) => (optionsButtonRefs.current[index] = el)}
-                      className={styles.moreButton}
-                      aria-label="More options"
-                      onClick={(e) => handleOptionsClick(index, e)}
-                    >
-                      <img src={horizontalDots} alt="horizontalDots" />{" "}
-                    </button>
-                  </div>
-                  {activePopup === index &&
-                    (isFolder ? (
-                      <FolderOptionsPopup
-                        parentRef={optionsButtonRefs.current[index]}
-                        onClose={() => setActivePopup(null)}
-                        onRename={() => console.log("renombrar")}
-                        onDelete={() => handleDelete(item)}
-                        action={() => console.log("añadir etiqueta")}
-                        // onClose={() => console.log("cerrar")}
-                        style={{
-                          position: "fixed",
-                          top:
-                            optionsButtonRefs.current[
-                              index
-                            ].getBoundingClientRect().top +
-                            optionsButtonRefs.current[index].offsetHeight,
-                          left: optionsButtonRefs.current[
-                            index
-                          ].getBoundingClientRect().left,
-                        }}
-                      />
-                    ) : (
-                      <FileOptionsPopup
-                        parentRef={optionsButtonRefs.current[index]}
-                        onDownload={() => handleDownload(item)}
-                        onShare={() => handleShare(item)}
-                        onDelete={() => handleDelete(item)}
-                        onClose={() => setActivePopup(null)}
-                        style={{
-                          position: "fixed",
-                          top:
-                            optionsButtonRefs.current[
-                              index
-                            ].getBoundingClientRect().top +
-                            optionsButtonRefs.current[index].offsetHeight,
-                          left: optionsButtonRefs.current[
-                            index
-                          ].getBoundingClientRect().left,
-                        }}
-                      />
-                    ))}
-                </div>
-              );
-
-              // {
-              //   activePopup === index && !isFolder && (
-              //     <FileOptionsPopup
-              //       parentRef={optionsButtonRefs.current[index]}
-              //       onDownload={() => handleDownload(item)}
-              //       onShare={() => handleShare(item)}
-              //       onDelete={() => handleDelete(item)}
-              //       onClose={() => setActivePopup(null)}
-              //       style={{
-              //         position: "fixed",
-              //         top:
-              //           optionsButtonRefs.current[index].getBoundingClientRect()
-              //             .top + optionsButtonRefs.current[index].offsetHeight,
-              //         left: optionsButtonRefs.current[
-              //           index
-              //         ].getBoundingClientRect().left,
-              //       }}
-              //     />
-              //   )
-              // }
-            })
-          )}
-
-          {uploadingFilesLoading && (
-            <div className={styles.bottomLoaderContainer}>
-              <MutatingDots
-                visible={true}
-                height="100"
-                width="100"
-                color="#000"
-                secondaryColor="#3f3f3f"
-                radius="10"
-                ariaLabel="mutating-dots-loading"
-              />
-            </div>
-          )}
+          </SearchIconWithIcon>
         </div>
-        <div className={styles.bottomMenu}>
-          <HouseContainer
-            onClick={() => dispatch(setCurrentPath(user.id + "/"))}
-            className={styles.icon}
-          />
-          {/* <span>2025</span> */}
+        <div className={styles.filesContainer}>
+          <div className={styles.fileList}>
+            {getFilesLoading ? (
+              <div className={styles.loaderContainer}>
+                <MutatingDots
+                  visible={true}
+                  height="100"
+                  width="100"
+                  color="#000"
+                  secondaryColor="#3f3f3f"
+                  radius="10"
+                  ariaLabel="mutating-dots-loading"
+                />
+              </div>
+            ) : (
+              (filteredFiles.length === 0 && (
+                <div
+                  style={{ background: dragingOverContainer && "#ECECF1" }}
+                  className={styles.noFilesContainer}
+                >
+                  <h3>Arrastra aquí tus archivos para subirlos.</h3>
+                  <FaUpload size={50} color="#3a3a3a" />
+                </div>
+              )) ||
+              filteredFiles?.map((item, index) => {
+                const isFolder = item.Key.endsWith("/");
+                const fileName = isFolder
+                  ? item.Key.split("/").slice(-2, -1)[0]
+                  : item.Key.split("/").pop();
+                console.log("item.key", fileName);
 
-          {renderBreadcrumbs()}
+                return (
+                  <div
+                    onClick={() => {
+                      if (isFolder) {
+                        console.log("setting current path to", item.Key);
+                        dispatch(setCurrentPath(item.Key));
+                      }
+
+                      if (isFolder) {
+                        navigate("/admin/panel");
+                      } else {
+                        console.log("item.Key", item);
+                        navigate("/admin/panel/" + item.ETag);
+                      }
+                    }}
+                    key={index}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, item)}
+                    onDragOver={(e) => handleDragOver(e, item)}
+                    onDrop={(e) => {
+                      console.log("triggering drop", item);
+                      handleDrop(e, item);
+                    }}
+                    onDragEnd={handleDragEnd}
+                    className={styles.fileItem}
+                  >
+                    <div className={styles.itemInner}>
+                      <img
+                        src={getFileIcon(item.Key)}
+                        alt="file-icon"
+                        className={styles.fileIcon}
+                      />
+                      <span className={styles.itemText}>{fileName}</span>
+
+                      <button
+                        ref={(el) => (optionsButtonRefs.current[index] = el)}
+                        className={styles.moreButton}
+                        aria-label="More options"
+                        onClick={(e) => handleOptionsClick(index, e)}
+                      >
+                        <img src={horizontalDots} alt="horizontalDots" />{" "}
+                      </button>
+                    </div>
+                    {activePopup === index &&
+                      (isFolder ? (
+                        <FolderOptionsPopup
+                          parentRef={optionsButtonRefs.current[index]}
+                          onClose={() => setActivePopup(null)}
+                          onRename={() => console.log("renombrar")}
+                          onDelete={() => handleDelete(item)}
+                          action={() => console.log("añadir etiqueta")}
+                          // onClose={() => console.log("cerrar")}
+                          style={{
+                            position: "fixed",
+                            top:
+                              optionsButtonRefs.current[
+                                index
+                              ].getBoundingClientRect().top +
+                              optionsButtonRefs.current[index].offsetHeight,
+                            left: optionsButtonRefs.current[
+                              index
+                            ].getBoundingClientRect().left,
+                          }}
+                        />
+                      ) : (
+                        <FileOptionsPopup
+                          parentRef={optionsButtonRefs.current[index]}
+                          onDownload={() => handleDownload(item)}
+                          onShare={() => handleShare(item)}
+                          onDelete={() => handleDelete(item)}
+                          onClose={() => setActivePopup(null)}
+                          style={{
+                            position: "fixed",
+                            top:
+                              optionsButtonRefs.current[
+                                index
+                              ].getBoundingClientRect().top +
+                              optionsButtonRefs.current[index].offsetHeight,
+                            left: optionsButtonRefs.current[
+                              index
+                            ].getBoundingClientRect().left,
+                          }}
+                        />
+                      ))}
+                  </div>
+                );
+
+                // {
+                //   activePopup === index && !isFolder && (
+                //     <FileOptionsPopup
+                //       parentRef={optionsButtonRefs.current[index]}
+                //       onDownload={() => handleDownload(item)}
+                //       onShare={() => handleShare(item)}
+                //       onDelete={() => handleDelete(item)}
+                //       onClose={() => setActivePopup(null)}
+                //       style={{
+                //         position: "fixed",
+                //         top:
+                //           optionsButtonRefs.current[index].getBoundingClientRect()
+                //             .top + optionsButtonRefs.current[index].offsetHeight,
+                //         left: optionsButtonRefs.current[
+                //           index
+                //         ].getBoundingClientRect().left,
+                //       }}
+                //     />
+                //   )
+                // }
+              })
+            )}
+
+            {uploadingFilesLoading && (
+              <div className={styles.bottomLoaderContainer}>
+                <MutatingDots
+                  visible={true}
+                  height="100"
+                  width="100"
+                  color="#000"
+                  secondaryColor="#3f3f3f"
+                  radius="10"
+                  ariaLabel="mutating-dots-loading"
+                />
+              </div>
+            )}
+          </div>
+          {currentPath?.split("/").filter(Boolean).length >= 2 && (
+            <div className={styles.bottomMenu}>
+              <HouseContainer
+                onClick={() => dispatch(setCurrentPath(user.id + "/"))}
+                className={styles.icon}
+              />
+
+              {renderBreadcrumbs()}
+            </div>
+          )}
         </div>
         {showLocationModal && (
           <SelectLocation onClose={() => setShowLocationModal(false)} />

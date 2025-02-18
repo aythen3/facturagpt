@@ -19,11 +19,11 @@
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 450px;
-  gap: 20px;
+  width: 515px;
   transform: scale(1);
   animation: scaleUp 300ms ease-out forwards;
   font-family: "Inter", sans-serif;
+  overflow: hidden;
 }
 
 .scaleDown {
@@ -129,8 +129,23 @@
 .contentContainer {
   display: flex;
   flex-direction: column;
-  padding: 0 24px;
   gap: 20px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  .content {
+    margin: 0 auto;
+    width: 90%;
+    background-color: white;
+    padding: 20px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    -ms-border-radius: 14px;
+    -o-border-radius: 14px;
+  }
 }
 
 .contentInnerContainer {
@@ -169,8 +184,98 @@
   color: #8897ad;
   border: none !important;
   outline: none !important;
-  margin-bottom: 20px;
   background-color: #f4f4f4;
   height: 48px;
   box-sizing: border-box;
+}
+.infoContainerWrapper {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0;
+  height: 45px;
+}
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 0;
+  div {
+    color: #1f184b;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  span {
+    /* max-width: 360px; */
+    color: #1f184b;
+    font-size: 12px;
+    font-weight: 300;
+  }
+}
+
+.contentContainerWrapp {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 0px 18px;
+  height: 32px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  .inviteButton {
+    cursor: pointer;
+    font-weight: 600;
+  }
+  input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+  > div {
+    width: fit-content;
+  }
+  &.active {
+    display: flex;
+  }
+  &.disabled {
+    display: none;
+  }
+}
+
+.emailList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.emailItem {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.nameEmail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-color: #233f39;
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
 }

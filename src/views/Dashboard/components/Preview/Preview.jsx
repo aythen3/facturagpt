@@ -45,9 +45,14 @@ try {
   documentoPDF = null; // Valor por defecto si no existe el archivo
 }
 
-const ButtonActionsWithText = ({ children, classStyle, click }) => {
+const ButtonActionsWithText = ({
+  children,
+  classStyle,
+  click,
+  disabledValue,
+}) => {
   return (
-    <button className={classStyle} onClick={click}>
+    <button className={classStyle} onClick={click} disabled={disabledValue}>
       {children}
     </button>
   );
@@ -181,6 +186,16 @@ const DocumentPreview = ({
     {
       text: "Imprimir",
       icon: printIcon,
+      click: () => {
+        const printWindow = window.open(documentoPDF, "_blank"); // Abre el PDF en una nueva ventana o pestaña
+        printWindow.onload = () => {
+          printWindow.print(); // Ejecuta la acción de impresión
+        };
+      },
+    },
+    {
+      text: "Buscar automatizaciones",
+      icon: printIcon,
       componente: (
         <SearchIconWithIcon
           // ref={searchInputRef}
@@ -207,19 +222,6 @@ const DocumentPreview = ({
           </>
         </SearchIconWithIcon>
       ),
-      click: () => {
-        const printWindow = window.open(documentoPDF, "_blank"); // Abre el PDF en una nueva ventana o pestaña
-        printWindow.onload = () => {
-          printWindow.print(); // Ejecuta la acción de impresión
-        };
-      },
-    },
-    {
-      text: "Buscar",
-      icon: printIcon,
-      click: () => {
-        console.log("hola");
-      },
     },
 
     {
@@ -228,6 +230,7 @@ const DocumentPreview = ({
         handleShowContentAutomate("Gmail");
       },
       classOption: styles.bgStripe,
+      services: true,
     },
     {
       icon: hubSpot,
@@ -235,6 +238,7 @@ const DocumentPreview = ({
         handleShowContentAutomate("Google Sheets");
       },
       classOption: styles.hubspot,
+      services: true,
     },
     {
       icon: gestionaEsPublico,
@@ -242,6 +246,7 @@ const DocumentPreview = ({
         handleShowContentAutomate("XML");
       },
       classOption: styles.bgGestiona,
+      services: true,
     },
   ];
 
@@ -266,6 +271,7 @@ const DocumentPreview = ({
                   action.text ? styles.btnWithText : action.classOption
                 }
                 click={action.click}
+                disabledValue={action.services}
               >
                 <img src={action.icon} alt="icon" />
                 {action.text}
@@ -285,6 +291,7 @@ const DocumentPreview = ({
     const corporativeFileInputRef = useRef(null);
     const signatureFileInputRef = useRef(null);
     const profileFileInputRef = useRef(null);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const [userData, setUserData] = useState({
       selectedSignatureImage: "",
@@ -473,9 +480,21 @@ const DocumentPreview = ({
               <EditCode /> Editar Código HTML <EditCodeRays />
             </Button>
             {showDiscountModal && (
-              <AddDiscount setShowDiscountModal={setShowDiscountModal} />
+              <AddDiscount
+                showDiscountModal={showDiscountModal}
+                setShowDiscountModal={setShowDiscountModal}
+                isAnimating={isAnimating}
+                setIsAnimating={setIsAnimating}
+              />
             )}
-            {showTaxModal && <AddTax setShowTaxModal={setShowTaxModal} />}
+            {showTaxModal && (
+              <AddTax
+                setShowTaxModal={setShowTaxModal}
+                showTaxModal={showTaxModal}
+                isAnimating={isAnimating}
+                setIsAnimating={setIsAnimating}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -511,7 +530,28 @@ const DocumentPreview = ({
       seeBillRef.current?.generatePDF(); // Generar PDF desde FacturaTemplate
     }
   };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add(styles.dragOver); // Agrega una clase para cambiar el estilo
+  };
 
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove(styles.dragOver); // Remueve la clase cuando el archivo sale del área
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove(styles.dragOver); // Remueve la clase cuando se suelta el archivo
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      handleFileChangePdf({ target: { files } });
+    }
+  };
   return (
     <div className={styles.container} style={customStyles}>
       <div className={styles.previewSection}>
@@ -535,13 +575,19 @@ const DocumentPreview = ({
             </div>
           </div>
         ) : (
-          <div className={styles.emptyPreview} onClick={handleClick}>
+          <div
+            className={styles.emptyPreview}
+            onClick={handleClick}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
             <input
               type="file"
               accept="application/pdf"
-              ref={fileInputRef} // Usando useRef para referenciar el input
+              ref={fileInputRef}
               onChange={handleFileChangePdf}
-              style={{ display: "none" }} // Oculta el input
+              style={{ display: "none" }}
             />
             <span>Drop your document here</span>
             {/* <div className={styles.visualizar} onClick={handleVisualizar}>
@@ -554,8 +600,11 @@ const DocumentPreview = ({
       {showMovetoFolder && (
         <MoveToFolder
           setShowMovetoFolder={setShowMovetoFolder}
+          showMovetoFolder={showMovetoFolder}
           configuration={XMLConfiguration}
           setConfiguration={setXMLConfiguration}
+          isAnimating={isAnimating}
+          setIsAnimating={setIsAnimating}
         />
       )}
       {seeBill && (

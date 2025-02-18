@@ -39,6 +39,29 @@ const ImportContactsAndProducts = ({ state, text }) => {
     }
   };
 
+  const getFilePath = (text) => {
+    switch (text) {
+      case "productos":
+        return require("../../assets/Plantillas/TemplateProductos.xlsx");
+      case "contactos":
+        return require("../../assets/Plantillas/TemplateContactos.xlsx");
+      default:
+        return null;
+    }
+  };
+
+  const filePath = getFilePath(text);
+
+  const handleDownload = () => {
+    if (filePath) {
+      const link = document.createElement("a");
+      link.href = filePath;
+      link.download = `muestra-${text}.xlsx`;
+      link.click();
+    } else {
+      alert("No hay archivo de muestra disponible para esta opción.");
+    }
+  };
   return (
     <div className={styles.overlay}>
       <div className={styles.bg} onClick={() => state(false)}></div>
@@ -77,7 +100,7 @@ const ImportContactsAndProducts = ({ state, text }) => {
               />
             </div>
           </div>
-          <p className={styles.descText}>
+          <p className={styles.descText} onClick={handleDownload}>
             Descarga una muestra del archivo XLSX para ver el formato de
             importación
           </p>
