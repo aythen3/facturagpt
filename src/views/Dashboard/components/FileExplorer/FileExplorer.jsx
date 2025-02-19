@@ -721,7 +721,7 @@ export default function FileExplorer({ isOpen, setIsOpen }) {
           left: `${left}vw`, // Aplicar el left dinámico
           width: "80vw",
           height: "100vh",
-          backgroundColor: "white",
+          // backgroundColor: "white",
           transition: "left 0.3s ease",
           boxSizing: "border-box",
           zIndex: 2,
