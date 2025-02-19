@@ -57,7 +57,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   const [showPlusModal, setShowPlusModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [numNotification, setNumNotification] = useState(0);
 
   // =======================
@@ -74,8 +73,8 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   const [clickTimer, setClickTimer] = useState(null);
 
   const handleProfileClick = () => {
-    setClickCount(prev => prev + 1);
-    
+    setClickCount((prev) => prev + 1);
+
     if (clickTimer) {
       clearTimeout(clickTimer);
     }
@@ -120,10 +119,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
 
   // ========================
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
   const handleSendEmail = async () => {
     const resp = await dispatch(
       sendEmail({
@@ -143,7 +138,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               <img src={facturaGPT} alt="Icon" />
             </a>
           </div>
- 
+
           <div className={styles.hiddenMobile}>
             <button
               onClick={() => setShowPlusModal(true)}
@@ -221,13 +216,13 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               onClick={() => setShowSidebar(false)}
             ></div>
           </div>
-          <div className={styles.showMobile}>
+          {/* <div className={styles.showMobile}>
             <button className={styles.hamburger} onClick={toggleMenu}>
               <img src={menuIcon} alt="Menu Icon" />
             </button>
-          </div>
+          </div> */}
 
-          {menuOpen && (
+          {/* {menuOpen && (
             <>
               <div
                 className={styles.mobileMenuOverlay}
@@ -305,71 +300,70 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
                 </div>
               </div>
             </>
-          )}
-
+          )} */}
         </div>
-          <div
-            className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}
-          >
-            <AccountSettings />
-          </div>
-          {showPlusModal && (
-            <UpgradePlanWrapper onClose={() => setShowPlusModal(false)} />
-          )}
-          {isOpen && (
-            <FloatingMenu
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              openModalAutomate={openModalAutomate}
-              closeModalAutomate={closeModalAutomate}
-              showLocationModal={showLocationModal}
-              setShowLocationModal={setShowLocationModal}
-              showNewTagModal={showNewTagModal}
-              setShowNewTagModal={setShowNewTagModal}
-              showNewContact={showNewContact}
-              setShowNewContact={setShowNewContact}
-              showNewProduct={showNewProduct}
-              setShowNewProduct={setShowNewProduct}
-              setShowNewBill={setShowNewBill}
-              setShowUplaodFile={setShowUplaodFile}
-            />
-          )}
-          {isModalAutomate && (
-            <Automate
-              typeContent={handleShowContentAutomate}
-              close={closeModalAutomate}
-              isModalAutomate={isModalAutomate}
-              setIsModalAutomate={setIsModalAutomate}
-              isAnimating={isAnimating}
-              setIsAnimating={setIsAnimating}
-            />
-          )}
-          {showNewTagModal && (
-            <NewTag setShowNewTagModal={setShowNewTagModal} />
-          )}
-          {showLocationModal && (
-            <SelectLocation onClose={() => setShowLocationModal(false)} />
-          )}
-          {typeContentAutomate && (
-            <PanelAutomate
-              automationData={selectedAutomationData}
-              typeContent={handleShowContentAutomate}
-              setIsModalAutomate={setIsModalAutomate}
-              close={handleCloseNewClient}
-              type={typeContentAutomate}
-              isAnimating={isAnimating}
-            />
-          )}
-          {showNewContact && (
-            <NewContact setShowNewContact={setShowNewContact} />
-          )}
-          {showNewProduct && (
-            <NewProduct setShowNewProduct={setShowNewProduct} />
-          )}
-          {showNewBill && <NewBIll setShowNewBill={setShowNewBill} />}
-          {showUploadFile && (
-            <UploadFIle setShowUplaodFile={setShowUplaodFile} />
-          )}
+        <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
+          <AccountSettings />
+        </div>
+        {showPlusModal && (
+          <UpgradePlanWrapper onClose={() => setShowPlusModal(false)} />
+        )}
+        {isOpen && (
+          <FloatingMenu
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            openModalAutomate={openModalAutomate}
+            closeModalAutomate={closeModalAutomate}
+            showLocationModal={showLocationModal}
+            setShowLocationModal={setShowLocationModal}
+            showNewTagModal={showNewTagModal}
+            setShowNewTagModal={setShowNewTagModal}
+            showNewContact={showNewContact}
+            setShowNewContact={setShowNewContact}
+            showNewProduct={showNewProduct}
+            setShowNewProduct={setShowNewProduct}
+            setShowNewBill={setShowNewBill}
+            setShowUplaodFile={setShowUplaodFile}
+          />
+        )}
+        {isModalAutomate && (
+          <Automate
+            typeContent={handleShowContentAutomate}
+            close={closeModalAutomate}
+            isModalAutomate={isModalAutomate}
+            setIsModalAutomate={setIsModalAutomate}
+            isAnimating={isAnimating}
+            setIsAnimating={setIsAnimating}
+          />
+        )}
+        {showNewTagModal && <NewTag setShowNewTagModal={setShowNewTagModal} />}
+        {showLocationModal && (
+          <SelectLocation onClose={() => setShowLocationModal(false)} />
+        )}
+        {typeContentAutomate && (
+          <PanelAutomate
+            automationData={selectedAutomationData}
+            typeContent={handleShowContentAutomate}
+            setIsModalAutomate={setIsModalAutomate}
+            close={handleCloseNewClient}
+            type={typeContentAutomate}
+            isAnimating={isAnimating}
+          />
+        )}
+        {showNewContact && (
+          <NewContact
+            setShowNewContact={setShowNewContact}
+            showNewContact={showNewContact}
+          />
+        )}
+        {showNewProduct && (
+          <NewProduct
+            setShowNewProduct={setShowNewProduct}
+            showNewProduct={showNewProduct}
+          />
+        )}
+        {showNewBill && <NewBIll setShowNewBill={setShowNewBill} />}
+        {showUploadFile && <UploadFIle setShowUplaodFile={setShowUplaodFile} />}
       </Elements>
     </>
   );

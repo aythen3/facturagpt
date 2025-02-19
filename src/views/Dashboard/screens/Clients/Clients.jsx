@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Clients.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.png";
@@ -38,6 +38,7 @@ import Button from "../../components/Button/Button";
 import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 import DeleteButton from "../../components/DeleteButton/DeleteButton";
+import useFocusShortcut from "../../../../utils/useFocusShortcut";
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -333,6 +334,7 @@ const Clients = () => {
     setTimeout(() => {
       dispatch(clearClient());
       setShowNewClient(false);
+      setShowImportContacts(false);
       setIsAnimating(false);
     }, 300);
   };
@@ -344,6 +346,8 @@ const Clients = () => {
         setTimeout(() => {
           dispatch(clearClient());
           setShowNewClient(false);
+          setShowImportContacts(false);
+
           setIsAnimating(false);
         }, 300);
       }
@@ -554,6 +558,12 @@ const Clients = () => {
       default: false,
     });
   };
+
+  const searchInputRef = useRef(null);
+
+  // Llama a la función y pasa la referencia
+  useFocusShortcut(searchInputRef, "k");
+
   return (
     <PanelTemplate>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
@@ -578,12 +588,12 @@ const Clients = () => {
               <DownloadIcon />
             </Button>
             <SearchIconWithIcon
-            // ref={searchInputRef}
-            // searchTerm={searchTerm}
-            // setSearchTerm={setSearchTerm}
-            // iconRight={pencilSquareIcon}
-            // classNameIconRight={styles.searchContainerL}
-            // onClickIconRight={() => setIsFilterOpen(true)}
+              ref={searchInputRef}
+              // searchTerm={searchTerm}
+              // setSearchTerm={setSearchTerm}
+              // iconRight={pencilSquareIcon}
+              // classNameIconRight={styles.searchContainerL}
+              // onClickIconRight={() => setIsFilterOpen(true)}
             >
               <>
                 <div
@@ -622,8 +632,9 @@ const Clients = () => {
         </div>
         {showImportContacts && (
           <ImportContactsAndProducts
-            state={setShowImportContacts}
             text="contactos"
+            state={handleCloseNewClient}
+            isAnimating={isAnimating}
           />
         )}
         <div className={styles.clientsTable}>
@@ -742,10 +753,10 @@ const Clients = () => {
             actionSave={handleCreateClient}
             onClick={handleCloseNewClient}
             text="contacto"
+            isAnimating={isAnimating}
+            className={`${styles.newClientContainer} `}
           >
-            <div
-              className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
-            >
+            <div>
               {/* <div className={styles.containerHeader}>
                 <h3>John Doe</h3>
                 <span onClick={handleCloseNewClient}>

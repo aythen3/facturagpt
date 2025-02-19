@@ -83,15 +83,24 @@ const CustomDropdown = ({
           handleToggle(e);
         }}
       >
-        <div style={{ textStyles, color: stateStripe && selectedColor }}>
+        <div
+          style={{ textStyles, color: stateStripe && selectedColor }}
+          className={styles.dropdownHeader}
+        >
           {Array.isArray(selectedOption) && selectedOption.length > 0 ? (
             selectedOption.join(", ")
           ) : Array.isArray(selectedOption) && selectedOption.length === 0 ? (
             placeholder
           ) : selectedOption == "es" ? (
-            <img src={spanish_flag} />
+            <>
+              <img src={spanish_flag} />
+              Es
+            </>
           ) : selectedOption == "en" ? (
-            <img src={english_flag} />
+            <>
+              <img src={english_flag} />
+              En
+            </>
           ) : (
             selectedOption || placeholder
           )}
@@ -148,7 +157,27 @@ const CustomDropdown = ({
                     setSelectedColor(colorMap[option]);
                   }}
                 >
-                  {hasObject ? option.label : option}
+                  {/* <img src={spanish_flag} />
+          ) : selectedOption == "en" ? (
+            <img src={english_flag} />
+          ) : (
+            selectedOption || placeholder
+          )} */}
+                  {hasObject ? (
+                    option.label
+                  ) : option == "es" ? (
+                    <>
+                      <img src={spanish_flag} />
+                      Es
+                    </>
+                  ) : option == "en" ? (
+                    <>
+                      <img src={english_flag} />
+                      En
+                    </>
+                  ) : (
+                    option
+                  )}
                 </div>
               ))}
         </div>

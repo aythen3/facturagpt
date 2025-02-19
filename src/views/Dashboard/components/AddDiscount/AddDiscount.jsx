@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import styles from "./AddDiscount.module.css";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import Button from "../Button/Button";
 import DiscardChange from "../DiscardChange/DiscardChange";
 
-const AddDiscount = ({ setShowDiscountModal }) => {
+const AddDiscount = ({
+  showDiscountModal,
+  setShowDiscountModal,
+  isAnimating,
+  setIsAnimating,
+}) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [discounts, setDiscounts] = useState([]);
   const [discountName, setDiscountName] = useState("");
@@ -34,15 +39,37 @@ const AddDiscount = ({ setShowDiscountModal }) => {
   };
   const [showDiscardChange, setShowDiscardChange] = useState(false);
 
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setShowDiscountModal(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && showDiscountModal) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setShowDiscountModal(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showDiscountModal]);
   return (
     <div className={styles.overlay}>
-      <div
-        className={styles.bg}
-        onClick={() => setShowDiscountModal(false)}
-      ></div>
+      <div className={styles.bg} onClick={() => handleCloseNewClient()}></div>
       {showDiscardChange && (
         <DiscardChange
-          actionSave={() => setShowDiscardChange(false)}
+          actionSave={() => handleCloseNewClient()}
           actionDiscard={() => {
             setShowDiscardChange(false);
             setShowDiscountModal(false);
@@ -50,7 +77,7 @@ const AddDiscount = ({ setShowDiscountModal }) => {
         />
       )}
       <div
-        className={`${styles.addTaxContainer} ${showDiscardChange && styles.opacity}`}
+        className={`${styles.addTaxContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
         <HeaderCard
           title={"Seleccionar Descuento"}

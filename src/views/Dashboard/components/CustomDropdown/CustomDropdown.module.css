@@ -96,3 +96,14 @@
   font-weight: 700;
   cursor: initial;
 }
+.dropdownHeader {
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

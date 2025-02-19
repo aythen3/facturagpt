@@ -20,7 +20,7 @@
   background-color: #f5f5f5;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 550px;
+  width: 515px;
   gap: 0px;
   transform: scale(1);
   animation: scaleUp 300ms ease-out forwards;
