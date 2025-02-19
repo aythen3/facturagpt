@@ -3,7 +3,7 @@ import styles from "./ImportContactsAndProducts.module.css";
 import { ReactComponent as DownloadIcon } from "../../assets/uploadIconGreen.svg";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
-const ImportContactsAndProducts = ({ state, text }) => {
+const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
   const fileInputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
 
@@ -66,7 +66,9 @@ const ImportContactsAndProducts = ({ state, text }) => {
     <div className={styles.overlay}>
       <div className={styles.bg} onClick={() => state(false)}></div>
 
-      <div className={styles.importContainer}>
+      <div
+        className={`${styles.importContainer}  ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+      >
         <HeaderCard title={`Importar ${text}`} setState={state}>
           <Button type="white" action={() => setShowDiscardChange(true)}>
             Cancel

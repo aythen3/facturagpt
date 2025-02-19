@@ -44,6 +44,7 @@ import {
 } from "@src/actions/chat";
 
 import { clearCurrentChat } from "@src/slices/chatSlices";
+import useFocusShortcut from "../../../../utils/useFocusShortcut.js";
 
 const actions = [
   {
@@ -77,7 +78,6 @@ const actions = [
     text: "Pide Ayuda",
   },
 ];
-
 const ChatMenu = ({ id, leftWidth }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -92,97 +92,98 @@ const ChatMenu = ({ id, leftWidth }) => {
   }, [searchTermState, dispatch]);
 
   const [chats, setChats] = useState([
-    // {
-    //   name: "React Hooks",
-    //   id: "chat-1",
-    //   older: 0,
-    // },
-    // {
-    //   name: "JavaScript Async/Await",
-    //   id: "chat-2",
-    //   older: 1,
-    // },
-    // {
-    //   name: "CSS Flexbox y Grid",
-    //   id: "chat-3",
-    //   older: 1,
-    // },
-    // {
-    //   name: "Node.js y Express",
-    //   id: "chat-4",
-    //   older: 0,
-    // },
-    // {
-    //   name: "APIs REST y GraphQL",
-    //   id: "chat-5",
-    //   older: 6,
-    // },
-    // {
-    //   name: "MongoDB y Mongoose",
-    //   id: "chat-6",
-    //   older: 13,
-    // },
-    // {
-    //   name: "Next.js vs. Remix",
-    //   id: "chat-7",
-    //   older: 28,
-    // },
-    // {
-    //   name: "Optimización Web",
-    //   id: "chat-8",
-    //   older: 98,
-    // },
-    // {
-    //   name: "Seguridad en Web Apps",
-    //   id: "chat-9",
-    //   older: 58,
-    // },
-    // {
-    //   name: "Testing con Jest",
-    //   id: "chat-10",
-    //   older: 0,
-    // },
-    // {
-    //   name: "TypeScript en React",
-    //   id: "chat-11",
-    //   older: 1,
-    // },
-    // {
-    //   name: "Redux vs. Zustand",
-    //   id: "chat-12",
-    //   older: 1,
-    // },
-    // {
-    //   name: "Mejorando el SEO",
-    //   id: "chat-13",
-    //   older: 0,
-    // },
-    // {
-    //   name: "Tailwind CSS en proyectos",
-    //   id: "chat-14",
-    //   older: 6,
-    // },
-    // {
-    //   name: "Accesibilidad en la Web",
-    //   id: "chat-15",
-    //   older: 13,
-    // },
-    // {
-    //   name: "Deploy con Vercel",
-    //   id: "chat-16",
-    //   older: 28,
-    // },
-    // {
-    //   name: "Microservicios con Docker",
-    //   id: "chat-17",
-    //   older: 98,
-    // },
-    // {
-    //   name: "GraphQL vs. REST",
-    //   id: "chat-18",
-    //   older: 58,
-    // },
+    {
+      name: "React Hooks",
+      id: "chat-1",
+      older: 0,
+    },
+    {
+      name: "JavaScript Async/Await",
+      id: "chat-2",
+      older: 1,
+    },
+    {
+      name: "CSS Flexbox y Grid",
+      id: "chat-3",
+      older: 1,
+    },
+    {
+      name: "Node.js y Express",
+      id: "chat-4",
+      older: 0,
+    },
+    {
+      name: "APIs REST y GraphQL",
+      id: "chat-5",
+      older: 6,
+    },
+    {
+      name: "MongoDB y Mongoose",
+      id: "chat-6",
+      older: 13,
+    },
+    {
+      name: "Next.js vs. Remix",
+      id: "chat-7",
+      older: 28,
+    },
+    {
+      name: "Optimización Web",
+      id: "chat-8",
+      older: 98,
+    },
+    {
+      name: "Seguridad en Web Apps",
+      id: "chat-9",
+      older: 58,
+    },
+    {
+      name: "Testing con Jest",
+      id: "chat-10",
+      older: 0,
+    },
+    {
+      name: "TypeScript en React",
+      id: "chat-11",
+      older: 1,
+    },
+    {
+      name: "Redux vs. Zustand",
+      id: "chat-12",
+      older: 1,
+    },
+    {
+      name: "Mejorando el SEO",
+      id: "chat-13",
+      older: 0,
+    },
+    {
+      name: "Tailwind CSS en proyectos",
+      id: "chat-14",
+      older: 6,
+    },
+    {
+      name: "Accesibilidad en la Web",
+      id: "chat-15",
+      older: 13,
+    },
+    {
+      name: "Deploy con Vercel",
+      id: "chat-16",
+      older: 28,
+    },
+    {
+      name: "Microservicios con Docker",
+      id: "chat-17",
+      older: 98,
+    },
+    {
+      name: "GraphQL vs. REST",
+      id: "chat-18",
+      older: 58,
+    },
   ]);
+  const [isOpenMenu, setIsOpenMenu] = useState({});
 
   useEffect(() => {
     if (chatList.length > 0) {
@@ -191,7 +192,13 @@ const ChatMenu = ({ id, leftWidth }) => {
     }
   }, [chatList]);
 
-  const sortChat = Object.groupBy(chats, ({ older }) => older);
+  // Asegurarse de que sortChat esté correctamente definido
+  const sortChat = chats.reduce((acc, chat) => {
+    const olderGroup = chat.older || 0; // Asegúrate de que 'older' esté presente
+    if (!acc[olderGroup]) acc[olderGroup] = [];
+    acc[olderGroup].push(chat);
+    return acc;
+  }, {});
 
   const searchInputRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -202,127 +209,261 @@ const ChatMenu = ({ id, leftWidth }) => {
     navigate(`/admin/chat/${uuidv4()}`);
   };
 
-  const [isOpenMenu, setIsOpenMenu] = useState({});
-
   const handleDeleteMessage = async (chatId) => {
     console.log("handleDeleteMessage", chatId);
     // dispatch(deleteChat({ chatId }));
-
-    const resp = await dispatch(deleteChat({ chatId }));
+    await dispatch(deleteChat({ chatId }));
   };
 
+  // Llama a la función y pasa la referencia
+  useFocusShortcut(searchInputRef, "/");
+  const [left, setLeft] = useState(-100); // Inicialmente oculto a la izquierda
+  const startTouch = useRef(0); // Para almacenar la posición inicial del toque o el mouse
+  const isMouseDown = useRef(false); // Detecta si el mouse está presionado
+
+  // Lógica para el swipe en el div invisible
+  const handleInvisibleTouchStart = (e) => {
+    startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
+  };
+
+  const handleInvisibleTouchMove = (e) => {
+    const currentTouch = e.touches[0].clientX;
+    const difference = currentTouch - startTouch.current;
+
+    // Mostrar el menú si el usuario hace swipe a la derecha
+    if (difference > 30) {
+      setLeft(0);
+    }
+  };
+
+  const handleInvisibleTouchEnd = () => {
+    // Reset o cualquier otra lógica adicional cuando se termina el gesto
+  };
+
+  // Lógica para el swipe en el menú (para ocultarlo)
+  const handleTouchStart = (e) => {
+    startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
+  };
+
+  const handleTouchMove = (e) => {
+    const currentTouch = e.touches[0].clientX;
+    const difference = currentTouch - startTouch.current;
+
+    // Ocultar el menú si el usuario hace swipe a la izquierda
+    if (difference < -30) {
+      setLeft(-100);
+    }
+  };
+  const handleInvisibleMouseDown = (e) => {
+    startTouch.current = e.clientX;
+    isMouseDown.current = true;
+
+    // Deshabilitar la selección de texto mientras se mantiene presionado
+    document.body.style.userSelect = "none";
+  };
+  const handleTouchEnd = () => {
+    // Reset o cualquier otra lógica adicional cuando se termina el gesto
+  };
+
+  // Lógica para el swipe en dispositivos de escritorio (mouse)
+  const handleMouseDownResize = (e) => {
+    if (window.innerWidth >= 768) return; // Solo habilitar el mouse en pantallas menores a 768px
+
+    isMouseDown.current = true;
+    startTouch.current = e.clientX;
+
+    // Deshabilitar la selección de texto mientras el mouse está presionado
+    document.body.style.userSelect = "none";
+  };
+  const handleInvisibleMouseMove = (e) => {
+    if (!isMouseDown.current) return;
+
+    const currentTouch = e.clientX;
+    const difference = currentTouch - startTouch.current;
+
+    // Mostrar el menú si el usuario hace swipe a la derecha
+    if (difference > 30) {
+      setLeft(0);
+    }
+  };
+  const handleInvisibleMouseUp = () => {
+    isMouseDown.current = false;
+
+    // Habilitar nuevamente la selección de texto
+    document.body.style.userSelect = "auto";
+  };
+
+  const handleMouseMoveResize = (e) => {
+    if (!isMouseDown.current || window.innerWidth >= 768) return;
+
+    const currentTouch = e.clientX;
+    const difference = currentTouch - startTouch.current;
+
+    // Mostrar u ocultar el menú según el movimiento del mouse
+    if (difference > 30) {
+      setLeft(0); // Mostrar el menú
+    } else if (difference < -30) {
+      setLeft(-100); // Ocultar el menú
+    }
+  };
+
+  const handleMouseUp = () => {
+    isMouseDown.current = false;
+    document.body.style.userSelect = "auto";
+  };
+
+  // Establecer los eventos para los dispositivos de escritorio
+  useEffect(() => {
+    const handleMouseMoveEvent = (e) => handleMouseMoveResize(e);
+    const handleMouseUpEvent = () => handleMouseUp();
+
+    if (window.innerWidth < 768) {
+      document.addEventListener("mousemove", handleMouseMoveEvent);
+      document.addEventListener("mouseup", handleMouseUpEvent);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMoveEvent);
+      document.removeEventListener("mouseup", handleMouseUpEvent);
+    };
+  }, [left]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Actualizar el ancho de la ventana cuando se cambie el tamaño de la pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Limpiar el evento cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const isMobile = windowWidth <= 768; // Usar el ancho de la ventana actualizado
+  // Manejador para ocultar el menú
+  const handleMenuClose = () => {
+    setLeft(-100);
+  };
   return (
-    <div className={styles.chatMenu} style={{ maxWidth: `${leftWidth}px` }}>
-      <SearchIconWithIcon
-        ref={searchInputRef}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        iconRight={pencilSquareIcon}
-        classNameIconRight={styles.searchContainerL}
-        onClickIconRight={() => addMessage()}
-        // onClickIconRight={() => setIsFilterOpen(true)}
+    <div
+      className={styles.chatMenu}
+      style={{
+        maxWidth: `${leftWidth}px`,
+        width: isMobile && "0px",
+        minWidth: isMobile && "0px",
+      }}
+    >
+      {/* Div invisible para detectar swipe hacia la derecha */}
+      <div
+        style={{
+          position: "fixed",
+          top: "25%",
+          left: 0,
+          width: "50px",
+          height: "50vh",
+          zIndex: 1,
+          backgroundColor: "transparent",
+        }}
+        onTouchStart={handleInvisibleTouchStart}
+        onTouchMove={handleInvisibleTouchMove}
+        onMouseDown={handleInvisibleMouseDown}
+        onMouseMove={handleInvisibleMouseMove}
+        onMouseUp={handleInvisibleMouseUp}
+      ></div>
+
+      <div
+        style={{
+          position: isMobile ? "absolute" : "initial",
+          top: 0,
+          left: `${left}vw`,
+          width: isMobile && "100vw",
+          height: "calc(100vh - 50px)",
+          backgroundColor: "white",
+          transition: "left 0.3s ease",
+          boxSizing: "border-box",
+          zIndex: 2,
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDownResize}
+        onMouseMove={handleMouseMoveResize}
+        onMouseUp={handleMouseUp}
       >
-        <>
-          {/* <div
-            style={{ marginLeft: "5px" }}
-            className={styles.searchIconsWrappers}
-          >
-            <img src={winIcon} alt="kIcon" />
-          </div>
-          <div
-            style={{ marginLeft: "5px" }}
-            className={styles.searchIconsWrappers}
-          >
-            <img src={KIcon} alt="kIcon" />
-          </div> */}
+        <SearchIconWithIcon
+          ref={searchInputRef}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          iconRight={pencilSquareIcon}
+          classNameIconRight={styles.searchContainerL}
+          onClickIconRight={() => addMessage()}
+        >
           <div
             style={{ marginLeft: "5px" }}
             className={styles.searchIconsWrappers}
           >
             <img src={l} alt="kIcon" />
           </div>
-        </>
-      </SearchIconWithIcon>
-      <div className={styles.chatsContainer}>
-        {Object.entries(sortChat).map(([group, chatArray]) => {
-          let groupTitle = "Antiguo";
+        </SearchIconWithIcon>
 
-          if (group == 0) groupTitle = "Hoy";
-          else if (group == 1) groupTitle = "Ayer";
-          else if (group > 1 && group < 7) groupTitle = "Esta semana";
-          else if (group >= 7 && group < 14) groupTitle = "Semana pasada";
-          else if (group >= 14 && group < 30) groupTitle = "Este mes";
-          else if (group >= 30 && group < 60) groupTitle = "Mes pasado";
-          else if (group >= 60) groupTitle = "Hace varios meses";
+        <div className={styles.chatsContainer}>
+          {Object.entries(sortChat).map(([group, chatArray]) => {
+            let groupTitle = "Antiguo";
 
-          return (
-            <div key={group}>
-              <h3>{groupTitle}</h3>
-              <ul>
-                {chatArray.map((chat) => {
-                  return (
-                    <li
-                      key={chat.id}
-                      className={`${id == chat.id && styles.active}`}
-                      onClick={() => navigate(`/admin/chat/${chat.id}`)}
-                    >
-                      {chat.name}
-                      <div className={styles.chatMenuSettings}>
-                        <button
-                          onClick={() =>
-                            setIsOpenMenu({
-                              ...isOpenMenu,
-                              [chat.id]: !isOpenMenu[chat.id],
-                            })
-                          }
-                        >
-                          <DotsOptions className={styles.icon} />
-                        </button>
-                        <ul
-                          className={isOpenMenu[chat.id] ? styles.active : ""}
-                        >
-                          <li onClick={() => handleDeleteMessage(chat.id)}>
-                            Eliminar chat
-                          </li>
-                          <li>Cambiar nombre</li>
-                          <li>Fijat chat</li>
-                        </ul>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
+            if (group == 0) groupTitle = "Hoy";
+            else if (group == 1) groupTitle = "Ayer";
+            else if (group > 1 && group < 7) groupTitle = "Esta semana";
+            else if (group >= 7 && group < 14) groupTitle = "Semana pasada";
+            else if (group >= 14 && group < 30) groupTitle = "Este mes";
+            else if (group >= 30 && group < 60) groupTitle = "Mes pasado";
+            else if (group >= 60) groupTitle = "Hace varios meses";
 
-      {/* <ul className={styles.chats}>
-        {true ? (
-          <b>7 días anteriores</b>
-        ) : false ? (
-          <b>14 días anteriores</b>
-        ) : (
-          <b>30 días anteriores</b>
-        )}
-        {chats.map((chat, index) => (
-          <li key={index} onClick={() => handleChat(chat.id)}>
-            <span>{chat.name}</span>
-            icon settings
-          </li>
-        ))}
-      </ul> */}
-
-      {true && (
-        <div className={styles.chatMenuSettings}>
-          <ul>
-            <li>Compartir</li>
-            <li>Cambiar nombre</li>
-            <li>Archivars</li>
-            <li>Eliminar</li>
-          </ul>
+            return (
+              <div key={group}>
+                <h3>{groupTitle}</h3>
+                <ul>
+                  {chatArray.map((chat) => {
+                    return (
+                      <li
+                        key={chat.id}
+                        className={`${id == chat.id && styles.active}`}
+                        onClick={() => navigate(`/admin/chat/${chat.id}`)}
+                      >
+                        {chat.name}
+                        <div className={styles.chatMenuSettings}>
+                          <button
+                            onClick={() =>
+                              setIsOpenMenu({
+                                ...isOpenMenu,
+                                [chat.id]: !isOpenMenu[chat.id],
+                              })
+                            }
+                          >
+                            <DotsOptions className={styles.icon} />
+                          </button>
+                          <ul
+                            className={isOpenMenu[chat.id] ? styles.active : ""}
+                          >
+                            <li onClick={() => handleDeleteMessage(chat.id)}>
+                              Eliminar chat
+                            </li>
+                            <li>Cambiar nombre</li>
+                            <li>Fijar chat</li>
+                          </ul>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </div>
   );
 };
@@ -672,10 +813,29 @@ const ChatView = () => {
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // Función para actualizar el ancho de la ventana
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Añadir el event listener para resize
+    window.addEventListener("resize", handleResize);
+
+    // Limpiar el event listener cuando el componente se desmonte
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); // El efecto se ejecuta solo una vez cuando el componente se monta
+
+  const isMobile = windowWidth <= 768; // Usar el ancho de la ventana actualizado
+
   return (
     <PanelTemplate>
       {/* <Chat /> */}
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      {/* <div style={{ display: "flex", flexDirection: "column" }}>
         <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>
         <button onClick={handleSendBotMessage}>Enviar grafica del bot</button>
         <button onClick={handleSendBotMessage}>
@@ -691,17 +851,20 @@ const ChatView = () => {
         <button onClick={handleSendBotMessage}>Insertar producto</button>
         <button onClick={handleSendBotMessage}>Insertar activo</button>
         <button onClick={handleSendBotMessage}>Nueva factura</button>
-      </div>
+      </div> */}
       <div className={styles.chatSection}>
         <ChatMenu id={id} leftWidth={leftWidth} />
-        <div
-          style={{
-            height: "100%",
-            width: "8px",
-            cursor: "ew-resize",
-          }}
-          onMouseDown={handleMouseDown}
-        ></div>
+        {!isMobile && (
+          <div
+            style={{
+              height: "100%",
+              width: "8px",
+              cursor: "ew-resize",
+              background: "white",
+            }}
+            onMouseDown={handleMouseDown}
+          ></div>
+        )}
         <ChatBody
           handleChat={handleChat}
           messages={messages}

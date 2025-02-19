@@ -69,7 +69,6 @@ const EditableInput = ({
     <div className={styles.editableInputContainer}>
       <div className={styles.editableInputHeader}>
         <p>
-          {" "}
           {!labelOptions && <span>{label}</span>}{" "}
           {info && <span className={styles.info}>{info}</span>}
         </p>
@@ -96,7 +95,7 @@ const EditableInput = ({
             className={styles.textarea} // Agrega estilos específicos si es necesario
           />
         ) : (
-          <div style={{ display: "flex", gap: "20px", height: "50px" }}>
+          <div style={{ display: "flex", gap: "20px" }}>
             {" "}
             <input
               ref={inputRef}

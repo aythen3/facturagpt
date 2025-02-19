@@ -4,16 +4,13 @@ import styles from "./FloatingMenu.module.css";
 import FolderModal from "../FolderModal/FolderModal";
 import TagModal from "../TagModal/TagModal";
 import Automate from "../Automate/Automate";
-import { ReactComponent as FolderIcon } from "../../assets/folderIconBW.svg";
-import { ReactComponent as TagIcon } from "../../assets/tagIconBW.svg";
-import { ReactComponent as WhatsAppIcon } from "../../assets/wsIconBW.svg";
+import { ReactComponent as FolderIcon } from "../../assets/folderOutline.svg";
 import { ReactComponent as CloudIcon } from "../../assets/uploadIconBW.svg";
 import { ReactComponent as CameraIcon } from "../../assets/camIconBW.svg";
-import { ReactComponent as NewBill } from "../../assets/newBill.svg";
+import { ReactComponent as NewBill } from "../../assets/penIconOutline.svg";
 import { ReactComponent as PlusIcon } from "../../assets/automatizaIconNew.svg";
-import { ReactComponent as ChatGPTIcon } from "../../assets/chatGPTIcon.svg";
-import { ReactComponent as NewContact } from "../../assets/newContact.svg";
-import { ReactComponent as NewAsset } from "../../assets/newAsset.svg";
+import { ReactComponent as PaperClipWhite } from "../../assets/paperClipWhite.svg";
+import { ReactComponent as NewContact } from "../../assets/bookOutline.svg";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SelectLocation from "../SelectLocation/SelectLocation";
@@ -96,8 +93,8 @@ export default function FloatingMenu({
       action: openModalAutomate,
     },
     {
-      icon: <CloudIcon />,
-      text: "Subir Archivo",
+      icon: <PaperClipWhite />,
+      text: "Subir Documento",
       action: () => {
         setShowUplaodFile(true);
         setIsOpen(false);
@@ -163,7 +160,7 @@ export default function FloatingMenu({
     // },
   ];
   if (isMobile) {
-    menuItems.push({
+    menuItems.splice(2, 0, {
       icon: <CameraIcon />,
       text: "Hacer una Foto",
       action: handleCameraAccess,

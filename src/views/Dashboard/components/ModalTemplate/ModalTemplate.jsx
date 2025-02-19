@@ -2,12 +2,20 @@ import React from "react";
 import styles from "./ModalTemplate.module.css";
 import Button from "../Button/Button";
 import { ReactComponent as ArrowDown } from "../../assets/ArrowLeftWhite.svg";
-const ModalTemplate = ({ children, onClick, actionSave, text }) => {
+const ModalTemplate = ({
+  children,
+  onClick,
+  actionSave,
+  text,
+  isAnimating,
+}) => {
   return (
     <>
       <div className={styles.bg} onClick={() => onClick()}></div>
 
-      <div className={styles.modalTemplate}>
+      <div
+        className={`${styles.modalTemplate}  ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
+      >
         <div className={styles.modalTemplateHeader}>
           <div className={styles.modalTemplateInfo}>
             <div className={styles.iconContainer} onClick={() => onClick()}>

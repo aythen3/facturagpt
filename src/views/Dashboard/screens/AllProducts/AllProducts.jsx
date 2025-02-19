@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./AllProducts.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.svg";
@@ -32,6 +32,7 @@ import Button from "../../components/Button/Button";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 import NewProduct from "../../components/NewProduct/NewProduct";
 import NewTag from "../../components/NewTag/NewTag";
+import useFocusShortcut from "../../../../utils/useFocusShortcut";
 
 const AllProducts = () => {
   const { t } = useTranslation("clients");
@@ -41,6 +42,8 @@ const AllProducts = () => {
   const [showModal, setShowModal] = useState(false);
   const [showImportAssets, setShowImportAssets] = useState(false);
   const [newClient, setShowNewClient] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
   const { transactionByClient, loading } = useSelector(
     (state) => state.transactions
   );
@@ -169,9 +172,45 @@ const AllProducts = () => {
   };
 
   const [creatingBill, setCreatingBill] = useState(true);
+
+  const searchInputRef = useRef(null);
+
+  // Llama a la función y pasa la referencia
+  useFocusShortcut(searchInputRef, "k");
+
+  const handleCloseNewClient = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCreatingBill(false);
+      setShowNewClient(false);
+      setShowImportAssets(false);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && newClient) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setCreatingBill(false);
+          setShowNewClient(false);
+          setShowImportAssets(false);
+          setIsAnimating(false);
+        }, 300);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [newClient]);
+
   return (
     <PanelTemplate>
-      <div className={styles.container} onClick={() => setShowSidebar(false)}>
+      <div className={styles.container}>
         <div className={styles.clientsHeader}>
           <h2>Articulos</h2>
           {/* <div className={styles.searchContainer}>
@@ -225,12 +264,12 @@ const AllProducts = () => {
               <DownloadIcon />
             </Button>
             <SearchIconWithIcon
-            // ref={searchInputRef}
-            // searchTerm={searchTerm}
-            // setSearchTerm={setSearchTerm}
-            // iconRight={pencilSquareIcon}
-            // classNameIconRight={styles.searchContainerL}
-            // onClickIconRight={() => setIsFilterOpen(true)}
+              ref={searchInputRef}
+              // searchTerm={searchTerm}
+              // setSearchTerm={setSearchTerm}
+              // iconRight={pencilSquareIcon}
+              // classNameIconRight={styles.searchContainerL}
+              // onClickIconRight={() => setIsFilterOpen(true)}
             >
               <>
                 <div
@@ -269,7 +308,8 @@ const AllProducts = () => {
         </div>
         {showImportAssets && (
           <ImportContactsAndProducts
-            state={setShowImportAssets}
+            state={handleCloseNewClient}
+            isAnimating={isAnimating}
             text="productos"
           />
         )}
@@ -392,7 +432,10 @@ const AllProducts = () => {
           <LastTransactions setShowModal={setShowModal} showModal={showModal} />
         )}
         {newProductModal && (
-          <ModalTemplate onClick={closeNewProductModal}>
+          <ModalTemplate
+            onClick={closeNewProductModal}
+            isAnimating={isAnimating}
+          >
             <div className={styles.allProductC}>
               <form className={styles.formAllProduct}>
                 <EditableInput
