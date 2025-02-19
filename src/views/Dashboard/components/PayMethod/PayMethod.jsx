@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./PayMethod.module.css";
 import { ReactComponent as Minus } from "../../assets/minus.svg";
 
@@ -13,8 +13,8 @@ const PayMethod = ({ method, onChange }) => {
         <div>
           <span>Banco</span>
           <select
-            value={method?.banco || ""}
-            onChange={(e) => handleInputChange("banco", e.target.value)}
+            value={method?.bank || ""}
+            onChange={(e) => handleInputChange("bank", e.target.value)}
           >
             <option value="BBVA">BBVA</option>
             <option value="Santander">Santander</option>
@@ -26,16 +26,16 @@ const PayMethod = ({ method, onChange }) => {
           <span>Número de cuenta</span>
           <input
             type="text"
-            value={method?.numeroCuenta || ""}
-            onChange={(e) => handleInputChange("numeroCuenta", e.target.value)}
+            value={method?.accountNumber || ""}
+            onChange={(e) => handleInputChange("accountNumber", e.target.value)}
           />
         </div>
         <div>
           <span>SWIFT-BIC</span>
           <input
             type="text"
-            value={method?.swiftBic || ""}
-            onChange={(e) => handleInputChange("swiftBic", e.target.value)}
+            value={method?.swift || ""}
+            onChange={(e) => handleInputChange("swift", e.target.value)}
           />
         </div>
         <div>
@@ -50,8 +50,8 @@ const PayMethod = ({ method, onChange }) => {
           <span>Moneda</span>
           <input
             type="text"
-            value={method?.moneda || ""}
-            onChange={(e) => handleInputChange("moneda", e.target.value)}
+            value={method?.currency || ""}
+            onChange={(e) => handleInputChange("currency", e.target.value)}
           />
         </div>
       </div>

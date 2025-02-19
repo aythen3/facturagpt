@@ -21,7 +21,7 @@ export default function FloatingMenu({
   isOpen,
   setIsOpen,
   showLocationModal,
-  setShowLocationModal,
+  setShowCreateFolder,
   showNewTagModal,
   setShowNewTagModal,
   showNewContact,
@@ -113,7 +113,7 @@ export default function FloatingMenu({
       icon: <FolderIcon />,
       text: "Nueva Carpeta",
       action: () => {
-        setShowLocationModal(true);
+        setShowCreateFolder(true);
         setIsOpen(false);
       },
     },

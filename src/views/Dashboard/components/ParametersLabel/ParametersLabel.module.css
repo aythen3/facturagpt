@@ -86,7 +86,7 @@ input {
 }
 .parametersHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   p {
     color: #92959858;
     margin: 0;
@@ -105,8 +105,12 @@ input {
 .parameter {
   display: flex;
   gap: 10px;
+  align-items: center;
   div {
     flex: 1;
+  }
+  .grabIcon {
+    cursor: grab;
   }
 }
 .parametersContainer {

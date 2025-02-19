@@ -125,7 +125,6 @@ const AccountSettings = () => {
       // console.log("setting user to ", newUserData);
       setUserData(newUserData);
       setInitialUserData(newUserData); // Guardamos la copia inicial
-
     }
   }, [user]);
 
@@ -208,7 +207,7 @@ const AccountSettings = () => {
       },
     };
     console.log("saving user data", userDataToSave);
-    dispatch(updateUser({ userId: user.id, toUpdate: userDataToSave }));
+    // dispatch(updateUser({ userId: user.id, toUpdate: userDataToSave }));
   };
 
   const handleToggleReadOnly = () => {

@@ -231,8 +231,8 @@
   min-width: 200px;
 
   .chatsContainer {
-    height: 85%;
-    /* overflow-y: scroll; */
+    height: 80vh;
+    overflow-y: auto;
     padding: 10px;
     box-sizing: border-box;
 
@@ -278,7 +278,13 @@
       background-color: #ececf1;
     }
   }
-
+}
+@media (width <= 768px) {
+  .chatMenu {
+    .chatsContainer {
+      height: 65vh;
+    }
+  }
   .searchInputWrapper {
     display: flex;
     align-items: center;

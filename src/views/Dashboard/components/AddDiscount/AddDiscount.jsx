@@ -10,12 +10,13 @@ const AddDiscount = ({
   setShowDiscountModal,
   isAnimating,
   setIsAnimating,
+  setDiscountQuantity,
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [discounts, setDiscounts] = useState([]);
   const [discountName, setDiscountName] = useState("");
   const [discountRate, setDiscountRate] = useState("");
-
+  const [selectedDiscount, setSelectedDiscount] = useState(0);
   const handleRowClick = (index) => {
     setSelectedRow(index === selectedRow ? null : index);
   };
@@ -25,7 +26,7 @@ const AddDiscount = ({
 
     const newDiscount = {
       name: discountName,
-      rate: `${discountRate}%`,
+      rate: `${discountRate}`,
     };
 
     setDiscounts([...discounts, newDiscount]);
@@ -83,10 +84,17 @@ const AddDiscount = ({
           title={"Seleccionar Descuento"}
           setState={setShowDiscountModal}
         >
-          <Button type="white" action={() => setShowDiscardChange(true)}>
+          <Button type="white" action={() => handleCloseNewClient()}>
             Cancel
           </Button>
-          <Button>Seleccionar</Button>
+          <Button
+            action={() => {
+              handleCloseNewClient();
+              setDiscountQuantity(selectedDiscount);
+            }}
+          >
+            Seleccionar
+          </Button>
         </HeaderCard>
         <div className={styles.addTaxContent}>
           <div className={styles.taxes}>
@@ -105,7 +113,12 @@ const AddDiscount = ({
                 type="number"
                 placeholder="%"
                 value={discountRate}
-                onChange={(e) => setDiscountRate(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value <= 100 && e.target.value >= 0)
+                    setDiscountRate(e.target.value);
+                }}
+                min={0}
+                max={100}
               />
             </div>
           </div>
@@ -125,7 +138,12 @@ const AddDiscount = ({
                   <tr
                     key={index}
                     className={selectedRow === index ? styles.selectedRow : ""}
-                    onClick={() => handleRowClick(index)}
+                    onClick={() => {
+                      selectedRow !== index
+                        ? setSelectedDiscount(discount.rate)
+                        : setSelectedDiscount(0);
+                      handleRowClick(index);
+                    }}
                     style={{ cursor: "pointer" }}
                   >
                     <td className={styles.small}>
@@ -136,7 +154,7 @@ const AddDiscount = ({
                       />
                     </td>
                     <td>{discount.name}</td>
-                    <td>{discount.rate}</td>
+                    <td>{discount.rate}%</td>
                     <td className={styles.small}>
                       <DeleteButton
                         action={(e) => {

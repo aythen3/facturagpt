@@ -1,6 +1,9 @@
 .container {
   /* padding: 20px; */
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .clientsHeader {
@@ -67,12 +70,6 @@
 .contactInfo {
   flex-wrap: wrap;
 }
-.idContainer {
-  display: flex;
-  align-items: center;
-  height: 100px;
-  background-color: re;
-}
 
 .tags {
   display: flex;
@@ -91,6 +88,7 @@
   -ms-border-radius: 999px;
   -o-border-radius: 999px;
   margin-left: -20px;
+  cursor: pointer;
 }
 
 .tag:nth-child(1) {
@@ -184,7 +182,6 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  flex-wrap: wrap;
   .button {
     text-decoration: underline;
     cursor: pointer;
@@ -283,10 +280,21 @@
 }
 
 .clientsTable {
-  overflow: auto;
-  &:scrollbar {
-    display: none;
-  }
+  width: 95%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border: 1px solid #eaecf0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.clientsTable::-webkit-scrollbar {
+  display: none;
 }
 
 .table {
@@ -294,43 +302,59 @@
   margin: 0 auto;
   text-align: start;
   border-collapse: collapse; /* Asegura que las celdas se vean uniformes */
+  thead {
+    background-color: #f5f5f5;
+  }
 }
 
 .name {
   color: #333333;
   font-weight: 600;
 }
-tbody {
-  p {
-    margin: 0;
+.table {
+  tbody {
+    p {
+      margin: 0;
+    }
+    tr {
+      border-top: 1px solid #eaecf0;
+      border-bottom: 1px solid #eaecf0;
+      height: 20px;
+    }
+  }
+  th {
+    text-align: start;
+    padding: 10px; /* Añade espacio interno */
+    color: #333; /* Color del texto */
+    font-weight: bold; /* Asegura que los encabezados sean visibles */
+    width: 150px; /* Ajusta la anchura según lo necesario */
+  }
+
+  td {
+    padding: 10px; /* Espaciado interno para las celdas */
+    color: #666666;
+    font-size: 13px;
+    height: 20px;
+    p {
+      margin: 0;
+    }
+  }
+
+  thead th {
+    min-width: 120px; /* Mínima anchura para garantizar espacio */
+  }
+
+  .small {
+    min-width: 40px;
+    width: 40px;
+  }
+  td p:first-of-type {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 }
-th {
-  text-align: start;
-  padding: 10px; /* Añade espacio interno */
-  color: #333; /* Color del texto */
-  font-weight: bold; /* Asegura que los encabezados sean visibles */
-  width: 150px; /* Ajusta la anchura según lo necesario */
-}
-
-td {
-  padding: 10px; /* Espaciado interno para las celdas */
-  color: #666666;
-  font-size: 13px;
-}
-
-thead th {
-  min-width: 120px; /* Mínima anchura para garantizar espacio */
-}
-
-.small {
-  min-width: 40px;
-  width: 40px;
-}
-td p:first-of-type {
-  margin-bottom: 10px;
-}
-
 .actions {
   position: relative;
   display: flex;
@@ -346,6 +370,7 @@ td p:first-of-type {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  width: 100px;
   a {
     font-weight: bold;
   }

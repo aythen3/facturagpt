@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Chat from "../../components/Chat/Chat.jsx";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
+import ImageEmpty from "../../assets/ImageEmpty.svg";
 
 import { v4 as uuidv4 } from "uuid"; // Add this import at the top with other imports
 
@@ -78,7 +79,7 @@ const actions = [
     text: "Pide Ayuda",
   },
 ];
-const ChatMenu = ({ id, leftWidth }) => {
+const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -394,6 +395,11 @@ const ChatMenu = ({ id, leftWidth }) => {
         onMouseMove={handleMouseMoveResize}
         onMouseUp={handleMouseUp}
       >
+        {isMobile && (
+          <div className={styles.showMobile}>
+            <img src={ImageEmpty} alt="" onClick={toggleMenu} />
+          </div>
+        )}
         <SearchIconWithIcon
           ref={searchInputRef}
           searchTerm={searchTerm}
@@ -615,6 +621,7 @@ const ChatView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [menuOpenChat, setMenuOpenChat] = useState(false);
 
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -831,9 +838,14 @@ const ChatView = () => {
   }, []); // El efecto se ejecuta solo una vez cuando el componente se monta
 
   const isMobile = windowWidth <= 768; // Usar el ancho de la ventana actualizado
-
+  const toggleMenu = () => {
+    setMenuOpenChat(!menuOpenChat);
+  };
   return (
-    <PanelTemplate>
+    <PanelTemplate
+      menuOpenChat={menuOpenChat}
+      setMenuOpenChat={setMenuOpenChat}
+    >
       {/* <Chat /> */}
       {/* <div style={{ display: "flex", flexDirection: "column" }}>
         <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>
@@ -853,7 +865,12 @@ const ChatView = () => {
         <button onClick={handleSendBotMessage}>Nueva factura</button>
       </div> */}
       <div className={styles.chatSection}>
-        <ChatMenu id={id} leftWidth={leftWidth} />
+        <ChatMenu
+          id={id}
+          leftWidth={leftWidth}
+          toggleMenu={toggleMenu}
+          isMobile={isMobile}
+        />
         {!isMobile && (
           <div
             style={{

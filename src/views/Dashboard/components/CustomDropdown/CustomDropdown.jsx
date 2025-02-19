@@ -94,12 +94,12 @@ const CustomDropdown = ({
           ) : selectedOption == "es" ? (
             <>
               <img src={spanish_flag} />
-              Es
+              Español
             </>
           ) : selectedOption == "en" ? (
             <>
               <img src={english_flag} />
-              En
+              Inglés
             </>
           ) : (
             selectedOption || placeholder
@@ -168,12 +168,12 @@ const CustomDropdown = ({
                   ) : option == "es" ? (
                     <>
                       <img src={spanish_flag} />
-                      Es
+                      Español
                     </>
                   ) : option == "en" ? (
                     <>
                       <img src={english_flag} />
-                      En
+                      Inglés
                     </>
                   ) : (
                     option

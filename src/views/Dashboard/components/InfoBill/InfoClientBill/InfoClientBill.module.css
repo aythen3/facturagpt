@@ -24,6 +24,25 @@
         text-decoration: underline;
         color: #222222;
         font-weight: 500;
+        cursor: pointer;
+      }
+      .icon {
+        cursor: pointer;
+      }
+      .searchContactContainer {
+        position: relative;
+      }
+      .contact {
+        position: absolute;
+        bottom: -200%;
+        background-color: white;
+        padding: 10px;
+        border: 1px solid #ececf1;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
       }
     }
   }

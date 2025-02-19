@@ -62,19 +62,21 @@ const MoveToFolder = ({
             <Button>Aceptar</Button>
           </HeaderCard>
           <div className={styles.contentInput}>
-            <p className={styles.titleContentInput}>Ubicación</p>
+            <div>
+              <p className={styles.titleContentInput}>Ubicación</p>
 
-            <InputComponent
-              readOnly={true}
-              value={configuration.folderLocation}
-              setValue={(value) =>
-                handleConfigurationChange("folderLocation", value)
-              }
-              textButton="Seleccionar Ubicación"
-              placeholder="/Inicio"
-              icon={<SearchSVG />}
-              action={() => setShowSelectInputLocation(true)}
-            />
+              <InputComponent
+                readOnly={true}
+                value={configuration.folderLocation}
+                setValue={(value) =>
+                  handleConfigurationChange("folderLocation", value)
+                }
+                textButton="Seleccionar Ubicación"
+                placeholder="/Inicio"
+                icon={<SearchSVG />}
+                action={() => setShowSelectInputLocation(true)}
+              />
+            </div>
           </div>
         </div>
         {showSelectInputLocation && (

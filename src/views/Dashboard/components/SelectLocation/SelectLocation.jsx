@@ -11,13 +11,19 @@ import HeaderCard from "../HeaderCard/HeaderCard";
 import { ReactComponent as HouseContainer } from "../../assets/blackHouse.svg";
 import FolderClosed from "../../assets/folderClosed.svg";
 import Button from "../Button/Button";
-const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
+const SelectLocation = ({
+  onClose,
+  pickLocation = () => {},
+  state,
+  setSelectedLocationNew,
+  showNewFolder = true,
+}) => {
   const { user } = useSelector((state) => state.user);
   const { userFiles } = useSelector((state) => state.scaleway);
   const [isClosing, setIsClosing] = useState(false);
   const [expandedPaths, setExpandedPaths] = useState(new Set());
-  const [selectedLocation, setSelectedLocation] = useState(user?.id + "/");
   const [showCreateFolderModal, setShowCreateFolderModal] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(user?.id + "/");
 
   const buildFolderStructure = (files) => {
     const root = {};
@@ -180,21 +186,30 @@ const SelectLocation = ({ onClose, pickLocation = () => {}, state }) => {
           <Button type="white" action={handleClose}>
             Cancelar
           </Button>
-          <Button>Seleccionar</Button>
+          <Button
+            action={() => {
+              setSelectedLocationNew(selectedLocation);
+              handleClose();
+            }}
+          >
+            Seleccionar
+          </Button>
         </HeaderCard>
         {/* Content */}
         <div className={styles.contentContainer}>
           <div className={styles.content}>
             {renderFolders(folderStructure)}
-            <div
-              onClick={() => {
-                console.log("Creating new folder on", selectedLocation);
-                setShowCreateFolderModal(true);
-              }}
-              className={styles.newFolderButton}
-            >
-              Nueva Carpeta
-            </div>
+            {showNewFolder && (
+              <div
+                onClick={() => {
+                  console.log("Creating new folder on", selectedLocation);
+                  setShowCreateFolderModal(true);
+                }}
+                className={styles.newFolderButton}
+              >
+                Nueva Carpeta
+              </div>
+            )}
           </div>
         </div>
       </div>

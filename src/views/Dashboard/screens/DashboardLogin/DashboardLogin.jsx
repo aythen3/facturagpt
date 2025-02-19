@@ -84,7 +84,7 @@ const DashboardLogin = () => {
     console.log("user", user);
     if (user) {
       if (user.success) {
-        navigate('/admin/chat')
+        navigate("/admin/chat");
       } else {
         // navigate('/login')
         localStorage.clear();
@@ -111,18 +111,18 @@ const DashboardLogin = () => {
     if (email.length > 1) {
       if (confirmPassword.length > 1 && password.length > 1) {
         if (password === confirmPassword) {
-          dispatch(updateUserPassword({ email, newPassword: password }))
-            .unwrap()
-            .then(() => {
-              navigate("/login");
-            })
-            .catch((error) => {
-              setError(error.message || "Error al actualizar la contraseña");
-            })
-            .finally(() => {
-              clearStates();
-              setIsLoading(false);
-            });
+          // dispatch(updateUserPassword({ email, newPassword: password }))
+          //   .unwrap()
+          //   .then(() => {
+          //     navigate("/login");
+          //   })
+          //   .catch((error) => {
+          //     setError(error.message || "Error al actualizar la contraseña");
+          //   })
+          //   .finally(() => {
+          //     clearStates();
+          //     setIsLoading(false);
+          //   });
         }
       }
     }

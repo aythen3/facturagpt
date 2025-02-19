@@ -8,7 +8,7 @@ const AddTax = ({
   showTaxModal,
   setShowTaxModal,
   isAnimating,
-
+  setTaxQuantity,
   setIsAnimating,
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -16,7 +16,7 @@ const AddTax = ({
   const [taxName, setTaxName] = useState("");
   const [taxRate, setTaxRate] = useState("");
   const [isCompound, setIsCompound] = useState(false);
-
+  const [selectedTax, setSelectedTax] = useState(0);
   const handleRowClick = (index) => {
     setSelectedRow(index === selectedRow ? null : index);
   };
@@ -26,7 +26,7 @@ const AddTax = ({
 
     const newTax = {
       name: taxName,
-      rate: `${taxRate}%`,
+      rate: `${taxRate}`,
       compound: isCompound ? "Si" : "No",
     };
 
@@ -86,7 +86,14 @@ const AddTax = ({
           <Button type="white" action={() => handleCloseNewClient()}>
             Cancel
           </Button>
-          <Button>Seleccionar</Button>
+          <Button
+            action={() => {
+              setTaxQuantity(selectedTax);
+              handleCloseNewClient();
+            }}
+          >
+            Seleccionar
+          </Button>
         </HeaderCard>
         <div className={styles.addTaxContent}>
           <div className={styles.taxes}>
@@ -105,7 +112,12 @@ const AddTax = ({
                 type="number"
                 placeholder="%"
                 value={taxRate}
-                onChange={(e) => setTaxRate(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value <= 100 && e.target.value >= 0)
+                    setTaxRate(e.target.value);
+                }}
+                min={0}
+                max={100}
               />
             </div>
             <div className={styles.compuesto}>
@@ -134,7 +146,12 @@ const AddTax = ({
                   <tr
                     key={index}
                     className={selectedRow === index ? styles.selectedRow : ""}
-                    onClick={() => handleRowClick(index)}
+                    onClick={() => {
+                      selectedRow !== index
+                        ? setSelectedTax(tax.rate)
+                        : setSelectedTax(0);
+                      handleRowClick(index);
+                    }}
                     style={{ cursor: "pointer" }}
                   >
                     <td className={styles.small}>
@@ -145,7 +162,7 @@ const AddTax = ({
                       />
                     </td>
                     <td>{tax.name}</td>
-                    <td>{tax.rate}</td>
+                    <td>{tax.rate}%</td>
                     <td>{tax.compound}</td>
                     <td className={styles.small}>
                       <DeleteButton

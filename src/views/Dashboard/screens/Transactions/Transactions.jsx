@@ -3,11 +3,11 @@ import styles from "./Transactions.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.svg";
 import optionDots from "../../assets/optionDots.svg";
-import plusIcon from "../../assets/Plus Icon.png";
+import plusIcon from "../../assets/Plus Icon.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import creditCard from "../../assets/creditCardIcon.png";
 import closeIcon from "../../assets/closeMenu.svg";
-import pdf from "../../assets/pdfIcon.png";
+import pdf from "../../assets/fileIcon.svg";
 import KIcon from "../../assets/KIcon.svg";
 import arrow from "../../assets/arrow.svg";
 import winIcon from "../../assets/winIcon.svg";
@@ -224,6 +224,7 @@ const Transactions = () => {
               expirationDateDay: "15",
               payMethod: "Visa ****1234",
               status: "Pendiente",
+              tag: "tagRed",
             },
           },
           state: ["Pendiente"],
@@ -240,6 +241,7 @@ const Transactions = () => {
               expirationDateDay: "10",
               payMethod: "Transferencia bancaria",
               status: "Pagada",
+              tag: "tagYellow",
             },
           },
           state: ["Pagada"],
@@ -256,6 +258,7 @@ const Transactions = () => {
               expirationDateDay: "01",
               payMethod: "Mastercard ****5678",
               status: "Vencida",
+              tag: "tagWhite",
             },
           },
           state: ["Vencida"],
@@ -263,7 +266,7 @@ const Transactions = () => {
       ]);
     }
   }, [transactionsByClient]);
-
+  console.log(mockTransactions);
   return (
     <PanelTemplate>
       <div className={styles.container}>
@@ -384,8 +387,11 @@ const Transactions = () => {
                       />
                     </td>
                     <td className={styles.idContainer}>
-                      <img src={pdf} className={styles.pdfIcon} />
-                      {row.id}
+                      <p>
+                        {" "}
+                        <img src={pdf} className={styles.pdfIcon} />
+                        {row.id}
+                      </p>
                     </td>
                     {/* <td>
                {Array.isArray(row.desc)
@@ -404,9 +410,9 @@ const Transactions = () => {
                     <td>
                       <div className={styles.tags}>
                         <span
-                          className={`${styles.tag} ${styles.tagWhite}`}
+                          className={`${styles.tag} ${styles[row?.doc?.totalData?.tag]}`}
                         ></span>
-                        <span
+                        {/* <span
                           className={`${styles.tag} ${styles.tagRed}`}
                         ></span>
                         <span
@@ -426,7 +432,7 @@ const Transactions = () => {
                         ></span>
                         <span
                           className={`${styles.tag} ${styles.tagPink}`}
-                        ></span>
+                        ></span> */}
                       </div>
                     </td>
                     <td>{row?.doc?.totalData?.totalAmount}</td>
