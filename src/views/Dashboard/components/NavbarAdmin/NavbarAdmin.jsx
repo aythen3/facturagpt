@@ -6,11 +6,11 @@ import AccountSettings from "../AccountSettings/AccountSettings";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as AddPlus } from "../../assets/addPlus.svg";
 import { ReactComponent as AddPlusWhite } from "../../assets/addPlusWhite.svg";
-import addGreen from "../../assets/addGreen.svg";
 import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
 import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
 import { ReactComponent as DotsNotification } from "../../assets/dotsNotification.svg";
 import { ReactComponent as ClientIcon } from "../../assets/clientsIcon.svg";
+import { ReactComponent as MenuMobileIcon } from "../../assets/filtersIconBarGreen.svg";
 import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
@@ -30,6 +30,7 @@ import NewProduct from "../NewProduct/NewProduct";
 import NewBIll from "../NewBIll/NewBIll";
 import UploadFIle from "../UploadFIle/UploadFIle";
 import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
+import MobileAsidebarNavigation from "./MobileAsidebarNavigation/MobileAsidebarNavigation";
 
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
@@ -133,6 +134,8 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   };
 
   const [selectedLocationNew, setSelectedLocationNew] = useState("/Inicio/");
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <>
       <Elements stripe={stripePromise}>
@@ -141,15 +144,25 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
             <a href={user ? "/admin/chat" : "/"}>
               <img src={facturaGPT} alt="Icon" />
             </a>
+            <div
+              onClick={() => setMenuOpen(true)}
+              className={styles.MenuMobileIcon}
+            >
+              <MenuMobileIcon />
+            </div>
           </div>
 
           <div className={styles.hiddenMobile}>
+            {" "}
             <button
               onClick={() => setShowPlusModal(true)}
               className={styles.plus}
             >
               {t("buttonGetPlus")} <img src={star} alt="Icon" />
             </button>
+          </div>
+
+          <div className={styles.hiddenMobile}>
             <div className={styles.profile}>
               {!isOpen ? (
                 <a
@@ -309,6 +322,13 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
         <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
           <AccountSettings />
         </div>
+
+        <MobileAsidebarNavigation
+          menuOpen={menuOpen}
+          setMenuOpen={setMenuOpen}
+          fromPath={fromPath}
+          setFromPath={setFromPath}
+        />
         {showPlusModal && (
           <UpgradePlanWrapper onClose={() => setShowPlusModal(false)} />
         )}

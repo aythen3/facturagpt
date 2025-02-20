@@ -11,6 +11,7 @@ import InfoActivity from "../InfoActivity/InfoActivity";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { ReactComponent as AiIcon } from "../../assets/AIcon.svg";
 import AiIcon2 from "../../assets/AIcon.svg";
+import CreateNotePopup from "../CreateNotePopup/CreateNotePopup";
 const documentTypes = [
   "Factura",
   "Factura de impuestos",
@@ -26,6 +27,7 @@ const documentTypes = [
 
 export default function InvoiceForm({
   hasNote,
+  setHasNote,
   handleAddNote,
   noteText,
   handleNoteChange,
@@ -33,11 +35,15 @@ export default function InvoiceForm({
   isEditingNote,
   handleEditNote,
   customStyles = {},
+  setNoteColor,
+  noteColor,
 }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Factura");
   const [sectionSelected, setSectionSelected] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
+  const [createdNote, setCreatedNote] = useState(false);
+  const [editorContentFinal, setEditorContentFinal] = useState("");
 
   const handleTypeSelect = (type) => {
     setSelectedType(type);
@@ -191,27 +197,29 @@ export default function InvoiceForm({
           </div>
         </div>
         <div className={styles.addNote}>
-          {hasNote && (
-            <div className={styles.note}>
+          {createdNote && (
+            <div className={`${styles.note} ${styles[noteColor]}`}>
               <div className={styles.text}>
-                {isEditingNote ? (
-                  <input
-                    type="text"
-                    value={noteText}
-                    onChange={handleNoteChange}
-                    // onBlur={handleNoteBlur}
-                    autoFocus
-                  />
-                ) : (
-                  <span>{noteText || "Nueva nota"}</span>
-                )}
+                <span>{editorContentFinal || "Nueva nota"}</span>
               </div>
-              <div className={styles.button} onClick={handleEditNote}>
-                {isEditingNote ? "Guardar Nota" : "Editar Nota"}
+              <div className={styles.button} onClick={handleAddNote}>
+                Editar Nota
               </div>
             </div>
           )}
         </div>
+        {hasNote && (
+          <>
+            <CreateNotePopup
+              setHasNote={setHasNote}
+              noteColor={noteColor}
+              setNoteColor={setNoteColor}
+              setCreatedNote={setCreatedNote}
+              editorContentFinal={editorContentFinal}
+              setEditorContentFinal={setEditorContentFinal}
+            />
+          </>
+        )}
       </header>
       <div className={styles.btnSectionsSelector}>
         <button

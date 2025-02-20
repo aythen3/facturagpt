@@ -46,6 +46,7 @@ import {
 
 import { clearCurrentChat } from "@src/slices/chatSlices";
 import useFocusShortcut from "../../../../utils/useFocusShortcut.js";
+import useSwipe from "../../../../utils/useSwipe.jsx";
 
 const actions = [
   {
@@ -218,116 +219,116 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
 
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "/");
-  const [left, setLeft] = useState(-100); // Inicialmente oculto a la izquierda
-  const startTouch = useRef(0); // Para almacenar la posición inicial del toque o el mouse
-  const isMouseDown = useRef(false); // Detecta si el mouse está presionado
+  // const [left, setLeft] = useState(-100); // Inicialmente oculto a la izquierda
+  // const startTouch = useRef(0); // Para almacenar la posición inicial del toque o el mouse
+  // const isMouseDown = useRef(false); // Detecta si el mouse está presionado
 
-  // Lógica para el swipe en el div invisible
-  const handleInvisibleTouchStart = (e) => {
-    startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
-  };
+  // // Lógica para el swipe en el div invisible
+  // const handleInvisibleTouchStart = (e) => {
+  //   startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
+  // };
 
-  const handleInvisibleTouchMove = (e) => {
-    const currentTouch = e.touches[0].clientX;
-    const difference = currentTouch - startTouch.current;
+  // const handleInvisibleTouchMove = (e) => {
+  //   const currentTouch = e.touches[0].clientX;
+  //   const difference = currentTouch - startTouch.current;
 
-    // Mostrar el menú si el usuario hace swipe a la derecha
-    if (difference > 30) {
-      setLeft(0);
-    }
-  };
+  //   // Mostrar el menú si el usuario hace swipe a la derecha
+  //   if (difference > 30) {
+  //     setLeft(0);
+  //   }
+  // };
 
-  const handleInvisibleTouchEnd = () => {
-    // Reset o cualquier otra lógica adicional cuando se termina el gesto
-  };
+  // const handleInvisibleTouchEnd = () => {
+  //   // Reset o cualquier otra lógica adicional cuando se termina el gesto
+  // };
 
-  // Lógica para el swipe en el menú (para ocultarlo)
-  const handleTouchStart = (e) => {
-    startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
-  };
+  // // Lógica para el swipe en el menú (para ocultarlo)
+  // const handleTouchStart = (e) => {
+  //   startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
+  // };
 
-  const handleTouchMove = (e) => {
-    const currentTouch = e.touches[0].clientX;
-    const difference = currentTouch - startTouch.current;
+  // const handleTouchMove = (e) => {
+  //   const currentTouch = e.touches[0].clientX;
+  //   const difference = currentTouch - startTouch.current;
 
-    // Ocultar el menú si el usuario hace swipe a la izquierda
-    if (difference < -30) {
-      setLeft(-100);
-    }
-  };
-  const handleInvisibleMouseDown = (e) => {
-    startTouch.current = e.clientX;
-    isMouseDown.current = true;
+  //   // Ocultar el menú si el usuario hace swipe a la izquierda
+  //   if (difference < -30) {
+  //     setLeft(-100);
+  //   }
+  // };
+  // const handleInvisibleMouseDown = (e) => {
+  //   startTouch.current = e.clientX;
+  //   isMouseDown.current = true;
 
-    // Deshabilitar la selección de texto mientras se mantiene presionado
-    document.body.style.userSelect = "none";
-  };
-  const handleTouchEnd = () => {
-    // Reset o cualquier otra lógica adicional cuando se termina el gesto
-  };
+  //   // Deshabilitar la selección de texto mientras se mantiene presionado
+  //   document.body.style.userSelect = "none";
+  // };
+  // const handleTouchEnd = () => {
+  //   // Reset o cualquier otra lógica adicional cuando se termina el gesto
+  // };
 
-  // Lógica para el swipe en dispositivos de escritorio (mouse)
-  const handleMouseDownResize = (e) => {
-    if (window.innerWidth >= 768) return; // Solo habilitar el mouse en pantallas menores a 768px
+  // // Lógica para el swipe en dispositivos de escritorio (mouse)
+  // const handleMouseDownResize = (e) => {
+  //   if (window.innerWidth >= 768) return; // Solo habilitar el mouse en pantallas menores a 768px
 
-    isMouseDown.current = true;
-    startTouch.current = e.clientX;
+  //   isMouseDown.current = true;
+  //   startTouch.current = e.clientX;
 
-    // Deshabilitar la selección de texto mientras el mouse está presionado
-    document.body.style.userSelect = "none";
-  };
-  const handleInvisibleMouseMove = (e) => {
-    if (!isMouseDown.current) return;
+  //   // Deshabilitar la selección de texto mientras el mouse está presionado
+  //   document.body.style.userSelect = "none";
+  // };
+  // const handleInvisibleMouseMove = (e) => {
+  //   if (!isMouseDown.current) return;
 
-    const currentTouch = e.clientX;
-    const difference = currentTouch - startTouch.current;
+  //   const currentTouch = e.clientX;
+  //   const difference = currentTouch - startTouch.current;
 
-    // Mostrar el menú si el usuario hace swipe a la derecha
-    if (difference > 30) {
-      setLeft(0);
-    }
-  };
-  const handleInvisibleMouseUp = () => {
-    isMouseDown.current = false;
+  //   // Mostrar el menú si el usuario hace swipe a la derecha
+  //   if (difference > 30) {
+  //     setLeft(0);
+  //   }
+  // };
+  // const handleInvisibleMouseUp = () => {
+  //   isMouseDown.current = false;
 
-    // Habilitar nuevamente la selección de texto
-    document.body.style.userSelect = "auto";
-  };
+  //   // Habilitar nuevamente la selección de texto
+  //   document.body.style.userSelect = "auto";
+  // };
 
-  const handleMouseMoveResize = (e) => {
-    if (!isMouseDown.current || window.innerWidth >= 768) return;
+  // const handleMouseMoveResize = (e) => {
+  //   if (!isMouseDown.current || window.innerWidth >= 768) return;
 
-    const currentTouch = e.clientX;
-    const difference = currentTouch - startTouch.current;
+  //   const currentTouch = e.clientX;
+  //   const difference = currentTouch - startTouch.current;
 
-    // Mostrar u ocultar el menú según el movimiento del mouse
-    if (difference > 30) {
-      setLeft(0); // Mostrar el menú
-    } else if (difference < -30) {
-      setLeft(-100); // Ocultar el menú
-    }
-  };
+  //   // Mostrar u ocultar el menú según el movimiento del mouse
+  //   if (difference > 30) {
+  //     setLeft(0); // Mostrar el menú
+  //   } else if (difference < -30) {
+  //     setLeft(-100); // Ocultar el menú
+  //   }
+  // };
 
-  const handleMouseUp = () => {
-    isMouseDown.current = false;
-    document.body.style.userSelect = "auto";
-  };
+  // const handleMouseUp = () => {
+  //   isMouseDown.current = false;
+  //   document.body.style.userSelect = "auto";
+  // };
 
-  // Establecer los eventos para los dispositivos de escritorio
-  useEffect(() => {
-    const handleMouseMoveEvent = (e) => handleMouseMoveResize(e);
-    const handleMouseUpEvent = () => handleMouseUp();
+  // // Establecer los eventos para los dispositivos de escritorio
+  // useEffect(() => {
+  //   const handleMouseMoveEvent = (e) => handleMouseMoveResize(e);
+  //   const handleMouseUpEvent = () => handleMouseUp();
 
-    if (window.innerWidth < 768) {
-      document.addEventListener("mousemove", handleMouseMoveEvent);
-      document.addEventListener("mouseup", handleMouseUpEvent);
-    }
+  //   if (window.innerWidth < 768) {
+  //     document.addEventListener("mousemove", handleMouseMoveEvent);
+  //     document.addEventListener("mouseup", handleMouseUpEvent);
+  //   }
 
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMoveEvent);
-      document.removeEventListener("mouseup", handleMouseUpEvent);
-    };
-  }, [left]);
+  //   return () => {
+  //     document.removeEventListener("mousemove", handleMouseMoveEvent);
+  //     document.removeEventListener("mouseup", handleMouseUpEvent);
+  //   };
+  // }, [left]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Actualizar el ancho de la ventana cuando se cambie el tamaño de la pantalla
@@ -349,6 +350,11 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
   const handleMenuClose = () => {
     setLeft(-100);
   };
+
+  const [swiped, setSwiped] = useState(false);
+
+  useSwipe(setSwiped);
+
   return (
     <div
       className={styles.chatMenu}
@@ -358,29 +364,11 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
         minWidth: isMobile && "0px",
       }}
     >
-      {/* Div invisible para detectar swipe hacia la derecha */}
-      <div
-        style={{
-          position: "fixed",
-          top: "25%",
-          left: 0,
-          width: "50px",
-          height: "50vh",
-          zIndex: 1,
-          backgroundColor: "transparent",
-        }}
-        onTouchStart={handleInvisibleTouchStart}
-        onTouchMove={handleInvisibleTouchMove}
-        onMouseDown={handleInvisibleMouseDown}
-        onMouseMove={handleInvisibleMouseMove}
-        onMouseUp={handleInvisibleMouseUp}
-      ></div>
-
       <div
         style={{
           position: isMobile ? "absolute" : "initial",
           top: 0,
-          left: `${left}vw`,
+          left: swiped ? "0" : "-100%",
           width: isMobile && "100vw",
           height: "calc(100vh - 50px)",
           backgroundColor: "white",
@@ -388,18 +376,18 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
           boxSizing: "border-box",
           zIndex: 2,
         }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDownResize}
-        onMouseMove={handleMouseMoveResize}
-        onMouseUp={handleMouseUp}
+        // onTouchStart={handleTouchStart}
+        // onTouchMove={handleTouchMove}
+        // onTouchEnd={handleTouchEnd}
+        // onMouseDown={handleMouseDownResize}
+        // onMouseMove={handleMouseMoveResize}
+        // onMouseUp={handleMouseUp}
       >
-        {isMobile && (
+        {/* {isMobile && (
           <div className={styles.showMobile}>
             <img src={ImageEmpty} alt="" onClick={toggleMenu} />
           </div>
-        )}
+        )} */}
         <SearchIconWithIcon
           ref={searchInputRef}
           searchTerm={searchTerm}

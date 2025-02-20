@@ -102,6 +102,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
           name="Aythen"
           address="Email adress, Dirección, Población, Provincia, Código Postal, País"
           textareaPlaceHolder="Dirección de facturación del receptor"
+          textHeader={"Facturar a"}
         />
       </div>
       <div className={styles.parameters}>

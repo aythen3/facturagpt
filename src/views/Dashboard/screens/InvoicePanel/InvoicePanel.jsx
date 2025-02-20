@@ -23,6 +23,7 @@ export default function InvoicePanel() {
   const { user, updatingUserLoading } = useSelector((state) => state.user);
   const [hasNote, setHasNote] = useState(false);
   const [noteText, setNoteText] = useState("");
+  const [noteColor, setNoteColor] = useState("tagGreen");
   const [isEditingNote, setIsEditingNote] = useState(false);
 
   console.log(`usuario: ${user}`);
@@ -66,7 +67,6 @@ export default function InvoicePanel() {
 
   const handleAddNote = () => {
     setHasNote(true);
-    setNoteText("");
   };
 
   const handleEditNote = () => {
@@ -127,12 +127,15 @@ export default function InvoicePanel() {
         <>
           <InvoiceForm
             hasNote={hasNote}
+            setHasNote={setHasNote}
             handleAddNote={handleAddNote}
             noteText={noteText}
             handleNoteChange={handleNoteChange}
             handleNoteBlur={handleNoteBlur}
             isEditingNote={isEditingNote}
             handleEditNote={handleEditNote}
+            noteColor={noteColor}
+            setNoteColor={setNoteColor}
           />
           <Preview
             companyInfo={company}

@@ -1,17 +1,25 @@
 .container {
-  padding: 20px;
-  min-height: 100vh;
-  max-width: calc(100% - 240px);
-  .clientsHeader {
+  padding: 0px 10px;
+  /* min-height: 100vh; */
+  /* width: calc(100% - 250px); */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clientsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+  padding: 10px 10px 0px;
+  width: 95%;
+  .searchContainer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    .searchContainer {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+    gap: 20px;
   }
 }
 
@@ -123,15 +131,20 @@
 }
 
 .clientsTable {
-  overflow: auto;
+  width: 95%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border: 1px solid #eaecf0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
-}
-.table {
-  width: 100%;
-  text-align: start;
-  border-collapse: collapse; /* Asegura que las celdas se vean uniformes */
 }
 
 .name {
@@ -150,48 +163,70 @@
     -o-border-radius: 100%;
   }
 }
-tbody {
-  p {
-    margin: 0;
+.titleInfoTd {
+  font-weight: 600;
+  color: #09090b;
+}
+.table {
+  text-align: start;
+  border-collapse: collapse; /* Asegura que las celdas se vean uniformes */
+  width: 100%;
+  thead {
+    background-color: #f5f5f5;
+  }
+}
+
+.table {
+  tbody {
+    p {
+      margin: 0;
+    }
+    tr {
+      border-top: 1px solid #eaecf0;
+      border-bottom: 1px solid #eaecf0;
+      height: 20px;
+    }
   }
   th {
     text-align: start;
     padding: 10px; /* Añade espacio interno */
     color: #333; /* Color del texto */
-    font-weight: bold; /* Asegura que los encabezados sean visibles */
+    font-weight: 500; /* Asegura que los encabezados sean visibles */
     width: 150px; /* Ajusta la anchura según lo necesario */
+    color: #666666;
   }
 
   td {
     padding: 10px; /* Espaciado interno para las celdas */
     color: #666666;
     font-size: 13px;
-    p:first-of-type {
-      margin-bottom: 10px;
+    height: 20px;
+    p {
+      margin: 0;
     }
   }
-}
 
-thead {
-  th {
+  thead th {
     min-width: 120px; /* Mínima anchura para garantizar espacio */
   }
-}
 
-.small {
-  min-width: 40px;
-  width: 40px;
+  .small {
+    min-width: 140px;
+    width: 40px;
+  }
+  td p:first-of-type {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 }
-.big {
-  width: 190px;
-}
-
 .actions {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  height: 35px;
   img {
     cursor: pointer;
   }
@@ -201,6 +236,7 @@ thead {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  width: 100px;
   a {
     font-weight: bold;
   }

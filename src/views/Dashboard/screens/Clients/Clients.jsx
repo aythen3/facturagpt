@@ -9,7 +9,7 @@ import closeIcon from "../../assets/closeMenu.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as Minus } from "../../assets/minus.svg";
-
+import emptyImage from "../../assets/ImageEmpty.svg";
 import l from "../../assets/lIcon.svg";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -641,7 +641,7 @@ const Clients = () => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th className={styles.small}>
+                <th className={styles.small} style={{ minWidth: "40px" }}>
                   <input
                     type="checkbox"
                     name="clientSelected"
@@ -675,7 +675,13 @@ const Clients = () => {
                         // }
                       />
                     </td>
-                    <td className={styles.name}>{client.clientName}</td>
+                    <td className={styles.name}>
+                      <img src={client.img || emptyImage} alt="" />
+                      <div>
+                        <span>{client.clientName}</span>
+                        <span>{client.clientName}</span>
+                      </div>
+                    </td>
                     <td>{client?.companyEmail || client.email}</td>
 
                     {/* <td>

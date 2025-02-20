@@ -2,20 +2,25 @@ import React, { useState } from "react";
 import styles from "./InfoClientBill.module.css";
 import emptyImage from "../../../assets/ImageEmpty.svg";
 import { ReactComponent as Lupa } from "../../../assets/searchGray.svg";
-const InfoClientBill = ({ name, address, urlImg, textareaPlaceHolder }) => {
+import { ReactComponent as PlusIconGray } from "../../../assets/plusIconGray.svg";
+const InfoClientBill = ({
+  name,
+  address,
+  urlImg,
+  textareaPlaceHolder,
+  textHeader = "De",
+}) => {
   const [editing, setEditing] = useState(false);
-  const [searchContact, setSearchContact] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <div className={styles.columnInfoBill}>
       <div className={styles.headerInfoBill}>
-        <p>De</p>
+        <p>{textHeader}</p>
         <div className={styles.search}>
           <div className={styles.searchContactContainer}>
-            <Lupa
-              className={styles.icon}
-              onClick={() => setSearchContact((prev) => !prev)}
-            />
-            {searchContact && <div className={styles.contact}>contactos</div>}
+            <Lupa className={styles.icon} />
           </div>
           <div
             className={styles.button}
@@ -45,7 +50,49 @@ const InfoClientBill = ({ name, address, urlImg, textareaPlaceHolder }) => {
           type="text"
           placeholder="Buscar contacto..."
           disabled={!editing}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onChange={(e) => setInputValue(e.target.value)}
+          value={inputValue}
         />
+        {/* Ahora el div de contactos se muestra solo si hay texto y el input está enfocado */}
+        {isFocused && inputValue.length > 0 && (
+          <div className={styles.contacts}>
+            <div className={styles.contact}>
+              <img src={urlImg || emptyImage} width={30} alt="" />
+              <div>
+                <p>Nombre de la cuenta</p>
+                <span>
+                  Email adress, Dirección, Población, Provincia, Código Postal,
+                  País
+                </span>
+              </div>
+            </div>
+            <div className={styles.contact}>
+              <img src={urlImg || emptyImage} width={30} alt="" />
+              <div>
+                <p>Nombre de la cuenta</p>
+                <span>
+                  Email adress, Dirección, Población, Provincia, Código Postal,
+                  País
+                </span>
+              </div>
+            </div>
+            <div className={styles.contact}>
+              <img src={urlImg || emptyImage} width={30} alt="" />
+              <div>
+                <p>Nombre de la cuenta</p>
+                <span>
+                  Email adress, Dirección, Población, Provincia, Código Postal,
+                  País
+                </span>
+              </div>
+            </div>
+            <div className={styles.newContactInfoClient}>
+              <PlusIconGray /> Nuevo contacto
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

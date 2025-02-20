@@ -13,6 +13,7 @@
   margin-bottom: 20px;
   gap: 10px;
   padding: 10px 10px 0px;
+  width: 95%;
 }
 .infoClient {
   display: flex;
@@ -298,8 +299,6 @@
 }
 
 .table {
-  width: 95%;
-  margin: 0 auto;
   text-align: start;
   border-collapse: collapse; /* Asegura que las celdas se vean uniformes */
   thead {
@@ -326,8 +325,9 @@
     text-align: start;
     padding: 10px; /* Añade espacio interno */
     color: #333; /* Color del texto */
-    font-weight: bold; /* Asegura que los encabezados sean visibles */
+    font-weight: 500; /* Asegura que los encabezados sean visibles */
     width: 150px; /* Ajusta la anchura según lo necesario */
+    color: #666666;
   }
 
   td {

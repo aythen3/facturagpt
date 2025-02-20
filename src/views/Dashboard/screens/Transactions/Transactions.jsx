@@ -92,7 +92,7 @@ const Transactions = () => {
   const tableHeaders = [
     "ID Transacción",
     "Descripción y Categoria",
-    "Etiquetas",
+    "Notas",
     "Total",
     "Fecha",
     "Vencimiento",
@@ -227,7 +227,7 @@ const Transactions = () => {
               tag: "tagRed",
             },
           },
-          state: ["Pendiente"],
+          state: ["Pendiente", "stripe"],
         },
         {
           id: "M002",
@@ -363,7 +363,11 @@ const Transactions = () => {
                     />
                   </th>
                   {tableHeaders.map((header, index) => (
-                    <th key={index} className={index == 8 ? styles.small : ""}>
+                    <th
+                      key={index}
+                      className={index == 2 ? styles.small : ""}
+                      style={{ minWidth: index == 1 && "200px" }}
+                    >
                       {header}
                     </th>
                   ))}
@@ -401,9 +405,17 @@ const Transactions = () => {
                  : row.desc}
              </td> */}
                     <td>
-                      <p>
+                      <p
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "start",
+                        }}
+                      >
                         {row?.doc?.totalData?.description
-                          ? row?.doc?.totalData?.description
+                          ? row?.doc?.totalData?.description.map(
+                              (item, index) => <span key={index}>{item}</span>
+                            )
                           : "Sin descripción"}
                       </p>
                     </td>
@@ -455,14 +467,10 @@ const Transactions = () => {
                           gap: "5px",
                         }}
                       >
-                        {/* <span className={getStateClass(row.state[0])}>
-                   &bull;
-                 </span> */}
-                        <span>
-                          {row?.doc?.totalData?.status
-                            ? row?.doc?.totalData?.status
-                            : "pendiente"}
+                        <span className={getStateClass(row.state[0])}>
+                          &bull;
                         </span>
+
                         <div
                           style={{
                             display: "flex",
