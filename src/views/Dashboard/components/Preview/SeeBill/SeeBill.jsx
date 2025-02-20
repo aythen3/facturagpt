@@ -25,6 +25,13 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
   const [uploadedPdf, setUploadedPdf] = useState(null);
   const contentRef = useRef(null); // Aquí inicializamos el ref
   const [hasGeneratedPDF, setHasGeneratedPDF] = useState(false); // Nueva bandera
+
+  console.log(
+    "API_URL_LOCAL:",
+    process.env.REACT_APP_API_CREATE_PDF ||
+      "https://facturagpt.com/api/user/upload-pdf"
+  );
+
   // Manejar la carga de un archivo PDF
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -62,9 +69,8 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
 
     setHasGeneratedPDF(true); // Marcamos que se generó el PDF
 
-    console.log("AAAAAAAAAAAAAA");
-
     if (fileUser) {
+      console.log("AAAAAAAAAAAAAA");
       // Si hay un archivo PDF subido, simplemente usalo
       const fileUrl = URL.createObjectURL(fileUser);
       setPdfUrl(fileUrl);
@@ -73,6 +79,7 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
     }
 
     if (uploadedPdf) {
+      console.log("BBBBBBBBBBBBBBBBBBBBB");
       // Si se ha cargado un PDF, simplemente úsalo
       setPdfUrl(uploadedPdf);
       return;

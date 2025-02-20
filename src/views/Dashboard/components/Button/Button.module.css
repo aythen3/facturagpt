@@ -15,6 +15,7 @@
   align-items: center;
   gap: 10px;
   justify-content: center;
+  min-width: fit-content;
 }
 
 .buttonTemplateGreen {

@@ -23,6 +23,7 @@ const EditableRow = ({
               fontSize: "13px",
             }}
             action={action}
+            disabledOption={!isEditing}
           >
             {buttonLabel}
           </Button>

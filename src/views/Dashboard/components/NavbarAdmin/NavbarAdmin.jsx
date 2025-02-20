@@ -29,6 +29,7 @@ import NewContact from "../NewContact/NewContact";
 import NewProduct from "../NewProduct/NewProduct";
 import NewBIll from "../NewBIll/NewBIll";
 import UploadFIle from "../UploadFIle/UploadFIle";
+import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
 
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
@@ -46,7 +47,9 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation("navbarAdmin");
   // console.log(user);
+  const [showCreateFolder, setShowCreateFolder] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
+
   const [showNewTagModal, setShowNewTagModal] = useState(false);
   const [showNewContact, setShowNewContact] = useState(false);
   const [showNewProduct, setShowNewProduct] = useState(false);
@@ -129,6 +132,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
     console.log("resp emails", resp);
   };
 
+  const [selectedLocationNew, setSelectedLocationNew] = useState("/Inicio/");
   return (
     <>
       <Elements stripe={stripePromise}>
@@ -314,8 +318,8 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
             setIsOpen={setIsOpen}
             openModalAutomate={openModalAutomate}
             closeModalAutomate={closeModalAutomate}
-            showLocationModal={showLocationModal}
-            setShowLocationModal={setShowLocationModal}
+            showCreateFolder={showCreateFolder}
+            setShowCreateFolder={setShowCreateFolder}
             showNewTagModal={showNewTagModal}
             setShowNewTagModal={setShowNewTagModal}
             showNewContact={showNewContact}
@@ -337,8 +341,19 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
           />
         )}
         {showNewTagModal && <NewTag setShowNewTagModal={setShowNewTagModal} />}
+        {showCreateFolder && (
+          <CreateFolderModal
+            onClose={() => setShowCreateFolder(false)}
+            location={selectedLocationNew}
+            setShowLocationModal={setShowLocationModal}
+          />
+        )}
         {showLocationModal && (
-          <SelectLocation onClose={() => setShowLocationModal(false)} />
+          <SelectLocation
+            onClose={() => setShowLocationModal(false)}
+            setSelectedLocationNew={setSelectedLocationNew}
+            showNewFolder={false}
+          />
         )}
         {typeContentAutomate && (
           <PanelAutomate

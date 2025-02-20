@@ -72,7 +72,9 @@ const DocumentPreview = ({
   const [selectedAutomationData, setSelectedAutomationData] = useState(null);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const [showSelectLocation, setShowSelectLocation] = useState(false);
+  const [discountQuantity, setDiscountQuantity] = useState(10);
+  const [taxQuantity, setTaxQuantity] = useState(10);
   // =======================
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const handleCloseNewClient = () => {
@@ -149,7 +151,7 @@ const DocumentPreview = ({
       text: "Duplicar",
       icon: doubleIcon,
       click: () => {
-        console.log("duplicar");
+        setShowSelectLocation(true);
       },
     },
     {
@@ -390,14 +392,14 @@ const DocumentPreview = ({
               buttonLabel="Añadir Descuento"
               action={() => setShowDiscountModal(true)}
               hasButton
-              hasPercentage="10%"
+              hasPercentage={discountQuantity + "%"}
             />
             <EditableRow
               label="Impuesto"
               buttonLabel="Añadir Impuesto"
               action={() => setShowTaxModal(true)}
               hasButton
-              hasPercentage="21%"
+              hasPercentage={taxQuantity + "%"}
             />
             <EditableRow label="Total" />
           </div>
@@ -485,6 +487,7 @@ const DocumentPreview = ({
                 setShowDiscountModal={setShowDiscountModal}
                 isAnimating={isAnimating}
                 setIsAnimating={setIsAnimating}
+                setDiscountQuantity={setDiscountQuantity}
               />
             )}
             {showTaxModal && (
@@ -493,6 +496,7 @@ const DocumentPreview = ({
                 showTaxModal={showTaxModal}
                 isAnimating={isAnimating}
                 setIsAnimating={setIsAnimating}
+                setTaxQuantity={setTaxQuantity}
               />
             )}
           </div>
@@ -516,15 +520,19 @@ const DocumentPreview = ({
       handleVisualizar();
     }
   };
+  const [pdfUrl, setPdfUrl] = useState(null);
 
   // Mostrar el modal y generar el PDF dependiendo del archivo subido
   const handleVisualizar = () => {
     setSeeBill(true); // Mostrar el modal
     if (fileUser) {
+      console.log("DESDE PREVIEWWWWWWWWWWWWWWWWWWWWWWWW");
       // Si hay un archivo PDF subido, usar ese archivo
       const fileUrl = URL.createObjectURL(fileUser);
+      setPdfUrl(fileUrl);
       seeBillRef.current?.generatePDF(fileUrl); // Generar PDF desde el archivo subido
     } else {
+      console.log("DESDE PREVIEWWWWWWWWWWWWWWWWWWWWWWWW22222222222222");
       // Si no hay archivo, usar el componente FacturaTemplate
       console.log("desde preview");
       seeBillRef.current?.generatePDF(); // Generar PDF desde FacturaTemplate
@@ -597,6 +605,9 @@ const DocumentPreview = ({
           </div>
         )}
       </div>
+      {showSelectLocation && (
+        <SelectLocation onClose={() => setShowSelectLocation(false)} />
+      )}
       {showMovetoFolder && (
         <MoveToFolder
           setShowMovetoFolder={setShowMovetoFolder}

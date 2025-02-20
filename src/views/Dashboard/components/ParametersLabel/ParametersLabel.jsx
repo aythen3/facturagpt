@@ -17,7 +17,7 @@ export const ParametersLabel = ({
   const addParameter = () => {
     setClientDataInputs((prev) => ({
       ...prev,
-      parameters: [...prev.parameters, { name: "", value: "" }],
+      parameters: [...prev.parameters, { name: "", value: "", title: "" }],
     }));
   };
 
@@ -58,7 +58,7 @@ export const ParametersLabel = ({
           return (
             <div key={index} className={styles.parameterContent}>
               <div className={styles.parametersHeader}>
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     gap: "10px",
@@ -66,8 +66,8 @@ export const ParametersLabel = ({
                   }}
                 >
                   <GrabIcon /> <ArrowDown className={`${styles.icon}`} />
-                  <p>Parametro {index + 1}</p>
-                </div>
+                  <p>{param.title || `Parametro ${index + 1}`} </p>
+                </div> */}
                 <div
                   style={{
                     display: "flex",
@@ -82,6 +82,12 @@ export const ParametersLabel = ({
                         setEditingIndices((prev) =>
                           prev.filter((i) => i !== index)
                         );
+                        setClientDataInputs((prev) => ({
+                          ...prev,
+                          parameters: prev.parameters.map((p, i) =>
+                            i === index ? { ...p, title: param.name } : p
+                          ),
+                        }));
                       } else {
                         setEditingIndices((prev) => [...prev, index]);
                       }
@@ -92,17 +98,18 @@ export const ParametersLabel = ({
                   <div
                     className={styles.delete}
                     onClick={() => {
-                      if (isEditing) {
-                        deleteParameter(index);
-                      }
+                      // if (isEditing) {
+                      deleteParameter(index);
+                      // }
                     }}
-                    style={{ background: !isEditing && "#dd7a84" }}
+                    // style={{ background: !isEditing && "#dd7a84" }}
                   >
                     <Minus className={styles.icon} />
                   </div>
                 </div>
               </div>
               <div className={styles.parameter}>
+                <GrabIcon className={styles.grabIcon} />
                 {isCategory && (
                   <div>
                     <span>Categoria</span>

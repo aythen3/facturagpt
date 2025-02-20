@@ -3,7 +3,7 @@ import styles from "./Clients.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.png";
 import { ReactComponent as ArrowUp } from "../../assets/arrowDownGray.svg";
-import plusIcon from "../../assets/Plus Icon.png";
+import plusIcon from "../../assets/Plus Icon.svg";
 import optionDots from "../../assets/optionDots.svg";
 import closeIcon from "../../assets/closeMenu.svg";
 import filterSearch from "../../assets/Filters Search.png";
@@ -974,36 +974,127 @@ const Clients = () => {
                     <div className={styles.infoBill}>
                       {clientData.infoBill?.length > 0 ? (
                         clientData.infoBill.map((bill, index) => (
-                          <div key={index} className={styles.infoBillContainer}>
-                            <div className={styles.info}>
-                              <p>
-                                {" "}
-                                <span> {bill.direccion || "Dirección"},</span>
-                                <span> {bill.Población || "Población"},</span>
-                                <span> {bill.Provincia || "Provincia"},</span>
-                                <span>
-                                  {bill.codigoPostal || "Código Postal"},
-                                </span>
-                                <span> {bill.pais || "País"}</span>
-                              </p>
+                          <div style={{ width: "100%" }}>
+                            {" "}
+                            <div
+                              key={index}
+                              className={styles.infoBillContainer}
+                              style={{ flexDirection: "row" }}
+                            >
+                              <div className={styles.info}>
+                                <p>
+                                  {" "}
+                                  <span> {bill.direccion || "Dirección"},</span>
+                                  <span> {bill.Población || "Población"},</span>
+                                  <span> {bill.Provincia || "Provincia"},</span>
+                                  <span>
+                                    {bill.codigoPostal || "Código Postal"},
+                                  </span>
+                                  <span> {bill.pais || "País"}</span>
+                                </p>
 
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  selectedBillIndex === index
-                                    ? handleSaveBillingDetail()
-                                    : handleEditBillingDetail(index);
-                                }}
-                                className={styles.button}
-                              >
-                                {selectedBillIndex === index
-                                  ? "Guardar"
-                                  : "Editar"}
-                              </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    selectedBillIndex === index
+                                      ? handleSaveBillingDetail()
+                                      : handleEditBillingDetail(index);
+                                  }}
+                                  className={styles.button}
+                                >
+                                  {selectedBillIndex === index
+                                    ? "Guardar"
+                                    : "Editar"}
+                                </button>
+                              </div>
+                              <DeleteButton
+                                action={() => handleDeleteBillingDetail(index)}
+                              />
                             </div>
-                            <DeleteButton
-                              action={() => handleDeleteBillingDetail(index)}
-                            />
+                            {selectedBillIndex === index && (
+                              <div className={styles.billInfoInputs}>
+                                <div className={styles.info}>
+                                  <span>Dirección</span>
+                                  <input
+                                    type="text"
+                                    disabled={!inputsEditing.info}
+                                    placeholder="Dirección"
+                                    value={currentBill.direccion}
+                                    onChange={(e) =>
+                                      handleBillingDetailChange(
+                                        "direccion",
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  {" "}
+                                  <div className={styles.info}>
+                                    <span>Población</span>
+                                    <input
+                                      type="text"
+                                      disabled={!inputsEditing.info}
+                                      placeholder="Población"
+                                      value={currentBill.Población}
+                                      onChange={(e) =>
+                                        handleBillingDetailChange(
+                                          "Población",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                  <div className={styles.info}>
+                                    <span>Provincia</span>
+                                    <input
+                                      type="text"
+                                      disabled={!inputsEditing.info}
+                                      placeholder="Provincia"
+                                      value={currentBill.Provincia}
+                                      onChange={(e) =>
+                                        handleBillingDetailChange(
+                                          "Provincia",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className={styles.info}>
+                                    <span>Código Postal</span>
+                                    <input
+                                      type="text"
+                                      disabled={!inputsEditing.info}
+                                      placeholder="Código Postal"
+                                      value={currentBill.codigoPostal}
+                                      onChange={(e) =>
+                                        handleBillingDetailChange(
+                                          "codigoPostal",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                  <div className={styles.info}>
+                                    <span>País</span>
+                                    <input
+                                      type="text"
+                                      disabled={!inputsEditing.info}
+                                      placeholder="País"
+                                      value={currentBill.pais}
+                                      onChange={(e) =>
+                                        handleBillingDetailChange(
+                                          "pais",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         ))
                       ) : (
@@ -1011,87 +1102,6 @@ const Clients = () => {
                       )}
                     </div>
                   </div>
-                  {selectedBillIndex !== null && (
-                    <div className={styles.billInfoInputs}>
-                      <div className={styles.info}>
-                        <span>Dirección</span>
-                        <input
-                          type="text"
-                          disabled={!inputsEditing.info}
-                          placeholder="Dirección"
-                          value={currentBill.direccion}
-                          onChange={(e) =>
-                            handleBillingDetailChange(
-                              "direccion",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </div>
-                      <div>
-                        {" "}
-                        <div className={styles.info}>
-                          <span>Población</span>
-                          <input
-                            type="text"
-                            disabled={!inputsEditing.info}
-                            placeholder="Población"
-                            value={currentBill.Población}
-                            onChange={(e) =>
-                              handleBillingDetailChange(
-                                "Población",
-                                e.target.value
-                              )
-                            }
-                          />
-                        </div>
-                        <div className={styles.info}>
-                          <span>Provincia</span>
-                          <input
-                            type="text"
-                            disabled={!inputsEditing.info}
-                            placeholder="Provincia"
-                            value={currentBill.Provincia}
-                            onChange={(e) =>
-                              handleBillingDetailChange(
-                                "Provincia",
-                                e.target.value
-                              )
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className={styles.info}>
-                          <span>Código Postal</span>
-                          <input
-                            type="text"
-                            disabled={!inputsEditing.info}
-                            placeholder="Código Postal"
-                            value={currentBill.codigoPostal}
-                            onChange={(e) =>
-                              handleBillingDetailChange(
-                                "codigoPostal",
-                                e.target.value
-                              )
-                            }
-                          />
-                        </div>
-                        <div className={styles.info}>
-                          <span>País</span>
-                          <input
-                            type="text"
-                            disabled={!inputsEditing.info}
-                            placeholder="País"
-                            value={currentBill.pais}
-                            onChange={(e) =>
-                              handleBillingDetailChange("pais", e.target.value)
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </label>
                 <label>
                   <div style={{ marginBottom: "30px" }}>
@@ -1184,16 +1194,15 @@ const Clients = () => {
                               ? "Guardar"
                               : "Editar"}
                           </div>
+                          {editingIndexPayMethod == index && (
+                            <PayMethod
+                              method={currentPayMethod}
+                              onChange={handlePayMethodChange}
+                            />
+                          )}
                         </div>
                       ))}
                   </div>
-
-                  {editingIndexPayMethod !== null && (
-                    <PayMethod
-                      method={currentPayMethod}
-                      onChange={handlePayMethodChange}
-                    />
-                  )}
                 </label>
 
                 <ParametersLabel

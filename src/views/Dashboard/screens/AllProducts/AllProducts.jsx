@@ -6,7 +6,7 @@ import searchWhite from "../../assets/searchWhite.png";
 import newClientIcon from "../../assets/newClientIcon.svg";
 import clock from "../../assets/clock.png";
 import edit from "../../assets/edit.png";
-import plusIcon from "../../assets/Plus Icon.png";
+import plusIcon from "../../assets/Plus Icon.svg";
 import optionDots from "../../assets/optionDots.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";

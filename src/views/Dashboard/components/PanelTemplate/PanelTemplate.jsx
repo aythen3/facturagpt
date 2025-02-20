@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import GetPlusButton from "../GetPlusButton/GetPlusButton.jsx";
-const PanelTemplate = ({ children }) => {
+const PanelTemplate = ({ menuOpenChat, setMenuOpenChat, children }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -101,11 +101,14 @@ const PanelTemplate = ({ children }) => {
           )}
         <>
           <div
-            className={`${styles.mobileMenuOverlay} ${menuOpen && styles.activeMenuOverlay}`}
-            onClick={() => setMenuOpen(false)}
+            className={`${styles.mobileMenuOverlay} ${(menuOpen && styles.activeMenuOverlay) || (menuOpenChat && styles.activeMenuOverlay)} `}
+            onClick={() => {
+              setMenuOpenChat !== undefined && setMenuOpenChat(false);
+              setMenuOpen(false);
+            }}
           ></div>
           <div
-            className={`${styles.mobileMenu} ${menuOpen && styles.activeMobileMenu}`}
+            className={`${styles.mobileMenu} ${(menuOpen && styles.activeMobileMenu) || (menuOpenChat && styles.activeMobileMenu)}`}
           >
             <ul>
               {/* <li onClick={() => setIsOpen((prev) => !prev)}>

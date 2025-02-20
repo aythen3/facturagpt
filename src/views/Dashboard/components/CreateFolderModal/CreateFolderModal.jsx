@@ -10,7 +10,7 @@ import CustomAutomationsWrapper from "../CustomAutomationsWrapper/CustomAutomati
 import OptionsSwitchComponent from "../OptionsSwichComponent/OptionsSwitchComponent";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import { ReactComponent as TwoPeople } from "../../assets/twoPeopleWhite.svg";
-const CreateFolderModal = ({ onClose, location }) => {
+const CreateFolderModal = ({ onClose, location, setShowLocationModal }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { createFolderLoading } = useSelector((state) => state.scaleway);
@@ -69,7 +69,12 @@ const CreateFolderModal = ({ onClose, location }) => {
           <Button type="white" action={handleClose}>
             Cancelar
           </Button>
-          <Button action={handleCreateFolder}>
+          <Button
+            action={() => {
+              handleCreateFolder();
+              !createFolder && handleClose();
+            }}
+          >
             {createFolderLoading ? "Creando..." : "Guardar"}
           </Button>
         </HeaderCard>
@@ -94,7 +99,7 @@ const CreateFolderModal = ({ onClose, location }) => {
                 textButton="Seleccionar Ubicación"
                 placeholder="/Inicio"
                 icon={<SearchSVG />}
-                action={() => setShowSelectOutputLocation(true)}
+                action={() => setShowLocationModal(true)}
               />
             </div>
 

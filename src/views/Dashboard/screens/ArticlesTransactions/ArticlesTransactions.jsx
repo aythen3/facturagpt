@@ -3,7 +3,7 @@ import styles from "./ArticlesTransactions.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.png";
 import optionDots from "../../assets/optionDots.svg";
-import plusIcon from "../../assets/Plus Icon.png";
+import plusIcon from "../../assets/Plus Icon.svg";
 import filterSearch from "../../assets/Filters Search.png";
 import creditCard from "../../assets/creditCardIcon.png";
 import closeIcon from "../../assets/closeMenu.svg";

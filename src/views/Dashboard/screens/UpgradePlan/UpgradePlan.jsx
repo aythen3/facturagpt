@@ -14,7 +14,7 @@ import checkedCircle from "../../assets/checkedCircle.svg";
 import PlanUpdatedModal from "../../components/PlanUpdatedModal/PlanUpdatedModal";
 import { useDispatch, useSelector } from "react-redux";
 import HeaderCard from "../../components/HeaderCard/HeaderCard";
-import { updateUser } from "../../../../actions/user";
+// import { updateUser } from "../../../../actions/user";
 import {
   attachCustomPaymentMethod,
   createCustomPaymentIntent,
@@ -82,7 +82,7 @@ const UpgradePlan = ({ onClose }) => {
 
       console.log("Updating user with", data);
 
-      await dispatch(updateUser({ userId: user?.id, toUpdate: data }));
+      // await dispatch(updateUser({ userId: user?.id, toUpdate: data }));
 
       const amountInCents = getMinPricingInCents(selectedPlan);
 
@@ -125,9 +125,9 @@ const UpgradePlan = ({ onClose }) => {
       },
     };
     console.log("updating user with", data);
-    dispatch(updateUser({ userId: user?.id, toUpdate: data })).then(() => {
-      dispatch(attachCustomPaymentMethod({ userId: user?.id }));
-    });
+    // dispatch(updateUser({ userId: user?.id, toUpdate: data })).then(() => {
+    //   dispatch(attachCustomPaymentMethod({ userId: user?.id }));
+    // });
   };
 
   const getMinPricingInCents = (selectedPlan) => {
