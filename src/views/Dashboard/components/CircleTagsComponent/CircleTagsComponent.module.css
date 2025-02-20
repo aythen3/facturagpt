@@ -1,0 +1,66 @@
+.tags {
+  display: flex;
+  gap: 5px;
+}
+
+.tag {
+  text-align: center;
+  color: white;
+  width: fit-content;
+  border-radius: 999px;
+  display: block;
+  height: 20px;
+  width: 20px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+  margin-left: -20px;
+  cursor: pointer;
+}
+
+.tag:nth-child(1) {
+  margin-left: 0;
+}
+
+.tagWhite {
+  background-color: #ffffff;
+  border: 2px solid #af8f8c;
+}
+.tagRed {
+  background-color: #f2c6c2;
+  border: 2px solid #af8f8c;
+}
+.tagOrange {
+  background-color: #f2cfc2;
+  border: 2px solid #af958c;
+}
+.tagYellow {
+  background-color: #f2e3c2;
+  border: 2px solid #b6ab92;
+}
+.tagGreen {
+  background-color: #c2f2d3;
+  border: 2px solid #8caf98;
+}
+.tagBlue {
+  background-color: #c2d8f2;
+  border: 2px solid #8c9caf;
+}
+.tagViolet {
+  background-color: #d7c5f6;
+  border: 2px solid #a194b7;
+}
+.tagPink {
+  background-color: #f0c2f2;
+  border: 2px solid #ad8caf;
+}
+.selected {
+  border: 3px solid rgb(104, 104, 104) !important;
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+  -webkit-transition: transform 0.2s ease-in-out;
+  -moz-transition: transform 0.2s ease-in-out;
+  -ms-transition: transform 0.2s ease-in-out;
+  -o-transition: transform 0.2s ease-in-out;
+}

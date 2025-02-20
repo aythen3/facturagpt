@@ -32,18 +32,6 @@
       .searchContactContainer {
         position: relative;
       }
-      .contact {
-        position: absolute;
-        bottom: -200%;
-        background-color: white;
-        padding: 10px;
-        border: 1px solid #ececf1;
-        border-radius: 10px;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        -ms-border-radius: 10px;
-        -o-border-radius: 10px;
-      }
     }
   }
   .info {
@@ -95,5 +83,55 @@
     -moz-border-radius: 6px;
     -ms-border-radius: 6px;
     -o-border-radius: 6px;
+    position: relative;
+  }
+}
+.contacts {
+  position: absolute;
+  top: calc(10px + 100%);
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+  background-color: white;
+  border: 1px solid #ececf1;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  z-index: 99;
+  .contact {
+    display: flex;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+
+    img {
+      border-radius: 999px;
+      -webkit-border-radius: 999px;
+      -moz-border-radius: 999px;
+      -ms-border-radius: 999px;
+      -o-border-radius: 999px;
+    }
+    p {
+      color: #09090b;
+    }
+    span {
+      color: #666666;
+      font-size: 13px;
+    }
+  }
+  .newContactInfoClient {
+    background-color: #f5f5f5;
+    padding: 10px;
+    padding-left: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 }

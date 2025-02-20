@@ -17,7 +17,7 @@ import aiIcon from "../../assets/AI-button.svg";
 import { ReactComponent as AIcon } from "../../assets/AIcon.svg";
 import { ReactComponent as ArrowDown } from "../../assets/arrowDownBold.svg";
 
-const Toolbar = () => {
+const Toolbar = ({ onContentChange }) => {
   const editorRef = useRef(null);
   const [textFormat, setTextFormat] = useState({
     bold: false,
@@ -289,6 +289,25 @@ const Toolbar = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const handleContentChange = () => {
+      if (editorRef.current && onContentChange) {
+        onContentChange(editorRef.current.innerHTML);
+      }
+    };
+
+    const editor = editorRef.current;
+    if (editor) {
+      editor.addEventListener("input", handleContentChange);
+    }
+
+    return () => {
+      if (editor) {
+        editor.removeEventListener("input", handleContentChange);
+      }
+    };
+  }, [onContentChange]);
 
   return (
     <>

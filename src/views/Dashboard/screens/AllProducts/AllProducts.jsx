@@ -14,7 +14,7 @@ import LastTransactions from "../../components/LastTransactions/LastTransactions
 import winIcon from "../../assets/winIcon.svg";
 import KIcon from "../../assets/KIcon.svg";
 import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
-
+import imageEmpty from "../../assets/ImageEmpty.svg";
 import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
 import EditableInput from "../Clients/EditableInput/EditableInput";
 import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
@@ -88,43 +88,54 @@ const AllProducts = () => {
   };
 
   const tableHeaders = [
+    "Código",
     "Nombre o Descripción",
-    ["Precio unitario", "(PVP)"],
-    ["Qty", "(Último mes)"],
+    "Proveedor",
+    "Categoría",
+    ["Cantidad", "(Último mes)"],
+    "Generado",
     "Precio máximo",
     "Precio mínimo",
     "Precio medio",
-    "Transacciones",
-    "Editar",
+    "",
   ];
 
   const tableData = [
     {
-      url: "https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid",
-      name: "Articulo 1",
-      price: "00,00 EUR",
-      quantity: "1.0 Qty",
+      imageUrl: "",
+      code: "9172389",
+      productDescription: ["Articulo 1", "Descripción"],
+      supplier: ["Aythen", "Email adress, Phone number , Zip code "],
+      category: ["Gasto", "Gastos Operativos"],
+      quantity: "1.0",
+      generated: "00,00 EUR",
       maxPrice: "00,00 EUR",
       minPrice: "00,00 EUR",
-      priceEn: "00,00 EUR",
+      averagePrice: "00,00 EUR",
     },
     {
-      url: "https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid",
-      name: "Articulo 1",
-      price: "00,00 EUR",
-      quantity: "1.0 Qty",
+      imageUrl: "",
+      code: "9172389",
+      productDescription: ["Articulo 1", "Descripción"],
+      supplier: ["Aythen", "Email adress, Phone number , Zip code "],
+      category: ["Gasto", "Gastos Operativos"],
+      quantity: "1.0",
+      generated: "00,00 EUR",
       maxPrice: "00,00 EUR",
       minPrice: "00,00 EUR",
-      priceEn: "00,00 EUR",
+      averagePrice: "00,00 EUR",
     },
     {
-      url: "https://img.freepik.com/foto-gratis/fondo-abstracto-textura_1258-30553.jpg?semt=ais_hybrid",
-      name: "Articulo 1",
-      price: "00,00 EUR",
-      quantity: "1.0 Qty",
+      imageUrl: "",
+      code: "9172389",
+      productDescription: ["Articulo 1", "Descripción"],
+      supplier: ["Aythen", "Email adress, Phone number , Zip code "],
+      category: ["Gasto", "Gastos Operativos"],
+      quantity: "1.0",
+      generated: "00,00 EUR",
       maxPrice: "00,00 EUR",
       minPrice: "00,00 EUR",
-      priceEn: "00,00 EUR",
+      averagePrice: "00,00 EUR",
     },
   ];
 
@@ -375,56 +386,107 @@ const AllProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {transactionByClient?.doc?.totalData?.productList.map(
-                (product, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="clientSelected"
-                        onClick={() => selectClient(rowIndex)}
-                        checked={
-                          clientSelected.includes(rowIndex) ? true : false
-                        }
+              {/* {transactionByClient?.doc?.totalData?.productList.map( */}
+              {tableData.map((product, rowIndex) => (
+                <tr key={rowIndex}>
+                  {/* Checkbox */}
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="clientSelected"
+                      onClick={() => selectClient(rowIndex)}
+                      checked={clientSelected.includes(rowIndex)}
+                    />
+                  </td>
+
+                  {/* Imagen del producto */}
+                  <td>{product.code}</td>
+
+                  {/* Descripción del producto */}
+                  <td>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      {" "}
+                      <img
+                        src={product.imageUrl || imageEmpty}
+                        alt="Producto"
+                        width="50"
+                        height="50"
                       />
-                    </td>
-                    <td className={styles.name}>
-                      {product.productDescription}
-                    </td>
-                    <td>{product.productImport}</td>
-                    <td>{product.quantity}</td>
-                    <td>{product.productImportWithoutDiscount}</td>
-                    <td>{product.productPartial}</td>
-                    <td>{product.priceEn}</td>
-                    <td className={styles.actions}>
-                      <div className={styles.transacciones}>
-                        <a href="#">Ver</a>
+                      <div>
+                        {product.productDescription.map((desc, index) => (
+                          <div
+                            key={index}
+                            className={index == 0 && styles.titleInfoTd}
+                          >
+                            {desc}
+                          </div>
+                        ))}
                       </div>
-                    </td>
-                    <td>
-                      <div className={styles.edit}>
-                        <a href="#">Editar</a>
-                        <div onClick={() => handleActions(rowIndex, product)}>
-                          <img src={optionDots} alt="options" />
-                        </div>
-                        {selectedRowIndex === rowIndex && (
-                          <ul className={styles.content_menu_actions}>
-                            <li
-                              onClick={() => {
-                                handleDelete(product.productRef);
-                                setSelectedRowIndex(null);
-                              }}
-                              className={styles.item_menu_actions}
-                            >
-                              Eliminar
-                            </li>
-                          </ul>
-                        )}
+                    </div>
+                  </td>
+
+                  {/* Proveedor */}
+                  <td>
+                    {product.supplier.map((info, index) => (
+                      <div
+                        key={index}
+                        className={index == 0 && styles.titleInfoTd}
+                      >
+                        {info}
                       </div>
-                    </td>
-                  </tr>
-                )
-              )}
+                    ))}
+                  </td>
+
+                  {/* Categoría */}
+                  <td>
+                    {product.category.map((cat, index) => (
+                      <div key={index}>{cat}</div>
+                    ))}
+                  </td>
+
+                  {/* Cantidad */}
+                  <td>{product.quantity}</td>
+
+                  {/* Precios */}
+                  <td>{product.generated}</td>
+                  <td>{product.maxPrice}</td>
+                  <td>{product.minPrice}</td>
+                  <td>{product.averagePrice}</td>
+
+                  <td className={styles.actions}>
+                    <div className={styles.transacciones}>
+                      <a href="#">Ver</a>
+                    </div>
+                  </td>
+                  <td>
+                    <div className={styles.edit}>
+                      <a href="#">Editar</a>
+                      <div onClick={() => handleActions(rowIndex, product)}>
+                        <img src={optionDots} alt="options" />
+                      </div>
+                      {selectedRowIndex === rowIndex && (
+                        <ul className={styles.content_menu_actions}>
+                          <li
+                            onClick={() => {
+                              handleDelete(product.productRef);
+                              setSelectedRowIndex(null);
+                            }}
+                            className={styles.item_menu_actions}
+                          >
+                            Eliminar
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -1,0 +1,43 @@
+.bg {
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.CreateNotePopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: #f5f5f5;
+  z-index: 99;
+  width: 70%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+.containerCreateNotepopup {
+  padding: 10px 23px;
+}
+.contentCreateNotePopup {
+  background-color: white;
+  box-sizing: border-box;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  padding: 10px;
+}
+.button {
+  text-decoration: underline;
+  color: #222222;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 10px 23px;
+}

@@ -71,6 +71,31 @@
       border: none;
     }
   }
+
+  .tagWhite {
+    background-color: #ffffff;
+  }
+  .tagRed {
+    background-color: #f2c6c2;
+  }
+  .tagOrange {
+    background-color: #f2cfc2;
+  }
+  .tagYellow {
+    background-color: #f2e3c2;
+  }
+  .tagGreen {
+    background-color: #c2f2d3;
+  }
+  .tagBlue {
+    background-color: #c2d8f2;
+  }
+  .tagViolet {
+    background-color: #d7c5f6;
+  }
+  .tagPink {
+    background-color: #f0c2f2;
+  }
 }
 
 .titleWrapper {

@@ -37,6 +37,7 @@ import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
 import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import GetPlusButton from "../GetPlusButton/GetPlusButton";
+import useSwipe from "../../../../utils/useSwipe";
 export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -553,116 +554,7 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
   //   document.addEventListener("keydown", handleKeyDown);
   //   return () => document.removeEventListener("keydown", handleKeyDown);
   // }, []);
-  const [left, setLeft] = useState(-100); // Inicialmente oculto a la izquierda
-  const startTouch = useRef(0); // Para almacenar la posición inicial del toque o el mouse
-  const isMouseDown = useRef(false); // Detecta si el mouse está presionado
 
-  // Lógica para el swipe en el div invisible
-  const handleInvisibleTouchStart = (e) => {
-    startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
-  };
-
-  const handleInvisibleTouchMove = (e) => {
-    const currentTouch = e.touches[0].clientX;
-    const difference = currentTouch - startTouch.current;
-
-    // Mostrar el menú si el usuario hace swipe a la derecha
-    if (difference > 30) {
-      setLeft(0);
-    }
-  };
-
-  const handleInvisibleTouchEnd = () => {
-    // Reset o cualquier otra lógica adicional cuando se termina el gesto
-  };
-
-  // Lógica para el swipe en el menú (para ocultarlo)
-  const handleTouchStart = (e) => {
-    startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
-  };
-
-  const handleTouchMove = (e) => {
-    const currentTouch = e.touches[0].clientX;
-    const difference = currentTouch - startTouch.current;
-
-    // Ocultar el menú si el usuario hace swipe a la izquierda
-    if (difference < -30) {
-      setLeft(-100);
-    }
-  };
-  const handleInvisibleMouseDown = (e) => {
-    startTouch.current = e.clientX;
-    isMouseDown.current = true;
-
-    // Deshabilitar la selección de texto mientras se mantiene presionado
-    document.body.style.userSelect = "none";
-  };
-  const handleTouchEnd = () => {
-    // Reset o cualquier otra lógica adicional cuando se termina el gesto
-  };
-
-  // Lógica para el swipe en dispositivos de escritorio (mouse)
-  const handleMouseDownResize = (e) => {
-    if (window.innerWidth >= 768) return; // Solo habilitar el mouse en pantallas menores a 768px
-
-    isMouseDown.current = true;
-    startTouch.current = e.clientX;
-
-    // Deshabilitar la selección de texto mientras el mouse está presionado
-    document.body.style.userSelect = "none";
-  };
-  const handleInvisibleMouseMove = (e) => {
-    if (!isMouseDown.current) return;
-
-    const currentTouch = e.clientX;
-    const difference = currentTouch - startTouch.current;
-
-    // Mostrar el menú si el usuario hace swipe a la derecha
-    if (difference > 30) {
-      setLeft(0);
-    }
-  };
-  const handleInvisibleMouseUp = () => {
-    isMouseDown.current = false;
-
-    // Habilitar nuevamente la selección de texto
-    document.body.style.userSelect = "auto";
-  };
-
-  const handleMouseMoveResize = (e) => {
-    if (!isMouseDown.current || window.innerWidth >= 768) return;
-
-    const currentTouch = e.clientX;
-    const difference = currentTouch - startTouch.current;
-
-    // Mostrar u ocultar el menú según el movimiento del mouse
-    if (difference > 30) {
-      setLeft(0); // Mostrar el menú
-    } else if (difference < -30) {
-      setLeft(-100); // Ocultar el menú
-    }
-  };
-
-  const handleMouseUp = () => {
-    isMouseDown.current = false;
-    document.body.style.userSelect = "auto";
-  };
-
-  // Establecer los eventos para los dispositivos de escritorio
-  useEffect(() => {
-    const handleMouseMoveEvent = (e) => handleMouseMoveResize(e);
-    const handleMouseUpEvent = () => handleMouseUp();
-
-    if (window.innerWidth < 768) {
-      document.addEventListener("mousemove", handleMouseMoveEvent);
-      document.addEventListener("mouseup", handleMouseUpEvent);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMoveEvent);
-      document.removeEventListener("mouseup", handleMouseUpEvent);
-    };
-  }, [left]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Actualizar el ancho de la ventana cuando se cambie el tamaño de la pantalla
@@ -681,9 +573,6 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
 
   const isMobile = windowWidth <= 768; // Usar el ancho de la ventana actualizado
   // Manejador para ocultar el menú
-  const handleMenuClose = () => {
-    setLeft(-100);
-  };
 
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "/");
@@ -701,45 +590,16 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
       (userFilters.selectedTags && userFilters.selectedTags.length > 0) ||
       (userFilters.selectedTypes && userFilters.selectedTypes.length > 0));
 
+  const [swiped, setSwiped] = useState(false);
+
+  useSwipe(setSwiped);
   return (
     <>
-      {/* Div invisible para detectar swipe hacia la derecha */}
-      <div
-        style={{
-          position: "fixed",
-          top: "25%",
-          left: 0,
-          width: "50px",
-          height: "50vh",
-          zIndex: 1,
-          backgroundColor: "transparent",
-        }}
-        onTouchStart={handleInvisibleTouchStart}
-        onTouchMove={handleInvisibleTouchMove}
-        onTouchEnd={handleInvisibleTouchEnd}
-        onMouseDown={handleInvisibleMouseDown}
-        onMouseMove={handleInvisibleMouseMove}
-        onMouseUp={handleInvisibleMouseUp}
-      ></div>
-      {isMobile && left == 0 && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            zIndex: 1,
-            backgroundColor: "transparent",
-          }}
-          onClick={handleMenuClose}
-        ></div>
-      )}
       <div
         style={{
           position: isMobile ? "absolute" : "initial",
           top: 0,
-          left: `${left}vw`, // Aplicar el left dinámico
+          left: swiped ? "0" : "-100%",
           width: "80vw",
           height: "100vh",
           // backgroundColor: "white",
@@ -752,19 +612,13 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
         onDrop={handleDropFiles}
         onDragOver={handleContainerDragOver}
         onDragLeave={() => setDragingOverContainer(false)}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDownResize}
-        onMouseMove={handleMouseMoveResize}
-        onMouseUp={handleMouseUp}
       >
         <div className={styles.searchContainer}>
-          {isMobile && (
+          {/* {isMobile && (
             <div className={styles.showMobile}>
               <img src={ImageEmpty} alt="" onClick={toggleMenu} />
             </div>
-          )}
+          )} */}
           {/* <div className={styles.searchContainer}> */}
           <SearchIconWithIcon
             ref={searchInputRef}
