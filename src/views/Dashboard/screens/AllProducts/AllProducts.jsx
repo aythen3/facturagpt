@@ -13,11 +13,14 @@ import { useTranslation } from "react-i18next";
 import LastTransactions from "../../components/LastTransactions/LastTransactions";
 import winIcon from "../../assets/winIcon.svg";
 import KIcon from "../../assets/KIcon.svg";
-import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
 import imageEmpty from "../../assets/ImageEmpty.svg";
 import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
 import EditableInput from "../Clients/EditableInput/EditableInput";
 import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
+import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
+import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
+import emptyimage from "../../assets/ImageEmpty.svg";
+
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
 import Tags from "../../components/Tags/Tags";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +36,9 @@ import ImportContactsAndProducts from "../../components/ImportContactsAndProduct
 import NewProduct from "../../components/NewProduct/NewProduct";
 import NewTag from "../../components/NewTag/NewTag";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
+import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
+import DynamicTable from "../../components/DynamicTable/DynamicTable";
+import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 
 const AllProducts = () => {
   const { t } = useTranslation("clients");
@@ -97,6 +103,7 @@ const AllProducts = () => {
     "Precio máximo",
     "Precio mínimo",
     "Precio medio",
+    "",
     "",
   ];
 
@@ -219,43 +226,176 @@ const AllProducts = () => {
     };
   }, [newClient]);
 
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  const renderRow = (row, index, onSelect) => (
+    <tr key={index}>
+      {/* Checkbox */}
+      <td>
+        <input
+          type="checkbox"
+          name="clientSelected"
+          onClick={() => selectClient(index)}
+          checked={clientSelected.includes(index)}
+        />
+      </td>
+
+      {/* Imagen del producto */}
+      <td>{row.code}</td>
+
+      {/* Descripción del producto */}
+      <td>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          {" "}
+          <img
+            src={row.imageUrl || imageEmpty}
+            alt="Producto"
+            width="50"
+            height="50"
+          />
+          <div>
+            {row.productDescription.map((desc, index) => (
+              <div key={index} className={index == 0 && styles.titleInfoTd}>
+                {desc}
+              </div>
+            ))}
+          </div>
+        </div>
+      </td>
+
+      {/* Proveedor */}
+      <td>
+        {row.supplier.map((info, index) => (
+          <div key={index} className={index == 0 && styles.titleInfoTd}>
+            {info}
+          </div>
+        ))}
+      </td>
+
+      {/* Categoría */}
+      <td>
+        {row.category.map((cat, index) => (
+          <div key={index}>{cat}</div>
+        ))}
+      </td>
+
+      {/* Cantidad */}
+      <td>{row.quantity}</td>
+
+      {/* Precios */}
+      <td>{row.generated}</td>
+      <td>{row.maxPrice}</td>
+      <td>{row.minPrice}</td>
+      <td>{row.averagePrice}</td>
+
+      <td className={styles.actions}>
+        <div className={styles.transacciones}>
+          <a href="#">Ver</a>
+        </div>
+      </td>
+      <td>
+        <div className={styles.edit}>
+          <a href="#">Editar</a>
+          <div onClick={() => handleActions(index, row)}>
+            <img src={optionDots} alt="options" />
+          </div>
+          {selectedRowIndex === index && (
+            <ul className={styles.content_menu_actions}>
+              <li
+                onClick={() => {
+                  handleDelete(row.productRef);
+                  setSelectedRowIndex(null);
+                }}
+                className={styles.item_menu_actions}
+              >
+                Eliminar
+              </li>
+            </ul>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+
+  const toggleSelection = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const selectAll = () => {
+    setSelectedIds(
+      selectedIds.length === tableData.length
+        ? []
+        : tableData.map((_, index) => index)
+    );
+  };
   return (
     <PanelTemplate>
       <div className={styles.container}>
-        <div className={styles.clientsHeader}>
-          <h2>Articulos</h2>
-          {/* <div className={styles.searchContainer}>
-            <button
-              className={styles.addButton}
-              onClick={() => setShowModal(true)}
-            >
-              Clientes y Proveedores
-            </button>
-            <button
-              className={styles.infoBtn}
-              onClick={() => setNewProductModal(true)}
-            >
-              Analíticas
-            </button>
-
-            <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder={t("placeholderSearch")}
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-
-              <div className={styles.inputIconOutsideContainer}>
-                <img src={filterSearch} className={styles.inputIconOutside} />
+        <ClientsHeader
+          title={"Gestión de Activos (X)"}
+          buttons={[
+            {
+              label: (
+                <>
+                  <img src={plusIcon} alt="Nuevo cliente" />
+                  Nuevo Activo
+                </>
+              ),
+              onClick: () => {
+                setCreatingBill(true);
+                setShowNewClient(true);
+              },
+            },
+            {
+              label: <DownloadIcon />,
+              headerStyle: { padding: "6px 10px" },
+              type: "white",
+              onClick: () => setShowImportAssets(true),
+            },
+            // {
+            //   label: <DownloadIcon />,
+            //   headerStyle: { padding: "6px 10px" },
+            //   type: "white",
+            //   onClick: () => console.log("Importar datos"),
+            // },
+          ]}
+          searchProps={
+            {
+              // searchTerm={searchTerm}
+              // setSearchTerm={setSearchTerm}
+              // iconRight={pencilSquareIcon}
+              // classNameIconRight={styles.searchContainerL}
+              // onClickIconRight={() => setIsFilterOpen(true)}
+            }
+          }
+          searchChildren={
+            <>
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={winIcon} alt="kIcon" />
               </div>
-            </div>
-            <button className={styles.moreBtn}>
-              <img src={plusIcon} />
-            </button>
-          </div> */}
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={KIcon} alt="kIcon" />
+              </div>
+            </>
+          }
+        />
+        {/* <div className={styles.clientsHeader}>
+          <h2>Gestión de Activos (X)</h2>
+
           <div className={styles.searchContainer}>
             <button
               className={`${styles.addButton} ${styles.btnNewClient}`}
@@ -276,11 +416,7 @@ const AllProducts = () => {
             </Button>
             <SearchIconWithIcon
               ref={searchInputRef}
-              // searchTerm={searchTerm}
-              // setSearchTerm={setSearchTerm}
-              // iconRight={pencilSquareIcon}
-              // classNameIconRight={styles.searchContainerL}
-              // onClickIconRight={() => setIsFilterOpen(true)}
+           
             >
               <>
                 <div
@@ -297,26 +433,9 @@ const AllProducts = () => {
                 </div>
               </>
             </SearchIconWithIcon>
-            {/* <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder={t("placeholderSearch")}
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-          
-              <div
-                style={{ marginLeft: "5px" }}
-                className={styles.searchIconsWrappers}
-              >
-                <img src={l} alt="kIcon" />
-              </div>
-            </div>
-             */}
+           
           </div>
-        </div>
+        </div> */}
         {showImportAssets && (
           <ImportContactsAndProducts
             state={handleCloseNewClient}
@@ -344,152 +463,24 @@ const AllProducts = () => {
             tags={tags}
           />
         )}
-        <div className={styles.clientsTable}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.small}>
-                  <input
-                    type="checkbox"
-                    name="clientSelected"
-                    checked={
-                      clientSelected.length == tableData.length ? true : false
-                    }
-                    onClick={selectAllClients}
-                  />
-                </th>
-                {tableHeaders.map((header, index) => (
-                  <th
-                    key={index}
-                    className={
-                      index == 7
-                        ? styles.small
-                        : "" || index == 6
-                          ? styles.small
-                          : "" || index == 0
-                            ? styles.big
-                            : "" || index == 1
-                              ? styles.big
-                              : ""
-                    }
-                  >
-                    {Array.isArray(header) ? (
-                      <div className={styles.headerStack}>
-                        <span>{header[0]}</span>
-                        <span className={styles.subHeader}>{header[1]}</span>
-                      </div>
-                    ) : (
-                      header
-                    )}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {/* {transactionByClient?.doc?.totalData?.productList.map( */}
-              {tableData.map((product, rowIndex) => (
-                <tr key={rowIndex}>
-                  {/* Checkbox */}
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="clientSelected"
-                      onClick={() => selectClient(rowIndex)}
-                      checked={clientSelected.includes(rowIndex)}
-                    />
-                  </td>
+        {tableData.length == 0 ? (
+          <SkeletonScreen
+            labelText="No se han encontrado productos ni servicios"
+            helperText="Todos tus activos estarán listados aquí."
+            showInput={true}
+            enableLabelClick={false}
+          />
+        ) : (
+          <DynamicTable
+            columns={tableHeaders}
+            data={transactionByClient?.doc?.totalData?.productList || tableData}
+            renderRow={renderRow}
+            selectedIds={selectedIds}
+            onSelectAll={selectAll}
+            onSelect={toggleSelection}
+          />
+        )}
 
-                  {/* Imagen del producto */}
-                  <td>{product.code}</td>
-
-                  {/* Descripción del producto */}
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      {" "}
-                      <img
-                        src={product.imageUrl || imageEmpty}
-                        alt="Producto"
-                        width="50"
-                        height="50"
-                      />
-                      <div>
-                        {product.productDescription.map((desc, index) => (
-                          <div
-                            key={index}
-                            className={index == 0 && styles.titleInfoTd}
-                          >
-                            {desc}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </td>
-
-                  {/* Proveedor */}
-                  <td>
-                    {product.supplier.map((info, index) => (
-                      <div
-                        key={index}
-                        className={index == 0 && styles.titleInfoTd}
-                      >
-                        {info}
-                      </div>
-                    ))}
-                  </td>
-
-                  {/* Categoría */}
-                  <td>
-                    {product.category.map((cat, index) => (
-                      <div key={index}>{cat}</div>
-                    ))}
-                  </td>
-
-                  {/* Cantidad */}
-                  <td>{product.quantity}</td>
-
-                  {/* Precios */}
-                  <td>{product.generated}</td>
-                  <td>{product.maxPrice}</td>
-                  <td>{product.minPrice}</td>
-                  <td>{product.averagePrice}</td>
-
-                  <td className={styles.actions}>
-                    <div className={styles.transacciones}>
-                      <a href="#">Ver</a>
-                    </div>
-                  </td>
-                  <td>
-                    <div className={styles.edit}>
-                      <a href="#">Editar</a>
-                      <div onClick={() => handleActions(rowIndex, product)}>
-                        <img src={optionDots} alt="options" />
-                      </div>
-                      {selectedRowIndex === rowIndex && (
-                        <ul className={styles.content_menu_actions}>
-                          <li
-                            onClick={() => {
-                              handleDelete(product.productRef);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Eliminar
-                          </li>
-                        </ul>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
         {showModal && (
           <LastTransactions setShowModal={setShowModal} showModal={showModal} />
         )}

@@ -131,7 +131,7 @@
 }
 
 .clientsTable {
-  width: 95%;
+  width: 85vw;
   overflow-x: auto;
   box-sizing: border-box;
   border-radius: 10px;

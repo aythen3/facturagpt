@@ -31,6 +31,8 @@ import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWi
 import Button from "../../components/Button/Button";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
+import DynamicTable from "../../components/DynamicTable/DynamicTable";
+import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 
 const Transactions = () => {
   const [clientSelected, setClientSelected] = useState([]);
@@ -208,6 +210,185 @@ const Transactions = () => {
 
   const [mockTransactions, setMockTransactions] = useState([]);
 
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  const toggleSelection = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const selectAll = () => {
+    setSelectedIds(
+      selectedIds.length === tableData.length
+        ? []
+        : tableData.map((_, index) => index)
+    );
+  };
+
+  const renderRow = (row, index, onSelect) => (
+    <tr key={index}>
+      <td>
+        <input
+          type="checkbox"
+          name="clientSelected"
+          onChange={() => toggleTransactionSelection(row.id)}
+          onClick={() => selectClient(index)}
+          checked={clientSelected.includes(index) ? true : false}
+        />
+      </td>
+      <td className={styles.idContainer}>
+        <p>
+          {" "}
+          <img src={pdf} className={styles.pdfIcon} />
+          {row.id}
+        </p>
+      </td>
+      {/* <td>
+{Array.isArray(row.desc)
+ ? row.desc.map((item, itemIndex) => (
+     <p key={itemIndex}>{item}</p>
+   ))
+ : row.desc}
+</td> */}
+      <td>
+        <p
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+          }}
+        >
+          {row?.doc?.totalData?.description
+            ? row?.doc?.totalData?.description.map((item, index) => (
+                <span key={index}>{item}</span>
+              ))
+            : "Sin descripción"}
+        </p>
+      </td>
+      <td>
+        <div className={styles.tags}>
+          <span
+            className={`${styles.tag} ${styles[row?.doc?.totalData?.tag]}`}
+          ></span>
+          {/* <span
+          className={`${styles.tag} ${styles.tagRed}`}
+        ></span>
+        <span
+          className={`${styles.tag} ${styles.tagOrange}`}
+        ></span>
+        <span
+          className={`${styles.tag} ${styles.tagYellow}`}
+        ></span>
+        <span
+          className={`${styles.tag} ${styles.tagGreen}`}
+        ></span>
+        <span
+          className={`${styles.tag} ${styles.tagBlue}`}
+        ></span>
+        <span
+          className={`${styles.tag} ${styles.tagViolet}`}
+        ></span>
+        <span
+          className={`${styles.tag} ${styles.tagPink}`}
+        ></span> */}
+        </div>
+      </td>
+      <td>{row?.doc?.totalData?.totalAmount}</td>
+      <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
+      <td>
+        {row?.doc?.totalData?.expirationDateYear}-
+        {row?.doc?.totalData?.expirationDateMonth}-
+        {row?.doc?.totalData?.expirationDateDay}
+      </td>
+      <td>
+        {row.doc?.totalData?.payMethod
+          ? row.doc?.totalData?.payMethod
+          : "Sin especificar"}
+      </td>
+      <td>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          <span className={getStateClass(row.state[0])}>&bull;</span>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column-reverse",
+            }}
+          >
+            {Array.isArray(row.state) ? (
+              row.state.map((item, itemIndex) => (
+                <p
+                  key={itemIndex}
+                  style={{
+                    color: itemIndex === 1 ? "blue" : "",
+                    fontWeight: itemIndex === 1 ? "600" : "inherit",
+                    margin: "0",
+                  }}
+                  className={getStateClass(row.state[0])}
+                >
+                  {item}
+                </p>
+              ))
+            ) : (
+              <p>{row.state}</p>
+            )}
+          </div>
+        </div>
+      </td>
+      <td className={styles.actions}>
+        <div className={styles.transacciones}>
+          <a
+            onClick={() => {
+              navigate("/allproducts");
+              dispatch(setTransaction(row));
+            }}
+            href="#"
+          >
+            Ver Articulos
+          </a>
+          <span>(2.345)</span>
+        </div>
+        <div
+          onClick={() => {
+            toggleTransactionSelection(row.id);
+            handleActions(index, row);
+          }}
+        >
+          <img src={optionDots} />
+        </div>
+        {selectedRowIndex === index && (
+          <ul className={styles.content_menu_actions}>
+            <li
+              onClick={() => {
+                setShowNewClient(true);
+                setSelectedRowIndex(null);
+              }}
+              className={styles.item_menu_actions}
+            >
+              Editar
+            </li>
+            <li
+              onClick={(e) => {
+                handleDeleteTransactions(e);
+                setSelectedRowIndex(null);
+              }}
+              className={styles.item_menu_actions}
+            >
+              Eliminar
+            </li>
+          </ul>
+        )}
+      </td>
+    </tr>
+  );
+
   useEffect(() => {
     // Si transactionsByClient está vacío, usamos datos de ejemplo
     if (transactionsByClient.length === 0) {
@@ -270,7 +451,95 @@ const Transactions = () => {
   return (
     <PanelTemplate>
       <div className={styles.container}>
-        <div className={styles.clientsHeader}>
+        <ClientsHeader
+          additionalInfo={
+            <>
+              <div className={styles.infoClient}>
+                <div className={styles.arrowContainer}>
+                  <div
+                    className={styles.iconContainer}
+                    onClick={() => navigate("/admin/clients")}
+                  >
+                    <Arrow />
+                  </div>
+                </div>
+                <img src={emptyimage} alt="" />
+                <div className={styles.clientInfo}>
+                  <div className={styles.contactInfo}>
+                    <h3>{client?.clientData?.clientName || "Aythen"}</h3>
+                    <span>{client?.email || "info@aythen.com"}</span>
+                    <span>
+                      {client?.clientData?.codeCountry || "+34"}{" "}
+                      {client?.clientData?.numberPhone || "600 798 012"}
+                    </span>
+                  </div>
+                  <div className={styles.info}>
+                    <p>Número Fiscal</p>
+                    <span>
+                      {client?.clientData?.taxNumber || "Desconocido"}
+                    </span>
+                  </div>
+                  <div className={styles.info}>
+                    <p># Transacciones</p>
+                    <span>0</span>
+                    <p>Total</p>
+                    <span>0,0 EUR en los últimos 30 días</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          }
+          buttons={[
+            {
+              label: <>Editar Contacto</>,
+              type: "button",
+              onClick: () => console.log("Crear nuevo activo"),
+            },
+            {
+              label: (
+                <>
+                  <img src={plusIcon} alt="" />
+                  Nueva transacción
+                </>
+              ),
+              onClick: () => setShowNewClient(true),
+            },
+            // {
+            //   label: <DownloadIcon />,
+            //   headerStyle: { padding: "6px 10px" },
+            //   type: "white",
+            //   onClick: () => console.log("Importar datos"),
+            // },
+          ]}
+          searchProps={
+            {
+              // ref={searchInputRef}
+              // searchTerm={searchTerm}
+              // setSearchTerm={setSearchTerm}
+              // iconRight={pencilSquareIcon}
+              // classNameIconRight={styles.searchContainerL}
+              // onClickIconRight={() => setIsFilterOpen(true)}
+            }
+          }
+          searchChildren={
+            <>
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={winIcon} alt="kIcon" />
+              </div>
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={KIcon} alt="kIcon" />
+              </div>
+            </>
+          }
+        />
+
+        {/* <div className={styles.clientsHeader}>
           <div className={styles.infoClient}>
             <div className={styles.arrowContainer}>
               <div
@@ -310,12 +579,7 @@ const Transactions = () => {
             </Button>
 
             <SearchIconWithIcon
-            // ref={searchInputRef}
-            // searchTerm={searchTerm}
-            // setSearchTerm={setSearchTerm}
-            // iconRight={pencilSquareIcon}
-            // classNameIconRight={styles.searchContainerL}
-            // onClickIconRight={() => setIsFilterOpen(true)}
+      
             >
               <>
                 <div
@@ -332,227 +596,29 @@ const Transactions = () => {
                 </div>
               </>
             </SearchIconWithIcon>
-            {/* <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder="Search..."
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-              <div className={styles.inputIconOutsideContainer}>
-                <img src={filterSearch} className={styles.inputIconOutside} />
-              </div>
-            </div> */}
+     
           </div>
-        </div>
-        {transactionsByClient.length >= 0 ? (
-          <div className={styles.clientsTable}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th className={styles.small}>
-                    <input
-                      type="checkbox"
-                      name="clientSelected"
-                      checked={
-                        clientSelected.length == tableData.length ? true : false
-                      }
-                      onClick={selectAllClients}
-                    />
-                  </th>
-                  {tableHeaders.map((header, index) => (
-                    <th
-                      key={index}
-                      className={index == 2 ? styles.small : ""}
-                      style={{ minWidth: index == 1 && "200px" }}
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {(transactionsByClient.length > 0
-                  ? transactionsByClient
-                  : mockTransactions
-                ).map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="clientSelected"
-                        onChange={() => toggleTransactionSelection(row.id)}
-                        onClick={() => selectClient(rowIndex)}
-                        checked={
-                          clientSelected.includes(rowIndex) ? true : false
-                        }
-                      />
-                    </td>
-                    <td className={styles.idContainer}>
-                      <p>
-                        {" "}
-                        <img src={pdf} className={styles.pdfIcon} />
-                        {row.id}
-                      </p>
-                    </td>
-                    {/* <td>
-               {Array.isArray(row.desc)
-                 ? row.desc.map((item, itemIndex) => (
-                     <p key={itemIndex}>{item}</p>
-                   ))
-                 : row.desc}
-             </td> */}
-                    <td>
-                      <p
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "start",
-                        }}
-                      >
-                        {row?.doc?.totalData?.description
-                          ? row?.doc?.totalData?.description.map(
-                              (item, index) => <span key={index}>{item}</span>
-                            )
-                          : "Sin descripción"}
-                      </p>
-                    </td>
-                    <td>
-                      <div className={styles.tags}>
-                        <span
-                          className={`${styles.tag} ${styles[row?.doc?.totalData?.tag]}`}
-                        ></span>
-                        {/* <span
-                          className={`${styles.tag} ${styles.tagRed}`}
-                        ></span>
-                        <span
-                          className={`${styles.tag} ${styles.tagOrange}`}
-                        ></span>
-                        <span
-                          className={`${styles.tag} ${styles.tagYellow}`}
-                        ></span>
-                        <span
-                          className={`${styles.tag} ${styles.tagGreen}`}
-                        ></span>
-                        <span
-                          className={`${styles.tag} ${styles.tagBlue}`}
-                        ></span>
-                        <span
-                          className={`${styles.tag} ${styles.tagViolet}`}
-                        ></span>
-                        <span
-                          className={`${styles.tag} ${styles.tagPink}`}
-                        ></span> */}
-                      </div>
-                    </td>
-                    <td>{row?.doc?.totalData?.totalAmount}</td>
-                    <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
-                    <td>
-                      {row?.doc?.totalData?.expirationDateYear}-
-                      {row?.doc?.totalData?.expirationDateMonth}-
-                      {row?.doc?.totalData?.expirationDateDay}
-                    </td>
-                    <td>
-                      {row.doc?.totalData?.payMethod
-                        ? row.doc?.totalData?.payMethod
-                        : "Sin especificar"}
-                    </td>
-                    <td>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                        }}
-                      >
-                        <span className={getStateClass(row.state[0])}>
-                          &bull;
-                        </span>
+        </div> */}
 
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column-reverse",
-                          }}
-                        >
-                          {Array.isArray(row.state) ? (
-                            row.state.map((item, itemIndex) => (
-                              <p
-                                key={itemIndex}
-                                style={{
-                                  color: itemIndex === 1 ? "blue" : "",
-                                  fontWeight:
-                                    itemIndex === 1 ? "600" : "inherit",
-                                  margin: "0",
-                                }}
-                                className={getStateClass(row.state[0])}
-                              >
-                                {item}
-                              </p>
-                            ))
-                          ) : (
-                            <p>{row.state}</p>
-                          )}
-                        </div>
-                      </div>
-                    </td>
-                    <td className={styles.actions}>
-                      <div className={styles.transacciones}>
-                        <a
-                          onClick={() => {
-                            navigate("/allproducts");
-                            dispatch(setTransaction(row));
-                          }}
-                          href="#"
-                        >
-                          Ver Articulos
-                        </a>
-                        <span>(2.345)</span>
-                      </div>
-                      <div
-                        onClick={() => {
-                          toggleTransactionSelection(row.id);
-                          handleActions(rowIndex, row);
-                        }}
-                      >
-                        <img src={optionDots} />
-                      </div>
-                      {selectedRowIndex === rowIndex && (
-                        <ul className={styles.content_menu_actions}>
-                          <li
-                            onClick={() => {
-                              setShowNewClient(true);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Editar
-                          </li>
-                          <li
-                            onClick={(e) => {
-                              handleDeleteTransactions(e);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Eliminar
-                          </li>
-                        </ul>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
+        {mockTransactions.length == 0 ? (
           <SkeletonScreen
             labelText="No se han encontrado documentos con este contacto"
             helperText="Todas las transacciones con este cliente o proveedor estarán listadas aquí."
             showInput={true}
             enableLabelClick={false}
+          />
+        ) : (
+          <DynamicTable
+            columns={tableHeaders}
+            data={
+              transactionsByClient.length > 0
+                ? transactionsByClient
+                : mockTransactions
+            }
+            renderRow={renderRow}
+            selectedIds={selectedIds}
+            onSelectAll={selectAll}
+            onSelect={toggleSelection}
           />
         )}
       </div>

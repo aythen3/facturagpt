@@ -39,6 +39,9 @@ import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWi
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 import DeleteButton from "../../components/DeleteButton/DeleteButton";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
+import DynamicTable from "../../components/DynamicTable/DynamicTable";
+import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
+import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -455,7 +458,10 @@ const Clients = () => {
       setSelectedBillIndex(null); // Reinicia selección
     }
   };
+  const [newContact, setNewContact] = useState(false);
+
   const handleEditAll = (value) => {
+    setNewContact(value);
     setInputsEditing((prevState) => {
       const updatedState = {};
       Object.keys(prevState).forEach((key) => {
@@ -564,10 +570,163 @@ const Clients = () => {
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
 
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  const toggleSelection = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const selectAll = () => {
+    setSelectedIds(
+      selectedIds.length === tableData.length
+        ? []
+        : tableData.map((_, index) => index)
+    );
+  };
+
+  const renderRow = (row, index, onSelect) => (
+    <tr key={index}>
+      <td>
+        <input
+          type="checkbox"
+          name="clientSelected"
+          // onClick={() => selectClient(rowIndex, row)}
+          onChange={() => toggleClientSelection(row?.id)}
+          // checked={
+          //   clientSelected.includes(rowIndex) ? true : false
+          // }
+        />
+      </td>
+      <td className={styles.name}>
+        <img src={row?.img || emptyImage} alt="" />
+        <div>
+          <span>{row?.clientName}</span>
+          <span>{row?.clientName}</span>
+        </div>
+      </td>
+      <td>{row?.companyEmail || row?.email}</td>
+
+      {/* <td>
+  {Array.isArray(row.email)
+    ? row.email.map((item, itemIndex) => (
+        <p key={itemIndex}>{item}</p>
+      ))
+    : row.email}
+</td> */}
+      <td>
+        {row?.countryCode}
+        {row?.number}
+      </td>
+      <td>
+        {row?.companyAddress} {row?.clientProvice}
+      </td>
+      <td>{row?.taxNumber}</td>
+      <td>{row?.cardNumber}</td>
+      {/* <td>
+  {Array.isArray(row.metodosPago)
+    ? row.metodosPago.map((item, itemIndex) => (
+        <p key={itemIndex}>{item}</p>
+      ))
+    : row.metodosPago}
+</td> */}
+      <td>{row?.preferredCurrency}</td>
+      <td className={styles.actions}>
+        <div className={styles.transacciones}>
+          <a
+            onClick={() => {
+              dispatch(clearTransaction());
+              handleGetOneClient(row?.id);
+            }}
+            href="#"
+          >
+            Ver
+          </a>
+          <span>(2.345)</span>
+        </div>
+        <div onClick={() => handleActions(index, row)}>
+          <img src={optionDots} />
+        </div>
+        {selectedRowIndex === index && (
+          <ul className={styles.content_menu_actions}>
+            <li
+              onClick={() => {
+                handleEditClient();
+                setSelectedRowIndex(null);
+              }}
+              className={styles.item_menu_actions}
+            >
+              Editar
+            </li>
+            <li
+              onClick={(e) => {
+                handleDeleteClient(e, row?.id);
+                setSelectedRowIndex(null);
+              }}
+              className={styles.item_menu_actions}
+            >
+              Eliminar
+            </li>
+          </ul>
+        )}
+      </td>
+    </tr>
+  );
+  console.log(
+    "clientssssssssssssssssssssssssssssssssssssssss11111111" + clients
+  );
   return (
     <PanelTemplate>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
-        <div className={styles.clientsHeader}>
+        <ClientsHeader
+          title="Gestión de Contactos"
+          buttons={[
+            {
+              label: (
+                <>
+                  <img src={plusIcon} alt="Nuevo cliente" />
+                  {t("buttonNewClient")}
+                </>
+              ),
+              onClick: () => {
+                handleEditAll(true);
+                setShowNewClient(true);
+              },
+            },
+            {
+              label: <DownloadIcon />,
+              headerStyle: { padding: "6px 10px" },
+              type: "white",
+              onClick: () => setShowImportContacts(true),
+            },
+          ]}
+          searchProps={{
+            ref: searchInputRef,
+            // searchTerm: searchTerm,
+            // setSearchTerm: setSearchTerm,
+            // iconRight: pencilSquareIcon,
+            // classNameIconRight: styles.searchContainerL,
+            // onClickIconRight: () => setIsFilterOpen(true)
+          }}
+          searchChildren={
+            <>
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={winIcon} alt="kIcon" />
+              </div>
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={KIcon} alt="kIcon" />
+              </div>
+            </>
+          }
+        />
+        {/* <div className={styles.clientsHeader}>
           <h2>{t("title")}</h2>
           <div className={styles.searchContainer}>
             <button
@@ -587,14 +746,7 @@ const Clients = () => {
             >
               <DownloadIcon />
             </Button>
-            <SearchIconWithIcon
-              ref={searchInputRef}
-              // searchTerm={searchTerm}
-              // setSearchTerm={setSearchTerm}
-              // iconRight={pencilSquareIcon}
-              // classNameIconRight={styles.searchContainerL}
-              // onClickIconRight={() => setIsFilterOpen(true)}
-            >
+            <SearchIconWithIcon ref={searchInputRef}>
               <>
                 <div
                   style={{ marginLeft: "5px" }}
@@ -610,26 +762,9 @@ const Clients = () => {
                 </div>
               </>
             </SearchIconWithIcon>
-            {/* <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder={t("placeholderSearch")}
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
           
-              <div
-                style={{ marginLeft: "5px" }}
-                className={styles.searchIconsWrappers}
-              >
-                <img src={l} alt="kIcon" />
-              </div>
-            </div>
-             */}
           </div>
-        </div>
+        </div> */}
         {showImportContacts && (
           <ImportContactsAndProducts
             text="contactos"
@@ -637,121 +772,23 @@ const Clients = () => {
             isAnimating={isAnimating}
           />
         )}
-        <div className={styles.clientsTable}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.small} style={{ minWidth: "40px" }}>
-                  <input
-                    type="checkbox"
-                    name="clientSelected"
-                    checked={
-                      selectedClientIds.length == tableData.length
-                        ? true
-                        : false
-                    }
-                    onClick={selectAllClients}
-                  />
-                </th>
-                {tableHeaders.map((header, index) => (
-                  <th key={index} className={styles.small}>
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {clients &&
-                clients.map((client, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="clientSelected"
-                        // onClick={() => selectClient(rowIndex, row)}
-                        onChange={() => toggleClientSelection(client?.id)}
-                        // checked={
-                        //   clientSelected.includes(rowIndex) ? true : false
-                        // }
-                      />
-                    </td>
-                    <td className={styles.name}>
-                      <img src={client.img || emptyImage} alt="" />
-                      <div>
-                        <span>{client.clientName}</span>
-                        <span>{client.clientName}</span>
-                      </div>
-                    </td>
-                    <td>{client?.companyEmail || client.email}</td>
-
-                    {/* <td>
-                    {Array.isArray(row.email)
-                      ? row.email.map((item, itemIndex) => (
-                          <p key={itemIndex}>{item}</p>
-                        ))
-                      : row.email}
-                  </td> */}
-                    <td>
-                      {client.countryCode}
-                      {client.number}
-                    </td>
-                    <td>
-                      {client.companyAddress} {client.clientProvice}
-                    </td>
-                    <td>{client.taxNumber}</td>
-                    <td>{client.cardNumber}</td>
-                    {/* <td>
-                    {Array.isArray(row.metodosPago)
-                      ? row.metodosPago.map((item, itemIndex) => (
-                          <p key={itemIndex}>{item}</p>
-                        ))
-                      : row.metodosPago}
-                  </td> */}
-                    <td>{client.preferredCurrency}</td>
-                    <td className={styles.actions}>
-                      <div className={styles.transacciones}>
-                        <a
-                          onClick={() => {
-                            dispatch(clearTransaction());
-                            handleGetOneClient(client.id);
-                          }}
-                          href="#"
-                        >
-                          Ver
-                        </a>
-                        <span>(2.345)</span>
-                      </div>
-                      <div onClick={() => handleActions(rowIndex, client)}>
-                        <img src={optionDots} />
-                      </div>
-                      {selectedRowIndex === rowIndex && (
-                        <ul className={styles.content_menu_actions}>
-                          <li
-                            onClick={() => {
-                              handleEditClient();
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Editar
-                          </li>
-                          <li
-                            onClick={(e) => {
-                              handleDeleteClient(e, client?.id);
-                              setSelectedRowIndex(null);
-                            }}
-                            className={styles.item_menu_actions}
-                          >
-                            Eliminar
-                          </li>
-                        </ul>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+        {clients.length == 0 ? (
+          <SkeletonScreen
+            labelText="No se han encontrado documentos con este contacto"
+            helperText="Todas las transacciones con este cliente o proveedor estarán listadas aquí."
+            showInput={true}
+            enableLabelClick={false}
+          />
+        ) : (
+          <DynamicTable
+            columns={tableHeaders}
+            data={clients}
+            renderRow={renderRow}
+            selectedIds={selectedIds}
+            onSelectAll={selectAll}
+            onSelect={toggleSelection}
+          />
+        )}
       </div>
       {showNewClient && (
         <>
@@ -761,8 +798,9 @@ const Clients = () => {
             text="contacto"
             isAnimating={isAnimating}
             className={`${styles.newClientContainer} `}
+            newContact={newContact}
           >
-            <div>
+            <div className={styles.containerNewClientForm}>
               {/* <div className={styles.containerHeader}>
                 <h3>John Doe</h3>
                 <span onClick={handleCloseNewClient}>

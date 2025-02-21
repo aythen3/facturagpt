@@ -82,10 +82,15 @@
   cursor: pointer;
 }
 .green,
-.seeMail {
+.seeMail,
+.delete {
   color: #04614b;
   font-weight: 600;
   cursor: pointer;
+}
+.delete {
+  color: rgb(253, 71, 71);
+  text-decoration: underline;
 }
 .documentDate {
   display: flex;
