@@ -83,71 +83,83 @@ const Layout = () => {
   const ComponentPrivate = () => {
     const { user } = useSelector((state) => state.user);
     const navigate = useNavigate()
-    
+
 
     const [init, setInit] = useState(false)
-    useEffect(()=>{
+
+    useEffect(() => {
       setInit(true)
 
-      if(user && user.success == false) { 
+      if (user && user.success == false) {
         navigate(`/login`)
-      } 
-  
-    },[user])
+      }
 
+    }, [user])
 
+    if (!init) {
+      return (null)
+    } else {
+      if (!user) {
+        return (
+          <Routes>
+            <Route path="*" element={<LandingPage />} />
+          </Routes>
+        )
+      } else {
+        return (
+          <Routes>
+            <Route path="/home" element={<Dashboard />} />
+            <Route path="/accounts" element={<AccountsDashboard />} />
+            <Route path="/users" element={<UsersDashboard />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/clients/:id" element={<Transactions />} />
+            <Route path="/products" element={<AllProducts />} />
+            <Route path="/chat" element={<ChatView />} />
+            <Route path="/chat/:id" element={<ChatView />} />
+            <Route path="/articlestransactions" element={<ArticlesTransactions />} />
+            <Route path="/notification" element={<NotificationsView />} />
+            <Route path="/panel" element={<InvoicePanel />} />
+            <Route path="/panel/:id" element={<InvoicePanel />} />
+            <Route path="*" element={<ChatView />} />
+          </Routes>
+        );
+      }
+    }
 
-
-    return (
-        <Routes>
-          <Route path="/home" element={<Dashboard />} />
-          <Route path="/accounts" element={<AccountsDashboard />} />
-          <Route path="/users" element={<UsersDashboard />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route path="/clients/:id" element={<Transactions />} />
-          <Route path="/products" element={<AllProducts />} />
-          <Route path="/chat" element={<ChatView />} />
-          <Route path="/chat/:id" element={<ChatView />} />
-          <Route path="/articlestransactions" element={<ArticlesTransactions />} />
-          <Route path="/notification" element={<NotificationsView />} />
-          <Route path="/panel" element={<InvoicePanel />} />
-          <Route path="/panel/:id" element={<InvoicePanel />} />
-          <Route path="*" element={<ChatView />} />
-        </Routes>
-    );
   }
 
   return (
     <>
 
-        <Elements stripe={stripePromise}>
-          <I18nextProvider i18n={i18n}>
-            <DndProvider backend={HTML5Backend}>
-              <Provider store={store}>
-                <AppProvider>
-                  <BrowserRouter>
-                    <Routes>
-                      <Route path="/landing" element={<LandingPage />} />
-                      <Route path="/contact" element={<ContactForm />} />
-                      <Route path="/pricing" element={<Pricing />} />
-                      <Route path="/terms" element={<Terms />} />
+      <Elements stripe={stripePromise}>
+        <I18nextProvider i18n={i18n}>
+          <DndProvider backend={HTML5Backend}>
+            <Provider store={store}>
+              <AppProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/home" element={<LandingPage />} />
+                    <Route path="/contact" element={<ContactForm />} />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/terms" element={<Terms />} />
 
-                      <Route path="/freetrial" element={<FreeTrial />} />
-                      <Route path="/login" element={<DashboardLogin />} />
-                      <Route path="/register" element={<DashboardLogin />} />
-                      <Route path="/recover" element={<DashboardLogin />} />
-                      <Route path="/otp" element={<DashboardLogin />} />
+                    <Route path="/freetrial" element={<FreeTrial />} />
+                    <Route path="/login" element={<DashboardLogin />} />
+                    <Route path="/register" element={<DashboardLogin />} />
+                    <Route path="/recover" element={<DashboardLogin />} />
+                    <Route path="/otp" element={<DashboardLogin />} />
 
-                      <Route path="/admin/*" element={<ComponentPrivate />} />
-   
-                      <Route path="*" element={<LandingPage />} />
-                    </Routes>
-                  </BrowserRouter>
-                </AppProvider>
-              </Provider>
-            </DndProvider>
-          </I18nextProvider>
-        </Elements>
+                    <Route path="/admin/*" element={<ComponentPrivate />} />
+
+                    {/* <Route path="*" element={<LandingPage />} /> */}
+                    <Route path="*" element={<ComponentPrivate />} />
+                  </Routes>
+                </BrowserRouter>
+              </AppProvider>
+            </Provider>
+          </DndProvider>
+        </I18nextProvider>
+      </Elements>
     </>
   );
 };

@@ -110,3 +110,35 @@ export const sendMessage = createAsyncThunk(
     }
   }
 );
+
+
+export const validateTokenGPT = createAsyncThunk(
+  "chat/validateTokenGPT",
+  async (id, { rejectWithValue }) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.post(
+        `/chat/validate-token`,
+        {  },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      console.log("!!! valid token gpt", res);
+
+      return {
+        ...res.data,
+        // chatId: chatId
+      };
+    } catch (error) {
+      console.error("Error sending message:", error);
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);

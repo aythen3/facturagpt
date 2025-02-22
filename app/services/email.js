@@ -185,7 +185,7 @@ async function sendOtpEmail(nombre, email, otp, language = "es") {
     service: "gmail",
     auth: {
       user: "info@aythen.com",
-      pass: "azyx mpfz fveg bqlr",
+      pass: "fyin lnvb fapo ezfp",
     },
   });
 

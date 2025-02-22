@@ -20,6 +20,7 @@ const authenticateToken = async (req, res, next) => {
     const decodedToken = jwt.verify(token, "your-secret-key"); // TODO: Move secret to env vars
 
 
+    // console.log('decodedToken', decodedToken)
     // console.log("token", token);
 
     // const decodedToken = jwt.verify(
@@ -30,24 +31,25 @@ const authenticateToken = async (req, res, next) => {
     // console.log("decodedToken", decodedToken);
 
 
-    // const query = {
-    //   "selector": {
-    //     "_id": decodedToken._id,
-    //     "user": decodedToken.user,
-    //     "isverified": true
-    //   }
-    // };
+    const query = {
+      "selector": {
+        // "_id": decodedToken.userId,
+        "_id": decodedToken.userId,
+        // "user": decodedToken.user,
+        // "isverified": true
+      }
+    };
 
-    // let db_account = await connectDB(`db_account`)
-    // const resp = await db_account.find(query)
+    let db_account = await connectDB(`db_accounts`)
+    const resp = await db_account.find(query)
 
     // console.log("resp", resp);
 
-    // if (resp.docs.length == 0) {
-    //   throw new ClientError("User not found", 404);
-    // }
+    if (resp.docs.length == 0) {
+      throw new ClientError("User not found", 404);
+    }
 
-    // const user = resp.docs[0]
+    const user = resp.docs[0]
 
    
 
@@ -60,7 +62,8 @@ const authenticateToken = async (req, res, next) => {
     // delete user.banner;
 
 
-    req.user = decodedToken;
+    // req.user = decodedToken;
+    req.user = user;
 
 
     next();
