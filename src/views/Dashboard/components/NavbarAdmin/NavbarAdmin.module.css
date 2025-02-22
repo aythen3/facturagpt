@@ -180,15 +180,13 @@
   position: fixed;
   top: 0;
   right: -800px;
-  width: 400px;
+  width: 340px;
   height: 90vh;
   margin-top: 5vh;
   overflow-y: scroll;
   background-color: white;
   z-index: 1000;
-  transition:
-    right 0.3s ease-in-out,
-    opacity 0.3s ease-in-out;
+  transition: right 0.3s ease-in-out, opacity 0.3s ease-in-out;
   color: black;
   scrollbar-width: none;
   box-shadow: 6px 0px 44px -24px black;
