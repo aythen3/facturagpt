@@ -1,5 +1,7 @@
 .container {
-  /* padding: 20px; */
+  padding: 0px 10px;
+  /* min-height: 100vh; */
+  /* width: calc(100% - 250px); */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -187,6 +189,7 @@
     text-decoration: underline;
     cursor: pointer;
     color: #222222;
+    min-width: fit-content;
   }
 }
 
@@ -281,7 +284,8 @@
 }
 
 .clientsTable {
-  width: 95%;
+  width: 85vw;
+
   overflow-x: auto;
   box-sizing: border-box;
   border-radius: 10px;

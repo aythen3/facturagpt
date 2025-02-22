@@ -94,96 +94,96 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
   }, [searchTermState, dispatch]);
 
   const [chats, setChats] = useState([
-    {
-      name: "React Hooks",
-      id: "chat-1",
-      older: 0,
-    },
-    {
-      name: "JavaScript Async/Await",
-      id: "chat-2",
-      older: 1,
-    },
-    {
-      name: "CSS Flexbox y Grid",
-      id: "chat-3",
-      older: 1,
-    },
-    {
-      name: "Node.js y Express",
-      id: "chat-4",
-      older: 0,
-    },
-    {
-      name: "APIs REST y GraphQL",
-      id: "chat-5",
-      older: 6,
-    },
-    {
-      name: "MongoDB y Mongoose",
-      id: "chat-6",
-      older: 13,
-    },
-    {
-      name: "Next.js vs. Remix",
-      id: "chat-7",
-      older: 28,
-    },
-    {
-      name: "Optimización Web",
-      id: "chat-8",
-      older: 98,
-    },
-    {
-      name: "Seguridad en Web Apps",
-      id: "chat-9",
-      older: 58,
-    },
-    {
-      name: "Testing con Jest",
-      id: "chat-10",
-      older: 0,
-    },
-    {
-      name: "TypeScript en React",
-      id: "chat-11",
-      older: 1,
-    },
-    {
-      name: "Redux vs. Zustand",
-      id: "chat-12",
-      older: 1,
-    },
-    {
-      name: "Mejorando el SEO",
-      id: "chat-13",
-      older: 0,
-    },
-    {
-      name: "Tailwind CSS en proyectos",
-      id: "chat-14",
-      older: 6,
-    },
-    {
-      name: "Accesibilidad en la Web",
-      id: "chat-15",
-      older: 13,
-    },
-    {
-      name: "Deploy con Vercel",
-      id: "chat-16",
-      older: 28,
-    },
-    {
-      name: "Microservicios con Docker",
-      id: "chat-17",
-      older: 98,
-    },
-    {
-      name: "GraphQL vs. REST",
-      id: "chat-18",
-      older: 58,
-    },
+    // {
+    //   name: "React Hooks",
+    //   id: "chat-1",
+    //   older: 0,
+    // },
+    // {
+    //   name: "JavaScript Async/Await",
+    //   id: "chat-2",
+    //   older: 1,
+    // },
+    // {
+    //   name: "CSS Flexbox y Grid",
+    //   id: "chat-3",
+    //   older: 1,
+    // },
+    // {
+    //   name: "Node.js y Express",
+    //   id: "chat-4",
+    //   older: 0,
+    // },
+    // {
+    //   name: "APIs REST y GraphQL",
+    //   id: "chat-5",
+    //   older: 6,
+    // },
+    // {
+    //   name: "MongoDB y Mongoose",
+    //   id: "chat-6",
+    //   older: 13,
+    // },
+    // {
+    //   name: "Next.js vs. Remix",
+    //   id: "chat-7",
+    //   older: 28,
+    // },
+    // {
+    //   name: "Optimización Web",
+    //   id: "chat-8",
+    //   older: 98,
+    // },
+    // {
+    //   name: "Seguridad en Web Apps",
+    //   id: "chat-9",
+    //   older: 58,
+    // },
+    // {
+    //   name: "Testing con Jest",
+    //   id: "chat-10",
+    //   older: 0,
+    // },
+    // {
+    //   name: "TypeScript en React",
+    //   id: "chat-11",
+    //   older: 1,
+    // },
+    // {
+    //   name: "Redux vs. Zustand",
+    //   id: "chat-12",
+    //   older: 1,
+    // },
+    // {
+    //   name: "Mejorando el SEO",
+    //   id: "chat-13",
+    //   older: 0,
+    // },
+    // {
+    //   name: "Tailwind CSS en proyectos",
+    //   id: "chat-14",
+    //   older: 6,
+    // },
+    // {
+    //   name: "Accesibilidad en la Web",
+    //   id: "chat-15",
+    //   older: 13,
+    // },
+    // {
+    //   name: "Deploy con Vercel",
+    //   id: "chat-16",
+    //   older: 28,
+    // },
+    // {
+    //   name: "Microservicios con Docker",
+    //   id: "chat-17",
+    //   older: 98,
+    // },
+    // {
+    //   name: "GraphQL vs. REST",
+    //   id: "chat-18",
+    //   older: 58,
+    // },
   ]);
   const [isOpenMenu, setIsOpenMenu] = useState({});
 
@@ -219,116 +219,7 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
 
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "/");
-  // const [left, setLeft] = useState(-100); // Inicialmente oculto a la izquierda
-  // const startTouch = useRef(0); // Para almacenar la posición inicial del toque o el mouse
-  // const isMouseDown = useRef(false); // Detecta si el mouse está presionado
 
-  // // Lógica para el swipe en el div invisible
-  // const handleInvisibleTouchStart = (e) => {
-  //   startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
-  // };
-
-  // const handleInvisibleTouchMove = (e) => {
-  //   const currentTouch = e.touches[0].clientX;
-  //   const difference = currentTouch - startTouch.current;
-
-  //   // Mostrar el menú si el usuario hace swipe a la derecha
-  //   if (difference > 30) {
-  //     setLeft(0);
-  //   }
-  // };
-
-  // const handleInvisibleTouchEnd = () => {
-  //   // Reset o cualquier otra lógica adicional cuando se termina el gesto
-  // };
-
-  // // Lógica para el swipe en el menú (para ocultarlo)
-  // const handleTouchStart = (e) => {
-  //   startTouch.current = e.touches[0].clientX; // Guardar la posición inicial del toque
-  // };
-
-  // const handleTouchMove = (e) => {
-  //   const currentTouch = e.touches[0].clientX;
-  //   const difference = currentTouch - startTouch.current;
-
-  //   // Ocultar el menú si el usuario hace swipe a la izquierda
-  //   if (difference < -30) {
-  //     setLeft(-100);
-  //   }
-  // };
-  // const handleInvisibleMouseDown = (e) => {
-  //   startTouch.current = e.clientX;
-  //   isMouseDown.current = true;
-
-  //   // Deshabilitar la selección de texto mientras se mantiene presionado
-  //   document.body.style.userSelect = "none";
-  // };
-  // const handleTouchEnd = () => {
-  //   // Reset o cualquier otra lógica adicional cuando se termina el gesto
-  // };
-
-  // // Lógica para el swipe en dispositivos de escritorio (mouse)
-  // const handleMouseDownResize = (e) => {
-  //   if (window.innerWidth >= 768) return; // Solo habilitar el mouse en pantallas menores a 768px
-
-  //   isMouseDown.current = true;
-  //   startTouch.current = e.clientX;
-
-  //   // Deshabilitar la selección de texto mientras el mouse está presionado
-  //   document.body.style.userSelect = "none";
-  // };
-  // const handleInvisibleMouseMove = (e) => {
-  //   if (!isMouseDown.current) return;
-
-  //   const currentTouch = e.clientX;
-  //   const difference = currentTouch - startTouch.current;
-
-  //   // Mostrar el menú si el usuario hace swipe a la derecha
-  //   if (difference > 30) {
-  //     setLeft(0);
-  //   }
-  // };
-  // const handleInvisibleMouseUp = () => {
-  //   isMouseDown.current = false;
-
-  //   // Habilitar nuevamente la selección de texto
-  //   document.body.style.userSelect = "auto";
-  // };
-
-  // const handleMouseMoveResize = (e) => {
-  //   if (!isMouseDown.current || window.innerWidth >= 768) return;
-
-  //   const currentTouch = e.clientX;
-  //   const difference = currentTouch - startTouch.current;
-
-  //   // Mostrar u ocultar el menú según el movimiento del mouse
-  //   if (difference > 30) {
-  //     setLeft(0); // Mostrar el menú
-  //   } else if (difference < -30) {
-  //     setLeft(-100); // Ocultar el menú
-  //   }
-  // };
-
-  // const handleMouseUp = () => {
-  //   isMouseDown.current = false;
-  //   document.body.style.userSelect = "auto";
-  // };
-
-  // // Establecer los eventos para los dispositivos de escritorio
-  // useEffect(() => {
-  //   const handleMouseMoveEvent = (e) => handleMouseMoveResize(e);
-  //   const handleMouseUpEvent = () => handleMouseUp();
-
-  //   if (window.innerWidth < 768) {
-  //     document.addEventListener("mousemove", handleMouseMoveEvent);
-  //     document.addEventListener("mouseup", handleMouseUpEvent);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener("mousemove", handleMouseMoveEvent);
-  //     document.removeEventListener("mouseup", handleMouseUpEvent);
-  //   };
-  // }, [left]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Actualizar el ancho de la ventana cuando se cambie el tamaño de la pantalla

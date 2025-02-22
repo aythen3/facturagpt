@@ -601,7 +601,7 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
           top: 0,
           left: swiped ? "0" : "-100%",
           width: "80vw",
-          height: "100vh",
+          Maxheight: "100vh",
           // backgroundColor: "white",
           transition: "left 0.3s ease",
           boxSizing: "border-box",

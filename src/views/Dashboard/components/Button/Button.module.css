@@ -47,3 +47,12 @@
   border: 1px solid #6f6f81;
   color: #ffffff;
 }
+.buttonTemplateButton {
+  text-decoration: underline;
+  color: #222222;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}

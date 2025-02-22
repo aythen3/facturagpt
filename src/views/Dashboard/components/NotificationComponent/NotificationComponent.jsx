@@ -127,6 +127,14 @@ const NotificationComponent = ({ data, handleHeaderClick, isActive, type }) => {
             >
               Ver Email
             </p>
+            <p
+              className={styles.delete}
+              onClick={(e) => {
+                e.stopPropagation(alert("Opcion seleccionada Eliminar"));
+              }}
+            >
+              Eliminar
+            </p>
           </div>
           <div className={styles.info}>
             <img src={data.icon} alt="Icon" />

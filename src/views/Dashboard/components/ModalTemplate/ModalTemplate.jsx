@@ -8,6 +8,7 @@ const ModalTemplate = ({
   actionSave,
   text,
   isAnimating,
+  newContact,
 }) => {
   return (
     <>
@@ -24,9 +25,15 @@ const ModalTemplate = ({
             <h3>Nuevo {text}</h3>
           </div>
           <div className={styles.buttonContainer}>
-            <Button type={"white"}>Ver Transacciones</Button>
-            <Button>Nueva Factura</Button>
-            <Button action={actionSave}>Guardar</Button>
+            {!newContact && (
+              <>
+                <Button type={"white"}>Ver Transacciones</Button>
+                <Button>Nueva Factura</Button>
+              </>
+            )}
+            <Button action={actionSave}>
+              {newContact ? "Guardar" : "Actualizar"}
+            </Button>
           </div>
         </div>
         <div className={styles.contentContainer}>{children}</div>

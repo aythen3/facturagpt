@@ -5,7 +5,7 @@
   flex-direction: column;
   width: 100%;
   font-family: "Inter", sans-serif;
-  gap: 8.5px;
+  gap: 5px;
   /* padding-bottom: 10px; */
 }
 
@@ -66,15 +66,14 @@
     font-size: 14px;
     font-weight: 400;
     color: #757575;
-    height: 31px;
     min-height: 21px !important;
     background-color: #f4f4f4;
     border-radius: 5px;
-    padding: 4px !important;
     box-sizing: border-box;
+    width: 100%;
   }
   .inputTypeClient {
-    padding: 4px !important;
+    padding: 12px !important;
     /* height: 100% !important;
     min-height: 100% !important; */
   }

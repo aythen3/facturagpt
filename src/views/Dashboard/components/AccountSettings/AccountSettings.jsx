@@ -139,11 +139,11 @@ const AccountSettings = () => {
   const [facturacionCount, setFacturacionCount] = useState(0);
   const [facturacionInputs, setFacturacionInputs] = useState([
     {
-      direccion: "direccion",
-      poblacion: "poblacion",
-      provincia: "provincia",
-      codigoPostal: "codigoPostal",
-      pais: "pais",
+      direccion: "Direccion",
+      poblacion: "Poblacion",
+      provincia: "Provincia",
+      codigoPostal: "CodigoPostal",
+      pais: "Pais",
       editable: false,
     },
   ]);
@@ -620,13 +620,9 @@ const AccountSettings = () => {
                         setFacturacionInputs([
                           ...facturacionInputs,
                           {
-                            direccion: "direccion",
-                            poblacion: "poblacion",
-                            provincia: "provincia",
-                            codigoPostal: "codigo Postal",
-                            pais: "pais",
-                            editable: false,
-                            editable: false,
+                            email: "",
+                            zipCode: "",
+                            country: "",
                           },
                         ]);
                       }}
@@ -658,24 +654,22 @@ const AccountSettings = () => {
                               <p>
                                 <span>
                                   {" "}
-                                  {facturacionInputs[index].direccion},
+                                  {facturacionInputs[index].email ||
+                                    "Email adress"}
+                                  ,
                                 </span>
                                 <span>
                                   {" "}
-                                  {facturacionInputs[index].poblacion},
+                                  {facturacionInputs[index].zipCode ||
+                                    "Zip code / Postcode"}
+                                  ,
                                 </span>
                                 <span>
                                   {" "}
-                                  {facturacionInputs[index].provincia},
+                                  {facturacionInputs[index].country ||
+                                    "Country of residence"}
+                                  ,
                                 </span>
-                                <span>
-                                  {" "}
-                                  {facturacionInputs[index].provincia},
-                                </span>
-                                <span>
-                                  {facturacionInputs[index].codigoPostal},
-                                </span>
-                                <span>{facturacionInputs[index].pais}</span>
                               </p>
                             </div>
                             {isEditingDetails && (
@@ -683,20 +677,14 @@ const AccountSettings = () => {
                                 {console.log(facturacionInputs)}
                                 {facturacionInputs[index]?.editable && (
                                   <DetailsBillInputs
-                                    direccion={
-                                      facturacionInputs[index].direccion || ""
+                                    compressed={true}
+                                    email={facturacionInputs[index].email || ""}
+                                    zipCode={
+                                      facturacionInputs[index].zipCode || ""
                                     }
-                                    poblacion={
-                                      facturacionInputs[index].poblacion || ""
+                                    country={
+                                      facturacionInputs[index].country || ""
                                     }
-                                    provincia={
-                                      facturacionInputs[index].provincia || ""
-                                    }
-                                    codigoPostal={
-                                      facturacionInputs[index].codigoPostal ||
-                                      ""
-                                    }
-                                    pais={facturacionInputs[index].pais || ""}
                                     handleChange={(key, value) =>
                                       handleInputChange(index, key, value)
                                     }
@@ -718,7 +706,7 @@ const AccountSettings = () => {
                       ))}
                 </div>
               </div>
-              <div className={styles.label}>
+              {/* <div className={styles.label}>
                 <div className={styles.headerLabel}>
                   <span>info@gmail.com</span>
                   <div className={styles.button} onClick={handleToggleReadOnly}>
@@ -754,7 +742,7 @@ const AccountSettings = () => {
                   placeholder={"Desconocido"}
                   readOnly={!isReadOnly}
                 />
-              </div>
+              </div> */}
             </label>
 
             <label>

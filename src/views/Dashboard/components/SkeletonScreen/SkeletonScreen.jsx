@@ -32,7 +32,7 @@ const SkeletonScreen = ({
             : undefined
         }
       >
-        {labelText} <br /> {helperText}
+        <p>{labelText}</p> <span>{helperText}</span>
       </label>
     </div>
   );

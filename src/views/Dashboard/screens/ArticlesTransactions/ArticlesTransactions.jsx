@@ -1,76 +1,28 @@
 import React, { useState } from "react";
 import styles from "./ArticlesTransactions.module.css";
-import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
-import searchGray from "../../assets/searchGray.png";
+
 import optionDots from "../../assets/optionDots.svg";
 import plusIcon from "../../assets/Plus Icon.svg";
-import filterSearch from "../../assets/Filters Search.png";
-import creditCard from "../../assets/creditCardIcon.png";
-import closeIcon from "../../assets/closeMenu.svg";
-import pdf from "../../assets/pdfIcon.png";
+
+import DynamicTable from "../../components/DynamicTable/DynamicTable";
+import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
+import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
+import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
+
+import KIcon from "../../assets/KIcon.svg";
+import winIcon from "../../assets/winIcon.svg";
+import emptyimage from "../../assets/ImageEmpty.svg";
+import { useSelector } from "react-redux";
+
+import Button from "../../components/Button/Button";
+import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
+import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
+import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
 
 const ArticlesTransactions = () => {
-  const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
-  const [clientSelected, setClientSelected] = useState([]);
-  const [showNewClient, setShowNewClient] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [web, setWeb] = useState("");
-  const [countryCode, setCountryCode] = useState("+34");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [residence, setResidence] = useState("");
-  const [fiscalNumber, setFiscalNumber] = useState("");
-  const [preferredCurrency, setPreferredCurrency] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [emailError, setEmailError] = useState("");
-
-  const selectClient = (rowIndex) => {
-    setClientSelected((prevItem) => {
-      if (prevItem.includes(rowIndex)) {
-        return prevItem.filter((i) => i !== rowIndex);
-      } else {
-        return [...prevItem, rowIndex];
-      }
-    });
-  };
-
-  const selectAllClients = () => {
-    if (clientSelected.length > 0) {
-      // Si ya hay clientes seleccionados, limpiar la selección
-      setClientSelected([]);
-    } else {
-      // Si no hay clientes seleccionados, agregar todos los índices
-      const allClientIndexes = tableData.map((_, index) => index); // Crear un arreglo con los índices
-      setClientSelected(allClientIndexes);
-    }
-  };
-
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const getStateClass = (state) => {
-    switch (state.toLowerCase()) {
-      case "pagada":
-        return styles.pagada;
-      case "pendiente":
-        return styles.pendiente;
-      case "incumplida":
-        return styles.incumplida;
-      case "vencida":
-        return styles.vencida;
-      case "anulada":
-        return styles.anulada;
-      default:
-        return "";
-    }
-  };
+  const [selectedIds, setSelectedIds] = useState([]);
+  const { client } = useSelector((state) => state.clients);
 
   const tableHeaders = [
     "Nombre o Descripción",
@@ -81,12 +33,13 @@ const ArticlesTransactions = () => {
     "Impuesto",
     "Pagado",
     "Método de Pago",
+    "",
   ];
 
   const tableData = [
     {
-      img: "https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc",
-      name: "Nombre o Descripcion",
+      img: "",
+      name: "Producto A",
       date: "25 Dec 2025",
       quantity: 1,
       priceUnit: "00,00EUR",
@@ -95,18 +48,8 @@ const ArticlesTransactions = () => {
       payMethod: "Mastercard ****5678",
     },
     {
-      img: "https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc",
-      name: "Nombre o Descripcion",
-      date: "25 Dec 2025",
-      quantity: 1,
-      priceUnit: "00,00EUR",
-      tax: ["No", "Sí,21%"],
-      state: ["stripe", "rembolsado"],
-      payMethod: "Mastercard ****5678",
-    },
-    {
-      img: "https://imgs.search.brave.com/TTIONeS9OVFFleLDeni9dc0f0MzX35GFM6HhjHhlDoI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bXlwZXJmZWN0Y29s/b3IuY29tL3JlcG9z/aXRvcmllcy9pbWFn/ZXMvY29sb3JzL3No/ZXJ3aW4td2lsbGlh/bXMtc3cyMTE0LWdy/aXMtcGFpbnQtY29s/b3ItbWF0Y2gtMi5q/cGc",
-      name: "Nombre o Descripcion",
+      img: "",
+      name: "Producto A",
       date: "25 Dec 2025",
       quantity: 1,
       priceUnit: "00,00EUR",
@@ -116,147 +59,235 @@ const ArticlesTransactions = () => {
     },
   ];
 
-  //   const formatCardNumber = (value) => {
-  //     return value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
-  //   };
-
-  const formatPhoneNumber = (phoneNumber) => {
-    return phoneNumber.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, "$1 $2 $3 $4");
+  const toggleSelection = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   };
 
-  const handleEmailChange = (e) => {
-    const emailValue = e.target.value;
-    setEmail(emailValue);
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(emailValue)) {
-    //   setEmailError('El correo electrónico no es válido.');
-    // } else {
-    //   setEmailError('');
-    // }
+  const selectAll = () => {
+    setSelectedIds(
+      selectedIds.length === tableData.length
+        ? []
+        : tableData.map((_, index) => index)
+    );
   };
+
+  const renderRow = (row, index, onSelect) => (
+    <tr key={index}>
+      <td>
+        <input
+          type="checkbox"
+          onChange={() => onSelect(index)}
+          checked={selectedIds.includes(index)}
+        />
+      </td>
+      <td className={styles.imgContainer}>
+        <p>
+          <img src={row.img || emptyimage} alt="" />
+          {row.name}
+        </p>
+      </td>
+      <td>{row.date}</td>
+      <td>{row.quantity}</td>
+      <td>{row.priceUnit}</td>
+      <td>{row.priceUnit}</td>
+      <td>
+        {Array.isArray(row.tax)
+          ? row.tax.map((item, i) => <p key={i}>{item}</p>)
+          : row.tax}
+      </td>
+      <td className={styles.rowState}>{row.state}</td>
+      <td>{row.payMethod}</td>
+      <td className={styles.actions}>
+        <div className={styles.transacciones}>
+          <a href="#">stripe</a>
+          <span>Refund</span>
+        </div>
+        <div>
+          <img src={optionDots} alt="Opciones" />
+        </div>
+      </td>
+    </tr>
+  );
 
   return (
-    <div>
-      {/* <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} /> */}
-      <div className={styles.container} onClick={() => setShowSidebar(false)}>
-        <div className={styles.clientsHeader}>
-          <div className={styles.infoClient}>
-            <div className={styles.contactInfo}>
-              <h3>Aythen</h3>
-              <span>info@aythen.com</span>
-              <span>+34 600 789 012</span>
-            </div>
+    <PanelTemplate>
+      <div className={styles.container}>
+        <ClientsHeader
+          additionalInfo={
+            <>
+              <div className={styles.infoClient}>
+                <div className={styles.arrowContainer}>
+                  <div
+                    className={styles.iconContainer}
+                    onClick={() => navigate("/admin/clients")}
+                  >
+                    <Arrow />
+                  </div>
+                  <h3>
+                    {client?.clientData?.clientName || "Titulo del Documento"}
+                  </h3>
+                </div>
+                <div className={styles.clientInfo}>
+                  <div className={styles.contactInfo}>
+                    <span>{client?.code || "T001"}</span>
+                    <span>{client?.name || "Aythen"}</span>
+                    <span>{client?.email || "info@aythen.com"}</span>
+                    <span>
+                      {client?.clientData?.codeCountry || "+34"}{" "}
+                      {client?.clientData?.numberPhone || "600 798 012"}
+                    </span>
+                  </div>
 
-            <div className={styles.info}>
-              <img src={pdf} />
-              <span>T001</span>
-              <span>Titulo del documento</span>
+                  <div className={styles.info}>
+                    <p>Categoría</p>
+                    <span>Gasto</span>
+                    <p>Fecha</p>
+                    <span>25 Dec 2025</span>
+                    <p>Activos</p>
+                    <span>0</span>
+                    <p>Subtotal</p>
+                    <span>0,00</span>
+                    <span>EUR</span>
+                    <p>IVA</p>
+                    <span>21%</span>
+                    <span>No</span>
+                    <p>Total</p>
+                    <span>0,00</span>
+                    <span>EUR</span>
+                    <p>Estado</p>
+                    <span>Pagado</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          }
+          buttons={[
+            {
+              label: <>Editar Contacto</>,
+              type: "button",
+              onClick: () => console.log("Crear nuevo activo"),
+            },
+            {
+              label: <DownloadIcon />,
+              headerStyle: { padding: "6px 10px" },
+              type: "white",
+              onClick: () => setShowNewClient(true),
+            },
+          ]}
+          searchProps={
+            {
+              // ref={searchInputRef}
+              // searchTerm={searchTerm}
+              // setSearchTerm={setSearchTerm}
+              // iconRight={pencilSquareIcon}
+              // classNameIconRight={styles.searchContainerL}
+              // onClickIconRight={() => setIsFilterOpen(true)}
+            }
+          }
+          searchChildren={
+            <>
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={winIcon} alt="kIcon" />
+              </div>
+              <div
+                style={{ marginLeft: "5px" }}
+                className={styles.searchIconsWrappers}
+              >
+                <img src={KIcon} alt="kIcon" />
+              </div>
+            </>
+          }
+        />
+
+        {/* <div className={styles.clientsHeader}>
+          <div className={styles.infoClient}>
+            <div className={styles.arrowContainer}>
+              <div
+                className={styles.iconContainer}
+                onClick={() => navigate("/admin/clients")}
+              >
+                <Arrow />
+              </div>
             </div>
-          </div>
-          <div className={styles.searchContainer}>
-            <div className={styles.inputWrapper}>
-              <img src={searchGray} className={styles.inputIconInside} />
-              <input
-                type="text"
-                placeholder="Search..."
-                value={search}
-                onChange={handleSearchChange}
-                className={styles.searchInput}
-              />
-              <div className={styles.inputIconOutsideContainer}>
-                <img src={filterSearch} className={styles.inputIconOutside} />
+            <img src={emptyimage} alt="" />
+            <div className={styles.clientInfo}>
+              <div className={styles.contactInfo}>
+                <h3>{client?.clientData?.clientName || "Aythen"}</h3>
+                <span>{client?.email || "info@aythen.com"}</span>
+                <span>
+                  {client?.clientData?.codeCountry || "+34"}{" "}
+                  {client?.clientData?.numberPhone || "600 798 012"}
+                </span>
+              </div>
+              <div className={styles.info}>
+                <p>Número Fiscal</p>
+                <span>{client?.clientData?.taxNumber || "Desconocido"}</span>
+              </div>
+              <div className={styles.info}>
+                <p># Transacciones</p>
+                <span>0</span>
+                <p>Total</p>
+                <span>0,0 EUR en los últimos 30 días</span>
               </div>
             </div>
           </div>
-        </div>
+          <div className={styles.searchContainer}>
+            <div className={styles.button}>Editar Contacto</div>
+            <Button action={() => setShowNewClient(true)}>
+              <img src={plusIcon} alt="" />
+              Nueva transacción
+            </Button>
 
-        <div className={styles.clientsTable}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.small}>
-                  <input
-                    type="checkbox"
-                    name="clientSelected"
-                    checked={
-                      clientSelected.length == tableData.length ? true : false
-                    }
-                    onClick={selectAllClients}
-                  />
-                </th>
-                {tableHeaders.map((header, index) => (
-                  <th key={index} className={index == 2 ? styles.small : ""}>
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="clientSelected"
-                      onClick={() => selectClient(rowIndex)}
-                      checked={clientSelected.includes(rowIndex) ? true : false}
-                    />
-                  </td>
-                  <td className={styles.imgContainer}>
-                    <img src={row.img} alt="" />
-                    <p>{row.name}</p>
-                  </td>
-
-                  <td>{row.date}</td>
-                  <td>{row.quantity}</td>
-                  <td>{row.priceUnit}</td>
-                  <td>{row.priceUnit}</td>
-                  <td>
-                    {Array.isArray(row.tax)
-                      ? row.tax.map((item, itemIndex) => (
-                          <p key={itemIndex}>{item}</p>
-                        ))
-                      : row.tax}
-                  </td>
-
-                  <td className={styles.rowState}>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <span>&bull;</span>
-                      <div>
-                        {Array.isArray(row.state)
-                          ? row.state.map((item, itemIndex) => (
-                              <p
-                                key={itemIndex}
-                                style={{
-                                  color: itemIndex === 0 ? "blue" : "inherit",
-                                  fontWeight:
-                                    itemIndex === 0 ? "600" : "inherit",
-                                }}
-                              >
-                                {item}
-                              </p>
-                            ))
-                          : row.state}
-                      </div>
-                    </div>
-                  </td>
-                  <td>{row.payMethod}</td>
-                  <td className={styles.actions}>
-                    <div className={styles.transacciones}>
-                      <a href="#">stripe</a>
-                      <span>Refund</span>
-                    </div>
-                    <div>
-                      <img src={optionDots} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            <SearchIconWithIcon
+            // ref={searchInputRef}
+            // searchTerm={searchTerm}
+            // setSearchTerm={setSearchTerm}
+            // iconRight={pencilSquareIcon}
+            // classNameIconRight={styles.searchContainerL}
+            // onClickIconRight={() => setIsFilterOpen(true)}
+            >
+              <>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={winIcon} alt="kIcon" />
+                </div>
+                <div
+                  style={{ marginLeft: "5px" }}
+                  className={styles.searchIconsWrappers}
+                >
+                  <img src={KIcon} alt="kIcon" />
+                </div>
+              </>
+            </SearchIconWithIcon>
+        
+          </div>
+        </div> */}
+        {tableData.length == 0 ? (
+          <SkeletonScreen
+            labelText="No se han encontrado documentos con este contacto"
+            helperText="Todas las transacciones con este cliente o proveedor estarán listadas aquí."
+            showInput={true}
+            enableLabelClick={false}
+          />
+        ) : (
+          <DynamicTable
+            columns={tableHeaders}
+            data={tableData}
+            renderRow={renderRow}
+            selectedIds={selectedIds}
+            onSelectAll={selectAll}
+            onSelect={toggleSelection}
+          />
+        )}
       </div>
-    </div>
+    </PanelTemplate>
   );
 };
 

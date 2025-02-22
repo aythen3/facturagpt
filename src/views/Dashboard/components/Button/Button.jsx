@@ -7,11 +7,19 @@ const Button = ({
   headerStyle = {},
   disabledOption = false,
 }) => {
+  const typeClasses = {
+    green: styles.buttonTemplateGreen,
+    white: styles.buttonTemplateWhite,
+    gray: styles.buttonTemplateGray,
+    discard: styles.buttonTemplateDiscard,
+    button:styles.buttonTemplateButton
+  };
+
   return (
     <button
       onClick={action}
       type="button"
-      className={`${styles.buttonTemplate} ${type == "green" && styles.buttonTemplateGreen} ${type == "white" && styles.buttonTemplateWhite} ${type == "gray" && styles.buttonTemplateGray}  ${type == "discard" && styles.buttonTemplateDiscard} `}
+      className={`${styles.buttonTemplate} ${typeClasses[type] || ""}`}
       style={headerStyle}
       disabled={disabledOption}
     >
