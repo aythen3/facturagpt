@@ -25,6 +25,7 @@ export default function InvoicePanel() {
   const [noteText, setNoteText] = useState("");
   const [noteColor, setNoteColor] = useState("tagGreen");
   const [isEditingNote, setIsEditingNote] = useState(false);
+  const [editingNote, setEditingNote] = useState(false);
 
   console.log(`usuario: ${user}`);
 
@@ -136,11 +137,16 @@ export default function InvoicePanel() {
             handleEditNote={handleEditNote}
             noteColor={noteColor}
             setNoteColor={setNoteColor}
+            setEditingNote={setEditingNote}
+            editingNote={editingNote}
+            idFile={id}
           />
           <Preview
             companyInfo={company}
             document={Factura}
             handleAddNote={handleAddNote}
+            setEditingNote={setEditingNote}
+            editingNote={editingNote}
           />
         </>
       )}

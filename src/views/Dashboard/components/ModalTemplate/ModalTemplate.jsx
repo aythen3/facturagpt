@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ModalTemplate.module.css";
 import Button from "../Button/Button";
 import { ReactComponent as ArrowDown } from "../../assets/ArrowLeftWhite.svg";
+
 const ModalTemplate = ({
   children,
   onClick,
@@ -9,6 +10,8 @@ const ModalTemplate = ({
   text,
   isAnimating,
   newContact,
+  selectedContact,
+  handleGetOneClient,
 }) => {
   return (
     <>
@@ -27,7 +30,14 @@ const ModalTemplate = ({
           <div className={styles.buttonContainer}>
             {!newContact && (
               <>
-                <Button type={"white"}>Ver Transacciones</Button>
+                <Button
+                  type={"white"}
+                  action={() => {
+                    true && handleGetOneClient(selectedContact);
+                  }}
+                >
+                  Ver Transacciones
+                </Button>
                 <Button>Nueva Factura</Button>
               </>
             )}

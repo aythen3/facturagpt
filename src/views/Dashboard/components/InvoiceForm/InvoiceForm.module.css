@@ -55,13 +55,21 @@
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
     .text {
-      height: 40px;
+      min-height: 40px;
+      height: fit-content;
+      max-height: 100px;
       display: flex;
       align-items: center;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
     span,
     input {
-      padding: 8px;
+      /* padding: 8px; */
       background-color: transparent;
       font-family: "Inter", sans-serif;
       font-size: 13px;

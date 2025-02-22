@@ -596,18 +596,7 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
   return (
     <>
       <div
-        style={{
-          position: isMobile ? "absolute" : "initial",
-          top: 0,
-          left: swiped ? "0" : "-100%",
-          width: "80vw",
-          Maxheight: "100vh",
-          // backgroundColor: "white",
-          transition: "left 0.3s ease",
-          boxSizing: "border-box",
-          zIndex: 2,
-        }}
-        className={styles.container}
+        className={`${styles.container} ${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} ${swiped ? "" : styles.offAsideBar}`}
         ref={fileExplorerRef}
         onDrop={handleDropFiles}
         onDragOver={handleContainerDragOver}

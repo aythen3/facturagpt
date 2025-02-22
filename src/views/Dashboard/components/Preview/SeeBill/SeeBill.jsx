@@ -51,10 +51,14 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
       new File([pdfBlob], "document.pdf", { type: "application/pdf" })
     );
 
-    const response = await fetch("http://localhost:3006/api/user/upload-pdf", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      process.env.REACT_APP_API_CREATE_PDF ||
+        "https://facturagpt.com/api/user/upload-pdf",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     if (response.ok) {
       console.log("PDF subido exitosamente");
@@ -126,7 +130,6 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
 
         {!fileUser && (
           <div className={styles.none}>
-            {/* Aquí pasamos contentRef a FacturaTemplate */}
             <FacturaTemplate ref={contentRef} document={document} />
           </div>
         )}

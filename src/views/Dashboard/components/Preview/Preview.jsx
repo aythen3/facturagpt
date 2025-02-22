@@ -63,6 +63,8 @@ const DocumentPreview = ({
   companyInfo,
   handleAddNote,
   customStyles,
+  setEditingNote,
+  editingNote,
 }) => {
   const [options, setOptions] = useState(0);
   const [showMovetoFolder, setShowMovetoFolder] = useState(false);
@@ -176,6 +178,7 @@ const DocumentPreview = ({
       icon: addNoteGray,
       click: () => {
         handleAddNote();
+        setEditingNote(false);
       },
     },
     {

@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    text-align: end;
     span {
       color: #5e6470;
     }
@@ -48,7 +49,7 @@
 
 .billedToRight {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   width: 100%;
   gap: 10px;
 }
@@ -57,6 +58,7 @@
 .billedToReference {
   display: flex;
   justify-content: space-between;
+  flex: 1;
 }
 
 .billedToDate {
@@ -92,8 +94,10 @@
     span {
       color: #5e6470;
     }
+    &:nth-child(2) {
+      text-align: end;
+    }
   }
-
   p {
     margin: 0;
   }
@@ -150,7 +154,10 @@
   justify-content: end;
 
   .taxesBody {
-    padding: 10px 20px;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
 
   .taxesContent {
@@ -184,7 +191,7 @@
         -o-border-radius: 99px;
         display: flex;
         justify-content: space-between;
-        padding: 12px 20px;
+        padding: 20px;
 
         p {
           font-weight: 600;

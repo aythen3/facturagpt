@@ -37,14 +37,18 @@ export default function InvoiceForm({
   customStyles = {},
   setNoteColor,
   noteColor,
+  setEditingNote,
+  editingNote,
+  idFile,
 }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Factura");
   const [sectionSelected, setSectionSelected] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
   const [createdNote, setCreatedNote] = useState(false);
-  const [editorContentFinal, setEditorContentFinal] = useState("");
+  const [isAnimating, setIsAnimating] = useState(false);
 
+  const [editorContentFinal, setEditorContentFinal] = useState("");
   const handleTypeSelect = (type) => {
     setSelectedType(type);
     setIsPopupOpen(false);
@@ -200,9 +204,17 @@ export default function InvoiceForm({
           {createdNote && (
             <div className={`${styles.note} ${styles[noteColor]}`}>
               <div className={styles.text}>
-                <span>{editorContentFinal || "Nueva nota"}</span>
+                <span dangerouslySetInnerHTML={{ __html: editorContentFinal }}>
+                  {/* {editorContentFinal || "Nueva nota"} */}
+                </span>
               </div>
-              <div className={styles.button} onClick={handleAddNote}>
+              <div
+                className={styles.button}
+                onClick={() => {
+                  handleAddNote();
+                  setEditingNote(true);
+                }}
+              >
                 Editar Nota
               </div>
             </div>
@@ -211,12 +223,17 @@ export default function InvoiceForm({
         {hasNote && (
           <>
             <CreateNotePopup
+              hasNote={hasNote}
               setHasNote={setHasNote}
               noteColor={noteColor}
               setNoteColor={setNoteColor}
               setCreatedNote={setCreatedNote}
               editorContentFinal={editorContentFinal}
               setEditorContentFinal={setEditorContentFinal}
+              setEditingNote={setEditingNote}
+              editingNote={editingNote}
+              isAnimating={isAnimating}
+              setIsAnimating={setIsAnimating}
             />
           </>
         )}
@@ -244,7 +261,7 @@ export default function InvoiceForm({
       {sectionSelected == 0 ? (
         <InfoBill isEditing={isEditing} setIsEditing={setIsEditing} />
       ) : sectionSelected == 1 ? (
-        <InfoContact />
+        <InfoContact idFile={idFile} />
       ) : sectionSelected == 2 ? (
         <InfoActivity />
       ) : (

@@ -14,7 +14,13 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CookiePopup from "../../components/CookiePopup/CookiePopup";
 import SubtitleTemplate from "../../components/SubtitleTemplate/SubtitleTemplate";
-
+import { benefits } from "./BenefitsPlans";
+import DynamicTable from "../../components/DynamicTable/DynamicTable";
+import { ReactComponent as Included } from "../../assets/includedIcon.svg";
+import { ReactComponent as NotIncluded } from "../../assets/notIncludedIcon.svg";
+import { ReactComponent as CheckCircleFeatures } from "../../assets/checkCircleFeatures.svg";
+import { ReactComponent as ArrowDiagonalGreen } from "../../assets/diagonalArrowGreen.svg";
+import { ReactComponent as ArrowDiagonalWhite } from "../../assets/diagonalArrowWhite.svg";
 const Pricing = () => {
   const navigate = useNavigate();
   const [sliderValue, setSliderValue] = useState(10);
@@ -155,15 +161,129 @@ const Pricing = () => {
     return (sliderValue - min) / (max - min) / 10; // Calcula el progreso en porcentaje
   };
 
+  const tableHeaders = ["", "Free", "Plus", "Pro", "Enterprise"];
+
+  const renderRow = (row, index, onSelect) => (
+    <tr key={row.name}>
+      <td>{row.name}</td>
+      <td>
+        {row.basic == "include" ? (
+          <Included />
+        ) : row.basic == "not include" ? (
+          <NotIncluded />
+        ) : (
+          row.basic
+        )}
+      </td>
+      <td>
+        {" "}
+        {row.standard == "include" ? (
+          <Included />
+        ) : row.standard == "not include" ? (
+          <NotIncluded />
+        ) : (
+          row.standard
+        )}
+      </td>
+      <td>
+        {" "}
+        {row.pro == "include" ? (
+          <Included />
+        ) : row.pro == "not include" ? (
+          <NotIncluded />
+        ) : (
+          row.pro
+        )}
+      </td>
+      <td>
+        {" "}
+        {row.enterprise == "include" ? (
+          <Included />
+        ) : row.enterprise == "not include" ? (
+          <NotIncluded />
+        ) : (
+          row.enterprise
+        )}
+      </td>
+    </tr>
+  );
+
   return (
     <div className={styles.pricingContainer}>
       <Navbar />
       <div className={styles.containerP}>
         <div className={styles.plansHeader}>
-          <h1 className={styles.plansTitle}>Planes de precios</h1>
+          <h1 className={styles.plansTitle}>
+            Planes de precios flexibles y escalables
+          </h1>
           <SubtitleTemplate
-            text={"Elige el mejor plan que se adapte a tus necesidades."}
+            text={
+              <>
+                <p>Elige el plan que mejor se adapte a tu negocio. </p>
+                <p>
+                  Comienza con Plus y crece a medida que evolucionan tus
+                  necesidades.
+                </p>
+              </>
+            }
           />
+
+          <div className={styles.cardsPlansContainer}>
+            <div className={styles.cardsContainer}>
+              {plansData.slice(0, 2).map((plan, index) => (
+                <div key={index} className={styles.card}>
+                  <h3>
+                    Plan <strong>{plan.title}</strong>
+                  </h3>
+                  <div className={styles.featuresContainer}>
+                    {plan.features.map((feat) => (
+                      <p>
+                        <CheckCircleFeatures /> {feat}
+                      </p>
+                    ))}
+                  </div>
+                  <button className={plan.buttonType && styles.customButton}>
+                    {plan.pricing}
+                    {plan.buttonType ? (
+                      <ArrowDiagonalWhite />
+                    ) : (
+                      <ArrowDiagonalGreen />
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+            <SubtitleTemplate
+              text={
+                "Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en cualquier momento."
+              }
+            />
+            <div className={styles.cardsContainer}>
+              {plansData.slice(2, 5).map((plan, index) => (
+                <div key={index} className={styles.card}>
+                  <h3>
+                    Plan <strong>{plan.title}</strong>
+                  </h3>
+                  <div className={styles.featuresContainer}>
+                    {plan.features.map((feat) => (
+                      <p>
+                        <CheckCircleFeatures /> {feat}
+                      </p>
+                    ))}
+                  </div>
+                  <button className={plan.buttonType && styles.customButton}>
+                    {plan.pricing}
+                    {plan.buttonType ? (
+                      <ArrowDiagonalWhite />
+                    ) : (
+                      <ArrowDiagonalGreen />
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* <p className={styles.currentPlan}>{currentPlan.documents}</p> */}
           <p className={styles.currentPlan}>
             {sliderValue.toLocaleString("es-ES")} Documentos
@@ -194,11 +314,7 @@ const Pricing = () => {
             sliderValue={sliderValue}
           />
         </div>
-        <SubtitleTemplate
-          text={
-            "Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en cualquier momento."
-          }
-        />
+
         {/* <span className={styles.microText}>
           Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela
           en cualquier momento.
@@ -227,16 +343,32 @@ const Pricing = () => {
           </div>
         ))}
       </div>
-      <h1 className={styles.pricingStarText}>
-        <img className={styles.star} src={star} alt="star" />
-        Valoración
-      </h1>
-      <SubtitleTemplate
-        stylesProp={{ maxWidth: "800px" }}
-        text={
-          "Escríbenos un email, una reseña en Google, una postal, o incluso puedes donar para ayudar a crear más funcionalidades."
-        }
-      />
+      <div className={styles.tableBenefitsContainer}>
+        <h2 className={styles.plansTitle}>
+          Comparación de las características de los planes
+        </h2>
+        <SubtitleTemplate
+          stylesProp={{ maxWidth: "800px" }}
+          text={
+            <>
+              <p>
+                Las empresas tardan entre 2 y 5 minutos en gestionar una
+                factura.
+              </p>
+              <p>Con FacturaGPT, lo haces en segundos...</p>
+            </>
+          }
+        />
+
+        <div className={styles.benefitsTable}>
+          <DynamicTable
+            columns={tableHeaders}
+            data={benefits}
+            renderRow={renderRow}
+            hideCheckbox={true}
+          />
+        </div>
+      </div>
 
       <div className={styles.trustContainer}>
         <div className={styles.googleCard}>

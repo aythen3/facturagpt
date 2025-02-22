@@ -1,6 +1,8 @@
 import React, { forwardRef } from "react";
 import styles from "./FacturaTemplate.module.css";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
+import QrCodeExample from "../../assets/qrCodeExample.png";
+
 const FacturaTemplate = forwardRef((props, ref) => {
   return (
     <div ref={ref} className={styles.billContainer}>
@@ -24,30 +26,32 @@ const FacturaTemplate = forwardRef((props, ref) => {
           <span>City, Country - 00000</span>
           <span>+0 (000) 123-4567</span>
         </div>
-        <div className={styles.billedToRight}>
-          <div className={styles.billedToDate}>
-            <div>
-              <span>Due date</span>
-              <p>15 Aug, 2023</p>
-            </div>
-            <div>
-              <span>Invoice date</span>
-              <p>1 Aug, 2023</p>
-            </div>
+        <div className={styles.QRCode}>
+          <img src={QrCodeExample} alt="" />
+        </div>
+      </div>
+      <div className={styles.billedToRight}>
+        <div className={styles.billedToDate}>
+          <div>
+            <span>Due date</span>
+            <p>15 Aug, 2023</p>
           </div>
-          <div className={styles.billedToReference}>
-            <div>
-              <span>Due date</span>
-              <p>15 Aug, 2023</p>
-            </div>
-            <div>
-              <span>Invoice date</span>
-              <p>1 Aug, 2023</p>
-            </div>
+          <div>
+            <span>Invoice date</span>
+            <p>1 Aug, 2023</p>
+          </div>
+        </div>
+        <div className={styles.billedToReference}>
+          <div>
+            <span>Invoice number</span>
+            <p>#AB2324-01</p>
+          </div>
+          <div>
+            <span>Reference</span>
+            <p>INV-057</p>
           </div>
         </div>
       </div>
-
       <div className={styles.tableBill}>
         <table>
           <thead>
@@ -62,7 +66,13 @@ const FacturaTemplate = forwardRef((props, ref) => {
           </thead>
           <tbody>
             <tr>
-              <td>Item Name</td>
+              <td>
+                <div>
+                  <p>Item Name </p>
+                  <span>Item Description</span>
+                </div>
+              </td>
+
               <td>01</td>
               <td>$3,000</td>
               <td>
