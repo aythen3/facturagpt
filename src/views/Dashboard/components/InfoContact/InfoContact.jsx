@@ -6,7 +6,9 @@ import { ReactComponent as ImageEmpty } from "../../assets/ImageEmpty.svg";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import DetailsBillInputs from "./DetailsBillInputs/DetailsBillInputs";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
-const InfoContact = () => {
+import { useNavigate } from "react-router-dom";
+const InfoContact = ({ idFile }) => {
+  const navigate = useNavigate();
   const inputRefs = useRef({});
   const [sectionSelected, setSectionSelected] = useState(0);
   const [editingDetailIndex, setEditingDetailIndex] = useState(null);
@@ -28,7 +30,6 @@ const InfoContact = () => {
     details: false,
     paymentMethods: false,
   });
-
   const toggleEdit = (field) => {
     setEditFields((prev) => ({
       ...prev,
@@ -62,14 +63,20 @@ const InfoContact = () => {
     });
   };
   const handlePaymentMethodChange = (index, key, value) => {
-    console.log(value);
     setFieldValues((prev) => {
-      return {
-        ...prev,
-        paymentMethods: prev.paymentMethods.map((method, i) =>
-          i === index ? { ...method, [key]: value } : method
-        ),
-      };
+      const updatedPaymentMethods = prev.paymentMethods.map((method, i) => {
+        if (i === index) {
+          return {
+            ...method,
+            [key]: value,
+            default: key === "default" ? true : method.default,
+          };
+        }
+        return key === "default" && value
+          ? { ...method, default: false }
+          : method;
+      });
+      return { ...prev, paymentMethods: updatedPaymentMethods };
     });
   };
 
@@ -120,21 +127,22 @@ const InfoContact = () => {
       paymentMethods: [
         ...prev.paymentMethods,
         {
+          id: Date.now(),
           banco: "",
           numeroCuenta: "",
           swiftBic: "",
           routingNumber: "",
           moneda: "",
-          default: prev.paymentMethods.length === 0 ? true : false, // Si es el primer método, será el default
+          default: prev.paymentMethods.length === 0 ? true : false,
         },
       ],
     }));
   };
 
-  const removePaymentMethod = (index) => {
+  const removePaymentMethod = (id) => {
     setFieldValues((prev) => ({
       ...prev,
-      paymentMethods: prev.paymentMethods.filter((_, i) => i !== index),
+      paymentMethods: prev.paymentMethods.filter((method) => method.id !== id),
     }));
   };
 
@@ -163,7 +171,13 @@ const InfoContact = () => {
         <div>
           Guardado <img src={check} alt="" />
         </div>
-        <button>Ver Transacciones</button>
+        <button
+          onClick={() => {
+            navigate(`/admin/clients/${idFile}`);
+          }}
+        >
+          Ver Transacciones
+        </button>
       </div>
       <div className={styles.typeClient}>
         <ImageEmpty />
@@ -230,56 +244,55 @@ const InfoContact = () => {
               {field === "paymentMethods" ? (
                 <div className={styles.paymentMethodsContainer}>
                   <div className={styles.paymethodContent}>
-                    {fieldValues.paymentMethods.map((method, index) => (
-                      <div key={index} className={styles.paymentMethodRow}>
-                        <div className={styles.deleteRow}>
-                          <span className={styles.fieldSpan}>
-                            {method.banco || "Banco"},
-                            {method.numeroCuenta || "Número de Cuenta"},
-                            {method.swiftBic || "SWIFT/BIC"},
-                            {method.routingNumber || "Routing Number"},{" "}
-                            {method.moneda || "Moneda"}
-                          </span>
+                    {fieldValues.paymentMethods
+                      .sort((a, b) =>
+                        a.default === b.default ? 0 : a.default ? -1 : 1
+                      )
+                      .map((method, index) => (
+                        <div key={index} className={styles.paymentMethodRow}>
+                          <div className={styles.deleteRow}>
+                            <span className={styles.fieldSpan}>
+                              {method.bank || "Banco"},
+                              {method.accountNumber || "Número de Cuenta"},
+                              {method.swift || "SWIFT/BIC"},
+                              {method.routingNumber || "Routing Number"},{" "}
+                              {method.currency || "Moneda"}
+                            </span>
+                            {editFields.paymentMethods && (
+                              <DeleteButton
+                                action={() => removePaymentMethod(method.id)}
+                              />
+                            )}
+                          </div>
                           {editFields.paymentMethods && (
-                            <DeleteButton
-                              action={() => removePaymentMethod(index)}
+                            <>
+                              <div
+                                className={styles.detailEdit}
+                                onClick={() => {
+                                  if (editingPaymentIndex === method.id) {
+                                    setEditingPaymentIndex(null);
+                                  } else {
+                                    setEditingPaymentIndex(method.id);
+                                  }
+                                }}
+                              >
+                                {editingPaymentIndex === method.id
+                                  ? "Guardar"
+                                  : "Editar"}
+                              </div>
+                            </>
+                          )}
+                          {editingPaymentIndex === method.id && (
+                            <PayMethod
+                              method={method}
+                              onChange={(key, value) => {
+                                handlePaymentMethodChange(index, key, value);
+                              }}
                             />
                           )}
                         </div>
-                        {editFields.paymentMethods && (
-                          <>
-                            <div
-                              className={styles.detailEdit}
-                              onClick={() => {
-                                if (editingPaymentIndex === index) {
-                                  setEditingPaymentIndex(null);
-                                } else {
-                                  setEditingPaymentIndex(index);
-                                }
-                              }}
-                            >
-                              {editingPaymentIndex === index
-                                ? "Guardar"
-                                : "Editar"}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    ))}
+                      ))}
                   </div>
-                  {editingPaymentIndex !== null &&
-                    fieldValues.paymentMethods.length >= 1 && (
-                      <PayMethod
-                        method={fieldValues.paymentMethods[editingPaymentIndex]}
-                        onChange={(key, value) =>
-                          handlePaymentMethodChange(
-                            editingPaymentIndex,
-                            key,
-                            value
-                          )
-                        }
-                      />
-                    )}
                 </div>
               ) : field === "phoneNumber" ? (
                 editFields[field] ? (

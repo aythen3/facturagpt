@@ -54,6 +54,7 @@ const Clients = () => {
   const [selectTypeClient, setSelectTypeClient] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showImportContacts, setShowImportContacts] = useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -654,6 +655,7 @@ const Clients = () => {
               onClick={() => {
                 handleEditClient();
                 setSelectedRowIndex(null);
+                setSelectedContact(row?.id);
               }}
               className={styles.item_menu_actions}
             >
@@ -799,6 +801,8 @@ const Clients = () => {
             isAnimating={isAnimating}
             className={`${styles.newClientContainer} `}
             newContact={newContact}
+            selectedContact={selectedContact}
+            handleGetOneClient={handleGetOneClient}
           >
             <div className={styles.containerNewClientForm}>
               {/* <div className={styles.containerHeader}>

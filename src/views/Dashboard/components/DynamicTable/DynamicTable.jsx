@@ -8,19 +8,22 @@ const DynamicTable = ({
   selectedIds,
   onSelectAll,
   onSelect,
+  hideCheckbox = false,
 }) => {
   return (
     <div className={styles.clientsTable}>
       <table className={styles.table}>
         <thead>
           <tr>
-            <th style={{ minWidth: "40px" }}>
-              <input
-                type="checkbox"
-                checked={selectedIds.length === data.length}
-                onChange={onSelectAll}
-              />
-            </th>
+            {!hideCheckbox && (
+              <th style={{ minWidth: "40px" }}>
+                <input
+                  type="checkbox"
+                  checked={selectedIds.length === data.length}
+                  onChange={onSelectAll}
+                />
+              </th>
+            )}
             {columns.map((header, index) => {
               if (Array.isArray(header)) {
                 // Si header es un arreglo, unimos los subHeaders en un solo <th>

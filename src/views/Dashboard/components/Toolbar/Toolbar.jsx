@@ -17,7 +17,7 @@ import aiIcon from "../../assets/AI-button.svg";
 import { ReactComponent as AIcon } from "../../assets/AIcon.svg";
 import { ReactComponent as ArrowDown } from "../../assets/arrowDownBold.svg";
 
-const Toolbar = ({ onContentChange }) => {
+const Toolbar = ({ onContentChange, editorContent }) => {
   const editorRef = useRef(null);
   const [textFormat, setTextFormat] = useState({
     bold: false,
@@ -293,7 +293,12 @@ const Toolbar = ({ onContentChange }) => {
   useEffect(() => {
     const handleContentChange = () => {
       if (editorRef.current && onContentChange) {
-        onContentChange(editorRef.current.innerHTML);
+        const updatedHTML = editorRef.current.innerHTML;
+
+        setTimeout(() => {
+          console.log(updatedHTML);
+          onContentChange(updatedHTML); // Se asegura de que React tenga el HTML correcto
+        }, 0);
       }
     };
 
@@ -308,6 +313,15 @@ const Toolbar = ({ onContentChange }) => {
       }
     };
   }, [onContentChange]);
+
+  useEffect(() => {
+    const updateText = () => {
+      if (editorRef.current && editorContent) {
+        editorRef.current.innerHTML = editorContent;
+      }
+    };
+    updateText();
+  }, []);
 
   return (
     <>
@@ -363,6 +377,7 @@ const Toolbar = ({ onContentChange }) => {
 
                     setSelectedColor(color);
                     setColorPickerVisible(false);
+                    onContentChange(editorRef.current.innerHTML);
                   }}
                   style={{
                     backgroundColor: color,

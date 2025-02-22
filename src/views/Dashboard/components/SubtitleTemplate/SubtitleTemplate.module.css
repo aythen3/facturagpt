@@ -3,7 +3,10 @@
   font-size: clamp(17px, 5vw, 20px);
   font-weight: 300;
   text-align: center;
-  margin: 0;
-  max-width: 600px;
+  margin: 0 auto;
+  max-width: 680px;
   /* padding: 0 20px; */
+  p {
+    margin: 0;
+  }
 }

@@ -256,23 +256,7 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
       }}
     >
       <div
-        style={{
-          position: isMobile ? "absolute" : "initial",
-          top: 0,
-          left: swiped ? "0" : "-100%",
-          width: isMobile && "100vw",
-          height: "calc(100vh - 50px)",
-          backgroundColor: "white",
-          transition: "left 0.3s ease",
-          boxSizing: "border-box",
-          zIndex: 2,
-        }}
-        // onTouchStart={handleTouchStart}
-        // onTouchMove={handleTouchMove}
-        // onTouchEnd={handleTouchEnd}
-        // onMouseDown={handleMouseDownResize}
-        // onMouseMove={handleMouseMoveResize}
-        // onMouseUp={handleMouseUp}
+        className={`${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} ${swiped ? "" : styles.offAsideBar}`}
       >
         {/* {isMobile && (
           <div className={styles.showMobile}>
