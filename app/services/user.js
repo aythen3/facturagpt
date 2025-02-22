@@ -14,22 +14,23 @@ const jwt = require("jsonwebtoken");
 const createAccount = async (account) => {
 
 
-  const dbName = "db_emailmanager_accounts";
-  let db;
+  // const dbName = "db_accounts";
+  // let db;
+
+  // try {
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist. Creating...`);
+  //     await nano.db.create(dbName);
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error checking/creating database:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
   try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist. Creating...`);
-      await nano.db.create(dbName);
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error checking/creating database:", error);
-    throw new Error("Database initialization failed");
-  }
-
-  try {
+    const db = await connectDB("db_accounts");
     const existingDocs = await db.list({ include_docs: true });
     const accountExists = existingDocs.rows.some(
       (doc) => doc.doc.email === account.email
@@ -113,22 +114,23 @@ const createAccount = async (account) => {
 
 const deleteAccount = async (id) => {
   console.log("account delete", id);
-  const dbName = "db_emailmanager_accounts";
-  let db;
+  // const dbName = "db_accounts";
+  // let db;
+
+  // try {
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist.`);
+  //     return { success: false, message: "Database does not exist." };
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error checking database:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
   try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error checking database:", error);
-    throw new Error("Database initialization failed");
-  }
-
-  try {
+    const db = await connectDB("db_accounts");
     // Get the document using the ID
     const doc = await db.find({ selector: { id: id } });
 
@@ -155,22 +157,24 @@ const deleteAccount = async (id) => {
 const updateAccount = async (data) => {
   console.log("Data received in updateAccount service:", { data });
 
-  const dbName = "db_emailmanager_accounts";
-  let db;
+  // const dbName = "db_emailmanager_accounts";
+  // let db;
 
-  try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error checking database:", error);
-    throw new Error("Database initialization failed");
-  }
+  // try {
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist.`);
+  //     return { success: false, message: "Database does not exist." };
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error checking database:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
+  
   try {
+    const db = await connectDB("db_accounts");
     let updatedDoc;
 
     console.log("data", data);
@@ -220,7 +224,7 @@ const updateAccount = async (data) => {
 const updateUserPassword = async ({ email, newPassword }) => {
   console.log("Data received in updateUserPassword service:", { email });
 
-  const dbName = "db_emailmanager_accounts";
+  const dbName = "db_accounts";
   let db;
 
   try {
@@ -278,7 +282,7 @@ const updateUserPassword = async ({ email, newPassword }) => {
 };
 
 const getAllAccounts = async (search) => {
-  const db = await connectDB("db_emailmanager_accounts");
+  const db = await connectDB("db_accounts");
   try {
     let selector = {};
     
@@ -317,7 +321,7 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
     accessToken,
   });
 
-  const dbName = "db_emailmanager_accounts";
+  const dbName = "db_accounts";
   let db;
 
   try {
@@ -421,7 +425,7 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
 };
 
 const getAllClientsService = async () => {
-  const mainDbName = "db_emailmanager_clients";
+  const mainDbName = "db_clients";
   let mainDb;
 
   try {
@@ -495,7 +499,7 @@ const getAllClientsService = async () => {
 };
 
 const addNewClientService = async ({ clientData }) => {
-  const dbName = "db_emailmanager_clients";
+  const dbName = "db_clients";
   let db;
 
   try {
@@ -560,7 +564,7 @@ const addNewClientService = async ({ clientData }) => {
 };
 
 const deleteClientService = async ({ clientId }) => {
-  const dbName = "db_emailmanager_clients";
+  const dbName = "db_clients";
   let db;
 
   try {
@@ -604,7 +608,7 @@ const deleteClientService = async ({ clientId }) => {
 };
 
 const generateAndSendOtpService = async ({ nombre, email, language }) => {
-  const dbName = "db_emailmanager_otp";
+  const dbName = "db_otp";
   let db;
   console.log(nombre);
   try {
@@ -653,7 +657,7 @@ const generateAndSendOtpService = async ({ nombre, email, language }) => {
 const verifyOTPService = async ({ email, otp }) => {
   console.log("Data received in verifyOTPService:", { email, otp });
 
-  const dbName = "db_emailmanager_otp";
+  const dbName = "db_otp";
   let db;
 
   try {

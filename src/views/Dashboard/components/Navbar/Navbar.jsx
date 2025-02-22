@@ -151,7 +151,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <img
-        onClick={() => navigate("/landing")}
+        onClick={() => navigate("/home")}
         src={facturaLogo}
         alt="FacturaGPT"
         className={styles.logo}
@@ -166,7 +166,7 @@ const Navbar = () => {
       >
         <div className={styles.navFlex}>
           <div className={styles.nav}>
-            {["landing", "soluciones", "contact", "pricing"].map(
+            {["home", "soluciones", "contact", "pricing"].map(
               (link, index) => (
                 <div
                   key={index}

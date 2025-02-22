@@ -1,25 +1,13 @@
 import styles from "./ChatView.module.css";
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import Chat from "../../components/Chat/Chat.jsx";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
-import ImageEmpty from "../../assets/ImageEmpty.svg";
 
 import { v4 as uuidv4 } from "uuid"; // Add this import at the top with other imports
 
 import { useParams, useNavigate } from "react-router-dom";
 
-const company = {
-  email: "coolmail@mail.com",
-  phone: "341-59-15",
-  website: "www.domain.com",
-  address:
-    "Pasaje Barcelona núm. 8, (08130), Santa Perpetua De Mogoda, Barcelona, Cataluña",
-  cnae: "1234",
-};
-
 import React, { useState } from "react";
-// import styles from "./Chat.module.css";
 import arrowUp from "../../assets/arrowUp.svg";
 import facturaGPT from "../../assets/FacturaLogoIconGreen.svg";
 import facturaGPTWhite from "../../assets/FacturaGPTW.svg";
@@ -30,18 +18,16 @@ import askClient from "../../assets/askClient.svg";
 import askAssets from "../../assets/askAssets.svg";
 import askHelp from "../../assets/askHelp.svg";
 import { ReactComponent as DotsOptions } from "../../assets/optionDots.svg";
-import searchMagnify from "../../assets/searchMagnify.svg";
 import pencilSquareIcon from "../../assets/pencilSquareIcon.svg";
 import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon.jsx";
-import KIcon from "../../assets/KIcon.svg";
 import l from "../../assets/lIcon.svg";
-import winIcon from "../../assets/winIcon.svg";
 
 import {
   fetchByMenu,
   fetchByChat,
   sendMessage,
   deleteChat,
+  validateTokenGPT
 } from "@src/actions/chat";
 
 import { clearCurrentChat } from "@src/slices/chatSlices";
@@ -80,6 +66,7 @@ const actions = [
     text: "Pide Ayuda",
   },
 ];
+
 const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -246,6 +233,27 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
 
   useSwipe(setSwiped);
 
+
+  const [selectedOption, setSelectedOption] = useState(false);
+
+  useEffect(() => {
+    // Manejador para cerrar el menú cuando se hace clic fuera
+    const handleClickOutside = (event) => {
+      if (selectedOption && !event.target.closest(`.${styles.menuOptions}`)) {
+        setSelectedOption(null);
+      }
+    };
+
+    // Agregar el event listener
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Limpiar el event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [selectedOption]);
+
+
   return (
     <div
       className={styles.chatMenu}
@@ -257,6 +265,7 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
     >
       <div
         className={`${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} ${swiped ? "" : styles.offAsideBar}`}
+
       >
         {/* {isMobile && (
           <div className={styles.showMobile}>
@@ -305,24 +314,21 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
                         {chat.name}
                         <div className={styles.chatMenuSettings}>
                           <button
-                            onClick={() =>
-                              setIsOpenMenu({
-                                ...isOpenMenu,
-                                [chat.id]: !isOpenMenu[chat.id],
-                              })
-                            }
+                            // onClick={() =>
+                            //   setIsOpenMenu({
+                            //     ...isOpenMenu,
+                            //     [chat.id]: !isOpenMenu[chat.id],
+                            //   })
+                            // }
+                            onClick={(e) => setSelectedOption({
+                              chat,
+                              x: e.clientX,
+                              y: e.clientY
+                            })}
                           >
                             <DotsOptions className={styles.icon} />
                           </button>
-                          <ul
-                            className={isOpenMenu[chat.id] ? styles.active : ""}
-                          >
-                            <li onClick={() => handleDeleteMessage(chat.id)}>
-                              Eliminar chat
-                            </li>
-                            <li>Cambiar nombre</li>
-                            <li>Fijar chat</li>
-                          </ul>
+
                         </div>
                       </li>
                     );
@@ -332,12 +338,29 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
             );
           })}
         </div>
+        {selectedOption && (
+          <ul
+            className={styles.menuOptions}
+            style={{
+              top: selectedOption.y,
+              left: selectedOption.x,
+            }}
+          // className={isOpenMenu[chat.id] ? styles.active : ""}
+          // className={true ? styles.active : ""}
+          >
+            <li onClick={() => handleDeleteMessage(selectedOption.id)}>
+              Eliminar chat
+            </li>
+            <li>Cambiar nombre</li>
+            <li>Fijar chat</li>
+          </ul>
+        )}
       </div>
     </div>
   );
 };
 
-const ChatBody = ({ handleChat, messages, inputValue, setInputValue }) => {
+const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenValid }) => {
   // const { id } = useParams()
 
   // const navigate = useNavigate();
@@ -460,21 +483,27 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue }) => {
                 handleChat(inputValue);
               }
             }}
-            // onKeyPress={(e) => {
-            //   if (e.key === "Enter" && !e.shiftKey) {
-            //     e.preventDefault(); // Evita el salto de línea
-            //     // handleSendMessage();
-            //     // handleThinkMessage();
-            //   }
-            // }}
+          // onKeyPress={(e) => {
+          //   if (e.key === "Enter" && !e.shiftKey) {
+          //     e.preventDefault(); // Evita el salto de línea
+          //     // handleSendMessage();
+          //     // handleThinkMessage();
+          //   }
+          // }}
           />
           <div className={styles.img} onClick={() => handleChat(inputValue)}>
             <img src={arrowUp} alt="Icon" />
           </div>
         </div>
-        <p className={styles.errorAlert}>
-          FacturaGPT puede cometer errores. Revise la información importante.
-        </p>
+        {isTokenValid ? (
+          <p className={styles.errorAlert}>
+            FacturaGPT puede cometer errores. Revise la información importante.
+          </p>
+        ) : (
+          <p className={styles.errorAlert}>
+            Introduce un token válido para usar FacturaGPT.
+          </p>
+        )}
       </div>
     </div>
   );
@@ -523,8 +552,24 @@ const ChatView = () => {
     // } else {
     // }
     // dispatch(fetchByChat({ chatId: id }));
+
+
   }, [id, dispatch]);
 
+
+  const [isTokenValid, setIsTokenValid] = useState(false);
+  
+  useEffect(() => {
+    const fn = async () => {
+      const response = await dispatch(validateTokenGPT());
+      console.log('response validateTokenGPT', response)
+      setIsTokenValid(response.payload.success);
+    }
+
+    // if (!isTokenValid) {
+      fn();
+    // }
+  }, []);
   // useEffect(() => {
   //   console.log("id", id);
   //   if (!id) {
@@ -740,7 +785,7 @@ const ChatView = () => {
               height: "100%",
               width: "8px",
               cursor: "ew-resize",
-              background: "white",
+              // background: "white",
             }}
             onMouseDown={handleMouseDown}
           ></div>
@@ -750,6 +795,7 @@ const ChatView = () => {
           messages={messages}
           inputValue={inputValue}
           setInputValue={setInputValue}
+          isTokenValid={isTokenValid}
         />
       </div>
     </PanelTemplate>

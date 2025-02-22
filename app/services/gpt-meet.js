@@ -162,9 +162,28 @@ const meetGPT = async (res, prompt) => {
   }
 
 
+  const validateToken = async (token) => {
+    try{
+
+      const response = await axios.get("https://api.openai.com/v1/models", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+  
+      console.log('response', response.data)
+      return true
+    } catch (e) {
+      // console.log('error', e)
+      return false
+    }
+  }
+
 
 module.exports = {
-    meetGPT
+    meetGPT,
+    validateToken
 }
 
 
