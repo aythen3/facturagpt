@@ -1,13 +1,14 @@
 const { connectDB } = require('./utils');
-const { meetGPT } = require('../services/gpt-meet');
-
+const { meetGPT, validateToken } = require('../services/gpt-meet');
+const { updateAccount } = require('../services/user');
 
 const getChatListController = async (req, res) => {
   const user = req.user;
   const search = req.query.search || '';
 
+  console.log('user getChatListController', user)
 
-  const id = user.userId.split('_').pop();
+  const id = user._id.split('_').pop();
   console.log("user", user, id);
   // console.log("search", search);
   // return res.json({ success: true, id });
@@ -76,7 +77,7 @@ const getChatMessagesController = async (req, res) => {
   console.log("chatId", chatId);
   console.log("user", user);
 
-  const id = user.userId.split('_').pop();
+  const id = user._id.split('_').pop();
 
   try {
     const dbName = `db_chat_${id}`;
@@ -159,8 +160,42 @@ const deleteChatController = async (req, res) => {
 
 
 
+const validateTokenGPT = async (req, res) => {
+  const user = req?.user;
+  // const { tokenGPT } = req.body;
 
-// ... existing code ...
+  // console.log('user validate token', res) 
+
+  if(!res?.send) {
+    // return res.send({
+    //   success: false,
+    //   error: 'Token GPT no encontrado'
+    // });
+    return true
+  }
+
+  if (!user) {
+    return res.send({
+      success: false,
+      error: 'Token GPT no encontrado'
+    });
+  }
+
+  console.log('user', user)
+
+  const response = await validateToken(user.tokenGPT);
+  // const response = await validateToken('1234');
+
+
+  console.log('validateTokenGPT', response)
+
+  return res.send({
+    success: response,
+    message: 'Token GPT validado correctamente'
+  });
+}
+
+
 
 const sendMessageController = async (req, res) => {
   // res.setHeader("Content-Type", "text/event-stream");
@@ -172,12 +207,25 @@ const sendMessageController = async (req, res) => {
   const { chatId } = req.params;
   const { text } = req.body;
 
+  const skProjRegex = /^sk-proj-[A-Za-z0-9-_]{100,}$/;
+  if (skProjRegex.test(text)) {
+    console.log('es un token de gpt')
+
+    const userData = {
+      id: user.id,
+      tokenGPT: text
+    }
+
+    console.log('userData', userData)
+
+    const response = await updateAccount(userData);
+    console.log('response data', response)
+  }
 
 
+  // const result_meet1 = await meetGPT(res, text);
 
-
-
-  // const result_meet = await meetGPT(res, text);
+  // console.log("result_meet1", result_meet1);
   const result_meet = {
     success: true,
     value: 'Hola, ¿cómo estás?'
@@ -185,7 +233,7 @@ const sendMessageController = async (req, res) => {
 
   console.log('result_meett', result_meet)
   console.log("user", user);
-  const id = user.userId.split('_').pop();
+  const id = user._id.split('_').pop();
   console.log("chatId", chatId);
   console.log("text", text);
 
@@ -283,5 +331,6 @@ module.exports = {
   getChatListController,
   getChatMessagesController,
   deleteChatController,
-  sendMessageController
+  sendMessageController,
+  validateTokenGPT
 };

@@ -417,8 +417,8 @@ input:checked + .switchLabel:after {
   border-radius: 7px;
   width: 100%;
   max-width: 100%;
-  min-width: 170px;
-  max-width: 170px;
+  /* min-width: 170px; */
+  /* max-width: 170px; */
   padding: 10px;
   gap: 5px;
   margin-top: 5px;

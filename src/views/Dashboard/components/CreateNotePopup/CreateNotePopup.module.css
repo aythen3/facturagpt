@@ -15,6 +15,7 @@
   background-color: #f5f5f5;
   z-index: 99;
   width: 70%;
+  border-radius: 8px;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
