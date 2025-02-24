@@ -2,6 +2,9 @@ const { default: axios } = require("axios");
 const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
+const { connectDB } = require('../controllers/utils')
+
+
 const createAutomation = async ({ userId, email, automationData }) => {
   console.log("Data received in createAutomation:", {
     userId,
@@ -9,30 +12,35 @@ const createAutomation = async ({ userId, email, automationData }) => {
     automationData,
   });
 
-  const dbAutomationsName = "db_automations";
-  const dbAccountsName = "db_emailmanager_accounts";
-  let dbAutomations, dbAccounts;
+  // const dbAutomationsName = "db_automations";
+  // const dbAccountsName = "db_accounts";
+  // let dbAutomations, dbAccounts;
+
+  // try {
+  //   const dbs = await nano.db.list();
+
+  //   if (!dbs.includes(dbAutomationsName)) {
+  //     console.log(`Database ${dbAutomationsName} does not exist. Creating...`);
+  //     await nano.db.create(dbAutomationsName);
+  //   }
+  //   dbAutomations = nano.use(dbAutomationsName);
+
+  //   if (!dbs.includes(dbAccountsName)) {
+  //     console.log(`Database ${dbAccountsName} does not exist. Creating...`);
+  //     await nano.db.create(dbAccountsName);
+  //   }
+  //   dbAccounts = nano.use(dbAccountsName);
+  // } catch (error) {
+  //   console.error("Error checking/creating databases:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
   try {
-    const dbs = await nano.db.list();
 
-    if (!dbs.includes(dbAutomationsName)) {
-      console.log(`Database ${dbAutomationsName} does not exist. Creating...`);
-      await nano.db.create(dbAutomationsName);
-    }
-    dbAutomations = nano.use(dbAutomationsName);
 
-    if (!dbs.includes(dbAccountsName)) {
-      console.log(`Database ${dbAccountsName} does not exist. Creating...`);
-      await nano.db.create(dbAccountsName);
-    }
-    dbAccounts = nano.use(dbAccountsName);
-  } catch (error) {
-    console.error("Error checking/creating databases:", error);
-    throw new Error("Database initialization failed");
-  }
+    const dbAutomations = await connectDB("db_automations");
+    const dbAccounts = await connectDB("db_accounts");
 
-  try {
     const automationId = uuidv4();
     const automationDoc = {
       _id: automationId,
@@ -66,16 +74,17 @@ const createAutomation = async ({ userId, email, automationData }) => {
 
 const getAllUserAutomations = async ({ userId }) => {
 
-  const dbAutomationsName = "db_automations";
-  let dbAutomations;
+  // const dbAutomationsName = "db_automations";
+  // let dbAutomations;
 
   try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbAutomationsName)) {
-      console.log(`Database ${dbAutomationsName} does not exist. Creating...`);
-      await nano.db.create(dbAutomationsName);
-    }
-    dbAutomations = nano.use(dbAutomationsName);
+    const dbAutomations = await connectDB("db_automations");
+    // const dbs = await nano.db.list();
+    // if (!dbs.includes(dbAutomationsName)) {
+    //   console.log(`Database ${dbAutomationsName} does not exist. Creating...`);
+    //   await nano.db.create(dbAutomationsName);
+    // }
+    // dbAutomations = nano.use(dbAutomationsName);
 
     const automations = await dbAutomations.find({
       selector: { userId },
@@ -100,11 +109,12 @@ const updateAutomation = async ({ automationId, userId, toUpdate }) => {
     toUpdate
   );
 
-  const dbAutomationsName = "db_automations";
-  let dbAutomations;
+  // const dbAutomationsName = "db_automations";
+  // let dbAutomations;
 
   try {
-    dbAutomations = nano.use(dbAutomationsName);
+    const dbAutomations = await connectDB("db_automations");
+    // dbAutomations = nano.use(dbAutomationsName);
 
     const automationDoc = await dbAutomations.get(automationId);
 
@@ -130,13 +140,15 @@ const updateAutomation = async ({ automationId, userId, toUpdate }) => {
 const deleteAutomation = async ({ automationId, userId }) => {
   console.log("Deleting automation with ID:", automationId);
 
-  const dbAutomationsName = "db_automations";
-  const dbAccountsName = "db_emailmanager_accounts";
-  let dbAutomations, dbAccounts;
+  // const dbAutomationsName = "db_automations";
+  // const dbAccountsName = "db_emailmanager_accounts";
+  // let dbAutomations, dbAccounts;
 
   try {
-    dbAutomations = nano.use(dbAutomationsName);
-    dbAccounts = nano.use(dbAccountsName);
+    const dbAutomations = await connectDB("db_automations");
+    const dbAccounts = await connectDB("db_accounts");
+    // dbAutomations = nano.use(dbAutomationsName);
+    // dbAccounts = nano.use(dbAccountsName);
 
     const automationDoc = await dbAutomations.get(automationId);
 

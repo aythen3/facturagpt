@@ -224,23 +224,24 @@ const updateAccount = async (data) => {
 const updateUserPassword = async ({ email, newPassword }) => {
   console.log("Data received in updateUserPassword service:", { email });
 
-  const dbName = "db_accounts";
-  let db;
+  // const dbName = "db_accounts";
+  // let db;
+
+  // try {
+  //   // Ensure the database exists
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist.`);
+  //     return { success: false, message: "Database does not exist." };
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error checking database:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
   try {
-    // Ensure the database exists
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error checking database:", error);
-    throw new Error("Database initialization failed");
-  }
-
-  try {
+    const db = await connectDB("db_accounts");
     // Fetch the user document by email
     const queryResponse = await db.find({
       selector: { email },
@@ -425,24 +426,25 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
 };
 
 const getAllClientsService = async () => {
-  const mainDbName = "db_clients";
-  let mainDb;
+  // const mainDbName = "db_clients";
+  // let mainDb;
+
+  // try {
+  //   const dbs = await nano.db.list();
+
+  //   // Ensure the main database exists
+  //   if (!dbs.includes(mainDbName)) {
+  //     console.log(`Database ${mainDbName} does not exist. Creating...`);
+  //     await nano.db.create(mainDbName);
+  //   }
+  //   mainDb = nano.use(mainDbName);
+  // } catch (error) {
+  //   console.error("Error accessing or creating the main database:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
   try {
-    const dbs = await nano.db.list();
-
-    // Ensure the main database exists
-    if (!dbs.includes(mainDbName)) {
-      console.log(`Database ${mainDbName} does not exist. Creating...`);
-      await nano.db.create(mainDbName);
-    }
-    mainDb = nano.use(mainDbName);
-  } catch (error) {
-    console.error("Error accessing or creating the main database:", error);
-    throw new Error("Database initialization failed");
-  }
-
-  try {
+    const mainDb = await connectDB("db_clients");
     // Fetch all clients from the main database
     const clients = await mainDb.list({ include_docs: true });
     const clientsWithDetails = await Promise.all(
@@ -564,22 +566,23 @@ const addNewClientService = async ({ clientData }) => {
 };
 
 const deleteClientService = async ({ clientId }) => {
-  const dbName = "db_clients";
-  let db;
+  // const dbName = "db_clients";
+  // let db;
+
+  // try {
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist.`);
+  //     return { success: false, message: "Database does not exist." };
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error accessing database:", error);
+  //   throw new Error("Database access failed");
+  // }
 
   try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "Database does not exist." };
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
-  }
-
-  try {
+    const db = await connectDB("db_clients");
     const clientDoc = await db.get(clientId);
 
     if (!clientDoc) {
@@ -608,23 +611,24 @@ const deleteClientService = async ({ clientId }) => {
 };
 
 const generateAndSendOtpService = async ({ nombre, email, language }) => {
-  const dbName = "db_otp";
-  let db;
-  console.log(nombre);
-  try {
-    // Verificar y crear la base de datos si no existe
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist. Creating...`);
-      await nano.db.create(dbName);
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error accessing or creating database:", error);
-    throw new Error("Database initialization failed");
-  }
+  // const dbName = "db_otp";
+  // let db;
+  // console.log(nombre);
+  // try {
+  //   // Verificar y crear la base de datos si no existe
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist. Creating...`);
+  //     await nano.db.create(dbName);
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error accessing or creating database:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
   try {
+    const db = await connectDB("db_otp");
     // Generar OTP y su metadata
     const otp = String(Math.floor(100000 + Math.random() * 900000));
 
@@ -657,22 +661,23 @@ const generateAndSendOtpService = async ({ nombre, email, language }) => {
 const verifyOTPService = async ({ email, otp }) => {
   console.log("Data received in verifyOTPService:", { email, otp });
 
-  const dbName = "db_otp";
-  let db;
+  // const dbName = "db_otp";
+  // let db;
+
+  // try {
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist.`);
+  //     return { success: false, message: "OTP database does not exist." };
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error accessing database:", error);
+  //   throw new Error("Database access failed");
+  // }
 
   try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
-      return { success: false, message: "OTP database does not exist." };
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
-  }
-
-  try {
+    const db = await connectDB("db_otp");
     const queryResponse = await db.find({
       selector: { email, otp },
     });

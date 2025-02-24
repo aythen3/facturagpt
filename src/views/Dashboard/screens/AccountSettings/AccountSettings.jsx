@@ -1,29 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./AccountSettings.module.css";
-import userAdd from "../../assets/userPlus.svg";
 import openEmail from "../../assets/openEmail.svg";
 import circuit from "../../assets/circuit.svg";
 import connection from "../../assets/connection.svg";
 import passwordIcon from "../../assets/password.svg";
 import paperSearch from "../../assets/paperSearch.svg";
 import shield from "../../assets/shield.svg";
-import eye from "../../assets/eye.svg";
-import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-// import { addNewClient, createAccount } from "../../../../actions/emailManager";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { ReactComponent as ArrowGray } from "../../assets/arrowDownGray.svg";
 import { ReactComponent as ArrowLeft } from "../../assets/ArrowLeftWhite.svg";
 import lock from "../../assets/greenLock.svg";
-import StripeModal from "./StripeModal";
-import StripePaymentForm from "./StripePaymentForm";
-import Payment from "./StripeComponents/Payment";
 import SetupPayment from "./StripeComponents/SetupPayment";
 import { getNextPaymentDate } from "../../utils/constants";
 import { useTranslation } from "react-i18next";
 import Button from "../../components/Button/Button";
+
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
@@ -31,7 +25,11 @@ const stripePromise = loadStripe(
 import {
   updateAccount,
   deleteAccount
-} from "../../../../actions/user";
+} from "@src/actions/user";
+
+import {
+  getAllUserAutomations
+} from "@src/actions/automations";
 
 
 const AccountSettings = ({
@@ -242,9 +240,24 @@ const AccountSettings = ({
   }, [paymentId]);
 
 
+  const [automations, setAutomations] = useState([])
+
+  const fnAutomations = async () => {
+    const resp = await dispatch(getAllUserAutomations({ userId: showAccountSettings.id }))
+    console.log('automations', resp)
+    if (resp.payload) {
+      setAutomations(resp.payload)
+    }
+  }
+
+
   useEffect(() => {
     console.log('!!!! showUserSettings', showAccountSettings)
     if (showAccountSettings) {
+
+      fnAutomations()
+      // console.log('automations', automations)
+
       // dispatch()
       setFieldValues({
         companyName: showAccountSettings.companyName || "",
@@ -264,8 +277,8 @@ const AccountSettings = ({
       setPort(showAccountSettings.port || "")
       setTokenUser(showAccountSettings.tokenUser || "")
       setTokenUserPassword(showAccountSettings.tokenUserPassword || "")
-      
-      if(showAccountSettings.emailQueries && showAccountSettings.emailQueries.length > 0){  
+
+      if (showAccountSettings.emailQueries && showAccountSettings.emailQueries.length > 0) {
         setFirstTag(showAccountSettings.emailQueries[0] || "")
         setSecondTag(showAccountSettings.emailQueries[1] || "")
         setThirdTag(showAccountSettings.emailQueries[2] || "")
@@ -537,6 +550,25 @@ const AccountSettings = ({
                   </div>
                 </div>
               </div>
+              {/* Automations Section */}
+
+              {automations.length > 0 && (
+                <div className={styles.automationsContainer}>
+                  <h2 className={styles.title}>Automations</h2>
+                  <div className={styles.automationsWrapper}>
+                    {automations.map((automation, index) => (
+                      <div className={styles.automationItem} key={index}>
+                        <h3>Automation {index + 1}</h3>
+                        <p>Description of automation {index + 1}</p>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+
             </div>
           </div>
         </div>
