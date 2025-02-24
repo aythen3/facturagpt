@@ -172,7 +172,7 @@ const meetGPT = async (res, prompt) => {
       });
   
   
-      console.log('response', response.data)
+      // console.log('response', response.data)
       return true
     } catch (e) {
       // console.log('error', e)

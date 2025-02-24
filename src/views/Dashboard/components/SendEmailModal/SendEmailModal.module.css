@@ -102,6 +102,7 @@
 }
 
 .addFileEmail {
+  margin-top: 10px;
   display: flex;
   padding: 0 20px;
   height: fit-content;

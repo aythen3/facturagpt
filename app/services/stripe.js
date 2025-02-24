@@ -1,21 +1,22 @@
 const getPaymentMethodService = async ({ clientId }) => {
-  const dbName = "db_emailmanager_clients";
-  let db;
+  // const dbName = "db_emailmanager_clients";
+  // let db;
+
+  // try {
+  //   // Ensure the database exists
+  //   const dbs = await nano.db.list();
+  //   if (!dbs.includes(dbName)) {
+  //     console.log(`Database ${dbName} does not exist.`);
+  //     throw new Error("Database does not exist");
+  //   }
+  //   db = nano.use(dbName);
+  // } catch (error) {
+  //   console.error("Error accessing database:", error);
+  //   throw new Error("Database access failed");
+  // }
 
   try {
-    // Ensure the database exists
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
-      throw new Error("Database does not exist");
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
-  }
-
-  try {
+    const db = await connectDB("db_clients");
     // Retrieve the client document by clientId
     const clientDoc = await db.get(clientId);
 
@@ -53,10 +54,10 @@ const getPaymentMethodService = async ({ clientId }) => {
 };
 
 const updateClientService = async ({ clientId, toUpdate }) => {
-  const mainDbName = "db_emailmanager_clients";
+  // const mainDbName = "db_emailmanager_clients";
   const clientUid = clientId.split("_")[2];
-  const processedEmailsDbName = `db_${clientUid}_processedemails`;
-  let mainDb, processedEmailsDb;
+  // const processedEmailsDbName = `db_${clientUid}_processedemails`;
+  // let mainDb, processedEmailsDb;
 
   // Utility function for sleep
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -90,29 +91,35 @@ const updateClientService = async ({ clientId, toUpdate }) => {
     }
   };
 
-  try {
-    // Initialize databases
-    const dbs = await withRetry(() => nano.db.list(), 5, 300);
-    if (!dbs.includes(mainDbName)) {
-      throw new Error(`Main database ${mainDbName} does not exist.`);
-    }
-    mainDb = nano.use(mainDbName);
+  // try {
+  //   // Initialize databases
+  //   const dbs = await withRetry(() => nano.db.list(), 5, 300);
+  //   if (!dbs.includes(mainDbName)) {
+  //     throw new Error(`Main database ${mainDbName} does not exist.`);
+  //   }
+  //   mainDb = nano.use(mainDbName);
 
-    if (!dbs.includes(processedEmailsDbName)) {
-      console.log(
-        `Database ${processedEmailsDbName} does not exist. Creating...`
-      );
-      await nano.db.create(processedEmailsDbName);
-    }
-    processedEmailsDb = nano.use(processedEmailsDbName);
-  } catch (error) {
-    console.error("Error accessing databases:", error);
-    throw new Error("Database initialization failed");
-  }
+  //   if (!dbs.includes(processedEmailsDbName)) {
+  //     console.log(
+  //       `Database ${processedEmailsDbName} does not exist. Creating...`
+  //     );
+  //     await nano.db.create(processedEmailsDbName);
+  //   }
+  //   processedEmailsDb = nano.use(processedEmailsDbName);
+  // } catch (error) {
+  //   console.error("Error accessing databases:", error);
+  //   throw new Error("Database initialization failed");
+  // }
 
   // Fetch client document from the main database
   let clientDoc;
+
+  const mainDb = await connectDB("db_clients");
+  const processedEmailsDb = await connectDB(`db_${clientUid}_processedemails`);
+
   try {
+
+   
     clientDoc = await withRetry(() => mainDb.get(clientId), 5, 300);
     if (!clientDoc) {
       throw new Error(`No client found with ID: ${clientId}`);
@@ -121,6 +128,7 @@ const updateClientService = async ({ clientId, toUpdate }) => {
     console.error("Error fetching client document:", error);
     throw new Error("Failed to fetch client document");
   }
+
 
   // Update detailedTokenConsumption in the processed emails database first
   if (toUpdate.detailedTokenConsumption) {
