@@ -106,3 +106,31 @@
     background-color: #16c098;
   }
 }
+
+.pricingPageCard {
+  background-color: #10a37f;
+  padding: 10px;
+  color: #ffffff;
+  .cardHeader {
+    background-color: #ffffff3b;
+  }
+  .cardBody {
+    p,
+    span {
+      color: #ffffff !important;
+    }
+  }
+}
+
+.pricingPageCard.selectedCard {
+  background-color: white;
+  .cardHeader {
+    background-color: #10a37f;
+  }
+  .cardBody {
+    p,
+    span {
+      color: #10a37f !important;
+    }
+  }
+}

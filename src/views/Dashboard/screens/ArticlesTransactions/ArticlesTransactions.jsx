@@ -192,12 +192,6 @@ const ArticlesTransactions = () => {
                 style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}
               >
-                <img src={winIcon} alt="kIcon" />
-              </div>
-              <div
-                style={{ marginLeft: "5px" }}
-                className={styles.searchIconsWrappers}
-              >
                 <img src={KIcon} alt="kIcon" />
               </div>
             </>

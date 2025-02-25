@@ -12,6 +12,7 @@ const ModalTemplate = ({
   newContact,
   selectedContact,
   handleGetOneClient,
+  typeTextHeader = "Nuevo",
 }) => {
   return (
     <>
@@ -25,7 +26,9 @@ const ModalTemplate = ({
             <div className={styles.iconContainer} onClick={() => onClick()}>
               <ArrowDown className={styles.icon} />
             </div>
-            <h3>Nuevo {text}</h3>
+            <h3>
+              {typeTextHeader} {text}
+            </h3>
           </div>
           <div className={styles.buttonContainer}>
             {!newContact && (

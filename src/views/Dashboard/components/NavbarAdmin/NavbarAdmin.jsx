@@ -348,6 +348,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
             setShowNewProduct={setShowNewProduct}
             setShowNewBill={setShowNewBill}
             setShowUplaodFile={setShowUplaodFile}
+            setShowLocationModal={setShowLocationModal}
           />
         )}
         {isModalAutomate && (

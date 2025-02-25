@@ -33,11 +33,12 @@ import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
 import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
+import NewContact from "../../components/NewContact/NewContact";
 
 const Transactions = () => {
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
-
+  const [showEditContact, setShowEditContact] = useState(false);
   const [selectedTransactionIds, setSelectedTransactionIds] = useState([]);
 
   const dispatch = useDispatch();
@@ -346,7 +347,7 @@ const Transactions = () => {
         <div className={styles.transacciones}>
           <a
             onClick={() => {
-              navigate("/allproducts");
+              navigate("/admin/products");
               dispatch(setTransaction(row));
             }}
             href="#"
@@ -493,7 +494,7 @@ const Transactions = () => {
             {
               label: <>Editar Contacto</>,
               type: "button",
-              onClick: () => console.log("Crear nuevo activo"),
+              onClick: () => setShowEditContact(true),
             },
             {
               label: (
@@ -523,12 +524,6 @@ const Transactions = () => {
           }
           searchChildren={
             <>
-              <div
-                style={{ marginLeft: "5px" }}
-                className={styles.searchIconsWrappers}
-              >
-                <img src={winIcon} alt="kIcon" />
-              </div>
               <div
                 style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}
@@ -623,6 +618,12 @@ const Transactions = () => {
         )}
       </div>
       <div>
+        {showEditContact && (
+          <NewContact
+            setShowNewContact={setShowEditContact}
+            typeTextHeader={"Editar"}
+          />
+        )}
         {showNewClient && <NewBIll setShowNewBill={setShowNewClient} />}
       </div>
     </PanelTemplate>
