@@ -21,6 +21,7 @@ import { ReactComponent as NotIncluded } from "../../assets/notIncludedIcon.svg"
 import { ReactComponent as CheckCircleFeatures } from "../../assets/checkCircleFeatures.svg";
 import { ReactComponent as ArrowDiagonalGreen } from "../../assets/diagonalArrowGreen.svg";
 import { ReactComponent as ArrowDiagonalWhite } from "../../assets/diagonalArrowWhite.svg";
+import BillingSlider from "../../components/BillingSlider/BillingSlider";
 const Pricing = () => {
   const navigate = useNavigate();
   const [sliderValue, setSliderValue] = useState(10);
@@ -284,65 +285,52 @@ const Pricing = () => {
             </div>
           </div>
 
-          {/* <p className={styles.currentPlan}>{currentPlan.documents}</p> */}
-          <p className={styles.currentPlan}>
-            {sliderValue.toLocaleString("es-ES")} Documentos
-          </p>
-
-          <input
-            type="range"
-            min="0"
-            max="100000"
-            value={sliderValue}
-            onChange={handleSliderChange}
-            className={styles.slider}
-            style={{
-              background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
-            }}
-          />
-        </div>
-
-        <div className={styles.plansCardsContainer}>
-          <PricingPlanCard
-            key={selectedPlanIndex}
-            title={selectedPlan.title}
-            price={selectedPlan.price}
-            priceTag={selectedPlan.priceTag}
-            documentPrices={selectedPlan.documentPrices}
-            features={selectedPlan.features}
-            isSelected={true}
-            sliderValue={sliderValue}
-          />
-        </div>
-
-        {/* <span className={styles.microText}>
+          {/* <span className={styles.microText}>
           Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela
           en cualquier momento.
         </span> */}
-      </div>
-      <SubtitleTemplate
-        stylesProp={{ marginTop: "80px" }}
-        text={
-          "Las empresas tardan entre 2 y 5 minutos en gestionar una factura. Con FacturaGPT, lo haces en segundos..."
-        }
-      />
+        </div>
+        <SubtitleTemplate
+          stylesProp={{ marginTop: "80px" }}
+          text={
+            "Las empresas tardan entre 2 y 5 minutos en gestionar una factura. Con FacturaGPT, lo haces en segundos..."
+          }
+        />
 
-      <div className={styles.parent}>
-        {cardsData.map((card, index) => (
-          <div className={styles[`div${index + 1}`]}>
-            <PricingCard
-              key={index}
-              index={index}
-              title={card.title || "Hasta 20 Documentos"}
-              price={card.price || "FREE"}
-              setSelectedCard={setSelectedCard}
-              selectedCard={selectedCard}
-              buyBtn={false}
-              compareSelected={true}
-            />
-          </div>
-        ))}
+        <div className={styles.parent}>
+          {cardsData.map((card, index) => (
+            <div className={styles[`div${index + 1}`]}>
+              <PricingCard
+                key={index}
+                index={index}
+                title={card.title || "Hasta 20 Documentos"}
+                price={card.price || "FREE"}
+                setSelectedCard={setSelectedCard}
+                selectedCard={selectedCard}
+                buyBtn={false}
+                compareSelected={true}
+                customStyles={true}
+              />
+            </div>
+          ))}
+        </div>
+        {/* <input
+          type="range"
+          min="0"
+          max="100000"
+          value={sliderValue}
+          onChange={handleSliderChange}
+          className={styles.slider}
+          style={{
+            background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
+          }}
+        /> */}
+        <BillingSlider
+          setSliderValue={setSliderValue}
+          sliderValue={sliderValue}
+        />
       </div>
+
       <div className={styles.tableBenefitsContainer}>
         <h2 className={styles.plansTitle}>
           Comparación de las características de los planes

@@ -20,7 +20,7 @@ export default function FloatingMenu({
   openModalAutomate,
   isOpen,
   setIsOpen,
-  showLocationModal,
+  setShowLocationModal,
   setShowCreateFolder,
   showNewTagModal,
   setShowNewTagModal,
@@ -96,7 +96,7 @@ export default function FloatingMenu({
       icon: <PaperClipWhite />,
       text: "Subir Documento",
       action: () => {
-        setShowUplaodFile(true);
+        setShowLocationModal(true);
         setIsOpen(false);
       },
     },

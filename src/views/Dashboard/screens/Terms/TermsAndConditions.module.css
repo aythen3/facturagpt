@@ -10,6 +10,51 @@
 
   article {
     width: 70%;
+    h2,
+    span {
+      margin: 0 auto;
+    }
+    p {
+      margin: 5px;
+      color: #676767;
+    }
+
+    h2 {
+      color: #18181b;
+      font-size: 44px;
+      font-family: Inter;
+      font-weight: 500;
+      line-height: 52.8px;
+      word-wrap: break-word;
+    }
+    span {
+      color: #676767;
+      font-size: 20px;
+      font-family: Inter;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 33px;
+      word-wrap: break-word;
+    }
+    section {
+      min-height: fit-content;
+      align-items: start;
+      gap: 0px;
+      margin: 20px 0;
+      h3,
+      h2,
+      ul,
+      p {
+        margin: 5px;
+        color: #676767;
+      }
+      a {
+        color: #10a37f;
+      }
+      li {
+        list-style: disc;
+      }
+    }
   }
 }
 @media (max-width: 768px) {

@@ -39,6 +39,7 @@ import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
+import OptionsPopup from "../../components/OptionsPopup/OptionsPopup";
 
 const AllProducts = () => {
   const { t } = useTranslation("clients");
@@ -103,7 +104,6 @@ const AllProducts = () => {
     "Precio máximo",
     "Precio mínimo",
     "Precio medio",
-    "",
     "",
   ];
 
@@ -294,30 +294,54 @@ const AllProducts = () => {
       <td>{row.minPrice}</td>
       <td>{row.averagePrice}</td>
 
-      <td className={styles.actions}>
+      {/* <td className={styles.actions}>
         <div className={styles.transacciones}>
           <a href="#">Ver</a>
         </div>
-      </td>
+      </td> */}
       <td>
         <div className={styles.edit}>
-          <a href="#">Editar</a>
-          <div onClick={() => handleActions(index, row)}>
+          {/* <a href="#">Editar</a> */}
+          <div
+            onClick={() => handleActions(index, row)}
+            className={styles.dotsOptions}
+          >
             <img src={optionDots} alt="options" />
           </div>
           {selectedRowIndex === index && (
-            <ul className={styles.content_menu_actions}>
-              <li
-                onClick={() => {
-                  handleDelete(row.productRef);
-                  setSelectedRowIndex(null);
-                }}
-                className={styles.item_menu_actions}
-              >
-                Eliminar
-              </li>
-            </ul>
+            <OptionsPopup
+              options={[
+                {
+                  label: "Ver Parámetros  (1828)",
+                },
+                {
+                  label: "Ver Transacciones (1828)",
+                },
+                {
+                  label: "Eliminar",
+                  onClick: () => {
+                    handleDelete(row.productRef);
+                    setSelectedRowIndex(null);
+                  },
+                },
+                {
+                  label: "Editar",
+                },
+                // Puedes agregar más opciones aquí
+              ]}
+            />
           )}
+          {/* <ul className={styles.content_menu_actions}> */}
+          {/* //   <li
+            //     onClick={() => {
+            //       handleDelete(row.productRef);
+            //       setSelectedRowIndex(null);
+            //     }}
+            //     className={styles.item_menu_actions}
+            //   >
+            //     Eliminar
+            //   </li>
+            // </ul> */}
         </div>
       </td>
     </tr>
@@ -378,12 +402,6 @@ const AllProducts = () => {
           }
           searchChildren={
             <>
-              <div
-                style={{ marginLeft: "5px" }}
-                className={styles.searchIconsWrappers}
-              >
-                <img src={winIcon} alt="kIcon" />
-              </div>
               <div
                 style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}

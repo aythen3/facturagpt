@@ -32,7 +32,7 @@ const TagsLanding = () => {
     </>,
     <>
       <img src={ManagePartner} alt="" />
-      Gestiona Socios, Clientes y Proveedores
+      Gestiona Contactos, Clientes y Proveedores
     </>,
   ];
   const tags2 = [

@@ -713,12 +713,12 @@ const Clients = () => {
           }}
           searchChildren={
             <>
-              <div
+              {/* <div
                 style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}
               >
                 <img src={winIcon} alt="kIcon" />
-              </div>
+              </div> */}
               <div
                 style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}

@@ -618,3 +618,508 @@ input[type="checkbox"] {
 .typeClientDisabled {
   background-color: transparent;
 }
+
+.newClientContainer {
+  /* position: fixed; */
+  background-color: white;
+  padding-bottom: 20px;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1); */
+  height: 80vh;
+  width: 80%;
+  /* overflow-y: scroll; */
+  border-radius: 10px;
+  /* -webkit-transform: translate(-50%, -50%) scale(1);
+  -moz-transform: translate(-50%, -50%) scale(1);
+  -ms-transform: translate(-50%, -50%) scale(1);
+  -o-transform: translate(-50%, -50%) scale(1); */
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  animation: scaleUp 300ms ease-out forwards;
+  -webkit-animation: scaleUp 300ms ease-out forwards;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .newClientForm {
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
+    overflow: scroll;
+    padding-bottom: 100px;
+    box-sizing: border-box;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .containerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 30px;
+    border-bottom: 1px solid #ebebeb;
+    h3 {
+      color: #222222;
+    }
+    span {
+      background-color: #ededed;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
+.containerNewClientForm {
+  background-color: white;
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.typeClient {
+  display: flex;
+  background-color: #f3f3f3;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  padding: 6px;
+  gap: 10px;
+  width: 300px;
+  button {
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    flex: 1;
+    background-color: transparent;
+  }
+}
+
+.typeClientActivate {
+  button {
+    background-color: transparent;
+    cursor: pointer;
+    color: #999999;
+  }
+  .selected {
+    background-color: white;
+    box-shadow: 0px 3px 8px rgb(172, 172, 172);
+    color: black;
+  }
+}
+
+.typeClientDisabled {
+  background-color: transparent;
+}
+.button {
+  cursor: pointer;
+  background-color: transparent;
+  text-decoration: underline;
+  font-weight: 600;
+  color: #18181b;
+  /* color: red; */
+  font-size: 14px;
+}
+.newClientForm {
+  label {
+    border-bottom: 1px solid #11a3812c;
+    padding: 10px 0;
+    p {
+      color: #222222;
+      font-weight: 400;
+    }
+  }
+  .detailsBill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .optionsDetailsBill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: end;
+    }
+  }
+  .billInfoInputs {
+    display: flex;
+    flex-direction: column;
+    > div {
+      display: flex;
+      flex: 1;
+      gap: 10px;
+      box-sizing: border-box;
+      .info {
+        width: 100%;
+      }
+    }
+  }
+  .infoBillContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .infoBill {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+    span {
+      color: #717171;
+    }
+    .infoBillContainer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      .info {
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+    .info {
+      display: flex;
+      width: 100%;
+      span {
+        width: fit-content;
+        color: #717171;
+      }
+    }
+    .button {
+      width: fit-content;
+      background-color: transparent;
+      outline: none;
+      border: none;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0;
+    }
+  }
+
+  .info1 {
+    margin-top: 20px;
+  }
+  .info {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      color: #717171;
+      font-weight: bold;
+    }
+  }
+  .billInfoInputs .info {
+    flex-direction: column;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  .row {
+    display: flex;
+    gap: 10px;
+    .info {
+      flex: 1;
+    }
+  }
+
+  button[disabled],
+  input[disabled],
+  select[disabled],
+  option[disabled],
+  textarea[disabled] {
+    background-color: transparent;
+  }
+
+  button,
+  input,
+  select,
+  option,
+  textarea {
+    border: none;
+    outline: none;
+    background-color: #f4f4f4;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  button::placeholder,
+  input::placeholder,
+  select::placeholder,
+  option::placeholder,
+  textarea::placeholder {
+    color: #757575;
+  }
+
+  input {
+    width: 100%;
+
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
+  input[type="checkbox"] {
+    width: fit-content;
+  }
+  .squareContainer {
+    display: flex;
+
+    .square {
+      background-color: #f4f4f4;
+      border: 1px solid #dfdfdf;
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      gap: 10px;
+      padding-left: 10px;
+      span {
+        color: #828282;
+        font-weight: bold;
+      }
+      p {
+        margin: 0;
+        color: black;
+        font-weight: 600;
+      }
+    }
+    .square.arrow {
+      align-items: center;
+      flex: 1;
+      padding: 0;
+      .icon {
+        height: 20px;
+        width: 20px;
+      }
+    }
+    .accountNumber {
+      flex: 3;
+    }
+  }
+  .payMethodContainer {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    border: 1px solid #11a3812c;
+    color: #1e0045;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    span {
+      font-weight: 600;
+    }
+  }
+
+  .payInfo {
+    display: flex;
+    gap: 10px;
+  }
+
+  .defaultBank {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 20px;
+    gap: 30px;
+    div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    p {
+      margin: 0;
+      color: #2ebc89;
+    }
+    input {
+      width: fit-content;
+    }
+  }
+  .delete {
+    background-color: #dc3545;
+    height: 20px;
+    min-width: 20px;
+    max-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    cursor: pointer;
+    .icon {
+      height: 13px;
+      width: 13px;
+    }
+  }
+
+  .addParameter {
+    width: 100%;
+    background-color: #fafafa;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .parametersCounter {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    .icon {
+      height: 10px;
+      width: 10px;
+      -webkit-transition: all 300ms;
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+    }
+    .rotated {
+      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+    }
+  }
+  .parametersHeader {
+    display: flex;
+    justify-content: space-between;
+    p {
+      color: #92959858;
+      margin: 0;
+    }
+    .button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+  .parameter {
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #11a3812c;
+    div {
+      flex: 1;
+    }
+  }
+  .parametersContainer {
+    transition: all 300ms;
+    -webkit-transition: all 300ms;
+    -moz-transition: all 300ms;
+    -ms-transition: all 300ms;
+    -o-transition: all 300ms;
+    overflow: hidden;
+    interpolate-size: allow-keywords;
+  }
+}
+.headerPhoneNumer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.unknown {
+  font-size: 14px;
+  font-weight: 400;
+  color: #717171;
+}
+.phoneNumber {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+}
+.buttonPhoneContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.phoneContainerUnknown {
+  display: flex;
+  width: 100%;
+}
+.phoneContainer {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-direction: column;
+  .phoneRow {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .delete {
+    background-color: #dc3545;
+    height: 20px;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    cursor: pointer;
+    .icon {
+      height: 13px;
+      width: 13px;
+    }
+  }
+}
+
+.searchIconsWrappers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #ececf1;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 3px;
+}
