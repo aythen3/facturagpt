@@ -24,10 +24,12 @@
   position: initial;
   left: 0;
 }
+
 .mobileMenu {
   position: absolute;
   width: 100vw;
 }
+
 .offAsideBar {
   left: -100%;
 }
@@ -273,6 +275,7 @@
     ul {
       padding-left: 0px;
       margin: 2px 0px;
+
       li {
         list-style: none;
         padding: 6px 0px;
@@ -299,6 +302,7 @@
 
     .active {
       background-color: #ececf1;
+      padding: 6px 8px;
     }
   }
 }
@@ -350,6 +354,7 @@
   }
 
 }
+
 .chatMenuSettings {
   position: relative;
 
@@ -361,6 +366,7 @@
   }
 
 }
+
 .menuOptions {
   flex-direction: column;
   gap: 10px;

@@ -1,19 +1,4 @@
 const getPaymentMethodService = async ({ clientId }) => {
-  // const dbName = "db_emailmanager_clients";
-  // let db;
-
-  // try {
-  //   // Ensure the database exists
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist.`);
-  //     throw new Error("Database does not exist");
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error accessing database:", error);
-  //   throw new Error("Database access failed");
-  // }
 
   try {
     const db = await connectDB("db_clients");
@@ -21,27 +6,21 @@ const getPaymentMethodService = async ({ clientId }) => {
     const clientDoc = await db.get(clientId);
 
     if (!clientDoc) {
-      console.log(`No client found with ID: ${clientId}`);
       return {
         success: false,
         message: "Client not found",
       };
     }
 
-    // Check if paymentMethodId exists in the client document
     const { paymentMethodId, stripeCustomerId } = clientDoc;
     if (!paymentMethodId) {
-      console.log(`No payment method found for client with ID: ${clientId}`);
       return {
         success: false,
         message: "Payment method not found for this client",
       };
     }
 
-    console.log(
-      `Payment method found for client with ID: ${clientId}`,
-      paymentMethodId
-    );
+
     return {
       success: true,
       paymentMethodId,
@@ -54,12 +33,8 @@ const getPaymentMethodService = async ({ clientId }) => {
 };
 
 const updateClientService = async ({ clientId, toUpdate }) => {
-  // const mainDbName = "db_emailmanager_clients";
   const clientUid = clientId.split("_")[2];
-  // const processedEmailsDbName = `db_${clientUid}_processedemails`;
-  // let mainDb, processedEmailsDb;
 
-  // Utility function for sleep
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const withRetry = async (fn, maxRetries, initialDelay) => {
@@ -69,7 +44,6 @@ const updateClientService = async ({ clientId, toUpdate }) => {
       try {
         return await fn();
       } catch (error) {
-        // Retry only on 409 Conflict errors
         if (error.statusCode === 409) {
           attempts++;
           console.warn(
@@ -79,39 +53,17 @@ const updateClientService = async ({ clientId, toUpdate }) => {
             console.error(
               `All ${maxRetries} attempts failed due to document conflicts.`
             );
-            throw error; // Rethrow after max retries
+            throw error; 
           }
           await sleep(delay);
-          delay *= 2; // Exponential backoff
+          delay *= 2; 
         } else {
-          // For other errors, do not retry
           throw error;
         }
       }
     }
   };
 
-  // try {
-  //   // Initialize databases
-  //   const dbs = await withRetry(() => nano.db.list(), 5, 300);
-  //   if (!dbs.includes(mainDbName)) {
-  //     throw new Error(`Main database ${mainDbName} does not exist.`);
-  //   }
-  //   mainDb = nano.use(mainDbName);
-
-  //   if (!dbs.includes(processedEmailsDbName)) {
-  //     console.log(
-  //       `Database ${processedEmailsDbName} does not exist. Creating...`
-  //     );
-  //     await nano.db.create(processedEmailsDbName);
-  //   }
-  //   processedEmailsDb = nano.use(processedEmailsDbName);
-  // } catch (error) {
-  //   console.error("Error accessing databases:", error);
-  //   throw new Error("Database initialization failed");
-  // }
-
-  // Fetch client document from the main database
   let clientDoc;
 
   const mainDb = await connectDB("db_clients");
@@ -130,7 +82,6 @@ const updateClientService = async ({ clientId, toUpdate }) => {
   }
 
 
-  // Update detailedTokenConsumption in the processed emails database first
   if (toUpdate.detailedTokenConsumption) {
     for (const [key, value] of Object.entries(
       toUpdate.detailedTokenConsumption
@@ -171,7 +122,6 @@ const updateClientService = async ({ clientId, toUpdate }) => {
     }
   }
 
-  // Fetch all detailedTokenConsumption from the processed emails database
   let detailedTokenConsumption;
   try {
     const processedEmailsDocs = await withRetry(
@@ -188,11 +138,9 @@ const updateClientService = async ({ clientId, toUpdate }) => {
     throw new Error("Failed to fetch processed emails");
   }
 
-  // Perform a single final update to the main client document
   try {
     await withRetry(
       async () => {
-        // Always get the latest revision of the client doc
         const latestDoc = await mainDb.get(clientId);
         const updatedDoc = {
           ...latestDoc,
@@ -226,8 +174,6 @@ const updateClientService = async ({ clientId, toUpdate }) => {
     throw new Error("Failed to update client");
   }
 
-  // Return the updated client data
-  // Need to fetch the latest client doc again to have the final state after update
   let finalDoc;
   try {
     finalDoc = await mainDb.get(clientId);

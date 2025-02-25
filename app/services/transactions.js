@@ -5,30 +5,12 @@ const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 const { connectDB } = require('../controllers/utils')
 
 const addTransaction = async ({ id, transaction }) => {
-  // let db;
-  
   try {
     const dbName = id.split('_')[2]
 
-    console.log('add transaction id: ', dbName)
-    
     const db = await connectDB(`db_${dbName}_processedemails`)
-    // db = await nano.db.list();
-
-    // const processedDbNames = db.filter((dbName) =>
-    //   dbName.includes("_processedemails")
-    // );
-
-    // db = nano.use(processedDbNames);
-
-    console.log(
-      "Bases de datos que contienen '_processedemails':",
-      // db
-    );
-
     const response = await db.insert(transaction);
 
-    console.log('response 1234567', response)
 
     return response;
   } catch (error) {
@@ -46,11 +28,6 @@ const getAllTransactionsByClient = async ({ idsEmails }) => {
       dbName.includes("_processedemails")
     );
 
-    console.log(
-      "Bases de datos que contienen '_processedemails':",
-      processedDbNames
-    );
-
     let matchingDocuments = [];
 
     for (const dbName of processedDbNames) {
@@ -60,7 +37,6 @@ const getAllTransactionsByClient = async ({ idsEmails }) => {
         include_docs: true,
       });
 
-      console.log(`Documentos de la base ${dbName}:`, processedEmails.rows);
 
       const matchingProcessedDocs = processedEmails.rows.filter(
         (processedEmailDoc) => idsEmails.includes(processedEmailDoc.doc._id)
@@ -69,7 +45,6 @@ const getAllTransactionsByClient = async ({ idsEmails }) => {
       matchingDocuments = [...matchingDocuments, ...matchingProcessedDocs];
     }
 
-    console.log("Documentos coincidentes:", matchingDocuments);
 
     return {
       matchingDocuments,
@@ -82,30 +57,20 @@ const getAllTransactionsByClient = async ({ idsEmails }) => {
 
 const getTransactionById = async (transactionId) => {
   try {
-    // Obtener todas las bases de datos disponibles
     const allDatabases = await nano.db.list();
-
-    // Filtrar las bases de datos que contienen "_processedemails"
     const processedDatabases = allDatabases.filter((dbName) =>
       dbName.endsWith("_processedemails")
     );
 
-    console.log(
-      "Bases de datos que contienen '_processedemails':",
-      processedDatabases
-    );
 
     let matchingDocuments = [];
 
-    // Iterar sobre las bases de datos seleccionadas
     for (const dbName of processedDatabases) {
       const db = nano.use(dbName);
 
       try {
-        // Intentar obtener el documento con el transactionId
         const doc = await db.get(transactionId);
 
-        // Si se encuentra el documento, agregarlo a la lista de coincidencias
         if (doc) {
           matchingDocuments.push({
             id: doc._id,
@@ -113,11 +78,9 @@ const getTransactionById = async (transactionId) => {
             value: { rev: doc._rev },
             doc, // Incluye el documento completo
           });
-          console.log(`Documento encontrado en la base ${dbName}:`, doc);
-          break; // Si encontramos el documento, no es necesario seguir buscando
+          break; 
         }
       } catch (docError) {
-        // Si no se encuentra el documento en esta base de datos, continuar con la siguiente
         if (docError.status !== 404) {
           console.error(
             `Error al obtener el documento ${transactionId} en la base ${dbName}:`,
@@ -127,11 +90,8 @@ const getTransactionById = async (transactionId) => {
       }
     }
 
-    // Verificar si se encontró algún documento
     if (matchingDocuments.length === 0) {
-      console.log(
-        `No se encontró el documento con transactionId ${transactionId}.`
-      );
+
       return {
         success: false,
         message: `No se encontró la transacción con ID ${transactionId}.`,
@@ -151,45 +111,33 @@ const getTransactionById = async (transactionId) => {
 
 const deleteTransactions = async ({ transactionsIds }) => {
   try {
-    // Obtener todas las bases de datos disponibles
     const allDatabases = await nano.db.list();
 
-    // Filtrar las bases de datos que contienen "_processedemails"
     const processedDatabases = allDatabases.filter((dbName) =>
       dbName.endsWith("_processedemails")
     );
 
     if (processedDatabases.length === 0) {
-      console.log("No se encontraron bases de datos con '_processedemails'.");
       return {
         success: false,
         message: "No hay bases de datos para procesar.",
       };
     }
 
-    // Iterar sobre las bases de datos seleccionadas
     for (const dbName of processedDatabases) {
       const db = nano.use(dbName);
 
-      // Iterar sobre los IDs de transacciones a eliminar
       for (const transactionId of transactionsIds) {
         try {
-          // Buscar documentos que coincidan con el transactionId
           const query = { selector: { _id: transactionId } };
           const result = await db.find(query);
 
           if (result.docs.length > 0) {
             for (const doc of result.docs) {
-              // Eliminar el documento encontrado
               await db.destroy(doc._id, doc._rev);
-              console.log(
-                `Documento con ID ${doc._id} eliminado de la base de datos ${dbName}.`
-              );
+        
             }
           } else {
-            console.log(
-              `Documento con ID ${transactionId} no encontrado en la base de datos ${dbName}.`
-            );
           }
         } catch (error) {
           console.error(
@@ -213,10 +161,8 @@ const deleteTransactions = async ({ transactionsIds }) => {
 
 const deleteProductFromTransactions = async ({ transactionId, productRef }) => {
   try {
-    // Obtener todas las bases de datos disponibles
     const allDatabases = await nano.db.list();
 
-    // Filtrar las bases de datos que contienen "_processedemails"
     const processedDatabases = allDatabases.filter((dbName) =>
       dbName.endsWith("_processedemails")
     );
@@ -229,12 +175,10 @@ const deleteProductFromTransactions = async ({ transactionId, productRef }) => {
       };
     }
 
-    // Iterar sobre las bases de datos seleccionadas
     for (const dbName of processedDatabases) {
       const db = nano.use(dbName);
 
       try {
-        // Intentar obtener el documento con el transactionId
         const doc = await db.get(transactionId);
 
         if (
@@ -242,34 +186,21 @@ const deleteProductFromTransactions = async ({ transactionId, productRef }) => {
           !doc.totalData ||
           !Array.isArray(doc.totalData.productList)
         ) {
-          console.log(
-            `Documento ${transactionId} no tiene una estructura válida en ${dbName}.`
-          );
           continue;
         }
 
-        // Filtrar la lista de productos para eliminar el producto deseado
         const updatedProductList = doc.totalData.productList.filter(
           (product) => product.productRef !== productRef
         );
 
-        // Verificar si hubo cambios en la lista de productos
         if (updatedProductList.length === doc.totalData.productList.length) {
-          console.log(
-            `Producto con referencia ${productRef} no encontrado en la transacción ${transactionId} de la base de datos ${dbName}.`
-          );
+
           continue;
         }
 
-        // Actualizar el documento con la lista de productos filtrada
         doc.totalData.productList = updatedProductList;
 
-        // Guardar los cambios en la base de datos
         await db.insert(doc);
-
-        console.log(
-          `Producto con referencia ${productRef} eliminado de la transacción ${transactionId} en la base de datos ${dbName}.`
-        );
       } catch (docError) {
         console.error(
           `Error al procesar el documento ${transactionId} en la base de datos ${dbName}:`,

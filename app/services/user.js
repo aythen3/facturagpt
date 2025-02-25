@@ -13,22 +13,6 @@ const jwt = require("jsonwebtoken");
 
 const createAccount = async (account) => {
 
-
-  // const dbName = "db_accounts";
-  // let db;
-
-  // try {
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist. Creating...`);
-  //     await nano.db.create(dbName);
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error checking/creating database:", error);
-  //   throw new Error("Database initialization failed");
-  // }
-
   try {
     const db = await connectDB("db_accounts");
     const existingDocs = await db.list({ include_docs: true });
@@ -37,13 +21,11 @@ const createAccount = async (account) => {
     );
 
     if (accountExists) {
-      console.log(`Account with email ${account.email} already exists.`);
       return { success: false, message: "Account already exists." };
     }
 
     const accountId = uuidv4();
 
-    console.log("accountId", account);
     const docId = `account_${account.email}_${accountId}`;
 
     let role = account.role || "user";
@@ -51,14 +33,11 @@ const createAccount = async (account) => {
     if(account.email === "info@aythen.com"){
       role = "superadmin";
     }
-    // const role = account.email === "info@aythen.com" ? "superadmin" : "user";
 
-    // const password  = '123456'
     const hashedPassword = Buffer.from(account?.password || "123456").toString(
       "base64"
     );
 
-    console.log("hashedPassword", hashedPassword);
 
     const newAccount = {
       // _id: docId,
@@ -97,9 +76,7 @@ const createAccount = async (account) => {
       bucketCreated: false,
     };
 
-    console.log("newAccount", newAccount);
     const response = await db.insert(newAccount);
-    console.log(`Account created successfully:`, response);
 
     return {
       success: true,
@@ -113,32 +90,12 @@ const createAccount = async (account) => {
 };
 
 const deleteAccount = async (id) => {
-  console.log("account delete", id);
-  // const dbName = "db_accounts";
-  // let db;
-
-  // try {
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist.`);
-  //     return { success: false, message: "Database does not exist." };
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error checking database:", error);
-  //   throw new Error("Database initialization failed");
-  // }
-
   try {
     const db = await connectDB("db_accounts");
-    // Get the document using the ID
     const doc = await db.find({ selector: { id: id } });
 
-    console.log("doc", doc);
-    // Delete the document using both _id and _rev
     await db.destroy(doc.docs[0]._id, doc.docs[0]._rev);
 
-    console.log(`Account deleted successfully: ${id}`);
     return {
       id,
       success: true,
@@ -155,31 +112,11 @@ const deleteAccount = async (id) => {
 };
 
 const updateAccount = async (data) => {
-  console.log("Data received in updateAccount service:", { data });
-
-  // const dbName = "db_emailmanager_accounts";
-  // let db;
-
-  // try {
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist.`);
-  //     return { success: false, message: "Database does not exist." };
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error checking database:", error);
-  //   throw new Error("Database initialization failed");
-  // }
-
-  
   try {
     const db = await connectDB("db_accounts");
     let updatedDoc;
 
-    console.log("data", data);
     if (data.id) {
-      // Update existing account
       const existingDoc = await db.get(data.id);
 
       if (!existingDoc) {
@@ -193,7 +130,6 @@ const updateAccount = async (data) => {
         _rev: existingDoc._rev,
       };
     } else {
-      // Create new account
       const accountId = uuidv4();
       const docId = `account_${data.email}_${accountId}`;
 
@@ -206,12 +142,7 @@ const updateAccount = async (data) => {
       };
     }
 
-    // Insert/Update the document in the database
     const response = await db.insert(updatedDoc);
-    console.log(
-      `Account ${data.id ? "updated" : "created"} successfully:`,
-      response
-    );
 
     const { _id, _rev, ...sanitizedDoc } = updatedDoc;
     return sanitizedDoc;
@@ -222,23 +153,6 @@ const updateAccount = async (data) => {
 };
 
 const updateUserPassword = async ({ email, newPassword }) => {
-  console.log("Data received in updateUserPassword service:", { email });
-
-  // const dbName = "db_accounts";
-  // let db;
-
-  // try {
-  //   // Ensure the database exists
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist.`);
-  //     return { success: false, message: "Database does not exist." };
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error checking database:", error);
-  //   throw new Error("Database initialization failed");
-  // }
 
   try {
     const db = await connectDB("db_accounts");
@@ -253,20 +167,15 @@ const updateUserPassword = async ({ email, newPassword }) => {
     }
 
     const userDoc = queryResponse.docs[0];
-
-    // Hash the new password
     const hashedPassword = Buffer.from(newPassword).toString("base64");
 
-    // Update the user document
     const updatedDoc = {
       ...userDoc,
       password: hashedPassword,
-      _rev: userDoc._rev, // Ensure the correct revision is used
+      _rev: userDoc._rev, 
     };
 
-    // Insert the updated document back into the database
     await db.insert(updatedDoc);
-    console.log(`Password updated successfully for user with email: ${email}`);
 
     return {
       success: true,
@@ -297,8 +206,6 @@ const getAllAccounts = async (search) => {
 
     const result = await db.find({
       selector: selector,
-      // fields: ['email', 'role', 'pin', /* otros campos necesarios */],
-      // sort: [{'email': 'asc'}]  // ordenamiento por defecto
     });
 
     const users = result.docs.map(doc => {
@@ -306,7 +213,6 @@ const getAllAccounts = async (search) => {
       return rest;
     });
     
-    console.log("result", users);
     return users;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -316,11 +222,6 @@ const getAllAccounts = async (search) => {
 
 
 const loginToManagerService = async ({ email, password, accessToken }) => {
-  console.log("Data received in loginToManagerService:", {
-    email,
-    password,
-    accessToken,
-  });
 
   const dbName = "db_accounts";
   let db;
@@ -328,7 +229,6 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
   try {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist.`);
       return { success: false, message: "Account database does not exist." };
     }
     db = nano.use(dbName);
@@ -341,25 +241,20 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
     let account;
 
     if (accessToken) {
-      console.log("Attempting login with accessToken");
       const tokenQuery = await db.find({
         selector: { token: accessToken },
       });
 
       if (tokenQuery.docs.length === 0) {
-        console.log("Invalid access token or account not found.");
         return { success: false, message: "Invalid access token." };
       }
       account = tokenQuery.docs[0];
-      console.log(`Login successful for account via token: ${account._id}`);
     } else {
-      console.log("Attempting login with email/password");
       const queryResponse = await db.find({
         selector: { email },
       });
 
       if (queryResponse.docs.length === 0) {
-        console.log(`No account found for email: ${email}`);
         return { success: false, message: "Invalid email or password." };
       }
 
@@ -374,31 +269,25 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
         return { success: false, message: "Invalid email or password." };
       }
 
-      // Generate JWT token
       const token = jwt.sign(
         {
           userId: account._id,
           email: account.email,
           role: account.role,
         },
-        "your-secret-key", // Replace with a secure secret key from environment variables
+        "your-secret-key", 
         { expiresIn: "24h" }
       );
 
-      // Update account with new token
       const updatedDoc = {
         ...account,
         token: token,
         _rev: account._rev,
       };
 
-      // Save token to database
       await db.insert(updatedDoc);
 
       account = updatedDoc;
-      // account.token = token
-
-      console.log(`Login successful for account: ${account._id}`);
     }
 
     const { _id, _rev, ...rest } = account;
@@ -412,7 +301,6 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
           _rev: account._rev,
         };
         const updateResponse = await db.insert(updatedDoc);
-        console.log("Bucket created and account updated:", updateResponse);
       } catch (error) {
         console.error("Error creating bucket:", error);
       }
@@ -426,26 +314,8 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
 };
 
 const getAllClientsService = async () => {
-  // const mainDbName = "db_clients";
-  // let mainDb;
-
-  // try {
-  //   const dbs = await nano.db.list();
-
-  //   // Ensure the main database exists
-  //   if (!dbs.includes(mainDbName)) {
-  //     console.log(`Database ${mainDbName} does not exist. Creating...`);
-  //     await nano.db.create(mainDbName);
-  //   }
-  //   mainDb = nano.use(mainDbName);
-  // } catch (error) {
-  //   console.error("Error accessing or creating the main database:", error);
-  //   throw new Error("Database initialization failed");
-  // }
-
   try {
     const mainDb = await connectDB("db_clients");
-    // Fetch all clients from the main database
     const clients = await mainDb.list({ include_docs: true });
     const clientsWithDetails = await Promise.all(
       clients.rows.map(async (row) => {
@@ -458,7 +328,6 @@ const getAllClientsService = async () => {
         const clientUid = clientDoc.id.split("_")[2];
         const processedEmailsDbName = `db_${clientUid}_processedemails`;
 
-        // Fetch detailedTokenConsumption for each client
         let detailedTokenConsumption = {};
         try {
           if (
@@ -507,7 +376,6 @@ const addNewClientService = async ({ clientData }) => {
   try {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbName)) {
-      console.log(`Database ${dbName} does not exist. Creating...`);
       await nano.db.create(dbName);
     }
     db = nano.use(dbName);
@@ -522,9 +390,7 @@ const addNewClientService = async ({ clientData }) => {
     });
 
     if (existingDocs.docs.length > 0) {
-      console.log(
-        `Client with tokenEmail ${clientData.tokenEmail} already exists.`
-      );
+  
       return {
         success: false,
         message: "Client with this tokenEmail already exists.",
@@ -546,7 +412,6 @@ const addNewClientService = async ({ clientData }) => {
     };
 
     await db.insert(newClient);
-    console.log(`Client added successfully:`, newClient);
 
     const allClients = await db.list({ include_docs: true });
     const sanitizedClients = allClients.rows.map((row) => {
@@ -566,21 +431,6 @@ const addNewClientService = async ({ clientData }) => {
 };
 
 const deleteClientService = async ({ clientId }) => {
-  // const dbName = "db_clients";
-  // let db;
-
-  // try {
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist.`);
-  //     return { success: false, message: "Database does not exist." };
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error accessing database:", error);
-  //   throw new Error("Database access failed");
-  // }
-
   try {
     const db = await connectDB("db_clients");
     const clientDoc = await db.get(clientId);
@@ -591,7 +441,6 @@ const deleteClientService = async ({ clientId }) => {
     }
 
     await db.destroy(clientDoc._id, clientDoc._rev);
-    console.log(`Client with ID ${clientId} deleted successfully.`);
 
     const allClients = await db.list({ include_docs: true });
     const sanitizedClients = allClients.rows.map((row) => {
@@ -611,32 +460,14 @@ const deleteClientService = async ({ clientId }) => {
 };
 
 const generateAndSendOtpService = async ({ nombre, email, language }) => {
-  // const dbName = "db_otp";
-  // let db;
-  // console.log(nombre);
-  // try {
-  //   // Verificar y crear la base de datos si no existe
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist. Creating...`);
-  //     await nano.db.create(dbName);
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error accessing or creating database:", error);
-  //   throw new Error("Database initialization failed");
-  // }
-
   try {
     const db = await connectDB("db_otp");
-    // Generar OTP y su metadata
     const otp = String(Math.floor(100000 + Math.random() * 900000));
 
     const expirationTime = Date.now() + 5 * 60 * 1000;
     const otpId = uuidv4();
     const docId = `otp_${email}_${otpId}`;
 
-    // Guardar el OTP en la base de datos
     const otpDocument = {
       _id: docId,
       email,
@@ -646,9 +477,6 @@ const generateAndSendOtpService = async ({ nombre, email, language }) => {
     };
 
     await db.insert(otpDocument);
-    console.log(`OTP generado y guardado para ${email}:`, otp);
-
-    // Enviar el correo electrónico con el OTP
     await sendOtpEmail(nombre, email, otp, language);
 
     return { success: true, message: "OTP generado y enviado exitosamente." };
@@ -659,31 +487,13 @@ const generateAndSendOtpService = async ({ nombre, email, language }) => {
 };
 
 const verifyOTPService = async ({ email, otp }) => {
-  console.log("Data received in verifyOTPService:", { email, otp });
-
-  // const dbName = "db_otp";
-  // let db;
-
-  // try {
-  //   const dbs = await nano.db.list();
-  //   if (!dbs.includes(dbName)) {
-  //     console.log(`Database ${dbName} does not exist.`);
-  //     return { success: false, message: "OTP database does not exist." };
-  //   }
-  //   db = nano.use(dbName);
-  // } catch (error) {
-  //   console.error("Error accessing database:", error);
-  //   throw new Error("Database access failed");
-  // }
 
   try {
     const db = await connectDB("db_otp");
     const queryResponse = await db.find({
       selector: { email, otp },
     });
-    console.log(`queryResponse ${queryResponse.docs}`);
     if (queryResponse.docs.length === 0) {
-      console.log(`No matching OTP found for email: ${email}`);
       return { success: false, message: "Invalid or expired OTP." };
     }
 
@@ -692,13 +502,10 @@ const verifyOTPService = async ({ email, otp }) => {
     const expiresAt = new Date(otpDoc.expirationTime);
 
     if (now > expiresAt) {
-      console.log("OTP has expired.");
       return { success: false, message: "OTP has expired." };
     }
 
-    // Delete OTP after successful verification
     await db.destroy(otpDoc._id, otpDoc._rev);
-    console.log("OTP verified and deleted successfully.");
 
     return { success: true, message: "OTP verified successfully." };
   } catch (error) {
@@ -724,7 +531,6 @@ const newsletter = async ({
   keepInformed,
   language = "es",
 }) => {
-  console.log("desde actions");
 
   let mailToAythenContent, mailFromAythenContent;
 
@@ -737,14 +543,6 @@ const newsletter = async ({
     <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}</p>
   </div>`;
   if (language === "es") {
-    // mailToAythenContent = `
-    // <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
-    //   <h1 style="text-align: center; font-size: 24px;">
-    //     <img src="cid:logo" style="max-width: 65%; height: auto;" />
-    //   </h1>
-    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hola, ${name}</p>
-    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}</p>
-    // </div>`;
 
     mailFromAythenContent = `
     <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
@@ -755,14 +553,6 @@ const newsletter = async ({
       <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Gracias por querer estar en contacto con el equipo de FacturaGPT!</p>
     </div>`;
   } else {
-    // mailToAythenContent = `
-    // <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
-    //   <h1 style="text-align: center; font-size: 24px;">
-    //     <img src="cid:logo" style="max-width: 65%; height: auto;" />
-    //   </h1>
-    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Hello, ${name}</p>
-    //   <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">You have received a new contact message.\n\nName: ${name}\nEmail: ${email}\n\nMessage:${message}\n\nWorks at:${work}\n\nPhone:${phone}\n\nKeep Informed:${keepInformed}</p>
-    // </div>`;
 
     mailFromAythenContent = `
     <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
@@ -778,9 +568,6 @@ const newsletter = async ({
     from: email,
     to: "yyeremi15@gmail.com",
     subject: `Nuevo Mensaje de ${name}`,
-    // language === "es"
-    //   ? `Nuevo mensaje de ${name}`
-    //   : `New message from ${name}`,
     html: mailToAythenContent,
     attachments: [
       {
@@ -810,10 +597,8 @@ const newsletter = async ({
 
   try {
     const infoToAythen = await transporter.sendMail(mailToAythen);
-    console.log("Correo enviado a yyeremi15@gmail.com:", infoToAythen.response);
 
     const infoFromAythen = await transporter.sendMail(mailFromAythen);
-    console.log("Correo enviado al usuario:", infoFromAythen.response);
 
     return {
       success: true,

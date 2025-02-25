@@ -12,6 +12,15 @@
   padding-bottom: 20px;
   cursor: pointer;
 
+  &:hover{
+    .activityHeader{
+      margin-top: 20px;
+      padding: 20px 10px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      height: auto !important;
+    }
+  }
 
   p {
     margin: 0;
@@ -26,6 +35,8 @@
       width: 16px;
       height: 16px;
     }
+
+
   }
 
   .date {
@@ -66,14 +77,19 @@
 
 .activityHeaderDocument {
   flex-direction: column;
-
+  position: relative;
   .options {
+    position: absolute;
+    top: -20px;
+    right: 0px;
     display: flex;
     width: 100%;
     justify-content: end;
     gap: 10px;
     align-items: center;
   }
+
+ 
 }
 
 .seeMail {
