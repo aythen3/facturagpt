@@ -5,13 +5,6 @@ const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 const { connectDB } = require("../controllers/utils");
 
 const createClient = async ({ email, userId, clientData }) => {
-  const normalizeDatabaseName = (name) => {
-    return name
-      .toLowerCase()
-      .replace(/[^a-z0-9_$()+\-/]/g, "_")
-      .replace(/^[^a-z]/, "db_");
-  };
-
   const extractLastId = (id) => {
     const parts = id.split("_");
     return parts[parts.length - 1];
@@ -19,29 +12,12 @@ const createClient = async ({ email, userId, clientData }) => {
 
   const extractedId = extractLastId(userId);
 
-  // const dbClientsName = normalizeDatabaseName(
-  //   `db_${extractedId}_clients`
-  // );
-  // const dbAccountsName = normalizeDatabaseName("db_accounts");
   let dbClients, dbAccounts;
 
   try {
-    // const dbs = await nano.db.list();
-
-    // if (!dbs.includes(dbClientsName)) {
-    //   console.log(`Database ${dbClientsName} does not exist. Creating...`);
-    //   await nano.db.create(dbClientsName);
-    // }
 
 
     dbClients = await connectDB(`db_${extractedId}_clients`);
-    // dbClients = nano.use(dbClientsName);
-    
-    // if (!dbs.includes(dbAccountsName)) {
-    //   console.log(`Database ${dbAccountsName} does not exist. Creating...`);
-    //   await nano.db.create(dbAccountsName);
-    // }
-    // dbAccounts = nano.use(dbAccountsName);
     dbAccounts = await connectDB(`db_accounts`);
 
 
@@ -137,25 +113,15 @@ const createClients = async ({ userId, clientsData }) => {
       const sanitizedEmailId = emailId.replace(/[^a-zA-Z0-9-_@.]+/g, "_");
       const clientId = `client_${sanitizedEmailId}`;
 
-      console.log("Procesando cliente:", {
-        attachment,
-        email,
-        processedData,
-        processedemails,
-      });
-
       const existingClient = await dbClients.find({
         selector: { email: email },
         limit: 1,
       });
 
-      console.log("Existing client found:", existingClient.docs);
 
       if (existingClient.docs.length > 0) {
         console.log("YA EXISTE UN DOC CON ESE emailId");
       } else {
-        console.log("CREANDO UN DOC NUEVO");
-
         const clientDoc = {
           _id: clientId,
           id: clientId,
@@ -170,10 +136,7 @@ const createClients = async ({ userId, clientsData }) => {
 
         try {
           const result = await dbClients.insert(clientDoc);
-          console.log(
-            `Client document with ID ${clientId} has been created in ${dbClientsName}. Result:`,
-            result
-          );
+
         } catch (err) {
           console.error("Error inserting client document:", err);
         }
@@ -189,7 +152,6 @@ const createClients = async ({ userId, clientsData }) => {
         clientDocs.push(clientDoc);
       }
     }
-    console.log("Clientes creados:", clientDocs);
 
     return clientDocs;
   } catch (error) {
@@ -217,14 +179,12 @@ const getAllUserClients = async ({ userId }) => {
     `db_${extractedId}_clients`
   );
 
-  console.log("USER ID EN Service", extractedId);
 
   let dbClients;
 
   try {
     const dbs = await nano.db.list();
     if (!dbs.includes(dbClientsName)) {
-      console.log(`Database ${dbClientsName} does not exist. Creating...`);
       await nano.db.create(dbClientsName);
     }
     dbClients = nano.use(dbClientsName);
@@ -233,7 +193,6 @@ const getAllUserClients = async ({ userId }) => {
       selector: { userId },
     });
 
-    console.log(`Found ${clients.docs.length} clients for userId ${userId}`);
 
     return clients.docs.length > 0 ? clients.docs : [];
   } catch (error) {
@@ -259,7 +218,6 @@ const deleteClient = async ({ clientIds, userId }) => {
       const clientDoc = await dbClients.get(clientId);
 
       await dbClients.destroy(clientDoc._id, clientDoc._rev);
-      console.log(`Client ${clientId} deleted successfully.`);
 
       userDoc.clients = userDoc.clients.filter((id) => id !== clientId);
     }
@@ -295,10 +253,8 @@ const updateClient = async ({ clientId, userId, clientData }) => {
       },
     };
 
-    console.log("CLIENTE A ACTUALIZAR", clientDoc);
 
     await dbClients.insert(updatedDoc);
-    console.log(`Client ${clientId} updated successfully`);
 
     const clients = await dbClients.find({
       selector: { userId },
@@ -336,7 +292,6 @@ const getOneClient = async ({ userId, clientId }) => {
     dbClients = nano.use(dbClientsName);
 
     const clientDoc = await dbClients.get(clientId);
-    console.log(`Client ${clientId} retrieved successfully`);
 
     return clientDoc;
   } catch (error) {

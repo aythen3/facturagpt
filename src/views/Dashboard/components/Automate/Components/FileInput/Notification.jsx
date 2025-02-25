@@ -34,7 +34,7 @@ const Notification = ({
 
     return (
         
-      <CustomAutomationsWrapper Icon={<WhiteBell />}>
+      <CustomAutomationsWrapper Icon={<WhiteBell />} showContent={showContent.info4}>
       <div
         className={styles.infoContainerWrapper}
         onClick={() =>

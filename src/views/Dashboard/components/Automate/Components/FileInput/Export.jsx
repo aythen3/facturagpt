@@ -36,7 +36,7 @@ const Export = ({
     // });
 
     return (
-        <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+        <CustomAutomationsWrapper Icon={<ArrowSquare />} showContent={showContent.info2}>
             <div
                 className={styles.infoContainerWrapper}
                 onClick={() =>
@@ -182,7 +182,7 @@ const Export = ({
                     />
                 </div>
 
-                <CustomAutomationsWrapper Icon={<WhiteText />}>
+                <CustomAutomationsWrapper Icon={<WhiteText />} showContent={showContent.info5}>
                     <div className={styles.infoContainerWrapper}>
                         <div
                             className={styles.infoContainer}
@@ -218,7 +218,7 @@ const Export = ({
                 </CustomAutomationsWrapper>
 
 
-                <CustomAutomationsWrapper Icon={<WhiteClock />}>
+                <CustomAutomationsWrapper Icon={<WhiteClock />} showContent={configuration.actionFrequency}>
                     <div className={styles.infoContainerWrapper}>
                         <div
                             className={styles.infoContainer}

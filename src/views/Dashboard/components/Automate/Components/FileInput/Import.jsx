@@ -31,9 +31,12 @@ const Import = ({
     });
 
     return (
-        <CustomAutomationsWrapper Icon={<WhiteFolder />}>
+        <CustomAutomationsWrapper 
+        Icon={<WhiteFolder />}
+        showContent={showContent.info1}
+        >
             <div
-                className={styles.infoContainerWrapper}
+                className={`${styles.infoContainerWrapper}`}
                 onClick={() =>
                     setShowContent({ ...showContent, info1: !showContent.info1 })
                 }
@@ -66,12 +69,12 @@ const Import = ({
                     />
                 </div>
 
-                <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+                <CustomAutomationsWrapper Icon={<ArrowSquare />} showContent={configuration.selectStandardExport}>
                     <div
                         className={styles.infoContainerWrapper}
-                        onClick={() =>
-                            setShowContent({ ...showContent, info7: !showContent.info7 })
-                        }
+                        // onClick={() =>
+                        //     setShowContent({ ...showContent, info7: !showContent.info7 })
+                        // }
                     >
                         <div className={styles.infoContainer}>
                             <div>Selecciona el destino de exportación</div>

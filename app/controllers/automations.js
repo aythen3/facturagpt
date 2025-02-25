@@ -9,11 +9,7 @@ const { catchedAsync } = require("../utils/err");
 const createAutomationController = async (req, res) => {
   try {
     const { userId, email, automationData } = req.body;
-    console.log("data from createAutomationController", {
-      userId,
-      email,
-      automationData,
-    });
+
 
     const resp = await createAutomation({ userId, email, automationData });
 
@@ -41,12 +37,7 @@ const updateAutomationController = async (req, res) => {
   try {
     const { automationId } = req.params;
     const { userId, ...toUpdate } = req.body;
-    console.log(
-      "Updating automation with ID:",
-      automationId,
-      "with data:",
-      toUpdate
-    );
+
 
     const resp = await updateAutomation({ automationId, toUpdate, userId });
 
@@ -62,12 +53,6 @@ const deleteAutomationController = async (req, res) => {
     const { automationId } = req.params;
     const { userId } = req.body;
 
-    console.log(
-      "Deleting automation with ID:",
-      automationId,
-      "for userId:",
-      userId
-    );
 
     const resp = await deleteAutomation({ automationId, userId });
 

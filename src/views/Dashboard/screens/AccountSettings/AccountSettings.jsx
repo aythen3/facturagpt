@@ -558,10 +558,13 @@ const AccountSettings = ({
                   <div className={styles.automationsWrapper}>
                     {automations.map((automation, index) => (
                       <div className={styles.automationItem} key={index}>
-                        <h3>Automation {index + 1}</h3>
-                        <p>Description of automation {index + 1}</p>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        {/* <h3>Automation {index + 1}</h3> */}
+                        {/* <p>Description of automation {index + 1}</p> */}
+                        {/* <button>Edit</button> */}
+                        <button>Borrar</button>
+                        <button>Probar</button>
+
+                        {JSON.stringify(automation)}
                       </div>
                     ))}
                   </div>

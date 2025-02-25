@@ -75,9 +75,6 @@ select.formatBtn {
 .emailBody {
   width: 100%;
   min-height: 200px;
-  /* padding: 15px; */
-  /* margin-bottom: 10px; */
-  /* border: 1px solid #ddd; */
   border-radius: 8px;
   outline: none;
   overflow-y: auto;
@@ -88,6 +85,9 @@ select.formatBtn {
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  /* padding: 15px; */
+  /* margin-bottom: 10px; */
+  /* border: 1px solid #ddd; */
   &::-webkit-scrollbar {
     display: none;
   }

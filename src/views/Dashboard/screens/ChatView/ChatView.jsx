@@ -368,10 +368,20 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenVali
   // const { currentChat, loading } = useSelector((state) => state.chat);
   // const { id } = useParams();
   // const { user, updatingUserLoading } = useSelector((state) => state.user);
+  const messageContainerRef = useRef(null);
 
+  // Efecto para hacer scroll cuando cambian los mensajes
+  useEffect(() => {
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+
+  
   return (
     <div className={styles.chatContainer}>
-      <div className={styles.messageContainer}>
+      <div className={styles.messageContainer} ref={messageContainerRef}>
         {messages.length === 0 && (
           <>
             <p className={styles.messageSettings}>

@@ -118,17 +118,16 @@ const setCalendarEmail = async (template, data) => {
     return false;
   }
 
-  // Handle participants list
   const participantsList = data.participants
     ? data.participants.map((participant) => `<li>${participant}</li>`).join("")
     : "";
 
-  const translations = dataEventInvitation[data.lan || "es"]; // Default to 'es' if no language is provided
+  const translations = dataEventInvitation[data.lan || "es"]; 
 
   const emailData = {
     ...translations,
     ...data,
-    participantsList, // Add participants list to the data passed to the template
+    participantsList, 
   };
 
   const html = insertData(resp.html, emailData);
@@ -156,7 +155,6 @@ async function sendInvitationEmail({ email, data }) {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Invitation email sent successfully");
   } catch (error) {
     console.error("Error sending invitation email:", error);
   }
@@ -254,7 +252,6 @@ async function sendOtpEmail(nombre, email, otp, language = "es") {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("OTP enviado exitosamente a:", email);
   } catch (error) {
     console.error("Error al enviar el OTP:", error);
     throw new Error("No se pudo enviar el OTP.");

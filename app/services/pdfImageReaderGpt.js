@@ -41,29 +41,6 @@ const {
 } = require("./gpt");
 
 
-// const connectDB = async (tableName) => {
-//   let db;
-//   try {
-//     await nano.db.get(tableName);
-//     db = nano.db.use(tableName);
-//     return db;
-//   } catch (error) {
-//     if (error.statusCode === 404) {
-//       try {
-//         await nano.db.create(tableName);
-//         db = nano.db.use(tableName);
-//         return db;
-//       } catch (createError) {
-//         console.log("Error al crear la base de datos:", createError);
-//         throw createError;
-//       }
-//     } else {
-//       console.log("Error al obtener información de la base de datos:", error);
-//       throw error;
-//     }
-//   }
-// };
-
 const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
   "https://www.googleapis.com/auth/spreadsheets",
 ]);
@@ -71,7 +48,6 @@ const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
 
 
 const connectToImap = (config) => {
-  // console.log("config", config);
   return new Promise((resolve, reject) => {
     const imap = new Imap(config);
 
@@ -85,7 +61,6 @@ const connectToImap = (config) => {
   });
 };
 
-// Open INBOX
 const openInbox = (imap) => {
   return new Promise((resolve, reject) => {
     imap.openBox("INBOX", true, (err, box) => {
@@ -113,10 +88,9 @@ const getImapConfig = (email, password) => {
     domain === "hotmail.com" ||
     domain === "live.com"
   ) {
-    host = "imap-mail.outlook.com"; //'outlook.office365.com'
+    host = "imap-mail.outlook.com"; 
     port = 993;
   } else {
-    // throw new Error(`Unsupported email domain: ${domain}`);
     host = "imap.gmail.com";
     port = 993;
   }
@@ -137,21 +111,17 @@ const getImapConfig = (email, password) => {
 
 
 const searchEmails = (imap, searchStrings, clientId) => {
-  // console.log("clientId from searchEmails", clientId);
   return new Promise((resolve, reject) => {
-    // Dynamically build the search query for multiple strings
     const searchQuery = ["ALL"];
 
     if (Array.isArray(searchStrings) && searchStrings.length > 0) {
       let combinedConditions = [];
       searchStrings.forEach((searchString) => {
-        console.log("searching by", searchString);
         combinedConditions.push(["SUBJECT", searchString]);
         combinedConditions.push(["TEXT", searchString]);
       });
 
-      // Combine all search conditions with "OR"
-      let query = combinedConditions.shift(); // Take the first condition
+      let query = combinedConditions.shift(); 
       while (combinedConditions.length > 0) {
         query = ["OR", query, combinedConditions.shift()];
       }
@@ -167,7 +137,6 @@ const searchEmails = (imap, searchStrings, clientId) => {
       }
 
       if (!results || results.length === 0) {
-        console.log("No matching emails found");
         resolve([]);
         return;
       }
@@ -194,27 +163,7 @@ const searchEmails = (imap, searchStrings, clientId) => {
 
             stream.once("end", async () => {
               try {
-                const parsed = await simpleParser(rawMessage);
-                // console.log("parsed email", parsed);
-                // console.log("parsedMessageId", parsed.messageId);
-                // if (logs && logs.includes(parsed.messageId)) {
-                //   console.log("Email already processed");
-                //   resolveMessage();
-                //   return;
-                // }
-
-                // updateClientService({
-                //   clientId,
-                //   toUpdate: { processedEmails: [parsed.messageId] },
-                // });
-
-
-                // const response = await updateAccount({
-                //   id: clientId,
-                //  processedEmails: [parsed.messageId],
-                // });
-
-                // console.log("response!!!!", response);
+                const parsed = await simpleParser(rawMessage);         
                 email.ref = parsed.messageId
                 email.fromEmail = parsed.from.value || "";
                 email.toEmail = parsed.to.value || "";
@@ -228,8 +177,6 @@ const searchEmails = (imap, searchStrings, clientId) => {
                 const response = await addTransaction({
                   id: clientId,
                   transaction: email,
-                  // transaction: parsed.messageId
-                  // processedEmails: [parsed.messageId],
                 })
 
                 console.log('response 1234567', response)
@@ -243,7 +190,6 @@ const searchEmails = (imap, searchStrings, clientId) => {
                     )
                   )
                   .map((att) => {
-                    // console.log("ATTACHMENT DATA", att);
                     return {
                       mimeType: att.contentType,
                       filename: att.filename,
@@ -297,7 +243,6 @@ const replaceNotFoundWithEmptyString = (obj) => {
     if (obj[key] === "NOT FOUND" || obj[key] === "notfound") {
       obj[key] = ""; // Cambia "NOT FOUND" por un string vacío
     } else if (typeof obj[key] === "object" && obj[key] !== null) {
-      // Si es un objeto, llama recursivamente a la función
       obj[key] = replaceNotFoundWithEmptyString(obj[key]);
     }
   }
@@ -621,7 +566,6 @@ const processImageSections = async (
         height: Math.max(1, Math.min(section.height, height - section.top)),
       };
 
-      console.log(`Processing section "${section.name}"`);
 
       if (validSection.width <= 0 || validSection.height <= 0) {
         console.warn(`Skipping invalid section: ${section.name}`);
@@ -637,7 +581,6 @@ const processImageSections = async (
 
         const imageSize = `${validSection.width}x${validSection.height}`;
 
-        console.log(`Calling documentGPT for section: ${section.name}`);
         const result = await documentGPT({
           token,
           image: sectionImageUrl,

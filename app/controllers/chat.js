@@ -6,23 +6,18 @@ const getChatListController = async (req, res) => {
   const user = req.user;
   const search = req.query.search || '';
 
-  console.log('user getChatListController', user)
-
   const id = user._id.split('_').pop();
-  console.log("user", user, id);
-  // console.log("search", search);
-  // return res.json({ success: true, id });
   try {
     const dbName = `db_chat_${id}`;
     const db = await connectDB(dbName);
 
     const selector = {
-      _id: { $gt: null } // Selecciona todos los documentos
+      _id: { $gt: null } 
     };
 
     if (search) {
       selector.name = {
-        $regex: `(?i)${search}`  // (?i) hace la búsqueda case-insensitive
+        $regex: `(?i)${search}`
       };
     }
 
@@ -30,14 +25,8 @@ const getChatListController = async (req, res) => {
     const result = await db.find({
       selector: selector,
       fields: ['_id', 'name', 'createdAt']
-      // sort: [{ createdAt: 'desc' }]
     });
 
-    // const result = await db.view('chats', 'by_date', {
-    //   descending: true
-    // });
-
-    console.log("result", result);
 
     let chats = result.docs.map(row => {
       const chat = row;
@@ -54,12 +43,6 @@ const getChatListController = async (req, res) => {
       };
     });
 
-    // if (search) {
-    //   chats = chats.filter(chat => 
-    //     chat.name.toLowerCase().includes(search.toLowerCase())
-    //   );
-    // }
-
     return res.json({ success: true, chats });
   } catch (error) {
     console.error('Error en getChatListController:', error);
@@ -74,9 +57,6 @@ const getChatMessagesController = async (req, res) => {
   const user = req.user;
   const { chatId } = req.params;
 
-  console.log("chatId", chatId);
-  console.log("user", user);
-
   const id = user._id.split('_').pop();
 
   try {
@@ -89,8 +69,6 @@ const getChatMessagesController = async (req, res) => {
       }
     });
 
-
-    // console.log("result", result);
 
     if (!result.docs || result.docs.length === 0) {
       return res.status(404).json({
@@ -132,7 +110,6 @@ const deleteChatController = async (req, res) => {
       }
     });
 
-    // const chat = result.docs[0];
 
     if (!result.docs || result.docs.length === 0) {
       return res.status(404).json({
@@ -162,15 +139,8 @@ const deleteChatController = async (req, res) => {
 
 const validateTokenGPT = async (req, res) => {
   const user = req?.user;
-  // const { tokenGPT } = req.body;
-
-  // console.log('user validate token', res) 
 
   if(!res?.send) {
-    // return res.send({
-    //   success: false,
-    //   error: 'Token GPT no encontrado'
-    // });
     return true
   }
 
@@ -181,14 +151,8 @@ const validateTokenGPT = async (req, res) => {
     });
   }
 
-  console.log('user', user)
 
   const response = await validateToken(user.tokenGPT);
-  // const response = await validateToken('1234');
-
-
-  console.log('validateTokenGPT', response)
-
   return res.send({
     success: response,
     message: 'Token GPT validado correctamente'
@@ -198,51 +162,44 @@ const validateTokenGPT = async (req, res) => {
 
 
 const sendMessageController = async (req, res) => {
-  // res.setHeader("Content-Type", "text/event-stream");
-  // res.setHeader("Cache-Control", "no-cache");
-  // res.setHeader("Connection", "keep-alive");
-
-  console.log("sendMessageController");
   const user = req.user;
   const { chatId } = req.params;
   const { text } = req.body;
 
   const skProjRegex = /^sk-proj-[A-Za-z0-9-_]{100,}$/;
   if (skProjRegex.test(text)) {
-    console.log('es un token de gpt')
 
     const userData = {
       id: user.id,
       tokenGPT: text
     }
 
-    console.log('userData', userData)
 
     const response = await updateAccount(userData);
-    console.log('response data', response)
   }
 
+  const tokenGPT = user.tokenGPT;
 
-  // const result_meet1 = await meetGPT(res, text);
+  if(!tokenGPT){
+    return res.json({
+      success: false,
+      error: 'Token GPT no encontrado'
+    });
+  }
 
-  // console.log("result_meet1", result_meet1);
+  const result_meet1 = await meetGPT(res, text, tokenGPT);
+
   const result_meet = {
     success: true,
-    value: 'Hola, ¿cómo estás?'
+    value: result_meet1
   }
 
-  console.log('result_meett', result_meet)
-  console.log("user", user);
+  
   const id = user._id.split('_').pop();
-  console.log("chatId", chatId);
-  console.log("text", text);
 
   try {
     const dbName = `db_chat_${id}`;
     const db = await connectDB(dbName);
-
-    // console.log("db", db);
-    // Get existing chat
 
     const result = await db.find({
       selector: {
@@ -250,8 +207,6 @@ const sendMessageController = async (req, res) => {
       }
     });
 
-
-    // res.end();
 
     let chat = result.docs[0];
     let isNewChat = false;
@@ -267,8 +222,6 @@ const sendMessageController = async (req, res) => {
       }
     }
 
-    console.log("chat", chat);
-    // Create new message object
     const newMessage = {
       type: 'user',
       userId: id,
@@ -283,19 +236,13 @@ const sendMessageController = async (req, res) => {
       timestamp: new Date().toISOString()
     }
 
-    console.log("botMessage", botMessage);
-
-
-    // console.log("newMessage", newMessage);
-
-    // Add message to the beginning of the messages array
     if (!chat.messages) {
       chat.messages = [];
     }
+
     chat.messages.unshift(newMessage);
     chat.messages.unshift(botMessage); 
 
-    // Save updated chat document
     if (isNewChat) {
       await db.insert({
         ...chat,

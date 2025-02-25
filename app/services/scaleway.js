@@ -112,11 +112,9 @@ const createFolderService = async (folderPath) => {
       await putFolderObject(bucketName, fullFolderKey);
 
       const newFolderData = await getFolderData(bucketName, fullFolderKey);
-      console.log("Folder created:", fullFolderKey);
 
       return newFolderData ? [newFolderData] : [];
     } else {
-      console.log("Folder already exists:", fullFolderKey);
       const existingFolderData = await getFolderData(bucketName, fullFolderKey);
 
       return existingFolderData ? [existingFolderData] : [];
@@ -188,7 +186,6 @@ const moveObjectService = async (sourceKey, destinationKey, isFolder) => {
     const fileName = sourceKey.split("/").pop();
     const newKey = `${destinationKey}${fileName}`;
 
-    console.log("Moving single file:", sourceKey, "->", newKey);
 
     await copyObject(bucketName, sourceKey, newKey);
     await deleteObject(bucketName, sourceKey);
@@ -199,13 +196,11 @@ const moveObjectService = async (sourceKey, destinationKey, isFolder) => {
       sourceKey += "/";
     }
 
-    console.log("Moving folder:", sourceKey, "->", destinationKey);
 
     const folderSegments = sourceKey.split("/").filter(Boolean);
     const folderName = folderSegments[folderSegments.length - 1];
 
     const targetFolderKey = `${destinationKey}${folderName}/`;
-    console.log("Creating new folder object:", targetFolderKey);
     await putFolderObject(bucketName, targetFolderKey);
 
     const data = await s3
@@ -216,7 +211,6 @@ const moveObjectService = async (sourceKey, destinationKey, isFolder) => {
       .promise();
 
     if (!data.Contents || data.Contents.length === 0) {
-      console.log("Source folder is empty, nothing to move.");
       await deleteObject(bucketName, sourceKey);
       return { success: true, message: "Empty folder moved" };
     }
@@ -232,14 +226,12 @@ const moveObjectService = async (sourceKey, destinationKey, isFolder) => {
         continue;
       }
 
-      console.log(`Copying ${oldKey} to ${newKey}`);
       await copyObject(bucketName, oldKey, newKey);
       await deleteObject(bucketName, oldKey);
 
       itemsMoved.push({ oldKey, newKey });
     }
 
-    console.log("Removing old folder object:", sourceKey);
     await deleteObject(bucketName, sourceKey);
 
     return {
@@ -257,7 +249,6 @@ async function copyObject(bucket, sourceKey, destinationKey) {
     CopySource: `/${bucket}/${sourceKey}`,
     Key: destinationKey,
   };
-  console.log("Params to copyObject:", params);
   await s3.copyObject(params).promise();
 }
 
@@ -273,7 +264,6 @@ async function deleteObjectService(key, isFolder) {
   const bucketName = "factura-gpt";
 
   if (!isFolder) {
-    console.log("Deleting single file:", key);
     await deleteObject(bucketName, key);
     return { success: true, message: "File deleted", deletedKey: key };
   } else {
@@ -282,7 +272,6 @@ async function deleteObjectService(key, isFolder) {
       folderKey += "/";
     }
 
-    console.log("Deleting folder:", folderKey);
 
     const listParams = {
       Bucket: bucketName,
@@ -290,14 +279,12 @@ async function deleteObjectService(key, isFolder) {
     };
     const data = await s3.listObjectsV2(listParams).promise();
     if (!data.Contents || data.Contents.length === 0) {
-      console.log("Folder is empty or doesn't exist:", folderKey);
       await deleteObject(bucketName, folderKey);
       return { success: true, message: "Folder was empty or not found" };
     }
 
     const deletedItems = [];
     for (const obj of data.Contents) {
-      console.log("Deleting:", obj.Key);
       await deleteObject(bucketName, obj.Key);
       deletedItems.push(obj.Key);
     }
