@@ -461,6 +461,9 @@ input[type="checkbox"] {
   a {
     color: #073f31;
   }
+  .dotsOptions {
+    cursor: pointer;
+  }
 }
 
 .allProductC {

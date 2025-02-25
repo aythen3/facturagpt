@@ -1,0 +1,36 @@
+.OptionsPopupContainer {
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  border-radius: 12px;
+  position: absolute;
+  background-color: white;
+  padding: 5px;
+  min-width: fit-content;
+  z-index: 99;
+  top: 20px;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 160px;
+  z-index: 9999;
+  padding: 4px;
+  > div {
+    width: 100%;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    border-radius: 4px;
+    transition: background-color 0.2sease-in-out;
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}

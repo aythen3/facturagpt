@@ -1,26 +1,38 @@
-.editableRow {
+.editableRow,
+.editableRowFlex {
   > div {
     display: flex;
-    justify-content: end;
+    justify-content: start;
     align-items: center;
     gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  input {
+    width: 60px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    background-color: #f4f4f4;
+    border: none;
+    outline: none;
+    padding: 6px 10px;
+    color: #71717a;
+  }
 
-    input {
-      width: 60px;
-      border-radius: 4px;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -ms-border-radius: 4px;
-      -o-border-radius: 4px;
-      background-color: #f4f4f4;
-      border: none;
-      outline: none;
-      padding: 6px 10px;
-      color: #71717a;
-    }
-
-    input[disabled] {
-      background-color: transparent;
-    }
+  input[disabled] {
+    background-color: transparent;
+  }
+}
+.editableRowFlex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  > div {
+    justify-content: end;
   }
 }

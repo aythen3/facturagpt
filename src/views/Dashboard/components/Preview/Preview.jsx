@@ -216,12 +216,6 @@ const DocumentPreview = ({
               style={{ marginLeft: "5px" }}
               className={styles.searchIconsWrappers}
             >
-              <img src={winIcon} alt="kIcon" />
-            </div>
-            <div
-              style={{ marginLeft: "5px" }}
-              className={styles.searchIconsWrappers}
-            >
               <img src={KIcon} alt="kIcon" />
             </div>
           </>
@@ -389,7 +383,7 @@ const DocumentPreview = ({
               </div>
             </div>
 
-            <EditableRow label="Subtotal" />
+            <EditableRow label="Subtotal" oneRow={true} />
             <EditableRow
               label="Descuento"
               buttonLabel="Añadir Descuento"
@@ -404,7 +398,7 @@ const DocumentPreview = ({
               hasButton
               hasPercentage={taxQuantity + "%"}
             />
-            <EditableRow label="Total" />
+            <EditableRow label="Total" oneRow={true} />
           </div>
 
           <div className={styles.containerEditableInput}>

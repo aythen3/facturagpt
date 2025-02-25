@@ -10,6 +10,7 @@ const SkeletonScreen = ({
   inputId = "CustomFileInput",
   showInput = true,
   enableLabelClick = true,
+  onLabelClick,
 }) => {
   return (
     <div
@@ -26,11 +27,12 @@ const SkeletonScreen = ({
         />
       )}
       <label
-        onClick={
-          enableLabelClick
-            ? () => document.querySelector(`#${inputId}`).click()
-            : undefined
-        }
+        onClick={() => {
+          if (enableLabelClick) {
+            document.querySelector(`#${inputId}`).click();
+            onLabelClick();
+          }
+        }}
       >
         <p>{labelText}</p> <span>{helperText}</span>
       </label>

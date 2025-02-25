@@ -23,6 +23,7 @@ const CreateFolderModal = ({ onClose, location, setShowLocationModal }) => {
 
   const [emailInput, setEmailInput] = useState(""); // Estado para el input de correo
   const [emailList, setEmailList] = useState([]); // Estado para la lista de correos
+  const [emailError, setEmailError] = useState(""); // Estado para el mensaje de error
 
   const handleClose = () => {
     setIsClosing(true);
@@ -41,8 +42,22 @@ const CreateFolderModal = ({ onClose, location, setShowLocationModal }) => {
 
   // Función para agregar el correo al estado
   const handleAddEmail = () => {
+    // Validar si el email es válido
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(emailInput)) {
+      setEmailError("Por favor, introduce un correo electrónico válido.");
+      return;
+    }
+
+    // Validar si el email ya existe en la lista
+    if (emailList.includes(emailInput)) {
+      setEmailError("Este correo ya está en la lista.");
+      return;
+    }
+
     setEmailList([...emailList, emailInput]);
     setEmailInput("");
+    setEmailError(""); // Limpiar el mensaje de error
   };
 
   // Función para eliminar un correo de la lista
@@ -131,6 +146,9 @@ const CreateFolderModal = ({ onClose, location, setShowLocationModal }) => {
                   Invitar
                 </div>
               </div>
+              {emailError && (
+                <div className={styles.errorMessage}>{emailError}</div>
+              )}
               {/* Renderiza la lista de correos */}
               <div className={styles.emailList}>
                 {emailList.map((email, index) => (

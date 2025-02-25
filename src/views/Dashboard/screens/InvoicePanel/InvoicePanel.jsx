@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen.jsx";
+import SelectLocation from "../../components/SelectLocation/SelectLocation.jsx";
 const company = {
   email: "coolmail@mail.com",
   phone: "341-59-15",
@@ -20,13 +21,13 @@ export default function InvoicePanel() {
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [showSelectLocation, setShowSelectLocation] = useState(false);
   const { user, updatingUserLoading } = useSelector((state) => state.user);
   const [hasNote, setHasNote] = useState(false);
   const [noteText, setNoteText] = useState("");
   const [noteColor, setNoteColor] = useState("tagGreen");
   const [isEditingNote, setIsEditingNote] = useState(false);
   const [editingNote, setEditingNote] = useState(false);
-
   console.log(`usuario: ${user}`);
 
   const { id } = useParams();
@@ -63,6 +64,7 @@ export default function InvoicePanel() {
     event.preventDefault();
     if (event.dataTransfer.files.length > 0) {
       setFileUploaded(true);
+      setShowSelectLocation(true);
     }
   };
 
@@ -80,6 +82,10 @@ export default function InvoicePanel() {
 
   const handleNoteBlur = () => {
     setIsEditingNote(false);
+  };
+
+  const handleLabelClick = () => {
+    setShowSelectLocation(true);
   };
 
   useEffect(() => {
@@ -103,8 +109,9 @@ export default function InvoicePanel() {
           inputId="InvoiceInput"
           labelText="Selecciona una factura o arrastra y suelta"
           helperText="Digitaliza y gestiona todos tus documentos con FacturaGPT."
-          showInput={true} // Puedes cambiarlo a false para ocultar el input
-          enableLabelClick={true} // Puedes cambiarlo a false para desactivar el click en el label/>
+          showInput={true}
+          enableLabelClick={true}
+          onLabelClick={handleLabelClick}
         />
       ) : (
         // <div
@@ -141,6 +148,9 @@ export default function InvoicePanel() {
             editingNote={editingNote}
             idFile={id}
           />
+          {showSelectLocation && (
+            <SelectLocation onClose={() => setShowSelectLocation(false)} />
+          )}
           <Preview
             companyInfo={company}
             document={Factura}

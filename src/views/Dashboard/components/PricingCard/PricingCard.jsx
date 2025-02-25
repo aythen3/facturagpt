@@ -16,6 +16,7 @@ export const PricingCard = ({
   sliding,
   buyBtn = true,
   compareSelected = false,
+  customStyles,
 }) => {
   const { t } = useTranslation("pricingCard");
   const handleClick = () => {
@@ -30,7 +31,7 @@ export const PricingCard = ({
   return (
     <div
       onClick={handleClick}
-      className={`${styles.card} ${styles.cardsPricing} ${compareSelected ? (selectedCard === index ? `${styles.selectedCard} ` : "") : selectedCard ? styles.selectedCard : ""}`}
+      className={`${styles.card} ${customStyles && styles.pricingPageCard} ${styles.cardsPricing} ${compareSelected ? (selectedCard === index ? `${styles.selectedCard} ` : "") : selectedCard ? styles.selectedCard : ""}`}
     >
       <div
         className={`${styles.cardHeader} ${compareSelected ? (selectedCard === index ? styles.selectedCardHeader : "") : selectedCard ? styles.selectedCardHeader : ""}`}

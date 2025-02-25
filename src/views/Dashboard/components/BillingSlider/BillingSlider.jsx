@@ -54,10 +54,9 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>
-        {/* <img className={styles.star} src={star} alt="star" /> */}
+      {/* <h2 className={styles.title}>
         {t("title")}
-      </h2>
+      </h2> */}
 
       <div className={styles.sliderWrapper}>
         {/* Slider Input */}
@@ -65,7 +64,7 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
           type="range"
           min="0"
           max="5000000"
-          step="100"
+          step=""
           value={sliderValue}
           onChange={handleSliderChange}
           className={styles.slider}

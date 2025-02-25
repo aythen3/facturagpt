@@ -1,5 +1,6 @@
 import { ReactComponent as IconStar } from "./assets/star.svg";
 import { ReactComponent as IconArrowConnect } from "./assets/arrow_connect.svg";
+import { ReactComponent as GrayCheck } from "./assets/grayCheck.svg";
 import { ReactComponent as IconArrow } from "./assets/arrow.svg";
 import { ReactComponent as IconDrive } from "./assets/icon_drive.svg";
 import { ReactComponent as IconDropbox } from "./assets/icon_dropbox.svg";
@@ -12,49 +13,56 @@ import { ReactComponent as IconSuccess } from "./assets/success.svg";
 
 import styles from "./IniAutomate.module.css";
 
-const PanelIniAutomate = () => {
+const PanelIniAutomate = ({ typeContent }) => {
   const automates = [
     {
       icon: <IconGmail />,
       name: "Sube tus Documentos de Gmail",
-      description: "lorem ipsum",
+      description:
+        "Conéctate y sube documentos adjuntos con filtros avanzados.",
       available: true,
       button: true,
+      key: "Gmail",
     },
     {
       icon: <IconOutlook />,
       name: "Sube tus Documentos de Oulook",
-      description: "lorem ipsum",
+      description: "Sincroniza tus correos y extrae archivos automáticamente.",
       available: false,
       button: true,
+      key: "Outlook",
     },
     {
       icon: <IconDrive />,
       name: "Sube tus Documentos de Google Drive",
-      description: "lorem ipsum",
+      description: "Accede a tu nube y filtra documentos de forma inteligente.",
       available: false,
       button: true,
+      key: "Gmail",
     },
     {
       icon: <IconSharePoint />,
       name: "Sube tus Documentos de Microsoft Sharepoint",
-      description: "lorem ipsum",
+      description: "Importa y organiza archivos con herramientas avanzadas.",
       available: false,
       button: true,
+      key: "Gmail",
     },
     {
       icon: <IconOneDrive />,
       name: "Sube tus Documentos de Microsoft One Drive",
-      description: "lorem ipsum",
+      description: "Conéctate y gestiona documentos con mayor precisión.",
       available: false,
       button: true,
+      key: "Gmail",
     },
     {
       icon: <IconDropbox />,
       name: "Sube tus Documentos de Dropbox",
-      description: "lorem ipsum",
+      description: "Sincroniza y filtra facturas y otros archivos fácilmente.",
       available: false,
       button: true,
+      key: "Gmail",
     },
   ];
 
@@ -89,9 +97,17 @@ const PanelIniAutomate = () => {
             </div>
             <div className={styles.bottom}>
               <div className={styles.buttons}>
-                <button className={styles.button_connect}>
+                <button
+                  className={styles.button_connect}
+                  onClick={() => typeContent("Gmail")}
+                >
                   Conectar
                   <IconArrowConnect />
+                </button>
+                <button
+                  className={`${styles.button_connect} ${styles.button_added}`}
+                >
+                  Añadido <GrayCheck />
                 </button>
                 {/* <button className={styles.button_added}>
                   Añadido
@@ -102,13 +118,6 @@ const PanelIniAutomate = () => {
           </li>
         ))}
       </ul>
-
-      <div className={styles.footer}>
-        <IconLock />
-        <span>
-          Automaticamente FacturaGPT analizará los datos de forma segura
-        </span>
-      </div>
     </div>
   );
 };
