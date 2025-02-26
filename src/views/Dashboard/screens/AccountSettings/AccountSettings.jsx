@@ -22,6 +22,9 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 
+
+import { ReactComponent as IconGmail } from "../../assets/gmailwithoutbg.svg";
+
 import {
   updateAccount,
   deleteAccount
@@ -564,7 +567,15 @@ const AccountSettings = ({
                         <button>Borrar</button>
                         <button>Probar</button>
 
-                        {JSON.stringify(automation)}
+                        {automation.type === "Gmail" && (
+                          <IconGmail />
+                        )}
+
+                        {automation.type}
+
+
+
+                        {/* {JSON.stringify(automation)} */}
                       </div>
                     ))}
                   </div>

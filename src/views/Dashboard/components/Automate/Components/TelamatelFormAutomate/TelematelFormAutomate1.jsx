@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as FTPIcon } from "../../../../assets/ftp.svg";
-import ModalAddConnectionFTP from "./ModalAddConnectionFTP";
+import ModalAddConnectionTelematal from "./ModalAddConnectionTelematel";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 import { ReactComponent as ArrowSquare } from "../../../../assets/whiteArrowSquareIn.svg";
@@ -14,7 +14,7 @@ import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg"
 import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-import styles from "./FTPFormAutomate.module.css";
+import styles from "./TelematelFormAutomate.module.css";
 import InputComponent from "../../../InputComponent/InputComponent";
 import SearchSVG from "../../svgs/SearchSVG";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
@@ -35,12 +35,12 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
   const addConnection = (connection) => {
     console.log("adding FTP connection", connection);
     const updatedConnections = [
-      ...(configuration?.ftpConnectionData || []),
+      ...(configuration?.telematelConnectionData || []),
       connection,
     ];
-    console.log("setting ftpConnectionData", updatedConnections);
+    console.log("setting telematelConnectionData", updatedConnections);
     handleConfigurationChange("ftpConnectionData", updatedConnections);
-    if (!configuration?.selectedFTPConnection) {
+    if (!configuration?.selectedTelematelConnection) {
       handleConfigurationChange("selectedFTPConnection", connection.clientId);
     }
   };
@@ -65,12 +65,12 @@ const FTPFormAutomate = ({ type, configuration, setConfiguration }) => {
   return (
     <div className={styles.sectionWrapper}>
       <HeaderFormsComponent
-        placeholder="Añade conexión FTP"
-        selectedEmailConnection={configuration?.selectedFTPConnection}
+        placeholder="Añade conexión Telematel"
+        selectedEmailConnection={configuration?.selectedTelematelConnection}
         setSelectedEmailConnection={(value) =>
-          handleConfigurationChange("selectedFTPConnection", value)
+          handleConfigurationChange("selectedTelematelConnection", value)
         }
-        emailConnections={(configuration?.ftpConnectionData || []).map(
+        emailConnections={(configuration?.telematelConnectionData || []).map(
           (connection) => connection.clientId
         )}
         action={() => setShowAddConnection(true)}

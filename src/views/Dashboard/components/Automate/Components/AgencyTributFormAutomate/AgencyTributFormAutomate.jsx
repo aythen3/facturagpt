@@ -63,12 +63,12 @@ const AgencyTributFormAutomate = ({
   const addConnection = (connection) => {
     console.log("adding connection", connection);
     const updatedConnections = [
-      ...(configuration.agenciaConnectionData || []),
+      ...(configuration?.agenciaConnectionData || []),
       connection,
     ];
     console.log("setting agenciaConnectionData", updatedConnections);
     handleConfigurationChange("agenciaConnectionData", updatedConnections);
-    if (!configuration.selectedAgenciaConnection) {
+    if (!configuration?.selectedAgenciaConnection) {
       handleConfigurationChange(
         "selectedAgenciaConnection",
         connection.clientId
@@ -78,11 +78,11 @@ const AgencyTributFormAutomate = ({
   return (
     <div>
       <HeaderFormsComponent
-        selectedEmailConnection={configuration.selectedAgencyConnection}
+        selectedEmailConnection={configuration?.selectedAgencyConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedAgencyConnection", value)
         }
-        emailConnections={(configuration.agenciaConnectionData || []).map(
+        emailConnections={(configuration?.agenciaConnectionData || []).map(
           (connection) => connection.clientId
         )}
         action={openAddConnection}
@@ -92,7 +92,7 @@ const AgencyTributFormAutomate = ({
       <TitleFormsComponent title="Exporta a la Agéncia Tributaria Española" />
 
       {/* <NotificationsConfirmComponent
-        mainState={configuration.notificateAfterExport || false}
+        mainState={configuration?.notificateAfterExport || false}
         setMainState={(value) =>
           handleConfigurationChange("notificateAfterExport", value)
         }
@@ -100,31 +100,31 @@ const AgencyTributFormAutomate = ({
         placeholder2="[00000000],..."
         type1="Gmail"
         type2="WhatsApp"
-        gmailTo={configuration.gmailTo || ""}
+        gmailTo={configuration?.gmailTo || ""}
         setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
-        gmailSubject={configuration.gmailSubject || ""}
+        gmailSubject={configuration?.gmailSubject || ""}
         setGmailSubject={(value) =>
           handleConfigurationChange("gmailSubject", value)
         }
-        gmailBody={configuration.gmailBody || ""}
+        gmailBody={configuration?.gmailBody || ""}
         setGmailBody={(value) => handleConfigurationChange("gmailBody", value)}
-        state1={configuration.notificateGmail || false}
-        state1Value={configuration.gmailToNotificate || ""}
+        state1={configuration?.notificateGmail || false}
+        state1Value={configuration?.gmailToNotificate || ""}
         setState1={(value) =>
           handleConfigurationChange("notificateGmail", value)
         }
         setState1Value={(value) =>
           handleConfigurationChange("gmailToNotificate", value)
         }
-        state2={configuration.notificateWhatsApp || false}
-        state2Value={configuration.whatsAppToNotificate || ""}
+        state2={configuration?.notificateWhatsApp || false}
+        state2Value={configuration?.whatsAppToNotificate || ""}
         setState2={(value) =>
           handleConfigurationChange("notificateWhatsApp", value)
         }
         setState2Value={(value) =>
           handleConfigurationChange("whatsAppToNotificate", value)
         }
-        whatsAppMessage={configuration.whatsAppMessage || ""}
+        whatsAppMessage={configuration?.whatsAppMessage || ""}
         setWhatsAppMessage={(value) =>
           handleConfigurationChange("whatsAppMessage", value)
         }
@@ -136,7 +136,7 @@ const AgencyTributFormAutomate = ({
       />
 
       <NotificationsConfirmComponent
-        mainState={configuration.notificateAfterError || false}
+        mainState={configuration?.notificateAfterError || false}
         setMainState={(value) =>
           handleConfigurationChange("notificateAfterError", value)
         }
@@ -144,26 +144,26 @@ const AgencyTributFormAutomate = ({
         placeholder2="[00000000],..."
         type1="Gmail"
         type2="WhatsApp"
-        gmailTo={configuration.errorGmailTo || ""}
+        gmailTo={configuration?.errorGmailTo || ""}
         setGmailTo={(value) => handleConfigurationChange("errorGmailTo", value)}
-        gmailSubject={configuration.errorGmailSubject || ""}
+        gmailSubject={configuration?.errorGmailSubject || ""}
         setGmailSubject={(value) =>
           handleConfigurationChange("errorGmailSubject", value)
         }
-        gmailBody={configuration.errorGmailBody || ""}
+        gmailBody={configuration?.errorGmailBody || ""}
         setGmailBody={(value) =>
           handleConfigurationChange("errorGmailBody", value)
         }
-        state1={configuration.notificateErrorGmail || false}
-        state1Value={configuration.errorGmailToNotificate || ""}
+        state1={configuration?.notificateErrorGmail || false}
+        state1Value={configuration?.errorGmailToNotificate || ""}
         setState1={(value) =>
           handleConfigurationChange("notificateErrorGmail", value)
         }
         setState1Value={(value) =>
           handleConfigurationChange("errorGmailToNotificate", value)
         }
-        state2={configuration.notificateErrorWhatsApp || false}
-        state2Value={configuration.errorWhatsAppToNotificate || ""}
+        state2={configuration?.notificateErrorWhatsApp || false}
+        state2Value={configuration?.errorWhatsAppToNotificate || ""}
         setState2={(value) =>
           handleConfigurationChange("notificateErrorWhatsApp", value)
         }
@@ -171,7 +171,7 @@ const AgencyTributFormAutomate = ({
           handleConfigurationChange("errorWhatsAppToNotificate", value)
         }
         title="Notificar en el caso de detectar un error en la validación"
-        whatsAppMessage={configuration.errorWhatsAppMessage || ""}
+        whatsAppMessage={configuration?.errorWhatsAppMessage || ""}
         setWhatsAppMessage={(value) =>
           handleConfigurationChange("errorWhatsAppMessage", value)
         }
@@ -215,7 +215,7 @@ const AgencyTributFormAutomate = ({
 
             <InputComponent
               readOnly={true}
-              value={configuration.folderLocation}
+              value={configuration?.folderLocation}
               setValue={(value) =>
                 handleConfigurationChange("folderLocation", value)
               }
@@ -251,7 +251,7 @@ const AgencyTributFormAutomate = ({
 
               <InputComponent
                 readOnly={true}
-                value={configuration.filesSource}
+                value={configuration?.filesSource}
                 setValue={(value) =>
                   handleConfigurationChange("folderLocation", value)
                 }
@@ -287,14 +287,14 @@ const AgencyTributFormAutomate = ({
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.enableNotifications || false}
+              isChecked={configuration?.enableNotifications || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("enableNotifications", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.enableNotifications ? styles.active : styles.disabled}`}
           >
             <CustomAutomationsWrapper Icon={<WhiteCheck />}>
               <div className={styles.infoContainerWrapper}>
@@ -305,19 +305,19 @@ const AgencyTributFormAutomate = ({
                 <OptionsSwitchComponent
                   border={"none"}
                   marginLeft={"auto"}
-                  isChecked={configuration.notificateAfterExport || false}
+                  isChecked={configuration?.notificateAfterExport || false}
                   setIsChecked={(value) =>
                     handleConfigurationChange("notificateAfterExport", value)
                   }
                 />
               </div>
               <div
-                className={`${styles.contentContainer} ${configuration.notificateAfterExport ? styles.active : styles.disabled}`}
+                className={`${styles.contentContainer} ${configuration?.notificateAfterExport ? styles.active : styles.disabled}`}
               >
                 <NotificationsConfirmComponent
                   configuration={configuration}
                   disableSwitch={true}
-                  mainState={configuration.notificateAfterExport || false}
+                  mainState={configuration?.notificateAfterExport || false}
                   setMainState={(value) =>
                     handleConfigurationChange("notificateAfterExport", value)
                   }
@@ -325,35 +325,35 @@ const AgencyTributFormAutomate = ({
                   placeholder2="[00000000],..."
                   type1="Gmail"
                   type2="WhatsApp"
-                  gmailTo={configuration.gmailTo || ""}
+                  gmailTo={configuration?.gmailTo || ""}
                   setGmailTo={(value) =>
                     handleConfigurationChange("gmailTo", value)
                   }
-                  gmailSubject={configuration.gmailSubject || ""}
+                  gmailSubject={configuration?.gmailSubject || ""}
                   setGmailSubject={(value) =>
                     handleConfigurationChange("gmailSubject", value)
                   }
-                  gmailBody={configuration.gmailBody || ""}
+                  gmailBody={configuration?.gmailBody || ""}
                   setGmailBody={(value) =>
                     handleConfigurationChange("gmailBody", value)
                   }
-                  state1={configuration.notificateGmail || false}
-                  state1Value={configuration.gmailToNotificate || ""}
+                  state1={configuration?.notificateGmail || false}
+                  state1Value={configuration?.gmailToNotificate || ""}
                   setState1={(value) =>
                     handleConfigurationChange("notificateGmail", value)
                   }
                   setState1Value={(value) =>
                     handleConfigurationChange("gmailToNotificate", value)
                   }
-                  state2={configuration.notificateWhatsApp || false}
-                  state2Value={configuration.whatsAppToNotificate || ""}
+                  state2={configuration?.notificateWhatsApp || false}
+                  state2Value={configuration?.whatsAppToNotificate || ""}
                   setState2={(value) =>
                     handleConfigurationChange("notificateWhatsApp", value)
                   }
                   setState2Value={(value) =>
                     handleConfigurationChange("whatsAppToNotificate", value)
                   }
-                  whatsAppMessage={configuration.whatsAppMessage || ""}
+                  whatsAppMessage={configuration?.whatsAppMessage || ""}
                   setWhatsAppMessage={(value) =>
                     handleConfigurationChange("whatsAppMessage", value)
                   }
@@ -381,7 +381,7 @@ const AgencyTributFormAutomate = ({
                   <OptionsSwitchComponent
                     border={"none"}
                     marginLeft={"auto"}
-                    isChecked={configuration.notificateErrors || false}
+                    isChecked={configuration?.notificateErrors || false}
                     setIsChecked={(value) =>
                       handleConfigurationChange("notificateErrors", value)
                     }
@@ -405,14 +405,14 @@ const AgencyTributFormAutomate = ({
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.selectStandardExport || false}
+              isChecked={configuration?.selectStandardExport || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("selectStandardExport", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.selectStandardExport ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.selectStandardExport ? styles.active : styles.disabled}`}
           >
             <p
               style={{ marginBottom: "10px" }}
@@ -422,7 +422,7 @@ const AgencyTributFormAutomate = ({
             </p>
             <CustomDropdown
               options={["XML", "FacturaE", "UBL", "PEPPOL"]}
-              selectedOption={configuration.selectedStandardExport || []}
+              selectedOption={configuration?.selectedStandardExport || []}
               height="31px"
               textStyles={{
                 fontWeight: 300,
@@ -457,7 +457,7 @@ const AgencyTributFormAutomate = ({
                 <div className={styles.contentInput}>
                   <InputComponent
                     readOnly={true}
-                    value={configuration.filesSource}
+                    value={configuration?.filesSource}
                     setValue={(value) =>
                       handleConfigurationChange("folderLocation", value)
                     }

@@ -61,11 +61,11 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
 
   const addConnection = (connection) => {
     const updatedConnections = [
-      ...(configuration.emailConnectionData || []),
+      ...(configuration?.emailConnectionData || []),
       connection,
     ];
     handleConfigurationChange("emailConnectionData", updatedConnections);
-    if (!configuration.selectedEmailConnection) {
+    if (!configuration?.selectedEmailConnection) {
       handleConfigurationChange("selectedEmailConnection", connection.email);
     }
   };
@@ -73,11 +73,11 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
   return (
     <div>
       <HeaderFormsComponent
-        selectedEmailConnection={configuration.selectedEmailConnection}
+        selectedEmailConnection={configuration?.selectedEmailConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedEmailConnection", value)
         }
-        emailConnections={(configuration.emailConnectionData || []).map(
+        emailConnections={(configuration?.emailConnectionData || []).map(
           (connection) => connection.email
         )}
         action={() => setShowAddConnection(true)}
@@ -118,7 +118,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               <p className={styles.titleContentInput}>Remitentes</p>
 
               <AddEmailsInput
-                addedEmails={configuration.addedRemitents || []}
+                addedEmails={configuration?.addedRemitents || []}
                 setAddedEmails={(value) =>
                   handleConfigurationChange("addedRemitents", value)
                 }
@@ -127,7 +127,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               <CheckboxWithText
                 color="#10A37F"
                 marginTop="10px"
-                state={configuration.includeAllRemitents || false}
+                state={configuration?.includeAllRemitents || false}
                 setState={(value) =>
                   handleConfigurationChange("includeAllRemitents", value)
                 }
@@ -139,7 +139,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               <p className={styles.titleContentInput}>Asunto Contiene</p>
 
               <InputComponent
-                value={configuration.subjectKeyWords}
+                value={configuration?.subjectKeyWords}
                 setValue={(value) =>
                   handleConfigurationChange("subjectKeyWords", value)
                 }
@@ -150,7 +150,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               <CheckboxWithText
                 marginTop="10px"
                 color="#10A37F"
-                state={configuration.subjectExactMatch || false}
+                state={configuration?.subjectExactMatch || false}
                 setState={(value) =>
                   handleConfigurationChange("subjectExactMatch", value)
                 }
@@ -161,7 +161,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
             <div className={styles.contentInput}>
               <p className={styles.titleContentInput}>Mensaje Contiene</p>
               <InputComponent
-                value={configuration.bodyKeyWords}
+                value={configuration?.bodyKeyWords}
                 setValue={(value) =>
                   handleConfigurationChange("bodyKeyWords", value)
                 }
@@ -172,7 +172,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               <CheckboxWithText
                 color="#10A37F"
                 marginTop="10px"
-                state={configuration.bodyExactMatch || false}
+                state={configuration?.bodyExactMatch || false}
                 setState={(value) =>
                   handleConfigurationChange("bodyExactMatch", value)
                 }
@@ -186,21 +186,21 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               <CheckboxWithText
                 marginTop="10px"
                 color="#10A37F"
-                state={configuration.attachmentExactMatch || false}
+                state={configuration?.attachmentExactMatch || false}
                 setState={(value) =>
                   handleConfigurationChange("attachmentExactMatch", value)
                 }
                 text="Incluir todos los tipos de archivos"
               />
               <div className={styles.cardTypesContainer}>
-                {(configuration.selectedTypes || []).map((type) => (
+                {(configuration?.selectedTypes || []).map((type) => (
                   <div className={styles.singleTypeCard} key={type}>
                     <span>{type}</span>
                     <div
                       onClick={() =>
                         handleConfigurationChange(
                           "selectedTypes",
-                          (configuration.selectedTypes || []).filter(
+                          (configuration?.selectedTypes || []).filter(
                             (option) => option !== type
                           )
                         )
@@ -214,7 +214,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               </div>
               <CustomDropdown
                 options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-                selectedOption={configuration.selectedTypes || []}
+                selectedOption={configuration?.selectedTypes || []}
                 height="31px"
                 textStyles={{
                   fontWeight: 300,
@@ -226,11 +226,11 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
                 setSelectedOption={(selected) =>
                   handleConfigurationChange(
                     "selectedTypes",
-                    configuration.selectedTypes?.includes(selected)
-                      ? configuration.selectedTypes.filter(
+                    configuration?.selectedTypes?.includes(selected)
+                      ? configuration?.selectedTypes.filter(
                           (option) => option !== selected
                         )
-                      : [...(configuration.selectedTypes || []), selected]
+                      : [...(configuration?.selectedTypes || []), selected]
                   )
                 }
               />
@@ -262,18 +262,18 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.actionFrequency || false}
+              isChecked={configuration?.actionFrequency || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("actionFrequency", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.actionFrequency ? styles.active : styles.disabled}`}
           >
             <CustomDropdown
               options={["Imediatamente", "5 Minutos", "10 Minutos"]}
-              selectedOption={configuration.selectedActionFrequency || []}
+              selectedOption={configuration?.selectedActionFrequency || []}
               height="31px"
               textStyles={{
                 fontWeight: 300,
@@ -301,18 +301,18 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.documentStatus || false}
+              isChecked={configuration?.documentStatus || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("documentStatus", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.documentStatus ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.documentStatus ? styles.active : styles.disabled}`}
           >
             <CustomDropdown
               options={["Pendiente", "Finalizado", "Anulado"]}
-              selectedOption={configuration.selectedDocumentStatus || []}
+              selectedOption={configuration?.selectedDocumentStatus || []}
               height="31px"
               textStyles={{
                 fontWeight: 300,
@@ -330,7 +330,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
         {/* <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.changeFileName || false}
+            isChecked={configuration?.changeFileName || false}
             setIsChecked={(value) =>
               handleConfigurationChange("changeFileName", value)
             }
@@ -340,7 +340,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
           <InputComponent
             placeholder="[fecha]-[empresa]-[importe]-[etiqueta]"
             typeInput="text"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
           />
         </div>
@@ -362,19 +362,19 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.renameFiles || false}
+              isChecked={configuration?.renameFiles || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("renameFiles", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.renameFiles ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.renameFiles ? styles.active : styles.disabled}`}
           >
             <InputComponent
               placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
               typeInput="text"
-              value={configuration.fileName || ""}
+              value={configuration?.fileName || ""}
               setValue={(value) => handleConfigurationChange("fileName", value)}
             />
           </div>
@@ -403,7 +403,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
 
               <InputComponent
                 readOnly={true}
-                value={configuration.folderLocation}
+                value={configuration?.folderLocation}
                 setValue={(value) =>
                   handleConfigurationChange("folderLocation", value)
                 }
@@ -432,14 +432,14 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.enableNotifications || false}
+              isChecked={configuration?.enableNotifications || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("enableNotifications", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.enableNotifications ? styles.active : styles.disabled}`}
           >
             <CustomAutomationsWrapper Icon={<WhiteCheck />}>
               <div className={styles.infoContainerWrapper}>
@@ -450,20 +450,20 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
                 <OptionsSwitchComponent
                   border={"none"}
                   marginLeft={"auto"}
-                  isChecked={configuration.notificateAfterExport || false}
+                  isChecked={configuration?.notificateAfterExport || false}
                   setIsChecked={(value) =>
                     handleConfigurationChange("notificateAfterExport", value)
                   }
                 />
               </div>
               <div
-                className={`${styles.contentContainer} ${configuration.notificateAfterExport ? styles.active : styles.disabled}`}
+                className={`${styles.contentContainer} ${configuration?.notificateAfterExport ? styles.active : styles.disabled}`}
               >
                 <NotificationsConfirmComponent
                   configuration={configuration}
                   icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
                   disableSwitch={true}
-                  mainState={configuration.notificateAfterExport || false}
+                  mainState={configuration?.notificateAfterExport || false}
                   setMainState={(value) =>
                     handleConfigurationChange("notificateAfterExport", value)
                   }
@@ -471,35 +471,35 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
                   placeholder2="Número de telefóno o nombre del contacto"
                   type1="Gmail"
                   type2="WhatsApp"
-                  gmailTo={configuration.gmailTo || ""}
+                  gmailTo={configuration?.gmailTo || ""}
                   setGmailTo={(value) =>
                     handleConfigurationChange("gmailTo", value)
                   }
-                  gmailSubject={configuration.gmailSubject || ""}
+                  gmailSubject={configuration?.gmailSubject || ""}
                   setGmailSubject={(value) =>
                     handleConfigurationChange("gmailSubject", value)
                   }
-                  gmailBody={configuration.gmailBody || ""}
+                  gmailBody={configuration?.gmailBody || ""}
                   setGmailBody={(value) =>
                     handleConfigurationChange("gmailBody", value)
                   }
-                  state1={configuration.notificateGmail || false}
-                  state1Value={configuration.gmailToNotificate || ""}
+                  state1={configuration?.notificateGmail || false}
+                  state1Value={configuration?.gmailToNotificate || ""}
                   setState1={(value) =>
                     handleConfigurationChange("notificateGmail", value)
                   }
                   setState1Value={(value) =>
                     handleConfigurationChange("gmailToNotificate", value)
                   }
-                  state2={configuration.notificateWhatsApp || false}
-                  state2Value={configuration.whatsAppToNotificate || ""}
+                  state2={configuration?.notificateWhatsApp || false}
+                  state2Value={configuration?.whatsAppToNotificate || ""}
                   setState2={(value) =>
                     handleConfigurationChange("notificateWhatsApp", value)
                   }
                   setState2Value={(value) =>
                     handleConfigurationChange("whatsAppToNotificate", value)
                   }
-                  whatsAppMessage={configuration.whatsAppMessage || ""}
+                  whatsAppMessage={configuration?.whatsAppMessage || ""}
                   setWhatsAppMessage={(value) =>
                     handleConfigurationChange("whatsAppMessage", value)
                   }
@@ -527,7 +527,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
                   <OptionsSwitchComponent
                     border={"none"}
                     marginLeft={"auto"}
-                    isChecked={configuration.notificateErrors || false}
+                    isChecked={configuration?.notificateErrors || false}
                     setIsChecked={(value) =>
                       handleConfigurationChange("notificateErrors", value)
                     }
@@ -541,7 +541,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
         <div>
           <div style={{ display: "grid", gap: "10px", marginTop: "10px" }}>
             <OptionsSwitchComponent
-              isChecked={configuration.addTags || false}
+              isChecked={configuration?.addTags || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("addTags", value)
               }
@@ -552,12 +552,12 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
               placeholder="Buscar etiqueta"
               typeInput="text"
               textButton="Crear"
-              value={configuration.tags || ""}
+              value={configuration?.tags || ""}
               setValue={(value) => handleConfigurationChange("tags", value)}
             />
           </div>
           <NotificationsConfirmComponent
-            mainState={configuration.notificateAfterExport || false}
+            mainState={configuration?.notificateAfterExport || false}
             setMainState={(value) =>
               handleConfigurationChange("notificateAfterExport", value)
             }
@@ -565,26 +565,26 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
             placeholder2="[00000000],..."
             type1="Gmail"
             type2="WhatsApp"
-            gmailTo={configuration.gmailTo || ""}
+            gmailTo={configuration?.gmailTo || ""}
             setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
-            gmailSubject={configuration.gmailSubject || ""}
+            gmailSubject={configuration?.gmailSubject || ""}
             setGmailSubject={(value) =>
               handleConfigurationChange("gmailSubject", value)
             }
-            gmailBody={configuration.gmailBody || ""}
+            gmailBody={configuration?.gmailBody || ""}
             setGmailBody={(value) =>
               handleConfigurationChange("gmailBody", value)
             }
-            state1={configuration.notificateGmail || false}
-            state1Value={configuration.gmailToNotificate || ""}
+            state1={configuration?.notificateGmail || false}
+            state1Value={configuration?.gmailToNotificate || ""}
             setState1={(value) =>
               handleConfigurationChange("notificateGmail", value)
             }
             setState1Value={(value) =>
               handleConfigurationChange("gmailToNotificate", value)
             }
-            state2={configuration.notificateWhatsApp || false}
-            state2Value={configuration.whatsAppToNotificate || ""}
+            state2={configuration?.notificateWhatsApp || false}
+            state2Value={configuration?.whatsAppToNotificate || ""}
             setState2={(value) =>
               handleConfigurationChange("notificateWhatsApp", value)
             }

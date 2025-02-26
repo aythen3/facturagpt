@@ -58,7 +58,7 @@ const Import = ({
 
                     <InputComponent
                         readOnly={true}
-                        value={configuration.folderLocation}
+                        value={configuration?.folderLocation}
                         setValue={(value) =>
                             handleConfigurationChange("folderLocation", value)
                         }
@@ -69,7 +69,7 @@ const Import = ({
                     />
                 </div>
 
-                <CustomAutomationsWrapper Icon={<ArrowSquare />} showContent={configuration.selectStandardExport}>
+                <CustomAutomationsWrapper Icon={<ArrowSquare />} showContent={configuration?.selectStandardExport}>
                     <div
                         className={styles.infoContainerWrapper}
                         // onClick={() =>
@@ -83,14 +83,14 @@ const Import = ({
                         <OptionsSwitchComponent
                             border={"none"}
                             marginLeft={"auto"}
-                            isChecked={configuration.selectStandardExport || false}
+                            isChecked={configuration?.selectStandardExport || false}
                             setIsChecked={(value) =>
                                 handleConfigurationChange("selectStandardExport", value)
                             }
                         />
                     </div>
                     <div
-                        className={`${styles.contentContainer} ${configuration.selectStandardExport ? styles.active : styles.disabled}`}
+                        className={`${styles.contentContainer} ${configuration?.selectStandardExport ? styles.active : styles.disabled}`}
                     >
                         <p
                             style={{ marginBottom: "10px" }}
@@ -100,7 +100,7 @@ const Import = ({
                         </p>
                         <CustomDropdown
                             options={["XML", "FacturaE", "UBL", "PEPPOL"]}
-                            selectedOption={configuration.selectedStandardExport || []}
+                            selectedOption={configuration?.selectedStandardExport || []}
                             height="31px"
                             textStyles={{
                                 fontWeight: 300,

@@ -51,7 +51,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
       {/* <div>
         <p>Nombre del archivo</p>
         <InputComponent
-          value={configuration.fileName}
+          value={configuration?.fileName}
           setValue={(value) => handleConfigurationChange("fileName", value)}
           placeholder="[fecha]-[empresa]-[importe]-[etiqueta]"
         />
@@ -96,7 +96,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
 
           <InputComponent
             readOnly={true}
-            value={configuration.folderLocation}
+            value={configuration?.folderLocation}
             setValue={(value) =>
               handleConfigurationChange("folderLocation", value)
             }
@@ -119,7 +119,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
 
         <CustomDropdown
           options={["FacturaE", "UBL", "PEPPOL"]}
-          selectedOption={configuration.formatType || []}
+          selectedOption={configuration?.formatType || []}
           height="31px"
           textStyles={{
             fontWeight: 300,
@@ -158,7 +158,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.enableNotifications || false}
+            isChecked={configuration?.enableNotifications || false}
             setIsChecked={(value) =>
               handleConfigurationChange("enableNotifications", value)
             }
@@ -176,7 +176,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.notificateAfterExport || false}
+              isChecked={configuration?.notificateAfterExport || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("notificateAfterExport", value)
               }
@@ -184,7 +184,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           </div>
           <NotificationsConfirmComponent
             disableSwitch={true}
-            mainState={configuration.notificateAfterExport || false}
+            mainState={configuration?.notificateAfterExport || false}
             setMainState={(value) =>
               handleConfigurationChange("notificateAfterExport", value)
             }
@@ -192,35 +192,35 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
             placeholder2="[00000000],..."
             type1="Gmail"
             type2="WhatsApp"
-            gmailTo={configuration.gmailTo || ""}
+            gmailTo={configuration?.gmailTo || ""}
             setGmailTo={(value) =>
               handleConfigurationChange("gmailTo", value)
             }
-            gmailSubject={configuration.gmailSubject || ""}
+            gmailSubject={configuration?.gmailSubject || ""}
             setGmailSubject={(value) =>
               handleConfigurationChange("gmailSubject", value)
             }
-            gmailBody={configuration.gmailBody || ""}
+            gmailBody={configuration?.gmailBody || ""}
             setGmailBody={(value) =>
               handleConfigurationChange("gmailBody", value)
             }
-            state1={configuration.notificateGmail || false}
-            state1Value={configuration.gmailToNotificate || ""}
+            state1={configuration?.notificateGmail || false}
+            state1Value={configuration?.gmailToNotificate || ""}
             setState1={(value) =>
               handleConfigurationChange("notificateGmail", value)
             }
             setState1Value={(value) =>
               handleConfigurationChange("gmailToNotificate", value)
             }
-            state2={configuration.notificateWhatsApp || false}
-            state2Value={configuration.whatsAppToNotificate || ""}
+            state2={configuration?.notificateWhatsApp || false}
+            state2Value={configuration?.whatsAppToNotificate || ""}
             setState2={(value) =>
               handleConfigurationChange("notificateWhatsApp", value)
             }
             setState2Value={(value) =>
               handleConfigurationChange("whatsAppToNotificate", value)
             }
-            whatsAppMessage={configuration.whatsAppMessage || ""}
+            whatsAppMessage={configuration?.whatsAppMessage || ""}
             setWhatsAppMessage={(value) =>
               handleConfigurationChange("whatsAppMessage", value)
             }
@@ -247,7 +247,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
               <OptionsSwitchComponent
                 border={"none"}
                 marginLeft={"auto"}
-                isChecked={configuration.notificateErrors || false}
+                isChecked={configuration?.notificateErrors || false}
                 setIsChecked={(value) =>
                   handleConfigurationChange("notificateErrors", value)
                 }
@@ -266,7 +266,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.selectStandardExport || false}
+              isChecked={configuration?.selectStandardExport || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("selectStandardExport", value)
               }
@@ -280,7 +280,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           </p>
           <CustomDropdown
             options={["XML", "FacturaE", "UBL", "PEPPOL"]}
-            selectedOption={configuration.selectedStandardExport || []}
+            selectedOption={configuration?.selectedStandardExport || []}
             height="31px"
             textStyles={{
               fontWeight: 300,
@@ -328,7 +328,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
 
             <InputComponent
               readOnly={true}
-              value={configuration.filesSource}
+              value={configuration?.filesSource}
               setValue={(value) =>
                 handleConfigurationChange("filesSource", value)
               }
@@ -366,18 +366,18 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.actionFrequency || false}
+            isChecked={configuration?.actionFrequency || false}
             setIsChecked={(value) =>
               handleConfigurationChange("actionFrequency", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.actionFrequency ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Imediatamente", "5 Minutos", "10 Minutos"]}
-            selectedOption={configuration.selectedActionFrequency || []}
+            selectedOption={configuration?.selectedActionFrequency || []}
             height="31px"
             textStyles={{
               fontWeight: 300,
@@ -405,18 +405,18 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.documentStatus || false}
+            isChecked={configuration?.documentStatus || false}
             setIsChecked={(value) =>
               handleConfigurationChange("documentStatus", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.documentStatus ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.documentStatus ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Pendiente", "Finalizado", "Anulado"]}
-            selectedOption={configuration.selectedDocumentStatus || []}
+            selectedOption={configuration?.selectedDocumentStatus || []}
             height="31px"
             textStyles={{
               fontWeight: 300,
@@ -448,19 +448,19 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.renameFiles || false}
+            isChecked={configuration?.renameFiles || false}
             setIsChecked={(value) =>
               handleConfigurationChange("renameFiles", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.renameFiles ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.renameFiles ? styles.active : styles.disabled}`}
         >
           <InputComponent
             placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
             typeInput="text"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
           />
         </div>
@@ -489,7 +489,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
 
             <InputComponent
               readOnly={true}
-              value={configuration.filesSource}
+              value={configuration?.filesSource}
               setValue={(value) =>
                 handleConfigurationChange("filesSource", value)
               }
@@ -518,14 +518,14 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.enableNotifications || false}
+            isChecked={configuration?.enableNotifications || false}
             setIsChecked={(value) =>
               handleConfigurationChange("enableNotifications", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.enableNotifications ? styles.active : styles.disabled}`}
         >
           <CustomAutomationsWrapper Icon={<WhiteCheck />}>
             <div className={styles.infoContainerWrapper}>
@@ -536,20 +536,20 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
               <OptionsSwitchComponent
                 border={"none"}
                 marginLeft={"auto"}
-                isChecked={configuration.notificateAfterExport || false}
+                isChecked={configuration?.notificateAfterExport || false}
                 setIsChecked={(value) =>
                   handleConfigurationChange("notificateAfterExport", value)
                 }
               />
             </div>
             <div
-              className={`${styles.contentContainer} ${configuration.notificateAfterExport ? styles.active : styles.disabled}`}
+              className={`${styles.contentContainer} ${configuration?.notificateAfterExport ? styles.active : styles.disabled}`}
             >
               {" "}
               <NotificationsConfirmComponent
                 configuration={configuration}
                 disableSwitch={true}
-                mainState={configuration.notificateAfterExport || false}
+                mainState={configuration?.notificateAfterExport || false}
                 setMainState={(value) =>
                   handleConfigurationChange("notificateAfterExport", value)
                 }
@@ -557,35 +557,35 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
                 placeholder2="[00000000],..."
                 type1="Gmail"
                 type2="WhatsApp"
-                gmailTo={configuration.gmailTo || ""}
+                gmailTo={configuration?.gmailTo || ""}
                 setGmailTo={(value) =>
                   handleConfigurationChange("gmailTo", value)
                 }
-                gmailSubject={configuration.gmailSubject || ""}
+                gmailSubject={configuration?.gmailSubject || ""}
                 setGmailSubject={(value) =>
                   handleConfigurationChange("gmailSubject", value)
                 }
-                gmailBody={configuration.gmailBody || ""}
+                gmailBody={configuration?.gmailBody || ""}
                 setGmailBody={(value) =>
                   handleConfigurationChange("gmailBody", value)
                 }
-                state1={configuration.notificateGmail || false}
-                state1Value={configuration.gmailToNotificate || ""}
+                state1={configuration?.notificateGmail || false}
+                state1Value={configuration?.gmailToNotificate || ""}
                 setState1={(value) =>
                   handleConfigurationChange("notificateGmail", value)
                 }
                 setState1Value={(value) =>
                   handleConfigurationChange("gmailToNotificate", value)
                 }
-                state2={configuration.notificateWhatsApp || false}
-                state2Value={configuration.whatsAppToNotificate || ""}
+                state2={configuration?.notificateWhatsApp || false}
+                state2Value={configuration?.whatsAppToNotificate || ""}
                 setState2={(value) =>
                   handleConfigurationChange("notificateWhatsApp", value)
                 }
                 setState2Value={(value) =>
                   handleConfigurationChange("whatsAppToNotificate", value)
                 }
-                whatsAppMessage={configuration.whatsAppMessage || ""}
+                whatsAppMessage={configuration?.whatsAppMessage || ""}
                 setWhatsAppMessage={(value) =>
                   handleConfigurationChange("whatsAppMessage", value)
                 }
@@ -613,7 +613,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
                 <OptionsSwitchComponent
                   border={"none"}
                   marginLeft={"auto"}
-                  isChecked={configuration.notificateErrors || false}
+                  isChecked={configuration?.notificateErrors || false}
                   setIsChecked={(value) =>
                     handleConfigurationChange("notificateErrors", value)
                   }
@@ -637,14 +637,14 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.selectStandardExport || false}
+            isChecked={configuration?.selectStandardExport || false}
             setIsChecked={(value) =>
               handleConfigurationChange("selectStandardExport", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.selectStandardExport ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.selectStandardExport ? styles.active : styles.disabled}`}
         >
           <p
             style={{ marginBottom: "10px" }}
@@ -654,7 +654,7 @@ const XmlFormAutomate = ({ type, configuration, setConfiguration }) => {
           </p>
           <CustomDropdown
             options={["XML", "FacturaE", "UBL", "PEPPOL"]}
-            selectedOption={configuration.selectedStandardExport || []}
+            selectedOption={configuration?.selectedStandardExport || []}
             height="31px"
             textStyles={{
               fontWeight: 300,

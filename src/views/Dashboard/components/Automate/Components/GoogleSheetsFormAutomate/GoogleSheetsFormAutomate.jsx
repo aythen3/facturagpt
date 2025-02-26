@@ -44,10 +44,10 @@ const GoogleSheetsFormAutomate = ({
     useState(false);
   const [checkboxStates, setCheckboxStates] = useState(() => {
     if (
-      configuration.generalConfiguration &&
-      Object.keys(configuration.generalConfiguration).length > 0
+      configuration?.generalConfiguration &&
+      Object.keys(configuration?.generalConfiguration).length > 0
     ) {
-      return configuration.generalConfiguration;
+      return configuration?.generalConfiguration;
     }
     return {
       facturas: facturas.reduce((acc, item) => ({ ...acc, [item]: false }), {}),
@@ -106,11 +106,11 @@ const GoogleSheetsFormAutomate = ({
   const addConnection = (connection) => {
     console.log("adding connection", connection);
     const updatedConnections = [
-      ...(configuration.googleSheetsConnectionData || []),
+      ...(configuration?.googleSheetsConnectionData || []),
       connection,
     ];
     handleConfigurationChange("googleSheetsConnectionData", updatedConnections);
-    if (!configuration.selectedGoogleSheetsConnection) {
+    if (!configuration?.selectedGoogleSheetsConnection) {
       handleConfigurationChange(
         "selectedGoogleSheetsConnection",
         connection.clientId
@@ -122,11 +122,11 @@ const GoogleSheetsFormAutomate = ({
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <HeaderFormsComponent
         placeholder="Añade una cuenta de Google Sheets"
-        selectedEmailConnection={configuration.selectedGoogleSheetsConnection}
+        selectedEmailConnection={configuration?.selectedGoogleSheetsConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedGoogleSheetsConnection", value)
         }
-        emailConnections={(configuration.googleSheetsConnectionData || []).map(
+        emailConnections={(configuration?.googleSheetsConnectionData || []).map(
           (connection) => connection.clientId
         )}
         action={() => setShowAddConnection(true)}
@@ -167,7 +167,7 @@ const GoogleSheetsFormAutomate = ({
 
               <InputComponent
                 readOnly={true}
-                value={configuration.folderLocation}
+                value={configuration?.folderLocation}
                 setValue={(value) =>
                   handleConfigurationChange("folderLocation", value)
                 }
@@ -324,7 +324,7 @@ const GoogleSheetsFormAutomate = ({
       {/* <CustomAutomationsWrapper Icon={<FrecuencyIcon />}>
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.frequency || false}
+            isChecked={configuration?.frequency || false}
             setIsChecked={(value) =>
               handleConfigurationChange("frequency", value)
             }
@@ -334,7 +334,7 @@ const GoogleSheetsFormAutomate = ({
           />
           <InputComponent
             typeInput="select"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
             options={[
               { value: "Inmediatamente", label: "Inmediatamente" },
@@ -365,18 +365,18 @@ const GoogleSheetsFormAutomate = ({
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.actionFrequency || false}
+            isChecked={configuration?.actionFrequency || false}
             setIsChecked={(value) =>
               handleConfigurationChange("actionFrequency", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.actionFrequency ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Imediatamente", "5 Minutos", "10 Minutos"]}
-            selectedOption={configuration.selectedActionFrequency || []}
+            selectedOption={configuration?.selectedActionFrequency || []}
             height="31px"
             textStyles={{
               fontWeight: 300,
@@ -395,7 +395,7 @@ const GoogleSheetsFormAutomate = ({
       <CustomAutomationsWrapper Icon={<ModifyState />}>
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.modifyState || false}
+            isChecked={configuration?.modifyState || false}
             setIsChecked={(value) =>
               handleConfigurationChange("modifyState", value)
             }
@@ -404,7 +404,7 @@ const GoogleSheetsFormAutomate = ({
           />
           <InputComponent
             typeInput="select"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
             options={[
               { value: "Pendiente", label: "Pendiente" },
@@ -426,18 +426,18 @@ const GoogleSheetsFormAutomate = ({
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.documentStatus || false}
+            isChecked={configuration?.documentStatus || false}
             setIsChecked={(value) =>
               handleConfigurationChange("documentStatus", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.documentStatus ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.documentStatus ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
             options={["Pendiente", "Finalizado", "Anulado"]}
-            selectedOption={configuration.selectedDocumentStatus || []}
+            selectedOption={configuration?.selectedDocumentStatus || []}
             height="31px"
             textStyles={{
               fontWeight: 300,
@@ -456,7 +456,7 @@ const GoogleSheetsFormAutomate = ({
       {/* <CustomAutomationsWrapper Icon={<RenameFile />}>
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.renameFile || false}
+            isChecked={configuration?.renameFile || false}
             setIsChecked={(value) =>
               handleConfigurationChange("renameFile", value)
             }
@@ -467,7 +467,7 @@ const GoogleSheetsFormAutomate = ({
           <InputComponent
             placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
             typeInput="text"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
           />
         </div>
@@ -489,19 +489,19 @@ const GoogleSheetsFormAutomate = ({
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.renameFiles || false}
+            isChecked={configuration?.renameFiles || false}
             setIsChecked={(value) =>
               handleConfigurationChange("renameFiles", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.renameFiles ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.renameFiles ? styles.active : styles.disabled}`}
         >
           <InputComponent
             placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
             typeInput="text"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
           />
         </div>
@@ -509,7 +509,7 @@ const GoogleSheetsFormAutomate = ({
       {/* <CustomAutomationsWrapper Icon={<CustomNotifications />}>
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.customNotification || false}
+            isChecked={configuration?.customNotification || false}
             setIsChecked={(value) =>
               handleConfigurationChange("customNotification", value)
             }
@@ -520,7 +520,7 @@ const GoogleSheetsFormAutomate = ({
           <CustomAutomationsWrapper Icon={<NotifyWhenUpdate />}>
             <div style={{ display: "grid", gap: "10px" }}>
               <OptionsSwitchComponent
-                isChecked={configuration.notifyWhenUpdate || false}
+                isChecked={configuration?.notifyWhenUpdate || false}
                 setIsChecked={(value) =>
                   handleConfigurationChange("notifyWhenUpdate", value)
                 }
@@ -529,7 +529,7 @@ const GoogleSheetsFormAutomate = ({
                 subtitle="Configura donde quieres recibir la notificación"
               />
               <NotificationsConfirmComponent
-                mainState={configuration.notificateAfterCreatingRow || false}
+                mainState={configuration?.notificateAfterCreatingRow || false}
                 setMainState={(value) =>
                   handleConfigurationChange("notificateAfterCreatingRow", value)
                 }
@@ -538,35 +538,35 @@ const GoogleSheetsFormAutomate = ({
                 placeholder2="[00000000],..."
                 type1="Gmail"
                 type2="WhatsApp"
-                gmailTo={configuration.gmailTo || ""}
+                gmailTo={configuration?.gmailTo || ""}
                 setGmailTo={(value) =>
                   handleConfigurationChange("gmailTo", value)
                 }
-                gmailSubject={configuration.gmailSubject || ""}
+                gmailSubject={configuration?.gmailSubject || ""}
                 setGmailSubject={(value) =>
                   handleConfigurationChange("gmailSubject", value)
                 }
-                gmailBody={configuration.gmailBody || ""}
+                gmailBody={configuration?.gmailBody || ""}
                 setGmailBody={(value) =>
                   handleConfigurationChange("gmailBody", value)
                 }
-                state1={configuration.notificateGmail || false}
-                state1Value={configuration.gmailToNotificate || ""}
+                state1={configuration?.notificateGmail || false}
+                state1Value={configuration?.gmailToNotificate || ""}
                 setState1={(value) =>
                   handleConfigurationChange("notificateGmail", value)
                 }
                 setState1Value={(value) =>
                   handleConfigurationChange("gmailToNotificate", value)
                 }
-                state2={configuration.notificateWhatsApp || false}
-                state2Value={configuration.whatsAppToNotificate || ""}
+                state2={configuration?.notificateWhatsApp || false}
+                state2Value={configuration?.whatsAppToNotificate || ""}
                 setState2={(value) =>
                   handleConfigurationChange("notificateWhatsApp", value)
                 }
                 setState2Value={(value) =>
                   handleConfigurationChange("whatsAppToNotificate", value)
                 }
-                whatsAppMessage={configuration.whatsAppMessage || ""}
+                whatsAppMessage={configuration?.whatsAppMessage || ""}
                 setWhatsAppMessage={(value) =>
                   handleConfigurationChange("whatsAppMessage", value)
                 }
@@ -580,7 +580,7 @@ const GoogleSheetsFormAutomate = ({
           <CustomAutomationsWrapper Icon={<CustomNotifications />}>
             <div style={{ display: "grid", gap: "10px" }}>
               <OptionsSwitchComponent
-                isChecked={configuration.activateValidations || false}
+                isChecked={configuration?.activateValidations || false}
                 setIsChecked={(value) =>
                   handleConfigurationChange("activateValidations", value)
                 }
@@ -609,14 +609,14 @@ const GoogleSheetsFormAutomate = ({
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.enableNotifications || false}
+            isChecked={configuration?.enableNotifications || false}
             setIsChecked={(value) =>
               handleConfigurationChange("enableNotifications", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.enableNotifications ? styles.active : styles.disabled}`}
         >
           <CustomAutomationsWrapper Icon={<NotifyWhenUpdate />}>
             <div className={styles.infoContainerWrapper}>
@@ -627,19 +627,19 @@ const GoogleSheetsFormAutomate = ({
               <OptionsSwitchComponent
                 border={"none"}
                 marginLeft={"auto"}
-                isChecked={configuration.notificateAfterExport || false}
+                isChecked={configuration?.notificateAfterExport || false}
                 setIsChecked={(value) =>
                   handleConfigurationChange("notificateAfterExport", value)
                 }
               />
             </div>
             <div
-              className={`${styles.contentContainer} ${configuration.notificateAfterExport ? styles.active : styles.disabled}`}
+              className={`${styles.contentContainer} ${configuration?.notificateAfterExport ? styles.active : styles.disabled}`}
             >
               <NotificationsConfirmComponent
                 configuration={configuration}
                 disableSwitch={true}
-                mainState={configuration.notificateAfterExport || false}
+                mainState={configuration?.notificateAfterExport || false}
                 setMainState={(value) =>
                   handleConfigurationChange("notificateAfterExport", value)
                 }
@@ -647,35 +647,35 @@ const GoogleSheetsFormAutomate = ({
                 placeholder2="[00000000],..."
                 type1="Gmail"
                 type2="WhatsApp"
-                gmailTo={configuration.gmailTo || ""}
+                gmailTo={configuration?.gmailTo || ""}
                 setGmailTo={(value) =>
                   handleConfigurationChange("gmailTo", value)
                 }
-                gmailSubject={configuration.gmailSubject || ""}
+                gmailSubject={configuration?.gmailSubject || ""}
                 setGmailSubject={(value) =>
                   handleConfigurationChange("gmailSubject", value)
                 }
-                gmailBody={configuration.gmailBody || ""}
+                gmailBody={configuration?.gmailBody || ""}
                 setGmailBody={(value) =>
                   handleConfigurationChange("gmailBody", value)
                 }
-                state1={configuration.notificateGmail || false}
-                state1Value={configuration.gmailToNotificate || ""}
+                state1={configuration?.notificateGmail || false}
+                state1Value={configuration?.gmailToNotificate || ""}
                 setState1={(value) =>
                   handleConfigurationChange("notificateGmail", value)
                 }
                 setState1Value={(value) =>
                   handleConfigurationChange("gmailToNotificate", value)
                 }
-                state2={configuration.notificateWhatsApp || false}
-                state2Value={configuration.whatsAppToNotificate || ""}
+                state2={configuration?.notificateWhatsApp || false}
+                state2Value={configuration?.whatsAppToNotificate || ""}
                 setState2={(value) =>
                   handleConfigurationChange("notificateWhatsApp", value)
                 }
                 setState2Value={(value) =>
                   handleConfigurationChange("whatsAppToNotificate", value)
                 }
-                whatsAppMessage={configuration.whatsAppMessage || ""}
+                whatsAppMessage={configuration?.whatsAppMessage || ""}
                 setWhatsAppMessage={(value) =>
                   handleConfigurationChange("whatsAppMessage", value)
                 }
@@ -703,7 +703,7 @@ const GoogleSheetsFormAutomate = ({
                 <OptionsSwitchComponent
                   border={"none"}
                   marginLeft={"auto"}
-                  isChecked={configuration.notificateErrors || false}
+                  isChecked={configuration?.notificateErrors || false}
                   setIsChecked={(value) =>
                     handleConfigurationChange("notificateErrors", value)
                   }
@@ -728,14 +728,14 @@ const GoogleSheetsFormAutomate = ({
           <OptionsSwitchComponent
             border={"none"}
             marginLeft={"auto"}
-            isChecked={configuration.selectStandardExport || false}
+            isChecked={configuration?.selectStandardExport || false}
             setIsChecked={(value) =>
               handleConfigurationChange("selectStandardExport", value)
             }
           />
         </div>
         <div
-          className={`${styles.contentContainer} ${configuration.selectStandardExport ? styles.active : styles.disabled}`}
+          className={`${styles.contentContainer} ${configuration?.selectStandardExport ? styles.active : styles.disabled}`}
         >
           <div className={styles.content_input}>
             <p className={styles.title_content_input}>
@@ -743,7 +743,7 @@ const GoogleSheetsFormAutomate = ({
             </p>
 
             <InputComponent
-              value={configuration.sheetId}
+              value={configuration?.sheetId}
               setValue={(value) => handleConfigurationChange("sheetId", value)}
               icon={<GoogleSheetsIcon style={{ width: 20, height: 20 }} />}
               placeholder="ID de la hoja"
@@ -778,7 +778,7 @@ const GoogleSheetsFormAutomate = ({
             </p>
 
             <InputComponent
-              value={configuration.sheetTitle}
+              value={configuration?.sheetTitle}
               setValue={(value) =>
                 handleConfigurationChange("sheetTitle", value)
               }

@@ -379,87 +379,88 @@ const PanelAutomate = ({
   useEffect(() => {
     if (automationData) {
       console.log("AUTOMATIONDATA LOADED", automationData);
-      if (automationData.automationData.type === "WhatsApp") {
+      if (automationData.type === "WhatsApp") {
         console.log(
           "Setting whatsAppConfiguration",
-          automationData.automationData
+          automationData
         );
         setWhatsAppConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "Gmail") {
+      } else if (automationData.type === "Gmail") {
         console.log(
           "Setting gmailAndOutlookConfiguration",
-          automationData.automationData
+          automationData
         );
         setGmailConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "Google Drive") {
+      } else if (automationData.type === "Google Drive") {
         console.log(
           "Setting googleDriveConfiguration",
-          automationData.automationData
+          automationData
         );
-        setGoogleDriveConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "esPúblico Gestiona") {
+        setGoogleDriveConfiguration(automationData);
+      } else if (automationData.type === "esPúblico Gestiona") {
         console.log(
           "Setting esPublicoGestionaConfiguration",
-          automationData.automationData
+          automationData
         );
-        setEsPublicoGestionaConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "Dropbox") {
+        setEsPublicoGestionaConfiguration(automationData);
+      } else if (automationData.type === "Dropbox") {
         console.log(
           "Setting dropBoxConfiguration",
-          automationData.automationData
+          automationData
         );
-        setDropBoxConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "Google Sheets") {
+        setDropBoxConfiguration(automationData);
+      } else if (automationData.type === "Google Sheets") {
         console.log(
           "Setting googleSheetsConfiguration",
-          automationData.automationData
+          automationData
         );
-        setGoogleSheetsConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "XML") {
-        console.log("Setting XML configuration", automationData.automationData);
+        setGoogleSheetsConfiguration(automationData);
+      } else if (automationData.type === "XML") {
+        console.log("Setting XML configuration", automationData);
         setXMLConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "Odoo") {
+      } else if (automationData.type === "Odoo") {
         console.log(
           "Setting Odoo configuration",
-          automationData.automationData
+          automationData
         );
-        setOdooConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "Wolters") {
+        setOdooConfiguration(automationData);
+      } else if (automationData.type === "Wolters") {
         console.log(
           "Setting Wolters configuration",
-          automationData.automationData
+          automationData
         );
-        setWoltersConfiguration(automationData.automationData);
+        setWoltersConfiguration(automationData);
       } else if (
         automationData.automationData.type === "whatsApp notifications"
       ) {
         console.log(
           "Setting whatsApp notifications configuration",
-          automationData.automationData
+          automationData
         );
-        setWhatsAppNotificationsConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "Agencia Tributaria") {
+        setWhatsAppNotificationsConfiguration(automationData);
+      } else if (automationData.type === "Agencia Tributaria") {
         console.log(
           "Setting Agencia Tributaria configuration",
-          automationData.automationData
+          automationData
         );
-        setAgenciaConfiguration(automationData.automationData);
-      } else if (automationData.automationData.type === "FTP") {
-        console.log("FTP configuration", automationData.automationData);
-        setFtpConfiguration(automationData.automationData);
+        setAgenciaConfiguration(automationData);
+      } else if (automationData.type === "FTP") {
+        console.log("FTP configuration", automationData);
+        setFtpConfiguration(automationData);
       }
     }
   }, [automationData]);
 
-  useEffect(() => {
-    console.log("type changed to", type);
-  }, [type]);
-  useEffect(() => {
-    console.log(
-      "gmailAndOutlookConfiguration changed to:",
-      gmailConfiguration
-    );
-  }, [gmailConfiguration]);
+  // useEffect(() => {
+  //   console.log("type changed to", type);
+  // }, [type]);
+
+  // useEffect(() => {
+  //   console.log(
+  //     "gmailAndOutlookConfiguration changed to:",
+  //     gmailConfiguration
+  //   );
+  // }, [gmailConfiguration]);
   //   ==============================================================================
   useEffect(() => {
     if (searchTerm === "") {
@@ -478,9 +479,9 @@ const PanelAutomate = ({
     setActiveCard(id);
   };
 
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("user", user);
+  // }, [user]);
 
   const handleAddAutomation = async () => {
     console.log("Adding automation...", type);

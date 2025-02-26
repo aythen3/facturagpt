@@ -12,6 +12,9 @@
   box-sizing: border-box;
   background-color: white;
   border: 1px solid #ececf1;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .description {

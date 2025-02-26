@@ -51,14 +51,14 @@ const Notification = ({
         <OptionsSwitchComponent
           border={"none"}
           marginLeft={"auto"}
-          isChecked={configuration.enableNotifications || false}
+          isChecked={configuration?.enableNotifications || false}
           setIsChecked={(value) =>
             handleConfigurationChange("enableNotifications", value)
           }
         />
       </div>
       <div
-        className={`${styles.contentContainer} ${configuration.enableNotifications ? styles.active : styles.disabled}`}
+        className={`${styles.contentContainer} ${configuration?.enableNotifications ? styles.active : styles.disabled}`}
       >
         <CustomAutomationsWrapper Icon={<WhiteCheck />}>
           <div className={styles.infoContainerWrapper}>
@@ -69,20 +69,20 @@ const Notification = ({
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.notificateAfterExport || false}
+              isChecked={configuration?.notificateAfterExport || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("notificateAfterExport", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.notificateAfterExport ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.notificateAfterExport ? styles.active : styles.disabled}`}
           >
             <NotificationsConfirmComponent
               configuration={configuration}
               icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
               disableSwitch={true}
-              mainState={configuration.notificateAfterExport || false}
+              mainState={configuration?.notificateAfterExport || false}
               setMainState={(value) =>
                 handleConfigurationChange("notificateAfterExport", value)
               }
@@ -90,35 +90,35 @@ const Notification = ({
               placeholder2="Número de telefóno o nombre del contacto"
               type1="Gmail"
               type2="WhatsApp"
-              gmailTo={configuration.gmailTo || ""}
+              gmailTo={configuration?.gmailTo || ""}
               setGmailTo={(value) =>
                 handleConfigurationChange("gmailTo", value)
               }
-              gmailSubject={configuration.gmailSubject || ""}
+              gmailSubject={configuration?.gmailSubject || ""}
               setGmailSubject={(value) =>
                 handleConfigurationChange("gmailSubject", value)
               }
-              gmailBody={configuration.gmailBody || ""}
+              gmailBody={configuration?.gmailBody || ""}
               setGmailBody={(value) =>
                 handleConfigurationChange("gmailBody", value)
               }
-              state1={configuration.notificateGmail || false}
-              state1Value={configuration.gmailToNotificate || ""}
+              state1={configuration?.notificateGmail || false}
+              state1Value={configuration?.gmailToNotificate || ""}
               setState1={(value) =>
                 handleConfigurationChange("notificateGmail", value)
               }
               setState1Value={(value) =>
                 handleConfigurationChange("gmailToNotificate", value)
               }
-              state2={configuration.notificateWhatsApp || false}
-              state2Value={configuration.whatsAppToNotificate || ""}
+              state2={configuration?.notificateWhatsApp || false}
+              state2Value={configuration?.whatsAppToNotificate || ""}
               setState2={(value) =>
                 handleConfigurationChange("notificateWhatsApp", value)
               }
               setState2Value={(value) =>
                 handleConfigurationChange("whatsAppToNotificate", value)
               }
-              whatsAppMessage={configuration.whatsAppMessage || ""}
+              whatsAppMessage={configuration?.whatsAppMessage || ""}
               setWhatsAppMessage={(value) =>
                 handleConfigurationChange("whatsAppMessage", value)
               }
@@ -146,7 +146,7 @@ const Notification = ({
               <OptionsSwitchComponent
                 border={"none"}
                 marginLeft={"auto"}
-                isChecked={configuration.notificateErrors || false}
+                isChecked={configuration?.notificateErrors || false}
                 setIsChecked={(value) =>
                   handleConfigurationChange("notificateErrors", value)
                 }

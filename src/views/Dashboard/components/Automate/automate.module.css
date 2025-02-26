@@ -34,7 +34,7 @@
   left: 50%;
   z-index: 9999;
   &.expand{
-    max-width: 540px;
+    max-width: 740px;
   }
 }
 

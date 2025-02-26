@@ -59,7 +59,7 @@ const Export = ({
                     <p className={styles.titleContentInput}>Remitentes</p>
 
                     <AddEmailsInput
-                        addedEmails={configuration.addedRemitents || []}
+                        addedEmails={configuration?.addedRemitents || []}
                         setAddedEmails={(value) =>
                             handleConfigurationChange("addedRemitents", value)
                         }
@@ -68,7 +68,7 @@ const Export = ({
                     <CheckboxWithText
                         color="#10A37F"
                         marginTop="10px"
-                        state={configuration.includeAllRemitents || false}
+                        state={configuration?.includeAllRemitents || false}
                         setState={(value) =>
                             handleConfigurationChange("includeAllRemitents", value)
                         }
@@ -80,7 +80,7 @@ const Export = ({
                     <p className={styles.titleContentInput}>Asunto Contiene</p>
 
                     <InputComponent
-                        value={configuration.subjectKeyWords}
+                        value={configuration?.subjectKeyWords}
                         setValue={(value) =>
                             handleConfigurationChange("subjectKeyWords", value)
                         }
@@ -91,7 +91,7 @@ const Export = ({
                     <CheckboxWithText
                         marginTop="10px"
                         color="#10A37F"
-                        state={configuration.subjectExactMatch || false}
+                        state={configuration?.subjectExactMatch || false}
                         setState={(value) =>
                             handleConfigurationChange("subjectExactMatch", value)
                         }
@@ -102,7 +102,7 @@ const Export = ({
                 <div className={styles.contentInput}>
                     <p className={styles.titleContentInput}>Mensaje Contiene</p>
                     <InputComponent
-                        value={configuration.bodyKeyWords}
+                        value={configuration?.bodyKeyWords}
                         setValue={(value) =>
                             handleConfigurationChange("bodyKeyWords", value)
                         }
@@ -113,7 +113,7 @@ const Export = ({
                     <CheckboxWithText
                         color="#10A37F"
                         marginTop="10px"
-                        state={configuration.bodyExactMatch || false}
+                        state={configuration?.bodyExactMatch || false}
                         setState={(value) =>
                             handleConfigurationChange("bodyExactMatch", value)
                         }
@@ -127,21 +127,21 @@ const Export = ({
                     <CheckboxWithText
                         marginTop="10px"
                         color="#10A37F"
-                        state={configuration.attachmentExactMatch || false}
+                        state={configuration?.attachmentExactMatch || false}
                         setState={(value) =>
                             handleConfigurationChange("attachmentExactMatch", value)
                         }
                         text="Incluir todos los tipos de archivos"
                     />
                     <div className={styles.cardTypesContainer}>
-                        {(configuration.selectedTypes || []).map((type) => (
+                        {(configuration?.selectedTypes || []).map((type) => (
                             <div className={styles.singleTypeCard} key={type}>
                                 <span>{type}</span>
                                 <div
                                     onClick={() =>
                                         handleConfigurationChange(
                                             "selectedTypes",
-                                            (configuration.selectedTypes || []).filter(
+                                            (configuration?.selectedTypes || []).filter(
                                                 (option) => option !== type
                                             )
                                         )
@@ -155,7 +155,7 @@ const Export = ({
                     </div>
                     <CustomDropdown
                         options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-                        selectedOption={configuration.selectedTypes || []}
+                        selectedOption={configuration?.selectedTypes || []}
                         height="31px"
                         textStyles={{
                             fontWeight: 300,
@@ -167,11 +167,11 @@ const Export = ({
                         setSelectedOption={(selected) =>
                             handleConfigurationChange(
                                 "selectedTypes",
-                                configuration.selectedTypes?.includes(selected)
-                                    ? configuration.selectedTypes.filter(
+                                configuration?.selectedTypes?.includes(selected)
+                                    ? configuration?.selectedTypes.filter(
                                         (option) => option !== selected
                                     )
-                                    : [...(configuration.selectedTypes || []), selected]
+                                    : [...(configuration?.selectedTypes || []), selected]
                             )
                         }
                     />
@@ -199,26 +199,26 @@ const Export = ({
                         <OptionsSwitchComponent
                             border={"none"}
                             marginLeft={"auto"}
-                            isChecked={configuration.renameFiles || false}
+                            isChecked={configuration?.renameFiles || false}
                             setIsChecked={(value) =>
                                 handleConfigurationChange("renameFiles", value)
                             }
                         />
                     </div>
                     <div
-                        className={`${styles.contentContainer} ${configuration.renameFiles ? styles.active : styles.disabled}`}
+                        className={`${styles.contentContainer} ${configuration?.renameFiles ? styles.active : styles.disabled}`}
                     >
                         <InputComponent
                             placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
                             typeInput="text"
-                            value={configuration.fileName || ""}
+                            value={configuration?.fileName || ""}
                             setValue={(value) => handleConfigurationChange("fileName", value)}
                         />
                     </div>
                 </CustomAutomationsWrapper>
 
 
-                <CustomAutomationsWrapper Icon={<WhiteClock />} showContent={configuration.actionFrequency}>
+                <CustomAutomationsWrapper Icon={<WhiteClock />} showContent={configuration?.actionFrequency}>
                     <div className={styles.infoContainerWrapper}>
                         <div
                             className={styles.infoContainer}
@@ -238,18 +238,18 @@ const Export = ({
                         <OptionsSwitchComponent
                             border={"none"}
                             marginLeft={"auto"}
-                            isChecked={configuration.actionFrequency || false}
+                            isChecked={configuration?.actionFrequency || false}
                             setIsChecked={(value) =>
                                 handleConfigurationChange("actionFrequency", value)
                             }
                         />
                     </div>
                     <div
-                        className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
+                        className={`${styles.contentContainer} ${configuration?.actionFrequency ? styles.active : styles.disabled}`}
                     >
                         <CustomDropdown
                             options={["Imediatamente", "5 Minutos", "10 Minutos"]}
-                            selectedOption={configuration.selectedActionFrequency || []}
+                            selectedOption={configuration?.selectedActionFrequency || []}
                             height="31px"
                             textStyles={{
                                 fontWeight: 300,

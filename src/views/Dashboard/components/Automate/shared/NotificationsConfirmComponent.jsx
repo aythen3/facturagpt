@@ -84,11 +84,11 @@ const NotificationsConfirmComponent = ({
       {state1 && (
         <>
           <HeaderFormsComponent
-            selectedEmailConnection={configuration.selectedEmailConnection}
+            selectedEmailConnection={configuration?.selectedEmailConnection}
             setSelectedEmailConnection={(value) =>
               handleConfigurationChange("selectedEmailConnection", value)
             }
-            emailConnections={(configuration.emailConnectionData || []).map(
+            emailConnections={(configuration?.emailConnectionData || []).map(
               (connection) => connection.email
             )}
             action={() => setShowAddConnection(true)}
@@ -139,11 +139,11 @@ const NotificationsConfirmComponent = ({
       {state2 && (
         <>
           <HeaderFormsComponent
-            selectedEmailConnection={configuration.selectedEmailConnection}
+            selectedEmailConnection={configuration?.selectedEmailConnection}
             setSelectedEmailConnection={(value) =>
               handleConfigurationChange("selectedWhatsappConnection", value)
             }
-            emailConnections={(configuration.emailConnectionData || []).map(
+            emailConnections={(configuration?.emailConnectionData || []).map(
               (connection) => connection.email
             )}
             action={() => setShowAddConnection(true)}
