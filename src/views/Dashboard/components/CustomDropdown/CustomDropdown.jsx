@@ -28,7 +28,9 @@ const CustomDropdown = ({
   customStyles,
   stateStripe,
   biggerWidth,
+  acceptButton = false,
 }) => {
+  console.log(textStyles);
   const { t } = useTranslation("dashboard");
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +86,10 @@ const CustomDropdown = ({
         }}
       >
         <div
-          style={{ textStyles, color: stateStripe && selectedColor }}
+          style={{
+            ...textStyles,
+            color: (stateStripe && selectedColor) || textStyles.colorHeader,
+          }}
           className={styles.dropdownHeader}
         >
           {Array.isArray(selectedOption) && selectedOption.length > 0 ? (
@@ -115,6 +120,7 @@ const CustomDropdown = ({
             }}
           />
         )}
+        {acceptButton && <div className={styles.acceptButton}>Aceptar</div>}
       </div>
       {isOpen && (
         <div
