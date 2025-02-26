@@ -9,7 +9,7 @@
   align-items: center;
   gap: 22px;
   padding: 0;
-  height: 45px;
+  /* height: 45px; */
 }
 .infoContainer {
   display: flex;
@@ -30,11 +30,11 @@
   }
 }
 
-.contentContainer{
-  &.active{
+.contentContainer {
+  &.active {
     display: block;
   }
-  &.disabled{
+  &.disabled {
     display: none;
   }
 }
@@ -51,6 +51,14 @@
   line-height: 1;
   margin-top: 15px;
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .optionsContentInput {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 }
 
 .cardTypesContainer {
@@ -92,4 +100,208 @@
   font-weight: 300;
   font-size: 11;
   color: #18181b;
+}
+.quantityContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  .quantityContent {
+    gap: 10px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    color: #1e0045;
+    input {
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+      border-radius: 4px;
+      padding: 0px 18px;
+      font-family: "Inter", sans-serif;
+      border: none;
+      outline: none;
+    }
+  }
+  p {
+    margin: 0;
+    height: fit-content;
+  }
+}
+.currencyContainer {
+  color: #264f88;
+  font-weight: bold;
+  border-bottom: 2px solid #264f88;
+  gap: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  div {
+    gap: 5px;
+  }
+}
+
+.currencyDropdownButton {
+  display: flex;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+.chevronIcon {
+  margin-top: 3px;
+}
+.currencyDropdown {
+  position: absolute;
+  top: 97%;
+  left: -4%;
+  width: 108%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  color: #264f88;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  overflow: hidden;
+
+  span {
+    display: flex;
+    padding: 1px 2px;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    justify-content: flex-start;
+    &:hover {
+      background-color: #ececf1;
+    }
+  }
+}
+
+.conditionsContainer {
+  display: flex;
+  padding: 5px 9px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 23px;
+  align-self: stretch;
+  border-radius: 5px;
+  background: #f4f4f4;
+  .conditions {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    flex-wrap: wrap;
+    .condition {
+      display: flex;
+      padding: 3px 12px;
+      align-items: center;
+      gap: 8px;
+      border-radius: 30px;
+      border: 1px solid #e0e3e6;
+      background: #fff;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      -ms-border-radius: 30px;
+      -o-border-radius: 30px;
+      color: #2a2e32;
+      font-family: Inter;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; /* 250% */
+    }
+  }
+  input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px; /* 150% */
+    box-sizing: border-box;
+    &::placeholder {
+      color: #71717a;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 21px; /* 150% */
+    }
+  }
+}
+
+.labelName input {
+  display: flex;
+  height: 32px;
+  padding: 6px 8px;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  outline: none;
+  color: #000000;
+  margin: 15px 0;
+  &::placeholder {
+    color: #000000;
+  }
+}
+
+.filtersLabelOptions {
+  border-left: 1px solid #c3c3c3;
+  display: flex;
+  padding-left: 22px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+}
+.buttonAddFilter {
+  display: flex;
+  height: 27px;
+  padding: 14px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbcbcb;
+  background: #fff;
+  cursor: pointer;
+}
+.newCategory {
+  color: #18181b;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22.4px; /* 22.4px */
+  span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
+.columnCategory {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.newCategoryRowDropdown {
+  display: flex;
+  gap: 20px;
+}
+.stateCategoryRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

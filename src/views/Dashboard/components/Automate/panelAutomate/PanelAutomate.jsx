@@ -27,6 +27,7 @@ import DropboxFormCreateAutomate from "../Components/DropboxFormCreateAutomate/D
 import HoldedFormAutomate from "../Components/HoldedFormAutomate/HoldedFormAutomate";
 import FTPFormAutomate from "../Components/FTPFormAutomate/FTPFormAutomate";
 import TelematelFormAutomate from "../Components/TelamatelFormAutomate/TelematelFormAutomate";
+import SelectCurrencyPopup from "../../SelectCurrencyPopup/SelectCurrencyPopup";
 
 const PanelAutomate = ({
   type,
@@ -43,6 +44,8 @@ const PanelAutomate = ({
   const [dataFilter, setDataFilter] = useState(data || newData);
   const [filterType, setfilterType] = useState("Todas");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
   const handleDataFilter = (searchTerm) => {
     const filteredData = data.filter((card) =>
       card.automateName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -52,55 +55,53 @@ const PanelAutomate = ({
 
   //   ================================ INPUT CONFIGS =====================================
 
-  const [gmailConfiguration, setGmailConfiguration] =
-    useState({
-      folderLocation: "/Inicio/",
-      includeAllRemitents: true,
-      subjectExactMatch: true,
-      bodyExactMatch: true,
-      attachmentExactMatch: true,
-      selectedTypes: [],
-      addedRemitents: [],
-      subjectKeyWords: [],
-      bodyKeyWords: [],
-      emailConnectionData: [],
-      selectedEmailConnection: "",
-      fileName: "",
-      tags: "",
-      notificateAfterExport: false,
-      notificateGmail: false,
-      notificateWhatsApp: false,
-      gmailTo: "",
-      gmailSubject: "",
-      gmailBody: "",
-      whatsAppToNotificate: "",
-      whatsAppMessage: "",
-    });
+  const [gmailConfiguration, setGmailConfiguration] = useState({
+    folderLocation: "/Inicio/",
+    includeAllRemitents: true,
+    subjectExactMatch: true,
+    bodyExactMatch: true,
+    attachmentExactMatch: true,
+    selectedTypes: [],
+    addedRemitents: [],
+    subjectKeyWords: [],
+    bodyKeyWords: [],
+    emailConnectionData: [],
+    selectedEmailConnection: "",
+    fileName: "",
+    tags: "",
+    notificateAfterExport: false,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+  });
 
-  const [outlookConfiguration, setOutlookConfiguration] =
-    useState({
-      folderLocation: "/Inicio/",
-      includeAllRemitents: true,
-      subjectExactMatch: true,
-      bodyExactMatch: true,
-      attachmentExactMatch: true,
-      selectedTypes: [],
-      addedRemitents: [],
-      subjectKeyWords: [],
-      bodyKeyWords: [],
-      emailConnectionData: [],
-      selectedEmailConnection: "",
-      fileName: "",
-      tags: "",
-      notificateAfterExport: false,
-      notificateGmail: false,
-      notificateWhatsApp: false,
-      gmailTo: "",
-      gmailSubject: "",
-      gmailBody: "",
-      whatsAppToNotificate: "",
-      whatsAppMessage: "",
-    });
+  const [outlookConfiguration, setOutlookConfiguration] = useState({
+    folderLocation: "/Inicio/",
+    includeAllRemitents: true,
+    subjectExactMatch: true,
+    bodyExactMatch: true,
+    attachmentExactMatch: true,
+    selectedTypes: [],
+    addedRemitents: [],
+    subjectKeyWords: [],
+    bodyKeyWords: [],
+    emailConnectionData: [],
+    selectedEmailConnection: "",
+    fileName: "",
+    tags: "",
+    notificateAfterExport: false,
+    notificateGmail: false,
+    notificateWhatsApp: false,
+    gmailTo: "",
+    gmailSubject: "",
+    gmailBody: "",
+    whatsAppToNotificate: "",
+    whatsAppMessage: "",
+  });
 
   const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({
     type: "WhatsApp",
@@ -359,8 +360,6 @@ const PanelAutomate = ({
     fileName: "",
   });
 
-  
-
   const [telematelConfiguration, setTelematelConfiguration] = useState({
     type: "Telematel",
     filesSource: "/Telematel",
@@ -451,17 +450,8 @@ const PanelAutomate = ({
     }
   }, [automationData]);
 
-  // useEffect(() => {
-  //   console.log("type changed to", type);
-  // }, [type]);
 
-  // useEffect(() => {
-  //   console.log(
-  //     "gmailAndOutlookConfiguration changed to:",
-  //     gmailConfiguration
-  //   );
-  // }, [gmailConfiguration]);
-  //   ==============================================================================
+
   useEffect(() => {
     if (searchTerm === "") {
       setDataFilter(data || newData);
@@ -840,6 +830,9 @@ const PanelAutomate = ({
                         type={type}
                         configuration={telematelConfiguration}
                         setConfiguration={setTelematelConfiguration}
+                        setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+                        setSelectedCurrency={setSelectedCurrency}
+                        selectedCurrency={selectedCurrency}
                       />
                     );
                   default:
@@ -848,7 +841,13 @@ const PanelAutomate = ({
               })()}
             </div>
           </div>
-
+          {showSelectCurrencyPopup && (
+            <SelectCurrencyPopup
+              setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+              setSelectedCurrency={setSelectedCurrency}
+              selectedCurrency={selectedCurrency}
+            />
+          )}
           {/* <div className={styles.container_buttons_footer}>
             <button
               onClick={close}

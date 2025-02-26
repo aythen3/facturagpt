@@ -6,7 +6,7 @@ import InputWithTitle from "../InputWithTitle/InputWithTitle";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import CheckboxWithText from "../CheckboxWithText/CheckboxWithText";
 import minusIcon from "../../assets/minusIcon.svg";
-import { FaChevronDown } from "react-icons/fa";
+import { ReactComponent as GrayArrow } from "../../assets/arrowDownBold.svg";
 import searchGray from "../../assets/searchGray.svg";
 import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
 
@@ -216,7 +216,7 @@ const FilesFilterModal = ({
                   <span style={{ textTransform: "uppercase" }}>
                     {selectedCurrency}
                   </span>
-                  <FaChevronDown
+                  <GrayArrow
                     className={styles.chevronIcon}
                     color="#71717A"
                     size={12}
