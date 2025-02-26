@@ -107,3 +107,11 @@
   align-items: center;
   gap: 10px;
 }
+.acceptButton {
+  color: #222222;
+  font-size: 14px;
+  font-family: Roboto;
+  font-weight: 600;
+  line-height: 20.02px;
+  word-wrap: break-word;
+}

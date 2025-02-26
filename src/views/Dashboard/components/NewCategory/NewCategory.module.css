@@ -1,0 +1,29 @@
+.NewCategoryContainer {
+  background-color: #f5f5f5;
+  padding: 0 40px 22px 40px;
+  > div {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    p {
+      margin: 0;
+    }
+    input {
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+      border-radius: 4px;
+      padding: 0px 18px;
+      font-family: "Inter", sans-serif;
+      outline: none;
+      border: none;
+      box-sizing: border-box;
+    }
+  }
+}
