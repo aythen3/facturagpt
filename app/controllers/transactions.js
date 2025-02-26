@@ -3,6 +3,7 @@ const {
   deleteTransactions,
   deleteProductFromTransactions,
   getTransactionById,
+  automateTransactions,
 } = require("../services/transactions");
 const { catchedAsync } = require("../utils/err");
 
@@ -130,13 +131,22 @@ const deleteProductFromTransactionsController = async (req, res) => {
   }
 };
 
+
+
+const automateTransactionsController = async (req, res) => {
+  try {
+    // const { transactionId } = req.body;
+
+    console.log('HELLO WORLD AUTOMATING SYSTEM')
+  } catch (error) {
+    console.error("Error en automateTransactionsController:", error);
+  }
+};
+
 module.exports = {
-  getAllTransactionsByClientController: catchedAsync(
-    getAllTransactionsByClientController
-  ),
+  getAllTransactionsByClientController: catchedAsync( getAllTransactionsByClientController ),
   deleteTransactionsController: catchedAsync(deleteTransactionsController),
-  deleteProductFromTransactionsController: catchedAsync(
-    deleteProductFromTransactionsController
-  ),
+  deleteProductFromTransactionsController: catchedAsync( deleteProductFromTransactionsController ),
   getTransactionByIdController: catchedAsync(getTransactionByIdController),
+  automateTransactionsController: catchedAsync(automateTransactionsController),
 };

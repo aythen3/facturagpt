@@ -37,11 +37,11 @@ const GoogleDriveFormCreateAutomate = ({
   const addConnection = (connection) => {
     console.log("adding connection", connection);
     const updatedConnections = [
-      ...(configuration.googleDriveConnectionData || []),
+      ...(configuration?.googleDriveConnectionData || []),
       connection,
     ];
     handleConfigurationChange("googleDriveConnectionData", updatedConnections);
-    if (!configuration.selectedGoogleDriveConnection) {
+    if (!configuration?.selectedGoogleDriveConnection) {
       handleConfigurationChange(
         "selectedGoogleDriveConnection",
         connection.clientId
@@ -53,11 +53,11 @@ const GoogleDriveFormCreateAutomate = ({
     <div>
       <HeaderFormsComponent
         placeholder="Añade una cuenta de Google Drive"
-        selectedEmailConnection={configuration.selectedGoogleDriveConnection}
+        selectedEmailConnection={configuration?.selectedGoogleDriveConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedGoogleDriveConnection", value)
         }
-        emailConnections={(configuration.googleDriveConnectionData || []).map(
+        emailConnections={(configuration?.googleDriveConnectionData || []).map(
           (connection) => connection.clientId
         )}
         action={() => setShowAddConnection(true)}
@@ -69,7 +69,7 @@ const GoogleDriveFormCreateAutomate = ({
         <p>Ubicación</p>
         <InputComponent
           readOnly={true}
-          value={configuration.folderLocation}
+          value={configuration?.folderLocation}
           setValue={(value) =>
             handleConfigurationChange("folderLocation", value)
           }
@@ -85,7 +85,7 @@ const GoogleDriveFormCreateAutomate = ({
           </p>
 
           <InputComponent
-            value={configuration.filesKeyWords}
+            value={configuration?.filesKeyWords}
             setValue={(value) =>
               handleConfigurationChange("filesKeyWords", value)
             }
@@ -95,7 +95,7 @@ const GoogleDriveFormCreateAutomate = ({
           <CheckboxWithText
             marginTop="10px"
             color="#10A37F"
-            state={configuration.filesExactMatch || false}
+            state={configuration?.filesExactMatch || false}
             setState={(value) =>
               handleConfigurationChange("filesExactMatch", value)
             }
@@ -109,21 +109,21 @@ const GoogleDriveFormCreateAutomate = ({
           <CheckboxWithText
             marginTop="10px"
             color="#10A37F"
-            state={configuration.allowAllFileTypes || false}
+            state={configuration?.allowAllFileTypes || false}
             setState={(value) =>
               handleConfigurationChange("allowAllFileTypes", value)
             }
             text="Incluir todos los tipos de archivos"
           />
           <div className={styles.cardTypesContainer}>
-            {(configuration.selectedFileTypes || []).map((type) => (
+            {(configuration?.selectedFileTypes || []).map((type) => (
               <div className={styles.singleTypeCard} key={type}>
                 <span>{type}</span>
                 <div
                   onClick={() =>
                     handleConfigurationChange(
                       "selectedFileTypes",
-                      (configuration.selectedFileTypes || []).filter(
+                      (configuration?.selectedFileTypes || []).filter(
                         (option) => option !== type
                       )
                     )
@@ -137,7 +137,7 @@ const GoogleDriveFormCreateAutomate = ({
           </div>
           <CustomDropdown
             options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-            selectedOption={configuration.selectedFileTypes || []}
+            selectedOption={configuration?.selectedFileTypes || []}
             height="31px"
             textStyles={{
               fontWeight: 300,
@@ -149,11 +149,11 @@ const GoogleDriveFormCreateAutomate = ({
             setSelectedOption={(selected) =>
               handleConfigurationChange(
                 "selectedFileTypes",
-                configuration.selectedFileTypes?.includes(selected)
-                  ? configuration.selectedFileTypes.filter(
+                configuration?.selectedFileTypes?.includes(selected)
+                  ? configuration?.selectedFileTypes.filter(
                       (option) => option !== selected
                     )
-                  : [...(configuration.selectedFileTypes || []), selected]
+                  : [...(configuration?.selectedFileTypes || []), selected]
               )
             }
           />
@@ -162,7 +162,7 @@ const GoogleDriveFormCreateAutomate = ({
         <div style={{ marginTop: "24px" }}>
           <div style={{ display: "grid", gap: "10px" }}>
             <OptionsSwitchComponent
-              isChecked={configuration.changeFileName || false}
+              isChecked={configuration?.changeFileName || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("changeFileName", value)
               }
@@ -172,12 +172,12 @@ const GoogleDriveFormCreateAutomate = ({
             <InputComponent
               placeholder="[fecha]-[empresa]-[importe]-[etiqueta]"
               typeInput="text"
-              value={configuration.fileName || ""}
+              value={configuration?.fileName || ""}
               setValue={(value) => handleConfigurationChange("fileName", value)}
             />
           </div>
           <NotificationsConfirmComponent
-            mainState={configuration.notificateAfterExport || false}
+            mainState={configuration?.notificateAfterExport || false}
             setMainState={(value) =>
               handleConfigurationChange("notificateAfterExport", value)
             }
@@ -185,26 +185,26 @@ const GoogleDriveFormCreateAutomate = ({
             placeholder2="[00000000],..."
             type1="Gmail"
             type2="WhatsApp"
-            gmailTo={configuration.gmailTo || ""}
+            gmailTo={configuration?.gmailTo || ""}
             setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
-            gmailSubject={configuration.gmailSubject || ""}
+            gmailSubject={configuration?.gmailSubject || ""}
             setGmailSubject={(value) =>
               handleConfigurationChange("gmailSubject", value)
             }
-            gmailBody={configuration.gmailBody || ""}
+            gmailBody={configuration?.gmailBody || ""}
             setGmailBody={(value) =>
               handleConfigurationChange("gmailBody", value)
             }
-            state1={configuration.notificateGmail || false}
-            state1Value={configuration.gmailToNotificate || ""}
+            state1={configuration?.notificateGmail || false}
+            state1Value={configuration?.gmailToNotificate || ""}
             setState1={(value) =>
               handleConfigurationChange("notificateGmail", value)
             }
             setState1Value={(value) =>
               handleConfigurationChange("gmailToNotificate", value)
             }
-            state2={configuration.notificateWhatsApp || false}
-            state2Value={configuration.whatsAppToNotificate || ""}
+            state2={configuration?.notificateWhatsApp || false}
+            state2Value={configuration?.whatsAppToNotificate || ""}
             setState2={(value) =>
               handleConfigurationChange("notificateWhatsApp", value)
             }

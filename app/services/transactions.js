@@ -220,10 +220,21 @@ const deleteProductFromTransactions = async ({ transactionId, productRef }) => {
   }
 };
 
+
+
+const automateTransactions = async () => {
+  try {
+    console.log('HELLO WORLD AUTOMATING SYSTEM')
+  } catch (error) {
+    console.error("Error en automateTransactions:", error);
+  }
+};
+
 module.exports = {
   addTransaction,
   getAllTransactionsByClient,
   deleteTransactions,
   deleteProductFromTransactions,
   getTransactionById,
+  automateTransactions,
 };

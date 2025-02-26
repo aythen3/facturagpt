@@ -40,18 +40,18 @@ const GPT = ({
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration.documentStatus || false}
+              isChecked={configuration?.documentStatus || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("documentStatus", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration.documentStatus ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.documentStatus ? styles.active : styles.disabled}`}
           >
             <CustomDropdown
               options={["Pendiente", "Finalizado", "Anulado"]}
-              selectedOption={configuration.selectedDocumentStatus || []}
+              selectedOption={configuration?.selectedDocumentStatus || []}
               height="31px"
               textStyles={{
                 fontWeight: 300,

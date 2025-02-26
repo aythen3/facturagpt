@@ -24,12 +24,12 @@ const WhatsAppFormCreateAutomate = ({
   const addConnection = (connection) => {
     console.log("adding wp connection", connection);
     const updatedConnections = [
-      ...(configuration.whatsAppConnectionData || []),
+      ...(configuration?.whatsAppConnectionData || []),
       connection,
     ];
     console.log("setting whatsAppConnectionData", updatedConnections);
     handleConfigurationChange("whatsAppConnectionData", updatedConnections);
-    if (!configuration.selectedWhatsAppConnection) {
+    if (!configuration?.selectedWhatsAppConnection) {
       handleConfigurationChange(
         "selectedWhatsAppConnection",
         connection.accountId
@@ -48,11 +48,11 @@ const WhatsAppFormCreateAutomate = ({
     <div>
       <HeaderFormsComponent
         placeholder="Añade una cuenta de WhatsApp"
-        selectedEmailConnection={configuration.selectedWhatsAppConnection}
+        selectedEmailConnection={configuration?.selectedWhatsAppConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedWhatsAppConnection", value)
         }
-        emailConnections={(configuration.whatsAppConnectionData || []).map(
+        emailConnections={(configuration?.whatsAppConnectionData || []).map(
           (connection) => connection.accountId
         )}
         action={() => setShowAddConnection(true)}
@@ -64,7 +64,7 @@ const WhatsAppFormCreateAutomate = ({
         <p>Ubicación</p>
         <InputComponent
           readOnly={true}
-          value={configuration.folderLocation}
+          value={configuration?.folderLocation}
           setValue={(value) =>
             handleConfigurationChange("folderLocation", value)
           }
@@ -86,7 +86,7 @@ const WhatsAppFormCreateAutomate = ({
             action={() => {
               console.log("adding phone", phoneNumber);
               handleConfigurationChange("phoneNumbers", [
-                ...configuration.phoneNumbers,
+                ...configuration?.phoneNumbers,
                 phoneNumber,
               ]);
               setPhoneNumber("");
@@ -100,14 +100,14 @@ const WhatsAppFormCreateAutomate = ({
               </p>
             )}
             {configuration?.phoneNumbers?.length > 0 &&
-              configuration.phoneNumbers.map((number) => (
+              configuration?.phoneNumbers.map((number) => (
                 <p className={styles.singlePhoneNumber}>
                   {number}
                   <div
                     onClick={() =>
                       handleConfigurationChange(
                         "phoneNumbers",
-                        (configuration.phoneNumbers || []).filter(
+                        (configuration?.phoneNumbers || []).filter(
                           (option) => option !== number
                         )
                       )
@@ -119,7 +119,7 @@ const WhatsAppFormCreateAutomate = ({
               ))}
           </div>
           <NotificationsConfirmComponent
-            mainState={configuration.notificateAfterExport || false}
+            mainState={configuration?.notificateAfterExport || false}
             setMainState={(value) =>
               handleConfigurationChange("notificateAfterExport", value)
             }
@@ -127,26 +127,26 @@ const WhatsAppFormCreateAutomate = ({
             placeholder2="[00000000],..."
             type1="Gmail"
             type2="WhatsApp"
-            gmailTo={configuration.gmailTo || ""}
+            gmailTo={configuration?.gmailTo || ""}
             setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
-            gmailSubject={configuration.gmailSubject || ""}
+            gmailSubject={configuration?.gmailSubject || ""}
             setGmailSubject={(value) =>
               handleConfigurationChange("gmailSubject", value)
             }
-            gmailBody={configuration.gmailBody || ""}
+            gmailBody={configuration?.gmailBody || ""}
             setGmailBody={(value) =>
               handleConfigurationChange("gmailBody", value)
             }
-            state1={configuration.notificateGmail || false}
-            state1Value={configuration.gmailToNotificate || ""}
+            state1={configuration?.notificateGmail || false}
+            state1Value={configuration?.gmailToNotificate || ""}
             setState1={(value) =>
               handleConfigurationChange("notificateGmail", value)
             }
             setState1Value={(value) =>
               handleConfigurationChange("gmailToNotificate", value)
             }
-            state2={configuration.notificateWhatsApp || false}
-            state2Value={configuration.whatsAppToNotificate || ""}
+            state2={configuration?.notificateWhatsApp || false}
+            state2Value={configuration?.whatsAppToNotificate || ""}
             setState2={(value) =>
               handleConfigurationChange("notificateWhatsApp", value)
             }

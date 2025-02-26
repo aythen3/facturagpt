@@ -31,12 +31,12 @@ const WhatsAppSendNotificationsFormAutomate = ({
   const addConnection = (connection) => {
     console.log("adding wp connection", connection);
     const updatedConnections = [
-      ...(configuration.whatsAppConnectionData || []),
+      ...(configuration?.whatsAppConnectionData || []),
       connection,
     ];
     console.log("setting whatsAppConnectionData", updatedConnections);
     handleConfigurationChange("whatsAppConnectionData", updatedConnections);
-    if (!configuration.selectedWhatsAppConnection) {
+    if (!configuration?.selectedWhatsAppConnection) {
       handleConfigurationChange(
         "selectedWhatsAppConnection",
         connection.accountId
@@ -55,11 +55,11 @@ const WhatsAppSendNotificationsFormAutomate = ({
     <div>
       <HeaderFormsComponent
         placeholder="Añade una cuenta de WhatsApp"
-        selectedEmailConnection={configuration.selectedWhatsAppConnection}
+        selectedEmailConnection={configuration?.selectedWhatsAppConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedWhatsAppConnection", value)
         }
-        emailConnections={(configuration.whatsAppConnectionData || []).map(
+        emailConnections={(configuration?.whatsAppConnectionData || []).map(
           (connection) => connection.accountId
         )}
         action={openAddConnection}
@@ -79,7 +79,7 @@ const WhatsAppSendNotificationsFormAutomate = ({
           action={() => {
             console.log("adding phone", phoneNumber);
             handleConfigurationChange("phoneNumbers", [
-              ...configuration.phoneNumbers,
+              ...configuration?.phoneNumbers,
               phoneNumber,
             ]);
             setPhoneNumber("");
@@ -93,14 +93,14 @@ const WhatsAppSendNotificationsFormAutomate = ({
             </p>
           )}
           {configuration?.phoneNumbers?.length > 0 &&
-            configuration.phoneNumbers.map((number) => (
+            configuration?.phoneNumbers.map((number) => (
               <p className={styles.singlePhoneNumber}>
                 {number}
                 <div
                   onClick={() =>
                     handleConfigurationChange(
                       "phoneNumbers",
-                      (configuration.phoneNumbers || []).filter(
+                      (configuration?.phoneNumbers || []).filter(
                         (option) => option !== number
                       )
                     )
@@ -118,7 +118,7 @@ const WhatsAppSendNotificationsFormAutomate = ({
 
           <InputComponent
             readOnly={true}
-            value={configuration.notificationsFromFolder}
+            value={configuration?.notificationsFromFolder}
             setValue={(value) =>
               handleConfigurationChange("notificationsFromFolder", value)
             }
@@ -131,7 +131,7 @@ const WhatsAppSendNotificationsFormAutomate = ({
           <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <CheckboxComponent
               color="#11A380"
-              state={configuration.newFileNotification}
+              state={configuration?.newFileNotification}
               setState={(value) =>
                 handleConfigurationChange("newFileNotification", value)
               }
@@ -144,7 +144,7 @@ const WhatsAppSendNotificationsFormAutomate = ({
           <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <CheckboxComponent
               color="#11A380"
-              state={configuration.tagUpdateNotification}
+              state={configuration?.tagUpdateNotification}
               setState={(value) =>
                 handleConfigurationChange("tagUpdateNotification", value)
               }
@@ -158,7 +158,7 @@ const WhatsAppSendNotificationsFormAutomate = ({
           <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <CheckboxComponent
               color="#11A380"
-              state={configuration.notificateDaysBeforeDueDate}
+              state={configuration?.notificateDaysBeforeDueDate}
               setState={(value) =>
                 handleConfigurationChange("notificateDaysBeforeDueDate", value)
               }

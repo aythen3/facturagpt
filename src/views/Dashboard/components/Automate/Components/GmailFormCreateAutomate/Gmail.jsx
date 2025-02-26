@@ -35,9 +35,9 @@ import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.s
 import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import Advertency from "../Advertency/Advertency";
-import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
+// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 
-
+import EditableInput from "../FileInput/Input";
 import FileInputNotification from "../FileInput/Notification";
 import FileInputGPT from "../FileInput/GPT";
 import FileInputExport from "../FileInput/Export";
@@ -67,11 +67,11 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
 
   const addConnection = (connection) => {
     const updatedConnections = [
-      ...(configuration.emailConnectionData || []),
+      ...(configuration?.emailConnectionData || []),
       connection,
     ];
     handleConfigurationChange("emailConnectionData", updatedConnections);
-    if (!configuration.selectedEmailConnection) {
+    if (!configuration?.selectedEmailConnection) {
       handleConfigurationChange("selectedEmailConnection", connection.email);
     }
   };
@@ -79,11 +79,11 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
   return (
     <div>
       <HeaderFormsComponent
-        selectedEmailConnection={configuration.selectedEmailConnection}
+        selectedEmailConnection={configuration?.selectedEmailConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedEmailConnection", value)
         }
-        emailConnections={(configuration.emailConnectionData || []).map(
+        emailConnections={(configuration?.emailConnectionData || []).map(
           (connection) => connection.email
         )}
         action={() => setShowAddConnection(true)}
@@ -91,7 +91,7 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
       />
       <TitleFormsComponent type={type} title="Sube tus facturas de" />
       <div className={styles.gmailoutlookContainer}>
-        <EditableInput
+        {/* <EditableInput
           label={"Nombre de la Automatización"}
           // value={userData?.nombre}
           name="automatization"
@@ -99,8 +99,14 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
           placeholder="Automatización 1"
           options={true}
           readOnly={false}
-        />
+          configuration={configuration}
+          handleConfigurationChange={handleConfigurationChange}
+        /> */}
 
+        <EditableInput
+          configuration={configuration}
+          handleConfigurationChange={handleConfigurationChange}
+        />
 
         <FileInputGPT
           configuration={configuration}
@@ -122,7 +128,7 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
         {/* <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.changeFileName || false}
+            isChecked={configuration?.changeFileName || false}
             setIsChecked={(value) =>
               handleConfigurationChange("changeFileName", value)
             }
@@ -132,7 +138,7 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
           <InputComponent
             placeholder="[fecha]-[empresa]-[importe]-[etiqueta]"
             typeInput="text"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
           />
         </div>
@@ -148,7 +154,7 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
         <div>
           <div style={{ display: "grid", gap: "10px", marginTop: "10px" }}>
             <OptionsSwitchComponent
-              isChecked={configuration.addTags || false}
+              isChecked={configuration?.addTags || false}
               setIsChecked={(value) =>
                 handleConfigurationChange("addTags", value)
               }
@@ -159,12 +165,12 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
               placeholder="Buscar etiqueta"
               typeInput="text"
               textButton="Crear"
-              value={configuration.tags || ""}
+              value={configuration?.tags || ""}
               setValue={(value) => handleConfigurationChange("tags", value)}
             />
           </div>
           <NotificationsConfirmComponent
-            mainState={configuration.notificateAfterExport || false}
+            mainState={configuration?.notificateAfterExport || false}
             setMainState={(value) =>
               handleConfigurationChange("notificateAfterExport", value)
             }
@@ -172,26 +178,26 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
             placeholder2="[00000000],..."
             type1="Gmail"
             type2="WhatsApp"
-            gmailTo={configuration.gmailTo || ""}
+            gmailTo={configuration?.gmailTo || ""}
             setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
-            gmailSubject={configuration.gmailSubject || ""}
+            gmailSubject={configuration?.gmailSubject || ""}
             setGmailSubject={(value) =>
               handleConfigurationChange("gmailSubject", value)
             }
-            gmailBody={configuration.gmailBody || ""}
+            gmailBody={configuration?.gmailBody || ""}
             setGmailBody={(value) =>
               handleConfigurationChange("gmailBody", value)
             }
-            state1={configuration.notificateGmail || false}
-            state1Value={configuration.gmailToNotificate || ""}
+            state1={configuration?.notificateGmail || false}
+            state1Value={configuration?.gmailToNotificate || ""}
             setState1={(value) =>
               handleConfigurationChange("notificateGmail", value)
             }
             setState1Value={(value) =>
               handleConfigurationChange("gmailToNotificate", value)
             }
-            state2={configuration.notificateWhatsApp || false}
-            state2Value={configuration.whatsAppToNotificate || ""}
+            state2={configuration?.notificateWhatsApp || false}
+            state2Value={configuration?.whatsAppToNotificate || ""}
             setState2={(value) =>
               handleConfigurationChange("notificateWhatsApp", value)
             }

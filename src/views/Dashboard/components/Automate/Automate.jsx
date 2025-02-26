@@ -184,10 +184,10 @@ const Automate = ({
             <div className={styles.contentContainer}>
               {userAutomations.length > 0 &&
                 userAutomations?.map((card, i) => {
-                  console.log("automationData", card.automationData);
+                  console.log("automationData", card);
                   const filteredAutomation = data.find(
                     (automation) =>
-                      automation?.type === card?.automationData?.type
+                      automation?.type === card?.type
                   );
                   console.log("filteredAutomation", filteredAutomation);
                   return (
@@ -199,12 +199,19 @@ const Automate = ({
                       name={filteredAutomation?.automateName}
                       image={filteredAutomation?.image}
                       contactType={
-                        card?.automationData?.type === "Gmail"
-                          ? card?.automationData?.selectedEmailConnection
-                          : card?.automationData?.type === "WhatsApp"
-                            ? card?.automationData?.selectedWhatsAppConnection
+                        card?.type === "Gmail"
+                          ? card?.selectedEmailConnection
+                          : card?.type === "WhatsApp"
+                            ? card?.selectedWhatsAppConnection
                             : card?.email
                       }
+                      // contactType={
+                      //   card?.automationData?.type === "Gmail"
+                      //     ? card?.automationData?.selectedEmailConnection
+                      //     : card?.automationData?.type === "WhatsApp"
+                      //       ? card?.automationData?.selectedWhatsAppConnection
+                      //       : card?.email
+                      // }
                       automationData={card}
                       isBorders={true}
                       last={i === dataFilter.length - 1}

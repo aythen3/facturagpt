@@ -1,9 +1,31 @@
 import React, { useState } from "react";
+import styles from "./TelematelFormAutomate.module.css";
+import SearchSVG from "../../svgs/SearchSVG";
+import WarningSVG from "../../svgs/WarningSVG";
+import SelectComponent from "../../../SelectComponent/SelectComponent";
+import CheckboxComponent from "../../shared/CheckboxComponent";
+import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
+import TextSVG from "../../svgs/TextSVG";
+import LabelSVG from "../../svgs/LabelSVG";
+import NotificationsSVG from "../../svgs/NotificationsSVG";
+import InputComponent from "../../../InputComponent/InputComponent";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as FTPIcon } from "../../../../assets/telematelWithoutBg.svg";
 import ModalAddConnectionTelematal from "./ModalAddConnectionTelematel";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
+import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
+import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
+import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
+import ModalAddConnectionTelematel from "./ModalAddConnectionTelematel";
+import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
+import SelectLocation from "../../../SelectLocation/SelectLocation";
+import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
+import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
+import minusIcon from "../../../../assets/minusIcon.svg";
+import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
+
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
+
 import { ReactComponent as ArrowSquare } from "../../../../assets/whiteArrowSquareIn.svg";
 import { ReactComponent as GrayChevron } from "../../../../assets/grayChevron.svg";
 import { ReactComponent as WhiteFolder } from "../../../../assets/whiteFolder.svg";
@@ -12,8 +34,19 @@ import { ReactComponent as WhiteClock } from "../../../../assets/whiteClock.svg"
 import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
 import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg";
 import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
-import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
+import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.svg";
+import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
+import Advertency from "../Advertency/Advertency";
+// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
+import { ReactComponent as TelematelIcon } from "../../../../assets/telematel.svg";
+
+import EditableInput from "../FileInput/Input";
+import FileInputNotification from "../FileInput/Notification";
+import FileInputGPT from "../FileInput/GPT";
+import FileInputExport from "../FileInput/Export";
+import FileInputImport from "../FileInput/Import";
+
 import styles from "./TelematelFormAutomate.module.css";
 import InputComponent from "../../../InputComponent/InputComponent";
 import SearchSVG from "../../svgs/SearchSVG";
@@ -33,14 +66,15 @@ import FiltersLabelOptionsTemplate from "../FiltersLabelOptionsTemplate/FiltersL
 import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import { ReactComponent as NewCategoryIcon } from "../../../../assets/NewCategoryIcon.svg";
 import NewCategory from "../../../NewCategory/NewCategory";
-const FTPFormAutomate = ({
-  type,
-  configuration,
-  setConfiguration,
-  setShowSelectCurrencyPopup,
-  setSelectedCurrency,
-  selectedCurrency,
-}) => {
+
+
+
+const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
+  const [showSelectLocation, setShowSelectLocation] = useState(false);
+  // const [showAddConnection, setShowAddConnection] = useState(false);
+  // const [showSelectOutputLocation, setShowSelectOutputLocation] =
+    useState(false);
+
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectInputLocation, setShowSelectInputLocation] = useState(false);
   const [showNewCategory, setShowNewCategory] = useState(false);
@@ -77,25 +111,25 @@ const FTPFormAutomate = ({
   const [labels, setLabels] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
-  const addConnection = (connection) => {
-    console.log("adding FTP connection", connection);
-    const updatedConnections = [
-      ...(configuration.telematelConnectionData || []),
-      connection,
-    ];
-    console.log("setting telematelConnectionData", updatedConnections);
-    handleConfigurationChange("ftpConnectionData", updatedConnections);
-    if (!configuration.selectedTelematelConnection) {
-      handleConfigurationChange("selectedFTPConnection", connection.clientId);
-    }
-  };
+  // const addConnection = (connection) => {
+  //   console.log("adding FTP connection", connection);
+  //   const updatedConnections = [
+  //     ...(configuration.telematelConnectionData || []),
+  //     connection,
+  //   ];
+  //   console.log("setting telematelConnectionData", updatedConnections);
+  //   handleConfigurationChange("ftpConnectionData", updatedConnections);
+  //   if (!configuration.selectedTelematelConnection) {
+  //     handleConfigurationChange("selectedFTPConnection", connection.clientId);
+  //   }
+  // };
 
-  const handleConfigurationChange = (key, value) => {
-    setConfiguration((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  // const handleConfigurationChange = (key, value) => {
+  //   setConfiguration((prev) => ({
+  //     ...prev,
+  //     [key]: value,
+  //   }));
+  // };
 
   const [showContent, setShowContent] = useState({
     info1: false,
@@ -108,6 +142,24 @@ const FTPFormAutomate = ({
     info8: false,
     info9: false,
   });
+
+  const handleConfigurationChange = (key, value) => {
+    setConfiguration((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const addConnection = (connection) => {
+    const updatedConnections = [
+      ...(configuration?.emailConnectionData || []),
+      connection,
+    ];
+    handleConfigurationChange("emailConnectionData", updatedConnections);
+    if (!configuration?.selectedEmailConnection) {
+      handleConfigurationChange("selectedEmailConnection", connection.email);
+    }
+  };
 
   const addCondition = () => {
     if (newCondition) {
@@ -172,18 +224,17 @@ const FTPFormAutomate = ({
   };
 
   return (
-    <div className={styles.sectionWrapper}>
+    <div>
       <HeaderFormsComponent
-        placeholder="Añade conexión Telematel"
-        selectedEmailConnection={configuration.selectedTelematelConnection}
+        selectedEmailConnection={configuration?.selectedEmailConnection}
         setSelectedEmailConnection={(value) =>
-          handleConfigurationChange("selectedTelematelConnection", value)
+          handleConfigurationChange("selectedEmailConnection", value)
         }
-        emailConnections={(configuration.telematelConnectionData || []).map(
-          (connection) => connection.clientId
+        emailConnections={(configuration?.emailConnectionData || []).map(
+          (connection) => connection.email
         )}
         action={() => setShowAddConnection(true)}
-        icon={<FTPIcon />}
+        icon={<TelematelIcon />}
       />
       <TitleFormsComponent title="Automatiza tu Telematel" />
       {showAddConnection && (
@@ -1174,7 +1225,27 @@ const FTPFormAutomate = ({
             handleConfigurationChange("filesSource", location);
           }}
         />
+
+        <FileInputImport
+          handleConfigurationChange={handleConfigurationChange}
+          configuration={configuration}
+        />
+
+
+        <FileInputExport
+          configuration={configuration}
+          handleConfigurationChange={handleConfigurationChange}
+        />
+
+        <FileInputNotification
+          type="Gmail"
+          handleConfigurationChange={handleConfigurationChange}
+          configuration={configuration}
+        />
+        
       )}
+      {/* </div> */}
+
       {showSelectOutputLocation && (
         <SelectLocation
           onClose={() => setShowSelectOutputLocation(false)}
@@ -1184,8 +1255,14 @@ const FTPFormAutomate = ({
           }}
         />
       )}
+      {showAddConnection && (
+        <ModalAddConnectionTelematel
+          close={() => setShowAddConnection(false)}
+          addConnection={addConnection}
+        />
+      )}
     </div>
   );
 };
 
-export default FTPFormAutomate;
+export default TelematelFormAutomate;

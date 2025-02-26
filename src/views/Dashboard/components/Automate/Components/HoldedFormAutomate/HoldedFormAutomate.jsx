@@ -30,12 +30,12 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
   const addConnection = (connection) => {
     console.log("adding Holded connection", connection);
     const updatedConnections = [
-      ...(configuration.holdedConnectionData || []),
+      ...(configuration?.holdedConnectionData || []),
       connection,
     ];
     console.log("setting holdedConnectionData", updatedConnections);
     handleConfigurationChange("holdedConnectionData", updatedConnections);
-    if (!configuration.selectedHoldedConnection) {
+    if (!configuration?.selectedHoldedConnection) {
       handleConfigurationChange(
         "selectedHoldedConnection",
         connection.clientId
@@ -47,11 +47,11 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
     <div>
       <HeaderFormsComponent
         placeholder="Añade una cuenta de Holded"
-        selectedEmailConnection={configuration.selectedHoldedConnection}
+        selectedEmailConnection={configuration?.selectedHoldedConnection}
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedHoldedConnection", value)
         }
-        emailConnections={(configuration.holdedConnectionData || []).map(
+        emailConnections={(configuration?.holdedConnectionData || []).map(
           (connection) => connection.clientId
         )}
         action={() => setShowAddConnection(true)}
@@ -70,7 +70,7 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
 
         <InputComponent
           readOnly={true}
-          value={configuration.filesSource}
+          value={configuration?.filesSource}
           setValue={(value) => handleConfigurationChange("filesSource", value)}
           textButton="Seleccionar Ubicación"
           placeholder="/Inicio"
@@ -90,7 +90,7 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
 
         <InputComponent
           readOnly={true}
-          value={configuration.folderLocation}
+          value={configuration?.folderLocation}
           setValue={(value) =>
             handleConfigurationChange("folderLocation", value)
           }
@@ -111,7 +111,7 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
 
         <CustomDropdown
           options={["XML", "FacturaE", "UBL", "PEPPOL"]}
-          selectedOption={configuration.formatType || []}
+          selectedOption={configuration?.formatType || []}
           height="31px"
           textStyles={{
             fontWeight: 300,
@@ -135,7 +135,7 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
 
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.changeFileName || false}
+            isChecked={configuration?.changeFileName || false}
             setIsChecked={(value) =>
               handleConfigurationChange("changeFileName", value)
             }
@@ -145,13 +145,13 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
           <InputComponent
             placeholder="[fecha]-[empresa]-[importe]-[etiqueta]"
             typeInput="text"
-            value={configuration.fileName || ""}
+            value={configuration?.fileName || ""}
             setValue={(value) => handleConfigurationChange("fileName", value)}
           />
         </div>
         <div style={{ display: "grid", gap: "10px", marginTop: "10px" }}>
           <OptionsSwitchComponent
-            isChecked={configuration.addTags || false}
+            isChecked={configuration?.addTags || false}
             setIsChecked={(value) =>
               handleConfigurationChange("addTags", value)
             }
@@ -162,13 +162,13 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
             placeholder="Buscar etiqueta"
             typeInput="text"
             textButton="Crear"
-            value={configuration.tags || ""}
+            value={configuration?.tags || ""}
             setValue={(value) => handleConfigurationChange("tags", value)}
           />
         </div>
 
         <NotificationsConfirmComponent
-          mainState={configuration.notificateAfterExport || false}
+          mainState={configuration?.notificateAfterExport || false}
           setMainState={(value) =>
             handleConfigurationChange("notificateAfterExport", value)
           }
@@ -176,33 +176,33 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
           placeholder2="[00000000],..."
           type1="Gmail"
           type2="WhatsApp"
-          gmailTo={configuration.gmailTo || ""}
+          gmailTo={configuration?.gmailTo || ""}
           setGmailTo={(value) => handleConfigurationChange("gmailTo", value)}
-          gmailSubject={configuration.gmailSubject || ""}
+          gmailSubject={configuration?.gmailSubject || ""}
           setGmailSubject={(value) =>
             handleConfigurationChange("gmailSubject", value)
           }
-          gmailBody={configuration.gmailBody || ""}
+          gmailBody={configuration?.gmailBody || ""}
           setGmailBody={(value) =>
             handleConfigurationChange("gmailBody", value)
           }
-          state1={configuration.notificateGmail || false}
-          state1Value={configuration.gmailToNotificate || ""}
+          state1={configuration?.notificateGmail || false}
+          state1Value={configuration?.gmailToNotificate || ""}
           setState1={(value) =>
             handleConfigurationChange("notificateGmail", value)
           }
           setState1Value={(value) =>
             handleConfigurationChange("gmailToNotificate", value)
           }
-          state2={configuration.notificateWhatsApp || false}
-          state2Value={configuration.whatsAppToNotificate || ""}
+          state2={configuration?.notificateWhatsApp || false}
+          state2Value={configuration?.whatsAppToNotificate || ""}
           setState2={(value) =>
             handleConfigurationChange("notificateWhatsApp", value)
           }
           setState2Value={(value) =>
             handleConfigurationChange("whatsAppToNotificate", value)
           }
-          whatsAppMessage={configuration.whatsAppMessage || ""}
+          whatsAppMessage={configuration?.whatsAppMessage || ""}
           setWhatsAppMessage={(value) =>
             handleConfigurationChange("whatsAppMessage", value)
           }
@@ -214,7 +214,7 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
         />
 
         <NotificationsConfirmComponent
-          mainState={configuration.notificateAfterError || false}
+          mainState={configuration?.notificateAfterError || false}
           setMainState={(value) =>
             handleConfigurationChange("notificateAfterError", value)
           }
@@ -222,28 +222,28 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
           placeholder2="[00000000],..."
           type1="Gmail"
           type2="WhatsApp"
-          gmailTo={configuration.errorGmailTo || ""}
+          gmailTo={configuration?.errorGmailTo || ""}
           setGmailTo={(value) =>
             handleConfigurationChange("errorGmailTo", value)
           }
-          gmailSubject={configuration.errorGmailSubject || ""}
+          gmailSubject={configuration?.errorGmailSubject || ""}
           setGmailSubject={(value) =>
             handleConfigurationChange("errorGmailSubject", value)
           }
-          gmailBody={configuration.errorGmailBody || ""}
+          gmailBody={configuration?.errorGmailBody || ""}
           setGmailBody={(value) =>
             handleConfigurationChange("errorGmailBody", value)
           }
-          state1={configuration.notificateErrorGmail || false}
-          state1Value={configuration.errorGmailToNotificate || ""}
+          state1={configuration?.notificateErrorGmail || false}
+          state1Value={configuration?.errorGmailToNotificate || ""}
           setState1={(value) =>
             handleConfigurationChange("notificateErrorGmail", value)
           }
           setState1Value={(value) =>
             handleConfigurationChange("errorGmailToNotificate", value)
           }
-          state2={configuration.notificateErrorWhatsApp || false}
-          state2Value={configuration.errorWhatsAppToNotificate || ""}
+          state2={configuration?.notificateErrorWhatsApp || false}
+          state2Value={configuration?.errorWhatsAppToNotificate || ""}
           setState2={(value) =>
             handleConfigurationChange("notificateErrorWhatsApp", value)
           }
@@ -251,7 +251,7 @@ const HoldedFormAutomate = ({ type, configuration, setConfiguration }) => {
             handleConfigurationChange("errorWhatsAppToNotificate", value)
           }
           title="Notificar en el caso de detectar un error en la validación"
-          whatsAppMessage={configuration.errorWhatsAppMessage || ""}
+          whatsAppMessage={configuration?.errorWhatsAppMessage || ""}
           setWhatsAppMessage={(value) =>
             handleConfigurationChange("errorWhatsAppMessage", value)
           }

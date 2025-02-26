@@ -16,9 +16,11 @@ const createAutomation = async ({ userId, email, automationData }) => {
       id: automationId,
       userId,
       email,
-      automationData: { ...automationData, id: automationId },
+      ...automationData
+      // automationData: { ...automationData, id: automationId },
     };
 
+    console.log("automationDoc", automationDoc);
     await dbAutomations.insert(automationDoc);
 
     const userDoc = await dbAccounts.get(userId);
@@ -64,6 +66,8 @@ const updateAutomation = async ({ automationId, userId, toUpdate }) => {
 
     const automationDoc = await dbAutomations.get(automationId);
 
+
+    console.log("toUpdatetoUpdatetoUpdate", toUpdate);
     const updatedDoc = {
       ...automationDoc,
       ...toUpdate,

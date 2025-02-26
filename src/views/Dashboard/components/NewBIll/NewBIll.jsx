@@ -80,11 +80,11 @@ const NewBIll = ({ setShowNewBill }) => {
 
   // const addConnection = (connection) => {
   //   const updatedConnections = [
-  //     ...(configuration.emailConnectionData || []),
+  //     ...(configuration?.emailConnectionData || []),
   //     connection,
   //   ];
   //   handleConfigurationChange("emailConnectionData", updatedConnections);
-  //   if (!configuration.selectedEmailConnection) {
+  //   if (!configuration?.selectedEmailConnection) {
   //     handleConfigurationChange("selectedEmailConnection", connection.email);
   //   }
   // };
@@ -142,7 +142,7 @@ const NewBIll = ({ setShowNewBill }) => {
 
                     <InputComponent
                       readOnly={true}
-                      // value={configuration.folderLocation}
+                      // value={configuration?.folderLocation}
                       // setValue={(value) =>
                       //   handleConfigurationChange("folderLocation", value)
                       // }
@@ -240,7 +240,7 @@ const NewBIll = ({ setShowNewBill }) => {
                       <InputComponent
                         placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
                         typeInput="text"
-                        // value={configuration.fileName || ""}
+                        // value={configuration?.fileName || ""}
                         // setValue={(value) =>
                         //   handleConfigurationChange("fileName", value)
                         // }

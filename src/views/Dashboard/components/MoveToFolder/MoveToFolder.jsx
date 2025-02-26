@@ -67,7 +67,7 @@ const MoveToFolder = ({
 
               <InputComponent
                 readOnly={true}
-                value={configuration.folderLocation}
+                value={configuration?.folderLocation}
                 setValue={(value) =>
                   handleConfigurationChange("folderLocation", value)
                 }
