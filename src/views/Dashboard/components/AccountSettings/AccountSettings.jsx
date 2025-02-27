@@ -17,7 +17,7 @@ import SeeHistory from "../SeeHistory/SeeHistory";
 import { useDispatch, useSelector } from "react-redux";
 import EditableInput from "./EditableInput/EditableInput";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
-import { updateUser } from "../../../../actions/user";
+import { updateAccount } from "../../../../actions/user";
 import { uploadFiles } from "../../../../actions/scaleway";
 import { useNavigate } from "react-router-dom";
 import LogoSelector from "../LogoSelector/LogoSelector";
@@ -96,6 +96,7 @@ const AccountSettings = () => {
   };
 
   useEffect(() => {
+    console.log("user1!!!", user);
     if (user) {
       const newUserData = {
         nombre: user?.nombre || "",
@@ -208,6 +209,7 @@ const AccountSettings = () => {
     };
     console.log("saving user data", userDataToSave);
     // dispatch(updateUser({ userId: user.id, toUpdate: userDataToSave }));
+    dispatch(updateAccount({ ...userDataToSave }));
   };
 
   const handleToggleReadOnly = () => {

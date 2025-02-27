@@ -9,6 +9,7 @@ import TextSVG from "../../svgs/TextSVG";
 import LabelSVG from "../../svgs/LabelSVG";
 import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../../InputComponent/InputComponent";
+// import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as FTPIcon } from "../../../../assets/telematelWithoutBg.svg";
 import ModalAddConnectionTelematal from "./ModalAddConnectionTelematel";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
@@ -46,6 +47,12 @@ import FileInputGPT from "../FileInput/GPT";
 import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
 
+// import styles from "./TelematelFormAutomate.module.css";
+// import InputComponent from "../../../InputComponent/InputComponent";
+// import SearchSVG from "../../svgs/SearchSVG";
+// import SelectLocation from "../../../SelectLocation/SelectLocation";
+// import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
+// import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 // import minusIcon from "../../../../assets/minusIcon.svg";
 // import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
 // import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
@@ -72,7 +79,7 @@ const TelematelFormAutomate = ({
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   // const [showAddConnection, setShowAddConnection] = useState(false);
   // const [showSelectOutputLocation, setShowSelectOutputLocation] =
-  useState(false);
+  // useState(false);
 
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectInputLocation, setShowSelectInputLocation] = useState(false);
@@ -374,7 +381,7 @@ const TelematelFormAutomate = ({
                     onClick={() => setShowSelectCurrencyPopup(true)}
                   >
                     <span style={{ textTransform: "uppercase" }}>
-                      {selectedCurrency}
+                      EN
                     </span>
                     <GrayArrow
                       className={styles.chevronIcon}

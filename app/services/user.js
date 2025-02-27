@@ -124,6 +124,8 @@ const updateAccount = async (data) => {
         return { success: false, message: "User not found." };
       }
 
+      console.log("existingDoc", existingDoc);
+
       updatedDoc = {
         ...existingDoc,
         ...data,

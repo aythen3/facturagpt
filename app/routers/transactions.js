@@ -13,7 +13,7 @@ const {
 const transactionsByClientRouter = Router();
 
 transactionsByClientRouter
-  .get("/", automateTransactionsController)
+  .get("/active", automateTransactionsController)
   
   .post("/alltransactionsByClient", getAllTransactionsByClientController)
   .post("/deleteTransacions", deleteTransactionsController)

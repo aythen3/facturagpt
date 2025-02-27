@@ -1,3 +1,9 @@
+
+const schedule = require('node-schedule');
+const { catchedAsync } = require("../utils/err");
+
+const { connectDB } = require("./utils");
+
 const {
   getAllTransactionsByClient,
   deleteTransactions,
@@ -5,7 +11,6 @@ const {
   getTransactionById,
   automateTransactions,
 } = require("../services/transactions");
-const { catchedAsync } = require("../utils/err");
 
 const getAllTransactionsByClientController = async (req, res) => {
   try {
@@ -138,15 +143,64 @@ const automateTransactionsController = async (req, res) => {
     // const { transactionId } = req.body;
 
     console.log('HELLO WORLD AUTOMATING SYSTEM')
+    if (global.automationJob) {
+      global.automationJob.cancel();
+    }
+
+
+    const db = await connectDB('db_accounts');
+
+    if (true) {
+
+      // Configurar la paginación
+      const batchSize = 100;
+      let currentPage = 0;
+      let accounts = [];
+
+      // Obtener todos los documentos con paginación en CouchDB usando Nano
+      try {
+        const result = await db.find({
+          selector: {},
+          limit: batchSize,
+          skip: currentPage * batchSize,
+          fields: ['_id', 'email', 'automations']
+        });
+
+
+        accounts = result.docs;
+      } catch (error) {
+        console.error('Error al obtener documentos:', error);
+        throw error;
+      }
+
+      console.log('ACCOUNTS', accounts);
+
+      global.automationJob = schedule.scheduleJob({ rule: '*/10 * * * * *' }, async () => {
+        try {
+          console.log('Ejecutando automatización de transacciones...');
+          await automateTransactions();
+        } catch (error) {
+          console.error('Error en la automatización programada:', error);
+        }
+      });
+    }
+
+
+
+    return res.status(200).json({
+      success: true,
+      message: "Automating transactions",
+    });
   } catch (error) {
     console.error("Error en automateTransactionsController:", error);
   }
 };
 
 module.exports = {
-  getAllTransactionsByClientController: catchedAsync( getAllTransactionsByClientController ),
+  getAllTransactionsByClientController: catchedAsync(getAllTransactionsByClientController),
   deleteTransactionsController: catchedAsync(deleteTransactionsController),
-  deleteProductFromTransactionsController: catchedAsync( deleteProductFromTransactionsController ),
+  deleteProductFromTransactionsController: catchedAsync(deleteProductFromTransactionsController),
   getTransactionByIdController: catchedAsync(getTransactionByIdController),
+
   automateTransactionsController: catchedAsync(automateTransactionsController),
 };

@@ -20,6 +20,12 @@ import {
   getOneClient,
   updateClient,
 } from "../../../../actions/clients";
+
+import {
+  FaChevronDown,
+} from "react-icons/fa";
+
+
 import { clearClient, setClient } from "../../../../slices/clientsSlices";
 import { useNavigate } from "react-router-dom";
 import EditableInput from "./EditableInput/EditableInput";
@@ -595,9 +601,9 @@ const Clients = () => {
           name="clientSelected"
           // onClick={() => selectClient(rowIndex, row)}
           onChange={() => toggleClientSelection(row?.id)}
-          // checked={
-          //   clientSelected.includes(rowIndex) ? true : false
-          // }
+        // checked={
+        //   clientSelected.includes(rowIndex) ? true : false
+        // }
         />
       </td>
       <td className={styles.name}>
@@ -678,6 +684,24 @@ const Clients = () => {
   console.log(
     "clientssssssssssssssssssssssssssssssssssssssss11111111" + clients
   );
+
+
+  const [selectedOption, setSelectedOption] = useState("Nombre");
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const options = ["Todos", "Activos", "Emails procesados", "Empresa A-Z"];
+
+
+  const handleDropdownToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
+
   return (
     <PanelTemplate>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
@@ -725,6 +749,29 @@ const Clients = () => {
                 className={styles.searchIconsWrappers}
               >
                 <img src={KIcon} alt="kIcon" />
+              </div>
+              <div className={styles.dropdownContainer}>
+                <div
+                  className={styles.filterSort}
+                  onClick={handleDropdownToggle}
+                  ref={dropdownRef}
+                >
+                  Ordenar por: <b>{selectedOption}</b>
+                  <FaChevronDown className={styles.chevronIcon} />
+                </div>
+                {isOpen && (
+                  <div className={styles.dropdownOptions}>
+                    {options.map((option, index) => (
+                      <div
+                        key={index}
+                        className={styles.dropdownOption}
+                        onClick={() => handleOptionClick(option)}
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </>
           }
@@ -840,11 +887,10 @@ const Clients = () => {
                   <div
                     className={`
                     ${styles.typeClient}
-                    ${
-                      inputsEditing.name
+                    ${inputsEditing.name
                         ? styles.typeClientActivate
                         : styles.typeClientDisabled
-                    }
+                      }
                       `}
                   >
                     <button
