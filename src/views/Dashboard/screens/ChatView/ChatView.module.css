@@ -374,15 +374,17 @@
   position: fixed;
   top: 0;
   left: 0;
-  border: 1px solid #d9d9e3;
-  max-width: 200px;
-  width: 200px;
-  /* height: 100%; */
   top: 23px;
   z-index: 999;
-  background: red;
+  padding: 4px;
+  border-radius: 8px;
+  background: #fafafa;
+  /* background: red; */
+  /* border: 1px solid #d9d9e3; */
+  /* max-width: 200px;
+  width: 200px; */
   /* display: none; */
-
+  /* height: 100%; */
   /* &.active {
     display: flex;
   } */

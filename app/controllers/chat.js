@@ -98,7 +98,7 @@ const deleteChatController = async (req, res) => {
   const user = req.user;
   const { chatId } = req.params;
 
-  const id = user.userId.split('_').pop();
+  const id = user._id.split('_').pop();
 
   try {
     const dbName = `db_chat_${id}`;

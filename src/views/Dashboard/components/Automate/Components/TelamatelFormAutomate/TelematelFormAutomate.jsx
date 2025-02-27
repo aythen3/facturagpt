@@ -9,7 +9,7 @@ import TextSVG from "../../svgs/TextSVG";
 import LabelSVG from "../../svgs/LabelSVG";
 import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../../InputComponent/InputComponent";
-import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
+// import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as FTPIcon } from "../../../../assets/telematelWithoutBg.svg";
 import ModalAddConnectionTelematal from "./ModalAddConnectionTelematel";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
@@ -47,23 +47,23 @@ import FileInputGPT from "../FileInput/GPT";
 import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
 
-import styles from "./TelematelFormAutomate.module.css";
-import InputComponent from "../../../InputComponent/InputComponent";
-import SearchSVG from "../../svgs/SearchSVG";
-import SelectLocation from "../../../SelectLocation/SelectLocation";
-import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
-import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-import minusIcon from "../../../../assets/minusIcon.svg";
-import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
-import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
+// import styles from "./TelematelFormAutomate.module.css";
+// import InputComponent from "../../../InputComponent/InputComponent";
+// import SearchSVG from "../../svgs/SearchSVG";
+// import SelectLocation from "../../../SelectLocation/SelectLocation";
+// import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
+// import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
+// import minusIcon from "../../../../assets/minusIcon.svg";
+// import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
+// import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import { ReactComponent as FrecuencyIcon } from "../../../../assets/frecuencyIcon.svg";
-import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
+// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 import SelectCurrencyPopup from "../../../SelectCurrencyPopup/SelectCurrencyPopup";
 import { ReactComponent as GrayArrow } from "../../../../assets/arrowDownBold.svg";
 import Button from "../../../Button/Button";
 import DeleteButton from "../../../DeleteButton/DeleteButton";
 import FiltersLabelOptionsTemplate from "../FiltersLabelOptionsTemplate/FiltersLabelOptionsTemplate";
-import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
+// import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import { ReactComponent as NewCategoryIcon } from "../../../../assets/NewCategoryIcon.svg";
 import NewCategory from "../../../NewCategory/NewCategory";
 
@@ -73,7 +73,6 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   // const [showAddConnection, setShowAddConnection] = useState(false);
   // const [showSelectOutputLocation, setShowSelectOutputLocation] =
-    useState(false);
 
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectInputLocation, setShowSelectInputLocation] = useState(false);
@@ -430,7 +429,8 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
                     onClick={() => setShowSelectCurrencyPopup(true)}
                   >
                     <span style={{ textTransform: "uppercase" }}>
-                      {selectedCurrency}
+                      {/* {selectedCurrency} */}
+                      EN
                     </span>
                     <GrayArrow
                       className={styles.chevronIcon}
@@ -1218,6 +1218,7 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
         <NewCategory setShowNewCategory={setShowNewCategory} />
       )}
       {showSelectInputLocation && (
+        <>
         <SelectLocation
           onClose={() => setShowSelectInputLocation(false)}
           pickLocation={(location) => {
@@ -1242,6 +1243,7 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
           handleConfigurationChange={handleConfigurationChange}
           configuration={configuration}
         />
+        </>
         
       )}
       {/* </div> */}

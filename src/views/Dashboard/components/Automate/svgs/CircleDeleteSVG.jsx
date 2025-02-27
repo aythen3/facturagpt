@@ -17,8 +17,8 @@ const CircleDeleteSVG = ({ width = "28px", height = "28px" }) => {
       <path
         d="M7.3335 11H14.6668"
         stroke="white"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

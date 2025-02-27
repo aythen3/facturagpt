@@ -22,6 +22,7 @@ import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitch
 import SearchSVG from "../../svgs/SearchSVG";
 
 const Import = ({
+    setShowSelectOutputLocation,
     handleConfigurationChange,
     configuration
 }) => {

@@ -43,7 +43,7 @@ const actions = [
   {
     id: 1,
     img: analizeBill,
-    text: "Analiza tu facturacion",
+    text: "Analiza tu facturación",
   },
   {
     id: 2,
@@ -202,6 +202,22 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
     console.log("handleDeleteMessage", chatId);
     // dispatch(deleteChat({ chatId }));
     await dispatch(deleteChat({ chatId }));
+    setSelectedOption(false);
+  };
+
+  const handleChangeName = async (chatId) => {
+    console.log("handleChangeName", chatId);
+    // dispatch(deleteChat({ chatId }));
+    await dispatch(deleteChat({ chatId }));
+    setSelectedOption(false);
+  };
+
+
+  const handleFixChat = async (chatId) => {
+    console.log("handleFixChat", chatId);
+    // dispatch(deleteChat({ chatId }));
+    await dispatch(deleteChat({ chatId }));
+    setSelectedOption(false);
   };
 
   // Llama a la función y pasa la referencia
@@ -311,7 +327,17 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
                         className={`${id == chat.id && styles.active}`}
                         onClick={() => navigate(`/admin/chat/${chat.id}`)}
                       >
-                        {chat.name}
+                        {true && (
+                          <div>
+                            fix
+                          </div>
+                        )}
+                        <input
+                          type="text"
+                          value={chat.name}
+                          onChange={(e) => handleChangeName(chat.id, e.target.value)}
+                        />
+                        {/* {chat.name} */}
                         <div className={styles.chatMenuSettings}>
                           <button
                             // onClick={() =>
@@ -348,11 +374,16 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
           // className={isOpenMenu[chat.id] ? styles.active : ""}
           // className={true ? styles.active : ""}
           >
-            <li onClick={() => handleDeleteMessage(selectedOption.id)}>
+            {/* {JSON.stringify(selectedOption)} */}
+            <li onClick={() => handleDeleteMessage(selectedOption.chat.id)}>
               Eliminar chat
             </li>
-            <li>Cambiar nombre</li>
-            <li>Fijar chat</li>
+            <li onClick={() => handleChangeName(selectedOption.chat.id)}>
+              Cambiar nombre
+            </li>
+            <li onClick={() => handleFixChat(selectedOption.chat.id)}>
+              Fijar chat
+            </li>
           </ul>
         )}
       </div>
@@ -362,12 +393,13 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
 
 const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenValid }) => {
   // const { id } = useParams()
-
   // const navigate = useNavigate();
   // const dispatch = useDispatch();
   // const { currentChat, loading } = useSelector((state) => state.chat);
   // const { id } = useParams();
-  // const { user, updatingUserLoading } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
+
+  
   const messageContainerRef = useRef(null);
 
   // Efecto para hacer scroll cuando cambian los mensajes
@@ -377,8 +409,6 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenVali
     }
   }, [messages]);
 
-
-  
   return (
     <div className={styles.chatContainer}>
       <div className={styles.messageContainer} ref={messageContainerRef}>
@@ -396,7 +426,7 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenVali
             <div className={styles.facturaGPTMessage}>
               <img src={facturaGPT} alt="Icon" />
               <div>
-                <p>¡Hola, John Doe! 👋 ¿En qué puedo ayudarte hoy? 🚀</p>
+                <p>¡Hola, {user?.name || 'Not found name'}! 👋 ¿En qué puedo ayudarte hoy? 🚀</p>
                 <p>Estas son mis habilidades:</p>
                 <p>
                   <strong>Generar Gráficas</strong>
@@ -474,7 +504,7 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenVali
         {messages.length === 0 && (
           <div className={styles.buttonContainer}>
             {actions.map((action, index) => (
-              <button key={index} onClick={() => handleChat(action?.text)}>
+              <button key={index} onClick={() => handleChat(action)}>
                 <img src={action.img} alt="Icon" />
                 {action.text}
               </button>
@@ -568,7 +598,7 @@ const ChatView = () => {
 
 
   const [isTokenValid, setIsTokenValid] = useState(false);
-  
+
   useEffect(() => {
     const fn = async () => {
       const response = await dispatch(validateTokenGPT());
@@ -577,7 +607,7 @@ const ChatView = () => {
     }
 
     // if (!isTokenValid) {
-      fn();
+    fn();
     // }
   }, []);
   // useEffect(() => {
@@ -698,11 +728,22 @@ const ChatView = () => {
     setMessages([...messages, { text: botMessage, sender: "bot" }]);
   };
 
-  const handleChat = (text) => {
-    console.log("3ri48juj");
+  const handleChat = (action) => {
+    console.log("3ri48juj", action);
     // handleSendMessage(actions[id].text);
-    handleSendMessage(text);
+    
+    if(action.id == 0) {
+      navigate(`/admin/panel`);
+    } else if(action.id == 1) {
+      navigate(`/admin/home`);
+    } else if(action.id == 5) {
+      navigate(`/contact`);
+    }else {
+      handleSendMessage(text);
+    }
+
   };
+
   const [leftWidth, setLeftWidth] = useState(200); // Establecer el ancho inicial al 50%
   const isResizing = useRef(false); // Para detectar cuando el usuario está arrastrando
   const startX = useRef(0); // Almacenar la posición inicial del ratón
