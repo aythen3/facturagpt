@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./InvoiceForm.module.css";
 import imageIcon from "../../assets/imageIcon.svg";
 import fileIcon from "../../assets/fileIcon.svg";
@@ -40,6 +40,8 @@ export default function InvoiceForm({
   setEditingNote,
   editingNote,
   idFile,
+  showInfoMobileBill,
+  setShowInfoMobileBill,
 }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Factura");
@@ -54,8 +56,32 @@ export default function InvoiceForm({
     setIsPopupOpen(false);
   };
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Actualizar el ancho de la ventana cuando se cambie el tamaño de la pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Limpiar el evento cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const isMobile = windowWidth <= 768;
+
   return (
-    <div className={styles.container} style={customStyles}>
+    <div
+      className={`${styles.container} ${showInfoMobileBill && styles.showInfoMobileBill}`}
+      style={customStyles}
+    >
+      {isMobile && (
+        <button onClick={() => setShowInfoMobileBill(false)}>Ir atras</button>
+      )}
       <header className={styles.header}>
         <div className={styles.titleWrapper}>
           <div className={styles.titleContent}>

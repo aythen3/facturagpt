@@ -34,6 +34,7 @@ const CookiePopup = () => {
     if (!cookiesAccepted) {
       setVisible(true);
     }
+    setShowHelp(true);
   }, []);
 
   const handleResponse = (accepted) => {
@@ -49,7 +50,7 @@ const CookiePopup = () => {
     }, 5000);
   };
 
-  if (!visible && !showHelp) return null;
+  // if (!visible && !showHelp) return null;
 
   return (
     <>

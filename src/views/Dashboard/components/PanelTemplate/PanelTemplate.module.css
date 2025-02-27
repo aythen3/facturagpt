@@ -30,6 +30,12 @@
   /* border: 1px solid #ececf1; */
   /* z-index: 1; */
 }
+@media (width<=768px) {
+  .contentTemplate {
+    position: absolute;
+    z-index: 99999;
+  }
+}
 .inputContainer input[type="file"] {
   display: none;
 }

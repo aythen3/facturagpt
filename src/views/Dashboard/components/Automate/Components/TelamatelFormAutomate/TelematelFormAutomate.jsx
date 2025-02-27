@@ -9,7 +9,6 @@ import TextSVG from "../../svgs/TextSVG";
 import LabelSVG from "../../svgs/LabelSVG";
 import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../../InputComponent/InputComponent";
-import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as FTPIcon } from "../../../../assets/telematelWithoutBg.svg";
 import ModalAddConnectionTelematal from "./ModalAddConnectionTelematel";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
@@ -47,33 +46,33 @@ import FileInputGPT from "../FileInput/GPT";
 import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
 
-import styles from "./TelematelFormAutomate.module.css";
-import InputComponent from "../../../InputComponent/InputComponent";
-import SearchSVG from "../../svgs/SearchSVG";
-import SelectLocation from "../../../SelectLocation/SelectLocation";
-import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
-import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-import minusIcon from "../../../../assets/minusIcon.svg";
-import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
-import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
+// import minusIcon from "../../../../assets/minusIcon.svg";
+// import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
+// import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import { ReactComponent as FrecuencyIcon } from "../../../../assets/frecuencyIcon.svg";
-import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
+// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 import SelectCurrencyPopup from "../../../SelectCurrencyPopup/SelectCurrencyPopup";
 import { ReactComponent as GrayArrow } from "../../../../assets/arrowDownBold.svg";
 import Button from "../../../Button/Button";
 import DeleteButton from "../../../DeleteButton/DeleteButton";
 import FiltersLabelOptionsTemplate from "../FiltersLabelOptionsTemplate/FiltersLabelOptionsTemplate";
-import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
+// import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import { ReactComponent as NewCategoryIcon } from "../../../../assets/NewCategoryIcon.svg";
 import NewCategory from "../../../NewCategory/NewCategory";
+import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
 
-
-
-const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
+const TelematelFormAutomate = ({
+  type,
+  configuration,
+  setConfiguration,
+  setShowSelectCurrencyPopup,
+  setSelectedCurrency,
+  selectedCurrency,
+}) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   // const [showAddConnection, setShowAddConnection] = useState(false);
   // const [showSelectOutputLocation, setShowSelectOutputLocation] =
-    useState(false);
+  useState(false);
 
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectInputLocation, setShowSelectInputLocation] = useState(false);
@@ -252,7 +251,7 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
         options={true}
         readOnly={false}
       />
-      <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+      {/* <CustomAutomationsWrapper Icon={<ArrowSquare />}>
         <div
           className={styles.infoContainerWrapper}
           onClick={() =>
@@ -270,45 +269,6 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
         <div
           className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
         >
-          {/* <div className={styles.contentInput}>
-            <p className={styles.titleContentInput}>Fuente de Datos</p>
-
-            <InputComponent
-              readOnly={true}
-              value={configuration.filesSource}
-              setValue={(value) =>
-                handleConfigurationChange("filesSource", value)
-              }
-              textButton="Seleccionar Ubicación"
-              placeholder="/FTP"
-              icon={<SearchSVG />}
-              action={() => setShowSelectInputLocation(true)}
-            />
-          </div> */}
-          {/* 
-          <div className={styles.contentInput}>
-            <p className={styles.titleContentInput}>
-              Título del archivo Contiene
-            </p>
-
-            <InputComponent
-              value={configuration.filesKeyWords}
-              setValue={(value) =>
-                handleConfigurationChange("filesKeyWords", value)
-              }
-              placeholder="Palabras clave separadas por coma"
-              typeInput="text"
-            />
-            <CheckboxWithText
-              marginTop="10px"
-              color="#10A37F"
-              state={configuration.filesExactMatch || false}
-              setState={(value) =>
-                handleConfigurationChange("filesExactMatch", value)
-              }
-              text="Match exacto"
-            />
-          </div> */}
           <CustomAutomationsWrapper Icon={<ArrowSquare />}>
             <div
               className={styles.infoContainerWrapper}
@@ -327,22 +287,6 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
             <div
               className={`${styles.contentContainer} ${showContent.info8 ? styles.active : styles.disabled}`}
             >
-              {/* <div className={styles.contentInput}>
-                <p className={styles.titleContentInput}>Fuente de Datos</p>
-
-                <InputComponent
-                  readOnly={true}
-                  value={configuration.filesSource}
-                  setValue={(value) =>
-                    handleConfigurationChange("filesSource", value)
-                  }
-                  textButton="Seleccionar Ubicación"
-                  placeholder="/FTP"
-                  icon={<SearchSVG />}
-                  action={() => setShowSelectInputLocation(true)}
-                />
-              </div> */}
-
               <div className={styles.contentInput}>
                 <p className={styles.titleContentInput}>
                   Título del archivo Contiene
@@ -436,10 +380,6 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
                       className={styles.chevronIcon}
                       color="#71717A"
                       size={12}
-                      // style={{
-                      //   transform: showCurrencyDropdown ? "rotate(180deg)" : "",
-                      //   transition: "transform 0.3s ease-in-out",
-                      // }}
                     />
                   </div>
                 </div>
@@ -455,35 +395,7 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
                   <input type="text" placeholder="-" />
                 </div>
               </span>
-              <div className={styles.infoContainerWrapper}>
-                <div
-                  className={styles.infoContainer}
-                  onClick={() =>
-                    setShowContent({
-                      ...showContent,
-                      info3: !showContent.info3,
-                    })
-                  }
-                >
-                  <div>
-                    Selecciona la frecuencia del tiempo que se ejecutará la
-                    acción
-                  </div>
-                  <span>
-                    Si no se marca esta opción se ejecutara siempre y de forma
-                    inmediata
-                  </span>
-                </div>
 
-                <OptionsSwitchComponent
-                  border={"none"}
-                  marginLeft={"auto"}
-                  isChecked={configuration.actionFrequency || false}
-                  setIsChecked={(value) =>
-                    handleConfigurationChange("actionFrequency", value)
-                  }
-                />
-              </div>
               <div
                 className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
               >
@@ -550,9 +462,6 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
                       </div>
                       {editIndex === index && (
                         <div className={styles.labelOptions}>
-                          <p className={styles.titleContentInput}>
-                            Condiciones
-                          </p>
                           <div className={styles.conditionsContainer}>
                             <div className={styles.conditions}>
                               {conditions.map((condition, index) => (
@@ -715,11 +624,6 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
                     saveFilter();
                   }
                 }}
-                // if (editIndex == index) {
-                //   editLabel(null);
-                // } else {
-                //   editLabel(index);
-                // }
               >
                 {editIndex != null ? "Guardar Filtro" : "Crear Filtro"}
               </Button>
@@ -728,12 +632,7 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
 
           <CustomAutomationsWrapper Icon={<WhiteClock />}>
             <div className={styles.infoContainerWrapper}>
-              <div
-                className={styles.infoContainer}
-                // onClick={() =>
-                // setShowContent({ ...showContent, info3: !showContent.info3 })
-                // }
-              >
+              <div className={styles.infoContainer}>
                 <div>
                   Selecciona la frecuencia del tiempo que se ejecutará la acción
                 </div>
@@ -773,93 +672,15 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
             </div>
           </CustomAutomationsWrapper>
         </div>
-      </CustomAutomationsWrapper>
-
-      {/* <CustomAutomationsWrapper Icon={<WhiteClock />}>
-        <div className={styles.infoContainerWrapper}>
-          <div
-            className={styles.infoContainer}
-            onClick={() =>
-              setShowContent({ ...showContent, info3: !showContent.info3 })
-            }
-          >
-            <div>
-              Selecciona la frecuencia del tiempo que se ejecutará la acción
-            </div>
-            <span>
-              Si no se marca esta opción se ejecutara siempre y de forma
-              inmediata
-            </span>
-          </div>
-
-          <OptionsSwitchComponent
-            border={"none"}
-            marginLeft={"auto"}
-            isChecked={configuration.actionFrequency || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("actionFrequency", value)
-            }
-          />
-        </div>
-        <div
-          className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
-        >
-          <CustomDropdown
-            options={["Imediatamente", "5 Minutos", "10 Minutos"]}
-            selectedOption={configuration.selectedActionFrequency || []}
-            height="31px"
-            textStyles={{
-              fontWeight: 300,
-              color: "#1E0045",
-              fontSize: "13px",
-              marginLeft: "6px",
-              userSelect: "none",
-            }}
-            setSelectedOption={(selected) =>
-              handleConfigurationChange("selectedActionFrequency", selected)
-            }
-          />
-        </div>
       </CustomAutomationsWrapper> */}
-      {/* <CustomAutomationsWrapper Icon={<WhiteBolt />}>
-        <div
-          className={styles.infoContainerWrapper}
-          onClick={() =>
-            setShowContent({ ...showContent, info4: !showContent.info4 })
-          }
-        >
-          <div className={styles.infoContainer}>
-            <div>Modifica el Estado a los Documentos Procesados</div>
-          </div>
-          <OptionsSwitchComponent
-            border={"none"}
-            marginLeft={"auto"}
-            isChecked={configuration.documentStatus || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("documentStatus", value)
-            }
-          />
-        </div>
-        <div
-          className={`${styles.contentContainer} ${configuration.documentStatus ? styles.active : styles.disabled}`}
-        >
-          <CustomDropdown
-            options={["Pendiente", "Finalizado", "Anulado"]}
-            selectedOption={configuration.selectedDocumentStatus || []}
-            height="31px"
-            textStyles={{
-              fontWeight: 300,
-              color: "#1E0045",
-              fontSize: "13px",
-              marginLeft: "6px",
-              userSelect: "none",
-            }}
-            setSelectedOption={(selected) =>
-              handleConfigurationChange("selectedDocumentStatus", selected)
-            }
-          />
-        </div>
-      </CustomAutomationsWrapper> */}
+      <SelectInfoToProcess
+        setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+        setSelectedCurrency={setSelectedCurrency}
+        selectedCurrency={selectedCurrency}
+        configuration={configuration}
+        setConfiguration={setConfiguration}
+        handleConfigurationChange={handleConfigurationChange}
+      />
 
       <CustomAutomationsWrapper Icon={<ArrowSquare />}>
         <div
@@ -1218,31 +1039,29 @@ const TelematelFormAutomate = ({ type, configuration, setConfiguration }) => {
         <NewCategory setShowNewCategory={setShowNewCategory} />
       )}
       {showSelectInputLocation && (
-        <SelectLocation
-          onClose={() => setShowSelectInputLocation(false)}
-          pickLocation={(location) => {
-            console.log("location", location);
-            handleConfigurationChange("filesSource", location);
-          }}
-        />
-
-        <FileInputImport
-          handleConfigurationChange={handleConfigurationChange}
-          configuration={configuration}
-        />
-
-
-        <FileInputExport
-          configuration={configuration}
-          handleConfigurationChange={handleConfigurationChange}
-        />
-
-        <FileInputNotification
-          type="Gmail"
-          handleConfigurationChange={handleConfigurationChange}
-          configuration={configuration}
-        />
-        
+        <>
+          {" "}
+          <SelectLocation
+            onClose={() => setShowSelectInputLocation(false)}
+            pickLocation={(location) => {
+              console.log("location", location);
+              handleConfigurationChange("filesSource", location);
+            }}
+          />
+          <FileInputImport
+            handleConfigurationChange={handleConfigurationChange}
+            configuration={configuration}
+          />
+          <FileInputExport
+            configuration={configuration}
+            handleConfigurationChange={handleConfigurationChange}
+          />
+          <FileInputNotification
+            type="Gmail"
+            handleConfigurationChange={handleConfigurationChange}
+            configuration={configuration}
+          />
+        </>
       )}
       {/* </div> */}
 

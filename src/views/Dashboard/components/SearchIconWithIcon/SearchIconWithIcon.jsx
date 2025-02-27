@@ -3,7 +3,6 @@ import styles from "./SearchIconWithIcon.module.css";
 import searchMagnify from "../../assets/searchMagnify.svg";
 const SearchIconWithIcon = ({
   children,
-  hola,
   searchTerm,
   setSearchTerm,
   iconRight,

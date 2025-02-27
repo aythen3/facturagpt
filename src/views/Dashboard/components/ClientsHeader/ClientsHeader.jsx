@@ -9,6 +9,7 @@ const ClientsHeader = ({
   buttons = [],
   searchProps,
   searchChildren,
+  ref,
 }) => {
   return (
     <div className={styles.clientsHeader}>
@@ -34,7 +35,7 @@ const ClientsHeader = ({
         ))}
 
         {/* Barra de búsqueda con funcionalidad dinámica */}
-        <SearchIconWithIcon {...searchProps}>
+        <SearchIconWithIcon {...searchProps} ref={ref}>
           {searchChildren}
         </SearchIconWithIcon>
       </div>

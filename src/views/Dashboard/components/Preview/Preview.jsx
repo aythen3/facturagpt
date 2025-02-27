@@ -1,6 +1,6 @@
 import { MoreVertical } from "lucide-react";
 import styles from "./Preview.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import sendMail from "../../assets/sendMail.svg";
 import downloadIcon from "../../assets/downloadIcon.svg";
 import tagIcon from "../../assets/tagIcon.svg";
@@ -57,7 +57,6 @@ const ButtonActionsWithText = ({
     </button>
   );
 };
-
 const DocumentPreview = ({
   document,
   companyInfo,
@@ -65,6 +64,8 @@ const DocumentPreview = ({
   customStyles,
   setEditingNote,
   editingNote,
+  setShowInfoMobileBill,
+  setMobileSelectedDocument,
 }) => {
   const [options, setOptions] = useState(0);
   const [showMovetoFolder, setShowMovetoFolder] = useState(false);
@@ -557,8 +558,37 @@ const DocumentPreview = ({
       handleFileChangePdf({ target: { files } });
     }
   };
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Actualizar el ancho de la ventana cuando se cambie el tamaño de la pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Limpiar el evento cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const isMobile = windowWidth <= 768;
+
   return (
     <div className={styles.container} style={customStyles}>
+      {isMobile && (
+        <>
+          <button onClick={() => setMobileSelectedDocument(false)}>
+            Atras
+          </button>
+          <button onClick={() => setShowInfoMobileBill(true)}>
+            Ver info factura
+          </button>
+        </>
+      )}
       <div className={styles.previewSection}>
         {documentoPDF ? (
           <div className={styles.documentWrapper}>
