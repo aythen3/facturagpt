@@ -38,7 +38,12 @@ import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import GetPlusButton from "../GetPlusButton/GetPlusButton";
 import useSwipe from "../../../../utils/useSwipe";
-export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
+export default function FileExplorer({
+  isOpen,
+  setIsOpen,
+  toggleMenu,
+  setMobileSelectedDocument,
+}) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -596,7 +601,8 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
   return (
     <>
       <div
-        className={`${styles.container} ${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} ${swiped ? "" : styles.offAsideBar}`}
+        // className={`${styles.container} ${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} ${swiped ? "" : styles.offAsideBar}`}
+        className={`${styles.container} ${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} `}
         ref={fileExplorerRef}
         onDrop={handleDropFiles}
         onDragOver={handleContainerDragOver}
@@ -729,6 +735,7 @@ export default function FileExplorer({ isOpen, setIsOpen, toggleMenu }) {
                       } else {
                         console.log("item.Key", item);
                         navigate("/admin/panel/" + item.ETag);
+                        setMobileSelectedDocument(true);
                       }
                     }}
                     key={index}

@@ -25,7 +25,6 @@ const FiltersLabelOptionsTemplate = ({
 
   return (
     <div className={styles.FiltersLabelOptionsTemplate}>
-      <p>{text}</p>
       <CustomDropdown
         editable={true}
         editing={true}

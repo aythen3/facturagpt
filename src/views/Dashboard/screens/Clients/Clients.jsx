@@ -683,6 +683,7 @@ const Clients = () => {
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <ClientsHeader
           title="Gestión de Contactos"
+          ref={searchInputRef}
           buttons={[
             {
               label: (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Transactions.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.svg";
@@ -34,6 +34,7 @@ import { ReactComponent as Arrow } from "../../assets/ArrowLeftWhite.svg";
 import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
+import useFocusShortcut from "../../../../utils/useFocusShortcut";
 
 const Transactions = () => {
   const [clientSelected, setClientSelected] = useState([]);
@@ -449,10 +450,17 @@ const Transactions = () => {
     }
   }, [transactionsByClient]);
   console.log(mockTransactions);
+
+  const searchInputRef = useRef(null);
+
+  // Llama a la función y pasa la referencia
+  useFocusShortcut(searchInputRef, "k");
+
   return (
     <PanelTemplate>
       <div className={styles.container}>
         <ClientsHeader
+          ref={searchInputRef}
           additionalInfo={
             <>
               <div className={styles.infoClient}>

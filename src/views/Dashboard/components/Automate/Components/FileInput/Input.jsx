@@ -2,16 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./FileInput.module.css";
 import { useTranslation } from "react-i18next";
 
-const EditableInput = ({
-  configuration,
-  handleConfigurationChange,
-}) => {
+const EditableInput = ({ configuration, handleConfigurationChange }) => {
   const { t } = useTranslation("accountSetting");
   const [sectionSelected, setSectionSelected] = useState(0);
   const [nameEditing, setNameEditing] = useState(false);
 
   const [editable, setEditable] = useState(false);
-  const [newValue, setNewValue] = useState(configuration?.inputValue || '');
+  const [newValue, setNewValue] = useState(configuration?.inputValue || "");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -71,7 +68,7 @@ const EditableInput = ({
       <div className={styles.editableInputHeader}>
         <p>
           {!labelOptions && <span>{label}</span>}{" "}
-          {info && <span className={styles.info}>{info}</span>}
+          {/* {info && <span className={styles.info}>{info}</span>} */}
         </p>
         {!options && (
           <div
@@ -96,7 +93,7 @@ const EditableInput = ({
               handleConfigurationChange("inputValue", e.target.value);
             }}
             readOnly={readOnly !== undefined ? readOnly : !editable}
-            className={styles.textarea} // Agrega estilos específicos si es necesario
+            className={`${styles.textarea} ${styles.inputTypeClient}`} // Agrega estilos específicos si es necesario
           />
         ) : (
           <div style={{ display: "flex", gap: "20px" }}>

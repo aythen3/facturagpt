@@ -94,9 +94,14 @@ export default function InvoicePanel() {
       setFileUploaded(true);
     }
   }, [id]);
+  const [mobileSelectedDocument, setMobileSelectedDocument] = useState(false);
+  const [showInfoMobileBill, setShowInfoMobileBill] = useState(false);
 
   return (
-    <PanelTemplate>
+    <PanelTemplate
+      mobileSelectedDocument={mobileSelectedDocument}
+      setMobileSelectedDocument={setMobileSelectedDocument}
+    >
       {/* <NavbarAdmin setIsOpen={setIsOpen} isOpen={isOpen} /> */}
       {/* <div className={styles.container}> */}
       {/* <FileExplorer isOpen={isOpen} setIsOpen={setIsOpen} /> */}
@@ -147,6 +152,8 @@ export default function InvoicePanel() {
             setEditingNote={setEditingNote}
             editingNote={editingNote}
             idFile={id}
+            showInfoMobileBill={showInfoMobileBill}
+            setShowInfoMobileBill={setShowInfoMobileBill}
           />
           {showSelectLocation && (
             <SelectLocation onClose={() => setShowSelectLocation(false)} />
@@ -157,6 +164,8 @@ export default function InvoicePanel() {
             handleAddNote={handleAddNote}
             setEditingNote={setEditingNote}
             editingNote={editingNote}
+            setShowInfoMobileBill={setShowInfoMobileBill}
+            setMobileSelectedDocument={setMobileSelectedDocument}
           />
         </>
       )}

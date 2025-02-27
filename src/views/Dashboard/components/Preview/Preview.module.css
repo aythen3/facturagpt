@@ -19,10 +19,18 @@
     }
   } */
 }
+
 .container::-webkit-scrollbar {
   display: none;
 }
-
+@media (width <= 768px) {
+  .container {
+    position: absolute;
+    width: 100vw;
+    max-width: 100vw;
+    z-index: 2;
+  }
+}
 .previewSection {
   border: 2px dashed #e5e7eb;
   border-radius: 12px;

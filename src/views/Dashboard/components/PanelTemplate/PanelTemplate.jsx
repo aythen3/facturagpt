@@ -20,7 +20,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import GetPlusButton from "../GetPlusButton/GetPlusButton.jsx";
-const PanelTemplate = ({ menuOpenChat, setMenuOpenChat, children }) => {
+const PanelTemplate = ({
+  menuOpenChat,
+  setMenuOpenChat,
+  children,
+  mobileSelectedDocument,
+  setMobileSelectedDocument,
+}) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -86,6 +92,24 @@ const PanelTemplate = ({ menuOpenChat, setMenuOpenChat, children }) => {
     navigate("/admin/" + fromPath);
   }, [fromPath]);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Actualizar el ancho de la ventana cuando se cambie el tamaño de la pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Limpiar el evento cuando el componente se desmonta
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const isMobile = windowWidth <= 768;
+
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <NavbarAdmin fromPath={fromPath} setFromPath={setFromPath} />
@@ -97,6 +121,7 @@ const PanelTemplate = ({ menuOpenChat, setMenuOpenChat, children }) => {
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               toggleMenu={toggleMenu}
+              setMobileSelectedDocument={setMobileSelectedDocument}
             />
           )}
         <>
@@ -109,6 +134,7 @@ const PanelTemplate = ({ menuOpenChat, setMenuOpenChat, children }) => {
           ></div>
           <div
             className={`${styles.mobileMenu} ${(menuOpen && styles.activeMobileMenu) || (menuOpenChat && styles.activeMobileMenu)}`}
+            // className={`${styles.mobileMenu}`}
           >
             <ul>
               {/* <li onClick={() => setIsOpen((prev) => !prev)}>
@@ -203,7 +229,10 @@ const PanelTemplate = ({ menuOpenChat, setMenuOpenChat, children }) => {
             </ul>
           </div>
         </>
-        <div className={styles.contentTemplate}>{children}</div>
+
+        {!isMobile || (isMobile && mobileSelectedDocument) ? (
+          <div className={styles.contentTemplate}>{children}</div>
+        ) : null}
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ const InputComponent = ({
   readOnly,
   action,
   options = [],
+  onKeyDown,
 }) => {
   return (
     <div className={styles.inputContainer}>
@@ -37,6 +38,7 @@ const InputComponent = ({
             onChange={(e) => setValue(e.target.value)}
             type={typeInput}
             placeholder={placeholder}
+            onKeyDown={onKeyDown}
           />
         )}
       </div>

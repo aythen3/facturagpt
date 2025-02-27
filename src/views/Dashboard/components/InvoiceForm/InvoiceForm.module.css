@@ -18,7 +18,15 @@
 .container::-webkit-scrollbar {
   display: none;
 }
-
+@media (width <= 768px) {
+  .showInfoMobileBill {
+    position: absolute;
+    width: 100vw;
+    max-width: 100vw;
+    z-index: 3;
+    background-color: white;
+  }
+}
 .header {
   display: flex;
   justify-content: space-between;

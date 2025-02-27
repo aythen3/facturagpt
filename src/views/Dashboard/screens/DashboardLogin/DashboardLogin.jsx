@@ -8,6 +8,7 @@ import facturaLogo from "../../assets/logo-facturagpt.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { OTPInput } from "../../components/OtpInput/OtpInput";
 import { ReactComponent as OpenAiLogo } from "../../assets/openai.svg";
+import { ReactComponent as GoogleLogo } from "../../assets/googleLogo.svg";
 import { ReactComponent as KeyIcon } from "../../assets/key-icon.svg";
 import { ReactComponent as EyePassword } from "../../assets/eyePassword.svg";
 import { ReactComponent as EyePasswordSlash } from "../../assets/eyePasswordSlash.svg";
@@ -478,17 +479,16 @@ const DashboardLogin = () => {
             ? t("buttonRegister1")
             : t("buttonRegister2")}
       </div>
-      {mode === "signin" && (
-        <button
-          onClick={() => {
-            loginWithRedirect();
-          }}
-          className={styles.buttonOpenAi}
-        >
-          <OpenAiLogo />
-          <span>{t("loginIAButton")}</span>
-        </button>
-      )}
+
+      <button
+        onClick={() => {
+          loginWithRedirect();
+        }}
+        className={styles.buttonGoogle}
+      >
+        <GoogleLogo width="20" />
+        <span>{t("loginIAButton")}</span>
+      </button>
     </form>
   );
 
