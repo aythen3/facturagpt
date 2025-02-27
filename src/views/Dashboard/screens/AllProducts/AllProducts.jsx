@@ -360,11 +360,17 @@ const AllProducts = () => {
         : tableData.map((_, index) => index)
     );
   };
+
+  // const searchInputRef = useRef(null);
+
+  // useFocusShortcut(searchInputRef, "k");
+
   return (
     <PanelTemplate>
       <div className={styles.container}>
         <ClientsHeader
           title={"Gestión de Activos (X)"}
+          ref={searchInputRef}
           buttons={[
             {
               label: (

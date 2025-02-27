@@ -33,8 +33,6 @@
   }
 }
 
-
-
 .rightContainer {
   display: flex;
   flex-direction: column;
@@ -61,7 +59,7 @@
     font-size: 14px;
     color: #666;
     margin-bottom: 24px;
-  
+
     .resendButton {
       color: #162d3a;
       text-decoration: underline;
@@ -71,9 +69,7 @@
       padding: 0;
       font: inherit;
     }
-  
   }
-  
 }
 
 .logoContainer {
@@ -240,14 +236,9 @@
   margin-top: 20px;
 }
 
-
 .mailIcon {
   color: #162d3a;
 }
-
-
-
-
 
 .timer {
   color: #162d3a;
@@ -270,7 +261,6 @@
   }
 }
 
-
 .error {
   color: #dc3545;
   font-size: 0.875rem;
@@ -284,7 +274,7 @@
   cursor: not-allowed;
 }
 
-.buttonOpenAi {
+.buttonGoogle {
   background-color: transparent;
   color: #000;
   font-size: 16px;
@@ -396,17 +386,17 @@
   .title {
     font-size: 22px;
   }
-  
+
   .subtitle {
     font-size: 16px;
   }
 }
 
 @media (max-width: 968px) {
-.leftContainer {
-  /* background-color: red; */
-  display: none !important;
-}
+  .leftContainer {
+    /* background-color: red; */
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {

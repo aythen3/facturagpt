@@ -36,8 +36,16 @@ import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import Advertency from "../Advertency/Advertency";
 import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
+import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
 
-const Outlook = ({ type, configuration, setConfiguration }) => {
+const Outlook = ({
+  type,
+  configuration,
+  setConfiguration,
+  setShowSelectCurrencyPopup,
+  setSelectedCurrency,
+  selectedCurrency,
+}) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectOutputLocation, setShowSelectOutputLocation] =
@@ -94,7 +102,14 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
           options={true}
           readOnly={false}
         />
-
+        <SelectInfoToProcess
+          setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+          setSelectedCurrency={setSelectedCurrency}
+          selectedCurrency={selectedCurrency}
+          configuration={configuration}
+          setConfiguration={setConfiguration}
+          handleConfigurationChange={handleConfigurationChange}
+        />
         <CustomAutomationsWrapper Icon={<ArrowSquare />}>
           <div
             className={styles.infoContainerWrapper}
@@ -242,6 +257,7 @@ const Outlook = ({ type, configuration, setConfiguration }) => {
             </div>
           </div>
         </CustomAutomationsWrapper>
+
         <CustomAutomationsWrapper Icon={<WhiteClock />}>
           <div className={styles.infoContainerWrapper}>
             <div

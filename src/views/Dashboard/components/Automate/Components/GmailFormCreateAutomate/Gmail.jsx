@@ -42,8 +42,16 @@ import FileInputNotification from "../FileInput/Notification";
 import FileInputGPT from "../FileInput/GPT";
 import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
+import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
 
-const Gmail = ({ type, configuration, setConfiguration }) => {
+const Gmail = ({
+  type,
+  configuration,
+  setConfiguration,
+  setShowSelectCurrencyPopup,
+  setSelectedCurrency,
+  selectedCurrency,
+}) => {
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectOutputLocation, setShowSelectOutputLocation] =
@@ -107,6 +115,14 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
           configuration={configuration}
           handleConfigurationChange={handleConfigurationChange}
         />
+        <SelectInfoToProcess
+          setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+          setSelectedCurrency={setSelectedCurrency}
+          selectedCurrency={selectedCurrency}
+          configuration={configuration}
+          setConfiguration={setConfiguration}
+          handleConfigurationChange={handleConfigurationChange}
+        />
 
         <FileInputGPT
           configuration={configuration}
@@ -118,12 +134,10 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
           configuration={configuration}
         />
 
-
         <FileInputExport
           configuration={configuration}
           handleConfigurationChange={handleConfigurationChange}
         />
-
 
         {/* <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div style={{ display: "grid", gap: "10px" }}>
@@ -143,7 +157,6 @@ const Gmail = ({ type, configuration, setConfiguration }) => {
           />
         </div>
       </CustomAutomationsWrapper> */}
-
 
         <FileInputNotification
           type="Gmail"

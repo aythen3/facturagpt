@@ -6,9 +6,16 @@ const HeaderCard = ({ title, children, setState, headerStyle = {} }) => {
   return (
     <header className={styles.newTagHeader} style={headerStyle}>
       <div className={styles.leftSide}>
-        <div className={styles.iconContainer} onClick={() => setState(false)}>
+        <button
+          type="button"
+          className={styles.iconContainer}
+          onClick={(e) => {
+            e.stopPropagation();
+            setState(false);
+          }}
+        >
           <Arrow />
-        </div>
+        </button>
         <h3>{title}</h3>
       </div>
       <div className={styles.rightSide}>{children}</div>

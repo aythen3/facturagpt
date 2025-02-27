@@ -20,6 +20,7 @@ import { ReactComponent as BalanceIcon } from "../../assets/balanceIcon.svg";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../../i18";
 import { useDispatch, useSelector } from "react-redux";
+import HeaderCard from "../HeaderCard/HeaderCard";
 const Navbar = () => {
   const [t] = useTranslation("navBar");
 
@@ -166,69 +167,78 @@ const Navbar = () => {
       >
         <div className={styles.navFlex}>
           <div className={styles.nav}>
-            {["home", "soluciones", "contact", "pricing"].map(
-              (link, index) => (
-                <div
-                  key={index}
-                  {...(link !== "soluciones"
-                    ? { onClick: () => navigate(`/${link}`) }
-                    : {})}
-                  className={`${
-                    location.pathname.slice(1) !== link
-                      ? styles.disabledBtn
-                      : ""
-                  }`}
-                >
-                  {link === "soluciones" ? (
+            {["home", "soluciones", "contact", "pricing"].map((link, index) => (
+              <div
+                key={index}
+                {...(link !== "soluciones"
+                  ? { onClick: () => navigate(`/${link}`) }
+                  : {})}
+                className={`${
+                  location.pathname.slice(1) !== link ? styles.disabledBtn : ""
+                }`}
+              >
+                {link === "soluciones" ? (
+                  <div
+                    className={styles.solucionesWrapper}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      isMobile && setShowSolutions(true);
+                      setMenuOpen(true);
+                    }}
+                  >
+                    <span className={styles.solucionesHover}>
+                      {t(`item${index + 1}`)}
+                      <ArrowGray className={styles.icon} />
+                    </span>
                     <div
-                      className={styles.solucionesWrapper}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        isMobile && setShowSolutions(true);
-                      }}
+                      className={`${styles.solutionsContainer} ${
+                        showSolutions
+                          ? styles.display
+                          : isMobile
+                            ? styles.none
+                            : ""
+                      }`}
                     >
-                      <span className={styles.solucionesHover}>
-                        {t(`item${index + 1}`)}
-                        <ArrowGray className={styles.icon} />
-                      </span>
-                      <div
-                        className={`${styles.solutionsContainer} ${
-                          showSolutions
-                            ? styles.display
-                            : isMobile
-                              ? styles.none
-                              : ""
-                        }`}
-                      >
-                        {isMobile && (
-                          <div className={styles.buttonContainer}>
-                            <button
-                              className={styles.toggleButton}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setShowSolutions(false);
-                              }}
-                            >
-                              <ChevDown className={styles.icon} />
-                            </button>
-                          </div>
-                        )}
-                        <div className={styles.showGrid}>
-                          {solutions.map((solution, index) => (
-                            <div key={index}>
-                              <p>{solution.title}</p>
-                              <span>{solution.desc}</span>
-                            </div>
-                          ))}
+                      {isMobile && (
+                        <div
+                          className={styles.buttonContainer}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <HeaderCard
+                            title={"Soluciones"}
+                            setState={setShowSolutions}
+                            headerStyle={{
+                              width: "100%",
+                              background: "transparent",
+                              padding: "0",
+                            }}
+                          ></HeaderCard>
+                          {/* <button
+                            className={styles.toggleButton}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setShowSolutions(false);
+                            }}
+                          >
+                            <ChevDown className={styles.icon} />
+                          </button> */}
                         </div>
+                      )}
+                      <div className={styles.showGrid}>
+                        {solutions.map((solution, index) => (
+                          <div key={index}>
+                            <p>{solution.title}</p>
+                            <span>{solution.desc}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  ) : (
-                    <div className={styles.test}>{t(`item${index + 1}`)}</div>
-                  )}
-                </div>
-              )
-            )}
+                  </div>
+                ) : (
+                  <div className={styles.test}>{t(`item${index + 1}`)}</div>
+                )}
+              </div>
+            ))}
           </div>
 
           <div className={styles.flagContainer}>

@@ -379,55 +379,31 @@ const PanelAutomate = ({
     if (automationData) {
       console.log("AUTOMATIONDATA LOADED", automationData);
       if (automationData.type === "WhatsApp") {
-        console.log(
-          "Setting whatsAppConfiguration",
-          automationData
-        );
+        console.log("Setting whatsAppConfiguration", automationData);
         setWhatsAppConfiguration(automationData.automationData);
       } else if (automationData.type === "Gmail") {
-        console.log(
-          "Setting gmailAndOutlookConfiguration",
-          automationData
-        );
+        console.log("Setting gmailAndOutlookConfiguration", automationData);
         setGmailConfiguration(automationData.automationData);
       } else if (automationData.type === "Google Drive") {
-        console.log(
-          "Setting googleDriveConfiguration",
-          automationData
-        );
+        console.log("Setting googleDriveConfiguration", automationData);
         setGoogleDriveConfiguration(automationData);
       } else if (automationData.type === "esPúblico Gestiona") {
-        console.log(
-          "Setting esPublicoGestionaConfiguration",
-          automationData
-        );
+        console.log("Setting esPublicoGestionaConfiguration", automationData);
         setEsPublicoGestionaConfiguration(automationData);
       } else if (automationData.type === "Dropbox") {
-        console.log(
-          "Setting dropBoxConfiguration",
-          automationData
-        );
+        console.log("Setting dropBoxConfiguration", automationData);
         setDropBoxConfiguration(automationData);
       } else if (automationData.type === "Google Sheets") {
-        console.log(
-          "Setting googleSheetsConfiguration",
-          automationData
-        );
+        console.log("Setting googleSheetsConfiguration", automationData);
         setGoogleSheetsConfiguration(automationData);
       } else if (automationData.type === "XML") {
         console.log("Setting XML configuration", automationData);
         setXMLConfiguration(automationData.automationData);
       } else if (automationData.type === "Odoo") {
-        console.log(
-          "Setting Odoo configuration",
-          automationData
-        );
+        console.log("Setting Odoo configuration", automationData);
         setOdooConfiguration(automationData);
       } else if (automationData.type === "Wolters") {
-        console.log(
-          "Setting Wolters configuration",
-          automationData
-        );
+        console.log("Setting Wolters configuration", automationData);
         setWoltersConfiguration(automationData);
       } else if (
         automationData.automationData.type === "whatsApp notifications"
@@ -438,10 +414,7 @@ const PanelAutomate = ({
         );
         setWhatsAppNotificationsConfiguration(automationData);
       } else if (automationData.type === "Agencia Tributaria") {
-        console.log(
-          "Setting Agencia Tributaria configuration",
-          automationData
-        );
+        console.log("Setting Agencia Tributaria configuration", automationData);
         setAgenciaConfiguration(automationData);
       } else if (automationData.type === "FTP") {
         console.log("FTP configuration", automationData);
@@ -449,8 +422,6 @@ const PanelAutomate = ({
       }
     }
   }, [automationData]);
-
-
 
   useEffect(() => {
     if (searchTerm === "") {
@@ -718,6 +689,9 @@ const PanelAutomate = ({
                         configuration={gmailConfiguration}
                         setConfiguration={setGmailConfiguration}
                         type={type}
+                        setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+                        setSelectedCurrency={setSelectedCurrency}
+                        selectedCurrency={selectedCurrency}
                       />
                     );
                   case "Outlook":
@@ -726,6 +700,9 @@ const PanelAutomate = ({
                         configuration={outlookConfiguration}
                         setConfiguration={setOutlookConfiguration}
                         type={type}
+                        setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+                        setSelectedCurrency={setSelectedCurrency}
+                        selectedCurrency={selectedCurrency}
                       />
                     );
                   case "Google Drive":
