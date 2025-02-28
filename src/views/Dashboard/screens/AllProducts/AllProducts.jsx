@@ -326,6 +326,12 @@ const AllProducts = () => {
                 },
                 {
                   label: "Editar",
+                  onClick: () => {
+                    setCreatingBill(false);
+                    setShowNewClient(true);
+                    setNewContact(false);
+                    setSelectedRowIndex(null);
+                  },
                 },
                 // Puedes agregar más opciones aquí
               ]}
@@ -364,7 +370,7 @@ const AllProducts = () => {
   // const searchInputRef = useRef(null);
 
   // useFocusShortcut(searchInputRef, "k");
-
+  const [newContactProp, setNewContact] = useState(false);
   return (
     <PanelTemplate>
       <div className={styles.container}>
@@ -380,8 +386,9 @@ const AllProducts = () => {
                 </>
               ),
               onClick: () => {
-                setCreatingBill(true);
+                setCreatingBill(false);
                 setShowNewClient(true);
+                setNewContact(true);
               },
             },
             {
@@ -476,6 +483,7 @@ const AllProducts = () => {
             setTags={setTags}
             tags={tags}
             creatingBill={creatingBill}
+            newContactProp={newContactProp}
           />
         )}
         {showAddTags && (

@@ -14,18 +14,15 @@ import Button from "../../../../Button/Button";
 import DeleteButton from "../../../../DeleteButton/DeleteButton";
 import FiltersLabelOptionsTemplate from "../../FiltersLabelOptionsTemplate/FiltersLabelOptionsTemplate";
 import { filter } from "jszip";
+import SelectCurrencyPopup from "../../../../SelectCurrencyPopup/SelectCurrencyPopup";
 
-const SelectInfoToProcess = ({
-  setShowSelectCurrencyPopup,
-  selectedCurrency,
-  configuration,
-  setConfiguration,
-  handleConfigurationChange,
-}) => {
+const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const [fileKeywords, setFileKeywords] = useState([]);
   const [labels, setLabels] = useState([]); // Ahora labels contiene toda la información necesaria
   const [editIndex, setEditIndex] = useState(null);
-
+  const [editConditionIndex, setEditConditionIndex] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
   const [showContent, setShowContent] = useState({
     info1: false,
     info2: false,
@@ -105,7 +102,10 @@ const SelectInfoToProcess = ({
   return (
     <div>
       {" "}
-      <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+      <CustomAutomationsWrapper
+        Icon={<ArrowSquare />}
+        showContent={showContent.info1}
+      >
         <div
           className={styles.infoContainerWrapper}
           onClick={() =>
@@ -123,7 +123,10 @@ const SelectInfoToProcess = ({
         <div
           className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
         >
-          <CustomAutomationsWrapper Icon={<ArrowSquare />}>
+          <CustomAutomationsWrapper
+            Icon={<ArrowSquare />}
+            showContent={showContent.info8}
+          >
             <div
               className={styles.infoContainerWrapper}
               onClick={() =>
@@ -273,7 +276,10 @@ const SelectInfoToProcess = ({
               </span>
             </div>
           </CustomAutomationsWrapper>
-          <CustomAutomationsWrapper Icon={<WhiteFolder />}>
+          <CustomAutomationsWrapper
+            Icon={<WhiteFolder />}
+            showContent={showContent.info9}
+          >
             <div
               className={styles.infoContainerWrapper}
               onClick={() =>
@@ -297,7 +303,20 @@ const SelectInfoToProcess = ({
                 {labels.map((label, index) => (
                   <div key={index}>
                     <div className={styles.titleContentInput}>
-                      <span>{label.name || "Nombre del Filtro"}</span>
+                      <div className={styles.labelName}>
+                        <input
+                          type="text"
+                          placeholder="Nombre del Filtro"
+                          value={label.name}
+                          onChange={(e) => {
+                            const updatedLabels = [...labels];
+                            updatedLabels[index].name = e.target.value;
+                            setLabels(updatedLabels);
+                          }}
+                          disabled={editIndex !== index}
+                        />
+                      </div>
+                      {/* <span>{label.name || "Nombre del Filtro"}</span> */}
                       <div className={styles.optionsContentInput}>
                         <Button
                           type="button"
@@ -318,11 +337,64 @@ const SelectInfoToProcess = ({
                       <div className={styles.labelOptions}>
                         <div className={styles.conditionsContainer}>
                           <div className={styles.conditions}>
-                            {label.conditions.map((condition, i) => (
-                              <div className={styles.condition} key={i}>
-                                {condition}
-                              </div>
-                            ))}
+                            {label.conditions.map((condition, i) => {
+                              if (
+                                condition === "" &&
+                                editConditionIndex === null
+                              ) {
+                                const updatedLabels = [...labels];
+                                updatedLabels[index].conditions.splice(i, 1); // Eliminar la condición vacía
+                                setLabels(updatedLabels);
+                                return null; // No renderizar nada para esta condición
+                              }
+                              return (
+                                <div key={i} className={styles.condition}>
+                                  {editIndex === index &&
+                                  editConditionIndex === i ? (
+                                    <textarea
+                                      className={styles.conditionInput}
+                                      type="text"
+                                      value={condition}
+                                      onChange={(e) => {
+                                        const updatedLabels = [...labels];
+                                        updatedLabels[index].conditions[i] =
+                                          e.target.value;
+                                        setLabels(updatedLabels);
+                                      }}
+                                      onBlur={() => setEditConditionIndex(null)}
+                                      onKeyDown={(e) => {
+                                        console.log(e.key);
+                                        if (
+                                          e.key === "Enter" ||
+                                          e.key === "Escape"
+                                        ) {
+                                          setEditConditionIndex(null);
+                                        }
+                                      }}
+                                    />
+                                  ) : (
+                                    <>
+                                      <span
+                                        onClick={() => {
+                                          setEditConditionIndex(i);
+                                        }}
+                                      >
+                                        {condition}
+                                      </span>
+                                      <DeleteButton
+                                        action={() => {
+                                          const updatedLabels = [...labels];
+                                          updatedLabels[
+                                            index
+                                          ].conditions.splice(i, 1);
+                                          setLabels(updatedLabels);
+                                        }}
+                                      />
+                                    </>
+                                  )}
+                                </div>
+                              );
+                            })}
                           </div>
                           <input
                             type="text"
@@ -334,29 +406,28 @@ const SelectInfoToProcess = ({
                                 e.target.value;
                               setLabels(updatedLabels);
                             }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                addCondition(index);
+                                setEditConditionIndex(null);
+                              }
+                            }}
                           />
+
                           <Button
-                            action={() => addCondition(index)}
+                            action={() => {
+                              addCondition(index);
+                              setEditConditionIndex(null);
+                            }}
                             headerStyle={{
                               height: "40px",
                               padding: "13px 11px",
                             }}
                           >
-                            Generar
+                            {editConditionIndex == null ? "Generar" : "Guardar"}
                           </Button>
                         </div>
-                        <div className={styles.labelName}>
-                          <input
-                            type="text"
-                            placeholder="Label Name"
-                            value={label.name}
-                            onChange={(e) => {
-                              const updatedLabels = [...labels];
-                              updatedLabels[index].name = e.target.value;
-                              setLabels(updatedLabels);
-                            }}
-                          />
-                        </div>
+
                         <div className={styles.filtersLabelOptions}>
                           {label.filters.map((filter) => (
                             <>
@@ -475,6 +546,12 @@ const SelectInfoToProcess = ({
                               Add OR Condition
                             </button>
                           </div> */}
+                          <button
+                            onClick={() => addFilter(editIndex, "AND")}
+                            className={styles.buttonAddFilter}
+                          >
+                            Añadir Condición
+                          </button>
                         </div>
                         {console.log(labels)}
                       </div>
@@ -483,14 +560,14 @@ const SelectInfoToProcess = ({
                 ))}
               </div>
               <div className={styles.buttonsTypeCondition}>
-                {labels.length >= 1 && (
+                {/* {labels.length >= 1 && (
                   <button
                     onClick={() => addFilter(editIndex, "AND")}
                     className={styles.buttonAddFilter}
                   >
                     Añadir Condición
                   </button>
-                )}
+                )} */}
                 <Button
                   headerStyle={{
                     height: "40px",
@@ -515,7 +592,10 @@ const SelectInfoToProcess = ({
               </div>
             </div>
           </CustomAutomationsWrapper>
-          <CustomAutomationsWrapper Icon={<WhiteClock />}>
+          <CustomAutomationsWrapper
+            Icon={<WhiteClock />}
+            showContent={configuration.actionFrequency}
+          >
             <div className={styles.infoContainerWrapper}>
               <div className={styles.infoContainer}>
                 <div>
@@ -558,6 +638,13 @@ const SelectInfoToProcess = ({
           </CustomAutomationsWrapper>
         </div>
       </CustomAutomationsWrapper>
+      {showSelectCurrencyPopup && (
+        <SelectCurrencyPopup
+          setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+          setSelectedCurrency={setSelectedCurrency}
+          selectedCurrency={selectedCurrency}
+        />
+      )}
     </div>
   );
 };

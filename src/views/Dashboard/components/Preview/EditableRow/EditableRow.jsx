@@ -9,8 +9,18 @@ const EditableRow = ({
   hasButton,
   action,
   oneRow = false,
+  updateValue,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [percentageValue, setPercentageValue] = useState(hasPercentage || "");
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setPercentageValue(newValue);
+    if (updateValue) {
+      updateValue(newValue);
+    }
+  };
 
   return (
     <div
@@ -22,7 +32,13 @@ const EditableRow = ({
           <Button type="button" action={() => setIsEditing(!isEditing)}>
             {isEditing ? "Guardar" : "Editar"}
           </Button>
-          <input type="text" placeholder="0,00 €" disabled={!isEditing} />
+          <input
+            type="text"
+            placeholder="0,00 €"
+            disabled={!isEditing}
+            value={percentageValue}
+            onChange={handleChange}
+          />
         </div>
       )}
       {!oneRow && (
@@ -44,8 +60,14 @@ const EditableRow = ({
           <Button type="button" action={() => setIsEditing(!isEditing)}>
             {isEditing ? "Guardar" : "Editar"}
           </Button>
-          {hasPercentage && <span>{hasPercentage}</span>}
-          <input type="text" placeholder="0,00 €" disabled={!isEditing} />
+          <input
+            type="text"
+            placeholder="0,00 €"
+            disabled={!isEditing}
+            value={percentageValue}
+            onChange={handleChange}
+          />
+          {!isEditing && "%"}
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import SelectTag from "./SelectTag/SelectTag";
 import NewTag from "../NewTag/NewTag";
 import AddTemplate from "./AddTemplate/AddTemplate";
+import { getOneClient } from "../../../../actions/clients";
 
 const ButtonLabelCommponentWithButton = ({
   textHeader,
@@ -84,6 +85,7 @@ const NewProduct = ({
   setTags,
   tags,
   creatingBill,
+  newContactProp,
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [userData, setUserData] = useState();
@@ -165,6 +167,20 @@ const NewProduct = ({
     };
   }, [showNewProduct]);
 
+  const dispatch = useDispatch();
+  const handleGetOneClient = async (clientId) => {
+    console.log("CLIENTIDDD", clientId);
+
+    try {
+      const response = await dispatch(
+        getOneClient({ userId: user?.id, clientId })
+      ).unwrap();
+      console.log("Cliente obtenido:", response);
+      navigate(`/admin/clients/${clientId}`);
+    } catch (error) {
+      console.error("Error al obtener el cliente:", error);
+    }
+  };
   return (
     <div className={styles.overlay}>
       <div className={styles.bg} onClick={() => handleCloseNewClient()}></div>
@@ -173,6 +189,8 @@ const NewProduct = ({
           text="Activo"
           onClick={() => handleCloseNewClient()}
           isAnimating={isAnimating}
+          newContact={newContactProp}
+          handleGetOneClient={handleGetOneClient}
         >
           <div
             className={`${styles.newClientContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}

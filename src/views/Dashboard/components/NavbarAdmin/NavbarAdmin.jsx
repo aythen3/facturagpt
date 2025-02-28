@@ -31,6 +31,8 @@ import NewBIll from "../NewBIll/NewBIll";
 import UploadFIle from "../UploadFIle/UploadFIle";
 import CreateFolderModal from "../CreateFolderModal/CreateFolderModal";
 import MobileAsidebarNavigation from "./MobileAsidebarNavigation/MobileAsidebarNavigation";
+import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
+import SeeHistory from "../SeeHistory/SeeHistory";
 
 const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
@@ -42,6 +44,7 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   // const fromPath = pathname.split("/")[2];
 
   // console.log('languageFromPath', fromPath)
+  const [seeHistory, setSeeHistory] = useState(false);
 
   const { user } = useSelector((state) => state.user);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
@@ -62,7 +65,8 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [numNotification, setNumNotification] = useState(0);
-
+  const [showChangeCurrencyPopup, setShowChangeCurrencyPopup] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   // =======================
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const handleCloseNewClient = () => {
@@ -330,8 +334,36 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
           setFromPath={setFromPath}
         />
         {showPlusModal && (
-          <UpgradePlanWrapper onClose={() => setShowPlusModal(false)} />
+          <UpgradePlanWrapper
+            onClose={() => setShowPlusModal(false)}
+            setShowSelectCurrencyPopup={setShowChangeCurrencyPopup}
+            setSelectedCurrency={setSelectedCurrency}
+            selectedCurrency={selectedCurrency}
+            setSeeHistory={setSeeHistory}
+            seeHistory={seeHistory}
+            isAnimating={isAnimating}
+            setIsAnimating={setIsAnimating}
+          />
         )}
+        {seeHistory && (
+          <div className={styles.seeHistoryContainer}>
+            <SeeHistory
+              setSeeHistory={setSeeHistory}
+              seeHistory={seeHistory}
+              isAnimating={isAnimating}
+              setIsAnimating={setIsAnimating}
+            />
+          </div>
+        )}
+
+        {showChangeCurrencyPopup && (
+          <SelectCurrencyPopup
+            setShowSelectCurrencyPopup={setShowChangeCurrencyPopup}
+            setSelectedCurrency={setSelectedCurrency}
+            selectedCurrency={selectedCurrency}
+          />
+        )}
+
         {isOpen && (
           <FloatingMenu
             isOpen={isOpen}

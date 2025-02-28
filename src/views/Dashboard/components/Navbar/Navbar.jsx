@@ -151,12 +151,38 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <img
-        onClick={() => navigate("/home")}
-        src={facturaLogo}
-        alt="FacturaGPT"
-        className={styles.logo}
-      />
+      {showSolutions && isMobile ? (
+        <div
+          className={styles.buttonContainer}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <HeaderCard
+            title={"Soluciones"}
+            setState={setShowSolutions}
+            headerStyle={{
+              width: "100%",
+              background: "transparent",
+              padding: "0",
+            }}
+          ></HeaderCard>
+          {/* <button
+          className={styles.toggleButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowSolutions(false);
+          }}
+        >
+          <ChevDown className={styles.icon} />
+        </button> */}
+        </div>
+      ) : (
+        <img
+          onClick={() => navigate("/home")}
+          src={facturaLogo}
+          alt="FacturaGPT"
+          className={styles.logo}
+        />
+      )}
       <button className={styles.hamburger} onClick={toggleMenu}>
         <img src={menuIcon} alt="Menu Icon" />
       </button>
@@ -183,7 +209,7 @@ const Navbar = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       isMobile && setShowSolutions(true);
-                      setMenuOpen(true);
+                      setMenuOpen(false);
                     }}
                   >
                     <span className={styles.solucionesHover}>
@@ -199,7 +225,7 @@ const Navbar = () => {
                             : ""
                       }`}
                     >
-                      {isMobile && (
+                      {/* {isMobile && (
                         <div
                           className={styles.buttonContainer}
                           onClick={(e) => e.stopPropagation()}
@@ -213,17 +239,9 @@ const Navbar = () => {
                               padding: "0",
                             }}
                           ></HeaderCard>
-                          {/* <button
-                            className={styles.toggleButton}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setShowSolutions(false);
-                            }}
-                          >
-                            <ChevDown className={styles.icon} />
-                          </button> */}
+                        
                         </div>
-                      )}
+                      )} */}
                       <div className={styles.showGrid}>
                         {solutions.map((solution, index) => (
                           <div key={index}>

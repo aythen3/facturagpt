@@ -23,7 +23,10 @@ import Button from "../Button/Button";
 import EditableRow from "./EditableRow/EditableRow";
 import EditableInput from "../AccountSettings/EditableInput/EditableInput";
 import { ReactComponent as SeleccionarPlantilla } from "../../assets/seleccionar plantilla.svg";
+import { ReactComponent as InfoPanelIcon } from "../../assets/infoPanelIcon.svg";
+import { ReactComponent as OptionDots } from "../../assets/optionDots.svg";
 import { ReactComponent as EditCode } from "../../assets/editCode.svg";
+import { ReactComponent as ArrowLeftTextBlack } from "../../assets/ArrowLeftTextBlack.svg";
 import { ReactComponent as EditCodeRays } from "../../assets/editCodeRays.svg";
 import AddDiscount from "../AddDiscount/AddDiscount";
 import AddTax from "../AddTax/AddTax";
@@ -390,14 +393,14 @@ const DocumentPreview = ({
               buttonLabel="Añadir Descuento"
               action={() => setShowDiscountModal(true)}
               hasButton
-              hasPercentage={discountQuantity + "%"}
+              hasPercentage={discountQuantity}
             />
             <EditableRow
               label="Impuesto"
               buttonLabel="Añadir Impuesto"
               action={() => setShowTaxModal(true)}
               hasButton
-              hasPercentage={taxQuantity + "%"}
+              hasPercentage={taxQuantity}
             />
             <EditableRow label="Total" oneRow={true} />
           </div>
@@ -581,12 +584,28 @@ const DocumentPreview = ({
     <div className={styles.container} style={customStyles}>
       {isMobile && (
         <>
-          <button onClick={() => setMobileSelectedDocument(false)}>
-            Atras
-          </button>
-          <button onClick={() => setShowInfoMobileBill(true)}>
-            Ver info factura
-          </button>
+          <div className={styles.headerBillMobile}>
+            <button onClick={() => setMobileSelectedDocument(false)}>
+              <ArrowLeftTextBlack /> Atrás
+            </button>
+            <div className={styles.notesHeaderBillMobile}>
+              <div className={styles.note}>nota</div>
+              <button>+Añadir Nota</button>
+              <OptionDots className={styles.verticalOptionDots} />
+            </div>
+          </div>
+          <Button
+            action={() => setShowInfoMobileBill(true)}
+            headerStyle={{
+              background: "transparent",
+              color: "#B4B4B4",
+              border: " 1px solid rgba(0, 0, 0, 0.10)",
+              margin: "10px 0",
+            }}
+          >
+            <InfoPanelIcon />
+            Info
+          </Button>
         </>
       )}
       <div className={styles.previewSection}>

@@ -223,7 +223,7 @@ const ContactForm = () => {
         </div>
 
         {isMessageVisible &&
-          (!statusMessage.includes("exitosamente") ? (
+          (statusMessage.includes("exitosamente") ? (
             <div className={`${styles.statusMessage} ${styles.success}`}>
               <HeaderCard title={"¡Gracias por contactarnos!"}>
                 <Button>Aceptar</Button>
