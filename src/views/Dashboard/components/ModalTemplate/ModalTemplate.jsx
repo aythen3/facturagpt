@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ModalTemplate.module.css";
 import Button from "../Button/Button";
 import { ReactComponent as ArrowDown } from "../../assets/ArrowLeftWhite.svg";
-
+import { ReactComponent as RedTrash } from "../../assets/redTrash.svg";
 const ModalTemplate = ({
   children,
   onClick,
@@ -17,7 +17,6 @@ const ModalTemplate = ({
   return (
     <>
       <div className={styles.bg} onClick={() => onClick()}></div>
-
       <div
         className={`${styles.modalTemplate}  ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
@@ -31,25 +30,32 @@ const ModalTemplate = ({
             </h3>
           </div>
           <div className={styles.buttonContainer}>
+            {/* {!(newContact || text === "Activo") && ( */}
             {!newContact && (
               <>
                 <Button
                   type={"white"}
-                  action={() => {
-                    true && handleGetOneClient(selectedContact);
-                  }}
+                  action={() => handleGetOneClient(selectedContact)}
                 >
                   Ver Transacciones
                 </Button>
                 <Button>Nueva Factura</Button>
               </>
             )}
+
             <Button action={actionSave}>
               {newContact ? "Guardar" : "Actualizar"}
             </Button>
           </div>
         </div>
         <div className={styles.contentContainer}>{children}</div>
+        <div>
+          {!newContact && (
+            <div className={styles.deleteContact}>
+              <RedTrash className={styles.icon} /> Eliminar {text}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

@@ -9,6 +9,8 @@ import InfoContact from "../InfoContact/InfoContact";
 import InfoBill from "../InfoBill/InfoBill";
 import InfoActivity from "../InfoActivity/InfoActivity";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
+import { ReactComponent as OptionDots } from "../../assets/optionDots.svg";
+import { ReactComponent as ArrowLeftTextBlack } from "../../assets/ArrowLeftTextBlack.svg";
 import { ReactComponent as AiIcon } from "../../assets/AIcon.svg";
 import AiIcon2 from "../../assets/AIcon.svg";
 import CreateNotePopup from "../CreateNotePopup/CreateNotePopup";
@@ -80,7 +82,18 @@ export default function InvoiceForm({
       style={customStyles}
     >
       {isMobile && (
-        <button onClick={() => setShowInfoMobileBill(false)}>Ir atras</button>
+        <div className={styles.headerBillMobile}>
+          {/* <button onClick={() => setShowInfoMobileBill(false)}>Ir atras</button> */}
+          <button onClick={() => setShowInfoMobileBill(false)}>
+            <ArrowLeftTextBlack /> Título del Documento
+          </button>
+          <div className={styles.headerBillMobile}>
+            <div className={styles.notesHeaderBillMobile}>
+              <button>+Añadir Nota</button>
+              <OptionDots className={styles.verticalOptionDots} />
+            </div>
+          </div>
+        </div>
       )}
       <header className={styles.header}>
         <div className={styles.titleWrapper}>

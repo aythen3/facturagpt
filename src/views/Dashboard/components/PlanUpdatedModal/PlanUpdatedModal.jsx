@@ -4,9 +4,9 @@ import closeGray from "../../assets/closeGray.svg";
 import greenTick from "../../assets/greenTick.svg";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
-const PlanUpdatedModal = ({ onClose }) => {
+import SeeHistory from "../SeeHistory/SeeHistory";
+const PlanUpdatedModal = ({ onClose, setSeeHistory, seeHistory }) => {
   const [isClosing, setIsClosing] = useState(false);
-
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
@@ -35,8 +35,16 @@ const PlanUpdatedModal = ({ onClose }) => {
             <img src={closeGray} alt="closeGray" />
           </div> */}
         <HeaderCard title="¡Plan actualizado con éxito!" setState={handleClose}>
-          <Button type="white">Ver Historial</Button>
-          <Button>Aceptar</Button>
+          <Button
+            type="white"
+            action={() => {
+              onClose();
+              setSeeHistory(true);
+            }}
+          >
+            Ver Historial
+          </Button>
+          <Button action={handleClose}>Aceptar</Button>
         </HeaderCard>
         <div className={styles.upgradePlanContent}>
           <div className={styles.checkCircle}>

@@ -121,3 +121,26 @@
 .fadeOut {
   opacity: 0;
 }
+.deleteContact {
+  width: 75%;
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  color: #dc3545;
+  gap: 7px;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16.9px; /* 140.833% */
+  cursor: pointer;
+  .icon {
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 200px;
+    background: #ededed;
+  }
+}

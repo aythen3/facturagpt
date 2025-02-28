@@ -352,7 +352,6 @@
       }
     }
   }
-
 }
 
 .chatMenuSettings {
@@ -364,7 +363,6 @@
     border: none;
     cursor: pointer;
   }
-
 }
 
 .menuOptions {
@@ -453,5 +451,25 @@
     -moz-transition: filter 0.1s ease;
     -ms-transition: filter 0.1s ease;
     -o-transition: filter 0.1s ease;
+  }
+}
+
+.noChats {
+  flex: 1 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #3a3a3a;
+  gap: 10px;
+  font-weight: 600;
+  justify-content: center;
+  padding-top: 0;
+  max-height: 85%;
+  height: 100%;
+  text-align: center;
+  p {
+    margin: 0;
   }
 }

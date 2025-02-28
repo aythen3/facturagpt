@@ -27,7 +27,7 @@ import {
   fetchByChat,
   sendMessage,
   deleteChat,
-  validateTokenGPT
+  validateTokenGPT,
 } from "@src/actions/chat";
 
 import { clearCurrentChat } from "@src/slices/chatSlices";
@@ -212,7 +212,6 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
     setSelectedOption(false);
   };
 
-
   const handleFixChat = async (chatId) => {
     console.log("handleFixChat", chatId);
     // dispatch(deleteChat({ chatId }));
@@ -249,7 +248,6 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
 
   useSwipe(setSwiped);
 
-
   const [selectedOption, setSelectedOption] = useState(false);
 
   useEffect(() => {
@@ -261,15 +259,14 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
     };
 
     // Agregar el event listener
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Limpiar el event listener
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [selectedOption]);
-
-
+  console.log(sortChat);
   return (
     <div
       className={styles.chatMenu}
@@ -281,7 +278,6 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
     >
       <div
         className={`${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} ${swiped ? "" : styles.offAsideBar}`}
-
       >
         {/* {isMobile && (
           <div className={styles.showMobile}>
@@ -305,64 +301,74 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
         </SearchIconWithIcon>
 
         <div className={styles.chatsContainer}>
-          {Object.entries(sortChat).map(([group, chatArray]) => {
-            let groupTitle = "Antiguo";
+          {searchTerm !== "" && Object.keys(sortChat).length === 0 ? (
+            <div className={styles.noChats}>
+              <p>Ningún chat coincide con esta búsqueda.</p>
+            </div>
+          ) : Object.keys(sortChat).length === 0 ? (
+            <div className={styles.noChats}>
+              <p>Actualmente no tienes chats.</p>
+              <p>Envía un mensaje para iniciar un chat nuevo.</p>
+            </div>
+          ) : (
+            Object.entries(sortChat).map(([group, chatArray]) => {
+              let groupTitle = "Antiguo";
 
-            if (group == 0) groupTitle = "Hoy";
-            else if (group == 1) groupTitle = "Ayer";
-            else if (group > 1 && group < 7) groupTitle = "Esta semana";
-            else if (group >= 7 && group < 14) groupTitle = "Semana pasada";
-            else if (group >= 14 && group < 30) groupTitle = "Este mes";
-            else if (group >= 30 && group < 60) groupTitle = "Mes pasado";
-            else if (group >= 60) groupTitle = "Hace varios meses";
-
-            return (
-              <div key={group}>
-                <h3>{groupTitle}</h3>
-                <ul>
-                  {chatArray.map((chat) => {
-                    return (
-                      <li
-                        key={chat.id}
-                        className={`${id == chat.id && styles.active}`}
-                        onClick={() => navigate(`/admin/chat/${chat.id}`)}
-                      >
-                        {true && (
-                          <div>
-                            fix
+              if (group == 0) groupTitle = "Hoy";
+              else if (group == 1) groupTitle = "Ayer";
+              else if (group > 1 && group < 7) groupTitle = "Esta semana";
+              else if (group >= 7 && group < 14) groupTitle = "Semana pasada";
+              else if (group >= 14 && group < 30) groupTitle = "Este mes";
+              else if (group >= 30 && group < 60) groupTitle = "Mes pasado";
+              else if (group >= 60) groupTitle = "Hace varios meses";
+              console.log(sortChat);
+              return (
+                <div key={group}>
+                  <h3>{groupTitle}</h3>
+                  <ul>
+                    {chatArray.map((chat) => {
+                      return (
+                        <li
+                          key={chat.id}
+                          className={`${id == chat.id && styles.active}`}
+                          onClick={() => navigate(`/admin/chat/${chat.id}`)}
+                        >
+                          {true && <div>fix</div>}
+                          <input
+                            type="text"
+                            value={chat.name}
+                            onChange={(e) =>
+                              handleChangeName(chat.id, e.target.value)
+                            }
+                          />
+                          {/* {chat.name} */}
+                          <div className={styles.chatMenuSettings}>
+                            <button
+                              // onClick={() =>
+                              //   setIsOpenMenu({
+                              //     ...isOpenMenu,
+                              //     [chat.id]: !isOpenMenu[chat.id],
+                              //   })
+                              // }
+                              onClick={(e) =>
+                                setSelectedOption({
+                                  chat,
+                                  x: e.clientX,
+                                  y: e.clientY,
+                                })
+                              }
+                            >
+                              <DotsOptions className={styles.icon} />
+                            </button>
                           </div>
-                        )}
-                        <input
-                          type="text"
-                          value={chat.name}
-                          onChange={(e) => handleChangeName(chat.id, e.target.value)}
-                        />
-                        {/* {chat.name} */}
-                        <div className={styles.chatMenuSettings}>
-                          <button
-                            // onClick={() =>
-                            //   setIsOpenMenu({
-                            //     ...isOpenMenu,
-                            //     [chat.id]: !isOpenMenu[chat.id],
-                            //   })
-                            // }
-                            onClick={(e) => setSelectedOption({
-                              chat,
-                              x: e.clientX,
-                              y: e.clientY
-                            })}
-                          >
-                            <DotsOptions className={styles.icon} />
-                          </button>
-
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            );
-          })}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })
+          )}
         </div>
         {selectedOption && (
           <ul
@@ -371,8 +377,8 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
               top: selectedOption.y,
               left: selectedOption.x,
             }}
-          // className={isOpenMenu[chat.id] ? styles.active : ""}
-          // className={true ? styles.active : ""}
+            // className={isOpenMenu[chat.id] ? styles.active : ""}
+            // className={true ? styles.active : ""}
           >
             {/* {JSON.stringify(selectedOption)} */}
             <li onClick={() => handleDeleteMessage(selectedOption.chat.id)}>
@@ -391,7 +397,13 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
   );
 };
 
-const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenValid }) => {
+const ChatBody = ({
+  handleChat,
+  messages,
+  inputValue,
+  setInputValue,
+  isTokenValid,
+}) => {
   // const { id } = useParams()
   // const navigate = useNavigate();
   // const dispatch = useDispatch();
@@ -399,13 +411,13 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenVali
   // const { id } = useParams();
   const { user } = useSelector((state) => state.user);
 
-  
   const messageContainerRef = useRef(null);
 
   // Efecto para hacer scroll cuando cambian los mensajes
   useEffect(() => {
     if (messageContainerRef.current) {
-      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -426,7 +438,10 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenVali
             <div className={styles.facturaGPTMessage}>
               <img src={facturaGPT} alt="Icon" />
               <div>
-                <p>¡Hola, {user?.name || 'Not found name'}! 👋 ¿En qué puedo ayudarte hoy? 🚀</p>
+                <p>
+                  ¡Hola, {user?.name || "Not found name"}! 👋 ¿En qué puedo
+                  ayudarte hoy? 🚀
+                </p>
                 <p>Estas son mis habilidades:</p>
                 <p>
                   <strong>Generar Gráficas</strong>
@@ -523,13 +538,13 @@ const ChatBody = ({ handleChat, messages, inputValue, setInputValue, isTokenVali
                 handleChat(inputValue);
               }
             }}
-          // onKeyPress={(e) => {
-          //   if (e.key === "Enter" && !e.shiftKey) {
-          //     e.preventDefault(); // Evita el salto de línea
-          //     // handleSendMessage();
-          //     // handleThinkMessage();
-          //   }
-          // }}
+            // onKeyPress={(e) => {
+            //   if (e.key === "Enter" && !e.shiftKey) {
+            //     e.preventDefault(); // Evita el salto de línea
+            //     // handleSendMessage();
+            //     // handleThinkMessage();
+            //   }
+            // }}
           />
           <div className={styles.img} onClick={() => handleChat(inputValue)}>
             <img src={arrowUp} alt="Icon" />
@@ -592,19 +607,16 @@ const ChatView = () => {
     // } else {
     // }
     // dispatch(fetchByChat({ chatId: id }));
-
-
   }, [id, dispatch]);
-
 
   const [isTokenValid, setIsTokenValid] = useState(false);
 
   useEffect(() => {
     const fn = async () => {
       const response = await dispatch(validateTokenGPT());
-      console.log('response validateTokenGPT', response)
+      console.log("response validateTokenGPT", response);
       setIsTokenValid(response.payload.success);
-    }
+    };
 
     // if (!isTokenValid) {
     fn();
@@ -731,17 +743,16 @@ const ChatView = () => {
   const handleChat = (action) => {
     console.log("3ri48juj", action);
     // handleSendMessage(actions[id].text);
-    
-    if(action.id == 0) {
+
+    if (action.id == 0) {
       navigate(`/admin/panel`);
-    } else if(action.id == 1) {
+    } else if (action.id == 1) {
       navigate(`/admin/home`);
-    } else if(action.id == 5) {
+    } else if (action.id == 5) {
       navigate(`/contact`);
-    }else {
+    } else {
       handleSendMessage(text);
     }
-
   };
 
   const [leftWidth, setLeftWidth] = useState(200); // Establecer el ancho inicial al 50%

@@ -10,6 +10,7 @@ import profileImage from "../../assets/profileIcon.svg";
 import { ReactComponent as GrabIcon } from "../../assets/grabIcon.svg";
 import AddTax from "../AddTax/AddTax";
 import AddDiscount from "../AddDiscount/AddDiscount";
+import NewContact from "../NewContact/NewContact";
 const InfoBill = ({ isEditing, setIsEditing }) => {
   const [parametersEditing, setParametersEditing] = useState({});
   const [articlesEditing, setArticlesEditing] = useState({});
@@ -21,6 +22,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
   const [articles, setArticles] = useState([]);
   const [showTaxModal, setShowTaxModal] = useState(false);
   const [showDiscountModal, setShowDiscountModal] = useState(false);
+  const [showNewContactPopup, setShowNewContactPopup] = useState(false);
   const toggleEditing = (id) => {
     setParametersEditing((prev) => ({
       ...prev,
@@ -95,14 +97,9 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
         <InfoClientBill
           name="Nombre de la cuenta"
           address="Email adress, Dirección, Población, Provincia, Código Postal, País"
-          textareaPlaceHolder="Su empresa o nombre, y dirección"
-          urlImg={profileImage}
-        />
-        <InfoClientBill
-          name="Aythen"
-          address="Email adress, Dirección, Población, Provincia, Código Postal, País"
           textareaPlaceHolder="Dirección de facturación del receptor"
-          textHeader={"Facturar a"}
+          urlImg={profileImage}
+          setShowNewContact={setShowNewContactPopup}
         />
       </div>
       <div className={styles.parameters}>
@@ -346,6 +343,9 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
           <AddDiscount setShowDiscountModal={setShowDiscountModal} />
         )}
         {showTaxModal && <AddTax setShowTaxModal={setShowTaxModal} />}
+        {showNewContactPopup && (
+          <NewContact setShowNewContact={setShowNewContactPopup} />
+        )}
       </div>
     </div>
   );

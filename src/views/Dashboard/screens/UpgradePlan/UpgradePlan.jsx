@@ -19,8 +19,16 @@ import {
   attachCustomPaymentMethod,
   createCustomPaymentIntent,
 } from "../../../../actions/stripe";
+import SelectCurrencyPopup from "../../components/SelectCurrencyPopup/SelectCurrencyPopup";
+import SeeHistory from "../../components/SeeHistory/SeeHistory";
 
-const UpgradePlan = ({ onClose }) => {
+const UpgradePlan = ({
+  onClose,
+  setShowSelectCurrencyPopup,
+  setSeeHistory,
+  seeHistory,
+  isAnimating,
+}) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [selectedModal, setSelectedModal] = useState("upgradePlan");
@@ -288,7 +296,10 @@ const UpgradePlan = ({ onClose }) => {
               )}
             </button>
             <div className={styles.currencyContainer}>
-              Prices in USD/EUR/ETH/BTC/USDC<span>Change Currency</span>
+              Prices in USD/EUR/ETH/BTC/USDC
+              <span onClick={() => setShowSelectCurrencyPopup(true)}>
+                Change Currency
+              </span>
             </div>
             <p className={styles.bottomText}>
               * Obtén <span className={styles.link}>más información</span> sobre
@@ -501,7 +512,10 @@ const UpgradePlan = ({ onClose }) => {
               )}
             </button>
             <div className={styles.currencyContainer}>
-              Prices in USD/EUR/ETH/BTC/USDC<span>Change Currency</span>
+              Prices in USD/EUR/ETH/BTC/USDC
+              <span onClick={() => setShowSelectCurrencyPopup(true)}>
+                Change Currency
+              </span>
             </div>
             <p className={styles.bottomText}>
               * Obtén <span className={styles.link}>más información</span> sobre
@@ -624,6 +638,7 @@ const UpgradePlan = ({ onClose }) => {
       )}
       {showUpdatedSuccessfully && (
         <PlanUpdatedModal
+          setSeeHistory={setSeeHistory}
           onClose={async () => {
             setShowUpdatedSuccessfully(false);
             setTimeout(() => {

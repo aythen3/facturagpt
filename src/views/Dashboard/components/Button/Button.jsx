@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Button.module.css";
+
 const Button = ({
   children,
   type = "green",
@@ -12,7 +13,7 @@ const Button = ({
     white: styles.buttonTemplateWhite,
     gray: styles.buttonTemplateGray,
     discard: styles.buttonTemplateDiscard,
-    button:styles.buttonTemplateButton
+    button: styles.buttonTemplateButton,
   };
 
   return (

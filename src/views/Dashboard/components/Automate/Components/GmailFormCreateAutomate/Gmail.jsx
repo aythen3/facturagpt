@@ -116,11 +116,7 @@ const Gmail = ({
           handleConfigurationChange={handleConfigurationChange}
         />
         <SelectInfoToProcess
-          setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
-          setSelectedCurrency={setSelectedCurrency}
-          selectedCurrency={selectedCurrency}
           configuration={configuration}
-          setConfiguration={setConfiguration}
           handleConfigurationChange={handleConfigurationChange}
         />
 

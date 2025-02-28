@@ -6,13 +6,11 @@ const nodemailer = require("nodemailer");
 const { checkOrCreateUserBucket } = require("./scaleway");
 const path = require("path");
 
-
 const { connectDB } = require("../controllers/utils");
 
 const jwt = require("jsonwebtoken");
 
 const createAccount = async (account) => {
-
   try {
     const db = await connectDB("db_accounts");
     const existingDocs = await db.list({ include_docs: true });
@@ -30,14 +28,13 @@ const createAccount = async (account) => {
 
     let role = account.role || "user";
 
-    if(account.email === "info@aythen.com"){
+    if (account.email === "info@aythen.com") {
       role = "superadmin";
     }
 
     const hashedPassword = Buffer.from(account?.password || "123456").toString(
       "base64"
     );
-
 
     const newAccount = {
       // _id: docId,
@@ -155,7 +152,6 @@ const updateAccount = async (data) => {
 };
 
 const updateUserPassword = async ({ email, newPassword }) => {
-
   try {
     const db = await connectDB("db_accounts");
     // Fetch the user document by email
@@ -174,7 +170,7 @@ const updateUserPassword = async ({ email, newPassword }) => {
     const updatedDoc = {
       ...userDoc,
       password: hashedPassword,
-      _rev: userDoc._rev, 
+      _rev: userDoc._rev,
     };
 
     await db.insert(updatedDoc);
@@ -197,12 +193,12 @@ const getAllAccounts = async (search) => {
   const db = await connectDB("db_accounts");
   try {
     let selector = {};
-    
+
     if (search) {
       selector = {
         email: {
-          $regex: `(?i)${search}`  // (?i) hace la búsqueda case-insensitive
-        }
+          $regex: `(?i)${search}`, // (?i) hace la búsqueda case-insensitive
+        },
       };
     }
 
@@ -210,11 +206,11 @@ const getAllAccounts = async (search) => {
       selector: selector,
     });
 
-    const users = result.docs.map(doc => {
+    const users = result.docs.map((doc) => {
       const { _id, _rev, ...rest } = doc;
       return rest;
     });
-    
+
     return users;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -222,9 +218,7 @@ const getAllAccounts = async (search) => {
   }
 };
 
-
 const loginToManagerService = async ({ email, password, accessToken }) => {
-
   const dbName = "db_accounts";
   let db;
 
@@ -277,7 +271,7 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
           email: account.email,
           role: account.role,
         },
-        "your-secret-key", 
+        "your-secret-key",
         { expiresIn: "24h" }
       );
 
@@ -392,7 +386,6 @@ const addNewClientService = async ({ clientData }) => {
     });
 
     if (existingDocs.docs.length > 0) {
-  
       return {
         success: false,
         message: "Client with this tokenEmail already exists.",
@@ -489,7 +482,6 @@ const generateAndSendOtpService = async ({ nombre, email, language }) => {
 };
 
 const verifyOTPService = async ({ email, otp }) => {
-
   try {
     const db = await connectDB("db_otp");
     const queryResponse = await db.find({
@@ -519,8 +511,8 @@ const verifyOTPService = async ({ email, otp }) => {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "yyeremi15@gmail.com",
-    pass: "mosb cdlz wgqz ntdr",
+    user: "info@facturagpt.com",
+    pass: "hosn ljvo ekvh qfdc",
   },
 });
 
@@ -533,7 +525,6 @@ const newsletter = async ({
   keepInformed,
   language = "es",
 }) => {
-
   let mailToAythenContent, mailFromAythenContent;
 
   mailToAythenContent = `
@@ -545,7 +536,6 @@ const newsletter = async ({
     <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Has recibido un nuevo mensaje de contacto.\n\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:${message}\n\nTrabaja en:${work}\n\nTelefono:${phone}\n\nMantener Informando:${keepInformed}</p>
   </div>`;
   if (language === "es") {
-
     mailFromAythenContent = `
     <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
       <h1 style="text-align: center; font-size: 24px;">
@@ -555,7 +545,6 @@ const newsletter = async ({
       <p style="font-size: 16px; line-height: 1.5; color:#1F184B;">Gracias por querer estar en contacto con el equipo de FacturaGPT!</p>
     </div>`;
   } else {
-
     mailFromAythenContent = `
     <div style="font-family: Arial, sans-serif; color: #1F184B; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 0 auto;">
       <h1 style="text-align: center; font-size: 24px;">
@@ -568,7 +557,7 @@ const newsletter = async ({
 
   const mailToAythen = {
     from: email,
-    to: "yyeremi15@gmail.com",
+    to: "info@facturagpt.com",
     subject: `Nuevo Mensaje de ${name}`,
     html: mailToAythenContent,
     attachments: [
@@ -581,7 +570,7 @@ const newsletter = async ({
   };
 
   const mailFromAythen = {
-    from: "yyeremi15@gmail.com",
+    from: "info@facturagpt.com",
     to: email,
     subject:
       language === "es"

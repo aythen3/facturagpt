@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./NewContact.module.css";
 import ProfileModalTemplate from "../ProfileModalTemplate/ProfileModalTemplate";
 import ModalTemplate from "../ModalTemplate/ModalTemplate";
-import EditableInput from "../AccountSettings/EditableInput/EditableInput";
+
 import { ParametersLabel } from "../ParametersLabel/ParametersLabel";
 import Tags from "../Tags/Tags";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,13 @@ import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import PayMethod from "../PayMethod/PayMethod";
 import { clearClient } from "../../../../slices/clientsSlices";
+import EditableInput from "../../screens/Clients/EditableInput/EditableInput";
+import { createClient } from "../../../../actions/clients";
 const NewContact = ({
   setShowNewContact,
   showNewContact,
   typeTextHeader = "Nuevo",
+  newContactProp,
 }) => {
   const [showNewClient, setShowNewClient] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
@@ -333,7 +336,6 @@ const NewContact = ({
       setSelectedBillIndex(null); // Reinicia selección
     }
   };
-  const [newContact, setNewContact] = useState(false);
 
   const handleEditAll = (value) => {
     setNewContact(value);
@@ -438,10 +440,9 @@ const NewContact = ({
           text="contacto"
           isAnimating={isAnimating}
           className={`${styles.newClientContainer} `}
-          newContact={newContact}
+          newContact={newContactProp}
           selectedContact={selectedContact}
           handleGetOneClient={handleGetOneClient}
-          typeTextHeader={typeTextHeader}
         >
           <div className={styles.containerNewClientForm}>
             {/* <div className={styles.containerHeader}>
@@ -491,15 +492,16 @@ const NewContact = ({
                     type="button"
                     disabled={!inputsEditing.name}
                   >
-                    Proveedor
+                    Contacto
                   </button>
+
                   <button
                     className={selectTypeClient == 1 && styles.selected}
                     onClick={() => setSelectTypeClient(1)}
                     type="button"
                     disabled={!inputsEditing.name}
                   >
-                    Cliente
+                    Empresa
                   </button>
                 </div>
               </EditableInput>
@@ -828,69 +830,65 @@ const NewContact = ({
                   </div>
 
                   {Array.isArray(clientData.paymethod) &&
-                    clientData.paymethod
-                      .sort((a, b) =>
-                        a.default === b.default ? 0 : a.default ? -1 : 1
-                      )
-                      .map((method, index) => (
-                        <div key={index} className={styles.infoBillContainer}>
-                          <div className={styles.info}>
-                            <p>
-                              <span>{method.bank || "Banco"}, </span>
-                              <span>
-                                {method.accountNumber || "Número de Cuenta"},{" "}
-                              </span>
-                              <span> {method.swift || "SWIFT/BIC"}, </span>
-                              <span>
-                                {method.routingNumber || "Routing Number"},{" "}
-                              </span>
-                              <span> {method.currency || "Moneda"}</span>
-                            </p>
-                            <DeleteButton />
-                          </div>
-                          <div
-                            className={styles.button}
-                            onClick={() => {
-                              if (editingIndexPayMethod === index) {
-                                // Si ya estamos editando este índice, guarda los cambios
-                                setClientData((prev) => {
-                                  const updatedPayMethods = [...prev.paymethod];
-                                  updatedPayMethods[editingIndexPayMethod] =
-                                    currentPayMethod;
-                                  return {
-                                    ...prev,
-                                    paymethod: updatedPayMethods,
-                                  };
-                                });
-
-                                setEditingIndexPayMethod(null); // Reset al índice después de guardar
-                                setCurrentPayMethod({
-                                  bank: "",
-                                  accountNumber: "",
-                                  swift: "",
-                                  routingNumber: "",
-                                  currency: "",
-                                  default: false,
-                                });
-                              } else {
-                                // Si no estamos editando este índice, entonces pasamos a modo edición
-                                setCurrentPayMethod(method);
-                                setEditingIndexPayMethod(index);
-                              }
-                            }}
-                          >
-                            {editingIndexPayMethod == index
-                              ? "Guardar"
-                              : "Editar"}
-                          </div>
-                          {editingIndexPayMethod == index && (
-                            <PayMethod
-                              method={currentPayMethod}
-                              onChange={handlePayMethodChange}
-                            />
-                          )}
+                    clientData.paymethod.map((method, index) => (
+                      <div key={index} className={styles.infoBillContainer}>
+                        <div className={styles.info}>
+                          <p>
+                            <span>{method.bank || "Banco"}, </span>
+                            <span>
+                              {method.accountNumber || "Número de Cuenta"},{" "}
+                            </span>
+                            <span> {method.swift || "SWIFT/BIC"}, </span>
+                            <span>
+                              {method.routingNumber || "Routing Number"},{" "}
+                            </span>
+                            <span> {method.currency || "Moneda"}</span>
+                          </p>
+                          <DeleteButton />
                         </div>
-                      ))}
+                        <div
+                          className={styles.button}
+                          onClick={() => {
+                            if (editingIndexPayMethod === index) {
+                              // Si ya estamos editando este índice, guarda los cambios
+                              setClientData((prev) => {
+                                const updatedPayMethods = [...prev.paymethod];
+                                updatedPayMethods[editingIndexPayMethod] =
+                                  currentPayMethod;
+                                return {
+                                  ...prev,
+                                  paymethod: updatedPayMethods,
+                                };
+                              });
+
+                              setEditingIndexPayMethod(null); // Reset al índice después de guardar
+                              setCurrentPayMethod({
+                                bank: "",
+                                accountNumber: "",
+                                swift: "",
+                                routingNumber: "",
+                                currency: "",
+                                default: false,
+                              });
+                            } else {
+                              // Si no estamos editando este índice, entonces pasamos a modo edición
+                              setCurrentPayMethod(method);
+                              setEditingIndexPayMethod(index);
+                            }
+                          }}
+                        >
+                          {editingIndexPayMethod == index
+                            ? "Guardar"
+                            : "Editar"}
+                        </div>
+                        {editingIndexPayMethod == index && (
+                          <PayMethod
+                            method={currentPayMethod}
+                            onChange={handlePayMethodChange}
+                          />
+                        )}
+                      </div>
+                    ))}
                 </div>
               </label>
 

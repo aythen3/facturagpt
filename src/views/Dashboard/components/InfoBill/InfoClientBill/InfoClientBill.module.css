@@ -15,7 +15,7 @@
     width: 100%;
     justify-content: space-between;
     align-items: center;
-
+    position: relative;
     .search {
       display: flex;
       align-items: center;
@@ -64,6 +64,9 @@
     resize: none;
     font-family: "Inter", sans-serif;
     color: #71717a;
+    resize: none;
+    field-sizing: content;
+    min-height: 60px;
   }
   .inputContainer {
     display: flex;
@@ -84,6 +87,7 @@
     -ms-border-radius: 6px;
     -o-border-radius: 6px;
     position: relative;
+    resize: none;
   }
 }
 .contacts {
@@ -109,13 +113,14 @@
     display: flex;
     gap: 10px;
     padding: 10px;
-
+    cursor: pointer;
     img {
       border-radius: 999px;
       -webkit-border-radius: 999px;
       -moz-border-radius: 999px;
       -ms-border-radius: 999px;
       -o-border-radius: 999px;
+      object-fit: cover;
     }
     p {
       color: #09090b;
