@@ -290,12 +290,12 @@ const Pricing = () => {
           en cualquier momento.
         </span> */}
         </div>
-        <SubtitleTemplate
+        {/* <SubtitleTemplate
           stylesProp={{ marginTop: "80px" }}
           text={
             "Las empresas tardan entre 2 y 5 minutos en gestionar una factura. Con FacturaGPT, lo haces en segundos..."
           }
-        />
+        /> */}
 
         <div className={styles.parent}>
           {cardsData.map((card, index) => (

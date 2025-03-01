@@ -10,7 +10,7 @@ import html2canvas from "html2canvas";
 import styles from "./SeeBill.module.css";
 import HeaderCard from "../../HeaderCard/HeaderCard";
 import FacturaTemplate from "../../FacturaTemplate/FacturaTemplate";
-
+import { ReactComponent as FacturaGPTBlack } from "../../../assets/FacturaGPTBlack.svg";
 let documentoPDF;
 
 try {
@@ -144,7 +144,9 @@ const SeeBill = forwardRef(({ document, setSeeBill, fileUser }, ref) => {
             />
           </div>
         ) : (
-          "Loading..."
+          <div className={styles.loader}>
+            <FacturaGPTBlack />
+          </div>
         )}
 
         {/* <div className={styles.generateButton}>

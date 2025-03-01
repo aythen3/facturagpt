@@ -11,8 +11,8 @@
 }
 
 .editorToolbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
 }
 
 .editorToolbar::-webkit-scrollbar-thumb {
@@ -33,6 +33,7 @@
   gap: 5px;
   padding: 0 5px;
   border-right: 1px solid #ddd;
+  position: relative;
 }
 
 .buttonGroup:last-child {
@@ -116,7 +117,7 @@ select.formatBtn {
 }
 
 .emojiMenu {
-  position: absolute;
+  position: fixed;
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;

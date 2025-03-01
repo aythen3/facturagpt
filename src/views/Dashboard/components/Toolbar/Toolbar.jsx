@@ -108,7 +108,7 @@ const Toolbar = ({ onContentChange, editorContent }) => {
 
   const handleFormat = (type, event) => {
     const editor = editorRef.current;
-
+    console.log(editor);
     switch (type) {
       case "bold":
         document.execCommand("bold", false, null);
@@ -483,33 +483,35 @@ const Toolbar = ({ onContentChange, editorContent }) => {
               <img src={icon} alt={type} />
             </button>
           ))}
+          <div>
+            {showEmojiMenu && (
+              <div
+                ref={emojiMenuRef}
+                className={styles.emojiMenu}
+                style={{
+                  top: "105px",
+                  right: "30px",
+                }}
+              >
+                {emojis.map((emoji, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleEmojiClick(emoji)}
+                    className={styles.emojiButton}
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {showEmojiMenu && (
-          <div
-            ref={emojiMenuRef}
-            className={styles.emojiMenu}
-            style={{
-              top: "0px",
-              right: "0px",
-            }}
-          >
-            {emojis.map((emoji, index) => (
-              <button
-                key={index}
-                onClick={() => handleEmojiClick(emoji)}
-                className={styles.emojiButton}
-              >
-                {emoji}
-              </button>
-            ))}
-          </div>
-        )}
-        <div className={styles.buttonGroup}>
+        {/* <div className={styles.buttonGroup}>
           <button className={`${styles.formatBtn}`}>
             <img src={aiIcon} />
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div
@@ -520,6 +522,10 @@ const Toolbar = ({ onContentChange, editorContent }) => {
         onFocus={() => {
           if (editorRef.current.textContent === "") {
             editorRef.current.textContent = "";
+          }
+          const selection = window.getSelection();
+          if (selection.rangeCount > 0) {
+            console.log("Texto seleccionado:", selection.toString());
           }
         }}
       />

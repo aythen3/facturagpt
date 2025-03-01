@@ -104,3 +104,38 @@
   font-size: 16px;
   color: #333;
 }
+
+.infoContainer {
+  margin: 30px 0;
+  h3,
+  p {
+    margin: 0;
+  }
+  p {
+    overflow: hidden;
+    color: #10a37f;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-family: Inter;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%; /* 35.2px */
+  }
+  h3 {
+    color: #10a37f;
+    font-family: Inter;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%; /* 46.8px */
+    span {
+      color: #10a37f;
+      font-family: Inter;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%; /* 30.8px */
+    }
+  }
+}

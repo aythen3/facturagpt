@@ -1,0 +1,123 @@
+.params {
+  .articleTitle {
+    display: flex;
+    justify-content: space-between;
+    span {
+      color: #92959865;
+      button {
+        background-color: transparent;
+        outline: none;
+        border: none;
+        .icon {
+          background-color: transparent;
+          outline: none;
+          border: none;
+          cursor: pointer;
+        }
+      }
+    }
+    div {
+      text-decoration: underline;
+    }
+  }
+  .parametersInfoContainer {
+    display: flex;
+    gap: 10px;
+
+    .column {
+      flex: 1;
+      input {
+        width: 100%;
+        outline: none;
+        border: none;
+        padding: 8px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+      }
+    }
+  }
+  .light {
+    color: #71717a;
+  }
+  .articleTaxs {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    box-sizing: border-box;
+    .column {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      input {
+        background-color: #f4f4f4;
+        color: #75757575;
+        border: none;
+        outline: none;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+        div,
+        span {
+          height: 40px;
+          background-color: red;
+        }
+      }
+      P {
+        font-size: 13px;
+      }
+      span {
+        font-size: 13px;
+      }
+    }
+
+    .unitPrice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      button {
+        color: black;
+        background-color: white;
+        border: none;
+        outline: none;
+        text-decoration: underline;
+      }
+      input {
+        width: 60%;
+      }
+    }
+    .addTax {
+      border: 1px solid #ced4da;
+      padding: 6px 10px;
+      background-color: #fafafa;
+      border-radius: 7px;
+      -webkit-border-radius: 7px;
+      -moz-border-radius: 7px;
+      -ms-border-radius: 7px;
+      -o-border-radius: 7px;
+      display: flex;
+      width: 120px;
+      white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+      overflow: hidden; /* Oculta el texto que se salga del botón */
+      cursor: pointer;
+    }
+  }
+  .delete {
+    background-color: #dc3545;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }
+}
