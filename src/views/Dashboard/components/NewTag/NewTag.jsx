@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import styles from "./NewTag.module.css";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
 import DeleteButton from "../DeleteButton/DeleteButton";
+import ColorPicker from "../ColorPicker/ColorPicker";
 
 const colorOptions = [
-  "#222222", // Negro
-  "#7329a5", // Violeta
-  "#c075ee", // Lila
-  "#0b06ff", // Azul
-  "#7086fd", // Azul claro
-  "#ff0000", // Rojo
-  "#ff8c00", // Naranja
-  "#12a27f", // Verde
-  "#16c098", // Verde claro
-  "#FFFF00", // Amarillo
+  "#222222",
+  "#7329a5",
+  "#c075ee",
+  "#0b06ff",
+  "#7086fd",
+  "#ff0000",
+  "#ff8c00",
+  "#12a27f",
+  "#16c098",
+  "#FFFF00",
   "conic-gradient(#ff9e3d 13%,#eeff00 34%,#7bff79 50%,#1400cc 68%,#b30095 85%,#990003 100%)",
 ];
 
@@ -28,49 +29,58 @@ const NewTag = ({
 }) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [tagName, setTagName] = useState("");
-  // Lista de etiquetas
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [colorPk, setColor] = useState("");
+  const [presetColors, setPresetColors] = useState([]);
 
-  const handleColorSelect = (color) => {
+  const handleColorSelect = useCallback((color) => {
     setSelectedColor(color);
-  };
+  }, []);
 
-  const handleAddTag = () => {
+  const handleAddTag = useCallback(() => {
     if (!tagName.trim() || !selectedColor) {
       alert("Selecciona un color y escribe un nombre para la etiqueta.");
       return;
     }
-
     const newTag = { id: Date.now(), name: tagName, color: selectedColor };
-    setTags([...tags, newTag]); // Agregar nueva etiqueta a la lista
-    setTagName(""); // Limpiar input
-    setSelectedColor(""); // Reiniciar color seleccionado
-  };
+    setTags((prevTags) => [...prevTags, newTag]);
+    setTagName("");
+    setSelectedColor("");
+  }, [tagName, selectedColor, setTags]);
 
-  const handleSelectTag = (id) => {
-    setSelectedTags((prev) =>
-      prev.includes(id) ? prev.filter((tagId) => tagId !== id) : [...prev, id]
-    );
-  };
+  const handleSelectTag = useCallback(
+    (id) => {
+      setSelectedTags((prev) =>
+        prev.includes(id) ? prev.filter((tagId) => tagId !== id) : [...prev, id]
+      );
+    },
+    [setSelectedTags]
+  );
 
-  const handleDeleteTag = (id) => {
-    setTags((prevTags) => prevTags.filter((tag) => tag.id !== id)); // Eliminar de la lista principal
-    setSelectedTags((prevSelected) =>
-      prevSelected.filter((tagId) => tagId !== id)
-    ); // Eliminar de las seleccionadas
-  };
+  const handleDeleteTag = useCallback(
+    (id) => {
+      setTags((prevTags) => prevTags.filter((tag) => tag.id !== id));
+      setSelectedTags((prevSelected) =>
+        prevSelected.filter((tagId) => tagId !== id)
+      );
+    },
+    [setTags, setSelectedTags]
+  );
+  useEffect(() => {
+    handleColorSelect(colorPk);
+    console.log(selectedColor);
+  }, [colorPk]);
 
+  console.log(colorPk);
   return (
-    <div className={styles.hola}>
+    <div className={styles.tagsContent}>
       <div
         className={styles.bg}
         onClick={() => setShowNewTagModal(false)}
       ></div>
+
       <div className={styles.newTagContainer}>
-        <HeaderCard
-          title={"Nueva etiqueta"}
-          setShowNewTagModal={setShowNewTagModal}
-          setState={setShowNewTagModal}
-        >
+        <HeaderCard title="Nueva etiqueta" setState={setShowNewTagModal}>
           <Button type="white">Cancelar</Button>
           <Button>Seleccionar</Button>
           <Button>Guardar</Button>
@@ -85,33 +95,45 @@ const NewTag = ({
             onChange={(e) => setTagName(e.target.value)}
           />
 
+          {/* Selector de colores */}
           <div className={styles.circleContainer}>
-            {colorOptions.map((color) => (
-              <div
-                key={color}
-                className={styles.circle}
-                style={{
-                  background: color.includes("gradient") ? color : undefined,
-                  backgroundColor: color.includes("gradient")
-                    ? undefined
-                    : color,
-                  border:
-                    selectedColor === color
+            {colorOptions.map((color) => {
+              const isGradient = color.includes("gradient");
+              const isSelected =
+                selectedColor === color ||
+                (selectedColor === colorPk && isGradient);
+
+              return (
+                <div
+                  key={color}
+                  className={styles.circle}
+                  style={{
+                    background: isGradient ? colorPk || color : undefined,
+                    backgroundColor: isGradient ? undefined : color,
+                    border: isSelected
                       ? "4px solid #C3C3C3"
                       : "4px solid white",
-                }}
-                onClick={() => handleColorSelect(color)}
-              ></div>
-            ))}
+                  }}
+                  onClick={() => {
+                    if (isGradient) {
+                      setShowColorPicker(true);
+                      handleColorSelect(colorPk);
+                    } else {
+                      handleColorSelect(color);
+                    }
+                  }}
+                />
+              );
+            })}
           </div>
 
           <div className={styles.button} onClick={handleAddTag}>
             Nueva Etiqueta
           </div>
 
-          {/* Lista de etiquetas con checkbox y botón de eliminar */}
+          {/* Lista de etiquetas */}
           <div className={styles.tagsContainer}>
-            {tags && tags.map((tag) => (
+            {tags.map((tag) => (
               <div key={tag.id} className={styles.tagWrapper}>
                 <input
                   type="checkbox"
@@ -123,7 +145,7 @@ const NewTag = ({
                   style={{
                     color: tag.color.includes("FFFF00") ? "black" : "white",
                     background: tag.color.includes("gradient")
-                      ? tag.color
+                      ? colorPk || tag.color
                       : undefined,
                     backgroundColor: tag.color.includes("gradient")
                       ? undefined
@@ -136,33 +158,18 @@ const NewTag = ({
               </div>
             ))}
           </div>
-
-          {/* Etiquetas seleccionadas */}
-          {/* {selectedTags.length > 0 && (
-            <div className={styles.selectedTagsContainer}>
-              <h3>Etiquetas seleccionadas:</h3>
-              {tags
-                .filter((tag) => selectedTags.includes(tag.id))
-                .map((tag) => (
-                  <div
-                    key={tag.id}
-                    className={styles.selectedTag}
-                    style={{
-                      background: tag.color.includes("gradient")
-                        ? tag.color
-                        : undefined,
-                      backgroundColor: tag.color.includes("gradient")
-                        ? undefined
-                        : tag.color,
-                    }}
-                  >
-                    {tag.name}
-                  </div>
-                ))}
-            </div>
-          )} */}
         </div>
       </div>
+
+      {showColorPicker && (
+        <ColorPicker
+          setShowColorPicker={setShowColorPicker}
+          color={colorPk}
+          setColor={setColor}
+          presetColors={presetColors}
+          setPresetColors={setPresetColors}
+        />
+      )}
     </div>
   );
 };

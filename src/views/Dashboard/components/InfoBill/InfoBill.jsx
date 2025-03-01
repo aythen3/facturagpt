@@ -11,6 +11,11 @@ import { ReactComponent as GrabIcon } from "../../assets/grabIcon.svg";
 import AddTax from "../AddTax/AddTax";
 import AddDiscount from "../AddDiscount/AddDiscount";
 import NewContact from "../NewContact/NewContact";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { SortableContext, useSortable, arrayMove } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import AssetLine from "../AssetLine/AssetLine";
+import ParameterGrab from "../ParameterGrab/ParameterGrab";
 const InfoBill = ({ isEditing, setIsEditing }) => {
   const [parametersEditing, setParametersEditing] = useState({});
   const [articlesEditing, setArticlesEditing] = useState({});
@@ -65,7 +70,7 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
 
   const handleAddParameter = () => {
     const newParameter = {
-      id: parameters.length + 1,
+      id: Date.now(),
       name: `Parámetro ${parameters.length + 1}`,
       value: `Valor parámetro ${parameters.length + 1}`,
     };
@@ -73,13 +78,12 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
   };
   const handleAddActivo = () => {
     const newActivo = {
-      id: articles.length + 1,
       quantity: 1.0,
       baseImport: "0.0€",
       amount: "0.0 €",
-      id: articles.length + 1,
-      name: `Articulo ${articles.length + 1}`,
-      description: `Descripción del Articulo ${articles.length + 1}`,
+      id: Date.now(),
+      name: ``,
+      description: ``,
     };
     setArticles((prev) => [...prev, newActivo]);
   };
@@ -89,6 +93,37 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
   };
   const handleDeleteActivo = (id) => {
     setArticles((prev) => prev.filter((param) => param.id !== id));
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      setArticles((prev) => {
+        const oldIndex = prev.findIndex((item) => item.id === active.id);
+        const newIndex = prev.findIndex((item) => item.id === over.id);
+        return arrayMove(prev, oldIndex, newIndex);
+      });
+      console.log(active.id);
+    }
+  };
+  const handleDragEndParameters = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      setParameters((prev) => {
+        const oldIndex = prev.findIndex((item) => item.id === active.id);
+        const newIndex = prev.findIndex((item) => item.id === over.id);
+        return arrayMove(prev, oldIndex, newIndex);
+      });
+      console.log(active.id);
+    }
+  };
+
+  const handleInputChange = (id, field, value) => {
+    setArticles((prev) =>
+      prev.map((article) =>
+        article.id === id ? { ...article, [field]: value } : article
+      )
+    );
   };
 
   return (
@@ -120,55 +155,39 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
           </p>
         </div>
 
-        <div
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEndParameters}
+        >
+          <SortableContext items={parameters.map((item) => item.id)}>
+            <div
+              className={styles.parametersInfo}
+              style={{
+                height: seeParameters ? "auto" : "0px",
+                padding: seeParameters ? "20px 0" : "0px",
+                borderBottom: !seeParameters && "1px solid transparent",
+              }}
+            >
+              {parameters.map((param) => (
+                <ParameterGrab
+                  article={param}
+                  parametersEditing={parametersEditing}
+                  toggleEditing={toggleEditing}
+                  handleDeleteParameter={handleDeleteParameter}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+
+        {/* <div
           className={styles.parametersInfo}
           style={{
             height: seeParameters ? "auto" : "0px",
             padding: seeParameters ? "20px 0" : "0px",
             borderBottom: !seeParameters && "1px solid transparent",
           }}
-        >
-          {parameters.map((param) => (
-            <div key={param.id}>
-              <div className={styles.articleTitle}>
-                <span>{param.name}</span>
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
-                >
-                  <p onClick={() => toggleEditing(param.id)}>
-                    {!parametersEditing[param.id] ? "Guardar" : "Editar"}
-                  </p>
-                  {!parametersEditing[param.id] && (
-                    <img
-                      src={minus}
-                      alt="Icon"
-                      className={styles.delete}
-                      onClick={() => handleDeleteParameter(param.id)}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className={styles.parametersInfoContainer}>
-                <div className={styles.column}>
-                  {!parametersEditing[param.id] && <p>Nombre del Parámetro</p>}
-                  <input
-                    type="text"
-                    placeholder={param.name}
-                    disabled={parametersEditing[param.id]}
-                  />
-                </div>
-                <div className={styles.column}>
-                  {!parametersEditing[param.id] && <p>Valor del Parámetro</p>}
-                  <input
-                    type="text"
-                    placeholder={param.value}
-                    disabled={parametersEditing[param.id]}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        ></div> */}
 
         <div className={styles.addParameters}>
           <button onClick={handleAddActivo}>Añadir Línea de Activos</button>
@@ -186,159 +205,39 @@ const InfoBill = ({ isEditing, setIsEditing }) => {
             Línea de Activos ({articles.length})
           </p>
         </div>
-        <div
-          className={styles.articleBill}
-          style={{
-            height: seeArticles ? "auto" : "0px",
-            padding: seeArticles ? "20px 0" : "0px",
-            borderBottom: !seeArticles && "1px solid transparent",
-          }}
+
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
         >
-          {articles.map((article) => (
-            <div key={article.id}>
-              <div className={styles.articleTitle}>
-                <span></span>
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
-                >
-                  <p onClick={() => toggleArticleEditing(article.id)}>
-                    {articlesEditing[article.id] ? "Editar" : "Guardar"}
-                  </p>
-                  <img
-                    src={minus}
-                    alt="Icon"
-                    className={styles.delete}
-                    onClick={() => handleDeleteActivo(article.id)}
+          <SortableContext items={articles.map((item) => item.id)}>
+            <div
+              className={styles.parametersInfo}
+              style={{
+                height: seeArticles ? "auto" : "0px",
+                padding: seeArticles ? "20px 0" : "0px",
+                borderBottom: !seeArticles && "1px solid transparent",
+              }}
+            >
+              <div className={styles.articleBill}>
+                {articles.map((item) => (
+                  <AssetLine
+                    key={item.id}
+                    article={item}
+                    articlesEditing={articlesEditing}
+                    editBaseImport={editBaseImport}
+                    toggleArticleEditing={toggleArticleEditing}
+                    handleDeleteActivo={handleDeleteActivo}
+                    setShowTaxModal={setShowTaxModal}
+                    setShowDiscountModal={setShowDiscountModal}
+                    handleEditBaseImport={handleEditBaseImport}
+                    handleInputChange={handleInputChange}
                   />
-                </div>
-              </div>
-              <div className={styles.articleBody}>
-                <div className={styles.grab}>
-                  <GrabIcon className={styles.icon} />
-                  <img
-                    src="https://materialescomsa.com/wp-content/uploads/2019/07/22079.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.test}>
-                    <div className={styles.leftInfo}>
-                      <span>{article.name}</span>
-                      <span className={styles.light}>
-                        {article.description}
-                      </span>
-                      <Tags
-                        onTagClick={(tag) => handleAddTag(article.id, tag)}
-                      />
-                      <button className={styles.addTag}>
-                        <img src={tagIcon} alt="Icon" />
-                        Añadir Etiqueta
-                      </button>
-                    </div>
-                    <div className={styles.rightInfo}>
-                      <div>
-                        <p>Recommended retail price (RRP)</p>
-                        <p>90283912,38912 EUR</p>
-                      </div>
-                      <div>
-                        <p>Floor Price</p>
-                        <p>90283912,38912 EUR</p>
-                      </div>
-                      <div className={styles.button}>Ver Parámetros (2)</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.articleTaxs}>
-                <div className={styles.column}>
-                  <p>Cant.</p>
-                  <input
-                    type="text"
-                    placeholder={article.quantity}
-                    disabled={articlesEditing[article.id]}
-                  />
-                </div>
-                <div className={styles.column}>
-                  <p>Base importe</p>
-                  <div className={styles.unitPrice}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      <input
-                        type="text"
-                        placeholder={article.baseImport}
-                        disabled={!editBaseImport[article.id]}
-                      />
-                      {articlesEditing[article.id] && (
-                        <span onClick={() => handleEditBaseImport(article.id)}>
-                          {editBaseImport[article.id] ? "Guardar" : "Editar"}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.column}>
-                  <p>Retención</p>
-                  <button
-                    className={styles.addTax}
-                    disabled={articlesEditing[article.id]}
-                  >
-                    Añadir Retención
-                  </button>
-                </div>
-                <div className={styles.column}>
-                  <p>Impuesto</p>
-                  <button
-                    className={styles.addTax}
-                    disabled={articlesEditing[article.id]}
-                    onClick={() => setShowTaxModal(true)}
-                  >
-                    Añadir Impuesto
-                  </button>
-                </div>
-                <div className={styles.column}>
-                  <p>Descuento</p>
-                  <button
-                    className={styles.addTax}
-                    disabled={articlesEditing[article.id]}
-                    onClick={() => setShowDiscountModal(true)}
-                  >
-                    Añadir Descuento
-                  </button>
-                </div>
-
-                <div className={styles.column}>
-                  <p>Total (PVP)</p>
-                  <div className={styles.unitPrice}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      <input
-                        type="text"
-                        placeholder={article.baseImport}
-                        disabled={!editBaseImport[article.id]}
-                      />
-                      {articlesEditing[article.id] && (
-                        <span onClick={() => handleEditBaseImport(article.id)}>
-                          {editBaseImport[article.id] ? "Guardar" : "Editar"}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
+          </SortableContext>
+        </DndContext>
         {showDiscountModal && (
           <AddDiscount setShowDiscountModal={setShowDiscountModal} />
         )}

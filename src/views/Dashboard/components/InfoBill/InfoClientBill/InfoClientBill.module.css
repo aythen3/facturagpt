@@ -57,6 +57,15 @@
       color: #666666;
       font-size: 13px;
     }
+    .profile {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      textarea {
+        max-height: 100px;
+      }
+    }
   }
 
   textarea {

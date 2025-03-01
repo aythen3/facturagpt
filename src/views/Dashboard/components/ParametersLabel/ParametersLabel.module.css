@@ -111,6 +111,9 @@ input {
   }
   .grabIcon {
     cursor: grab;
+    outline: none;
+    border: none;
+    background-color: transparent;
   }
 }
 .parametersContainer {

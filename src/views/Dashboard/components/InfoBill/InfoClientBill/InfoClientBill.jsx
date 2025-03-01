@@ -92,8 +92,23 @@ const InfoClientBill = ({
             alt="Profile picture"
           />
           <div className={styles.profile}>
-            <p>{selectedContact?.name}</p>
-            <span>{selectedContact?.address}</span>
+            <input
+              disabled={!editing}
+              value={selectedContact?.name}
+              onChange={(e) =>
+                setSelectedContact({ ...selectedContact, name: e.target.value })
+              }
+            />
+            <textarea
+              disabled={!editing}
+              value={selectedContact?.address}
+              onChange={(e) =>
+                setSelectedContact({
+                  ...selectedContact,
+                  address: e.target.value,
+                })
+              }
+            />
           </div>
         </div>
       ) : toggleInputs ? (

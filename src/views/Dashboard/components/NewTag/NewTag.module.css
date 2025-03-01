@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
 }
-.hola {
+.tagsContent {
   height: 100%;
   width: 100%;
   position: fixed;
@@ -30,8 +30,8 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   background-color: white;
-      /* border: 1px solid #22222273; */
-    overflow: hidden;
+  /* border: 1px solid #22222273; */
+  overflow: hidden;
   /*border: 1px solid #22222273;
   */
   position: fixed;
@@ -68,8 +68,8 @@
       padding-top: 10px;
       flex-wrap: wrap;
     }
-    .button{ 
-      cursor: pointer;  
+    .button {
+      cursor: pointer;
     }
     input {
       background-color: #f5f5f5;
@@ -102,6 +102,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 235px;
+  overflow-y: auto;
 }
 .tagWrapper {
   display: flex;

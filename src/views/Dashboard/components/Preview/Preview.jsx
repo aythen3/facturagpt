@@ -39,6 +39,7 @@ import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
 import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { ReactComponent as StripeText } from "../../assets/stripePurple.svg";
+import useFocusShortcut from "../../../../utils/useFocusShortcut";
 let documentoPDF;
 
 try {
@@ -145,6 +146,9 @@ const DocumentPreview = ({
       );
     }
   };
+  const searchInputRef = useRef(null);
+  // Llama a la función y pasa la referencia
+  useFocusShortcut(searchInputRef, "k");
   const actions = [
     {
       text: "Compartir",
@@ -207,7 +211,7 @@ const DocumentPreview = ({
       icon: printIcon,
       componente: (
         <SearchIconWithIcon
-          // ref={searchInputRef}
+          ref={searchInputRef}
           // searchTerm={searchTerm}
           // setSearchTerm={setSearchTerm}
           classNameIconRight={styles.searchContainerL}
