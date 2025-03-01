@@ -17,7 +17,7 @@ const {
   verifyRecoveryCodeController,
 } = require("../controllers/emailManager");
 
-const { fetchEmailsByQuery } = require("../services/pdfImageReaderGpt");
+const { goAutomate } = require("../services/automate");
 
 // -------------------------------
 emailManagerRouter
@@ -33,7 +33,7 @@ emailManagerRouter
   .post("/create-setup-intent", createSetupIntentController)
   .post("/send-otp", generateAndSendOtpController)
   .post("/verify-otp", verifyOTPController)
-  .post("/getEmailsByQuery", fetchEmailsByQuery)
+  .post("/getEmailsByQuery", goAutomate)
   .post("/send-recovery-code", generateAndSendRecoveryCodeController)
   .post("/verify-recovery-code", verifyRecoveryCodeController);
 

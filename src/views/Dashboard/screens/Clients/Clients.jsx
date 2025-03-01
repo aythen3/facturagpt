@@ -735,12 +735,6 @@ const Clients = () => {
           }}
           searchChildren={
             <>
-              {/* <div
-                style={{ marginLeft: "5px" }}
-                className={styles.searchIconsWrappers}
-              >
-                <img src={winIcon} alt="kIcon" />
-              </div> */}
               <div
                 style={{ marginLeft: "5px" }}
                 className={styles.searchIconsWrappers}
@@ -773,45 +767,7 @@ const Clients = () => {
             </>
           }
         />
-        {/* <div className={styles.clientsHeader}>
-          <h2>{t("title")}</h2>
-          <div className={styles.searchContainer}>
-            <button
-              className={`${styles.addButton} ${styles.btnNewClient}`}
-              onClick={() => {
-                handleEditAll(true);
-                setShowNewClient(true);
-              }}
-            >
-              <img src={plusIcon} alt="Nuevo cliente" />
-              {t("buttonNewClient")}
-            </button>
-            <Button
-              type="white"
-              headerStyle={{ padding: "6px 10px" }}
-              action={() => setShowImportContacts(true)}
-            >
-              <DownloadIcon />
-            </Button>
-            <SearchIconWithIcon ref={searchInputRef}>
-              <>
-                <div
-                  style={{ marginLeft: "5px" }}
-                  className={styles.searchIconsWrappers}
-                >
-                  <img src={winIcon} alt="kIcon" />
-                </div>
-                <div
-                  style={{ marginLeft: "5px" }}
-                  className={styles.searchIconsWrappers}
-                >
-                  <img src={KIcon} alt="kIcon" />
-                </div>
-              </>
-            </SearchIconWithIcon>
-          
-          </div>
-        </div> */}
+      
         {showImportContacts && (
           <ImportContactsAndProducts
             text="contactos"

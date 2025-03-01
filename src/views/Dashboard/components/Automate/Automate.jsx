@@ -109,7 +109,7 @@ const Automate = ({
         </div> */}
         <HeaderCard
           title={
-            userAutomations.length <= 0
+            userAutomations?.length <= 0
               ? "Selecciona dónde tienes tus documentos"
               : "Automatiza"
           }
@@ -128,7 +128,7 @@ const Automate = ({
             </>
           )}
         </HeaderCard>
-        {userAutomations.length <= 0 ? (
+        {userAutomations?.length <= 0 ? (
           <div className={styles.iniContainer}>
             <IniAutomate typeContent={typeContent} />
           </div>
@@ -182,7 +182,7 @@ const Automate = ({
               </button>
             </div>
             <div className={styles.contentContainer}>
-              {userAutomations.length > 0 &&
+              {userAutomations?.length > 0 &&
                 userAutomations?.map((card, i) => {
                   console.log("automationData", card);
                   const filteredAutomation = data.find(
@@ -222,7 +222,7 @@ const Automate = ({
           </div>
         )}
 
-        {userAutomations.length <= 0 && (
+        {userAutomations?.length <= 0 && (
           <div className={styles.footer}>
             <IconLock />
             <span>

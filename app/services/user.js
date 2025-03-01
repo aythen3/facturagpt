@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 const { sendOtpEmail } = require("./email");
 const nodemailer = require("nodemailer");
-const { checkOrCreateUserBucket } = require("./scaleway");
+// const { checkOrCreateUserBucket } = require("./scaleway");
 const path = require("path");
 
 const { connectDB } = require("../controllers/utils");
@@ -289,7 +289,7 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
     const { _id, _rev, ...rest } = account;
     if (!account.bucketCreated) {
       try {
-        await checkOrCreateUserBucket(rest.id);
+        // await checkOrCreateUserBucket(rest.id);
 
         const updatedDoc = {
           ...account,
