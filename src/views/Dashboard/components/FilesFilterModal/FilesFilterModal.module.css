@@ -397,9 +397,10 @@
 
 .tagsContainer {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   gap: 8px;
   margin: 9px 0;
+  flex-wrap: wrap;
 }
 .singleTag {
   display: flex;
@@ -410,5 +411,6 @@
   font-size: 14px;
   font-weight: 600;
   color: #fff;
-  padding: 0 12px;
+  padding: 0 6px 0 12px;
+  
 }
