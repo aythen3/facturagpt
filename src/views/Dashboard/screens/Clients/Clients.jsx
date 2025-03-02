@@ -46,6 +46,7 @@ import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
+import useSwipe from "../../../../utils/useSwipe";
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);

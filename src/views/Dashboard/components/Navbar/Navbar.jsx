@@ -7,15 +7,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import english_flag from "../../assets/english_flag.svg";
 import spain_flag from "../../assets/spain_flag.svg";
 import { ReactComponent as ArrowGray } from "../../assets/arrowDownGray.svg";
-import { ReactComponent as MessageIcon } from "../../assets/messageIcon.svg";
-import { ReactComponent as InformationIcon } from "../../assets/informationIcon.svg";
-import { ReactComponent as RocketIcon } from "../../assets/rocketIcon.svg";
-import { ReactComponent as PaperClipsIcon } from "../../assets/paperClipsIcon.svg";
-import { ReactComponent as StadisticsIcon } from "../../assets/stadisticsIcon.svg";
-import { ReactComponent as PencilPaperIcon } from "../../assets/pencilPaperIcon.svg";
-import { ReactComponent as MoneyIcon } from "../../assets/moneyIcon.svg";
-import { ReactComponent as RingIcon } from "../../assets/ringIcon.svg";
-import { ReactComponent as BalanceIcon } from "../../assets/balanceIcon.svg";
+import { ReactComponent as SearchWhite } from "../../assets/searchWhite.svg";
+import { ReactComponent as FolderClosedWhite } from "../../assets/folderClosedWhite.svg";
+import { ReactComponent as BillingWhite } from "../../assets/billingWhite.svg";
+import { ReactComponent as WorldWhite } from "../../assets/worldWhite.svg";
+import { ReactComponent as StandardsWhite } from "../../assets/standardsWhite.svg";
+import { ReactComponent as WhiteCheck } from "../../assets/whiteCheck.svg";
+import { ReactComponent as Automation } from "../../assets/automation.svg";
+import { ReactComponent as ChatIconWhite } from "../../assets/chatIconWhite.svg";
+import { ReactComponent as ImageIconWhite } from "../../assets/imageIconWhite.svg";
 
 import { useTranslation } from "react-i18next";
 import i18n from "../../../../i18";
@@ -69,26 +69,32 @@ const Navbar = () => {
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <RocketIcon className={styles.iconSolutions} />
-          Automatización de documentos
+          <div className={styles.iconContainerSolutions}>
+            <SearchWhite className={styles.iconSolutions} />
+          </div>
+          Extracción inteligente de datos
         </p>
       ),
-      desc: "Subida, clasificación y procesamiento automático de documentos desde múltiples plataformas como Gmail, Drive y SharePoint. Optimiza la gestión documental y evita tareas manuales.",
+      desc: "Subida, clasificación y procesamiento automático de documentos desde múltiples fuentes como Gmail, Drive y SharePoint. Extrae automáticamente la información que necesites. Optimiza la gestión documental y evita tareas manuales.",
     },
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <InformationIcon className={styles.iconSolutions} /> Centralización de
-          información
+          <div className={styles.iconContainerSolutions}>
+            <FolderClosedWhite className={styles.iconSolutions} />{" "}
+          </div>
+          Centralización total de información
         </p>
       ),
-      desc: "Gestiona contactos, activos, precios y descuentos en un sistema unificado. Centraliza documentos de múltiples fuentes, facilitando el acceso colaborativo rápido y organizado.",
+      desc: "Gestiona contactos, activos, precios y descuentos en un sistema unificado. Captura y recopila documentos de múltiples fuentes, facilitando el acceso colaborativo rápido y organizado.",
     },
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <PencilPaperIcon className={styles.iconSolutions} />
-          Generación de facturas y presupuestos
+          <div className={styles.iconContainerSolutions}>
+            <BillingWhite className={styles.iconSolutions} />
+          </div>
+          Facturación y presupuestos sin esfuerzo
         </p>
       ),
       desc: "Simplifica el proceso de gestión de facturas. Crea y envía documentos recurrentes de forma rápida, adaptados a las necesidades de cada cliente. Configura condiciones comerciales y agiliza el flujo de trabajo.",
@@ -96,25 +102,31 @@ const Navbar = () => {
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <PaperClipsIcon className={styles.iconSolutions} />
+          <div className={styles.iconContainerSolutions}>
+            <WorldWhite className={styles.iconSolutions} />
+          </div>
           Conecta con terceros
         </p>
       ),
-      desc: "Sincronización fluida con ERP, CRM y sistemas de gestión empresarial a través de FTP, asegurando un intercambio seguro y eficiente de datos.",
+      desc: "Sincronización ininterrumpida con ERP, CRM y sistemas de gestión empresarial a través de FTP, asegurando un intercambio de datos seguro y eficiente con tus herramientas favoritas.",
     },
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <BalanceIcon className={styles.iconSolutions} />
+          <div className={styles.iconContainerSolutions}>
+            <StandardsWhite className={styles.iconSolutions} />
+          </div>
           Cumplimiento normativo
         </p>
       ),
-      desc: "Exportación automática de datos a la Agencia Tributaria (EAT) con reportes fiscales compatibles con normativas locales e internacionales.",
+      desc: "Exportación automática de datos con Hacienda, FacturaGPT está listo para cumplir con normativas locales e internacionales.",
     },
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <RingIcon className={styles.iconSolutions} />
+          <div className={styles.iconContainerSolutions}>
+            <WhiteCheck className={styles.iconSolutions} />
+          </div>
           Alertas y validación de datos
         </p>
       ),
@@ -123,29 +135,35 @@ const Navbar = () => {
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <MoneyIcon className={styles.iconSolutions} />
-          Automatiza la facturación
+          <div className={styles.iconContainerSolutions}>
+            <Automation className={styles.iconSolutions} />
+          </div>
+          Automatización personalizada
         </p>
       ),
-      desc: "Optimiza la gestión financiera de tu empresa desde hoy. Automatiza documentos facturables, cobros recurrentes y facturación periódica para clientes y proveedores de forma eficiente y monitorizada.",
+      desc: "Optimiza la gestión financiera de tu empresa desde hoy, con flujos de aprobación automáticos. Automatiza tu flujo de trabajo o contacta con el equipo de ventas para soluciones a medida.",
     },
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <MessageIcon className={styles.iconSolutions} />
+          <div className={styles.iconContainerSolutions}>
+            <ChatIconWhite className={styles.iconSolutions} />
+          </div>
           Chatea con FacturaGPT
         </p>
       ),
-      desc: "Accede instantáneamente a reportes, consultas específicas y métricas clave desde cualquier dispositivo, en cualquier momento.",
+      desc: "Consulta métricas clave, genera reportes y resuelve dudas en cualquier momento, desde cualquier dispositivo. Tu asistente financiero siempre disponible.",
     },
     {
       title: (
         <p className={styles.solutionTextHeader}>
-          <StadisticsIcon className={styles.iconSolutions} />
+          <div className={styles.iconContainerSolutions}>
+            <ImageIconWhite className={styles.iconSolutions} />
+          </div>
           Análisis predictivos y comparativas
         </p>
       ),
-      desc: "Usa el panel de control para obtener una visión general de tu negocio. Para un análisis avanzado, pídeselo a FacturaGPT y obtén informes detallados y análisis de datos que te ayudarán a tomar mejores decisiones.",
+      desc: "Usa el panel de control para obtener una visión general de tu negocio. Para un análisis avanzado, pídeselo a FacturaGPT y descubre patrones, anticipa problemas y toma decisiones estratégicas basadas en datos.",
     },
   ];
 

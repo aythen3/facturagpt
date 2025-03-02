@@ -520,14 +520,57 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                     : ["No hay opciones disponibles"]
                                 }
                                 optionsSecond={
-                                  filter.type === "AND"
-                                    ? ["=", "!=", ">", "<"]
-                                    : [
-                                        "CONTAINS",
-                                        "CONTAINS",
-                                        "CONTAINS",
-                                        "CONTAINS",
-                                      ]
+                                  // filter.type === "AND"
+                                  //   ? [
+                                  //       "=",
+                                  //       "!=",
+                                  //       ">",
+                                  //       "<",
+                                  //       ">=",
+                                  //       "<=",
+                                  //       "between",
+                                  //       "not between",
+                                  //       "in",
+                                  //       "not in",
+                                  //     ]
+                                  //   : [
+                                  //       "CONTAINS",
+                                  //       "not contains",
+                                  //       "starts with",
+                                  //       "ends with",
+                                  //       "matches regex",
+                                  //       "before",
+                                  //       "after",
+                                  //       "on",
+                                  //       "between dates",
+                                  //       "day of week",
+                                  //       "is null",
+                                  //       "is not null",
+                                  //     ]
+                                  [
+                                    "=",
+                                    "!=",
+                                    ">",
+                                    "<",
+                                    ">=",
+                                    "<=",
+                                    "between",
+                                    "not between",
+                                    "in",
+                                    "not in",
+                                    "contains",
+                                    "not contains",
+                                    "starts with",
+                                    "ends with",
+                                    "matches regex",
+                                    "before",
+                                    "after",
+                                    "on",
+                                    "between dates",
+                                    "day of week",
+                                    "is null",
+                                    "is not null",
+                                  ]
                                 }
                               />
                             </>
@@ -620,7 +663,17 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
             >
               <CustomDropdown
-                options={["Imediatamente", "5 Minutos", "10 Minutos"]}
+                options={[
+                  "Inmediatamente",
+                  "5 Minutos",
+                  "10 Minutos",
+                  "30 Minutos",
+                  "1 Hora",
+                  "3 Horas",
+                  "6  Horas",
+                  "12 Horas",
+                  "1 Día",
+                ]}
                 selectedOption={configuration.selectedActionFrequency || []}
                 height="31px"
                 textStyles={{

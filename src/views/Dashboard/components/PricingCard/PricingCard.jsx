@@ -23,8 +23,8 @@ export const PricingCard = ({
     setSelectedCard(index);
     console.log(index);
     const validSlidingValue = Number(sliding);
+    setSliderValue(min);
     if (!isNaN(validSlidingValue)) {
-      setSliderValue(validSlidingValue);
     }
   };
 

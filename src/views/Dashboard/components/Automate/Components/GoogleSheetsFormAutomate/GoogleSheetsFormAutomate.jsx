@@ -375,7 +375,17 @@ const GoogleSheetsFormAutomate = ({
           className={`${styles.contentContainer} ${configuration?.actionFrequency ? styles.active : styles.disabled}`}
         >
           <CustomDropdown
-            options={["Imediatamente", "5 Minutos", "10 Minutos"]}
+            options={[
+              "Inmediatamente",
+              "5 Minutos",
+              "10 Minutos",
+              "30 Minutos",
+              "1 Hora",
+              "3 Horas",
+              "6  Horas",
+              "12 Horas",
+              "1 Día",
+            ]}
             selectedOption={configuration?.selectedActionFrequency || []}
             height="31px"
             textStyles={{
