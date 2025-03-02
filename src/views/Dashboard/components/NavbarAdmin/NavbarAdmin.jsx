@@ -11,11 +11,9 @@ import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
 import { ReactComponent as DotsNotification } from "../../assets/dotsNotification.svg";
 import { ReactComponent as ClientIcon } from "../../assets/clientsIcon.svg";
 import { ReactComponent as MenuMobileIcon } from "../../assets/filtersIconBarGreen.svg";
-import menuIcon from "../../assets/menuIconBlack.svg"; // Ícono de menú
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
-// import PanelIniAutomate from "../Automate/panelAutomate/IniAutomate";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UpgradePlanWrapper from "../../screens/UpgradePlan/UpgradePlan";
@@ -38,19 +36,16 @@ const stripePromise = loadStripe(
   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
 );
 const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
-  // const { pathname } = window.location;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const fromPath = pathname.split("/")[2];
 
-  // console.log('languageFromPath', fromPath)
   const [seeHistory, setSeeHistory] = useState(false);
 
   const { user } = useSelector((state) => state.user);
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation("navbarAdmin");
-  // console.log(user);
+
   const [showCreateFolder, setShowCreateFolder] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
 
@@ -127,15 +122,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
 
   // ========================
 
-  const handleSendEmail = async () => {
-    const resp = await dispatch(
-      sendEmail({
-        // id: user.id,
-        email: "info@aythen.com",
-      })
-    );
-    console.log("resp emails", resp);
-  };
 
   const [selectedLocationNew, setSelectedLocationNew] = useState("/Inicio/");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -189,7 +175,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               </a>
               <a
                 onClick={() => setFromPath("clients")}
-                // className={(fromPath == "clients" || formPath == "clients/:id")? styles.active : ""}
                 className={fromPath?.startsWith("clients") ? styles.active : ""}
               >
                 <ClientIcon />
@@ -237,91 +222,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
               onClick={() => setShowSidebar(false)}
             ></div>
           </div>
-          {/* <div className={styles.showMobile}>
-            <button className={styles.hamburger} onClick={toggleMenu}>
-              <img src={menuIcon} alt="Menu Icon" />
-            </button>
-          </div> */}
-
-          {/* {menuOpen && (
-            <>
-              <div
-                className={styles.mobileMenuOverlay}
-                onClick={() => setMenuOpen(false)}
-              ></div>
-              <div className={styles.mobileMenu}>
-                <button>
-                  {t("buttonGetPlus")} <img src={star} alt="Icon" />
-                </button>
-                <ul>
-                  <li onClick={() => setIsOpen((prev) => !prev)}>
-                    <AddPlus />
-                    Automatizar
-                  </li>
-                  <li>
-                    <a
-                      href="/admin/chat"
-                      className={fromPath == "chat" ? styles.active : ""}
-                    >
-                      <ChatIcon />
-                      Chat
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/admin/contacts"
-                      className={fromPath == "contacts" ? styles.active : ""}
-                    >
-                      <ClientIcon />
-                      Clients
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/admin/products"
-                      className={fromPath == "products" ? styles.active : ""}
-                    >
-                      <BoxIcon />
-                      Products
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/admin/notification"
-                      className={`${styles.number} 
-                ${fromPath == "notification" ? styles.active : ""}`}
-                    >
-                      <DotsNotification />
-                      Notificacions
-                      {numNotification !== 0 && <span>{numNotification}</span>}
-                    </a>
-                  </li>
-                </ul>
-                <div
-                  onClick={handleProfileClick}
-                  className={styles.profileContainer}
-                >
-                  <div className={styles.profileText}>
-                    <p>{user?.nombre || "Not found"}</p>
-                    <span>{user?.role || "Not found"}</span>
-                  </div>
-                  {user?.profileImage ? (
-                    <img
-                      className={styles.profileImage}
-                      src={user?.profileImage}
-                      alt=""
-                    />
-                  ) : (
-                    <div className={styles.initials}>
-                      {user?.nombre
-                        ?.split(" ")
-                        .map((letter) => letter?.[0] || "U")}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </>
-          )} */}
         </div>
         <div className={`${styles.sidebar} ${showSidebar ? styles.show : ""}`}>
           <AccountSettings />

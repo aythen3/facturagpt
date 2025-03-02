@@ -9,9 +9,9 @@ const {
 
 // -------------------------------
 automationsRouter
-  .post("/createAutomation", createAutomationController)
-  .get("/getAllUserAutomations/:userId", getAllUserAutomationsController)
-  .put("/updateAutomation/:automationId", updateAutomationController)
+.post("/createAutomation", createAutomationController)
+.get("/getAllUserAutomations/:userId", getAllUserAutomationsController)
+.put("/updateAutomation/:automationId", updateAutomationController)
   .delete("/deleteAutomation/:automationId", deleteAutomationController);
 
 module.exports = automationsRouter;

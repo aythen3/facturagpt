@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Plus } from "lucide-react";
 import styles from "./FloatingMenu.module.css";
 import FolderModal from "../FolderModal/FolderModal";
 import TagModal from "../TagModal/TagModal";
-import Automate from "../Automate/Automate";
 import { ReactComponent as FolderIcon } from "../../assets/folderOutline.svg";
-import { ReactComponent as CloudIcon } from "../../assets/uploadIconBW.svg";
 import { ReactComponent as CameraIcon } from "../../assets/camIconBW.svg";
 import { ReactComponent as NewBill } from "../../assets/penIconOutline.svg";
 import { ReactComponent as PlusIcon } from "../../assets/automatizaIconNew.svg";
@@ -13,8 +10,6 @@ import { ReactComponent as PaperClipWhite } from "../../assets/paperClipWhite.sv
 import { ReactComponent as NewContact } from "../../assets/bookOutline.svg";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SelectLocation from "../SelectLocation/SelectLocation";
-import NewTag from "../NewTag/NewTag";
 
 export default function FloatingMenu({
   openModalAutomate,
@@ -55,15 +50,14 @@ export default function FloatingMenu({
     console.log("Selected color:", color);
     closeModal();
   };
-  const videoRef = useRef(null); // Referencia al video para mostrar la vista previa
-  const canvasRef = useRef(null); // Referencia al canvas para capturar la imagen
-  const [isCameraActive, setIsCameraActive] = useState(false); // Estado para saber si la cámara está activa
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null); 
+  const [isCameraActive, setIsCameraActive] = useState(false); 
 
   const handleCameraAccess = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      console.log("✅ Acceso a la cámara concedido", stream);
-      videoRef.current.srcObject = stream; // Enlazar el stream al elemento video
+      videoRef.current.srcObject = stream; 
       setIsCameraActive(true);
     } catch (error) {
       console.error("❌ Acceso a la cámara denegado o error:", error);
@@ -82,7 +76,7 @@ export default function FloatingMenu({
         canvasRef.current.height
       );
       const imageData = canvasRef.current.toDataURL("image/png");
-      console.log("Imagen capturada:", imageData); // Aquí puedes hacer algo con la imagen (como subirla, mostrarla, etc.)
+      console.log("Imagen capturada:", imageData); 
     }
   };
 
@@ -126,38 +120,6 @@ export default function FloatingMenu({
       },
     },
 
-    // {
-    //   icon: <NewAsset />,
-    //   text: "Nuevo Activo",
-    //   action: () => {
-    //     setShowNewProduct(true);
-    //     setIsOpen(false);
-    //   },
-    // },
-    // {
-    //   icon: <TagIcon />,
-    //   text: "Nuevo Tag",
-    //   action: () => {
-    //     setShowNewTagModal(true);
-    //     setIsOpen(false);
-    //   },
-    // },
-    // {
-    //   icon: <WhatsAppIcon />,
-    //   text: "Abrir Whatsapp",
-    //   action: () => window.open("https://wa.me/584243356112", "_blank"), // Reemplaza 1234567890 con el número de WhatsApp deseado
-    // },
-    // {
-    //   icon: <ChatGPTIcon />,
-    //   text: "ChatGPT",
-    //   action: () => navigate("/admin/chat"), // Cambia a la ruta deseada
-    // },
-
-    // {
-    //   icon: <CameraIcon />,
-    //   text: "Hacer una Foto",
-    //   action: () => console.log("Hacer una Foto clicked"),
-    // },
   ];
   if (isMobile) {
     menuItems.splice(2, 0, {
@@ -169,15 +131,6 @@ export default function FloatingMenu({
   return (
     <>
       <div className={styles.fabContainer}>
-        {/* <div className="fab-wrapper">
-          <button
-            className={styles.fab}
-            onClick={toggleMenu}
-            aria-label="Open menu"
-          >
-            <Plus className={styles.fabIcon} />
-          </button>
-        </div> */}
 
         {isOpen && (
           <div className={styles.overlay} onClick={handleClickOutside}>
@@ -188,7 +141,6 @@ export default function FloatingMenu({
                   className={styles.menuItem}
                   onClick={() => {
                     item.action();
-                    // setIsOpen(false);
                   }}
                 >
                   <span className={styles.menuIcon}>{item.icon}</span>

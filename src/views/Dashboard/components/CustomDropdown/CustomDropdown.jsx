@@ -30,7 +30,6 @@ const CustomDropdown = ({
   biggerWidth,
   acceptButton = false,
 }) => {
-  console.log(textStyles);
   const { t } = useTranslation("dashboard");
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);

@@ -31,7 +31,7 @@ import {
   // getAllClients,
   getAllAccounts,
   updateAccount,
-  getEmailsByQuery,
+  goAutomate,
   // updateAccount,
 } from "../../actions/user";
 import { useDispatch } from "react-redux";
@@ -271,7 +271,7 @@ const UsersDashboard = () => {
       //   logs: [],
       // });
       dispatch(
-        getEmailsByQuery({
+        goAutomate({
           userId: user?.id || "randomId",
           email: user.tokenEmail,
           password: user.tokenPassword,

@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getAllAccounts,
   updateAccount,
-  getEmailsByQuery, //
+  goAutomate, //
   updateAcount,
   // getAllUsers,
   // getClient
@@ -251,7 +251,7 @@ const AccountsDashboard = () => {
     if (!singleUser.active) {
       alert(2);
       const response = await dispatch(
-        getEmailsByQuery({
+        goAutomate({
           userId: singleUser?.id || "randomId",
           email: singleUser.tokenEmail,
           password: singleUser.tokenPassword,

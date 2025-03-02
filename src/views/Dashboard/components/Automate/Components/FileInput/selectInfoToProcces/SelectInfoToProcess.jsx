@@ -163,7 +163,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   ))}
                 </div>
                 <InputComponent
-                  value={configuration.filesKeyWords}
+                  value={configuration?.filesKeyWords}
                   setValue={(value) =>
                     handleConfigurationChange("filesKeyWords", value)
                   }
@@ -185,7 +185,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 <CheckboxWithText
                   marginTop="10px"
                   color="#10A37F"
-                  state={configuration.filesExactMatch || false}
+                  state={configuration?.filesExactMatch || false}
                   setState={(value) =>
                     handleConfigurationChange("filesExactMatch", value)
                   }
@@ -199,21 +199,21 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 <CheckboxWithText
                   marginTop="10px"
                   color="#10A37F"
-                  state={configuration.allowAllFileTypes || false}
+                  state={configuration?.allowAllFileTypes || false}
                   setState={(value) =>
                     handleConfigurationChange("allowAllFileTypes", value)
                   }
                   text="Incluir todos los tipos de archivos"
                 />
                 <div className={styles.cardTypesContainer}>
-                  {(configuration.selectedFileTypes || []).map((type) => (
+                  {(configuration?.selectedFileTypes || []).map((type) => (
                     <div className={styles.singleTypeCard} key={type}>
                       <span>{type}</span>
                       <DeleteButton
                         action={() =>
                           handleConfigurationChange(
                             "selectedFileTypes",
-                            (configuration.selectedFileTypes || []).filter(
+                            (configuration?.selectedFileTypes || []).filter(
                               (option) => option !== type
                             )
                           )
@@ -224,7 +224,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 </div>
                 <CustomDropdown
                   options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-                  selectedOption={configuration.selectedFileTypes || []}
+                  selectedOption={configuration?.selectedFileTypes || []}
                   height="31px"
                   textStyles={{
                     fontWeight: 300,
@@ -236,11 +236,11 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   setSelectedOption={(selected) =>
                     handleConfigurationChange(
                       "selectedFileTypes",
-                      configuration.selectedFileTypes?.includes(selected)
-                        ? configuration.selectedFileTypes.filter(
+                      configuration?.selectedFileTypes?.includes(selected)
+                        ? configuration?.selectedFileTypes?.filter(
                             (option) => option !== selected
                           )
-                        : [...(configuration.selectedFileTypes || []), selected]
+                        : [...(configuration?.selectedFileTypes || []), selected]
                     )
                   }
                 />
@@ -575,20 +575,6 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                               />
                             </>
                           ))}
-                          {/* <div className={styles.buttonsTypeCondition}>
-                            <button
-                              onClick={() => addFilter(index, "AND")}
-                              className={styles.buttonAddFilter}
-                            >
-                              Add AND Condition
-                            </button>
-                            <button
-                              onClick={() => addFilter(index, "OR")}
-                              className={styles.buttonAddFilter}
-                            >
-                              Add OR Condition
-                            </button>
-                          </div> */}
                           <button
                             onClick={() => addFilter(editIndex, "AND")}
                             className={styles.buttonAddFilter}
@@ -603,14 +589,6 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 ))}
               </div>
               <div className={styles.buttonsTypeCondition}>
-                {/* {labels.length >= 1 && (
-                  <button
-                    onClick={() => addFilter(editIndex, "AND")}
-                    className={styles.buttonAddFilter}
-                  >
-                    Añadir Condición
-                  </button>
-                )} */}
                 <Button
                   headerStyle={{
                     height: "40px",
@@ -635,6 +613,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               </div>
             </div>
           </CustomAutomationsWrapper>
+
           <CustomAutomationsWrapper
             Icon={<WhiteClock />}
             showContent={configuration.actionFrequency}
@@ -689,6 +668,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               />
             </div>
           </CustomAutomationsWrapper>
+
         </div>
       </CustomAutomationsWrapper>
       {showSelectCurrencyPopup && (
