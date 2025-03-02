@@ -78,9 +78,11 @@
   /* flex-direction: column; */
   gap: 10px;
   margin-bottom: 30px;
-
+  img {
+    height: 60px;
+  }
   p {
-    font-size: clamp(30px, 12vw, 60px);
+    font-size: clamp(30px, 12vw, 50px);
     color: #222222;
     margin: 0;
 

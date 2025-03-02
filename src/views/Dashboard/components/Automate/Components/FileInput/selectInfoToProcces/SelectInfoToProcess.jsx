@@ -520,14 +520,57 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                     : ["No hay opciones disponibles"]
                                 }
                                 optionsSecond={
-                                  filter.type === "AND"
-                                    ? ["=", "!=", ">", "<"]
-                                    : [
-                                        "CONTAINS",
-                                        "CONTAINS",
-                                        "CONTAINS",
-                                        "CONTAINS",
-                                      ]
+                                  // filter.type === "AND"
+                                  //   ? [
+                                  //       "=",
+                                  //       "!=",
+                                  //       ">",
+                                  //       "<",
+                                  //       ">=",
+                                  //       "<=",
+                                  //       "between",
+                                  //       "not between",
+                                  //       "in",
+                                  //       "not in",
+                                  //     ]
+                                  //   : [
+                                  //       "CONTAINS",
+                                  //       "not contains",
+                                  //       "starts with",
+                                  //       "ends with",
+                                  //       "matches regex",
+                                  //       "before",
+                                  //       "after",
+                                  //       "on",
+                                  //       "between dates",
+                                  //       "day of week",
+                                  //       "is null",
+                                  //       "is not null",
+                                  //     ]
+                                  [
+                                    "=",
+                                    "!=",
+                                    ">",
+                                    "<",
+                                    ">=",
+                                    "<=",
+                                    "between",
+                                    "not between",
+                                    "in",
+                                    "not in",
+                                    "contains",
+                                    "not contains",
+                                    "starts with",
+                                    "ends with",
+                                    "matches regex",
+                                    "before",
+                                    "after",
+                                    "on",
+                                    "between dates",
+                                    "day of week",
+                                    "is null",
+                                    "is not null",
+                                  ]
                                 }
                               />
                             </>
@@ -570,6 +613,62 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               </div>
             </div>
           </CustomAutomationsWrapper>
+
+          <CustomAutomationsWrapper
+            Icon={<WhiteClock />}
+            showContent={configuration.actionFrequency}
+          >
+            <div className={styles.infoContainerWrapper}>
+              <div className={styles.infoContainer}>
+                <div>
+                  Selecciona la frecuencia del tiempo que se ejecutará la acción
+                </div>
+                <span>
+                  Si no se marca esta opción se ejecutara siempre y de forma
+                  inmediata
+                </span>
+              </div>
+
+              <OptionsSwitchComponent
+                border={"none"}
+                marginLeft={"auto"}
+                isChecked={configuration.actionFrequency || false}
+                setIsChecked={(value) =>
+                  handleConfigurationChange("actionFrequency", value)
+                }
+              />
+            </div>
+            <div
+              className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
+            >
+              <CustomDropdown
+                options={[
+                  "Inmediatamente",
+                  "5 Minutos",
+                  "10 Minutos",
+                  "30 Minutos",
+                  "1 Hora",
+                  "3 Horas",
+                  "6  Horas",
+                  "12 Horas",
+                  "1 Día",
+                ]}
+                selectedOption={configuration.selectedActionFrequency || []}
+                height="31px"
+                textStyles={{
+                  fontWeight: 300,
+                  color: "#1E0045",
+                  fontSize: "13px",
+                  marginLeft: "6px",
+                  userSelect: "none",
+                }}
+                setSelectedOption={(selected) =>
+                  handleConfigurationChange("selectedActionFrequency", selected)
+                }
+              />
+            </div>
+          </CustomAutomationsWrapper>
+
         </div>
       </CustomAutomationsWrapper>
       {showSelectCurrencyPopup && (

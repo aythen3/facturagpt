@@ -43,6 +43,8 @@ export default function FileExplorer({
   setIsOpen,
   toggleMenu,
   setMobileSelectedDocument,
+  mobileSelectedDocument,
+  pagePath,
 }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -602,7 +604,13 @@ export default function FileExplorer({
     <>
       <div
         // className={`${styles.container} ${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} ${swiped ? "" : styles.offAsideBar}`}
-        className={`${styles.container} ${styles.asideBar} ${isMobile ? styles.mobileMenu : ""} `}
+        className={`
+          ${styles.container} 
+          ${styles.asideBar} 
+          ${isMobile ? styles.mobileMenu : ""} 
+          ${!mobileSelectedDocument ? styles.activeMenu : ""} 
+          ${pagePath === "panel" ? styles.panel : swiped ? "" : styles.offAsideBar}
+        `}
         ref={fileExplorerRef}
         onDrop={handleDropFiles}
         onDragOver={handleContainerDragOver}

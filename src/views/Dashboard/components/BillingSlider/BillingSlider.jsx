@@ -58,51 +58,51 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
     let newAdditionalInfo = "";
 
     switch (true) {
-      case value == 0:
+      case value <= 2500:
         newDisplayValue = "0’00€";
         newAdditionalInfo = "FREE";
         break;
-      case value <= 20:
+      case value <= 12799:
         newDisplayValue = "4€";
         newAdditionalInfo = "0,20€";
         break;
-      case value <= 200:
+      case value <= 22099:
         newDisplayValue = "38€";
         newAdditionalInfo = "0,19€";
         break;
-      case value <= 500:
+      case value <= 31699:
         newDisplayValue = "92€";
         newAdditionalInfo = "0,18€";
         break;
-      case value <= 1000:
+      case value <= 41099:
         newDisplayValue = "172€";
         newAdditionalInfo = "0,16€";
         break;
-      case value <= 2000:
+      case value <= 49999:
         newDisplayValue = "322€";
         newAdditionalInfo = "0,15€";
         break;
-      case value <= 5000:
+      case value <= 59999:
         newDisplayValue = "712€";
         newAdditionalInfo = "0,13€";
         break;
-      case value <= 10000:
+      case value <= 68599:
         newDisplayValue = "1312€";
         newAdditionalInfo = "0,12€";
         break;
-      case value <= 20000:
+      case value <= 77999:
         newDisplayValue = "2412€";
         newAdditionalInfo = "0,11€";
         break;
-      case value <= 50000:
+      case value <= 86999:
         newDisplayValue = "5112€";
         newAdditionalInfo = "0,09€";
         break;
-      case value <= 99999:
+      case value <= 96599:
         newDisplayValue = "7612€";
         newAdditionalInfo = "0,05€";
         break;
-      case value == 100000:
+      case value <= 100000:
         newDisplayValue = "¿Aún más?";
         newAdditionalInfo = "Contacta con Ventas";
         break;
@@ -120,10 +120,19 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
     }
   };
 
+  useEffect(() => {
+    getDisplayValues(sliderValue);
+  }, [sliderValue]);
+
   const handleSliderChange = (event) => {
     const value = event.target.value;
     setSliderValue(Number(event.target.value));
     getDisplayValues(value); // Calcula los valores asociados al slider
+  };
+
+  const handleChange = (event) => {
+    setSliderValue(event.target.value);
+    getDisplayValues(event.target.value); // Calcula los valores asociados al slider
   };
 
   return (
@@ -139,7 +148,7 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
       </div>
       <div className={styles.sliderWrapper}>
         {/* Slider Input */}
-        <input
+        {/* <input
           type="range"
           min="0"
           max="100000"
@@ -149,8 +158,18 @@ const BillingSlider = ({ sliderValue, setSliderValue }) => {
           style={{
             background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
           }}
+        /> */}
+        <input
+          type="range"
+          min="0"
+          max="100000"
+          value={sliderValue}
+          onChange={handleChange}
+          className={styles.slider}
+          style={{
+            background: `linear-gradient(to right, #16c098 ${calculateProgress()}%, rgba(91, 123, 253, 0.15) ${calculateProgress()}%)`,
+          }}
         />
-
         {/* Labels */}
         <div className={styles.labels}>
           {marks.map((mark) => (

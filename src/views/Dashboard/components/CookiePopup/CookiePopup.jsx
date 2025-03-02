@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import styles from "./CookiePopup.module.css";
-import cookiesAlert from "../../assets/cookiesAlert.svg";
 import { ReactComponent as Arrow } from "../../assets/arrowDiagonalWhite.svg";
 import { ReactComponent as Close } from "../../assets/closeGray.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 const HelpComponent = ({ setShowHelp }) => {
   const navigate = useNavigate();
+
+  const handleClose = () => {
+    setShowHelp(false);
+    sessionStorage.setItem("showHelp", "false"); // Guardar en sessionStorage
+  };
+
   return (
     <div className={styles.HelpComponent}>
       <div className={styles.helpText}>
         <p>¿Cómo podemos ayudarle a mejorar su proceso de facturación? 🚀</p>
-        <Close className={styles.icon} onClick={() => setShowHelp(false)} />
+        <Close className={styles.icon} onClick={handleClose} />
       </div>
       <div
         className={styles.helpContentArrow}
@@ -23,38 +29,50 @@ const HelpComponent = ({ setShowHelp }) => {
 };
 
 const CookiePopup = () => {
+  const location = useLocation();
   const [visible, setVisible] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
+  const [showHelp, setShowHelp] = useState(() => {
+    return sessionStorage.getItem("showHelp") !== "false"; // Si es "false", mantenerlo oculto
+  });
 
   useEffect(() => {
     // Comprobar si la cookie de aceptación ya existe
     const cookiesAccepted = document.cookie
       .split("; ")
       .find((row) => row.startsWith("cookiesAccepted="));
+
     if (!cookiesAccepted) {
       setVisible(true);
     }
-    setShowHelp(true);
-  }, []);
+
+    // Verificar la última página visitada
+    const prevPage = sessionStorage.getItem("prevPage");
+
+    if (prevPage !== location.pathname) {
+      // Si la página cambió, restablecer showHelp a true
+      setShowHelp(true);
+      sessionStorage.setItem("showHelp", "true");
+    }
+
+    // Guardar la página actual en sessionStorage
+    sessionStorage.setItem("prevPage", location.pathname);
+  }, [location.pathname]); // Se ejecuta cada vez que cambia la ruta
 
   const handleResponse = (accepted) => {
-    // Crear una cookie que almacene la preferencia del usuario
     if (accepted) {
       document.cookie = "cookiesAccepted=true; path=/; max-age=31536000"; // Expira en 1 año
     }
     setVisible(false);
 
-    // Mostrar HelpComponent después de 5 segundos
     setTimeout(() => {
       setShowHelp(true);
+      sessionStorage.setItem("showHelp", "true"); // Guardar como "true" por si se refresca la página
     }, 5000);
   };
 
-  // if (!visible && !showHelp) return null;
-
   return (
     <>
-      {visible && (
+      {visible ? (
         <div className={styles.cookiePopup}>
           <p>
             Utilizamos cookies y tecnologías similares para ofrecer, mantener y
@@ -63,15 +81,16 @@ const CookiePopup = () => {
             información. Haga clic en "Aceptar todo" para permitir que
             FacturaGPT y sus socios utilicen cookies para estos fines. Haga clic
             en "Rechazar todo" para rechazar las cookies, excepto las que sean
-            estrictamente necesarias.
+            estrictamente necesarias. {showHelp ? "true" : "false"}
           </p>
           <div className={styles.buttons}>
             <button onClick={() => handleResponse(false)}>Rechazar todo</button>
             <button onClick={() => handleResponse(true)}>Aceptar todo</button>
           </div>
         </div>
+      ) : (
+        showHelp && <HelpComponent setShowHelp={setShowHelp} />
       )}
-      {showHelp && <HelpComponent setShowHelp={setShowHelp} />}
     </>
   );
 };

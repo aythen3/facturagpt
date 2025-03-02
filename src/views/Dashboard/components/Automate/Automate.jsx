@@ -186,10 +186,8 @@ const Automate = ({
                 userAutomations?.map((card, i) => {
                   console.log("automationData", card);
                   const filteredAutomation = data.find(
-                    (automation) =>
-                      automation?.type === card?.type
+                    (automation) => automation?.type === card?.type
                   );
-                  console.log("filteredAutomation", filteredAutomation);
                   return (
                     <CardAutomate
                       fullContent={true}

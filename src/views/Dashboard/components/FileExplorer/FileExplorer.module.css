@@ -35,15 +35,13 @@
   -ms-transition: left 0.3s ease;
   -o-transition: left 0.3s ease;
   position: initial;
+
   left: 0;
   /* background-color: white; */
 }
 .mobileMenu {
-  /* position: absolute; */
-  /* width: 100vw; */
-}
-.offAsideBar {
-  left: -100%;
+  position: absolute;
+  width: 100vw;
 }
 
 .container::-webkit-scrollbar {
@@ -464,4 +462,13 @@
   .icon {
     cursor: pointer;
   }
+}
+.activeMenu {
+  z-index: 999999999;
+}
+.offAsideBar {
+  left: -100%;
+}
+.panel {
+  left: 0%;
 }

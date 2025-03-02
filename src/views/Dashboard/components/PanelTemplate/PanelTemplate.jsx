@@ -109,19 +109,22 @@ const PanelTemplate = ({
   }, []);
 
   const isMobile = windowWidth <= 768;
-
+  console.log(pagePath);
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <NavbarAdmin fromPath={fromPath} setFromPath={setFromPath} />
       <div className={styles.container}>
         {pagePath !== "accounts" &&
           pagePath !== "chat" &&
+          pagePath !== undefined &&
           pagePath !== "users" && (
             <FileExplorer
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               toggleMenu={toggleMenu}
               setMobileSelectedDocument={setMobileSelectedDocument}
+              mobileSelectedDocument={mobileSelectedDocument}
+              pagePath={pagePath}
             />
           )}
         <>
@@ -230,9 +233,10 @@ const PanelTemplate = ({
           </div>
         </>
 
-        {!isMobile || (isMobile && mobileSelectedDocument) ? (
+        {/* {!isMobile || (isMobile && mobileSelectedDocument) ? (
           <div className={styles.contentTemplate}>{children}</div>
-        ) : null}
+        ) : null} */}
+        <div className={styles.contentTemplate}>{children}</div>
       </div>
     </div>
   );

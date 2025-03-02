@@ -13,9 +13,6 @@ import AddTemplate from "./AddTemplate/AddTemplate";
 import { getOneClient } from "../../../../actions/clients";
 import { useDispatch } from "react-redux";
 
-// import { useDispatch } from "react-redux";
-
-
 
 const ButtonLabelCommponentWithButton = ({
   textHeader,
