@@ -23,6 +23,9 @@ export const createAutomation = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error creating automation:", error);
+
+      if(error.response.status === 501) logout()
+
     }
   }
 );
@@ -42,6 +45,9 @@ export const getAllUserAutomations = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error fetching user automations:", error);
+
+      if(error.response.status === 501) logout()
+
       throw error;
     }
   }
@@ -70,6 +76,8 @@ export const updateAutomation = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error updating automation:", error);
+
+      if(error.response.status === 501) logout()
       throw error;
     }
   }
@@ -93,6 +101,8 @@ export const deleteAutomation = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error deleting automation:", error);
+
+      if(error.response.status === 501) logout()
       throw error;
     }
   }

@@ -535,16 +535,9 @@ const ChatBody = ({
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault(); // Prevents newline
-                handleChat(inputValue);
+                handleChat({text: inputValue});
               }
             }}
-            // onKeyPress={(e) => {
-            //   if (e.key === "Enter" && !e.shiftKey) {
-            //     e.preventDefault(); // Evita el salto de línea
-            //     // handleSendMessage();
-            //     // handleThinkMessage();
-            //   }
-            // }}
           />
           <div className={styles.img} onClick={() => handleChat(inputValue)}>
             <img src={arrowUp} alt="Icon" />
@@ -618,35 +611,10 @@ const ChatView = () => {
       setIsTokenValid(response.payload.success);
     };
 
-    // if (!isTokenValid) {
+    
     fn();
-    // }
   }, []);
-  // useEffect(() => {
-  //   console.log("id", id);
-  //   if (!id) {
-  //     const prev_id = uuidv4();
-  //     navigate(`/admin/chat/${prev_id}`);
-  //   }
-  // }, [id]);
 
-  // const handleSendMessage = async (text = false) => {
-  //   try {
-
-  //     const response = await dispatch(sendMessage({
-  //       text: text || inputValue,
-  //       chatId: id
-  //     }));
-  //     console.log("response", response);
-  //     if (text || inputValue.trim()) {
-  //       setMessages([...messages, { text: text || inputValue, sender: "user" }]);
-  //       setInputValue("");
-  //     }
-  //   } catch (error) {
-  //     console.log("error handleSendMessage", error);
-  //   }
-
-  // };
 
   const handleSendMessage = async (text = false) => {
     try {
@@ -750,8 +718,8 @@ const ChatView = () => {
       navigate(`/admin/home`);
     } else if (action.id == 5) {
       navigate(`/contact`);
-    } else {
-      handleSendMessage(text);
+    } else if(!action.id){
+      handleSendMessage(action.text);
     }
   };
 

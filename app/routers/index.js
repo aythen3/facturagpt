@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const mainRouter = Router();
 
-const routerReseller = require("./reseller");
+// const routerReseller = require("./reseller");
 const routerEmailManager = require("./emailManager");
 const routerStripe = require("./stripe");
 const routerUser = require("./user");
@@ -11,14 +11,16 @@ const clientRouter = require("./clients");
 const transactionsByClientRouter = require("./transactions");
 const chatRouter = require("./chat");
 
-mainRouter.use("/chat", chatRouter);
 mainRouter.use("/emailManager", routerEmailManager);
-mainRouter.use("/reseller", routerReseller);
-mainRouter.use("/stripe", routerStripe);
+
 mainRouter.use("/user", routerUser);
-mainRouter.use("/automations", automationsRouter);
+mainRouter.use("/stripe", routerStripe);
 mainRouter.use("/scaleway", scalewayRouter);
+
 mainRouter.use("/clients", clientRouter);
 mainRouter.use("/transactions", transactionsByClientRouter);
+
+mainRouter.use("/chat", chatRouter);
+mainRouter.use("/automations", automationsRouter);
 
 module.exports = mainRouter;

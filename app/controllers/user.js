@@ -5,32 +5,32 @@ const fs = require("fs");
 // DELETE
 const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
-const multer = require("multer");
+// const multer = require("multer");
 
 // Configuración de multer para guardar los archivos en "public/pdfs"
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const pdfPath = path.join(
-      __dirname,
-      "../../src/views/Dashboard/assets/pdfs"
-    );
-    // Crear la carpeta "pdfs" si no existe
-    if (!fs.existsSync(pdfPath)) {
-      fs.mkdirSync(pdfPath, { recursive: true });
-    }
-    cb(null, pdfPath); // Asegúrate de que esta carpeta exista
-  },
-  filename: (req, file, cb) => {
-    const filePath = path.join(__dirname, "../../public", file.originalname);
-    // Verificar si el archivo existe y eliminarlo
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-    cb(null, file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const pdfPath = path.join(
+//       __dirname,
+//       "../../src/views/Dashboard/assets/pdfs"
+//     );
+//     // Crear la carpeta "pdfs" si no existe
+//     if (!fs.existsSync(pdfPath)) {
+//       fs.mkdirSync(pdfPath, { recursive: true });
+//     }
+//     cb(null, pdfPath); // Asegúrate de que esta carpeta exista
+//   },
+//   filename: (req, file, cb) => {
+//     const filePath = path.join(__dirname, "../../public", file.originalname);
+//     // Verificar si el archivo existe y eliminarlo
+//     if (fs.existsSync(filePath)) {
+//       fs.unlinkSync(filePath);
+//     }
+//     cb(null, file.originalname);
+//   },
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
 const {
   createAccount,
@@ -39,17 +39,20 @@ const {
   getAllAccounts,
 
   loginToManagerService,
-  getAllClientsService,
-  addNewClientService,
-  deleteClientService,
   generateAndSendOtp,
   verifyOTP,
   newsletter,
   updateUserPassword,
+  
+  // getAllClientsService,
+  // addNewClientService,
+  // deleteClientService,
 } = require("../services/user");
 
-const { catchedAsync } = require("../utils/err");
+
 const { updateClientService } = require("../services/stripe");
+
+const { catchedAsync } = require("../utils/err");
 const { sendEmail, getTemplate } = require("../services/email");
 
 const createAccountController = async (req, res) => {
@@ -143,15 +146,7 @@ const loginToManagerController = async (req, res) => {
   }
 };
 
-const getAllClientsController = async (req, res) => {
-  try {
-    const clients = await getAllClientsService();
-    return res.status(200).send(clients);
-  } catch (err) {
-    console.log("Error in getAllClientsController:", err);
-    return res.status(500).send("Error fetching clients");
-  }
-};
+
 
 const getAllAccountsController = async (req, res) => {
   try {
@@ -163,46 +158,9 @@ const getAllAccountsController = async (req, res) => {
   }
 };
 
-const addNewClientController = async (req, res) => {
-  try {
-    const { clientData } = req.body;
-    console.log("Client data received:", clientData);
 
-    const response = await addNewClientService({ clientData });
-    return res.status(200).send(response);
-  } catch (err) {
-    console.log("Error in addNewClientController:", err);
-    return res.status(500).send("Error adding new client");
-  }
-};
 
-const deleteClientController = async (req, res) => {
-  try {
-    const { clientId } = req.body;
-    console.log("Client ID received for deletion:", clientId);
 
-    const response = await deleteClientService({ clientId });
-
-    return res.status(200).send(response);
-  } catch (err) {
-    console.log("Error in deleteClientController:", err);
-    return res.status(500).send("Error deleting client");
-  }
-};
-
-const updateClientController = async (req, res) => {
-  try {
-    const { clientId, toUpdate } = req.body;
-    console.log("Client update data received:", { clientId, toUpdate });
-
-    const response = await updateClientService({ clientId, toUpdate });
-
-    return res.status(200).send(response);
-  } catch (err) {
-    console.log("Error in updateClientController:", err);
-    return res.status(500).send("Error updating client");
-  }
-};
 
 const generateAndSendOtpController = async (req, res) => {
   try {
@@ -260,36 +218,8 @@ const sendNewsletter = async (req, res) => {
   }
 };
 
-// const getFile = async (req, res) => {
-//   try {
-//     // const { file } = req.body
-//     // console.log('file', file)
-//     const { name } = req.params;
 
-//     const filePath = path.join(__dirname, "../../src/assets/email", name);
 
-//     // Determinar el Content-Type basado en la extensión del archivo
-//     const contentType = name.toLowerCase().endsWith(".svg")
-//       ? "image/svg+xml"
-//       : name.toLowerCase().endsWith(".png")
-//         ? "image/png"
-//         : "application/octet-stream";
-
-//     // Leer como Buffer para archivos binarios, como UTF-8 para texto
-//     const fileContent = await fs.readFile(
-//       filePath,
-//       contentType === "image/svg+xml" ? "utf8" : null
-//     );
-
-//     res.setHeader("Content-Type", contentType);
-//     res.setHeader("Cache-Control", "public, max-age=86400"); // Optional: Cache for 24 hours
-
-//     return res.status(200).send(fileContent);
-//   } catch (err) {
-//     console.log("Error in sendFile:", err);
-//     return res.status(500).send("Error in sendFile");
-//   }
-// };
 
 const getFile = async (req, res) => {
   try {
@@ -355,9 +285,8 @@ const uploadPDF = (req, res) => {
   res.json({ message: "Archivo PDF guardado correctamente" });
 };
 
-// ==============================================================================
 
-///
+
 
 const deleteAllDB = async (req, res) => {
   try {
@@ -379,22 +308,18 @@ module.exports = {
   sendEmail: catchedAsync(senderEmail),
   getEmail: catchedAsync(getEmail),
 
-  createAccountController: catchedAsync(createAccountController),
-  getAllAccountsController: catchedAsync(getAllAccountsController),
-  updateAccountController: catchedAsync(updateAccountController),
-  deleteAccountController: catchedAsync(deleteAccountController),
-  updateAccountPasswordController: catchedAsync(
-    updateAccountPasswordController
-  ),
   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
   verifyOTPController: catchedAsync(verifyOTPController),
   sendNewsletter: catchedAsync(sendNewsletter),
+  
+  createAccountController: catchedAsync(createAccountController),
+  updateAccountController: catchedAsync(updateAccountController),
+  getAllAccountsController: catchedAsync(getAllAccountsController),
+  deleteAccountController: catchedAsync(deleteAccountController),
+  updateAccountPasswordController: catchedAsync( updateAccountPasswordController ),
 
   loginToManagerController: catchedAsync(loginToManagerController),
-  getAllClientsController: catchedAsync(getAllClientsController),
-  addNewClientController: catchedAsync(addNewClientController),
-  deleteClientController: catchedAsync(deleteClientController),
-  updateClientController: catchedAsync(updateClientController),
+
   uploadPDF: catchedAsync(uploadPDF),
-  upload: upload,
+  // upload: upload,
 };

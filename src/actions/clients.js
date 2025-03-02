@@ -23,6 +23,8 @@ export const createClient = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error creating client:", error);
+      if(error.response.status === 501) logout()
+
     }
   }
 );
@@ -57,6 +59,9 @@ export const createClients = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.error("Error creating clients:", error);
+
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(error.response?.data || "Error inesperado");
     }
   }
@@ -75,6 +80,8 @@ export const getAllClients = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error fetching user automations:", error);
+
+      if(error.response.status === 501) logout()
       throw error;
     }
   }
@@ -98,6 +105,8 @@ export const updateClient = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error updating client:", error);
+
+      if(error.response.status === 501) logout()
       throw error;
     }
   }
@@ -123,6 +132,8 @@ export const getOneClient = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error get client:", error);
+
+      if(error.response.status === 501) logout()
       throw error;
     }
   }
@@ -143,6 +154,8 @@ export const deleteClients = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.error("Error deleting clients:", error);
+      
+      if(error.response.status === 501) logout()
       throw error;
     }
   }

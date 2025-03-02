@@ -3,47 +3,59 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const sendEmail =
-createAsyncThunk('user/sendEmail',
-  async ({ id, email }, { dispatch }) => {
-    try {
-      const token = localStorage.getItem('token')
+  createAsyncThunk('user/sendEmail',
+    async ({ id, email }, { dispatch }) => {
+      try {
+        const token = localStorage.getItem('token')
 
-      const resp = await apiBackend.post(
-        `/user/send`,
-        { email },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-        }
-      );
+        const resp = await apiBackend.post(
+          `/user/send`,
+          { email },
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+          }
+        );
 
-      return resp.data;
-    } catch (error) {
-      throw error;
+        return resp.data;
+      } catch (error) {
+        throw error;
+      }
     }
-  }
-);
+  );
 
 
 
 
 // -------------------------------
-export const getEmailsByQuery = createAsyncThunk(
-  "user/getEmailsByQuery",
-  async ({ userId, email, password, query, tokenGpt, /*logs,*/ ftpData }) => {
+export const goAutomate = createAsyncThunk(
+  "user/automate",
+  async ({ userId, email, password, query, tokenGpt, /*logs,*/ ftpData, file }) => {
     try {
       console.log("EMAIL FETCH REQUEST:", { userId, email, query, ftpData });
 
       const token = localStorage.getItem("token");
-      // Call your backend endpoint for fetching emails
+
+      // Create FormData object
+      const formData = new FormData();
+      formData.append('userId', userId);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('query', query);
+      formData.append('tokenGpt', tokenGpt);
+      formData.append('ftpData', JSON.stringify(ftpData));
+      if (file) {
+        formData.append('file', file);
+      }
+
       const res = await apiBackend.post(
-        "/user/getEmailsByQuery",
-        { userId, email, password, query, tokenGpt, /*logs,*/ ftpData },
+        "/user/automate",
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Replace with your token
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -122,86 +134,89 @@ export const getAllAccounts = createAsyncThunk("user/getAllAccounts", async () =
   }
 });
 
-export const getAllClients = createAsyncThunk(
-  "user/getAllClients",
-  async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await apiBackend.get(`/user/getAllClients`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return res.data;
-    } catch (error) {
-      console.log("Error fetching clients:", error);
-      throw new Error("Failed to fetch clients");
-    }
-  }
-);
+// export const getAllClients = createAsyncThunk(
+//   "user/getAllClients",
+//   async () => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const res = await apiBackend.get(`/user/getAllClients`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//       return res.data;
+//     } catch (error) {
+//       console.log("Error fetching clients:", error);
+//       throw new Error("Failed to fetch clients");
+//     }
+//   }
+// );
 
-export const addNewClient = createAsyncThunk(
-  "user/addNewClient",
-  async ({ clientData }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await apiBackend.post(
-        `/user/addNewClient`,
-        { clientData },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return res.data;
-    } catch (error) {
-      console.log("Error adding new client:", error);
-      throw new Error("Failed to add new client");
-    }
-  }
-);
+// export const addNewClient = createAsyncThunk(
+//   "user/addNewClient",
+//   async ({ clientData }) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const res = await apiBackend.post(
+//         `/user/addNewClient`,
+//         { clientData },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+//       return res.data;
+//     } catch (error) {
+//       console.log("Error adding new client:", error);
+//       throw new Error("Failed to add new client");
+//     }
+//   }
+// );
 
-export const deleteClient = createAsyncThunk(
-  "user/deleteClient",
-  async ({ clientId }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await apiBackend.delete(`/user/deleteClient`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: { clientId },
-      });
-      return res.data;
-    } catch (error) {
-      console.log("Error deleting client:", error);
-      throw new Error("Failed to delete client");
-    }
-  }
-);
+// export const deleteClient = createAsyncThunk(
+//   "user/deleteClient",
+//   async ({ clientId }) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const res = await apiBackend.delete(`/user/deleteClient`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//         data: { clientId },
+//       });
+//       return res.data;
+//     } catch (error) {
+//       console.log("Error deleting client:", error);
+//       throw new Error("Failed to delete client");
+//     }
+//   }
+// );
 
-export const updateClient = createAsyncThunk(
-  "user/updateClient",
-  async ({ clientId, toUpdate }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await apiBackend.put(
-        `/user/updateClient`,
-        { clientId, toUpdate },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return res.data;
-    } catch (error) {
-      console.log("Error updating client:", error);
-      throw new Error("Failed to update client");
-    }
-  }
-);
+// export const updateClient = createAsyncThunk(
+//   "user/updateClient",
+//   async ({ clientId, toUpdate }) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const res = await apiBackend.put(
+//         `/user/updateClient`,
+//         { clientId, toUpdate },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+//       return res.data;
+//     } catch (error) {
+//       console.log("Error updating client:", error);
+
+//       if(error.response.status === 501) logout()
+
+//       throw new Error("Failed to update client");
+//     }
+//   }
+// );
 
 export const updateAccount = createAsyncThunk(
   "user/updateAccount",
@@ -210,7 +225,7 @@ export const updateAccount = createAsyncThunk(
       const token = localStorage.getItem("token");
       const res = await apiBackend.put(
         `/user/updateAccount`,
-        { userData: data},
+        { userData: data },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -220,6 +235,8 @@ export const updateAccount = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error updating account:", error);
+      if(error.response.status === 501) logout()
+
       throw new Error("Failed to update account");
     }
   }
@@ -247,6 +264,9 @@ export const deleteAccount = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error updating account:", error);
+
+      if(error.response.status === 501) logout()
+
       throw new Error("Failed to update account");
     }
   }
@@ -383,6 +403,8 @@ export const sendEmailNewsletter = createAsyncThunk(
         "Error sending email:",
         error.response?.data || error.message
       );
+      
+
       return rejectWithValue(error.response?.data || "Failed to send email");
     }
   }
@@ -417,6 +439,8 @@ export const createPaymentIntent = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error adding new payment intent:", error);
+      if(error.response.status === 501) logout()
+
       throw new Error("Failed to add new payment intent");
     }
   }
@@ -443,9 +467,35 @@ export const createSetupIntent = createAsyncThunk(
         "Error creating setup intent:",
         error.response?.data || error.message
       );
+
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(
         error.response?.data || "Failed to create setup intent"
       );
     }
   }
 );
+
+
+
+export const logout =
+  async (_) => {
+    try {
+      console.log("logout1234");
+      // Limpiar el almacenamiento local
+      localStorage.removeItem("user");
+      localStorage.removeItem("lastPath");
+      localStorage.removeItem("token"); // También deberíamos eliminar el token
+
+      window.location.href = "/login";
+      // Es mejor usar navigate de react-router-dom en el componente
+      // pero si necesitas hacerlo aquí, podrías retornar un valor
+      // para manejar la redirección en el componente
+      return { success: true };
+    } catch (error) {
+      console.log("Error during logout:", error);
+      // return rejectWithValue("Failed to logout");
+    }
+  }
+

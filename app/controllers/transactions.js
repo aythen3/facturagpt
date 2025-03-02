@@ -4,13 +4,15 @@ const { catchedAsync } = require("../utils/err");
 
 const { connectDB } = require("./utils");
 
-const {
-  getAllTransactionsByClient,
-  deleteTransactions,
-  deleteProductFromTransactions,
-  getTransactionById,
-  automateTransactions,
-} = require("../services/transactions");
+// const {
+//   getAllTransactionsByClient,
+//   deleteTransactions,
+//   deleteProductFromTransactions,
+//   getTransactionById,
+//   automateTransactions,
+// } = require("../services/transactions");
+
+
 
 const getAllTransactionsByClientController = async (req, res) => {
   try {
@@ -22,13 +24,53 @@ const getAllTransactionsByClientController = async (req, res) => {
         .json({ error: "Se requiere un array de idsEmails válido" });
     }
 
-    const filteredDatabases = await getAllTransactionsByClient({ idsEmails });
+    // const filteredDatabases = await getAllTransactionsByClient({ idsEmails });
 
-    return res.status(200).json({
-      success: true,
-      message: "Bases de datos obtenidas correctamente",
-      databases: filteredDatabases,
-    });
+
+    try {
+      const allDatabases = await nano.db.list();
+
+      const processedDbNames = allDatabases.filter((dbName) =>
+        dbName.includes("_processedemails")
+      );
+
+      let matchingDocuments = [];
+
+      for (const dbName of processedDbNames) {
+        const processedDb = nano.use(dbName);
+
+        const processedEmails = await processedDb.list({
+          include_docs: true,
+        });
+
+
+        const matchingProcessedDocs = processedEmails.rows.filter(
+          (processedEmailDoc) => idsEmails.includes(processedEmailDoc.doc._id)
+        );
+
+        matchingDocuments = [...matchingDocuments, ...matchingProcessedDocs];
+      }
+
+
+      // return {
+      //   matchingDocuments,
+      // };
+
+
+      return res.status(200).json({
+        success: true,
+        message: "Bases de datos obtenidas correctamente",
+        databases: matchingDocuments,
+      });
+
+
+    } catch (error) {
+      console.error("Error al obtener las transacciones:", error);
+      throw new Error("No se pudieron obtener las transacciones");
+    }
+
+
+
   } catch (error) {
     console.error("Error en getAllTransactionsByClientController:", error);
     return res.status(500).json({
@@ -51,17 +93,75 @@ const getTransactionByIdController = async (req, res) => {
         .json({ error: "Se requiere un transactionId válido" });
     }
 
+
+    try {
+      const allDatabases = await nano.db.list();
+      const processedDatabases = allDatabases.filter((dbName) =>
+        dbName.endsWith("_processedemails")
+      );
+
+
+      let matchingDocuments = [];
+
+      for (const dbName of processedDatabases) {
+        const db = nano.use(dbName);
+
+        try {
+          const doc = await db.get(transactionId);
+
+          if (doc) {
+            matchingDocuments.push({
+              id: doc._id,
+              key: doc._id,
+              value: { rev: doc._rev },
+              doc, // Incluye el documento completo
+            });
+            break;
+          }
+        } catch (docError) {
+          if (docError.status !== 404) {
+            console.error(
+              `Error al obtener el documento ${transactionId} en la base ${dbName}:`,
+              docError
+            );
+          }
+        }
+      }
+
+      if (matchingDocuments.length === 0) {
+
+        return {
+          success: false,
+          message: `No se encontró la transacción con ID ${transactionId}.`,
+          matchingDocuments,
+        };
+      }
+
+      // return {
+      //   success: true,
+      //   matchingDocuments,
+      // };
+
+      if (!matchingDocuments.success) {
+        return res.status(404).json({
+          success: false,
+          message: matchingDocuments,
+          matchingDocuments: [],
+        });
+      }
+
+
+    } catch (error) {
+      console.error("Error al obtener la transacción:", error);
+      throw new Error("No se pudo obtener la transacción");
+    }
+
+
     // Llamar al servicio para obtener la transacción
-    const result = await getTransactionById(transactionId);
+    // const result = await getTransactionById(transactionId);
 
     // Si la transacción no se encuentra
-    if (!result.success) {
-      return res.status(404).json({
-        success: false,
-        message: result.message,
-        matchingDocuments: [],
-      });
-    }
+
 
     // Retornar la transacción encontrada
     return res.status(200).json({
@@ -97,12 +197,69 @@ const deleteTransactionsController = async (req, res) => {
     console.log("Eliminando transacciones con IDs:", transactionsIds);
 
     // Llamar a la función para eliminar las transacciones
-    const response = await deleteTransactions({ transactionsIds });
+    // const response = await deleteTransactions({ transactionsIds });
 
-    return res.status(200).json({
-      message: "Transacciones eliminadas exitosamente.",
-      data: response,
-    });
+    // return res.status(200).json({
+    //   message: "Transacciones eliminadas exitosamente.",
+    //   data: response,
+    // });
+
+
+    try {
+      const allDatabases = await nano.db.list();
+
+      const processedDatabases = allDatabases.filter((dbName) =>
+        dbName.endsWith("_processedemails")
+      );
+
+      if (processedDatabases.length === 0) {
+        return {
+          success: false,
+          message: "No hay bases de datos para procesar.",
+        };
+      }
+
+      for (const dbName of processedDatabases) {
+        const db = nano.use(dbName);
+
+        for (const transactionId of transactionsIds) {
+          try {
+            const query = { selector: { _id: transactionId } };
+            const result = await db.find(query);
+
+            if (result.docs.length > 0) {
+              for (const doc of result.docs) {
+                await db.destroy(doc._id, doc._rev);
+
+              }
+            } else {
+            }
+          } catch (error) {
+            console.error(
+              `Error al buscar o eliminar documentos en la base de datos ${dbName}:`,
+              error
+            );
+          }
+        }
+      }
+
+      // return 
+
+      return res.status(200).json({
+        message: "Transacciones eliminadas exitosamente.",
+        data: {
+          success: true,
+          message:
+            "Transacciones eliminadas correctamente de las bases de datos procesadas.",
+        }
+      });
+
+    } catch (error) {
+      console.error("Error al procesar las transacciones:", error);
+      throw new Error("Falló la eliminación de transacciones.");
+    }
+
+
   } catch (err) {
     console.error("Error en deleteTransactionController:", err);
     return res
@@ -119,15 +276,89 @@ const deleteProductFromTransactionsController = async (req, res) => {
     console.log("MI REF-------------", productRef);
 
     // Llamar a la función para eliminar las transacciones
-    const response = await deleteProductFromTransactions({
-      transactionId,
-      productRef,
-    });
+    // const response = await deleteProductFromTransactions({
+    //   transactionId,
+    //   productRef,
+    // });
 
-    return res.status(200).json({
-      message: "Transacciones eliminadas exitosamente.",
-      data: response,
-    });
+    // return res.status(200).json({
+    //   message: "Transacciones eliminadas exitosamente.",
+    //   data: response,
+    // });
+
+
+
+    try {
+      const allDatabases = await nano.db.list();
+
+      const processedDatabases = allDatabases.filter((dbName) =>
+        dbName.endsWith("_processedemails")
+      );
+
+      if (processedDatabases.length === 0) {
+        console.log("No se encontraron bases de datos con '_processedemails'.");
+        return {
+          success: false,
+          message: "No hay bases de datos para procesar.",
+        };
+      }
+
+      for (const dbName of processedDatabases) {
+        const db = nano.use(dbName);
+
+        try {
+          const doc = await db.get(transactionId);
+
+          if (
+            !doc ||
+            !doc.totalData ||
+            !Array.isArray(doc.totalData.productList)
+          ) {
+            continue;
+          }
+
+          const updatedProductList = doc.totalData.productList.filter(
+            (product) => product.productRef !== productRef
+          );
+
+          if (updatedProductList.length === doc.totalData.productList.length) {
+
+            continue;
+          }
+
+          doc.totalData.productList = updatedProductList;
+
+          await db.insert(doc);
+        } catch (docError) {
+          console.error(
+            `Error al procesar el documento ${transactionId} en la base de datos ${dbName}:`,
+            docError
+          );
+        }
+      }
+
+      // return {
+      //   success: true,
+      //   message:
+      //     "Transacciones procesadas correctamente en las bases de datos seleccionadas.",
+      // };
+
+
+      return res.status(200).json({
+        message: "Transacciones eliminadas exitosamente.",
+        data: {
+          success: true,
+          message:
+            "Transacciones procesadas correctamente en las bases de datos seleccionadas.",
+        }
+      });
+
+    } catch (error) {
+      console.error("Error al procesar las transacciones:", error);
+      throw new Error("Falló la eliminación de transacciones.");
+    }
+
+
   } catch (err) {
     console.error("Error en deleteTransactionController:", err);
     return res
@@ -178,7 +409,12 @@ const automateTransactionsController = async (req, res) => {
       global.automationJob = schedule.scheduleJob({ rule: '*/10 * * * * *' }, async () => {
         try {
           console.log('Ejecutando automatización de transacciones...');
-          await automateTransactions();
+          // await automateTransactions();
+          try {
+            console.log('HELLO WORLD AUTOMATING SYSTEM')
+          } catch (error) {
+            console.error("Error en automateTransactions:", error);
+          }
         } catch (error) {
           console.error('Error en la automatización programada:', error);
         }

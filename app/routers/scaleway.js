@@ -1,4 +1,7 @@
 const { Router } = require("express");
+const multer = require("multer");
+const upload = multer();
+
 const scalewayRouter = Router();
 const {
   checkOrCreateUserBucketController,
@@ -8,8 +11,6 @@ const {
   moveObjectController,
   deleteObjectController,
 } = require("../controllers/scaleway");
-const multer = require("multer");
-const upload = multer();
 
 // -------------------------------
 scalewayRouter

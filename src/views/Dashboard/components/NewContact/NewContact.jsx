@@ -13,6 +13,8 @@ import PayMethod from "../PayMethod/PayMethod";
 import { clearClient } from "../../../../slices/clientsSlices";
 import EditableInput from "../../screens/Clients/EditableInput/EditableInput";
 import { createClient } from "../../../../actions/clients";
+
+
 const NewContact = ({
   setShowNewContact,
   showNewContact,

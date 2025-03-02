@@ -19,6 +19,9 @@ export const getAllTransactionsByClient = createAsyncThunk(
     } catch (error) {
       console.error("Error saving transactions:", error);
 
+      if(error.response.status === 501) logout()
+
+      
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -44,6 +47,8 @@ export const deleteTransactions = createAsyncThunk(
     } catch (error) {
       console.error("Error deleting transactions:", error);
 
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -68,6 +73,8 @@ export const deleteProductFromTransaction = createAsyncThunk(
       return res.data; // Retornar datos de la respuesta del servidor
     } catch (error) {
       console.error("Error deleting transactions:", error);
+
+      if(error.response.status === 501) logout()
 
       return rejectWithValue(
         error.response ? error.response.data : error.message
@@ -99,7 +106,8 @@ export const getOneTransactionById = createAsyncThunk(
     } catch (error) {
       console.error("Error al eliminar el producto de la transacción:", error);
 
-      // Manejo de errores, devuelve un mensaje de error
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );

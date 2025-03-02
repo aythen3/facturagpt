@@ -1,7 +1,11 @@
 const { Router } = require("express");
 const userManagerRouter = Router();
+
+const multer = require("multer");
+const upload = multer();
+
 const {
-  getEmailsByQuery,
+  // getEmailsByQuery,
 
   sendEmail,
   getEmail,
@@ -13,24 +17,24 @@ const {
   createAccountController,
 
   loginToManagerController,
-  addNewClientController,
-  getAllClientsController,
-  deleteClientController,
-  updateClientController,
+  // addNewClientController,
+  // getAllClientsController,
+  // deleteClientController,
+  // updateClientController,
   updateAccountController,
   generateAndSendOtpController,
   verifyOTPController,
   sendNewsletter,
   uploadPDF,
-  upload,
+  // upload,
   deleteAllDB,
 } = require("../controllers/user");
 
-const { fetchEmailsByQuery } = require("../services/pdfImageReaderGpt");
+const { goAutomate } = require("../services/automate");
 
 // -------------------------------
 userManagerRouter
-  .post("/getEmailsByQuery", fetchEmailsByQuery)
+  .post("/automate", upload.single("file"), goAutomate)
 
   .post("/createAccount", createAccountController)
   .get("/getAllAccounts", getAllAccountsController)
@@ -39,10 +43,10 @@ userManagerRouter
   .post("/updateAccountPassword", updateAccountPasswordController)
 
   .post("/loginToManager", loginToManagerController)
-  .post("/addNewClient", addNewClientController)
-  .get("/getAllClients", getAllClientsController)
-  .delete("/deleteClient", deleteClientController)
-  .put("/updateClient", updateClientController)
+  // .post("/addNewClient", addNewClientController)
+  // .get("/getAllClients", getAllClientsController)
+  // .delete("/deleteClient", deleteClientController)
+  // .put("/updateClient", updateClientController)
   
   .post("/send-otp", generateAndSendOtpController)
   .post("/verify-otp", verifyOTPController)

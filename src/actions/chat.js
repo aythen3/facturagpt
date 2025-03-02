@@ -1,4 +1,5 @@
 import apiBackend from "@src/apiBackend.js";
+import { logout } from "@src/actions/user.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchByMenu = createAsyncThunk(
@@ -21,6 +22,8 @@ export const fetchByMenu = createAsyncThunk(
       // La respuesta incluirá los chats con sus días de antigüedad
       return res.data;
     } catch (error) {
+      if(error.response.status === 501) logout()      
+
       console.error("Error fetching chats:", error);
       return rejectWithValue(
         error.response ? error.response.data : error.message
@@ -47,6 +50,9 @@ export const fetchByChat = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.error("Error fetching chat messages:", error);
+
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -72,6 +78,9 @@ export const deleteChat = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.error("Error deleting chat:", error);
+
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -104,6 +113,9 @@ export const sendMessage = createAsyncThunk(
       };
     } catch (error) {
       console.error("Error sending message:", error);
+
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -136,6 +148,9 @@ export const validateTokenGPT = createAsyncThunk(
       };
     } catch (error) {
       console.error("Error sending message:", error);
+
+      if(error.response.status === 501) logout()
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );

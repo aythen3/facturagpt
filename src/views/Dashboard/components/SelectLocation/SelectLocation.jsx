@@ -11,6 +11,10 @@ import HeaderCard from "../HeaderCard/HeaderCard";
 import { ReactComponent as HouseContainer } from "../../assets/blackHouse.svg";
 import FolderClosed from "../../assets/folderClosed.svg";
 import Button from "../Button/Button";
+
+import { useDispatch } from "react-redux";
+import { goAutomate } from "@src/actions/user";
+
 const SelectLocation = ({
   onClose,
   pickLocation = () => {},
@@ -18,6 +22,9 @@ const SelectLocation = ({
   setSelectedLocationNew,
   showNewFolder = true,
 }) => {
+  const dispatch = useDispatch();
+
+
   const { user } = useSelector((state) => state.user);
   const { userFiles } = useSelector((state) => state.scaleway);
   const [isClosing, setIsClosing] = useState(false);
@@ -168,6 +175,49 @@ const SelectLocation = ({
     });
   };
 
+  const handleUploadFile = async () => {
+    try {
+      // Create file input element
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = '.pdf,.jpg,.jpeg,.png'; 
+      
+      fileInput.onchange = async (e) => {
+        const file = e.target.files[0];
+        console.log("file", file)
+        if (!file) return;
+
+        console.log('file!!!!!!!!!!!', file)
+
+        // Convert to PNG if needed
+        const img = new Image();
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const objectUrl = URL.createObjectURL(file);
+
+        console.log('objectUrl', objectUrl)
+
+        const response = await dispatch(goAutomate({
+          userId: user?.id || "randomId",
+          file: file,
+          // email: user.tokenEmail,
+          // password: user.tokenPassword,
+          // query: user.emailQueries,
+          // tokenGpt: user.tokenGPT,
+        }))
+
+        console.log('response', response)
+
+        img.src = objectUrl;
+      };
+
+      fileInput.click();
+    } catch (error) {
+      console.error('Error in handleUploadFile:', error);
+    }
+  };
+
   return (
     <div
       onClick={(e) => {
@@ -188,6 +238,11 @@ const SelectLocation = ({
           </Button>
           <Button
             action={() => {
+
+              if(1){
+                handleUploadFile()
+              }
+
               setSelectedLocationNew(selectedLocation);
               handleClose();
             }}
