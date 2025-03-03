@@ -34,10 +34,11 @@ import UsersDashboard from "./views/Dashboard/UsersDashboard.jsx";
 import ChatView from "./views/Dashboard/screens/ChatView/ChatView.jsx";
 import AccountsDashboard from "./views/Dashboard/AccountsDashboard.jsx";
 import NotificationsView from "./views/Dashboard/screens/NotificationsView/NotificationsView.jsx";
+import Loading from "./views/Dashboard/components/Loading/Loading.jsx";
 
-const stripePromise = loadStripe(
-  "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
-);
+// const stripePromise = loadStripe(
+//   "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
+// );
 
 
 
@@ -79,49 +80,52 @@ const Layout = () => {
   const ComponentPrivate = () => {
     const { user } = useSelector((state) => state.user);
     const navigate = useNavigate()
-
-
     const [init, setInit] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
       setInit(true)
+      
+      const timer = setTimeout(() => {
+        setIsLoading(false)
+        if (user && user.success == false) {
+          navigate(`/login`)
+        }
+      }, 200)
 
-      if (user && user.success == false) {
-        navigate(`/login`)
-      }
-
+      return () => clearTimeout(timer)
     }, [user])
 
-    if (!init) {
-      return (null)
-    } else {
-      if (!user) {
-        return (
-          <Routes>
-            <Route path="*" element={<LandingPage />} />
-          </Routes>
-        )
-      } else {
-        return (
-          <Routes>
-            <Route path="/home" element={<Dashboard />} />
-            <Route path="/accounts" element={<AccountsDashboard />} />
-            <Route path="/users" element={<UsersDashboard />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/clients/:id" element={<Transactions />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/chat" element={<ChatView />} />
-            <Route path="/chat/:id" element={<ChatView />} />
-            <Route path="/articlestransactions" element={<ArticlesTransactions />} />
-            <Route path="/notification" element={<NotificationsView />} />
-            <Route path="/panel" element={<InvoicePanel />} />
-            <Route path="/panel/:id" element={<InvoicePanel />} />
-            <Route path="*" element={<ChatView />} />
-          </Routes>
-        );
-      }
+    if (!init || isLoading) {
+      return (
+        <Loading />
+      )
     }
-
+    
+    if (!user) {
+      return (
+        <Routes>
+          <Route path="*" element={<LandingPage />} />
+        </Routes>
+      )
+    }
+    return (
+      <Routes>
+        <Route path="/home" element={<Dashboard />} />
+        <Route path="/accounts" element={<AccountsDashboard />} />
+        <Route path="/users" element={<UsersDashboard />} />
+        <Route path="/clients" element={<Clients />} />
+        <Route path="/clients/:id" element={<Transactions />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/chat" element={<ChatView />} />
+        <Route path="/chat/:id" element={<ChatView />} />
+        <Route path="/articlestransactions" element={<ArticlesTransactions />} />
+        <Route path="/notification" element={<NotificationsView />} />
+        <Route path="/panel" element={<InvoicePanel />} />
+        <Route path="/panel/:id" element={<InvoicePanel />} />
+        <Route path="*" element={<ChatView />} />
+      </Routes>
+    );
   }
 
   return (

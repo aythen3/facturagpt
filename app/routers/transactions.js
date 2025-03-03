@@ -1,4 +1,8 @@
 const { Router } = require("express");
+
+const { authenticateToken } = require('../middlewares/auth/auth')
+
+
 const {
   getAllTransactionsByClientController,
   deleteTransactionsController,
@@ -13,11 +17,10 @@ const {
 const transactionsByClientRouter = Router();
 
 transactionsByClientRouter
-  .get("/active", automateTransactionsController)
-  
-  .post("/alltransactionsByClient", getAllTransactionsByClientController)
-  .post("/deleteTransacions", deleteTransactionsController)
-  .post("/deleteProductFromTransacion", deleteProductFromTransactionsController)
-  .get("/getOneTransaction/:transactionId", getTransactionByIdController);
+  .get("/active", authenticateToken, automateTransactionsController)
+  .post("/alltransactionsByClient", authenticateToken, getAllTransactionsByClientController)
+  .post("/deleteTransacions", authenticateToken, deleteTransactionsController)
+  .post("/deleteProductFromTransacion", authenticateToken, deleteProductFromTransactionsController)
+  .get("/getOneTransaction/:transactionId", authenticateToken, getTransactionByIdController);
 
 module.exports = transactionsByClientRouter;

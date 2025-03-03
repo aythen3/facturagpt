@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const clientsRouter = Router();
 
+const { authenticateToken } = require('../middlewares/auth/auth')
+
 const {
   createClientController,
   getAllClientsController,
@@ -11,11 +13,11 @@ const {
 } = require("../controllers/clients");
 
 clientsRouter
-  .post("/createClient", createClientController)
-  .post("/createClients", createClientsController)
-  .get("/getAllClients/:userId", getAllClientsController)
-  .put("/updateClient/:clientId", updateClientController)
-  .delete("/deleteClients", deleteClientController)
-  .get("/getClient/:clientId/:userId", getOneClientController);
+  .post("/createClient", authenticateToken, createClientController)
+  .post("/createClients", authenticateToken, createClientsController)
+  .get("/getAllClients/:userId", authenticateToken, getAllClientsController)
+  .put("/updateClient/:clientId", authenticateToken, updateClientController)
+  .delete("/deleteClients", authenticateToken, deleteClientController)
+  .get("/getClient/:clientId/:userId", authenticateToken, getOneClientController);
 
 module.exports = clientsRouter;

@@ -1,5 +1,8 @@
 const { Router } = require("express");
 const stripeRouter = Router();
+
+const { authenticateToken } = require('../middlewares/auth/auth')
+
 const {
   createPaymentIntentController,
   createSetupIntentController,
@@ -9,9 +12,9 @@ const {
 
 // -------------------------------
 stripeRouter
-  .post("/create-payment-intent", createPaymentIntentController)
-  .post("/create-setup-intent", createSetupIntentController)
-  .post("/attach-custom-payment-method", attachCustomPaymentMethodController)
-  .post("/create-custom-payment-intent", createCustomPaymentIntentController);
+  .post("/create-payment-intent", authenticateToken, createPaymentIntentController)
+  .post("/create-setup-intent", authenticateToken, createSetupIntentController)
+  .post("/attach-custom-payment-method", authenticateToken, attachCustomPaymentMethodController)
+  .post("/create-custom-payment-intent", authenticateToken, createCustomPaymentIntentController);
 
 module.exports = stripeRouter;

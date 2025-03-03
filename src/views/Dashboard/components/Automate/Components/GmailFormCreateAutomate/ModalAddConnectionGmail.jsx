@@ -8,7 +8,15 @@ import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import styles from "./ModalAddConnectionGmail.module.css";
 import { ReactComponent as Gmail } from "../../../../assets/gmail-icon.svg";
 import Button from "../../../Button/Button";
-const ModalAddConnectionGmail = ({ close, addConnection }) => {
+import { useDispatch } from "react-redux";
+
+import { addAuth } from "@src/actions/automate";
+
+
+const ModalAddConnectionGmail = ({ close }) => {
+
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [appPassword, setAppPassword] = useState("");
   const [imapServer, setImapServer] = useState("");
@@ -20,27 +28,32 @@ const ModalAddConnectionGmail = ({ close, addConnection }) => {
   const [selectedSmtpEncryption, setSelectedSmtpEncryption] =
     useState("TLS/SSL o Ninguno");
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const testEmail = (email) => emailRegex.test(email);
 
-  const handleAddConnection = () => {
+  const handleAddConnection = async () => {
     const connection = {
+      type: "gmail",
       email,
       appPassword,
-      imapServer,
-      smtpServer,
-      imapPort,
-      smtpPort,
-      selectedImapEncryption,
-      selectedSmtpEncryption,
+      // imapServer,
+      // smtpServer,
+      // imapPort,
+      // smtpPort,
+      // selectedImapEncryption,
+      // selectedSmtpEncryption,
     };
 
+    console.log("connection", connection);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const testEmail = (email) => emailRegex.test(email);
+
+    
     const isEmailValid = testEmail(email);
     const isAppPasswordProvided = appPassword.trim() !== "";
-    const isImapServerValid = imapServer.trim() !== "";
-    const isSmtpServerValid = smtpServer.trim() !== "";
-    const isImapPortValid = imapPort.trim() !== "" && !isNaN(imapPort);
-    const isSmtpPortValid = smtpPort.trim() !== "" && !isNaN(smtpPort);
+    // const isImapServerValid = imapServer.trim() !== "";
+    // const isSmtpServerValid = smtpServer.trim() !== "";
+    // const isImapPortValid = imapPort.trim() !== "" && !isNaN(imapPort);
+    // const isSmtpPortValid = smtpPort.trim() !== "" && !isNaN(smtpPort);
 
     if (!isEmailValid) {
       console.error("Invalid email address.");
@@ -52,20 +65,21 @@ const ModalAddConnectionGmail = ({ close, addConnection }) => {
       return;
     }
 
-    if (!isImapServerValid && !isSmtpServerValid) {
-      console.error("At least one of IMAP or SMTP servers must be provided.");
-      return;
-    }
+    // if (!isImapServerValid && !isSmtpServerValid) {
+    //   console.error("At least one of IMAP or SMTP servers must be provided.");
+    //   return;
+    // }
 
-    if (!isImapPortValid && !isSmtpPortValid) {
-      console.error(
-        "At least one of IMAP or SMTP ports must be provided and valid."
-      );
-      return;
-    }
+    // if (!isImapPortValid && !isSmtpPortValid) {
+    //   console.error(
+    //     "At least one of IMAP or SMTP ports must be provided and valid."
+    //   );
+    //   return;
+    // }
 
     console.log("Adding connection with values:", connection);
-    addConnection(connection);
+    const resp = await dispatch(addAuth(connection))
+    console.log("resp add connection", resp);
     close();
   };
 

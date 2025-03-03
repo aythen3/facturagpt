@@ -6,7 +6,10 @@ export const checkOrCreateUserBucket = createAsyncThunk(
   async ({ userId }) => {
     console.log("data from checkOrCreateUserBucket", { userId });
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.get(
         `/scaleway/check-user-bucket/${userId}`,
         {
@@ -26,7 +29,10 @@ export const getUserFiles = createAsyncThunk(
   "scaleway/getUserFiles",
   async ({ userId }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.get(`/scaleway/get-user-files/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,6 +50,11 @@ export const uploadFiles = createAsyncThunk(
   async ({ files, currentPath }, { rejectWithValue }) => {
     console.log("on uploadFiles action", { files, currentPath });
     try {
+
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const formData = new FormData();
       files.forEach((file) => {
         formData.append("files", file);
@@ -56,6 +67,7 @@ export const uploadFiles = createAsyncThunk(
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -72,7 +84,10 @@ export const createFolder = createAsyncThunk(
   "scaleway/createFolder",
   async ({ folderPath }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         "/scaleway/create-folder",
         { folderPath },
@@ -94,7 +109,10 @@ export const moveObject = createAsyncThunk(
   "scaleway/moveObject",
   async ({ sourceKey, destinationKey, isFolder }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         "/scaleway/move-object",
         { sourceKey, destinationKey, isFolder },
@@ -116,7 +134,10 @@ export const deleteObject = createAsyncThunk(
   "scaleway/deleteObject",
   async ({ key, isFolder }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+     
       const res = await apiBackend.post(
         "/scaleway/delete-object",
         { key, isFolder },

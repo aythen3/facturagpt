@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const userManagerRouter = Router();
 
+const { authenticateToken } = require('../middlewares/auth/auth')
+
 const multer = require("multer");
 const upload = multer();
 
@@ -36,12 +38,12 @@ const {
 userManagerRouter
   // .post("/automate", upload.single("file"), goAutomate)
 
-  .post("/createAccount", createAccountController)
-  .get("/getAllAccounts", getAllAccountsController)
-  .put("/updateAccount", updateAccountController)
-  .post("/deleteAccount", deleteAccountController)
+  .post("/createAccount", authenticateToken, createAccountController)
+  .get("/getAllAccounts", authenticateToken, getAllAccountsController)
+  .put("/updateAccount", authenticateToken, updateAccountController)
+  .post("/deleteAccount", authenticateToken, deleteAccountController)
+  
   .post("/updateAccountPassword", updateAccountPasswordController)
-
   .post("/loginToManager", loginToManagerController)
   // .post("/addNewClient", addNewClientController)
   // .get("/getAllClients", getAllClientsController)

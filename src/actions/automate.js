@@ -8,9 +8,12 @@ export const goAutomate = createAsyncThunk(
   async ({ userId, email, password, query, tokenGpt, /*logs,*/ ftpData, file }) => {
     try {
       console.log("EMAIL FETCH REQUEST:", { userId, email, query, ftpData });
-      const token = localStorage.getItem("token");
-      const formData = new FormData();
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
       
+      const formData = new FormData();
+
       formData.append('userId', userId);
       formData.append('email', email);
       formData.append('password', password);
@@ -45,13 +48,12 @@ export const goAutomate = createAsyncThunk(
 export const createAutomation = createAsyncThunk(
   "automate/createAutomation",
   async ({ userId, email, automationData }) => {
-    console.log("data from createAutomation", {
-      userId,
-      email,
-      automationData,
-    });
+   
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/automate/createAutomation`,
         { userId, email, automationData },
@@ -75,7 +77,10 @@ export const getAllUserAutomations = createAsyncThunk(
   "automate/getAllUserAutomations",
   async ({ userId }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.get(
         `/automate/getAllUserAutomations/${userId}`,
         {
@@ -97,14 +102,12 @@ export const getAllUserAutomations = createAsyncThunk(
 export const updateAutomation = createAsyncThunk(
   "automate/updateAutomation",
   async ({ automationId, toUpdate, userId }) => {
-    console.log(
-      "Updating automation with ID:",
-      automationId,
-      "with data:",
-      toUpdate
-    );
+    
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.put(
         `/automate/updateAutomation/${automationId}`,
         { ...toUpdate, userId },
@@ -129,7 +132,10 @@ export const deleteAutomation = createAsyncThunk(
   async ({ automationId, userId }) => {
     console.log("Deleting automation with ID:", automationId);
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.delete(
         `/automate/deleteAutomation/${automationId}`,
         {
@@ -148,3 +154,98 @@ export const deleteAutomation = createAsyncThunk(
     }
   }
 );
+
+
+
+
+
+// ------------------
+
+export const addAuth = createAsyncThunk(
+  "automate/addAuth",
+  async (data) => {
+
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      
+      const res = await apiBackend.post(
+        `/automate/addAuth`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error creating automation:", error);
+
+      if(error.response.status === 501) logout()
+
+    }
+  }
+);
+
+
+export const getAuth = createAsyncThunk(
+  "automate/getAuth",
+  async (type) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.get(
+        `/automate/getAuth/${type}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      console.log("Error fetching user automations:", error);
+
+      if(error.response.status === 501) logout()
+
+      throw error;
+    }
+  }
+);
+
+
+export const deleteAuth = createAsyncThunk(
+  "automate/deleteAuth",
+  async ({ data }) => {
+    
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+      
+      const res = await apiBackend.delete(
+        `/automate/deleteAuth`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: { },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error deleting automation:", error);
+
+      if(error.response.status === 501) logout()
+      throw error;
+    }
+  }
+);
+
+
+
+

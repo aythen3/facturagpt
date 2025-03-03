@@ -11,7 +11,8 @@
 }
 
 .asideBar {
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
+  background: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
   height: calc(100vh - 50px);
   box-sizing: border-box;
   top: 0;
@@ -99,6 +100,16 @@
 
       strong {
         font-weight: 600;
+      }
+    }
+    .facturaGPTLogo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 40px;
+
+      img {
+        width: 100px;
       }
     }
   }

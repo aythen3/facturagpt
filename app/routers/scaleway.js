@@ -1,4 +1,7 @@
 const { Router } = require("express");
+
+const { authenticateToken } = require('../middlewares/auth/auth')
+
 const multer = require("multer");
 const upload = multer();
 
@@ -14,11 +17,11 @@ const {
 
 // -------------------------------
 scalewayRouter
-  .get("/check-user-bucket/:userId", checkOrCreateUserBucketController)
-  .get("/get-user-files/:userId", getUserFilesController)
-  .post("/upload-files", upload.array("files"), uploadFilesController)
-  .post("/create-folder", createFolderController)
-  .post("/move-object", moveObjectController)
-  .post("/delete-object", deleteObjectController);
+  .get("/check-user-bucket/:userId", authenticateToken, checkOrCreateUserBucketController)
+  .get("/get-user-files/:userId", authenticateToken, getUserFilesController)
+  .post("/upload-files", authenticateToken, upload.array("files"), uploadFilesController)
+  .post("/create-folder", authenticateToken, createFolderController)
+  .post("/move-object", authenticateToken, moveObjectController)
+  .post("/delete-object", authenticateToken, deleteObjectController);
 
 module.exports = scalewayRouter;

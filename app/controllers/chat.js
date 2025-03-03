@@ -54,6 +54,8 @@ const getChatListController = async (req, res) => {
 };
 
 const getChatMessagesController = async (req, res) => {
+
+  console.log("getChatMessagesController");
   const user = req.user;
   const { chatId } = req.params;
 
