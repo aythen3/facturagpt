@@ -6,7 +6,9 @@ export const sendEmail =
   createAsyncThunk('user/sendEmail',
     async ({ id, email }, { dispatch }) => {
       try {
-        const token = localStorage.getItem('token')
+        const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
 
         const resp = await apiBackend.post(
           `/user/send`,
@@ -38,7 +40,10 @@ export const createAccount = createAsyncThunk(
   async (clientData) => {
     // console.log("data from createAccount", { nombre, email, password });
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/user/createAccount`,
         { ...clientData },
@@ -60,7 +65,10 @@ export const loginToManager = createAsyncThunk(
   async ({ email, password, accessToken }) => {
 
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/user/loginToManager`,
         { email, password, accessToken },
@@ -80,7 +88,10 @@ export const loginToManager = createAsyncThunk(
 
 export const getAllAccounts = createAsyncThunk("user/getAllAccounts", async () => {
   try {
-    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
     const res = await apiBackend.get(`/user/getAllAccounts`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -183,7 +194,10 @@ export const updateAccount = createAsyncThunk(
   "user/updateAccount",
   async (data) => {
     try {
-      const token = localStorage.getItem("token");
+     const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.put(
         `/user/updateAccount`,
         { userData: data },
@@ -210,7 +224,10 @@ export const deleteAccount = createAsyncThunk(
     try {
       console.log("id from deleteAccount", id)
       // console.log("id from deleteAccount", id)
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/user/deleteAccount`,
         { id },
@@ -238,7 +255,10 @@ export const updateAccountPassword = createAsyncThunk(
   async ({ email, newPassword }) => {
     console.log("updating password (ACTION)", { email, newPassword });
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.put(
         `/user/updateUserPassword`,
         { email, newPassword },
@@ -387,7 +407,10 @@ export const createPaymentIntent = createAsyncThunk(
       clientId,
     });
     try {
-      const token = localStorage.getItem("token");
+     const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/user/create-payment-intent`,
         { amount, currency, clientId },
@@ -412,7 +435,10 @@ export const createSetupIntent = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     console.log("=== ON CREATE SETUP INTENT ===");
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+      
       const res = await apiBackend.post(
         `/user/create-setup-intent`,
         {},

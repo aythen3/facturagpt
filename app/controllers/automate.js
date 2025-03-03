@@ -3,10 +3,98 @@ const { connectDB } = require("./utils");
 const { v4: uuidv4 } = require('uuid');
 
 
+
+
+
+const addAuthController = async (req, res) => {
+  try {
+    console.log("addAuthController");
+    const user = req.user;
+    const id = user._id.split('_').pop(); 
+
+    const dbAutomations = await connectDB(`db_${id}_auth`);
+
+    const auth = req.body;
+
+    console.log("auth", auth);
+
+    if(!auth.type) {
+      return res.status(400).send("Type is required");
+    }
+    
+
+
+    // Check if auth with same email already exists
+    const existingAuth = await dbAutomations.find({
+      selector: {
+        email: auth.email,
+        type: auth.type
+      }
+    });
+    
+    if (existingAuth.docs.length > 0) {
+      return res.status(400).send("Auth with this email already exists");
+    }
+
+
+
+    await dbAutomations.insert(auth);
+
+    console.log("auth", auth);
+
+    return res.status(200).send(auth);
+  } catch(err) {
+    console.log("err", err);
+    return res.status(500).send("Error on addAuthController");
+  }
+}
+
+
+const getAuthController = async (req, res) => {
+  try {
+    const user = req.user;
+    const { type } = req.params;
+
+    console.log("user!!", user);
+    const id = user._id.split('_').pop(); 
+
+    console.log("type automate auth getAuthController", type);
+
+    const dbAutomations = await connectDB(`db_${id}_auth`);
+
+    const automations = await dbAutomations.find({
+      selector: { 
+        type: type
+       },
+    });
+
+    console.log("automations", automations);
+
+    return res.status(200).send(automations.docs);
+  } catch(err) {
+    console.log("err", err);
+    return res.status(500).send("Error on getAuthController");
+  }
+}
+
+
+const deleteAuthController = async (req, res) => {
+  try {
+    const { automationId } = req.params;
+    const { userId } = req.body;
+  } catch(err) {
+    console.log("err", err);
+    return res.status(500).send("Error on deleteAuthController");
+  }
+}
+
+
+
+
+
 const createAutomationController = async (req, res) => {
   try {
     const { userId, email, automationData } = req.body;
-
 
     console.log('userId', userId)
     // const resp = await createAutomation({ userId, email, automationData });
@@ -170,11 +258,15 @@ const deleteAutomationController = async (req, res) => {
 };
 
 
-
 module.exports = {
+  addAuthController: catchedAsync(addAuthController),
+  getAuthController: catchedAsync(getAuthController),
+  deleteAuthController: catchedAsync(deleteAuthController),
+  
   deleteAutomationController: catchedAsync(deleteAutomationController),
   createAutomationController: catchedAsync(createAutomationController),
   getAllUserAutomationsController: catchedAsync( getAllUserAutomationsController ),
   updateAutomationController: catchedAsync(updateAutomationController),
   deleteAutomationController: catchedAsync(deleteAutomationController),
+
 };

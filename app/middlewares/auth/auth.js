@@ -16,6 +16,8 @@ const authenticateToken = async (req, res, next) => {
       throw new ClientError("Authorization token missing", 401);
     }
 
+    console.log("token", token);
+
 
     const decodedToken = jwt.verify(token, "your-secret-key"); // TODO: Move secret to env vars
 

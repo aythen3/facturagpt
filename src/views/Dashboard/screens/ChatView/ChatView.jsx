@@ -435,7 +435,10 @@ const ChatBody = ({
               Esto garantiza que todos los datos necesarios estén presentes y
               evita errores en el proceso de facturación.
             </p>
-            <div className={styles.facturaGPTMessage}>
+            <div className={styles.facturaGPTLogo}>
+              <img src={facturaGPT} alt="Icon" />
+            </div>
+            {/* <div className={styles.facturaGPTMessage}>
               <img src={facturaGPT} alt="Icon" />
               <div>
                 <p>
@@ -496,7 +499,7 @@ const ChatBody = ({
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
           </>
         )}
         {messages.map((message, index) => (

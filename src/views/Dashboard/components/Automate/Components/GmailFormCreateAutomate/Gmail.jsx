@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./gmail.module.css";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import ModalAddConnectionGmail from "./ModalAddConnectionGmail";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
-import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
+// import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
+import { useDispatch } from "react-redux";
 
 import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.svg";
 import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
@@ -17,6 +18,9 @@ import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
 import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
 
+
+import { getAuth } from "@src/actions/automate";
+
 const Gmail = ({
   type,
   configuration,
@@ -25,6 +29,9 @@ const Gmail = ({
   setSelectedCurrency,
   selectedCurrency,
 }) => {
+
+  const dispatch = useDispatch();
+
   const [showSelectLocation, setShowSelectLocation] = useState(false);
   const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectOutputLocation, setShowSelectOutputLocation] =
@@ -46,16 +53,30 @@ const Gmail = ({
     }));
   };
 
-  const addConnection = (connection) => {
-    const updatedConnections = [
-      ...(configuration?.emailConnectionData || []),
-      connection,
-    ];
-    handleConfigurationChange("emailConnectionData", updatedConnections);
-    if (!configuration?.selectedEmailConnection) {
-      handleConfigurationChange("selectedEmailConnection", connection.email);
-    }
-  };
+  // const addConnection = (connection) => {
+  //   const updatedConnections = [
+  //     ...(configuration?.emailConnectionData || []),
+  //     connection,
+  //   ];
+  //   handleConfigurationChange("emailConnectionData", updatedConnections);
+  //   if (!configuration?.selectedEmailConnection) {
+  //     handleConfigurationChange("selectedEmailConnection", connection.email);
+  //   }
+  // };
+
+  const [authData, setAuthData] = useState([]);
+  useEffect(() => {
+    const getAuthData = async () => {
+      const resp = await dispatch(getAuth('gmail'));
+      console.log("resp data form auth", resp);
+
+      if(resp.payload.length > 0) {
+        setAuthData(resp.payload);
+      }
+    };
+
+    getAuthData();
+  }, []);
 
   return (
     <div>
@@ -64,9 +85,12 @@ const Gmail = ({
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedEmailConnection", value)
         }
-        emailConnections={(configuration?.emailConnectionData || []).map(
+        emailConnections={(authData || []).map(
           (connection) => connection.email
         )}
+        // emailConnections={(configuration?.emailConnectionData || []).map(
+        //   (connection) => connection.email
+        // )}
         action={() => setShowAddConnection(true)}
         icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
       />
@@ -117,7 +141,7 @@ const Gmail = ({
       {showAddConnection && (
         <ModalAddConnectionGmail
           close={() => setShowAddConnection(false)}
-          addConnection={addConnection}
+          // addConnection={addConnection}
         />
       )}
     </div>

@@ -10,7 +10,10 @@ export const createClient = createAsyncThunk(
       clientData,
     });
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/clients/createClient`,
         { userId, email, clientData },
@@ -28,16 +31,16 @@ export const createClient = createAsyncThunk(
     }
   }
 );
+
 export const createClients = createAsyncThunk(
   "clients/createClients",
   async ({ userId, clientsData }, { rejectWithValue }) => {
-    console.log("Data from createClients Thunk", {
-      userId,
-      clientsData,
-    });
+
 
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
 
       // Realiza la solicitud POST a la API
       const res = await apiBackend.post(
@@ -72,7 +75,10 @@ export const getAllClients = createAsyncThunk(
   async ({ userId }) => {
     console.log("Fetching clients for userId (REDUX):", userId);
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.get(`/clients/getAllClients/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -92,7 +98,10 @@ export const updateClient = createAsyncThunk(
   async ({ userID, id, clientData }) => {
     console.log("Updating client with ID:", id, "with data:", clientData);
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+      
       const res = await apiBackend.put(
         `/clients/updateClient/${id}`,
         { userID, id, clientData },
@@ -115,11 +124,11 @@ export const updateClient = createAsyncThunk(
 export const getOneClient = createAsyncThunk(
   "/getClient/client",
   async ({ userId, clientId }) => {
-    console.log("CLIENTID EN ACTION", clientId);
-    console.log("USER IDDD EN ACTION", userId);
-
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.get(
         `/clients/getClient/${clientId}/${userId}`,
 
@@ -142,9 +151,11 @@ export const getOneClient = createAsyncThunk(
 export const deleteClients = createAsyncThunk(
   "clients/deleteClients",
   async ({ clientIds, userId }) => {
-    console.log("Deleting clients with IDs:", clientIds);
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.delete(`/clients/deleteClients`, {
         headers: {
           Authorization: `Bearer ${token}`,
