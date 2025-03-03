@@ -1,45 +1,18 @@
 import React, { useState } from "react";
 import styles from "./gmail.module.css";
-import SearchSVG from "../../svgs/SearchSVG";
-import WarningSVG from "../../svgs/WarningSVG";
-import SelectComponent from "../../../SelectComponent/SelectComponent";
-import CheckboxComponent from "../../shared/CheckboxComponent";
-import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
-import TextSVG from "../../svgs/TextSVG";
-import LabelSVG from "../../svgs/LabelSVG";
-import NotificationsSVG from "../../svgs/NotificationsSVG";
-import InputComponent from "../../../InputComponent/InputComponent";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
-import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import ModalAddConnectionGmail from "./ModalAddConnectionGmail";
-import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
-import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
-import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-import minusIcon from "../../../../assets/minusIcon.svg";
-import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
-
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
-import { ReactComponent as ArrowSquare } from "../../../../assets/whiteArrowSquareIn.svg";
-import { ReactComponent as GrayChevron } from "../../../../assets/grayChevron.svg";
-import { ReactComponent as WhiteFolder } from "../../../../assets/whiteFolder.svg";
-import { ReactComponent as WhiteBolt } from "../../../../assets/whiteBolt.svg";
-import { ReactComponent as WhiteClock } from "../../../../assets/whiteClock.svg";
-import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
-import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg";
-import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
+
 import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.svg";
 import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
-import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-import Advertency from "../Advertency/Advertency";
-// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 
 import EditableInput from "../FileInput/Input";
 import FileInputNotification from "../FileInput/Notification";
-import FileInputGPT from "../FileInput/GPT";
+// import FileInputGPT from "../FileInput/GPT";
 import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
 import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
@@ -99,32 +72,20 @@ const Gmail = ({
       />
       <TitleFormsComponent type={type} title="Sube tus facturas de" />
       <div className={styles.gmailoutlookContainer}>
-        {/* <EditableInput
-          label={"Nombre de la Automatización"}
-          // value={userData?.nombre}
-          name="automatization"
-          // onSave={handleChange}
-          placeholder="Automatización 1"
-          options={true}
-          readOnly={false}
-          configuration={configuration}
-          handleConfigurationChange={handleConfigurationChange}
-        /> */}
-
         <EditableInput
           configuration={configuration}
           handleConfigurationChange={handleConfigurationChange}
         />
-        
+
         <SelectInfoToProcess
           configuration={configuration}
           handleConfigurationChange={handleConfigurationChange}
         />
 
-        <FileInputGPT
+        {/* <FileInputGPT
           configuration={configuration}
           handleConfigurationChange={handleConfigurationChange}
-        />
+        /> */}
 
         <FileInputImport
           handleConfigurationChange={handleConfigurationChange}
@@ -141,7 +102,7 @@ const Gmail = ({
           handleConfigurationChange={handleConfigurationChange}
           configuration={configuration}
         />
-        
+
       </div>
 
       {showSelectOutputLocation && (

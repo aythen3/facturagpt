@@ -28,7 +28,7 @@ const Automate = ({
   isAnimating,
   setIsAnimating,
 }) => {
-  const { userAutomations } = useSelector((state) => state.automations);
+  const { userAutomations } = useSelector((state) => state.automate);
   const [selectedType, setSelectedType] = useState(0);
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();

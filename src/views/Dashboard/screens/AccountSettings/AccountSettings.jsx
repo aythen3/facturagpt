@@ -32,7 +32,7 @@ import {
 
 import {
   getAllUserAutomations
-} from "@src/actions/automations";
+} from "@src/actions/automate";
 
 
 const AccountSettings = ({

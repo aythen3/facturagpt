@@ -134,7 +134,7 @@ const Dashboard = () => {
                 flexDirection: "column",
               }}
             >
-              <div style={{ display: "flex", width: "100%" }}>
+              <div style={{ display: "flex", width: "100%", overflowX: "scroll" }}>
                 {statistics.map((statistic) => (
                   <div className={styles.statisticCard}>
                     <div className={styles.title}>

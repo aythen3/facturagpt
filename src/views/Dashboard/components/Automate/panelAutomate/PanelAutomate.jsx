@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createAutomation,
   updateAutomation,
-} from "../../../../../actions/automations";
+} from "../../../../../actions/automate";
 import { useNavigate } from "react-router-dom";
 import ModalBlackBgTemplate from "../../ModalBlackBgTemplate/ModalBlackBgTemplate";
 import chevronLeft from "../../../assets/chevronLeft.svg";
@@ -39,7 +39,7 @@ const PanelAutomate = ({
 }) => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const { userAutomations } = useSelector((state) => state.automations); // Aca tenemos el array de automates del user (con toda la info dentro, no solo ids)
+  const { userAutomations } = useSelector((state) => state.automate); // Aca tenemos el array de automates del user (con toda la info dentro, no solo ids)
   const dispatch = useDispatch();
   const [dataFilter, setDataFilter] = useState(data || newData);
   const [filterType, setfilterType] = useState("Todas");
@@ -383,7 +383,8 @@ const PanelAutomate = ({
         setWhatsAppConfiguration(automationData.automationData);
       } else if (automationData.type === "Gmail") {
         console.log("Setting gmailAndOutlookConfiguration", automationData);
-        setGmailConfiguration(automationData.automationData);
+        // setGmailConfiguration(automationData.automationData);
+        setGmailConfiguration(automationData);
       } else if (automationData.type === "Google Drive") {
         console.log("Setting googleDriveConfiguration", automationData);
         setGoogleDriveConfiguration(automationData);

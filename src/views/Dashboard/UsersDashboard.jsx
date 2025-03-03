@@ -55,7 +55,7 @@ import AddAdminModal from "./components/AddAdminModal/AddAdminModal";
 import {
   createAutomation,
   getAllUserAutomations,
-} from "../../actions/automations";
+} from "../../actions/automate";
 
 const UsersDashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -66,7 +66,7 @@ const UsersDashboard = () => {
 
   const { user: userData, allAccounts } = useSelector((state) => state.user);
   // const { user: userData } = useSelector((state) => state.user);
-  const { userAutomations } = useSelector((state) => state.automations);
+  const { userAutomations } = useSelector((state) => state.automate);
   const [filteredAccounts, setFilteredAccounts] = useState([]); // Store filtered and sorted clients
   const [searchQuery, setSearchQuery] = useState(""); // Store search query
 

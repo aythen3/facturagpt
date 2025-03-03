@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginToManager } from "../actions/user";
 import { checkOrCreateUserBucket, getUserFiles } from "../actions/scaleway";
-import { getAllUserAutomations } from "../actions/automations";
+import { getAllUserAutomations } from "../actions/automate";
 import { getAllClients } from "../actions/emailManager";
 
 const AppContext = createContext();

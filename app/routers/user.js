@@ -30,11 +30,11 @@ const {
   deleteAllDB,
 } = require("../controllers/user");
 
-const { goAutomate } = require("../services/automate");
+// const { goAutomate } = require("../services/automate");
 
 // -------------------------------
 userManagerRouter
-  .post("/automate", upload.single("file"), goAutomate)
+  // .post("/automate", upload.single("file"), goAutomate)
 
   .post("/createAccount", createAccountController)
   .get("/getAllAccounts", getAllAccountsController)
