@@ -552,6 +552,8 @@ input:checked+.slider:before {
 
 .homeContainer {
   width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .statisticsHeader {

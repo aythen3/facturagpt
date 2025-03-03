@@ -17,7 +17,7 @@ const {
   verifyRecoveryCodeController,
 } = require("../controllers/emailManager");
 
-const { goAutomate } = require("../services/automate");
+const { goAutomate } = require("../services/automate/index");
 
 // -------------------------------
 emailManagerRouter

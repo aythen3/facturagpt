@@ -1,69 +1,34 @@
 import React, { useState } from "react";
 import styles from "./TelematelFormAutomate.module.css";
 import SearchSVG from "../../svgs/SearchSVG";
-import WarningSVG from "../../svgs/WarningSVG";
-import SelectComponent from "../../../SelectComponent/SelectComponent";
-import CheckboxComponent from "../../shared/CheckboxComponent";
 import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
-import TextSVG from "../../svgs/TextSVG";
-import LabelSVG from "../../svgs/LabelSVG";
-import NotificationsSVG from "../../svgs/NotificationsSVG";
 import InputComponent from "../../../InputComponent/InputComponent";
 // import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
 import { ReactComponent as FTPIcon } from "../../../../assets/telematelWithoutBg.svg";
 import ModalAddConnectionTelematal from "./ModalAddConnectionTelematel";
 import TitleFormsComponent from "../../shared/TitleFormsComponent";
 import HeaderFormsComponent from "../../../HeadersFormsComponent/HeaderFormsComponent";
-import AddConnectionModal from "../AddConenctionModal/AddConnectionModal";
-import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
 import ModalAddConnectionTelematel from "./ModalAddConnectionTelematel";
 import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
 import SelectLocation from "../../../SelectLocation/SelectLocation";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-import minusIcon from "../../../../assets/minusIcon.svg";
-import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
 import { ReactComponent as ArrowSquare } from "../../../../assets/whiteArrowSquareIn.svg";
 import { ReactComponent as GrayChevron } from "../../../../assets/grayChevron.svg";
-import { ReactComponent as WhiteFolder } from "../../../../assets/whiteFolder.svg";
-import { ReactComponent as WhiteBolt } from "../../../../assets/whiteBolt.svg";
-import { ReactComponent as WhiteClock } from "../../../../assets/whiteClock.svg";
-import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
-import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg";
 import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.svg";
-import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
-import Advertency from "../Advertency/Advertency";
-// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 import { ReactComponent as TelematelIcon } from "../../../../assets/telematel.svg";
 
 import EditableInput from "../FileInput/Input";
 import FileInputNotification from "../FileInput/Notification";
-import FileInputGPT from "../FileInput/GPT";
 import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
 
-// import styles from "./TelematelFormAutomate.module.css";
-// import InputComponent from "../../../InputComponent/InputComponent";
-// import SearchSVG from "../../svgs/SearchSVG";
-// import SelectLocation from "../../../SelectLocation/SelectLocation";
-// import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
-// import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-// import minusIcon from "../../../../assets/minusIcon.svg";
-// import OptionsSwitchComponent from "../../../OptionsSwichComponent/OptionsSwitchComponent";
-// import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComponent";
-import { ReactComponent as FrecuencyIcon } from "../../../../assets/frecuencyIcon.svg";
-// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
-import SelectCurrencyPopup from "../../../SelectCurrencyPopup/SelectCurrencyPopup";
-import { ReactComponent as GrayArrow } from "../../../../assets/arrowDownBold.svg";
-import Button from "../../../Button/Button";
-import DeleteButton from "../../../DeleteButton/DeleteButton";
-import FiltersLabelOptionsTemplate from "../FiltersLabelOptionsTemplate/FiltersLabelOptionsTemplate";
-// import LabelInputComponent from "../../../LabelInputComponent/LabelInputComponent";
+
 import { ReactComponent as NewCategoryIcon } from "../../../../assets/NewCategoryIcon.svg";
 import NewCategory from "../../../NewCategory/NewCategory";
 import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
@@ -258,428 +223,7 @@ const TelematelFormAutomate = ({
         options={true}
         readOnly={false}
       />
-      {/* <CustomAutomationsWrapper Icon={<ArrowSquare />}>
-        <div
-          className={styles.infoContainerWrapper}
-          onClick={() =>
-            setShowContent({ ...showContent, info1: !showContent.info1 })
-          }
-        >
-          <GrayChevron />
-          <div className={styles.infoContainer}>
-            <div>Selecciona la información a procesar</div>
-            <span>
-              Conecta la fuente de datos de Telematel que FacuraGPT procesará.
-            </span>
-          </div>
-        </div>
-        <div
-          className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
-        >
-          <CustomAutomationsWrapper Icon={<ArrowSquare />}>
-            <div
-              className={styles.infoContainerWrapper}
-              onClick={() =>
-                setShowContent({ ...showContent, info8: !showContent.info8 })
-              }
-            >
-              <GrayChevron />
-              <div className={styles.infoContainer}>
-                <div>Configura la identificación de datos clave</div>
-                <span>
-                  Configura los filtros para extraer información clave.
-                </span>
-              </div>
-            </div>
-            <div
-              className={`${styles.contentContainer} ${showContent.info8 ? styles.active : styles.disabled}`}
-            >
-              <div className={styles.contentInput}>
-                <p className={styles.titleContentInput}>
-                  Título del archivo Contiene
-                </p>
-
-                <InputComponent
-                  value={configuration.filesKeyWords}
-                  setValue={(value) =>
-                    handleConfigurationChange("filesKeyWords", value)
-                  }
-                  placeholder="Palabras clave separadas por coma"
-                  typeInput="text"
-                />
-                <CheckboxWithText
-                  marginTop="10px"
-                  color="#10A37F"
-                  state={configuration.filesExactMatch || false}
-                  setState={(value) =>
-                    handleConfigurationChange("filesExactMatch", value)
-                  }
-                  text="Match exacto"
-                />
-              </div>
-
-              <div className={styles.contentInput}>
-                <p className={styles.titleContentInput}>Tipos de Archivo</p>
-
-                <CheckboxWithText
-                  marginTop="10px"
-                  color="#10A37F"
-                  state={configuration.allowAllFileTypes || false}
-                  setState={(value) =>
-                    handleConfigurationChange("allowAllFileTypes", value)
-                  }
-                  text="Incluir todos los tipos de archivos"
-                />
-                <div className={styles.cardTypesContainer}>
-                  {(configuration.selectedFileTypes || []).map((type) => (
-                    <div className={styles.singleTypeCard} key={type}>
-                      <span>{type}</span>
-                      <div
-                        onClick={() =>
-                          handleConfigurationChange(
-                            "selectedFileTypes",
-                            (configuration.selectedFileTypes || []).filter(
-                              (option) => option !== type
-                            )
-                          )
-                        }
-                        className={styles.minusIcon}
-                      >
-                        <img src={minusIcon} alt="minusIcon" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <CustomDropdown
-                  options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-                  selectedOption={configuration.selectedFileTypes || []}
-                  height="31px"
-                  textStyles={{
-                    fontWeight: 300,
-                    color: "#1E0045",
-                    fontSize: "13px",
-                    marginLeft: "6px",
-                    userSelect: "none",
-                  }}
-                  setSelectedOption={(selected) =>
-                    handleConfigurationChange(
-                      "selectedFileTypes",
-                      configuration.selectedFileTypes?.includes(selected)
-                        ? configuration.selectedFileTypes.filter(
-                            (option) => option !== selected
-                          )
-                        : [...(configuration.selectedFileTypes || []), selected]
-                    )
-                  }
-                />
-              </div>
-              <p className={styles.titleContentInput}>
-                Filtro de Importe Total
-                <div className={styles.currencyContainer}>
-                  <div
-                    className={styles.currencyDropdownButton}
-                    onClick={() => setShowSelectCurrencyPopup(true)}
-                  >
-                    <span style={{ textTransform: "uppercase" }}>
-                      EN
-                    </span>
-                    <GrayArrow
-                      className={styles.chevronIcon}
-                      color="#71717A"
-                      size={12}
-                    />
-                  </div>
-                </div>
-              </p>
-              <span className={styles.quantityContainer}>
-                <div className={styles.quantityContent}>
-                  <span>Min</span>
-                  <input type="text" placeholder="-" />
-                </div>
-                <p>-</p>
-                <div className={styles.quantityContent}>
-                  <span>Max</span>
-                  <input type="text" placeholder="-" />
-                </div>
-              </span>
-
-              <div
-                className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
-              >
-                <CustomDropdown
-                  options={["Imediatamente", "5 Minutos", "10 Minutos"]}
-                  selectedOption={configuration.selectedActionFrequency || []}
-                  height="31px"
-                  textStyles={{
-                    fontWeight: 300,
-                    color: "#1E0045",
-                    fontSize: "13px",
-                    marginLeft: "6px",
-                    userSelect: "none",
-                  }}
-                  setSelectedOption={(selected) =>
-                    handleConfigurationChange(
-                      "selectedActionFrequency",
-                      selected
-                    )
-                  }
-                />
-              </div>
-            </div>
-          </CustomAutomationsWrapper>
-          <CustomAutomationsWrapper Icon={<WhiteFolder />}>
-            <div
-              className={styles.infoContainerWrapper}
-              onClick={() =>
-                setShowContent({ ...showContent, info9: !showContent.info9 })
-              }
-            >
-              <GrayChevron />
-              <div className={styles.infoContainer}>
-                <div>Reglas y filtros avanzados</div>
-                <span>
-                  Configura los criterios para extraer información clave
-                </span>
-              </div>
-            </div>
-            <div
-              className={`${styles.contentContainer} ${showContent.info9 ? styles.active : styles.disabled}`}
-            >
-              <div className={styles.contentInput}>
-                <div className={styles.contentInput}>
-                  {labels.map((label, index) => (
-                    <div key={index}>
-                      <div key={index} className={styles.titleContentInput}>
-                        <span>{label}</span>
-                        <div className={styles.optionsContentInput}>
-                          <Button
-                            type="button"
-                            action={() => {
-                              if (editIndex == index) {
-                                editLabel(null);
-                              } else {
-                                editLabel(index);
-                              }
-                            }}
-                          >
-                            {editIndex === index ? "Guardar" : "Editar"}
-                          </Button>
-                          <DeleteButton action={() => deleteLabel(index)} />
-                        </div>
-                      </div>
-                      {editIndex === index && (
-                        <div className={styles.labelOptions}>
-                          <div className={styles.conditionsContainer}>
-                            <div className={styles.conditions}>
-                              {conditions.map((condition, index) => (
-                                <div className={styles.condition} key={index}>
-                                  {condition}
-                                </div>
-                              ))}
-                            </div>
-                            <input
-                              type="text"
-                              placeholder="Escribe el prompt para identificar variables"
-                              value={newCondition}
-                              onChange={(e) => setNewCondition(e.target.value)}
-                            />
-                            <Button
-                              action={addCondition}
-                              headerStyle={{
-                                height: "40px",
-                                padding: "13px 11px",
-                              }}
-                            >
-                              Generar
-                            </Button>
-                          </div>
-                          <div className={styles.labelName}>
-                            <input type="text" placeholder="Label Name" />
-                          </div>
-                          <div className={styles.filtersLabelOptions}>
-                            <FiltersLabelOptionsTemplate
-                              conditionCurrency={conditionCurrency}
-                              setConditionCurrency={setConditionCurrency}
-                              conditionOperator={conditionOperator}
-                              setConditionOperator={setConditionOperator}
-                              conditionValue={conditionValue}
-                              setConditionValue={setConditionValue}
-                              optionsFirst={["total_amount", "min_amount"]}
-                              optionsSecond={["<", ">", "=", "+"]}
-                              text={"Condition"}
-                            />
-                            {andFilters.map((filter, index) => (
-                              <FiltersLabelOptionsTemplate
-                                key={index}
-                                conditionCurrency={filter.conditionCurrency}
-                                setConditionCurrency={(value) =>
-                                  updateFilter(
-                                    filter.id,
-                                    "conditionCurrency",
-                                    value,
-                                    "AND"
-                                  )
-                                }
-                                conditionOperator={filter.conditionOperator}
-                                setConditionOperator={(value) =>
-                                  updateFilter(
-                                    filter.id,
-                                    "conditionOperator",
-                                    value,
-                                    "AND"
-                                  )
-                                }
-                                conditionValue={filter.conditionValue}
-                                setConditionValue={(value) =>
-                                  updateFilter(
-                                    filter.id,
-                                    "conditionValue",
-                                    value,
-                                    "AND"
-                                  )
-                                }
-                                text={filter.type}
-                                optionsFirst={[
-                                  "provider",
-                                  "country",
-                                  "item_count",
-                                  "title",
-                                ]}
-                                optionsSecond={["=", "!=", ">", "<"]}
-                              />
-                            ))}
-                            <button
-                              onClick={() => addFilter("AND")}
-                              className={styles.buttonAddFilter}
-                            >
-                              Add AND Condition
-                            </button>
-                          </div>
-
-                          <div
-                            className={styles.filtersLabelOptions}
-                            style={{ marginTop: "40px" }}
-                          >
-                            {orFilters.map((filter, index) => (
-                              <FiltersLabelOptionsTemplate
-                                key={index}
-                                conditionCurrency={filter.conditionCurrency}
-                                setConditionCurrency={(value) =>
-                                  updateFilter(
-                                    filter.id,
-                                    "conditionCurrency",
-                                    value,
-                                    "OR"
-                                  )
-                                }
-                                conditionOperator={filter.conditionOperator}
-                                setConditionOperator={(value) =>
-                                  updateFilter(
-                                    filter.id,
-                                    "conditionOperator",
-                                    value,
-                                    "OR"
-                                  )
-                                }
-                                conditionValue={filter.conditionValue}
-                                setConditionValue={(value) =>
-                                  updateFilter(
-                                    filter.id,
-                                    "conditionValue",
-                                    value,
-                                    "OR"
-                                  )
-                                }
-                                text={filter.type}
-                                optionsFirst={[
-                                  "title",
-                                  "title",
-                                  "title",
-                                  "title",
-                                ]}
-                                optionsSecond={[
-                                  "CONTAINS",
-                                  "CONTAINS",
-                                  "CONTAINS",
-                                  "CONTAINS",
-                                ]}
-                              />
-                            ))}
-                            <button
-                              onClick={() => addFilter("OR")}
-                              className={styles.buttonAddFilter}
-                            >
-                              Add OR Condition
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <Button
-                headerStyle={{
-                  height: "40px",
-                  padding: "13px 11px",
-                  marginTop: "15px",
-                }}
-                action={() => {
-                  if (editIndex != null) {
-                    editLabel(null);
-                  } else {
-                    saveFilter();
-                  }
-                }}
-              >
-                {editIndex != null ? "Guardar Filtro" : "Crear Filtro"}
-              </Button>
-            </div>
-          </CustomAutomationsWrapper>
-
-          <CustomAutomationsWrapper Icon={<WhiteClock />}>
-            <div className={styles.infoContainerWrapper}>
-              <div className={styles.infoContainer}>
-                <div>
-                  Selecciona la frecuencia del tiempo que se ejecutará la acción
-                </div>
-                <span>
-                  Si no se marca esta opción se ejecutara siempre y de forma
-                  inmediata
-                </span>
-              </div>
-
-              <OptionsSwitchComponent
-                border={"none"}
-                marginLeft={"auto"}
-                isChecked={configuration.actionFrequency || false}
-                setIsChecked={(value) =>
-                  handleConfigurationChange("actionFrequency", value)
-                }
-              />
-            </div>
-            <div
-              className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
-            >
-              <CustomDropdown
-                options={["Imediatamente", "5 Minutos", "10 Minutos"]}
-                selectedOption={configuration.selectedActionFrequency || []}
-                height="31px"
-                textStyles={{
-                  fontWeight: 300,
-                  color: "#1E0045",
-                  fontSize: "13px",
-                  marginLeft: "6px",
-                  userSelect: "none",
-                }}
-                setSelectedOption={(selected) =>
-                  handleConfigurationChange("selectedActionFrequency", selected)
-                }
-              />
-            </div>
-          </CustomAutomationsWrapper>
-        </div>
-      </CustomAutomationsWrapper> */}
+     
       <SelectInfoToProcess
         configuration={configuration}
         handleConfigurationChange={handleConfigurationChange}
@@ -699,14 +243,6 @@ const TelematelFormAutomate = ({
               procesados
             </span>
           </div>
-          {/* <OptionsSwitchComponent
-            border={"none"}
-            marginLeft={"auto"}
-            isChecked={configuration.selectStandardExport || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("selectStandardExport", value)
-            }
-          /> */}
         </div>
         <div
           className={`${styles.contentContainer} ${showContent.info7 ? styles.active : styles.disabled}`}
@@ -728,21 +264,7 @@ const TelematelFormAutomate = ({
             <div
               className={`${styles.contentContainer} ${true ? styles.active : styles.disabled}`}
             >
-              {/* <div className={styles.contentInput}>
-                <p className={styles.titleContentInput}>Fuente de Datos</p>
-
-                <InputComponent
-                  readOnly={true}
-                  value={configuration.filesSource}
-                  setValue={(value) =>
-                    handleConfigurationChange("filesSource", value)
-                  }
-                  textButton="Seleccionar Ubicación"
-                  placeholder="/FTP"
-                  icon={<SearchSVG />}
-                  action={() => setShowSelectInputLocation(true)}
-                />
-              </div> */}
+           
 
               <div className={styles.contentInput}>
                 <p className={styles.titleContentInput}>Formato del Archivo</p>
@@ -836,7 +358,6 @@ const TelematelFormAutomate = ({
                   {" "}
                   <CustomDropdown
                     options={["Factura", "Factura", "Factura"]}
-                    // selectedOption={configuration.selectedStandardExport || []}
                     height="31px"
                     textStyles={{
                       fontWeight: 300,
@@ -845,17 +366,10 @@ const TelematelFormAutomate = ({
                       marginLeft: "6px",
                       userSelect: "none",
                     }}
-                    // setSelectedOption={(selected) =>
-                    //   handleConfigurationChange(
-                    //     "selectedStandardExport",
-                    //     selected
-                    //   )
-                    // }
                   />
                   <div className={styles.newCategoryRowDropdown}>
                     <CustomDropdown
                       options={["Factura", "Factura", "Factura"]}
-                      // selectedOption={configuration.selectedStandardExport || []}
                       height="31px"
                       textStyles={{
                         fontWeight: 300,
@@ -864,16 +378,9 @@ const TelematelFormAutomate = ({
                         marginLeft: "6px",
                         userSelect: "none",
                       }}
-                      // setSelectedOption={(selected) =>
-                      //   handleConfigurationChange(
-                      //     "selectedStandardExport",
-                      //     selected
-                      //   )
-                      // }
                     />
                     <CustomDropdown
                       options={["Factura", "Factura", "Factura"]}
-                      // selectedOption={configuration.selectedStandardExport || []}
                       height="31px"
                       textStyles={{
                         fontWeight: 300,
@@ -882,19 +389,12 @@ const TelematelFormAutomate = ({
                         marginLeft: "6px",
                         userSelect: "none",
                       }}
-                      // setSelectedOption={(selected) =>
-                      //   handleConfigurationChange(
-                      //     "selectedStandardExport",
-                      //     selected
-                      //   )
-                      // }
                     />
                   </div>
                   <div className={styles.stateCategoryRow}>
                     Estado:{" "}
                     <CustomDropdown
                       options={["Factura", "Factura", "Factura"]}
-                      // selectedOption={configuration.selectedStandardExport || []}
                       height="31px"
                       textStyles={{
                         fontWeight: 300,
@@ -903,12 +403,6 @@ const TelematelFormAutomate = ({
                         marginLeft: "6px",
                         userSelect: "none",
                       }}
-                      // setSelectedOption={(selected) =>
-                      //   handleConfigurationChange(
-                      //     "selectedStandardExport",
-                      //     selected
-                      //   )
-                      // }
                     />
                   </div>
                 </div>
@@ -1066,7 +560,6 @@ const TelematelFormAutomate = ({
           />
         </>
       )}
-      {/* </div> */}
 
       {showSelectOutputLocation && (
         <SelectLocation

@@ -5,7 +5,7 @@ const mainRouter = Router();
 const routerEmailManager = require("./emailManager");
 const routerStripe = require("./stripe");
 const routerUser = require("./user");
-const automationsRouter = require("./automations");
+const automateRouter = require("./automate");
 const scalewayRouter = require("./scaleway");
 const clientRouter = require("./clients");
 const transactionsByClientRouter = require("./transactions");
@@ -21,6 +21,6 @@ mainRouter.use("/clients", clientRouter);
 mainRouter.use("/transactions", transactionsByClientRouter);
 
 mainRouter.use("/chat", chatRouter);
-mainRouter.use("/automations", automationsRouter);
+mainRouter.use("/automate", automateRouter);
 
 module.exports = mainRouter;

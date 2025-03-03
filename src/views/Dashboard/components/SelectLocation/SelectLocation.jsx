@@ -13,7 +13,7 @@ import FolderClosed from "../../assets/folderClosed.svg";
 import Button from "../Button/Button";
 
 import { useDispatch } from "react-redux";
-import { goAutomate } from "@src/actions/user";
+import { goAutomate } from "@src/actions/automate";
 
 const SelectLocation = ({
   onClose,

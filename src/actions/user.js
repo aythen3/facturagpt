@@ -28,46 +28,7 @@ export const sendEmail =
 
 
 
-// -------------------------------
-export const goAutomate = createAsyncThunk(
-  "user/automate",
-  async ({ userId, email, password, query, tokenGpt, /*logs,*/ ftpData, file }) => {
-    try {
-      console.log("EMAIL FETCH REQUEST:", { userId, email, query, ftpData });
 
-      const token = localStorage.getItem("token");
-
-      // Create FormData object
-      const formData = new FormData();
-      formData.append('userId', userId);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('query', query);
-      formData.append('tokenGpt', tokenGpt);
-      formData.append('ftpData', JSON.stringify(ftpData));
-      if (file) {
-        formData.append('file', file);
-      }
-
-      const res = await apiBackend.post(
-        "/user/automate",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      console.log("EMAIL FETCH RESPONSE:", res.data);
-      return res.data; // Return the email data
-    } catch (error) {
-      console.error("Error in getEmailsByQuery action:", error);
-      return rejectWithValue(error.response?.data || "Failed to fetch emails");
-    }
-  }
-);
 
 
 export const createAccount = createAsyncThunk(

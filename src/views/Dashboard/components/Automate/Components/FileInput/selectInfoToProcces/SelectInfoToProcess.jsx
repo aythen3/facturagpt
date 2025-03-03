@@ -616,7 +616,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
 
           <CustomAutomationsWrapper
             Icon={<WhiteClock />}
-            showContent={configuration.actionFrequency}
+            showContent={configuration?.actionFrequency}
           >
             <div className={styles.infoContainerWrapper}>
               <div className={styles.infoContainer}>
@@ -632,14 +632,14 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               <OptionsSwitchComponent
                 border={"none"}
                 marginLeft={"auto"}
-                isChecked={configuration.actionFrequency || false}
+                isChecked={configuration?.actionFrequency || false}
                 setIsChecked={(value) =>
                   handleConfigurationChange("actionFrequency", value)
                 }
               />
             </div>
             <div
-              className={`${styles.contentContainer} ${configuration.actionFrequency ? styles.active : styles.disabled}`}
+              className={`${styles.contentContainer} ${configuration?.actionFrequency ? styles.active : styles.disabled}`}
             >
               <CustomDropdown
                 options={[
@@ -653,7 +653,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   "12 Horas",
                   "1 Día",
                 ]}
-                selectedOption={configuration.selectedActionFrequency || []}
+                selectedOption={configuration?.selectedActionFrequency || []}
                 height="31px"
                 textStyles={{
                   fontWeight: 300,

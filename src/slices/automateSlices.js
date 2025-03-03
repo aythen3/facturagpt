@@ -4,10 +4,10 @@ import {
   deleteAutomation,
   getAllUserAutomations,
   updateAutomation,
-} from "../actions/automations";
+} from "../actions/automate";
 
 const automationsSlices = createSlice({
-  name: "automations",
+  name: "automate",
   initialState: {
     userAutomations: [],
   },

@@ -82,16 +82,6 @@ const ModalAddConnectionGmail = ({ close, addConnection }) => {
           <p>Sign in with Gmail</p>
         </div>
 
-        {/* <div className={styles.signInOption}>
-
-          <OutlookIcon width={28} height={28} />
-          <p>Sign in with Outlook</p>
-        </div>
-
-        <div className={styles.signInOption}>
-          <EmailIcon width={28} height={28} />
-          <p>Conexión de Email (IMAP/SMTP)</p>
-        </div> */}
 
         <LabelInputComponent
           value={email}
@@ -109,65 +99,7 @@ const ModalAddConnectionGmail = ({ close, addConnection }) => {
           inputType="password"
         />
 
-        {/* <div className={styles.serverConfigContainer}>
-          <LabelInputComponent
-            value={imapServer}
-            setValue={setImapServer}
-            label="Servidor IMAP"
-            placeholder="imap.dominio.com"
-            inputType="text"
-          />
-
-          <LabelInputComponent
-            value={smtpServer}
-            setValue={setSmtpServer}
-            label="Servidor SMTP"
-            placeholder="smtp.dominio.com"
-            inputType="text"
-          />
-
-          <LabelInputComponent
-            value={imapPort}
-            setValue={setImapPort}
-            label="PUERTO IMAP"
-            placeholder="993"
-            inputType="number"
-            maxLength="3"
-          />
-
-          <LabelInputComponent
-            value={smtpPort}
-            setValue={setSmtpPort}
-            label="PUERTO SMTP"
-            placeholder="587"
-            inputType="number"
-            maxLength="3"
-          />
-
-          <div className={styles.dropdownContainer}>
-            <label>Método de Cifrado IMAP</label>
-            <CustomDropdown
-              borderRadius="8px"
-              height="31px"
-              selectedOption={selectedImapEncryption}
-              setSelectedOption={setSelectedImapEncryption}
-              label="Método de Cifrado IMAP"
-              options={["TLS/SSL o Ninguno", "Otro"]}
-            />
-          </div>
-
-          <div className={styles.dropdownContainer}>
-            <label>Método de Cifrado SMTP</label>
-            <CustomDropdown
-              borderRadius="8px"
-              height="31px"
-              selectedOption={selectedSmtpEncryption}
-              setSelectedOption={setSelectedSmtpEncryption}
-              label="Método de Cifrado SMTP"
-              options={["TLS/SSL o Ninguno", "Otro"]}
-            />
-          </div>
-        </div> */}
+  
         <Button action={handleAddConnection}>
           <span>Add Connection</span>
         </Button>

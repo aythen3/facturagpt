@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./cardAutomate.module.css";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
 import ConfirmationPopup from "../../../ConfirmationPopup/ConfirmationPopup";
-import { deleteAutomation } from "../../../../../../actions/automations";
+import { deleteAutomation } from "../../../../../../actions/automate";
 import { useDispatch } from "react-redux";
 
 const CardAutomate = ({

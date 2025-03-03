@@ -135,9 +135,7 @@ const GoogleSheetsFormAutomate = ({
       <TitleFormsComponent title="Actualiza tu" type={type} />
       <EditableInput
         label={"Nombre de la Automatización"}
-        // value={userData?.nombre}
         name="automatization"
-        // onSave={handleChange}
         placeholder="Automatización 1"
         options={true}
         readOnly={false}
@@ -200,30 +198,7 @@ const GoogleSheetsFormAutomate = ({
                 </div>
               ))}
             </div>
-            {/* <div>
-              <p>Facturas</p>
-              {facturas.map((factura) => (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
-                  key={factura}
-                >
-                  <CheckboxComponent
-                    color="#27A768"
-                    state={checkboxStates.facturas[factura]}
-                    setState={(value) =>
-                      handleCheckboxChange("facturas", factura, value)
-                    }
-                    label={factura}
-                  />
-                  <p>{factura}</p>
-                </div>
-              ))}
-            </div> */}
-
+          
             <div>
               <p>Clientes</p>
               {cliente.map((client) => (
@@ -321,29 +296,7 @@ const GoogleSheetsFormAutomate = ({
           </div>
         </div>
       </CustomAutomationsWrapper>
-      {/* <CustomAutomationsWrapper Icon={<FrecuencyIcon />}>
-        <div style={{ display: "grid", gap: "10px" }}>
-          <OptionsSwitchComponent
-            isChecked={configuration?.frequency || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("frequency", value)
-            }
-            // icon={<TextSVG />}
-            text="Selecciona la frecuencia del tiempo que se ejecutará la acción"
-            subtitle="Si no se marca esta opción se ejecutara siempre y de forma inmediata"
-          />
-          <InputComponent
-            typeInput="select"
-            value={configuration?.fileName || ""}
-            setValue={(value) => handleConfigurationChange("fileName", value)}
-            options={[
-              { value: "Inmediatamente", label: "Inmediatamente" },
-              { value: "1hr", label: "Cada 1hr" },
-              { value: "5hr", label: "Cada 5hr" },
-            ]}
-          />
-        </div>
-      </CustomAutomationsWrapper> */}
+    
 
       <CustomAutomationsWrapper Icon={<FrecuencyIcon />}>
         <div className={styles.infoContainerWrapper}>
@@ -401,28 +354,7 @@ const GoogleSheetsFormAutomate = ({
           />
         </div>
       </CustomAutomationsWrapper>
-      {/* 
-      <CustomAutomationsWrapper Icon={<ModifyState />}>
-        <div style={{ display: "grid", gap: "10px" }}>
-          <OptionsSwitchComponent
-            isChecked={configuration?.modifyState || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("modifyState", value)
-            }
-            // icon={<TextSVG />}
-            text="Modifica el Estado a los Documentos Procesados"
-          />
-          <InputComponent
-            typeInput="select"
-            value={configuration?.fileName || ""}
-            setValue={(value) => handleConfigurationChange("fileName", value)}
-            options={[
-              { value: "Pendiente", label: "Pendiente" },
-              { value: "entregado", label: "Entregado" },
-            ]}
-          />
-        </div>
-      </CustomAutomationsWrapper> */}
+     
       <CustomAutomationsWrapper Icon={<ModifyState />}>
         <div
           className={styles.infoContainerWrapper}
@@ -463,25 +395,7 @@ const GoogleSheetsFormAutomate = ({
         </div>
       </CustomAutomationsWrapper>
 
-      {/* <CustomAutomationsWrapper Icon={<RenameFile />}>
-        <div style={{ display: "grid", gap: "10px" }}>
-          <OptionsSwitchComponent
-            isChecked={configuration?.renameFile || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("renameFile", value)
-            }
-            // icon={<TextSVG />}
-            text="Renombra automáticamente tus archivos"
-            subtitle="Configura nombres claros y personalizados para mantener todo organizado."
-          />
-          <InputComponent
-            placeholder="Escribe [id], [title], [date], [totalamount], [contactid], [category] para personalizar los documentos subidos"
-            typeInput="text"
-            value={configuration?.fileName || ""}
-            setValue={(value) => handleConfigurationChange("fileName", value)}
-          />
-        </div>
-      </CustomAutomationsWrapper> */}
+     
       <CustomAutomationsWrapper Icon={<RenameFile />}>
         <div className={styles.infoContainerWrapper}>
           <div
@@ -516,92 +430,7 @@ const GoogleSheetsFormAutomate = ({
           />
         </div>
       </CustomAutomationsWrapper>
-      {/* <CustomAutomationsWrapper Icon={<CustomNotifications />}>
-        <div style={{ display: "grid", gap: "10px" }}>
-          <OptionsSwitchComponent
-            isChecked={configuration?.customNotification || false}
-            setIsChecked={(value) =>
-              handleConfigurationChange("customNotification", value)
-            }
-            // icon={<TextSVG />}
-            text="Configura tus notificaciones personalizadas"
-            subtitle="Recibe alertas en tiempo real para mantenerte informado sobre cada proceso."
-          />
-          <CustomAutomationsWrapper Icon={<NotifyWhenUpdate />}>
-            <div style={{ display: "grid", gap: "10px" }}>
-              <OptionsSwitchComponent
-                isChecked={configuration?.notifyWhenUpdate || false}
-                setIsChecked={(value) =>
-                  handleConfigurationChange("notifyWhenUpdate", value)
-                }
-                // icon={<TextSVG />}
-                text="Notificar cuando se actualize la hoja de cálculo"
-                subtitle="Configura donde quieres recibir la notificación"
-              />
-              <NotificationsConfirmComponent
-                mainState={configuration?.notificateAfterCreatingRow || false}
-                setMainState={(value) =>
-                  handleConfigurationChange("notificateAfterCreatingRow", value)
-                }
-                title="Notificar al crear una fila"
-                placeholder1="[email],..."
-                placeholder2="[00000000],..."
-                type1="Gmail"
-                type2="WhatsApp"
-                gmailTo={configuration?.gmailTo || ""}
-                setGmailTo={(value) =>
-                  handleConfigurationChange("gmailTo", value)
-                }
-                gmailSubject={configuration?.gmailSubject || ""}
-                setGmailSubject={(value) =>
-                  handleConfigurationChange("gmailSubject", value)
-                }
-                gmailBody={configuration?.gmailBody || ""}
-                setGmailBody={(value) =>
-                  handleConfigurationChange("gmailBody", value)
-                }
-                state1={configuration?.notificateGmail || false}
-                state1Value={configuration?.gmailToNotificate || ""}
-                setState1={(value) =>
-                  handleConfigurationChange("notificateGmail", value)
-                }
-                setState1Value={(value) =>
-                  handleConfigurationChange("gmailToNotificate", value)
-                }
-                state2={configuration?.notificateWhatsApp || false}
-                state2Value={configuration?.whatsAppToNotificate || ""}
-                setState2={(value) =>
-                  handleConfigurationChange("notificateWhatsApp", value)
-                }
-                setState2Value={(value) =>
-                  handleConfigurationChange("whatsAppToNotificate", value)
-                }
-                whatsAppMessage={configuration?.whatsAppMessage || ""}
-                setWhatsAppMessage={(value) =>
-                  handleConfigurationChange("whatsAppMessage", value)
-                }
-                icons={[
-                  <GmailIcon style={{ width: 25 }} />,
-                  <WhatsAppIcon style={{ width: 25 }} />,
-                ]}
-              />
-            </div>
-          </CustomAutomationsWrapper>
-          <CustomAutomationsWrapper Icon={<CustomNotifications />}>
-            <div style={{ display: "grid", gap: "10px" }}>
-              <OptionsSwitchComponent
-                isChecked={configuration?.activateValidations || false}
-                setIsChecked={(value) =>
-                  handleConfigurationChange("activateValidations", value)
-                }
-                // icon={<TextSVG />}
-                text="Activa validaciones avanzadas para notificar posibles errores"
-                subtitle="Asegura la precisión de tus datos con alertas en caso de inconsistencias."
-              />
-            </div>
-          </CustomAutomationsWrapper>
-        </div>
-      </CustomAutomationsWrapper> */}
+      
       <CustomAutomationsWrapper Icon={<CustomNotifications />}>
         <div
           className={styles.infoContainerWrapper}
