@@ -38,7 +38,6 @@ const {
 userManagerRouter
   // .post("/automate", upload.single("file"), goAutomate)
 
-  .post("/createAccount", authenticateToken, createAccountController)
   .get("/getAllAccounts", authenticateToken, getAllAccountsController)
   .put("/updateAccount", authenticateToken, updateAccountController)
   .post("/deleteAccount", authenticateToken, deleteAccountController)
@@ -50,6 +49,7 @@ userManagerRouter
   // .delete("/deleteClient", deleteClientController)
   // .put("/updateClient", updateClientController)
   
+  .post("/createAccount", createAccountController)
   .post("/send-otp", generateAndSendOtpController)
   .post("/verify-otp", verifyOTPController)
   .post("/newsletter", sendNewsletter)

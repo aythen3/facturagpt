@@ -40,16 +40,16 @@ export const createAccount = createAsyncThunk(
   async (clientData) => {
     // console.log("data from createAccount", { nombre, email, password });
     try {
-      const user = localStorage.getItem("user");
-      const userJson = JSON.parse(user);
-      const token = userJson.accessToken;
+      // const user = localStorage.getItem("user");
+      // const userJson = JSON.parse(user);
+      // const token = userJson.accessToken;
 
       const res = await apiBackend.post(
         `/user/createAccount`,
         { ...clientData },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
         }
       );
