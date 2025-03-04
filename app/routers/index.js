@@ -8,7 +8,7 @@ const routerUser = require("./user");
 const automateRouter = require("./automate");
 const scalewayRouter = require("./scaleway");
 const clientRouter = require("./clients");
-const transactionsByClientRouter = require("./transactions");
+const docsRouter = require("./docs");
 const chatRouter = require("./chat");
 
 mainRouter.use("/emailManager", routerEmailManager);
@@ -18,7 +18,7 @@ mainRouter.use("/stripe", routerStripe);
 mainRouter.use("/scaleway", scalewayRouter);
 
 mainRouter.use("/clients", clientRouter);
-mainRouter.use("/transactions", transactionsByClientRouter);
+mainRouter.use("/docs", docsRouter);
 
 mainRouter.use("/chat", chatRouter);
 mainRouter.use("/automate", automateRouter);

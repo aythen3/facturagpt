@@ -43,9 +43,6 @@ const albaranXML = fs.readFileSync(albaranXMLPath, "utf-8"); // Leer como texto
 
 
 
-// const { addTransaction } = require("./transactions");
-// const { updateAccount } = require("./user");
-
 const {
   documentGPT,
   getProductsGPT,
@@ -53,7 +50,7 @@ const {
 } = require("../gpt");
 
 
-const getAttachmentData = async (attach) => {
+const getGPTData = async (attach) => {
   // console.log("ATTACH RECEIVED", attach);
   try {
     const fileBuffer = attach.buffer;
@@ -446,7 +443,7 @@ const gmailFilter = async ({
         filteredEmails.push(email);
 
         for (const attachment of email.attachments) {
-          let processedData = await getAttachmentData(attachment);
+          let processedData = await getGPTData(attachment);
           let newProcessedData = await calculateTaxesAndDiscounts(processedData.productList);
 
           processedData.partialAmount = convertToNumber(processedData.partialAmount);
@@ -576,7 +573,9 @@ const goAutomate = async (req, res) => {
   
         await s3.upload(params).promise();
   
-        console.log('file uploaded successfully')
+
+        const attachmentData = await getGPTData(file)
+        console.log('file uploaded successfully', attachmentData)
         return res.status(200).json({ message: "ok not automations" });
       } catch (error) {
         console.log('error', error)
