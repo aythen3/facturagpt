@@ -65,19 +65,17 @@ export const loginToManager = createAsyncThunk(
   async ({ email, password, accessToken }) => {
 
     try {
-      const user = localStorage.getItem("user");
-      const userJson = JSON.parse(user);
-      const token = userJson.accessToken;
 
       const res = await apiBackend.post(
         `/user/loginToManager`,
         { email, password, accessToken },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
         }
       );
+      console.log('eeeeee', res)
       return res.data;
     } catch (error) {
       console.log("Error during login:", error);
