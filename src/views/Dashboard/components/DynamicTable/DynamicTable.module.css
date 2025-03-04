@@ -184,11 +184,12 @@
   }
   th {
     text-align: start;
-    padding: 10px; /* Añade espacio interno */
-    color: #333; /* Color del texto */
-    font-weight: 500; /* Asegura que los encabezados sean visibles */
-    width: 150px; /* Ajusta la anchura según lo necesario */
+    padding: 4px 10px;
+    color: #333;
+    font-weight: 500;
+    width: 150px;
     color: #666666;
+    font-size: 14px;
   }
 
   td {
