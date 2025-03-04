@@ -5,7 +5,9 @@ export const getAllTransactionsByClient = createAsyncThunk(
   "transactions/alltransactionsByClient",
   async ({ idsEmails }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
 
       const res = await apiBackend.post(
         "/transactions/alltransactionsByClient",
@@ -19,9 +21,9 @@ export const getAllTransactionsByClient = createAsyncThunk(
     } catch (error) {
       console.error("Error saving transactions:", error);
 
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
-      
+
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -33,7 +35,9 @@ export const deleteTransactions = createAsyncThunk(
   "transactions/deleteTransactions",
   async ({ transactionsIds }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
 
       const res = await apiBackend.post(
         "/transactions/deleteTransacions",
@@ -47,7 +51,7 @@ export const deleteTransactions = createAsyncThunk(
     } catch (error) {
       console.error("Error deleting transactions:", error);
 
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
       return rejectWithValue(
         error.response ? error.response.data : error.message
@@ -60,7 +64,9 @@ export const deleteProductFromTransaction = createAsyncThunk(
   "transactions/deleteProductFromTransacion",
   async ({ transactionId, productRef }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
 
       const res = await apiBackend.post(
         "/transactions/deleteProductFromTransacion",
@@ -74,7 +80,7 @@ export const deleteProductFromTransaction = createAsyncThunk(
     } catch (error) {
       console.error("Error deleting transactions:", error);
 
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
       return rejectWithValue(
         error.response ? error.response.data : error.message
@@ -90,7 +96,10 @@ export const getOneTransactionById = createAsyncThunk(
 
     try {
       // Obtener el token de localStorage para la autenticación
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
 
       // Realizar la solicitud POST al servidor con los datos de la transacción
       const res = await apiBackend.get(
@@ -104,9 +113,8 @@ export const getOneTransactionById = createAsyncThunk(
       // Retornar los datos de la respuesta si la solicitud es exitosa
       return res.data;
     } catch (error) {
-      console.error("Error al eliminar el producto de la transacción:", error);
 
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
       return rejectWithValue(
         error.response ? error.response.data : error.message

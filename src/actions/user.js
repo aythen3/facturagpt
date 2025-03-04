@@ -7,8 +7,8 @@ export const sendEmail =
     async ({ id, email }, { dispatch }) => {
       try {
         const user = localStorage.getItem("user");
-      const userJson = JSON.parse(user);
-      const token = userJson.accessToken;
+        const userJson = JSON.parse(user);
+        const token = userJson.accessToken;
 
         const resp = await apiBackend.post(
           `/user/send`,
@@ -87,8 +87,8 @@ export const loginToManager = createAsyncThunk(
 export const getAllAccounts = createAsyncThunk("user/getAllAccounts", async () => {
   try {
     const user = localStorage.getItem("user");
-      const userJson = JSON.parse(user);
-      const token = userJson.accessToken;
+    const userJson = JSON.parse(user);
+    const token = userJson.accessToken;
 
     const res = await apiBackend.get(`/user/getAllAccounts`, {
       headers: {
@@ -192,7 +192,7 @@ export const updateAccount = createAsyncThunk(
   "user/updateAccount",
   async (data) => {
     try {
-     const user = localStorage.getItem("user");
+      const user = localStorage.getItem("user");
       const userJson = JSON.parse(user);
       const token = userJson.accessToken;
 
@@ -208,7 +208,7 @@ export const updateAccount = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error updating account:", error);
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
       throw new Error("Failed to update account");
     }
@@ -241,7 +241,7 @@ export const deleteAccount = createAsyncThunk(
     } catch (error) {
       console.log("Error updating account:", error);
 
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
       throw new Error("Failed to update account");
     }
@@ -382,7 +382,7 @@ export const sendEmailNewsletter = createAsyncThunk(
         "Error sending email:",
         error.response?.data || error.message
       );
-      
+
 
       return rejectWithValue(error.response?.data || "Failed to send email");
     }
@@ -405,7 +405,7 @@ export const createPaymentIntent = createAsyncThunk(
       clientId,
     });
     try {
-     const user = localStorage.getItem("user");
+      const user = localStorage.getItem("user");
       const userJson = JSON.parse(user);
       const token = userJson.accessToken;
 
@@ -421,7 +421,7 @@ export const createPaymentIntent = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("Error adding new payment intent:", error);
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
       throw new Error("Failed to add new payment intent");
     }
@@ -436,7 +436,7 @@ export const createSetupIntent = createAsyncThunk(
       const user = localStorage.getItem("user");
       const userJson = JSON.parse(user);
       const token = userJson.accessToken;
-      
+
       const res = await apiBackend.post(
         `/user/create-setup-intent`,
         {},
@@ -453,7 +453,7 @@ export const createSetupIntent = createAsyncThunk(
         error.response?.data || error.message
       );
 
-      if(error.response.status === 501) logout()
+      if (error.response.status === 501) logout()
 
       return rejectWithValue(
         error.response?.data || "Failed to create setup intent"
