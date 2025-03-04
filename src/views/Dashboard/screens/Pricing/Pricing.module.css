@@ -525,8 +525,15 @@
   width: auto;
   margin-top: 40px;
   row-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-
+@media (width<=600px) {
+  .pricingCardContainer {
+    width: 80%;
+  }
+}
 /* Orden visual de menor a mayor (1 -> 11) */
 .div1 {
   grid-area: 1 / 1 / 2 / 3;
@@ -574,7 +581,7 @@
 @media (max-width: 935px) {
   .parent {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    /* gap: 20px; */
   }
   .div1,
   .div2,

@@ -7,7 +7,7 @@ import NotificationComponent from "../NotificationComponent/NotificationComponen
 const activities = [
   {
     email: "johndoe@gmail.com",
-    title: "Titulo de la factura",
+    title: "Titulo de la factura 1",
     date: "25 Dec 2025",
     time: "00:00 PM",
     folder: "Q1>Facturas",
@@ -15,7 +15,7 @@ const activities = [
   },
   {
     email: "johndoe@gmail.com",
-    title: "Titulo de la factura",
+    title: "Titulo de la factura 2",
     date: "25 Dec 2025",
     time: "00:00 PM",
     folder: "Q1>Facturas",
@@ -23,7 +23,7 @@ const activities = [
   },
   {
     email: "johndoe@gmail.com",
-    title: "Titulo de la factura",
+    title: "Titulo de la factura 3",
     date: "25 Dec 2025",
     time: "00:00 PM",
     folder: "Q1>Facturas",
@@ -31,7 +31,7 @@ const activities = [
   },
   {
     email: "johndoe@gmail.com",
-    title: "Titulo de la factura",
+    title: "John Doe",
     date: "25 Dec 2025",
     time: "00:00 PM",
     folder: "Q1>Facturas",

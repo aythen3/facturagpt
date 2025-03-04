@@ -43,6 +43,7 @@
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .detailsContainer {

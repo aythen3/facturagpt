@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
@@ -17,6 +17,7 @@ import InputComponent from "../../../InputComponent/InputComponent";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 
 import Advertency from "../Advertency/Advertency";
+import DeleteButton from "../../../DeleteButton/DeleteButton";
 
 const Export = ({ handleConfigurationChange, configuration }) => {
   const [showContent, setShowContent] = useState({
@@ -26,6 +27,15 @@ const Export = ({ handleConfigurationChange, configuration }) => {
   // const [configuration, setConfiguration] = useState({
   //     addedRemitents: [],
   // });
+  const [subjectContains, setSubjectContains] = useState([]);
+  const [messageContains, setMessageContains] = useState([]);
+  useEffect(() => {
+    if (configuration?.selectedTypes?.length == 6) {
+      handleConfigurationChange("attachmentExactMatch", true);
+    } else {
+      handleConfigurationChange("attachmentExactMatch", false);
+    }
+  }, [configuration?.selectedTypes]);
 
   return (
     <CustomAutomationsWrapper
@@ -73,16 +83,65 @@ const Export = ({ handleConfigurationChange, configuration }) => {
 
         <div className={styles.contentInput}>
           <p className={styles.titleContentInput}>Asunto Contiene</p>
-
+          <div className={styles.keywordContainer}>
+            {subjectContains.map((keyword, index) => (
+              <div className={styles.keyword} key={index}>
+                {keyword}
+                <DeleteButton
+                  action={() => {
+                    setSubjectContains((prevKeywords) =>
+                      prevKeywords.filter((_, i) => i !== index)
+                    );
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           <InputComponent
             value={configuration?.subjectKeyWords}
             setValue={(value) =>
               handleConfigurationChange("subjectKeyWords", value)
             }
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const keywords = e.target.value
+                  .split(",")
+                  .map((keyword) => keyword.trim())
+                  .filter((keyword) => keyword !== "");
+                console.log(keywords);
+                setSubjectContains((prevKeywords) => [
+                  ...prevKeywords,
+                  ...keywords,
+                ]);
+                handleConfigurationChange("subjectKeyWords", "");
+              }
+            }}
             placeholder="Palabras clave separadas por coma"
             typeInput="text"
           />
 
+          {/* <InputComponent
+                  value={configuration?.filesKeyWords}
+                  setValue={(value) =>
+                    handleConfigurationChange("filesKeyWords", value)
+                  }
+                  placeholder="Palabras clave separadas por coma"
+                  typeInput="text"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      const keywords = e.target.value
+                        .split(",")
+                        .map((keyword) => keyword.trim())
+                        .filter((keyword) => keyword !== "");
+                      console.log(keywords);
+                      setFileKeywords((prevKeywords) => [
+                        ...prevKeywords,
+                        ...keywords,
+                      ]);
+                      handleConfigurationChange("filesKeyWords", "");
+                    }
+                  }}
+                /> */}
           <CheckboxWithText
             marginTop="10px"
             color="#10A37F"
@@ -96,6 +155,20 @@ const Export = ({ handleConfigurationChange, configuration }) => {
 
         <div className={styles.contentInput}>
           <p className={styles.titleContentInput}>Mensaje Contiene</p>
+          <div className={styles.keywordContainer}>
+            {messageContains.map((keyword, index) => (
+              <div className={styles.keyword} key={index}>
+                {keyword}
+                <DeleteButton
+                  action={() => {
+                    setMessageContains((prevKeywords) =>
+                      prevKeywords.filter((_, i) => i !== index)
+                    );
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           <InputComponent
             value={configuration?.bodyKeyWords}
             setValue={(value) =>
@@ -103,6 +176,20 @@ const Export = ({ handleConfigurationChange, configuration }) => {
             }
             placeholder="Palabras clave separadas por coma"
             typeInput="text"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const keywords = e.target.value
+                  .split(",")
+                  .map((keyword) => keyword.trim())
+                  .filter((keyword) => keyword !== "");
+                console.log(keywords);
+                setMessageContains((prevKeywords) => [
+                  ...prevKeywords,
+                  ...keywords,
+                ]);
+                handleConfigurationChange("bodyKeyWords", "");
+              }
+            }}
           />
 
           <CheckboxWithText
@@ -123,53 +210,75 @@ const Export = ({ handleConfigurationChange, configuration }) => {
             marginTop="10px"
             color="#10A37F"
             state={configuration?.attachmentExactMatch || false}
-            setState={(value) =>
-              handleConfigurationChange("attachmentExactMatch", value)
-            }
-            text="Incluir todos los tipos de archivos"
-          />
-          <div className={styles.cardTypesContainer}>
-            {(configuration?.selectedTypes || []).map((type) => (
-              <div className={styles.singleTypeCard} key={type}>
-                <span>{type}</span>
-                <div
-                  onClick={() =>
-                    handleConfigurationChange(
-                      "selectedTypes",
-                      (configuration?.selectedTypes || []).filter(
-                        (option) => option !== type
-                      )
-                    )
-                  }
-                  className={styles.minusIcon}
-                >
-                  <img src={minusIcon} alt="minusIcon" />
-                </div>
-              </div>
-            ))}
-          </div>
-          <CustomDropdown
-            options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-            selectedOption={configuration?.selectedTypes || []}
-            height="31px"
-            textStyles={{
-              fontWeight: 300,
-              color: "#1E0045",
-              fontSize: "13px",
-              marginLeft: "6px",
-              userSelect: "none",
-            }}
-            setSelectedOption={(selected) =>
+            // setState={(value) =>
+            //   handleConfigurationChange("attachmentExactMatch", value)
+            // }
+
+            setState={(value) => {
+              handleConfigurationChange("attachmentExactMatch", value);
               handleConfigurationChange(
                 "selectedTypes",
-                configuration?.selectedTypes?.includes(selected)
-                  ? configuration?.selectedTypes.filter(
-                      (option) => option !== selected
-                    )
-                  : [...(configuration?.selectedTypes || []), selected]
-              )
-            }
+                value ? ["PDF", "PNG", "JPG", "XML", "JSON", "HTML"] : []
+              );
+            }}
+            text="Incluir todos los tipos de archivos"
           />
+          {!configuration?.attachmentExactMatch && (
+            <>
+              <div className={styles.cardTypesContainer}>
+                {(configuration?.selectedTypes || []).map((type) => (
+                  <div className={styles.singleTypeCard} key={type}>
+                    <span>{type}</span>
+                    <div
+                      onClick={() =>
+                        handleConfigurationChange(
+                          "selectedTypes",
+                          (configuration?.selectedTypes || []).filter(
+                            (option) => option !== type
+                          )
+                        )
+                      }
+                      className={styles.minusIcon}
+                    >
+                      <DeleteButton
+                        action={() =>
+                          handleConfigurationChange(
+                            "selectedTypes",
+                            (configuration?.selectedTypes || []).filter(
+                              (option) => option !== type
+                            )
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <CustomDropdown
+                options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
+                selectedOption={configuration?.selectedTypes || []}
+                height="31px"
+                textStyles={{
+                  fontWeight: 300,
+                  color: "#1E0045",
+                  fontSize: "13px",
+                  marginLeft: "6px",
+                  userSelect: "none",
+                }}
+                setSelectedOption={(selected) =>
+                  handleConfigurationChange(
+                    "selectedTypes",
+                    configuration?.selectedTypes?.includes(selected)
+                      ? configuration?.selectedTypes.filter(
+                          (option) => option !== selected
+                        )
+                      : [...(configuration?.selectedTypes || []), selected]
+                  )
+                }
+              />
+            </>
+          )}
+
           <Advertency
             text={
               "Si el correo no tiene archivos adjuntos no se guardará ninguna factura"

@@ -35,6 +35,7 @@ import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
+import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
 
 const Transactions = () => {
   const [clientSelected, setClientSelected] = useState([]);
@@ -64,18 +65,27 @@ const Transactions = () => {
       }
     });
   };
+  const [mockTransactions, setMockTransactions] = useState([]);
 
   const selectAllClients = () => {
-    if (clientSelected.length > 0) {
-      // Si ya hay clientes seleccionados, limpiar la selección
+    if (clientSelected.length === mockTransactions.length) {
+      // Si todos los clientes están seleccionados, limpiar la selección
       setClientSelected([]);
+      setSelectedIds(false);
     } else {
-      // Si no hay clientes seleccionados, agregar todos los índices
-      const allClientIndexes = tableData.map((_, index) => index); // Crear un arreglo con los índices
+      // Si no todos los clientes están seleccionados, agregar todos los índices
+      setSelectedIds(true);
+      const allClientIndexes = mockTransactions.map((_, index) => index); // Crear un arreglo con los índices
       setClientSelected(allClientIndexes);
     }
   };
-
+  const selectAll = () => {
+    setSelectedIds(
+      selectedIds.length === tableData.length
+        ? []
+        : tableData.map((_, index) => index)
+    );
+  };
   const getStateClass = (state) => {
     switch (state.toLowerCase()) {
       case "pagada":
@@ -210,21 +220,11 @@ const Transactions = () => {
 
   console.log("TRANSACTIONS SELECTED IDS----", selectedTransactionIds);
 
-  const [mockTransactions, setMockTransactions] = useState([]);
-
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedIds, setSelectedIds] = useState();
 
   const toggleSelection = (id) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
-  };
-
-  const selectAll = () => {
-    setSelectedIds(
-      selectedIds.length === tableData.length
-        ? []
-        : tableData.map((_, index) => index)
     );
   };
 
@@ -455,6 +455,7 @@ const Transactions = () => {
 
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
+  const [selectedOption, setSelectedOption] = useState("Nombre");
 
   return (
     <PanelTemplate>
@@ -538,6 +539,10 @@ const Transactions = () => {
               >
                 <img src={KIcon} alt="kIcon" />
               </div>
+              <FiltersDropdownContainer
+                setSelectedOption={setSelectedOption}
+                selectedOption={selectedOption}
+              />
             </>
           }
         />
@@ -619,8 +624,8 @@ const Transactions = () => {
                 : mockTransactions
             }
             renderRow={renderRow}
-            selectedIds={selectedIds}
-            onSelectAll={selectAll}
+            selectedIds={clientSelected}
+            onSelectAll={selectAllClients}
             onSelect={toggleSelection}
           />
         )}

@@ -18,7 +18,6 @@ import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
 import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
 
-
 import { getAuth } from "@src/actions/automate";
 
 const Gmail = ({
@@ -29,7 +28,6 @@ const Gmail = ({
   setSelectedCurrency,
   selectedCurrency,
 }) => {
-
   const dispatch = useDispatch();
 
   const [showSelectLocation, setShowSelectLocation] = useState(false);
@@ -67,10 +65,10 @@ const Gmail = ({
   const [authData, setAuthData] = useState([]);
   useEffect(() => {
     const getAuthData = async () => {
-      const resp = await dispatch(getAuth('gmail'));
+      const resp = await dispatch(getAuth("gmail"));
       console.log("resp data form auth", resp);
 
-      if(resp.payload.length > 0) {
+      if (resp.payload.length > 0) {
         setAuthData(resp.payload);
       }
     };
@@ -114,6 +112,7 @@ const Gmail = ({
         <FileInputImport
           handleConfigurationChange={handleConfigurationChange}
           configuration={configuration}
+          setShowSelectOutputLocation={setShowSelectOutputLocation}
         />
 
         <FileInputExport
@@ -126,7 +125,6 @@ const Gmail = ({
           handleConfigurationChange={handleConfigurationChange}
           configuration={configuration}
         />
-
       </div>
 
       {showSelectOutputLocation && (

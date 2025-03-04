@@ -55,7 +55,10 @@ const SelectCurrencyPopup = ({
         onClick={() => setShowSelectCurrencyPopup(false)}
       ></div>
       <div className={styles.ShowSelectCurrencyPopup}>
-        <HeaderCard title={"Seleccionar Divisa"}>
+        <HeaderCard
+          title={"Seleccionar Divisa"}
+          setState={setShowSelectCurrencyPopup}
+        >
           <Button type="white" action={() => setShowSelectCurrencyPopup(false)}>
             Cancelar
           </Button>

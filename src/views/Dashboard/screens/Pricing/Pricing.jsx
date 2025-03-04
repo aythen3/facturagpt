@@ -254,11 +254,18 @@ const Pricing = () => {
                 </div>
               ))}
             </div>
-            <SubtitleTemplate
-              text={
-                "Impuestos indirectos no incluidos. Sin gastos de instalación. Cancela en cualquier momento."
-              }
-            />
+            <div>
+              <SubtitleTemplate
+                text={
+                  <>
+                    <p>Impuestos indirectos no incluidos.</p>
+                    <p>
+                      Sin gastos de instalación. Cancela en cualquier momento.
+                    </p>
+                  </>
+                }
+              />
+            </div>
             <div className={styles.cardsContainer}>
               {plansData.slice(2, 5).map((plan, index) => (
                 <div key={index} className={styles.card}>
@@ -299,7 +306,8 @@ const Pricing = () => {
 
         <div className={styles.parent}>
           {cardsData.map((card, index) => (
-            <div className={styles[`div${index + 1}`]}>
+            // <div className={styles[`div${index + 1}`]}>
+            <div className={styles.pricingCardContainer}>
               <PricingCard
                 key={index}
                 index={index}

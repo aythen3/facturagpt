@@ -387,6 +387,7 @@
 input[type="checkbox"] {
   width: 15px;
   height: 15px;
+  accent-color: rgb(16, 163, 127);
 }
 
 .bg {

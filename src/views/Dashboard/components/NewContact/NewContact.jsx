@@ -12,20 +12,20 @@ import DeleteButton from "../DeleteButton/DeleteButton";
 import PayMethod from "../PayMethod/PayMethod";
 import { clearClient } from "../../../../slices/clientsSlices";
 import EditableInput from "../../screens/Clients/EditableInput/EditableInput";
-import { createClient } from "../../../../actions/clients";
-
+import { createClient, getOneClient } from "../../../../actions/clients";
 
 const NewContact = ({
   setShowNewContact,
   showNewContact,
   typeTextHeader = "Nuevo",
   newContactProp,
+  selectedContact,
 }) => {
   const [showNewClient, setShowNewClient] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showImportContacts, setShowImportContacts] = useState(false);
-  const [selectedContact, setSelectedContact] = useState(null);
+  // const [selectedContact, setSelectedContact] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -219,6 +219,7 @@ const NewContact = ({
       ).unwrap();
       console.log("Cliente obtenido:", response);
       navigate(`/admin/clients/${clientId}`);
+      // navigate(`/admin/panel`);
     } catch (error) {
       console.error("Error al obtener el cliente:", error);
     }
@@ -432,6 +433,9 @@ const NewContact = ({
   console.log(
     "clientssssssssssssssssssssssssssssssssssssssss11111111" + clients
   );
+
+  console.log(selectedContact, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
   return (
     <div>
       <div className={styles.bg} onClick={() => handleCloseNewClient()}></div>
@@ -453,7 +457,9 @@ const NewContact = ({
                   <img src={closeIcon} />
                 </span>
               </div> */}
-
+            <button onClick={() => handleGetOneClient(selectedContact)}>
+              hola
+            </button>
             <form
               className={styles.newClientForm}
               onSubmit={handleCreateClient}

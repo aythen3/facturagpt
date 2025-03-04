@@ -4,7 +4,7 @@ export const plansData = [
     features: [
       "Hasta 20 Documentos al mes",
       "Invita a Miembros del Equipo",
-      "Integracioones Básicas",
+      "Integraciones Básicas",
       "Soporte Básico",
     ],
     pricing: "Comience su prueba gratuita",
@@ -12,7 +12,7 @@ export const plansData = [
   {
     title: "Plus",
     features: [
-      "20 - 2.000",
+      "20 - 2.000 Documentos",
       "Almacenamiento Ilimitado",
       "Todas las Integraciones",
       "Soporte Prioritario",
@@ -24,7 +24,7 @@ export const plansData = [
     features: [
       "2.000 - 20.000 Documentos",
       "Almacenamiento Ilimitado",
-      "todas las Integraciones",
+      "Todas las Integraciones",
       "Soporte Prioritario",
       "Acceso a la Comunidad",
     ],
@@ -33,7 +33,7 @@ export const plansData = [
   {
     title: "Enterprise",
     features: [
-      "20.000 - 100.000",
+      "20.000 - 100.000 Documentos",
       "Almacenamiento Ilimitado",
       "Todas las Integraciones",
       "Soporte Prioritario",

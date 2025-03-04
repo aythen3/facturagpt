@@ -563,7 +563,6 @@ const Outlook = ({
             </div>
           </div>
         </CustomAutomationsWrapper>
-
       </div>
 
       {showSelectOutputLocation && (
