@@ -378,6 +378,8 @@ export default function FileExplorer({
         ? item.Key.split("/").slice(-2, -1)[0]
         : item.Key.split("/").pop();
 
+
+
       if (lowerKeyWord) {
         if (!fileName.toLowerCase().includes(lowerKeyWord)) {
           return false;
@@ -634,8 +636,8 @@ export default function FileExplorer({
             setSearchTerm={setSearchTerm}
             iconRight={
               userFilters &&
-              Object.keys(userFilters).length > 0 &&
-              hasActiveFilters
+                Object.keys(userFilters).length > 0 &&
+                hasActiveFilters
                 ? filterIconGreen
                 : filterIcon
             }
@@ -643,8 +645,8 @@ export default function FileExplorer({
             onClickIconRight={() => setIsFilterOpen(true)}
           >
             {userFilters &&
-            Object.keys(userFilters).length > 0 &&
-            hasActiveFilters ? (
+              Object.keys(userFilters).length > 0 &&
+              hasActiveFilters ? (
               <img
                 src={l}
                 alt="filterIcon"
@@ -730,10 +732,18 @@ export default function FileExplorer({
               )) ||
               filteredFiles?.map((item, index) => {
                 const isFolder = item.Key.endsWith("/");
-                const fileName = isFolder
+                let fileName = isFolder
                   ? item.Key.split("/").slice(-2, -1)[0]
                   : item.Key.split("/").pop();
                 console.log("item.key", fileName);
+
+                const filePrefix = /^FILE-([^_]+)/;
+                const match = fileName.match(filePrefix);
+                const uuid = match ? match[1] : null;
+                
+                // Quitar el "FILE-[uuid]" del nombre
+                fileName = fileName.replace(/^FILE-[^_]+/, '');
+
 
                 return (
                   <div
@@ -745,6 +755,11 @@ export default function FileExplorer({
 
                       if (isFolder) {
                         navigate("/admin/panel");
+                      } else if(uuid){
+                        alert('111')
+                        console.log("item.Key", item);
+                        navigate("/admin/panel/" + uuid);
+                        setMobileSelectedDocument(true);
                       } else {
                         console.log("item.Key", item);
                         navigate("/admin/panel/" + item.ETag);

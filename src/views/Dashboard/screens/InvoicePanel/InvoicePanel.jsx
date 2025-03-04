@@ -8,7 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen.jsx";
 import SelectLocation from "../../components/SelectLocation/SelectLocation.jsx";
+
 import CreateNotePopup from "../../components/CreateNotePopup/CreateNotePopup.jsx";
+
+// import { dispatch } from "d3";
+import { getOneTransactionById } from "@src/actions/transactions";
+
+
 const company = {
   email: "coolmail@mail.com",
   phone: "341-59-15",
@@ -19,6 +25,8 @@ const company = {
 };
 
 export default function InvoicePanel() {
+  const dispatch = useDispatch()
+
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
   const [fileUploaded, setFileUploaded] = useState(false);
@@ -93,11 +101,31 @@ export default function InvoicePanel() {
   };
 
   useEffect(() => {
-    console.log("id", id);
-    if (id) {
+    // console.log("id", id);
+    // if (id) {
+    //   setFileUploaded(true);
+    // }
+
+    const fn = async () => {
       setFileUploaded(true);
+      // const db = await connectDB('db_automations')
+      // const automation = await db.get(id)
+      // console.log('automation', automation)
+
+      const response = await dispatch(getOneTransactionById({
+        transactionId: id
+      }))
+      console.log('db', response)
     }
+
+    if(id) {
+      fn()
+    }
+
   }, [id]);
+
+
+
   const [mobileSelectedDocument, setMobileSelectedDocument] = useState(false);
   const [showInfoMobileBill, setShowInfoMobileBill] = useState(false);
   const [createdNote, setCreatedNote] = useState(false);

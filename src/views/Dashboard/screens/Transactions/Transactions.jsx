@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./Transactions.module.css";
+import styles from "./Docs.module.css";
 import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
 import searchGray from "../../assets/searchGray.svg";
 import optionDots from "../../assets/optionDots.svg";
@@ -14,14 +14,14 @@ import winIcon from "../../assets/winIcon.svg";
 import emptyimage from "../../assets/ImageEmpty.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteTransactions,
-  getAllTransactionsByClient,
-} from "../../../../actions/transactions";
+  deleteDocs,
+  getAllDocsByClient,
+} from "../../../../actions/docs";
 import { updateClient } from "../../../../actions/user";
 import {
   clearTransaction,
   setTransaction,
-} from "../../../../slices/transactionsSlices";
+} from "../../../../slices/docsSlices";
 import { useNavigate } from "react-router-dom";
 import { clearClient } from "../../../../slices/clientsSlices";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
@@ -37,7 +37,7 @@ import NewContact from "../../components/NewContact/NewContact";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
 
-const Transactions = () => {
+const Docs = () => {
   const [clientSelected, setClientSelected] = useState([]);
   const [showNewClient, setShowNewClient] = useState(false);
   const [showEditContact, setShowEditContact] = useState(false);
@@ -45,14 +45,14 @@ const Transactions = () => {
 
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.clients);
-  const { transactionsByClient, loading } = useSelector(
-    (state) => state.transactions
+  const { docsByClient, loading } = useSelector(
+    (state) => state.docs
   );
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(
-      getAllTransactionsByClient({ idsEmails: client?.processedemails })
+      getAllDocsByClient({ idsEmails: client?.processedemails })
     );
   }, [loading]);
 
@@ -188,13 +188,13 @@ const Transactions = () => {
     setSelectedRowIndex(selectedRowIndex === rowIndex ? null : rowIndex);
   };
 
-  const handleDeleteTransactions = (e) => {
+  const handleDeleteDocs = (e) => {
     e.preventDefault();
     console.log("IDSSSSSS EN ACTION", selectedTransactionIds);
 
     dispatch(
-      deleteTransactions({
-        transactionsIds: selectedTransactionIds,
+      deleteDocs({
+        docsIds: selectedTransactionIds,
       })
     )
       .then((result) => {
@@ -220,7 +220,9 @@ const Transactions = () => {
 
   console.log("TRANSACTIONS SELECTED IDS----", selectedTransactionIds);
 
-  const [selectedIds, setSelectedIds] = useState();
+
+  const [mockDocs, setMockDocs] = useState([]);
+
 
   const toggleSelection = (id) => {
     setSelectedIds((prev) =>
@@ -378,7 +380,7 @@ const Transactions = () => {
             </li>
             <li
               onClick={(e) => {
-                handleDeleteTransactions(e);
+                handleDeleteDocs(e);
                 setSelectedRowIndex(null);
               }}
               className={styles.item_menu_actions}
@@ -392,9 +394,9 @@ const Transactions = () => {
   );
 
   useEffect(() => {
-    // Si transactionsByClient está vacío, usamos datos de ejemplo
-    if (transactionsByClient.length === 0) {
-      setMockTransactions([
+    // Si docsByClient está vacío, usamos datos de ejemplo
+    if (docsByClient.length === 0) {
+      setMockDocs([
         {
           id: "M001",
           doc: {
@@ -448,8 +450,8 @@ const Transactions = () => {
         },
       ]);
     }
-  }, [transactionsByClient]);
-  console.log(mockTransactions);
+  }, [docsByClient]);
+  console.log(mockDocs);
 
   const searchInputRef = useRef(null);
 
@@ -608,7 +610,7 @@ const Transactions = () => {
           </div>
         </div> */}
 
-        {mockTransactions.length == 0 ? (
+        {mockDocs.length == 0 ? (
           <SkeletonScreen
             labelText="No se han encontrado documentos con este contacto"
             helperText="Todas las transacciones con este cliente o proveedor estarán listadas aquí."
@@ -619,9 +621,9 @@ const Transactions = () => {
           <DynamicTable
             columns={tableHeaders}
             data={
-              transactionsByClient.length > 0
-                ? transactionsByClient
-                : mockTransactions
+              docsByClient.length > 0
+                ? docsByClient
+                : mockDocs
             }
             renderRow={renderRow}
             selectedIds={clientSelected}
@@ -643,4 +645,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Docs;
