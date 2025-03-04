@@ -55,7 +55,7 @@ const getAuthController = async (req, res) => {
     const user = req.user;
     const { type } = req.params;
 
-    console.log("user!!", user);
+    // console.log("user!!", user);
     const id = user._id.split('_').pop(); 
 
     console.log("type automate auth getAuthController", type);

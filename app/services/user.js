@@ -219,19 +219,9 @@ const getAllAccounts = async (search) => {
 };
 
 const loginToManagerService = async ({ email, password, accessToken }) => {
-  const dbName = "db_accounts";
-  let db;
+  // const dbName = "db_accounts";
+  let db = await connectDB('db_accounts');
 
-  try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      return { success: false, message: "Account database does not exist." };
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error accessing database:", error);
-    throw new Error("Database access failed");
-  }
 
   try {
     let account;
@@ -309,150 +299,8 @@ const loginToManagerService = async ({ email, password, accessToken }) => {
   }
 };
 
-const getAllClientsService = async () => {
-  try {
-    const mainDb = await connectDB("db_clients");
-    const clients = await mainDb.list({ include_docs: true });
-    const clientsWithDetails = await Promise.all(
-      clients.rows.map(async (row) => {
-        const clientDoc = row.doc;
-        if (!clientDoc.id) {
-          clientDoc.id = clientDoc._id;
-        }
 
-        const { _id, _rev, ...rest } = clientDoc;
-        const clientUid = clientDoc.id.split("_")[2];
-        const processedEmailsDbName = `db_${clientUid}_processedemails`;
 
-        let detailedTokenConsumption = {};
-        try {
-          if (
-            await nano.db
-              .list()
-              .then((dbs) => dbs.includes(processedEmailsDbName))
-          ) {
-            const processedEmailsDb = nano.use(processedEmailsDbName);
-            const detailedDocs = await processedEmailsDb.list({
-              include_docs: true,
-            });
-            detailedTokenConsumption = detailedDocs.rows.reduce((acc, row) => {
-              acc[row.id] = row.doc;
-              return acc;
-            }, {});
-          } else {
-            console.warn(
-              `Database ${processedEmailsDbName} does not exist for client ${clientDoc.id}.`
-            );
-          }
-        } catch (error) {
-          console.error(
-            `Error fetching detailedTokenConsumption for client ${clientDoc.id}:`,
-            error
-          );
-        }
-
-        return {
-          ...rest,
-          detailedTokenConsumption,
-        };
-      })
-    );
-
-    return clientsWithDetails;
-  } catch (error) {
-    console.error("Error fetching clients:", error);
-    throw new Error("Failed to fetch clients");
-  }
-};
-
-const addNewClientService = async ({ clientData }) => {
-  const dbName = "db_clients";
-  let db;
-
-  try {
-    const dbs = await nano.db.list();
-    if (!dbs.includes(dbName)) {
-      await nano.db.create(dbName);
-    }
-    db = nano.use(dbName);
-  } catch (error) {
-    console.error("Error accessing or creating database:", error);
-    throw new Error("Database initialization failed");
-  }
-
-  try {
-    const existingDocs = await db.find({
-      selector: { tokenEmail: clientData.tokenEmail },
-    });
-
-    if (existingDocs.docs.length > 0) {
-      return {
-        success: false,
-        message: "Client with this tokenEmail already exists.",
-      };
-    }
-
-    const clientId = uuidv4();
-    const docId = `client_${clientData.tokenEmail}_${clientId}`;
-
-    let newClient = {
-      _id: docId,
-      id: docId,
-      ...clientData,
-      processedEmails: [],
-      detailedTokenConsumption: {},
-      tokensConsumed: 0,
-      totalTokensPrice: 0,
-      active: false,
-    };
-
-    await db.insert(newClient);
-
-    const allClients = await db.list({ include_docs: true });
-    const sanitizedClients = allClients.rows.map((row) => {
-      let docData = row.doc;
-      if (!docData.id) {
-        docData.id = docData._id;
-      }
-      const { _id, _rev, ...rest } = docData;
-      return rest;
-    });
-
-    return sanitizedClients;
-  } catch (error) {
-    console.error("Error adding new client:", error);
-    throw new Error("Failed to add new client");
-  }
-};
-
-const deleteClientService = async ({ clientId }) => {
-  try {
-    const db = await connectDB("db_clients");
-    const clientDoc = await db.get(clientId);
-
-    if (!clientDoc) {
-      console.log(`No client found with ID: ${clientId}`);
-      return { success: false, message: "Client not found." };
-    }
-
-    await db.destroy(clientDoc._id, clientDoc._rev);
-
-    const allClients = await db.list({ include_docs: true });
-    const sanitizedClients = allClients.rows.map((row) => {
-      let docData = row.doc;
-      if (!docData.id) {
-        docData.id = docData._id;
-      }
-      const { _id, _rev, ...rest } = docData;
-      return rest;
-    });
-
-    return sanitizedClients;
-  } catch (error) {
-    console.error("Error deleting client:", error);
-    throw new Error("Failed to delete client");
-  }
-};
 
 const generateAndSendOtpService = async ({ nombre, email, language }) => {
   try {
@@ -612,9 +460,6 @@ module.exports = {
   createAccount: createAccount,
   updateAccount: updateAccount,
   loginToManagerService: loginToManagerService,
-  getAllClientsService: getAllClientsService,
-  addNewClientService: addNewClientService,
-  deleteClientService: deleteClientService,
   generateAndSendOtp: generateAndSendOtpService,
   verifyOTP: verifyOTPService,
   newsletter: newsletter,
