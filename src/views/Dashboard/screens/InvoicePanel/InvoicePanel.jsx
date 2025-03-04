@@ -101,6 +101,7 @@ export default function InvoicePanel() {
     // }
 
     const fn = async () => {
+      setFileUploaded(true);
       // const db = await connectDB('db_automations')
       // const automation = await db.get(id)
       // console.log('automation', automation)

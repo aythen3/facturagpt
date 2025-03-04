@@ -10,9 +10,9 @@ const {
   validateTokenGPT
 } = require("../controllers/chat");
 
-const transactionsByClientRouter = Router();
+const chatByClientRouter = Router();
 
-transactionsByClientRouter
+chatByClientRouter
 
   .get("/list", authenticateToken, getChatListController)
   .get("/:chatId/messages", authenticateToken, getChatMessagesController)
@@ -20,4 +20,4 @@ transactionsByClientRouter
   .post("/:chatId/messages", authenticateToken, sendMessageController)
   .post("/validate-token", authenticateToken, validateTokenGPT);
 
-module.exports = transactionsByClientRouter;
+module.exports = chatByClientRouter;

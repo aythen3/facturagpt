@@ -1,8 +1,38 @@
 import apiBackend from "@src/apiBackend.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const getAllTransactionsByClient = createAsyncThunk(
-  "transactions/alltransactionsByClient",
+export const addDoc = createAsyncThunk(
+  "docs/addDoc",
+  async ({ doc }, { rejectWithValue }) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.post(
+        "/docs/addDocs",
+        { doc },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      console.error("Error saving docs:", error);
+
+      if (error.response.status === 501) logout()
+
+
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+
+export const getAllDocsByClient = createAsyncThunk(
+  "docs/allDocsByClient",
   async ({ idsEmails }, { rejectWithValue }) => {
     try {
       const user = localStorage.getItem("user");
@@ -10,7 +40,7 @@ export const getAllTransactionsByClient = createAsyncThunk(
       const token = userJson.accessToken;
 
       const res = await apiBackend.post(
-        "/transactions/alltransactionsByClient",
+        "/docs/alldocsByClient",
         { idsEmails },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -19,7 +49,7 @@ export const getAllTransactionsByClient = createAsyncThunk(
 
       return res.data;
     } catch (error) {
-      console.error("Error saving transactions:", error);
+      console.error("Error saving docs:", error);
 
       if (error.response.status === 501) logout()
 
@@ -31,17 +61,17 @@ export const getAllTransactionsByClient = createAsyncThunk(
   }
 );
 
-export const deleteTransactions = createAsyncThunk(
-  "transactions/deleteTransactions",
-  async ({ transactionsIds }, { rejectWithValue }) => {
+export const deleteDocs = createAsyncThunk(
+  "docs/deleteDocs",
+  async ({ docsIds }, { rejectWithValue }) => {
     try {
       const user = localStorage.getItem("user");
       const userJson = JSON.parse(user);
       const token = userJson.accessToken;
 
       const res = await apiBackend.post(
-        "/transactions/deleteTransacions",
-        { transactionsIds },
+        "/docs/deleteDocs",
+        { docsIds },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -49,7 +79,7 @@ export const deleteTransactions = createAsyncThunk(
 
       return res.data; // Retornar datos de la respuesta del servidor
     } catch (error) {
-      console.error("Error deleting transactions:", error);
+      console.error("Error deleting docs:", error);
 
       if (error.response.status === 501) logout()
 
@@ -60,17 +90,17 @@ export const deleteTransactions = createAsyncThunk(
   }
 );
 
-export const deleteProductFromTransaction = createAsyncThunk(
-  "transactions/deleteProductFromTransacion",
-  async ({ transactionId, productRef }, { rejectWithValue }) => {
+export const deleteProductFromDocs = createAsyncThunk(
+  "docs/deleteProductFromDocs",
+  async ({ docId, productRef }, { rejectWithValue }) => {
     try {
       const user = localStorage.getItem("user");
       const userJson = JSON.parse(user);
       const token = userJson.accessToken;
 
       const res = await apiBackend.post(
-        "/transactions/deleteProductFromTransacion",
-        { transactionId, productRef },
+        "/docs/deleteProductFromDocs",
+        { docId, productRef },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -78,7 +108,7 @@ export const deleteProductFromTransaction = createAsyncThunk(
 
       return res.data; // Retornar datos de la respuesta del servidor
     } catch (error) {
-      console.error("Error deleting transactions:", error);
+      console.error("Error deleting docs:", error);
 
       if (error.response.status === 501) logout()
 
@@ -89,10 +119,10 @@ export const deleteProductFromTransaction = createAsyncThunk(
   }
 );
 
-export const getOneTransactionById = createAsyncThunk(
-  "transactions/getOneTransaction/", // Nombre de la acción
-  async ({ transactionId }, { rejectWithValue }) => {
-    console.log("IDDDDD ACTION ----------", transactionId);
+export const getOneDocById = createAsyncThunk(
+  "docs/getOneDocs", // Nombre de la acción
+  async ({ docId }, { rejectWithValue }) => {
+    console.log("IDDDDD ACTION ----------", docId);
 
     try {
       // Obtener el token de localStorage para la autenticación
@@ -103,7 +133,7 @@ export const getOneTransactionById = createAsyncThunk(
 
       // Realizar la solicitud POST al servidor con los datos de la transacción
       const res = await apiBackend.get(
-        `/transactions/getOneTransaction/${transactionId}`, // Endpoint
+        `/docs/getOneDocs/${docId}`, // Endpoint
 
         {
           headers: { Authorization: `Bearer ${token}` }, // Enviar el token como parte de los encabezados
