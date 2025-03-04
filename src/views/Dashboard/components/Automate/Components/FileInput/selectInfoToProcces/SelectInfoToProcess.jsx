@@ -178,7 +178,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                         ...prevKeywords,
                         ...keywords,
                       ]);
-                      handleConfigurationChange("filesKeyWords", "");
+                      // handleConfigurationChange("filesKeyWords", "");
                     }
                   }}
                 />

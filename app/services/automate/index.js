@@ -17,6 +17,7 @@ const sharp = require("sharp");
 const { PDFDocument } = require("pdf-lib");
 const convert = require("xml-js");
 
+const { getImapConfig, connectToImap } = require('./gmail')
 
 const { simpleParser } = require("mailparser");
 
@@ -54,14 +55,288 @@ const {
 
 
 
+const processEmailsDetailedData = (emailData) => {
+  return emailData.reduce((result, emailItem) => {
+    console.log("===EMAIL ITEM===", emailItem);
+    const fromEmail = emailItem.email.fromEmail;
+    const toEmail = emailItem.email.toEmail;
+    const emailId = emailItem.attachment.emailId;
+    const attachFileName = emailItem.attachment.filename;
+    const attachTokens = emailItem.processedData.totalTokens;
+    const attachTokensPrice = emailItem.processedData.totalPrice;
+    const totalData = emailItem.processedData;
+
+    if (!result[emailId]) {
+      result[emailId] = {
+        processedAt: new Date(),
+        totalTokens: 0,
+        totalTokensPrice: 0,
+        attachments: {},
+      };
+    }
+
+    result[emailId].totalTokens += attachTokens;
+    result[emailId].totalTokensPrice += attachTokensPrice;
+    result[emailId].totalData = totalData;
+    result[emailId].fromEmail = fromEmail;
+    result[emailId].toEmail = toEmail;
+    result[emailId].attachments[attachFileName] = {
+      totalTokens: attachTokens,
+      totalTokensPrice: attachTokensPrice,
+    };
+
+    return result;
+  }, {});
+};
+
+
+
+const gmailFilter = async ({
+  email,
+  password,
+  query,
+  userId,
+  logs,
+  // ftpData
+}) => {
+  try {
+    ///
+    //
+    ///
+    const imapConfig = getImapConfig(email, password);
+    console.log('44444444444444444444444444444444444444444')
+    const imap = await connectToImap(imapConfig);
+    await openInbox(imap);
+
+
+    const emails = await searchEmails(imap, query, userId);
+    console.log(
+      `Found ${emails.length} emails matching query: ${query}`,
+      // emails
+      logs
+    );
+
+
+    console.log('55555555555555555555555555555555555555555')
+
+    const filteredEmails = [];
+    const processedAttachments = [];
+
+    console.log('5111', emails)
+    for (const email of emails) {
+      if (email.attachments && email.attachments.length > 0) {
+        console.log('funca0')
+        filteredEmails.push(email);
+
+        for (const attachment of email.attachments) {
+          console.log('funca1')
+          let processedData = await getAttachmentData(attachment);
+          console.log(
+            "PRODUCT LIST BEFORE CALCULATING TAXES/DISCOUNTS",
+            processedData.productList
+          );
+
+          let newProcessedData = await calculateTaxesAndDiscounts(
+            processedData.productList
+          );
+          console.log(
+            "PRODUCT LIST AFTER CALCULATING TAXES/DISCOUNTS",
+            newProcessedData
+          );
+          processedData.partialAmount = convertToNumber(
+            processedData.partialAmount
+          );
+          processedData.productList = newProcessedData;
+
+          processedData.taxesFromPartialAmount =
+            processedData.partialAmount * 0.21;
+
+          processedData = replaceNotFoundWithEmptyString(processedData);
+          console.log("clientCif", processedData.clientCif);
+          processedData.clientCif = extractCIF(processedData.clientCif);
+          console.log("clientNif", processedData.clientNif);
+          processedData.clientNif = extractNIF(processedData.clientNif);
+
+          let xmlFile;
+          let xmlData;
+          let uploadType;
+          const file_xml = `${attachment.filename.split(".")[0]}.xml`;
+          if (processedData?.documentType === "factura") {
+            xmlFile = facturaXML;
+            uploadType = "notificacion_fraC";
+          } else {
+            xmlFile = albaranXML;
+            uploadType = "notificacion_albC";
+          }
+          // console.log("xmlFile", typeof xmlFile);
+          if (processedData?.documentType && xmlFile) {
+            const json = convert.xml2json(xmlFile, {
+              compact: true,
+              spaces: 4,
+            });
+
+            xmlData = JSON.parse(json);
+          }
+
+          // console.log("processedData", processedData);
+
+          const obj = processItems(xmlData, processedData);
+
+          let text = convert.json2xml(JSON.stringify(obj), {
+            compact: true,
+            spaces: 4,
+          });
+
+          xmlFile = {
+            buffer: text,
+            originalname: attachment.filename,
+          };
+
+          const tempFilePath = path.join(__dirname, "./temp/" + file_xml);
+
+          // Escribe el contenido en el archivo
+          // fs.writeFileSync(tempFilePath, xmlFile.buffer, 'utf-8')
+
+          // const localFilePath = path.join(__dirname, file_xml)
+          await fs.promises.writeFile(tempFilePath, xmlFile.buffer);
+          // console.log('Local file path:', localFilePath)
+
+          // Subir directamente desde el buffer
+
+          console.log("File uploaded successfully. ");
+
+          // COMENTAMOS MOMENTANEAMENTE EL FTP -------------------------------
+
+          // Tenemos listas las credentials del ftp en ftpData (checkear cuando volvamos al ssh)
+
+          // const ftpClient = new ftp.Client();
+          // // ftpClient.ftp.verbose = true
+          // const host = ftpData.host || "46.183.119.66";
+          // const port = ftpData.port || "21";
+          // const user = ftpData.user || "Aythen";
+          // const pw =  ftpData.password || "Cloud@24";
+
+          // await ftpClient.access({
+          //   host,
+          //   port,
+          //   user,
+          //   password: pw,
+          //   secure: false,
+          //   connTimeout: 120000,
+          //   pasvTimeout: 120000,
+          //   keepalive: 30000,
+          // });
+
+          // // console.log('ftpClient', ftpClient)
+          // await ftpClient.uploadFrom(
+          //   tempFilePath,
+          //   `${uploadType}/${file_xml}`
+          // );
+
+          // // fileData.Body, // Buffer del archivo
+          // // await fs.promises.unlink(localFilePath)
+          // await ftpClient.close();
+          // ---------------------------------------------------------------------
+          console.log("EMAIL", email);
+          processedAttachments.push({
+            email: {
+              subject: email.subject,
+              fromEmail: email.fromEmail,
+              toEmail: email.toEmail,
+              date: email.attrs.date,
+              subject: attachment.subject,
+            },
+            attachment: {
+              filename: attachment.filename,
+              mimeType: attachment.mimeType,
+              size: attachment.size,
+              emailId: attachment.emailId,
+            },
+            processedData,
+            xmlContent: obj,
+          });
+        }
+      }
+    }
+
+    imap.end();
+
+    ///
+    //
+    ///
+
+    console.log('66666666666666666666666666666666666666666')
+    let dataByEmails = processEmailsDetailedData(processedAttachments);
+    console.log("dataByEmails:", dataByEmails);
+    // updateClientService({
+    //   clientId: userId,
+    //   toUpdate: { detailedTokenConsumption: dataByEmails },
+    // });
+
+
+
+    let totalTokensConsumed = 0
+    let totalTokensPrice = 0
+
+    processedAttachments.forEach((attach) => {
+      totalTokensConsumed += attach?.processedData?.totalTokens || 0
+      totalTokensPrice += attach?.processedData?.totalPrice || 0
+    });
+
+    // updateAccount({
+    //   id: userId,
+    //   tokensConsumed: totalTokensConsumed,
+    //   totalTokensPrice: totalTokensPrice,
+    // }); 
+
+
+    console.log('update account!!!')
+
+    // processedAttachments.forEach((attach) => {
+    //   updateClientService({
+    //     clientId: userId,
+    //     toUpdate: {
+    //       tokensConsumed: attach?.processedData?.totalTokens || 0,
+    //       totalTokensPrice: attach?.processedData?.totalPrice || 0,
+    //     },
+    //   });
+    // });
+
+
+    // AUTOMATES
+
+    // const filteredEmailsProcessed = await processDataAndAppend(
+    //   "1Qq_YHkphBhmLzZt4Nyyi4FvIOeEYq75zujj2DIMDg9I",
+    //   processedAttachments
+    // );
+
+    return {
+      filteredEmails,
+      processedAttachments,
+    };
+  } catch (err) {
+    console.error("Error fetching emails:", err);
+    return {
+      message: "Failed to fetch emails",
+      error: err.message
+    };
+  }
+}
+
+
+
 const goAutomate = async (req, res) => {
   // return res.status(200).json({ message: "ok" });
   try {
 
     console.log('33333333333333333333333333333333333333333')
-    const { userId, email, password, query, tokenGpt, logs, ftpData } =
-      req.body;
+    // const { userId, email, password, query, tokenGpt, logs, ftpData } =
+    //   req.body;
 
+    // const { folder } = req.body
+
+    const user = req.user
+    const id = user._id.split('_')[1]
 
     const file = req.file
 
@@ -70,13 +345,22 @@ const goAutomate = async (req, res) => {
 
     const dbAccounts = await connectDB('db_accounts')
     const dbAutomations = await connectDB('db_automations')
+    const dbAuth = await connectDB(`db_${id}_auth`)
 
-    const account = await dbAccounts.get(userId)
+    const token = await dbAuth.find({
+      selector: {
+        type: 'Gmail'
+      }
+    })
+
+    console.log('token')
+
+    const account = await dbAccounts.get(user._id)
 
     console.log('account', account)
 
     try {
-      const path = `${userId}/`;
+      const path = `${user._id}/`;
       const bucketName = "factura-gpt";
 
       const params = {
@@ -107,284 +391,35 @@ const goAutomate = async (req, res) => {
       console.log('automation / data', automationData)
 
       if (automationData.type === 'Gmail') {
-
+        console.log('FILTER GMAIL')
+        await gmailFilter({
+          email,
+          password,
+          query,
+          userId,
+          logs,
+          ftpData
+        });
       }
     }
 
     // const { automations } = account
-    return res.status(200).json({ message: "ok" });
-
-    // console.log("On fetchEmailsByQuery", {
-    //   userId,
-    //   email,
-    //   password,
-    //   query,
-    //   logs,
-    // });
+    // return res.status(200).json({ message: "ok" });
 
 
-    if (!email || !password || !query) {
-      return res.status(400).json({ message: "Missing required parameters" });
-    }
 
+    // if (!email || !password || !query) {
+    //   return res.status(400).json({ message: "Missing required parameters" });
+    // }
     // console.log("EMAIL FETCH REQUEST BACK:", {
     //   userId,
     //   email,
     //   query,
     //   password,
     // });
-
-    const imapConfig = getImapConfig(email, password);
     // console.log("imapConfig", imapConfig);
 
-    try {
 
-      console.log('44444444444444444444444444444444444444444')
-      const imap = await connectToImap(imapConfig);
-      await openInbox(imap);
-
-
-      const emails = await searchEmails(imap, query, userId);
-      console.log(
-        `Found ${emails.length} emails matching query: ${query}`,
-        // emails
-        logs
-      );
-
-
-      console.log('55555555555555555555555555555555555555555')
-
-      const filteredEmails = [];
-      const processedAttachments = [];
-
-      console.log('5111', emails)
-      for (const email of emails) {
-        if (email.attachments && email.attachments.length > 0) {
-          console.log('funca0')
-          filteredEmails.push(email);
-
-          for (const attachment of email.attachments) {
-            console.log('funca1')
-            let processedData = await getAttachmentData(attachment);
-            console.log(
-              "PRODUCT LIST BEFORE CALCULATING TAXES/DISCOUNTS",
-              processedData.productList
-            );
-
-            let newProcessedData = await calculateTaxesAndDiscounts(
-              processedData.productList
-            );
-            console.log(
-              "PRODUCT LIST AFTER CALCULATING TAXES/DISCOUNTS",
-              newProcessedData
-            );
-            processedData.partialAmount = convertToNumber(
-              processedData.partialAmount
-            );
-            processedData.productList = newProcessedData;
-
-            processedData.taxesFromPartialAmount =
-              processedData.partialAmount * 0.21;
-
-            processedData = replaceNotFoundWithEmptyString(processedData);
-            console.log("clientCif", processedData.clientCif);
-            processedData.clientCif = extractCIF(processedData.clientCif);
-            console.log("clientNif", processedData.clientNif);
-            processedData.clientNif = extractNIF(processedData.clientNif);
-
-            let xmlFile;
-            let xmlData;
-            let uploadType;
-            const file_xml = `${attachment.filename.split(".")[0]}.xml`;
-            if (processedData?.documentType === "factura") {
-              xmlFile = facturaXML;
-              uploadType = "notificacion_fraC";
-            } else {
-              xmlFile = albaranXML;
-              uploadType = "notificacion_albC";
-            }
-            // console.log("xmlFile", typeof xmlFile);
-            if (processedData?.documentType && xmlFile) {
-              const json = convert.xml2json(xmlFile, {
-                compact: true,
-                spaces: 4,
-              });
-
-              xmlData = JSON.parse(json);
-            }
-
-            // console.log("processedData", processedData);
-
-            const obj = processItems(xmlData, processedData);
-
-            let text = convert.json2xml(JSON.stringify(obj), {
-              compact: true,
-              spaces: 4,
-            });
-
-            xmlFile = {
-              buffer: text,
-              originalname: attachment.filename,
-            };
-
-            const tempFilePath = path.join(__dirname, "./temp/" + file_xml);
-
-            // Escribe el contenido en el archivo
-            // fs.writeFileSync(tempFilePath, xmlFile.buffer, 'utf-8')
-
-            // const localFilePath = path.join(__dirname, file_xml)
-            await fs.promises.writeFile(tempFilePath, xmlFile.buffer);
-            // console.log('Local file path:', localFilePath)
-
-            // Subir directamente desde el buffer
-
-            console.log("File uploaded successfully. ");
-
-            // COMENTAMOS MOMENTANEAMENTE EL FTP -------------------------------
-
-            // Tenemos listas las credentials del ftp en ftpData (checkear cuando volvamos al ssh)
-
-            // const ftpClient = new ftp.Client();
-            // // ftpClient.ftp.verbose = true
-            // const host = ftpData.host || "46.183.119.66";
-            // const port = ftpData.port || "21";
-            // const user = ftpData.user || "Aythen";
-            // const pw =  ftpData.password || "Cloud@24";
-
-            // await ftpClient.access({
-            //   host,
-            //   port,
-            //   user,
-            //   password: pw,
-            //   secure: false,
-            //   connTimeout: 120000,
-            //   pasvTimeout: 120000,
-            //   keepalive: 30000,
-            // });
-
-            // // console.log('ftpClient', ftpClient)
-            // await ftpClient.uploadFrom(
-            //   tempFilePath,
-            //   `${uploadType}/${file_xml}`
-            // );
-
-            // // fileData.Body, // Buffer del archivo
-            // // await fs.promises.unlink(localFilePath)
-            // await ftpClient.close();
-            // ---------------------------------------------------------------------
-            console.log("EMAIL", email);
-            processedAttachments.push({
-              email: {
-                subject: email.subject,
-                fromEmail: email.fromEmail,
-                toEmail: email.toEmail,
-                date: email.attrs.date,
-                subject: attachment.subject,
-              },
-              attachment: {
-                filename: attachment.filename,
-                mimeType: attachment.mimeType,
-                size: attachment.size,
-                emailId: attachment.emailId,
-              },
-              processedData,
-              xmlContent: obj,
-            });
-          }
-        }
-      }
-
-      imap.end();
-
-      const processEmailsDetailedData = (emailData) => {
-        return emailData.reduce((result, emailItem) => {
-          console.log("===EMAIL ITEM===", emailItem);
-          const fromEmail = emailItem.email.fromEmail;
-          const toEmail = emailItem.email.toEmail;
-          const emailId = emailItem.attachment.emailId;
-          const attachFileName = emailItem.attachment.filename;
-          const attachTokens = emailItem.processedData.totalTokens;
-          const attachTokensPrice = emailItem.processedData.totalPrice;
-          const totalData = emailItem.processedData;
-
-          if (!result[emailId]) {
-            result[emailId] = {
-              processedAt: new Date(),
-              totalTokens: 0,
-              totalTokensPrice: 0,
-              attachments: {},
-            };
-          }
-
-          result[emailId].totalTokens += attachTokens;
-          result[emailId].totalTokensPrice += attachTokensPrice;
-          result[emailId].totalData = totalData;
-          result[emailId].fromEmail = fromEmail;
-          result[emailId].toEmail = toEmail;
-          result[emailId].attachments[attachFileName] = {
-            totalTokens: attachTokens,
-            totalTokensPrice: attachTokensPrice,
-          };
-
-          return result;
-        }, {});
-      };
-
-      console.log('66666666666666666666666666666666666666666')
-      let dataByEmails = processEmailsDetailedData(processedAttachments);
-      console.log("dataByEmails:", dataByEmails);
-      // updateClientService({
-      //   clientId: userId,
-      //   toUpdate: { detailedTokenConsumption: dataByEmails },
-      // });
-
-
-
-      let totalTokensConsumed = 0
-      let totalTokensPrice = 0
-
-      processedAttachments.forEach((attach) => {
-        totalTokensConsumed += attach?.processedData?.totalTokens || 0
-        totalTokensPrice += attach?.processedData?.totalPrice || 0
-      });
-
-      // updateAccount({
-      //   id: userId,
-      //   tokensConsumed: totalTokensConsumed,
-      //   totalTokensPrice: totalTokensPrice,
-      // }); 
-
-
-      console.log('update account!!!')
-
-      // processedAttachments.forEach((attach) => {
-      //   updateClientService({
-      //     clientId: userId,
-      //     toUpdate: {
-      //       tokensConsumed: attach?.processedData?.totalTokens || 0,
-      //       totalTokensPrice: attach?.processedData?.totalPrice || 0,
-      //     },
-      //   });
-      // });
-
-
-      // AUTOMATES
-
-      // const filteredEmailsProcessed = await processDataAndAppend(
-      //   "1Qq_YHkphBhmLzZt4Nyyi4FvIOeEYq75zujj2DIMDg9I",
-      //   processedAttachments
-      // );
-
-      return res.status(200).json({
-        filteredEmails,
-        processedAttachments,
-      });
-    } catch (err) {
-      console.error("Error fetching emails:", err);
-      return res
-        .status(500)
-        .json({ message: "Failed to fetch emails", error: err.message });
-    }
   } catch (error) {
     console.log("ERRORRRRRRRRRRRR", error);
   }

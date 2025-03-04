@@ -533,7 +533,8 @@ const PanelAutomate = ({
       dispatch(
         updateAutomation({
           automationId: selectedAutomationData?.id,
-          toUpdate: { automationData: selectedAutomationData },
+          // toUpdate: { automationData: selectedAutomationData },
+          toUpdate: selectedAutomationData,
           userId: user?.id,
         })
       );
