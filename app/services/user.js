@@ -190,8 +190,8 @@ const updateUserPassword = async ({ email, newPassword }) => {
 };
 
 const getAllAccounts = async (search) => {
-  const db = await connectDB("db_accounts");
   try {
+    const db = await connectDB("db_accounts");
     let selector = {};
 
     if (search) {
