@@ -47,7 +47,7 @@ const ModalAddConnectionGmail = ({ close }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const testEmail = (email) => emailRegex.test(email);
 
-    
+
     const isEmailValid = testEmail(email);
     const isAppPasswordProvided = appPassword.trim() !== "";
     // const isImapServerValid = imapServer.trim() !== "";
@@ -105,6 +105,9 @@ const ModalAddConnectionGmail = ({ close }) => {
           inputType="email"
         />
 
+        <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener noreferrer">
+          Link
+        </a>
         <LabelInputComponent
           value={appPassword}
           setValue={setAppPassword}
@@ -113,7 +116,7 @@ const ModalAddConnectionGmail = ({ close }) => {
           inputType="password"
         />
 
-  
+
         <Button action={handleAddConnection}>
           <span>Add Connection</span>
         </Button>
