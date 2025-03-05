@@ -656,6 +656,145 @@ const deleteAllDB = async (req, res) => {
   }
 };
 
+
+
+const addNotificationController = async (req, res) => {
+  try {
+    const { user } = req;
+    const id = user._id.split('_').pop()
+
+    const { notification } = req.body;
+    console.log("Notification received:", notification);
+  
+    const dbNotifications = await connectDB(`db_${id}_notifications`)
+
+
+
+//     sales
+// expenses
+// benefits
+
+// month [0..11]
+
+// accounts
+// -exceptional
+// -current_lost
+// -social_security
+// -compensations
+// -salary
+// -services
+// -supplies
+// -publicity
+// -banking
+
+    dbNotifications.insert({
+      accountId: user._id,
+      user: 'info@aythen.com',
+      type: 'automation',
+      title: 'Titulo de la factura',
+      message: 'Automating docs',
+      path: 'automate/docs',
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    })
+
+    return res.status(200).send({ 
+      success: true, 
+      message: "Notification added successfully",
+      notification: notification,
+    });
+  } catch (err) {
+    console.log("Error in addNotificationController:", err);
+    return res.status(500).send("Error adding notification");
+  }
+};
+
+const getAllNotificationsController = async (req, res) => {
+  try {
+    const { notifications } = req.body;
+    console.log("Notifications received:", notifications);
+    const user = req.user
+    const id = user._id.split('_').pop()
+
+    const dbNotifications = await connectDB(`db_${id}_notifications`)
+
+    const notificationsDb = await dbNotifications.find({ 
+      selector: {} 
+    })
+
+    const notificationsDocs = notificationsDb.docs.map((doc) => {
+      const { _id, _rev, ...rest } = doc;
+      return rest;
+    })
+
+    return res.status(200).send({ 
+      success: true, 
+      message: "Notifications fetched successfully",
+      notifications: notificationsDocs,
+    });
+  
+  } catch (err) {
+    console.log("Error in getAllNotificationsController:", err);
+    return res.status(500).send("Error getting notifications");
+  }
+};
+
+const deleteNotificationController = async (req, res) => {
+  try {
+    const { notification } = req.body;
+    console.log("Notification received:", notification);
+ 
+    const user = req.user
+    const id = user._id.split('_').pop()
+
+    const dbNotifications = await connectDB(`db_${id}_notifications`)
+
+    await dbNotifications.destroy(notification._id, notification._rev);
+
+    return res.status(200).send({ 
+      success: true, 
+      message: "Notification deleted successfully",
+      notification: notification,
+    });
+  } catch (err) {
+    console.log("Error in deleteNotificationController:", err);
+    return res.status(500).send("Error deleting notification");
+  }
+};
+
+
+
+const getResumeAccount = async (req, res) => {
+  try {
+    const { user } = req;
+    const id = user._id.split('_').pop()
+
+    const dbNotifications = await connectDB(`db_${id}_notifications`)
+
+    const notifications = await dbNotifications.find({ 
+      selector: {
+        // type: 'resume'
+      } 
+    })
+
+    console.log("notifications", notifications)
+
+    return res.status(200).send({ 
+      success: true, 
+      message: "Resume account fetched successfully",
+      resume: notifications,
+    });
+
+  } catch (err) {
+    console.log("Error in getResumeAccount:", err);
+    return res.status(500).send("Error getting resume account");
+  }
+}
+
+
+
+
 module.exports = {
   deleteAllDB: catchedAsync(deleteAllDB),
 
@@ -672,6 +811,12 @@ module.exports = {
   getAllAccountsController: catchedAsync(getAllAccountsController),
   deleteAccountController: catchedAsync(deleteAccountController),
   updateAccountPasswordController: catchedAsync( updateAccountPasswordController ),
+
+
+  addNotificationController: catchedAsync(addNotificationController),
+  getAllNotificationsController: catchedAsync(getAllNotificationsController),
+  deleteNotificationController: catchedAsync(deleteNotificationController),
+  getResumeAccount: catchedAsync(getResumeAccount),
 
   loginToManagerController: catchedAsync(loginToManagerController),
 

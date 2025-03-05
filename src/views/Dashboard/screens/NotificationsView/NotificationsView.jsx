@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
 import styles from "./NotificationsView.module.css";
 import FileIcon from "../../assets/S3/fileIcon.svg";
@@ -7,184 +7,188 @@ import { ReactComponent as FolderIcon } from "../../assets/S3/folderMail.svg";
 import { ReactComponent as CloseMenu } from "../../assets/closeMenu.svg";
 import NotificationComponent from "../../components/NotificationComponent/NotificationComponent";
 
-const notifications = [
-  {
-    id: 1,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Compartir"], // Solo 2 opciones
-  },
-  {
-    id: 2,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: CodeIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: CodeIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Compartir"], // 3 opciones
-  },
-  {
-    id: 3,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
-  },
-  {
-    id: 4,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
-  },
-  {
-    id: 1,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Compartir"], // Solo 2 opciones
-  },
-  {
-    id: 2,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: CodeIcon,
-        location: "Q1>Facturas",
-      },
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: CodeIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Compartir"], // 3 opciones
-  },
-  {
-    id: 3,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
-  },
-  {
-    id: 4,
-    title: "Document Title",
-    date: "25 Dec 2025",
-    time: "00:00 PM",
-    icon: FileIcon,
-    notifications: [
-      {
-        title: "Titulo de la factura",
-        email: "johndoe@email.com",
-        icon: FileIcon,
-        location: "Q1>Facturas",
-      },
-    ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
-  },
-];
+import { useDispatch } from "react-redux";
+import { getAllNotifications } from "@src/actions/user";
+
+
+// const notifications = [
+//   {
+//     id: 1,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Compartir"], // Solo 2 opciones
+//   },
+//   {
+//     id: 2,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: CodeIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: CodeIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Compartir"], // 3 opciones
+//   },
+//   {
+//     id: 3,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+//   },
+//   {
+//     id: 4,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+//   },
+//   {
+//     id: 1,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Compartir"], // Solo 2 opciones
+//   },
+//   {
+//     id: 2,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: CodeIcon,
+//         location: "Q1>Facturas",
+//       },
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: CodeIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Compartir"], // 3 opciones
+//   },
+//   {
+//     id: 3,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+//   },
+//   {
+//     id: 4,
+//     title: "Document Title",
+//     date: "25 Dec 2025",
+//     time: "00:00 PM",
+//     icon: FileIcon,
+//     notifications: [
+//       {
+//         title: "Titulo de la factura",
+//         email: "johndoe@email.com",
+//         icon: FileIcon,
+//         location: "Q1>Facturas",
+//       },
+//     ],
+//     options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+//   },
+// ];
 
 const ButtonsOptions = ({ option, index }) => {
   const shareOption = async () => {
@@ -234,6 +238,8 @@ const ButtonsOptions = ({ option, index }) => {
 };
 
 const NotificationsView = () => {
+  const dispatch = useDispatch();
+
   const [unreadEmails, setUnreadEmails] = useState(true);
   const [expandedNotifications, setExpandedNotifications] = useState({});
 
@@ -244,57 +250,50 @@ const NotificationsView = () => {
     }));
   };
 
+
+
+  const [notifications, setNotifications] = useState([]);
+
+
+  useEffect(() => {
+    const fn = async () => {
+      const response = await dispatch(getAllNotifications());
+      // setNotifications(notifications);
+      console.log("NOTIFICATIONS", response);
+      if (response.payload.success) {
+        setNotifications(response.payload.notifications);
+      }
+    }
+
+    fn()
+  }, []);
+
   return (
     <PanelTemplate>
-      <div className={styles.notificationCoontainer}>
-        {notifications.map((notification) => (
-          <NotificationComponent
-            key={notification.id}
-            handleHeaderClick={() => toggleNotification(notification.id)}
-            isActive={expandedNotifications[notification.id]}
-            data={notification}
-            type="document"
-          />
-          // <div
-          //   key={notification.id}
-          //   className={styles.notification}
-          //   onClick={() => toggleNotification(notification.id)}
-          // >
-          //   <div className={styles.notificationHeader}>
-          //     <div>
-          //       {notification.icon} <p>{notification.title}</p>
-          //     </div>
-          //   </div>
-          //   <div
-          //     className={styles.notifications}
-          //     style={{
-          //       height: expandedNotifications[notification.id] ? "auto" : "0",
-          //       overflow: "hidden",
-          //       transition: "height 0.3s ease-out", // Smooth transition for height
-          //     }}
-          //   >
-          //     {notification.options.map((option, index) => (
-          //       <ButtonsOptions option={option} index={index} />
-          //     ))}
-          //   </div>
-          //   {notification.notifications.map((noti) => (
-          //     <div className={styles.notificationContent} key={noti.email}>
-          //       {noti.icon}
-          //       <p>
-          //         <strong>{noti.email}</strong> ha creado{" "}
-          //         <strong>{noti.title}</strong> factura en{" "}
-          //         <strong>{noti.location}</strong>{" "}
-          //       </p>
-          //     </div>
-          //   ))}
+      {notifications.length > 0 && (
+        <div className={styles.notificationCoontainer}>
+          {notifications.map((notification) => (
+            <NotificationComponent
+              key={notification.id}
+              handleHeaderClick={() => toggleNotification(notification.id)}
+              isActive={expandedNotifications[notification.id]}
+              data={notification}
+              type="document"
+            />
+          ))}
+        </div>
+      )}
 
-          //   <div className={styles.notificationDate}>
-          //     <span>{notification.date}</span>
-          //     <span>{notification.time}</span>
-          //   </div>
-          // </div>
-        ))}
-      </div>
+      {notifications.length === 0 && (
+        <div className={styles.noNotifications}>
+          <span>
+            No hay notificaciones
+            <br />
+            Configura tus notificaciones
+            Analiza los datos de tus facturas y presupuestos
+          </span>
+        </div>
+      )}
 
       {unreadEmails && (
         <div className={styles.unreadEmails}>

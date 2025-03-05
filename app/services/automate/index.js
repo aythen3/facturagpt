@@ -41,6 +41,10 @@ const albaranXML = fs.readFileSync(albaranXMLPath, "utf-8"); // Leer como texto
 
 // const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
 
+const {
+  convertPDFToPNG
+} = require("./utils")
+
 
 
 const {
@@ -56,9 +60,11 @@ const getGPTData = async (attach) => {
     const fileBuffer = attach.buffer;
     let imageBuffers = [];
 
-    if (attach.mimeType === "application/pdf") {
+    console.log("ATTACH", attach)
+    
+    if (attach.mimetype === "application/pdf" || attach.mimeType === "application/pdf") {
       imageBuffers = await convertPDFToPNG(fileBuffer);
-    } else if (attach.mimeType.startsWith("image/")) {
+    } else if (attach && attach.mimeType.startsWith("image/")) {
       imageBuffers.push(fileBuffer);
     }
 
@@ -554,15 +560,81 @@ const goAutomate = async (req, res) => {
     const dbAccounts = await connectDB('db_accounts')
     const dbAutomations = await connectDB('db_automations')
     const dbAuth = await connectDB(`db_${id}_auth`)
+    const dbNotifications = await connectDB(`db_${id}_notifications`)
 
+
+    // sales
+    // expenses
+    // benefits
     
+    // month [0..11]
+    
+    // accounts
+    // -exceptional
+    // -current_lost
+    // -social_security
+    // -compensations
+    // -salary
+    // -services
+    // -supplies
+    // -publicity
+    // -banking
+
+
+    const dataNotification = {
+      title: "Titulo de la factura",
+      email: "johndoe@email.com",
+      icon: "https://aythen.com/logo.png",
+      location: "Q1>Facturas",
+    }
+
+    const currentMonth = new Date().getMonth()
+    const currentYear = new Date().getFullYear()
+    const currentMonthYear = `${currentMonth}-${currentYear}`
+   
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = currentDate.toLocaleString('en-US', { month: 'short' });
+    const year = currentDate.getFullYear();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    const period = hours >= 12 ? 'PM' : 'AM';
+
+
+    dbNotifications.insert({
+      // id: 1,
+      title: "Document Title",
+      date: `${day} ${month} ${year}`,
+      time: `${hours}:${minutes} ${period}`,
+      month: currentMonthYear,
+      icon: "https://aythen.com/logo.png",
+      notifications: [
+        dataNotification,
+        dataNotification,
+        dataNotification
+      ],
+      options: ["Compartir"], // Solo 2 opciones
+      category: ["excepcional", "current_lost", "social_security", "compensations", "salary", "services", "supplies", "publicity", "banking"]
+    })
+    // dbNotifications.insert({
+    //   accountId: user._id,
+    //   user: 'info@aythen.com',
+    //   type: 'automation',
+    //   title: 'Titulo de la factura',
+    //   message: 'Automating docs',
+    //   path: 'automate/docs',
+    //   status: 'pending',
+    //   createdAt: new Date().toISOString(),
+    //   updatedAt: new Date().toISOString(),
+    // })
+
     if (!automate) {
       try {
         const file = req.file
         console.log('file', file)
         const path = `${user._id}/`;
         const bucketName = "factura-gpt";
-  
+
         const params = {
           Bucket: bucketName,
           // Key: `${path}${file.originalname}`,
@@ -570,9 +642,9 @@ const goAutomate = async (req, res) => {
           Body: file.buffer,
           ContentType: file.mimetype,
         };
-  
+
         await s3.upload(params).promise();
-  
+
 
         const attachmentData = await getGPTData(file)
         console.log('file uploaded successfully', attachmentData)
@@ -649,7 +721,7 @@ const goAutomate = async (req, res) => {
     const resp = await updateAccount({
       id: user._id,
       text: 'hello world'
-    }); 
+    });
 
     console.log('resp update account', resp)
 

@@ -9,7 +9,7 @@ import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen.jsx";
 import SelectLocation from "../../components/SelectLocation/SelectLocation.jsx";
 // import { dispatch } from "d3";
-import { getOneTransactionById } from "@src/actions/transactions";
+import { getOneDocsById } from "@src/actions/docs";
 
 
 const company = {
@@ -106,8 +106,8 @@ export default function InvoicePanel() {
       // const automation = await db.get(id)
       // console.log('automation', automation)
 
-      const response = await dispatch(getOneTransactionById({
-        transactionId: id
+      const response = await dispatch(getOneDocsById({
+        docId: id
       }))
       console.log('db', response)
     }

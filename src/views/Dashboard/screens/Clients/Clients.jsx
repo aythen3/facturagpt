@@ -19,17 +19,17 @@ import {
   getAllClients,
   getOneClient,
   updateClient,
-} from "../../../../actions/clients";
+} from  "@src/actions/clients";
 
 import { FaChevronDown } from "react-icons/fa";
 
-import { clearClient, setClient } from "../../../../slices/clientsSlices";
+import { clearClient, setClient } from "@src/slices/clientsSlices";
 import { useNavigate } from "react-router-dom";
 import EditableInput from "./EditableInput/EditableInput";
 import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
 import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
-import { clearTransaction } from "../../../../slices/transactionsSlices";
+import { clearDoc } from "@src/slices/docsSlices";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
 // import { getEmailsByQuery } from '../../../../actions/user';
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";

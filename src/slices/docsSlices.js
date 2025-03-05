@@ -3,7 +3,7 @@ import {
   deleteProductFromDocs,
   deleteDocs,
   getAllDocsByClient,
-  getOneDocById,
+  getOneDocsById,
 } from "../actions/docs";
 
 const docsSlices = createSlice({
@@ -64,11 +64,11 @@ const docsSlices = createSlice({
       })
 
       // GET ONE DOCUMENT BY ID
-      .addCase(getOneDocById.pending, (state) => {})
-      .addCase(getOneDocById.fulfilled, (state, action) => {
+      .addCase(getOneDocsById.pending, (state) => {})
+      .addCase(getOneDocsById.fulfilled, (state, action) => {
         state.docByClient = action.payload?.matchingDocuments?.[0];
       })
-      .addCase(getOneDocById.rejected, (state, action) => {
+      .addCase(getOneDocsById.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

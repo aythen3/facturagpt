@@ -484,3 +484,102 @@ export const logout =
     }
   }
 
+
+
+
+
+export const addNotification = createAsyncThunk(
+  "user/addNotification",
+  async ({ notification }, { rejectWithValue }) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.post(`/user/addNotification`, {
+        notification,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.log("Error adding notification:", error);
+      return rejectWithValue(error.response?.data || "Failed to add notification");
+    }
+  }
+);
+
+
+export const getAllNotifications = createAsyncThunk(
+  "user/getAllNotifications",
+  async (_, { rejectWithValue }) => {
+    console.log("Getting all notifications:");
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.get(`/user/getAllNotifications`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.log("Error getting all notifications:", error);
+      return rejectWithValue(error.response?.data || "Failed to get all notifications");
+    }
+  }
+);
+
+
+
+export const deleteNotification = createAsyncThunk(
+  "user/deleteNotification",
+  async ({ notification }, { rejectWithValue }) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.post(`/user/deleteNotification`, {
+        notification,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("Deleting notification:", notification);
+
+      return res.data;
+    } catch (error) {
+      console.log("Error deleting notification:", error);
+      return rejectWithValue(error.response?.data || "Failed to delete notification");
+    }
+  });
+
+
+export const getResumeAccount = createAsyncThunk(
+  "user/getResumeAccount",
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.post(`/user/resume`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.log("Error getting resume account:", error);
+    }
+  });

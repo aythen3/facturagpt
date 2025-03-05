@@ -89,13 +89,13 @@ const getDocByIdController = async (req, res) => {
   try {
     const { docId } = req.params;
 
-    console.log("ID EN CONTROLLER--------------------", transactionId);
+    console.log("ID EN CONTROLLER--------------------", docId);
 
-    // Validación del transactionId
-    if (!transactionId || typeof transactionId !== "string") {
+    // Validación del docId
+    if (!docId || typeof docId !== "string") {
       return res
         .status(400)
-        .json({ error: "Se requiere un transactionId válido" });
+        .json({ error: "Se requiere un docId válido" });
     }
 
 
@@ -122,8 +122,8 @@ const getDocByIdController = async (req, res) => {
       } catch (docError) {
         if (docError.status !== 404) {
           console.error(
-            `Error al obtener el documento ${docId} en la base ${dbName}:`,
-            docError
+            `Error al obtener el documento ${docId} en la base de datos`,
+            // docError
           );
         }
       }
@@ -157,7 +157,7 @@ const getDocByIdController = async (req, res) => {
 
 
     // Llamar al servicio para obtener la transacción
-    // const result = await getTransactionById(transactionId);
+    // const result = await getTransactionById(docId);
 
     // Si la transacción no se encuentra
 
@@ -196,7 +196,7 @@ const deleteDocsController = async (req, res) => {
     console.log("Eliminando documentos con IDs:", docsIds);
 
     // Llamar a la función para eliminar las transacciones
-    // const response = await deleteTransactions({ transactionsIds });
+    // const response = await deleteTransactions({ docsIds });
 
     // return res.status(200).json({
     //   message: "Transacciones eliminadas exitosamente.",
@@ -265,7 +265,7 @@ const deleteProductFromDocsController = async (req, res) => {
 
     // Llamar a la función para eliminar las transacciones
     // const response = await deleteProductFromTransactions({
-    //   transactionId,
+    //   docId,
     //   productRef,
     // });
 
@@ -345,7 +345,7 @@ const deleteProductFromDocsController = async (req, res) => {
 
 const automateDocsController = async (req, res) => {
   try {
-    // const { transactionId } = req.body;
+    // const { docId } = req.body;
 
     console.log('HELLO WORLD AUTOMATING SYSTEM')
     if (global.automationJob) {
@@ -399,7 +399,7 @@ const automateDocsController = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Automating transactions",
+      message: "Automating docs",
     });
   } catch (error) {
     console.error("Error en automateTransactionsController:", error);
