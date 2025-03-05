@@ -19,6 +19,9 @@ import { filter } from "jszip";
 import SelectCurrencyPopup from "../../../../SelectCurrencyPopup/SelectCurrencyPopup";
 import { ifft } from "@tensorflow/tfjs";
 
+import { Currency } from "lucide-react";
+ 
+
 const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const [fileKeywords, setFileKeywords] = useState([]);
   const [labels, setLabels] = useState([]); // Ahora labels contiene toda la información necesaria
@@ -36,6 +39,11 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
     info7: false,
     info8: false,
     info9: false,
+  });
+  const [totalAmount, setTotalAmount] = useState({
+    min: 0,
+    max: 0,
+    selectedCurrency,
   });
 
   const addCondition = (index) => {
@@ -110,6 +118,18 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
       handleConfigurationChange("allowAllFileTypes", false);
     }
   }, [configuration?.selectedFileTypes]);
+
+  console.log("totalAmount ==>", totalAmount);
+
+  useEffect(() => {
+    const totalAmountAndSelectedCurrency = {
+      max: totalAmount.max,
+      min: totalAmount.min,
+      selectedCurrency,
+    };
+    handleConfigurationChange("totalAmount", totalAmountAndSelectedCurrency);
+  }, [selectedCurrency, totalAmount]);
+
 
   return (
     <div>
@@ -218,10 +238,22 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                     handleConfigurationChange("allowAllFileTypes", value);
                     handleConfigurationChange(
                       "selectedFileTypes",
+
                       value ? ["PDF", "PNG", "JPG", "XML", "JSON", "HTML"] : []
                     );
                   }}
                   text="Incluir todos los tipos de archivos"
+
+                      configuration?.selectedFileTypes?.includes(selected)
+                        ? configuration?.selectedFileTypes?.filter(
+                            (option) => option !== selected
+                          )
+                        : [
+                            ...(configuration?.selectedFileTypes || []),
+                            selected,
+                          ]
+                    )
+                  }
                 />
                 {!configuration?.allowAllFileTypes && (
                   <>
@@ -291,12 +323,30 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               <span className={styles.quantityContainer}>
                 <div className={styles.quantityContent}>
                   <span>Min</span>
-                  <input type="text" placeholder="-" />
+                  <input
+                    type="text"
+                    placeholder="-"
+                    onChange={(e) =>
+                      setTotalAmount((value) => ({
+                        ...value,
+                        min: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
                 <p>-</p>
                 <div className={styles.quantityContent}>
                   <span>Max</span>
-                  <input type="text" placeholder="-" />
+                  <input
+                    type="text"
+                    placeholder="-"
+                    onChange={(e) =>
+                      setTotalAmount((value) => ({
+                        ...value,
+                        max: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
               </span>
             </div>

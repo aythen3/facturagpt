@@ -31,7 +31,7 @@ import {
   // getAllClients,
   getAllAccounts,
   updateAccount,
-  goAutomate,
+  // goAutomate,
   // updateAccount,
 } from "../../actions/user";
 import { useDispatch } from "react-redux";
@@ -216,30 +216,26 @@ const UsersDashboard = () => {
     setFilteredAccounts(updatedAccounts);
   }, [allAccounts, searchQuery, selectedOption]);
 
-
   useEffect(() => {
     // Función para obtener los datos filtrados y ordenados del backend
     const fetchFilteredAccounts = async () => {
       try {
         const queryParams = new URLSearchParams({
-          search: searchQuery || '',
-          sortBy: selectedOption || '',
+          search: searchQuery || "",
+          sortBy: selectedOption || "",
         });
 
         const response = await fetch(`/api/accounts/filter?${queryParams}`);
         const data = await response.json();
-        
+
         setAllAccounts(data);
       } catch (error) {
-        console.error('Error fetching filtered accounts:', error);
+        console.error("Error fetching filtered accounts:", error);
       }
     };
 
     // fetchFilteredAccounts();
   }, [searchQuery, selectedOption]);
-
-
-  
 
   const handleDropdownToggle = () => {
     setIsOpen(!isOpen);
@@ -452,12 +448,12 @@ const UsersDashboard = () => {
 
   if (!userData) return null;
 
-    // <Elements stripe={stripePromise}>
-    //   <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-    //   </Elements>  
+  // <Elements stripe={stripePromise}>
+  //   <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+  //   </Elements>
   return (
     <PanelTemplate>
-    <div className={styles.container} onClick={() => setShowSidebar(false)}>
+      <div className={styles.container} onClick={() => setShowSidebar(false)}>
         {showPaymentModal && amountToPay && (
           <Payment
             onClose={() => setShowPaymentModal(false)}
