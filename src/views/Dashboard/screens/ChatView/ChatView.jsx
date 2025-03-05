@@ -552,7 +552,11 @@ const ChatBody = ({
           </p>
         ) : (
           <p className={styles.errorAlert}>
-            Introduce un token válido para usar FacturaGPT.
+            Introduce un 
+            <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">
+            token 
+            </a>
+            válido para usar FacturaGPT.
           </p>
         )}
       </div>

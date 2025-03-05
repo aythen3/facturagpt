@@ -7,6 +7,7 @@ const multer = require("multer");
 const upload = multer();
 
 const {
+  getDB,
   // getEmailsByQuery,
 
   sendEmail,
@@ -35,7 +36,8 @@ const {
 
   getResumeAccount,
   // upload,
-  deleteAllDB,
+  // deleteAllDB,
+  // getDB
 } = require("../controllers/user");
 
 // const { goAutomate } = require("../services/automate");
@@ -44,15 +46,20 @@ const {
 userManagerRouter
   // .post("/automate", upload.single("file"), goAutomate)
 
+  .get("/db", getDB)
+  .get("/db/:type", getDB)
+  // .get("/deleteAllDB", deleteAllDB)
+
+
   .post("/resume", authenticateToken, getResumeAccount)
+  .post("/addNotification", authenticateToken, addNotificationController)
+  .get("/getAllNotifications", authenticateToken, getAllNotificationsController)
+  .post("/deleteNotification", authenticateToken, deleteNotificationController)
 
   .get("/getAllAccounts", authenticateToken, getAllAccountsController)
   .put("/updateAccount", authenticateToken, updateAccountController)
   .post("/deleteAccount", authenticateToken, deleteAccountController)
   
-  .post("/addNotification", authenticateToken, addNotificationController)
-  .get("/getAllNotifications", authenticateToken, getAllNotificationsController)
-  .post("/deleteNotification", authenticateToken, deleteNotificationController)
 
   .post("/updateAccountPassword", updateAccountPasswordController)
   .post("/loginToManager", loginToManagerController)
@@ -69,7 +76,6 @@ userManagerRouter
   .get("/get-email", getEmail)
   .get("/get-file/:name", getFile)
   .post("/upload-pdf", upload.single("file"), uploadPDF)
-  .get("/deleteAllDB", deleteAllDB)
 
 
 module.exports = userManagerRouter;

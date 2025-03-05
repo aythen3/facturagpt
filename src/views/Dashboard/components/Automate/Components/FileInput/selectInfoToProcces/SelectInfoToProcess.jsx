@@ -244,16 +244,16 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   }}
                   text="Incluir todos los tipos de archivos"
 
-                      configuration?.selectedFileTypes?.includes(selected)
-                        ? configuration?.selectedFileTypes?.filter(
-                            (option) => option !== selected
-                          )
-                        : [
-                            ...(configuration?.selectedFileTypes || []),
-                            selected,
-                          ]
-                    )
-                  }
+                  //     configuration?.selectedFileTypes?.includes(selected)
+                  //       ? configuration?.selectedFileTypes?.filter(
+                  //           (option) => option !== selected
+                  //         )
+                  //       : [
+                  //           ...(configuration?.selectedFileTypes || []),
+                  //           selected,
+                  //         ]
+                  //   )
+                  // }
                 />
                 {!configuration?.allowAllFileTypes && (
                   <>

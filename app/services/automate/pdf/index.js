@@ -1,4 +1,10 @@
 
+const sharp = require('sharp')
+
+const {
+  getProductsGPT,
+  documentGPT
+} = require('../../gpt')
 
 const processDataAndAppend = async (spreadsheetId, items) => {
     for (const item of items) {
@@ -127,7 +133,7 @@ const processDataAndAppend = async (spreadsheetId, items) => {
       return { error: error.message || "Failed to process image sections" };
     }
   };
-  
+
   
   const processProductsSection = async (imageBuffer, token) => {
     try {

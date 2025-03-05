@@ -77,8 +77,6 @@ const SelectLocation = ({
 
   const renderFolders = (folders, path = "", depth = 0) => {
     return Object.keys(folders).map((folderName) => {
-      console.log("HOLA" + folderName);
-      console.log("CHAO" + path);
       const currentPath = `${path}${folderName}/`;
       const isExpanded = expandedPaths.has(currentPath) || currentPath === "";
       const subFolders = folders[folderName].__folders;

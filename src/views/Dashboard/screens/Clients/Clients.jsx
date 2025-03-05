@@ -1,16 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Clients.module.css";
-import NavbarAdmin from "../../components/NavbarAdmin/NavbarAdmin";
-import searchGray from "../../assets/searchGray.png";
-import { ReactComponent as ArrowUp } from "../../assets/arrowDownGray.svg";
 import plusIcon from "../../assets/Plus Icon.svg";
 import optionDots from "../../assets/optionDots.svg";
-import closeIcon from "../../assets/closeMenu.svg";
-import filterSearch from "../../assets/Filters Search.png";
 import { useTranslation } from "react-i18next";
-import { ReactComponent as Minus } from "../../assets/minus.svg";
 import emptyImage from "../../assets/ImageEmpty.svg";
-import l from "../../assets/lIcon.svg";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,33 +14,22 @@ import {
   updateClient,
 } from  "@src/actions/clients";
 
-import { FaChevronDown } from "react-icons/fa";
 
 import { clearClient, setClient } from "@src/slices/clientsSlices";
 import { useNavigate } from "react-router-dom";
-import EditableInput from "./EditableInput/EditableInput";
-import ModalTemplate from "../../components/ModalTemplate/ModalTemplate";
-import ProfileModalTemplate from "../../components/ProfileModalTemplate/ProfileModalTemplate";
-import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
 import { clearDoc } from "@src/slices/docsSlices";
-import FileExplorer from "../../components/FileExplorer/FileExplorer";
-// import { getEmailsByQuery } from '../../../../actions/user';
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
-import PayMethod from "../../components/PayMethod/PayMethod";
 import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
 import KIcon from "../../assets/KIcon.svg";
-import winIcon from "../../assets/winIcon.svg";
-import Button from "../../components/Button/Button";
-import SearchIconWithIcon from "../../components/SearchIconWithIcon/SearchIconWithIcon";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
-import DeleteButton from "../../components/DeleteButton/DeleteButton";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
-import useSwipe from "../../../../utils/useSwipe";
 import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
+
+
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -654,7 +636,7 @@ const Clients = () => {
         <div className={styles.transacciones}>
           <a
             onClick={() => {
-              dispatch(clearTransaction());
+              dispatch(clearDoc());
               handleGetOneClient(row?.id);
             }}
             href="#"

@@ -14,10 +14,13 @@ import { ReactComponent as DownloadIcon } from "../../assets/downloadIcon.svg";
 import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabel";
 import Tags from "../../components/Tags/Tags";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   deleteProductFromDocs,
   getOneDocsById,
+  getAllProducts,
 } from "@src/actions/docs";
+
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 import NewProduct from "../../components/NewProduct/NewProduct";
@@ -31,6 +34,8 @@ import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/
 
 const Products = () => {
   const { t } = useTranslation("clients");
+  const dispatch = useDispatch()
+
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
   const [clientSelected, setClientSelected] = useState([]);
@@ -40,12 +45,11 @@ const Products = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [selectedClientIds, setSelectedClientIds] = useState([]);
 
-  const { docByClient, loading } = useSelector(
-    (state) => state.docs
-  );
+  const { docByClient, loading } = useSelector( (state) => state.docs );
   const [newProductModal, setNewProductModal] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
-  const dispatch = useDispatch();
+
+
   const closeNewProductModal = () => {
     setNewProductModal(false);
   };
@@ -53,7 +57,23 @@ const Products = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tags, setTags] = useState([]);
 
-  console.log("TRANSAAAAAAAA----------", docByClient);
+  // console.log("TRANSAAAAAAAA----------", docByClient);
+
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const fn = async () => {
+      const response = await dispatch(getAllProducts())
+
+      if(response.payload){
+        console.log('resp product', response)
+
+        setProducts(response.payload.products)
+      }
+    }
+  
+    fn()
+  }, [])
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -163,6 +183,7 @@ const Products = () => {
     retailPrice: "",
     parameters: [],
   });
+
   const [inputsEditing, setInputsEditing] = useState({
     name: false,
     desc: false,
@@ -257,6 +278,11 @@ const Products = () => {
     // );
     // console.log('RESPONSE==', response);
   };
+
+
+
+
+
   const renderRow = (row, index, onSelect) => (
     <tr key={index}>
       {/* Checkbox */}
@@ -290,7 +316,7 @@ const Products = () => {
             height="50"
           />
           <div>
-            {row.productDescription.map((desc, index) => (
+            {row.productDescription?.map((desc, index) => (
               <div key={index} className={index == 0 && styles.titleInfoTd}>
                 {desc}
               </div>
@@ -301,7 +327,7 @@ const Products = () => {
 
       {/* Proveedor */}
       <td>
-        {row.supplier.map((info, index) => (
+        {row.supplier?.map((info, index) => (
           <div key={index} className={index == 0 && styles.titleInfoTd}>
             {info}
           </div>
@@ -310,7 +336,7 @@ const Products = () => {
 
       {/* Categoría */}
       <td>
-        {row.category.map((cat, index) => (
+        {row.category?.map((cat, index) => (
           <div key={index}>{cat}</div>
         ))}
       </td>
@@ -485,7 +511,8 @@ const Products = () => {
         ) : (
           <DynamicTable
             columns={tableHeaders}
-            data={docByClient?.doc?.totalData?.productList || tableData}
+            // data={docByClient?.doc?.totalData?.productList || tableData}
+            data={products}
             renderRow={renderRow}
             selectedIds={clientSelected}
             onSelectAll={selectAllClients}
