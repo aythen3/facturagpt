@@ -654,7 +654,7 @@ const Clients = () => {
         <div className={styles.transacciones}>
           <a
             onClick={() => {
-              dispatch(clearTransaction());
+              dispatch(clearDoc());
               handleGetOneClient(row?.id);
             }}
             href="#"

@@ -235,7 +235,8 @@ const getOneClientController = async (req, res) => {
     const extractedId = userId.split('_').pop();
     const dbClients = await connectDB(`db_${extractedId}_clients`);
     
-    dbClients = nano.use(dbClientsName);
+    // dbClients = nano.use(dbClientsName);
+    
 
     const clientDoc = await dbClients.get(clientId);
 
