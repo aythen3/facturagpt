@@ -600,8 +600,12 @@ export default function FileExplorer({
       (userFilters.selectedTypes && userFilters.selectedTypes.length > 0));
 
   const [swiped, setSwiped] = useState(false);
-
+  console.log(swiped, "swipeswipeswipeswipeswipeswipeswipeswipeswipeswipe");
   useSwipe(setSwiped);
+  // useEffect(() => {
+  //   setSwiped(false);
+  // }, []);
+
   return (
     <>
       <div
@@ -611,8 +615,9 @@ export default function FileExplorer({
           ${styles.asideBar} 
           ${isMobile ? styles.mobileMenu : ""} 
           ${!mobileSelectedDocument ? styles.activeMenu : ""} 
-          ${pagePath === "panel" ? styles.panel : swiped ? "" : styles.offAsideBar}
-        `}
+          ${swiped ? "" : styles.offAsideBar}
+          `}
+        // clase para que en panel no haya swipe y en otros si ${pagePath === "panel" ? styles.panel : swiped ? "" : styles.offAsideBar}
         ref={fileExplorerRef}
         onDrop={handleDropFiles}
         onDragOver={handleContainerDragOver}

@@ -3,6 +3,7 @@ import styles from "./SeeHistory.module.css";
 import arrow from "../../assets/arrow.svg";
 import pdfIcon from "../../assets/pdfmask.svg";
 import optionDots from "../../assets/optionDots.svg";
+import HeaderCard from "../HeaderCard/HeaderCard";
 
 const historyData = [
   {
@@ -104,18 +105,21 @@ const SeeHistory = ({
 
   return (
     <>
-      {/* <div className={styles.bg} onClick={handleCloseNewClient}></div> */}
+      <div className={styles.bg} onClick={handleCloseNewClient}></div>
 
       <div
         // className={`${styles.historyContainer} ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
         className={`${styles.historyContainer} `}
       >
-        <header className={styles.headerHistory}>
+        {/* <header className={styles.headerHistory}>
           <img src={arrow} onClick={handleCloseNewClient} />
           <p>
             Historial Guardado en /<strong>NombredelaCuenta</strong>
           </p>
-        </header>
+        </header> */}
+        <HeaderCard setState={handleCloseNewClient}>
+          Historial Guardado en /<strong>NombredelaCuenta</strong>
+        </HeaderCard>
         <div className={styles.contentHistory}>
           {historyData.map((item, index) => (
             <div key={index} className={styles.content}>

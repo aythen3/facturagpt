@@ -22,6 +22,7 @@
   justify-content: flex-start;
   cursor: pointer;
   gap: 10px;
+  text-transform: capitalize;
 }
 
 .emailsFilterSort {

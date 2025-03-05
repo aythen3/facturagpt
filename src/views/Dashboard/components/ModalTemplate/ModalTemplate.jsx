@@ -20,6 +20,7 @@ const ModalTemplate = ({
       <div
         className={`${styles.modalTemplate}  ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
+        {selectedContact}
         <div className={styles.modalTemplateHeader}>
           <div className={styles.modalTemplateInfo}>
             <div className={styles.iconContainer} onClick={() => onClick()}>
@@ -30,8 +31,8 @@ const ModalTemplate = ({
             </h3>
           </div>
           <div className={styles.buttonContainer}>
-            {/* {!(newContact || text === "Activo") && ( */}
-            {!newContact && (
+            {/* {!newContact && ( */}
+            {!(newContact || text === "Activo") && (
               <>
                 <Button
                   type={"white"}

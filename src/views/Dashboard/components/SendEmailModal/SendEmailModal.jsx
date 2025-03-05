@@ -39,8 +39,10 @@ const SendEmailModal = ({
   setMailModal,
   isAnimating,
   setIsAnimating,
+  emailSubject = "",
 }) => {
   const [documentoPDF, setDocumentoPDF] = useState(null);
+  const [localEmailSubject, setLocalEmailSubject] = useState(emailSubject);
 
   useEffect(() => {
     try {
@@ -188,7 +190,12 @@ const SendEmailModal = ({
         <div className={styles.sendEmailContent}>
           <div className={styles.infOptions}>
             <input type="text" placeholder="Para: [email], ..." />
-            <input type="text" placeholder="Asunto: [document_title]" />
+            <input
+              type="text"
+              placeholder="Asunto: [document_title]"
+              value={localEmailSubject}
+              onChange={(e) => setLocalEmailSubject(e.target.value)}
+            />
             <Toolbar />
           </div>
         </div>

@@ -14,6 +14,15 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      const validExtension =
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+      if (file.type !== validExtension) {
+        alert("Por favor, selecciona un archivo con extensión .xlsx");
+        event.target.value = ""; // Resetea el input para evitar que suba archivos inválidos
+        return;
+      }
+
       console.log("Archivo seleccionado:", file.name);
       // Aquí puedes manejar la subida del archivo
     }
@@ -27,13 +36,20 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
   const handleDragLeave = () => {
     setDragging(false);
   };
-
   const handleDrop = (event) => {
     event.preventDefault();
     setDragging(false);
 
     const file = event.dataTransfer.files[0];
     if (file) {
+      const validExtension =
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+      if (file.type !== validExtension) {
+        alert("Por favor, arrastra un archivo con extensión .xlsx");
+        return;
+      }
+
       console.log("Archivo arrastrado:", file.name);
       // Aquí puedes manejar la subida del archivo
     }
@@ -89,7 +105,7 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
               <button
                 type="button"
                 className={styles.uploadButton}
-                onClick={handleButtonClick}
+                // onClick={handleButtonClick}
               >
                 Subir archivo
               </button>
@@ -98,6 +114,7 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
                 type="file"
                 ref={fileInputRef}
                 className={styles.hiddenInput}
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 onChange={handleFileChange}
               />
             </div>

@@ -78,7 +78,7 @@ const notifications = [
         location: "Q1>Facturas",
       },
     ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+    options: ["Compartir", "Ver Email"], // 4 opciones
   },
   {
     id: 4,
@@ -94,7 +94,7 @@ const notifications = [
         location: "Q1>Facturas",
       },
     ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+    options: ["Compartir", "Ver Email"], // 4 opciones
   },
   {
     id: 1,
@@ -166,7 +166,7 @@ const notifications = [
         location: "Q1>Facturas",
       },
     ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+    options: ["Compartir", "Ver Email"], // 4 opciones
   },
   {
     id: 4,
@@ -182,7 +182,7 @@ const notifications = [
         location: "Q1>Facturas",
       },
     ],
-    options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
+    options: ["Compartir", "Ver Email"], // 4 opciones
   },
 ];
 

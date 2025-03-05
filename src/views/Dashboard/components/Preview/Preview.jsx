@@ -14,7 +14,8 @@ import gestionaEsPublico from "../../assets/gestionaEsPublicoIcon.svg";
 import stripeIcon from "../../assets/stripeIconText.svg";
 import winIcon from "../../assets/winIcon.svg";
 import KIcon from "../../assets/KIcon.svg";
-
+import imageIcon from "../../assets/imageIcon.svg";
+import AiIcon2 from "../../assets/AIcon.svg";
 import hubSpot from "../../assets/hubspotIcon.svg";
 import SendEmailModal from "../SendEmailModal/SendEmailModal";
 import { ReactComponent as EyeWhiteIcon } from "../../assets/eyeWhiteIcon.svg";
@@ -40,6 +41,9 @@ import SearchIconWithIcon from "../SearchIconWithIcon/SearchIconWithIcon";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { ReactComponent as StripeText } from "../../assets/stripePurple.svg";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
+import CurrencyDropdownBtn from "../CurrencyDropdownBtn/CurrencyDropdownBtn";
+import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
+
 let documentoPDF;
 
 try {
@@ -70,6 +74,13 @@ const DocumentPreview = ({
   editingNote,
   setShowInfoMobileBill,
   setMobileSelectedDocument,
+  setCreatedNote,
+  createdNote,
+  noteColor,
+  setEditorContentFinal,
+  editorContentFinal,
+  selectedCurrency,
+  setSelectedCurrency,
 }) => {
   const [options, setOptions] = useState(0);
   const [showMovetoFolder, setShowMovetoFolder] = useState(false);
@@ -583,6 +594,9 @@ const DocumentPreview = ({
   }, []);
 
   const isMobile = windowWidth <= 768;
+  const [typeBill, setTypeBill] = useState();
+  const [typeExpense, setTypeExpense] = useState();
+  const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
 
   return (
     <div className={styles.container} style={customStyles}>
@@ -593,11 +607,201 @@ const DocumentPreview = ({
               <ArrowLeftTextBlack /> Atrás
             </button>
             <div className={styles.notesHeaderBillMobile}>
-              <div className={styles.note}>nota</div>
-              <button>+Añadir Nota</button>
+              {createdNote && (
+                <div className={`${styles.note} ${styles[noteColor]}`}>
+                  <div
+                    className={styles.text}
+                    onClick={() => {
+                      handleAddNote();
+                      setEditingNote(true);
+                    }}
+                  >
+                    <span
+                      dangerouslySetInnerHTML={{ __html: editorContentFinal }}
+                    >
+                      {/* {editorContentFinal || "Nueva nota"} */}
+                    </span>
+                  </div>
+                  {/* <div
+                    className={styles.button}
+                    onClick={() => {
+                      handleAddNote();
+                      setEditingNote(true);
+                    }}
+                  >
+                    Editar Nota
+                  </div> */}
+                </div>
+              )}
+              <button
+                onClick={() => {
+                  handleAddNote();
+                  setEditingNote(false);
+                }}
+              >
+                +Añadir Nota
+              </button>
               <OptionDots className={styles.verticalOptionDots} />
             </div>
           </div>
+          <header className={styles.header}>
+            <div className={styles.titleWrapper}>
+              <div className={styles.titleContent}>
+                <img src={imageIcon} alt="icon" />
+                <input
+                  type="text"
+                  placeholder="Document Title"
+                  className={styles.title}
+                />
+              </div>
+            </div>
+            <div className={styles.dropdownCurrencyContainer}>
+              <div className={styles.dropdownContainer}>
+                <div className={styles.dropdown}>
+                  <CustomDropdown
+                    customStyles={styles.transparent}
+                    hasObject={true}
+                    biggerWidth={true}
+                    selectedOption={typeBill}
+                    setSelectedOption={(option) => setTypeBill(option)}
+                    options={[
+                      {
+                        value: "factura ordinaria",
+                        label: (
+                          <div className={styles.facturaContainer}>
+                            <p>Factura Ordinaria</p>
+                            <span>
+                              La más común, refleja una operación de venta o
+                              servicio.
+                            </span>
+                          </div>
+                        ),
+                      },
+                      {
+                        value: "factura simplificada",
+                        label: (
+                          <div className={styles.facturaContainer}>
+                            <p>Factura Simplificada</p>
+                            <span>
+                              Usada en operaciones de bajo importe (tickets de
+                              caja)
+                            </span>
+                          </div>
+                        ),
+                      },
+                      {
+                        value: "factura rectificativa",
+                        label: (
+                          <div className={styles.facturaContainer}>
+                            <p>Factura Rectificativa</p>
+                            <span>
+                              Corrige errores o realiza devoluciones sobre
+                              facturas previas.
+                            </span>
+                          </div>
+                        ),
+                      },
+                      {
+                        value: "factura recapitulativa",
+                        label: (
+                          <div className={styles.facturaContainer}>
+                            <p>Factura Recapitulativa </p>
+                            <span>
+                              Agrupa varias operaciones de un mismo cliente en
+                              un período.
+                            </span>
+                          </div>
+                        ),
+                      },
+                    ]}
+                  />
+                </div>
+                <div className={styles.dropdown}>
+                  <CustomDropdown
+                    customStyles={styles.transparent}
+                    hasObject={true}
+                    selectedOption={typeExpense}
+                    setSelectedOption={(option) => setTypeExpense(option)}
+                    textStyles={{
+                      display: "flex",
+                      // align: "center",
+
+                      gap: "5px",
+                      fontWeight: 500,
+                      color: "#3d3c42",
+                      marginLeft: "6px",
+                      userSelect: "none",
+                    }}
+                    placeholder={
+                      <>
+                        Seleccionar Categoria{" "}
+                        <img src={AiIcon2} alt="Icono" height={"15px"} />
+                      </>
+                    }
+                    multioption={true}
+                    options={[
+                      {
+                        title: "Ingreso",
+                        items: [
+                          {
+                            value: "Ventas de Productos",
+                            label: "Ventas de Productos",
+                          },
+                          {
+                            value: "Servicios",
+                            label: "Servicios",
+                          },
+                          {
+                            value: "Ingresos Recurrentes",
+                            label: "Ingresos Recurrentes",
+                          },
+                          { value: "Otros Ingresos", label: "Otros Ingresos" },
+                        ],
+                      },
+                      {
+                        title: "Gasto",
+                        items: [
+                          {
+                            value: "Operativos",
+                            label: "Operativos",
+                          },
+                          {
+                            value: "Administrativos",
+                            label: "Administrativos",
+                          },
+                          {
+                            value: "Comerciales",
+                            label: "Comerciales",
+                          },
+                          {
+                            value: "Financieros",
+                            label: "Financieros",
+                          },
+                          {
+                            value: "Personales",
+                            label: "Personales",
+                          },
+                          {
+                            value: "Infraestructura",
+                            label: "Infraestructura",
+                          },
+                          {
+                            value: "Otro Gastos",
+                            label: "Otro Gastos",
+                          },
+                        ],
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+              <CurrencyDropdownBtn
+                selectedCurrency={selectedCurrency}
+                setSelectedCurrency={setSelectedCurrency}
+                setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+              />
+            </div>
+          </header>
           <Button
             action={() => setShowInfoMobileBill(true)}
             headerStyle={{
@@ -710,6 +914,14 @@ const DocumentPreview = ({
           mailModal={mailModal}
           isAnimating={isAnimating}
           setIsAnimating={setIsAnimating}
+        />
+      )}
+
+      {showSelectCurrencyPopup && (
+        <SelectCurrencyPopup
+          setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
+          setSelectedCurrency={setSelectedCurrency}
+          selectedCurrency={selectedCurrency}
         />
       )}
     </div>

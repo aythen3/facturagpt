@@ -10,6 +10,10 @@ const DynamicTable = ({
   onSelect,
   hideCheckbox = false,
 }) => {
+  console.log(selectedIds.length);
+  console.log(selectedIds);
+  console.log(data.length);
+  console.log(data);
   return (
     <div className={styles.clientsTable}>
       <table className={styles.table}>
