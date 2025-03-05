@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getAllAccounts,
   updateAccount,
-  goAutomate, //
+  // goAutomate, //
   updateAcount,
   // getAllUsers,
   // getClient
@@ -56,11 +56,10 @@ const AccountsDashboard = () => {
   const { allAccounts } = useSelector((state) => state.user);
   const { user: userRedux } = useSelector((state) => state.user);
   const [filteredAccounts, setFilteredAccounts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const [selectedOption, setSelectedOption] = useState("Todos"); 
+  const [selectedOption, setSelectedOption] = useState("Todos");
   const [isOpen, setIsOpen] = useState(false);
-
 
   const dropdownRef = useRef(null);
 

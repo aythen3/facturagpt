@@ -77,6 +77,11 @@ const PanelAutomate = ({
     gmailBody: "",
     whatsAppToNotificate: "",
     whatsAppMessage: "",
+    totalAmount: {
+      currency: "USD",
+      min: 0,
+      max: 0,
+    },
   });
 
   const [outlookConfiguration, setOutlookConfiguration] = useState({
@@ -407,7 +412,7 @@ const PanelAutomate = ({
         console.log("Setting Wolters configuration", automationData);
         setWoltersConfiguration(automationData);
       } else if (
-        automationData.automationData.type === "whatsApp notifications"
+        automationData.automationData?.type === "whatsApp notifications"
       ) {
         console.log(
           "Setting whatsApp notifications configuration",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./selectInfoToProcces.module.css";
 import OptionsSwitchComponent from "../../../../OptionsSwichComponent/OptionsSwitchComponent";
 import InputComponent from "../../../../InputComponent/InputComponent";
@@ -15,6 +15,7 @@ import DeleteButton from "../../../../DeleteButton/DeleteButton";
 import FiltersLabelOptionsTemplate from "../../FiltersLabelOptionsTemplate/FiltersLabelOptionsTemplate";
 import { filter } from "jszip";
 import SelectCurrencyPopup from "../../../../SelectCurrencyPopup/SelectCurrencyPopup";
+import { Currency } from "lucide-react";
 
 const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const [fileKeywords, setFileKeywords] = useState([]);
@@ -33,6 +34,11 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
     info7: false,
     info8: false,
     info9: false,
+  });
+  const [totalAmount, setTotalAmount] = useState({
+    min: 0,
+    max: 0,
+    selectedCurrency,
   });
 
   const addCondition = (index) => {
@@ -99,6 +105,18 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const editLabel = (index) => {
     setEditIndex(index);
   };
+
+  console.log("totalAmount ==>", totalAmount);
+
+  useEffect(() => {
+    const totalAmountAndSelectedCurrency = {
+      max: totalAmount.max,
+      min: totalAmount.min,
+      selectedCurrency,
+    };
+    handleConfigurationChange("totalAmount", totalAmountAndSelectedCurrency);
+  }, [selectedCurrency, totalAmount]);
+
   return (
     <div>
       {" "}
@@ -240,7 +258,10 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                         ? configuration?.selectedFileTypes?.filter(
                             (option) => option !== selected
                           )
-                        : [...(configuration?.selectedFileTypes || []), selected]
+                        : [
+                            ...(configuration?.selectedFileTypes || []),
+                            selected,
+                          ]
                     )
                   }
                 />
@@ -266,12 +287,30 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               <span className={styles.quantityContainer}>
                 <div className={styles.quantityContent}>
                   <span>Min</span>
-                  <input type="text" placeholder="-" />
+                  <input
+                    type="text"
+                    placeholder="-"
+                    onChange={(e) =>
+                      setTotalAmount((value) => ({
+                        ...value,
+                        min: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
                 <p>-</p>
                 <div className={styles.quantityContent}>
                   <span>Max</span>
-                  <input type="text" placeholder="-" />
+                  <input
+                    type="text"
+                    placeholder="-"
+                    onChange={(e) =>
+                      setTotalAmount((value) => ({
+                        ...value,
+                        max: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
               </span>
             </div>
@@ -668,7 +707,6 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               />
             </div>
           </CustomAutomationsWrapper>
-
         </div>
       </CustomAutomationsWrapper>
       {showSelectCurrencyPopup && (
