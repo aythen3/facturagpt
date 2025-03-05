@@ -464,9 +464,11 @@
   }
 }
 .activeMenu {
-  z-index: 999999999;
+  z-index: 999;
+  left: 0%;
 }
 .offAsideBar {
+  z-index: 999;
   left: -100%;
 }
 .panel {

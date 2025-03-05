@@ -7,6 +7,7 @@ import { ReactComponent as FolderIcon } from "../../assets/S3/folderMail.svg";
 import { ReactComponent as CloseMenu } from "../../assets/closeMenu.svg";
 import NotificationComponent from "../../components/NotificationComponent/NotificationComponent";
 
+
 import { useDispatch } from "react-redux";
 import { getAllNotifications } from "@src/actions/user";
 
@@ -189,6 +190,7 @@ import { getAllNotifications } from "@src/actions/user";
 //     options: ["Reenviar", "Responder", "Compartir", "Ver Email"], // 4 opciones
 //   },
 // ];
+
 
 const ButtonsOptions = ({ option, index }) => {
   const shareOption = async () => {

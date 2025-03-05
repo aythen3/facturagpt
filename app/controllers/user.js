@@ -12,7 +12,6 @@ const { v4: uuidv4 } = require("uuid");
 const { connectDB } = require("./utils");
 const jwt = require("jsonwebtoken");
 
-
 // Configuración de multer para guardar los archivos en "public/pdfs"
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -50,17 +49,17 @@ const {
   // generateAndSendOtp,
   // verifyOTP,
   // updateUserPassword,
-  
+
   // getAllClientsService,
   // addNewClientService,
   // deleteClientService,
 } = require("../services/user");
 
-
 // const { updateClientService } = require("../services/stripe");
 
 const { catchedAsync } = require("../utils/err");
 const { sendEmail, getTemplate } = require("../services/email");
+const { log } = require("console");
 
 const createAccountController = async (req, res) => {
   try {
@@ -81,32 +80,31 @@ const createAccountController = async (req, res) => {
 
     // const resp = await createAccount(clientData);
 
-
     try {
       const db = await connectDB("db_accounts");
       const existingDocs = await db.list({ include_docs: true });
       const accountExists = existingDocs.rows.some(
         (doc) => doc.doc.email === account.email
       );
-  
+
       if (accountExists) {
         return { success: false, message: "Account already exists." };
       }
-  
+
       const accountId = uuidv4();
-  
+
       const docId = `account_${account.email}_${accountId}`;
-  
+
       let role = account.role || "user";
-  
+
       if (account.email === "info@aythen.com") {
         role = "superadmin";
       }
-  
-      const hashedPassword = Buffer.from(account?.password || "123456").toString(
-        "base64"
-      );
-  
+
+      const hashedPassword = Buffer.from(
+        account?.password || "123456"
+      ).toString("base64");
+
       const newAccount = {
         // _id: docId,
         // nombre,
@@ -135,7 +133,7 @@ const createAccountController = async (req, res) => {
         // isPaymentConfigured: false,
         // emailQueries: [],
         // nextPaymentDate: '2025-01-31T23:00:00.000Z'
-  
+
         ...account,
         _id: docId,
         id: docId,
@@ -143,20 +141,19 @@ const createAccountController = async (req, res) => {
         role,
         bucketCreated: false,
       };
-  
+
       const response = await db.insert(newAccount);
-  
+      console.log("response", response);
+
       return res.status(200).send({
         success: true,
         message: "Account created successfully.",
         account: { ...account },
-      })
+      });
     } catch (error) {
       console.error("Error creating account:", error);
       throw new Error("Failed to create account");
     }
-
-
 
     // return res.status(200).send(resp);
   } catch (err) {
@@ -177,17 +174,17 @@ const updateAccountController = async (req, res) => {
     try {
       const db = await connectDB("db_accounts");
       let updatedDoc;
-  
+
       if (data.id) {
         const existingDoc = await db.get(data.id);
-  
+
         if (!existingDoc) {
           console.log(`No user found with ID: ${data.id}`);
           return { success: false, message: "User not found." };
         }
-  
+
         console.log("existingDoc", existingDoc);
-  
+
         updatedDoc = {
           ...existingDoc,
           ...data,
@@ -196,7 +193,7 @@ const updateAccountController = async (req, res) => {
       } else {
         const accountId = uuidv4();
         const docId = `account_${data.email}_${accountId}`;
-  
+
         updatedDoc = {
           ...data,
           _id: docId,
@@ -205,19 +202,17 @@ const updateAccountController = async (req, res) => {
           bucketCreated: false,
         };
       }
-  
+
       const response = await db.insert(updatedDoc);
-  
+
       const { _id, _rev, ...sanitizedDoc } = updatedDoc;
       // return sanitizedDoc;
 
-      return res.status(200).send(sanitizedDoc)
+      return res.status(200).send(sanitizedDoc);
     } catch (error) {
       console.error("Error updating/creating account:", error);
       throw new Error("Failed to update/create account");
     }
-
-
   } catch (err) {
     console.log("Error in updateAccountController:", err);
     return res.status(500).send("Error updating user");
@@ -235,9 +230,9 @@ const deleteAccountController = async (req, res) => {
     try {
       const db = await connectDB("db_accounts");
       const doc = await db.find({ selector: { id: id } });
-  
+
       await db.destroy(doc.docs[0]._id, doc.docs[0]._rev);
-  
+
       return res.status(200).send({
         id,
         success: true,
@@ -251,8 +246,6 @@ const deleteAccountController = async (req, res) => {
       console.error("Error deleting account:", error);
       throw new Error("Failed to delete account");
     }
-
-
   } catch (err) {
     console.log("Error in deleteAccountController:", err);
     return res.status(500).send("Error deleting user");
@@ -273,23 +266,23 @@ const updateAccountPasswordController = async (req, res) => {
       const queryResponse = await db.find({
         selector: { email },
       });
-  
+
       if (queryResponse.docs.length === 0) {
         console.log(`No user found with email: ${email}`);
         return { success: false, message: "User not found." };
       }
-  
+
       const userDoc = queryResponse.docs[0];
       const hashedPassword = Buffer.from(newPassword).toString("base64");
-  
+
       const updatedDoc = {
         ...userDoc,
         password: hashedPassword,
         _rev: userDoc._rev,
       };
-  
+
       await db.insert(updatedDoc);
-  
+
       return res.status(200).send({
         success: true,
         message: "Password updated successfully.",
@@ -302,7 +295,6 @@ const updateAccountPasswordController = async (req, res) => {
       console.error("Error updating password:", error);
       throw new Error("Failed to update password");
     }
-
   } catch (err) {
     console.log("Error in updateAccountPasswordController:", err);
     return res.status(500).send("Error updating user password");
@@ -326,93 +318,89 @@ const loginToManagerController = async (req, res) => {
 
     // return res.status(200).send(response);
 
+    let db = await connectDB("db_accounts");
 
-    let db = await connectDB('db_accounts');
+    try {
+      let account;
 
+      if (accessToken) {
+        const tokenQuery = await db.find({
+          selector: { token: accessToken },
+        });
 
-  try {
-    let account;
+        if (tokenQuery.docs.length === 0) {
+          return { success: false, message: "Invalid access token." };
+        }
+        account = tokenQuery.docs[0];
+      } else {
+        const queryResponse = await db.find({
+          selector: { email },
+        });
 
-    if (accessToken) {
-      const tokenQuery = await db.find({
-        selector: { token: accessToken },
-      });
+        if (queryResponse.docs.length === 0) {
+          return { success: false, message: "Invalid email or password." };
+        }
 
-      if (tokenQuery.docs.length === 0) {
-        return { success: false, message: "Invalid access token." };
-      }
-      account = tokenQuery.docs[0];
-    } else {
-      const queryResponse = await db.find({
-        selector: { email },
-      });
+        account = queryResponse.docs[0];
+        const hashedPassword = Buffer.from(password).toString("base64");
 
-      if (queryResponse.docs.length === 0) {
-        return { success: false, message: "Invalid email or password." };
-      }
+        if (
+          account.password !== hashedPassword &&
+          account.password !== password
+        ) {
+          console.log("Invalid password provided.");
+          return { success: false, message: "Invalid email or password." };
+        }
 
-      account = queryResponse.docs[0];
-      const hashedPassword = Buffer.from(password).toString("base64");
-
-      if (
-        account.password !== hashedPassword &&
-        account.password !== password
-      ) {
-        console.log("Invalid password provided.");
-        return { success: false, message: "Invalid email or password." };
-      }
-
-      const token = jwt.sign(
-        {
-          userId: account._id,
-          email: account.email,
-          role: account.role,
-        },
-        "your-secret-key",
-        { expiresIn: "24h" }
-      );
-
-      const updatedDoc = {
-        ...account,
-        token: token,
-        _rev: account._rev,
-      };
-
-      await db.insert(updatedDoc);
-
-      account = updatedDoc;
-    }
-
-    const { _id, _rev, ...rest } = account;
-    if (!account.bucketCreated) {
-      try {
-        // await checkOrCreateUserBucket(rest.id);
+        const token = jwt.sign(
+          {
+            userId: account._id,
+            email: account.email,
+            role: account.role,
+          },
+          "your-secret-key",
+          { expiresIn: "24h" }
+        );
 
         const updatedDoc = {
           ...account,
-          bucketCreated: true,
+          token: token,
           _rev: account._rev,
         };
-        const updateResponse = await db.insert(updatedDoc);
-      } catch (error) {
-        console.error("Error creating bucket:", error);
+
+        await db.insert(updatedDoc);
+
+        account = updatedDoc;
       }
+
+      const { _id, _rev, ...rest } = account;
+      if (!account.bucketCreated) {
+        try {
+          // await checkOrCreateUserBucket(rest.id);
+
+          const updatedDoc = {
+            ...account,
+            bucketCreated: true,
+            _rev: account._rev,
+          };
+          const updateResponse = await db.insert(updatedDoc);
+          console.log("Bucket created for user:", updateResponse);
+        } catch (error) {
+          console.error("Error creating bucket:", error);
+        }
+      }
+
+      // return return;
+      return res.status(200).send(rest);
+    } catch (error) {
+      console.error("Error during login:", error);
+      throw new Error("Login process failed");
     }
-
-    // return return;
-    return res.status(200).send(rest);
-  } catch (error) {
-    console.error("Error during login:", error);
-    throw new Error("Login process failed");
-  }
-
   } catch (err) {
     console.log("Error in loginToManagerController:", err);
     return res.status(500).send("Error during login process");
   }
 };
-
-
 
 const getAllAccountsController = async (req, res) => {
   try {
@@ -422,7 +410,7 @@ const getAllAccountsController = async (req, res) => {
     try {
       const db = await connectDB("db_accounts");
       let selector = {};
-  
+
       if (search) {
         selector = {
           email: {
@@ -430,33 +418,28 @@ const getAllAccountsController = async (req, res) => {
           },
         };
       }
-  
+
       const result = await db.find({
         selector: selector,
       });
-  
+
       const accounts = result.docs.map((doc) => {
         const { _id, _rev, ...rest } = doc;
         return rest;
       });
-  
+
       // return users;
 
-      return res.status(200).send(accounts)
+      return res.status(200).send(accounts);
     } catch (error) {
       console.error("Error fetching users:", error);
       throw new Error("Failed to fetch users");
     }
-
   } catch (err) {
     console.log("Error in getAllAccountsController:", err);
     return res.status(500).send("Error fetching accounts");
   }
 };
-
-
-
-
 
 const generateAndSendOtpController = async (req, res) => {
   try {
@@ -469,11 +452,11 @@ const generateAndSendOtpController = async (req, res) => {
     try {
       const db = await connectDB("db_otp");
       const otp = String(Math.floor(100000 + Math.random() * 900000));
-  
+
       const expirationTime = Date.now() + 5 * 60 * 1000;
       const otpId = uuidv4();
       const docId = `otp_${email}_${otpId}`;
-  
+
       const otpDocument = {
         _id: docId,
         email,
@@ -481,17 +464,18 @@ const generateAndSendOtpController = async (req, res) => {
         expirationTime,
         createdAt: new Date().toISOString(),
       };
-  
+
       await db.insert(otpDocument);
       await sendOtpEmail(nombre, email, otp, language);
-  
-      return res.status(200).send({ success: true, message: "OTP generado y enviado exitosamente." });
+
+      return res.status(200).send({
+        success: true,
+        message: "OTP generado y enviado exitosamente.",
+      });
     } catch (error) {
       console.error("Error generando o enviando OTP:", error);
       throw new Error("No se pudo generar o enviar el OTP.");
     }
-
-
   } catch (err) {
     console.log("Error in generateAndSendOtpController:", err);
     return res.status(500).send("Error generating OTP");
@@ -505,8 +489,6 @@ const verifyOTPController = async (req, res) => {
 
     // const response = await verifyOTP({ email, otp });
 
-
-
     try {
       const db = await connectDB("db_otp");
       const queryResponse = await db.find({
@@ -515,28 +497,27 @@ const verifyOTPController = async (req, res) => {
       if (queryResponse.docs.length === 0) {
         return { success: false, message: "Invalid or expired OTP." };
       }
-  
+
       const otpDoc = queryResponse.docs[0];
       const now = new Date();
       const expiresAt = new Date(otpDoc.expirationTime);
-  
+
       if (now > expiresAt) {
         return { success: false, message: "OTP has expired." };
       }
-  
+
       await db.destroy(otpDoc._id, otpDoc._rev);
-  
+
       // return { success: true, message: "OTP verified successfully." };
 
-      return res.status(200).send({ success: true, message: "OTP verified successfully." });
-
+      return res
+        .status(200)
+        .send({ success: true, message: "OTP verified successfully." });
     } catch (error) {
       console.error("Error verifying OTP:", error);
       // throw new Error("Failed to verify OTP");
       return res.status(401).send(response);
     }
-
-
 
     // if (response.success) {
     //   return res.status(200).send(response);
@@ -572,9 +553,6 @@ const sendNewsletter = async (req, res) => {
     return res.status(500).send("Error verifying OTP");
   }
 };
-
-
-
 
 const getFile = async (req, res) => {
   try {
@@ -639,9 +617,6 @@ const senderEmail = async (req, res) => {
 const uploadPDF = (req, res) => {
   res.json({ message: "Archivo PDF guardado correctamente" });
 };
-
-
-
 
 const deleteAllDB = async (req, res) => {
   try {
@@ -805,12 +780,14 @@ module.exports = {
   generateAndSendOtpController: catchedAsync(generateAndSendOtpController),
   verifyOTPController: catchedAsync(verifyOTPController),
   sendNewsletter: catchedAsync(sendNewsletter),
-  
+
   createAccountController: catchedAsync(createAccountController),
   updateAccountController: catchedAsync(updateAccountController),
   getAllAccountsController: catchedAsync(getAllAccountsController),
   deleteAccountController: catchedAsync(deleteAccountController),
-  updateAccountPasswordController: catchedAsync( updateAccountPasswordController ),
+  updateAccountPasswordController: catchedAsync(
+    updateAccountPasswordController
+  ),
 
 
   addNotificationController: catchedAsync(addNotificationController),

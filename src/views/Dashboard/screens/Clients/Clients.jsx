@@ -47,6 +47,7 @@ import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
 import useSwipe from "../../../../utils/useSwipe";
+import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -158,17 +159,31 @@ const Clients = () => {
       }
     });
   };
-
   const selectAllClients = () => {
-    if (clientSelected.length > 0) {
-      // Si ya hay clientes seleccionados, limpiar la selección
+    if (clientSelected.length === clients.length) {
+      // Si todos los clientes están seleccionados, limpiar la selección
       setClientSelected([]);
+      setSelectedIds(false);
+      console.log("a");
     } else {
-      // Si no hay clientes seleccionados, agregar todos los índices
-      const allClientIndexes = tableData.map((_, index) => index); // Crear un arreglo con los índices
+      // Si no todos los clientes están seleccionados, agregar todos los índices
+      setSelectedIds(true);
+      const allClientIndexes = clients.map((_, index) => index); // Crear un arreglo con los índices
+      console.log(allClientIndexes);
       setClientSelected(allClientIndexes);
     }
   };
+
+  // const selectAllClients = () => {
+  //   if (clientSelected.length > 0) {
+  //     // Si ya hay clientes seleccionados, limpiar la selección
+  //     setClientSelected([]);
+  //   } else {
+  //     // Si no hay clientes seleccionados, agregar todos los índices
+  //     const allClientIndexes = tableData.map((_, index) => index); // Crear un arreglo con los índices
+  //     setClientSelected(allClientIndexes);
+  //   }
+  // };
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -269,10 +284,10 @@ const Clients = () => {
         ? prev.filter((id) => id !== clientId)
         : [...prev, clientId]
     );
-    console.log("users", allUsers);
+
     console.log("toggling clientId", clientId);
     console.log("allClients", allClients);
-    let singleUser = allClients[0];
+    // let singleUser = allClients[0];
     // const response = await dispatch(
     //   getEmailsByQuery({
     //     userId: singleUser?.id || 'randomId',
@@ -597,11 +612,9 @@ const Clients = () => {
         <input
           type="checkbox"
           name="clientSelected"
-          // onClick={() => selectClient(rowIndex, row)}
           onChange={() => toggleClientSelection(row?.id)}
-          // checked={
-          //   clientSelected.includes(rowIndex) ? true : false
-          // }
+          onClick={() => selectClient(index, row)}
+          checked={clientSelected.includes(index) ? true : false}
         />
       </td>
       <td className={styles.name}>
@@ -685,19 +698,6 @@ const Clients = () => {
   );
 
   const [selectedOption, setSelectedOption] = useState("Nombre");
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const options = ["Todos", "Activos", "Emails procesados", "Empresa A-Z"];
-
-  const handleDropdownToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
 
   return (
     <PanelTemplate>
@@ -742,7 +742,7 @@ const Clients = () => {
               >
                 <img src={KIcon} alt="kIcon" />
               </div>
-              <div className={styles.dropdownContainer}>
+              {/* <div className={styles.dropdownContainer}>
                 <div
                   className={styles.filterSort}
                   onClick={handleDropdownToggle}
@@ -764,11 +764,15 @@ const Clients = () => {
                     ))}
                   </div>
                 )}
-              </div>
+              </div> */}
+              <FiltersDropdownContainer
+                setSelectedOption={setSelectedOption}
+                selectedOption={selectedOption}
+              />
             </>
           }
         />
-      
+
         {showImportContacts && (
           <ImportContactsAndProducts
             text="contactos"
@@ -788,8 +792,8 @@ const Clients = () => {
             columns={tableHeaders}
             data={clients}
             renderRow={renderRow}
-            selectedIds={selectedIds}
-            onSelectAll={selectAll}
+            selectedIds={clientSelected}
+            onSelectAll={selectAllClients}
             onSelect={toggleSelection}
           />
         )}
@@ -799,6 +803,7 @@ const Clients = () => {
           <NewContact
             setShowNewContact={setShowNewClient}
             newContactProp={newContactProp}
+            selectedContact={selectedContact}
           />
         </>
       )}

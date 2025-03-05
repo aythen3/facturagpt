@@ -43,6 +43,7 @@ const CustomDropdown = ({
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
+    console.log(option);
     setIsOpen(false);
   };
 

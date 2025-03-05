@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "./CustomAutomationsWrapper.module.css";
 
-const CustomAutomationsWrapper = ({ 
-  color = "#233F39", 
-  Icon, 
+const CustomAutomationsWrapper = ({
+  color = "#233F39",
+  Icon,
   children,
   showContent,
- }) => {
+}) => {
+  console.log("children", children);
+
   return (
-    <div className={`${styles.wrapper} ${showContent ? styles.open : ''}`}>
+    <div className={`${styles.wrapper} ${showContent ? styles.open : ""}`}>
       <div style={{ backgroundColor: color }} className={styles.leftContainer}>
         {Icon}
       </div>

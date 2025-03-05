@@ -47,3 +47,36 @@
     color: #757575;
   }
 }
+.keywordContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 9px 0;
+  .keyword {
+    display: flex;
+    gap: 9px;
+    padding: 3px 12px;
+    border-radius: 30px;
+    border: 1px solid #e0e3e6;
+    align-items: center;
+  }
+}
+.cardTypesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 9px 0;
+}
+.singleTypeCard {
+  display: flex;
+  gap: 9px;
+  padding: 3px 12px;
+  border-radius: 30px;
+  border: 1px solid #e0e3e6;
+  span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #2a2e32;
+    user-select: none;
+  }
+}

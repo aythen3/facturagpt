@@ -13,7 +13,6 @@ import AddTemplate from "./AddTemplate/AddTemplate";
 import { getOneClient } from "../../../../actions/clients";
 import { useDispatch } from "react-redux";
 
-
 const ButtonLabelCommponentWithButton = ({
   textHeader,
   buttonText,
@@ -183,6 +182,7 @@ const NewProduct = ({
       console.error("Error al obtener el cliente:", error);
     }
   };
+
   return (
     <div className={styles.overlay}>
       <div className={styles.bg} onClick={() => handleCloseNewClient()}></div>
@@ -192,6 +192,7 @@ const NewProduct = ({
           onClick={() => handleCloseNewClient()}
           isAnimating={isAnimating}
           newContact={newContactProp}
+          selectedContact={selectedContact}
           handleGetOneClient={handleGetOneClient}
         >
           <div

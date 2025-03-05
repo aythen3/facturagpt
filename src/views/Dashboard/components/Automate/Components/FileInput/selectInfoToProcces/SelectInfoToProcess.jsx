@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./selectInfoToProcces.module.css";
 import OptionsSwitchComponent from "../../../../OptionsSwichComponent/OptionsSwitchComponent";
 import InputComponent from "../../../../InputComponent/InputComponent";
@@ -10,11 +10,17 @@ import { ReactComponent as GrayChevron } from "../../../../../assets/grayChevron
 import { ReactComponent as WhiteFolder } from "../../../../../assets/whiteFolder.svg";
 import { ReactComponent as WhiteClock } from "../../../../../assets/whiteClock.svg";
 import { ReactComponent as GrayArrow } from "../../../../../assets/arrowDownBold.svg";
+import { ReactComponent as SearchWhite } from "../../../../../assets/searchWhite.svg";
+import { ReactComponent as CircuitryIcon } from "../../../../../assets/CircuitryIcon.svg";
 import Button from "../../../../Button/Button";
 import DeleteButton from "../../../../DeleteButton/DeleteButton";
 import FiltersLabelOptionsTemplate from "../../FiltersLabelOptionsTemplate/FiltersLabelOptionsTemplate";
 import { filter } from "jszip";
 import SelectCurrencyPopup from "../../../../SelectCurrencyPopup/SelectCurrencyPopup";
+import { ifft } from "@tensorflow/tfjs";
+
+import { Currency } from "lucide-react";
+ 
 
 const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const [fileKeywords, setFileKeywords] = useState([]);
@@ -33,6 +39,11 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
     info7: false,
     info8: false,
     info9: false,
+  });
+  const [totalAmount, setTotalAmount] = useState({
+    min: 0,
+    max: 0,
+    selectedCurrency,
   });
 
   const addCondition = (index) => {
@@ -99,6 +110,27 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const editLabel = (index) => {
     setEditIndex(index);
   };
+
+  useEffect(() => {
+    if (configuration?.selectedFileTypes?.length == 6) {
+      handleConfigurationChange("allowAllFileTypes", true);
+    } else {
+      handleConfigurationChange("allowAllFileTypes", false);
+    }
+  }, [configuration?.selectedFileTypes]);
+
+  console.log("totalAmount ==>", totalAmount);
+
+  useEffect(() => {
+    const totalAmountAndSelectedCurrency = {
+      max: totalAmount.max,
+      min: totalAmount.min,
+      selectedCurrency,
+    };
+    handleConfigurationChange("totalAmount", totalAmountAndSelectedCurrency);
+  }, [selectedCurrency, totalAmount]);
+
+
   return (
     <div>
       {" "}
@@ -124,7 +156,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
           className={`${styles.contentContainer} ${showContent.info1 ? styles.active : styles.disabled}`}
         >
           <CustomAutomationsWrapper
-            Icon={<ArrowSquare />}
+            Icon={<SearchWhite />}
             showContent={showContent.info8}
           >
             <div
@@ -173,12 +205,14 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                     if (e.key === "Enter") {
                       const keywords = e.target.value
                         .split(",")
-                        .map((keyword) => keyword.trim());
+                        .map((keyword) => keyword.trim())
+                        .filter((keyword) => keyword !== "");
+                      console.log(keywords);
                       setFileKeywords((prevKeywords) => [
                         ...prevKeywords,
                         ...keywords,
                       ]);
-                      // handleConfigurationChange("filesKeyWords", "");
+                      handleConfigurationChange("filesKeyWords", "");
                     }
                   }}
                 />
@@ -200,50 +234,73 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   marginTop="10px"
                   color="#10A37F"
                   state={configuration?.allowAllFileTypes || false}
-                  setState={(value) =>
-                    handleConfigurationChange("allowAllFileTypes", value)
-                  }
-                  text="Incluir todos los tipos de archivos"
-                />
-                <div className={styles.cardTypesContainer}>
-                  {(configuration?.selectedFileTypes || []).map((type) => (
-                    <div className={styles.singleTypeCard} key={type}>
-                      <span>{type}</span>
-                      <DeleteButton
-                        action={() =>
-                          handleConfigurationChange(
-                            "selectedFileTypes",
-                            (configuration?.selectedFileTypes || []).filter(
-                              (option) => option !== type
-                            )
-                          )
-                        }
-                      ></DeleteButton>
-                    </div>
-                  ))}
-                </div>
-                <CustomDropdown
-                  options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-                  selectedOption={configuration?.selectedFileTypes || []}
-                  height="31px"
-                  textStyles={{
-                    fontWeight: 300,
-                    color: "#1E0045",
-                    fontSize: "13px",
-                    marginLeft: "6px",
-                    userSelect: "none",
-                  }}
-                  setSelectedOption={(selected) =>
+                  setState={(value) => {
+                    handleConfigurationChange("allowAllFileTypes", value);
                     handleConfigurationChange(
                       "selectedFileTypes",
+
+                      value ? ["PDF", "PNG", "JPG", "XML", "JSON", "HTML"] : []
+                    );
+                  }}
+                  text="Incluir todos los tipos de archivos"
+
                       configuration?.selectedFileTypes?.includes(selected)
                         ? configuration?.selectedFileTypes?.filter(
                             (option) => option !== selected
                           )
-                        : [...(configuration?.selectedFileTypes || []), selected]
+                        : [
+                            ...(configuration?.selectedFileTypes || []),
+                            selected,
+                          ]
                     )
                   }
                 />
+                {!configuration?.allowAllFileTypes && (
+                  <>
+                    <div className={styles.cardTypesContainer}>
+                      {(configuration?.selectedFileTypes || []).map((type) => (
+                        <div className={styles.singleTypeCard} key={type}>
+                          <span>{type}</span>
+                          <DeleteButton
+                            action={() =>
+                              handleConfigurationChange(
+                                "selectedFileTypes",
+                                (configuration?.selectedFileTypes || []).filter(
+                                  (option) => option !== type
+                                )
+                              )
+                            }
+                          ></DeleteButton>
+                        </div>
+                      ))}
+                    </div>
+                    <CustomDropdown
+                      options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
+                      selectedOption={configuration?.selectedFileTypes || []}
+                      height="31px"
+                      textStyles={{
+                        fontWeight: 300,
+                        color: "#1E0045",
+                        fontSize: "13px",
+                        marginLeft: "6px",
+                        userSelect: "none",
+                      }}
+                      setSelectedOption={(selected) =>
+                        handleConfigurationChange(
+                          "selectedFileTypes",
+                          configuration?.selectedFileTypes?.includes(selected)
+                            ? configuration?.selectedFileTypes?.filter(
+                                (option) => option !== selected
+                              )
+                            : [
+                                ...(configuration?.selectedFileTypes || []),
+                                selected,
+                              ]
+                        )
+                      }
+                    />
+                  </>
+                )}
               </div>
               <p className={styles.titleContentInput}>
                 Filtro de Importe Total
@@ -266,18 +323,36 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               <span className={styles.quantityContainer}>
                 <div className={styles.quantityContent}>
                   <span>Min</span>
-                  <input type="text" placeholder="-" />
+                  <input
+                    type="text"
+                    placeholder="-"
+                    onChange={(e) =>
+                      setTotalAmount((value) => ({
+                        ...value,
+                        min: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
                 <p>-</p>
                 <div className={styles.quantityContent}>
                   <span>Max</span>
-                  <input type="text" placeholder="-" />
+                  <input
+                    type="text"
+                    placeholder="-"
+                    onChange={(e) =>
+                      setTotalAmount((value) => ({
+                        ...value,
+                        max: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
               </span>
             </div>
           </CustomAutomationsWrapper>
           <CustomAutomationsWrapper
-            Icon={<WhiteFolder />}
+            Icon={<CircuitryIcon />}
             showContent={showContent.info9}
           >
             <div
@@ -668,7 +743,6 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               />
             </div>
           </CustomAutomationsWrapper>
-
         </div>
       </CustomAutomationsWrapper>
       {showSelectCurrencyPopup && (

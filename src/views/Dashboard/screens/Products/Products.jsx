@@ -27,6 +27,7 @@ import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import OptionsPopup from "../../components/OptionsPopup/OptionsPopup";
+import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
 
 const Products = () => {
   const { t } = useTranslation("clients");
@@ -37,6 +38,7 @@ const Products = () => {
   const [showImportAssets, setShowImportAssets] = useState(false);
   const [newClient, setShowNewClient] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedClientIds, setSelectedClientIds] = useState([]);
 
   const { docByClient, loading } = useSelector(
     (state) => state.docs
@@ -64,15 +66,30 @@ const Products = () => {
   };
 
   const selectAllClients = () => {
-    if (clientSelected.length > 0) {
-      // Si ya hay clientes seleccionados, limpiar la selección
+    if (clientSelected.length === tableData.length) {
+      // Si todos los clientes están seleccionados, limpiar la selección
       setClientSelected([]);
+      setSelectedIds(false);
+      console.log("a");
     } else {
-      // Si no hay clientes seleccionados, agregar todos los índices
+      // Si no todos los clientes están seleccionados, agregar todos los índices
+      setSelectedIds(true);
       const allClientIndexes = tableData.map((_, index) => index); // Crear un arreglo con los índices
+      console.log(allClientIndexes);
       setClientSelected(allClientIndexes);
     }
   };
+
+  // const selectAllClients = () => {
+  //   if (clientSelected.length === clients.length) {
+  //     // Si ya hay clientes seleccionados, limpiar la selección
+  //     setClientSelected([]);
+  //   } else {
+  //     // Si no hay clientes seleccionados, agregar todos los índices
+  //     const allClientIndexes = tableData.map((_, index) => index); // Crear un arreglo con los índices
+  //     setClientSelected(allClientIndexes);
+  //   }
+  // };
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -212,6 +229,34 @@ const Products = () => {
 
   const [selectedIds, setSelectedIds] = useState([]);
 
+  const toggleClientSelection = async (clientId) => {
+    setSelectedClientIds((prev) =>
+      prev.includes(clientId)
+        ? prev.filter((id) => id !== clientId)
+        : [...prev, clientId]
+    );
+
+    console.log("toggling clientId", clientId);
+    // console.log("allClients", allClients);
+    // let singleUser = allClients[0];
+    // const response = await dispatch(
+    //   getEmailsByQuery({
+    //     userId: singleUser?.id || 'randomId',
+    //     email: singleUser.tokenEmail,
+    //     password: singleUser.tokenPassword,
+    //     query: singleUser.emailQueries,
+    //     tokenGpt: singleUser.tokenGPT,
+    //     logs: [],
+    //     ftpData: {
+    //       host: singleUser.host,
+    //       port: singleUser.port,
+    //       user: singleUser.tokenUser,
+    //       password: singleUser.tokenUserPassword,
+    //     },
+    //   })
+    // );
+    // console.log('RESPONSE==', response);
+  };
   const renderRow = (row, index, onSelect) => (
     <tr key={index}>
       {/* Checkbox */}
@@ -219,6 +264,7 @@ const Products = () => {
         <input
           type="checkbox"
           name="clientSelected"
+          onChange={() => toggleClientSelection(row?.id)}
           onClick={() => selectClient(index)}
           checked={clientSelected.includes(index)}
         />
@@ -294,6 +340,7 @@ const Products = () => {
           </div>
           {selectedRowIndex === index && (
             <OptionsPopup
+              close={setSelectedRowIndex}
               options={[
                 {
                   label: "Ver Parámetros  (1828)",
@@ -321,7 +368,6 @@ const Products = () => {
               ]}
             />
           )}
- 
         </div>
       </td>
     </tr>
@@ -341,8 +387,8 @@ const Products = () => {
     );
   };
 
-
   const [newContactProp, setNewContact] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("Nombre");
   return (
     <PanelTemplate>
       <div className={styles.container}>
@@ -393,6 +439,10 @@ const Products = () => {
               >
                 <img src={KIcon} alt="kIcon" />
               </div>
+              <FiltersDropdownContainer
+                setSelectedOption={setSelectedOption}
+                selectedOption={selectedOption}
+              />
             </>
           }
         />
@@ -437,8 +487,8 @@ const Products = () => {
             columns={tableHeaders}
             data={docByClient?.doc?.totalData?.productList || tableData}
             renderRow={renderRow}
-            selectedIds={selectedIds}
-            onSelectAll={selectAll}
+            selectedIds={clientSelected}
+            onSelectAll={selectAllClients}
             onSelect={toggleSelection}
           />
         )}

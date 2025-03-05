@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate.jsx";
 import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen.jsx";
 import SelectLocation from "../../components/SelectLocation/SelectLocation.jsx";
+
+import CreateNotePopup from "../../components/CreateNotePopup/CreateNotePopup.jsx";
+
 // import { dispatch } from "d3";
 import { getOneDocsById } from "@src/actions/docs";
 
@@ -34,6 +37,9 @@ export default function InvoicePanel() {
   const [noteColor, setNoteColor] = useState("tagGreen");
   const [isEditingNote, setIsEditingNote] = useState(false);
   const [editingNote, setEditingNote] = useState(false);
+  const [editorContentFinal, setEditorContentFinal] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+
   console.log(`usuario: ${user}`);
 
   const { id } = useParams();
@@ -122,7 +128,13 @@ export default function InvoicePanel() {
 
   const [mobileSelectedDocument, setMobileSelectedDocument] = useState(false);
   const [showInfoMobileBill, setShowInfoMobileBill] = useState(false);
-
+  const [createdNote, setCreatedNote] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [isAnimating, setIsAnimating] = useState(false);
+  console.log(
+    mobileSelectedDocument,
+    "mobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocument"
+  );
   return (
     <PanelTemplate
       mobileSelectedDocument={mobileSelectedDocument}
@@ -180,6 +192,12 @@ export default function InvoicePanel() {
             idFile={id}
             showInfoMobileBill={showInfoMobileBill}
             setShowInfoMobileBill={setShowInfoMobileBill}
+            setCreatedNote={setCreatedNote}
+            createdNote={createdNote}
+            editorContentFinal={editorContentFinal}
+            setEditorContentFinal={setEditorContentFinal}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
           />
           {showSelectLocation && (
             <SelectLocation onClose={() => setShowSelectLocation(false)} />
@@ -192,7 +210,31 @@ export default function InvoicePanel() {
             editingNote={editingNote}
             setShowInfoMobileBill={setShowInfoMobileBill}
             setMobileSelectedDocument={setMobileSelectedDocument}
+            setCreatedNote={setCreatedNote}
+            createdNote={createdNote}
+            noteColor={noteColor}
+            editorContentFinal={editorContentFinal}
+            setEditorContentFinal={setEditorContentFinal}
+            setSelectedCurrency={setSelectedCurrency}
+            selectedCurrency={selectedCurrency}
           />
+          {hasNote && (
+            <>
+              <CreateNotePopup
+                hasNote={hasNote}
+                setHasNote={setHasNote}
+                noteColor={noteColor}
+                setNoteColor={setNoteColor}
+                setCreatedNote={setCreatedNote}
+                editorContentFinal={editorContentFinal}
+                setEditorContentFinal={setEditorContentFinal}
+                setEditingNote={setEditingNote}
+                editingNote={editingNote}
+                isAnimating={isAnimating}
+                setIsAnimating={setIsAnimating}
+              />
+            </>
+          )}
         </>
       )}
     </PanelTemplate>
