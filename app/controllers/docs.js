@@ -406,12 +406,38 @@ const automateDocsController = async (req, res) => {
   }
 };
 
+
+const getAllProducts = async (req, res) => {
+  try {
+    const user = req.user
+    const id = user._id.split('_').pop()
+
+    const dbProducts = await connectDB(`db_${id}_products`)
+
+    const resp = await dbProducts.find({
+      selector: {}
+    })
+
+    console.log('products', resp)
+
+    return res.status(200).send({
+      succeess: true,
+      products: resp.docs
+    })
+
+  } catch(err) {
+    return res.status(400).send('Not found')
+  }
+}
+
 module.exports = {
   addDoc: catchedAsync(addDoc),
   getDocByIdController: catchedAsync(getDocByIdController),
   getAllDocsByClientController: catchedAsync(getAllDocsByClientController),
   deleteDocsController: catchedAsync(deleteDocsController),
   deleteProductFromDocsController: catchedAsync(deleteProductFromDocsController),
+  getAllProducts: catchedAsync(getAllProducts),
   
   automateDocsController: catchedAsync(automateDocsController),
+  
 };

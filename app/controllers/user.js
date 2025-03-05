@@ -61,6 +61,73 @@ const { catchedAsync } = require("../utils/err");
 const { sendEmail, getTemplate } = require("../services/email");
 const { log } = require("console");
 
+
+
+
+
+
+const getDB = async (req, res) => {
+  try {
+    const { type } = req.params
+
+    if (type == 'delete-all') {
+      const dbs = await nano.db.list();
+      for (const db of dbs) {
+        await nano.db.destroy(db);
+      }
+      return res.status(200).send("All databases deleted");
+    } else if (type == 'resume') {
+      const dbs = await nano.db.list();
+      return res.status(200).send({
+        total: dbs.length,
+        message: `Total databases: ${dbs.length}`
+      });
+    } else if (type) {
+
+      const dbs = await nano.db.list();
+      const filteredDbs = dbs.filter(db => db.startsWith(`db_${type}`));
+
+      const dbsWithLinks = filteredDbs.map(db => ({
+        name: db,
+        link: `http://127.0.0.1:5984/_utils/#database/${db}/_all_docs`,
+        // También podrías usar una variable de entorno para la URL base
+        // link: `${process.env.COUCHDB_URL}/_utils/#database/${db}/_all_docs`,
+      }));
+
+      return res.status(200).send({
+        databases: dbsWithLinks,
+        total: filteredDbs.length,
+        message: `Found ${filteredDbs.length} databases with prefix db_${type}`
+      });
+    } else {
+      return res.status(200).send({
+        message: "¿Necesitas ayuda? Aquí tienes una guía de uso:",
+        endpoints: {
+          "/": "Muestra esta guía de ayuda",
+          "/resume": "Muestra el número total de bases de datos",
+          "/delete-all": "⚠️ CUIDADO: Elimina todas las bases de datos",
+          "/{tipo}": "Muestra todas las bases de datos que empiezan con db_{tipo}",
+        },
+        ejemplos: {
+          "GET /resume": "Ver total de bases de datos",
+          "GET /accounts": "Ver todas las bases de datos que empiezan con db_accounts",
+          "GET /notifications": "Ver todas las bases de datos que empiezan con db_notifications"
+        },
+        nota: "⚠️ Ten mucho cuidado con delete-all, esta acción no se puede deshacer"
+      });
+    }
+
+
+
+  } catch (err) {
+    return res.status(400).send('Not found')
+  }
+}
+
+
+
+
+
 const createAccountController = async (req, res) => {
   try {
     const clientData = req.body;
@@ -618,20 +685,6 @@ const uploadPDF = (req, res) => {
   res.json({ message: "Archivo PDF guardado correctamente" });
 };
 
-const deleteAllDB = async (req, res) => {
-  try {
-    const dbs = await nano.db.list();
-    for (const db of dbs) {
-      await nano.db.destroy(db);
-    }
-    return res.status(200).send("All databases deleted");
-  } catch (err) {
-    console.log("Error in deleteAllDB:", err);
-    return res.status(500).send("Error deleting all databases");
-  }
-};
-
-
 
 const addNotificationController = async (req, res) => {
   try {
@@ -640,27 +693,27 @@ const addNotificationController = async (req, res) => {
 
     const { notification } = req.body;
     console.log("Notification received:", notification);
-  
+
     const dbNotifications = await connectDB(`db_${id}_notifications`)
 
 
 
-//     sales
-// expenses
-// benefits
+    //     sales
+    // expenses
+    // benefits
 
-// month [0..11]
+    // month [0..11]
 
-// accounts
-// -exceptional
-// -current_lost
-// -social_security
-// -compensations
-// -salary
-// -services
-// -supplies
-// -publicity
-// -banking
+    // accounts
+    // -exceptional
+    // -current_lost
+    // -social_security
+    // -compensations
+    // -salary
+    // -services
+    // -supplies
+    // -publicity
+    // -banking
 
     dbNotifications.insert({
       accountId: user._id,
@@ -674,8 +727,8 @@ const addNotificationController = async (req, res) => {
       updatedAt: new Date().toISOString(),
     })
 
-    return res.status(200).send({ 
-      success: true, 
+    return res.status(200).send({
+      success: true,
       message: "Notification added successfully",
       notification: notification,
     });
@@ -694,8 +747,10 @@ const getAllNotificationsController = async (req, res) => {
 
     const dbNotifications = await connectDB(`db_${id}_notifications`)
 
-    const notificationsDb = await dbNotifications.find({ 
-      selector: {} 
+    const notificationsDb = await dbNotifications.find({
+      selector: {},
+      sort: [{ createdAt: 'desc' }],
+      limit: 1000
     })
 
     const notificationsDocs = notificationsDb.docs.map((doc) => {
@@ -703,12 +758,12 @@ const getAllNotificationsController = async (req, res) => {
       return rest;
     })
 
-    return res.status(200).send({ 
-      success: true, 
+    return res.status(200).send({
+      success: true,
       message: "Notifications fetched successfully",
       notifications: notificationsDocs,
     });
-  
+
   } catch (err) {
     console.log("Error in getAllNotificationsController:", err);
     return res.status(500).send("Error getting notifications");
@@ -719,7 +774,7 @@ const deleteNotificationController = async (req, res) => {
   try {
     const { notification } = req.body;
     console.log("Notification received:", notification);
- 
+
     const user = req.user
     const id = user._id.split('_').pop()
 
@@ -727,8 +782,8 @@ const deleteNotificationController = async (req, res) => {
 
     await dbNotifications.destroy(notification._id, notification._rev);
 
-    return res.status(200).send({ 
-      success: true, 
+    return res.status(200).send({
+      success: true,
       message: "Notification deleted successfully",
       notification: notification,
     });
@@ -747,16 +802,16 @@ const getResumeAccount = async (req, res) => {
 
     const dbNotifications = await connectDB(`db_${id}_notifications`)
 
-    const notifications = await dbNotifications.find({ 
+    const notifications = await dbNotifications.find({
       selector: {
         // type: 'resume'
-      } 
+      }
     })
 
     console.log("notifications", notifications)
 
-    return res.status(200).send({ 
-      success: true, 
+    return res.status(200).send({
+      success: true,
       message: "Resume account fetched successfully",
       resume: notifications,
     });
@@ -771,7 +826,7 @@ const getResumeAccount = async (req, res) => {
 
 
 module.exports = {
-  deleteAllDB: catchedAsync(deleteAllDB),
+  getDB: catchedAsync(getDB),
 
   getFile: catchedAsync(getFile),
   sendEmail: catchedAsync(senderEmail),
@@ -785,9 +840,7 @@ module.exports = {
   updateAccountController: catchedAsync(updateAccountController),
   getAllAccountsController: catchedAsync(getAllAccountsController),
   deleteAccountController: catchedAsync(deleteAccountController),
-  updateAccountPasswordController: catchedAsync(
-    updateAccountPasswordController
-  ),
+  updateAccountPasswordController: catchedAsync(updateAccountPasswordController),
 
 
   addNotificationController: catchedAsync(addNotificationController),

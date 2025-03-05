@@ -11,6 +11,8 @@ const {
 
   automateDocsController,
   addDoc,
+
+  getAllProducts,
 } = require("../controllers/docs");
 
 
@@ -23,6 +25,7 @@ docsByClientRouter
   .post("/deleteDocs", authenticateToken, deleteDocsController)
   .post("/deleteProductFromDocs", authenticateToken, deleteProductFromDocsController)
   .get("/getOneDocs/:docId", authenticateToken, getDocByIdController)
-  .post("/addDocs", authenticateToken, addDoc);
+  .post("/addDocs", authenticateToken, addDoc)
+  .post("/getAllProducts", authenticateToken, getAllProducts)
 
 module.exports = docsByClientRouter;

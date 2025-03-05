@@ -735,7 +735,7 @@ export default function FileExplorer({
                 let fileName = isFolder
                   ? item.Key.split("/").slice(-2, -1)[0]
                   : item.Key.split("/").pop();
-                console.log("item.key", fileName);
+                // console.log("item.key", fileName);
 
                 const filePrefix = /^FILE-([^_]+)/;
                 const match = fileName.match(filePrefix);

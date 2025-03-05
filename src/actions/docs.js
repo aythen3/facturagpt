@@ -90,34 +90,6 @@ export const deleteDocs = createAsyncThunk(
   }
 );
 
-export const deleteProductFromDocs = createAsyncThunk(
-  "docs/deleteProductFromDocs",
-  async ({ docId, productRef }, { rejectWithValue }) => {
-    try {
-      const user = localStorage.getItem("user");
-      const userJson = JSON.parse(user);
-      const token = userJson.accessToken;
-
-      const res = await apiBackend.post(
-        "/docs/deleteProductFromDocs",
-        { docId, productRef },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      return res.data; // Retornar datos de la respuesta del servidor
-    } catch (error) {
-      console.error("Error deleting docs:", error);
-
-      if (error.response.status === 501) logout()
-
-      return rejectWithValue(
-        error.response ? error.response.data : error.message
-      );
-    }
-  }
-);
 
 export const getOneDocsById = createAsyncThunk(
   "docs/getOneDocs", // Nombre de la acción
@@ -152,3 +124,67 @@ export const getOneDocsById = createAsyncThunk(
     }
   }
 );
+
+
+
+
+export const deleteProductFromDocs = createAsyncThunk(
+  "docs/deleteProductFromDocs",
+  async ({ docId, productRef }, { rejectWithValue }) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.post(
+        "/docs/deleteProductFromDocs",
+        { docId, productRef },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      return res.data; // Retornar datos de la respuesta del servidor
+    } catch (error) {
+      console.error("Error deleting docs:", error);
+
+      if (error.response.status === 501) logout()
+
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+
+
+
+export const getAllProducts = createAsyncThunk(
+  "docs/getAllProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
+      const res = await apiBackend.post(
+        "/docs/getAllProducts",
+        { },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      return res.data; // Retornar datos de la respuesta del servidor
+    } catch (error) {
+      console.error("Error deleting docs:", error);
+
+      if (error.response.status === 501) logout()
+
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+

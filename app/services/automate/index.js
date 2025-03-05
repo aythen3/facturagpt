@@ -2,6 +2,8 @@ const { catchedAsync, response } = require("../../utils/err");
 const { connectDB } = require("../../controllers/utils");
 const { v4: uuidv4 } = require('uuid');
 
+const { mergeResults } = require('./utils')
+
 const AWS = require("aws-sdk");
 
 const s3 = new AWS.S3({
@@ -23,6 +25,12 @@ const { getImapConfig, connectToImap } = require('./gmail')
 const { simpleParser } = require("mailparser");
 
 const ftp = require("basic-ftp");
+
+const {
+  processImageSections,
+  processProductsSection
+} = require('./pdf/index.js')
+
 
 // const { updateClientService } = require("./emailManager");
 // const tempDir = "./temp";
@@ -54,14 +62,15 @@ const {
 } = require("../gpt");
 
 
-const getGPTData = async (attach) => {
+const getGPTData = async ({ attach, token }) => {
   // console.log("ATTACH RECEIVED", attach);
   try {
+    console.log('att', attach)
     const fileBuffer = attach.buffer;
     let imageBuffers = [];
 
     console.log("ATTACH", attach)
-    
+
     if (attach.mimetype === "application/pdf" || attach.mimeType === "application/pdf") {
       imageBuffers = await convertPDFToPNG(fileBuffer);
     } else if (attach && attach.mimeType.startsWith("image/")) {
@@ -71,7 +80,7 @@ const getGPTData = async (attach) => {
     // const token =
     //   "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";
 
-    const token = "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"
+    // const token = "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"
 
     console.log("TOKEN", token);
     let allErrors = [];
@@ -218,6 +227,8 @@ const getGPTData = async (attach) => {
           !clientCifFound,
           !clientNifFound
         );
+
+        console.log('sectionResult', sectionResult)
 
         totalTokens += sectionResult.totalTokens || 0;
         totalPrice += sectionResult.totalPrice || 0;
@@ -430,6 +441,7 @@ const gmailFilter = async ({
   userId,
   logs,
   // ftpData
+  tokenGPT
 }) => {
   try {
     ///
@@ -449,7 +461,10 @@ const gmailFilter = async ({
         filteredEmails.push(email);
 
         for (const attachment of email.attachments) {
-          let processedData = await getGPTData(attachment);
+          let processedData = await getGPTData({
+            attach: attachment,
+            token: tokenGPT
+          });
           let newProcessedData = await calculateTaxesAndDiscounts(processedData.productList);
 
           processedData.partialAmount = convertToNumber(processedData.partialAmount);
@@ -544,6 +559,85 @@ const gmailFilter = async ({
 
 
 
+
+
+const saveAttachmentData = async ({
+  userId,
+  data
+}) => {
+  try {
+
+    // const userId = 
+    const dbClients = await connectDB(`db_${userId}_clients`)
+    const dbDocs = await connectDB(`db_${userId}_docs`)
+    const dbProducts = await connectDB(`db_${userId}_products`)
+
+
+    console.log('data', data)
+
+    if(data?.documentType == 'factura') {
+      console.log('EXITO ES UNA FACTURA')
+    }else {
+      console.log('IS DIGITAL TRASH!!')
+    }
+
+    let clientId = uuidv4()
+    let docId = uuidv4()
+
+    let doc = {
+      id: docId,
+      clientId: clientId,
+      date: data.invoiceDate,
+      year: data.invoiceDate,
+      month: data.invoiceDate,
+      day: data.invoiceDate,
+      number: data.numberDocument,
+      total: data.totalAmount,
+      discount: data.discountAmount,
+      partial: data.partialAmount,
+    }
+
+    let client = {
+      id: clientId,
+      name: data.clientName,
+      cif: data.clientCif,
+      nif: data.clientCif,
+      phone_number: data.clientPhoneNumber,
+      address: data.clientAddress,
+    }
+
+
+    data.productList.map((product, index) => {
+      let productId = uuidv4()
+      let productDoc = {
+        id: productId,
+        docId: docId,
+        clientId: clientId,
+        ref: product.productRef,
+        description: product.productDescription,
+        quantity: product.productQuantity,
+        unit: product.productUnit,
+        quantity: product.productPartial,
+        import: product.productImport,
+        discount: product.productDiscount,
+        rate: product.productDiscountRate,
+        partial: product.productPartial
+      }
+
+      dbProducts.insert(productDoc)
+    })
+
+    dbDocs.insert(doc)
+    dbClients.insert(client)
+
+
+  } catch (err) {
+    console.log('err', err)
+  }
+}
+
+
+
 const goAutomate = async (req, res) => {
   // return res.status(200).json({ message: "ok" });
   try {
@@ -566,9 +660,9 @@ const goAutomate = async (req, res) => {
     // sales
     // expenses
     // benefits
-    
+
     // month [0..11]
-    
+
     // accounts
     // -exceptional
     // -current_lost
@@ -590,8 +684,7 @@ const goAutomate = async (req, res) => {
 
     const currentMonth = new Date().getMonth()
     const currentYear = new Date().getFullYear()
-    const currentMonthYear = `${currentMonth}-${currentYear}`
-   
+
     const currentDate = new Date();
     const day = currentDate.getDate().toString().padStart(2, '0');
     const month = currentDate.toLocaleString('en-US', { month: 'short' });
@@ -606,7 +699,7 @@ const goAutomate = async (req, res) => {
       title: "Document Title",
       date: `${day} ${month} ${year}`,
       time: `${hours}:${minutes} ${period}`,
-      month: currentMonthYear,
+      month: `${currentMonth}-${currentYear}`,
       icon: "https://aythen.com/logo.png",
       notifications: [
         dataNotification,
@@ -614,8 +707,13 @@ const goAutomate = async (req, res) => {
         dataNotification
       ],
       options: ["Compartir"], // Solo 2 opciones
-      category: ["excepcional", "current_lost", "social_security", "compensations", "salary", "services", "supplies", "publicity", "banking"]
+      category: ["excepcional", "current_lost", "social_security", "compensations", "salary", "services", "supplies", "publicity", "banking"],
+      type: 'pay',
+      value: 1000,
+      currency: 'EUR'
     })
+
+
     // dbNotifications.insert({
     //   accountId: user._id,
     //   user: 'info@aythen.com',
@@ -646,9 +744,27 @@ const goAutomate = async (req, res) => {
         await s3.upload(params).promise();
 
 
-        const attachmentData = await getGPTData(file)
+        if (!user.tokenGPT) {
+          return res.status(200).json({ message: 'Token not authorizated' })
+        }
+
+        const attachmentData = await getGPTData({
+          attach: file,
+          token: user.tokenGPT
+        })
+
+
+        saveAttachmentData({
+          userId: id,
+          data:attachmentData
+      })
+
         console.log('file uploaded successfully', attachmentData)
-        return res.status(200).json({ message: "ok not automations" });
+        return res.status(200).json({ 
+          success: true,
+          status: 201,
+          message: "ok, but not automations" 
+        });
       } catch (error) {
         console.log('error', error)
         return res.status(200).json({ message: "error uploading file" });
@@ -659,6 +775,10 @@ const goAutomate = async (req, res) => {
     // AUTOMATES
     const account = await dbAccounts.get(user._id)
     console.log('account AUTOMATIONS', account)
+
+    if (!account.tokenGPT) {
+      return res.status(200).json({ message: 'Token not authorizated' })
+    }
 
     if (!account.automations || account.automations.length === 0) {
       return res.status(200).json({ message: "Not found automations" });
@@ -699,6 +819,7 @@ const goAutomate = async (req, res) => {
           password: tokenData?.appPassword,
           query: tokenData?.query,
           logs: tokenData?.logs,
+          tokenGPT: user.tokenGPT
           // ftpData: tokenData.ftpData
         });
 

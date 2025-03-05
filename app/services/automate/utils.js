@@ -1,3 +1,9 @@
+const path = require('path');
+const fs = require('fs')
+const { PDFDocument } = require("pdf-lib");
+const { fromPath } = require('pdf2pic');
+
+
 const calculateTaxesAndDiscounts = (products) => {
     return products.map((product) => {
         let {
@@ -79,6 +85,7 @@ const removeDuplicatesFromArray = (array) => {
 };
 
 const convertPDFToPNG = async (buffer) => {
+
     const tempDir = path.join(__dirname, "./temp");
     const tempPdfPath = path.join(tempDir, "temp.pdf");
 

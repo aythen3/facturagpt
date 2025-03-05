@@ -176,7 +176,8 @@ const getAllClientsController = async (req, res) => {
     const dbClients = await connectDB(`db_${extractedId}_clients`);
 
     const clients = await dbClients.find({
-      selector: { userId },
+      // selector: { userId },
+      selector: { },
     });
 
     const data = clients.docs.length > 0 ? clients.docs : [];
