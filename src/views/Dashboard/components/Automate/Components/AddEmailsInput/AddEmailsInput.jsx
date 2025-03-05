@@ -4,6 +4,21 @@ import miniClose from "../../../../assets/miniClose.svg";
 
 const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
   const [value, setValue] = useState("");
+  console.log("addedEmails", addedEmails);
+  const handleButton = (e) => {
+    e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const testEmail = (email) => emailRegex.test(email);
+    if (value !== "" && testEmail(value)) {
+      if (addedEmails.includes(value)) {
+        setAddedEmails(addedEmails.filter((email) => email !== value));
+      } else {
+        setAddedEmails([...addedEmails, value]);
+      }
+      setValue("");
+    }
+  };
+
   return (
     <div className={styles.addEmailsInputContainer}>
       <div className={styles.addedEmailsContainer}>
@@ -28,9 +43,9 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              e.preventDefault();
               const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
               const testEmail = (email) => emailRegex.test(email);
-              e.preventDefault();
               if (value !== "" && testEmail(value)) {
                 if (addedEmails.includes(value)) {
                   setAddedEmails(
@@ -44,6 +59,9 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
             }
           }}
         />
+        <button onClick={handleButton} className={styles.button}>
+          +
+        </button>
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAu
 
 import styles from "./FileInput.module.css";
 
-
 import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
 import InputComponent from "../../../InputComponent/InputComponent";
@@ -22,19 +21,16 @@ import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 
-const Notification = ({
-    handleConfigurationChange,
-    configuration,
-    type
-}) => {
+const Notification = ({ handleConfigurationChange, configuration, type }) => {
+  const [showContent, setShowContent] = useState({
+    info4: false,
+  });
 
-    const [showContent, setShowContent] = useState({
-        info4: false,
-    });
-
-    return (
-        
-      <CustomAutomationsWrapper Icon={<WhiteBell />} showContent={showContent.info4}>
+  return (
+    <CustomAutomationsWrapper
+      Icon={<WhiteBell />}
+      showContent={showContent.info4}
+    >
       <div
         className={styles.infoContainerWrapper}
         onClick={() =>
@@ -44,8 +40,8 @@ const Notification = ({
         <div className={styles.infoContainer}>
           <div>Configura tus notificaciones personalizadas</div>
           <span>
-            Recibe alertas en tiempo real para mantenerte informado sobre
-            cada proceso.
+            Recibe alertas en tiempo real para mantenerte informado sobre cada
+            proceso.
           </span>
         </div>
         <OptionsSwitchComponent
@@ -80,6 +76,12 @@ const Notification = ({
           >
             <NotificationsConfirmComponent
               configuration={configuration}
+              setPhoneListNotificate={(phoneListNotificate) =>
+                handleConfigurationChange(
+                  "phoneListNotificate",
+                  phoneListNotificate
+                )
+              }
               icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
               disableSwitch={true}
               mainState={configuration?.notificateAfterExport || false}
@@ -135,8 +137,7 @@ const Notification = ({
             <div className={styles.infoContainerWrapper}>
               <div className={styles.infoContainer}>
                 <div>
-                  Activa validaciones avanzadas para notificar posibles
-                  errores
+                  Activa validaciones avanzadas para notificar posibles errores
                 </div>
                 <span>
                   Asegura la precisión de tus datos con alertas en caso de
@@ -156,8 +157,7 @@ const Notification = ({
         </div>
       </div>
     </CustomAutomationsWrapper>
-       
-    )
-}
+  );
+};
 
-export default Notification
+export default Notification;

@@ -20,11 +20,10 @@ import SelectCurrencyPopup from "../../../../SelectCurrencyPopup/SelectCurrencyP
 import { ifft } from "@tensorflow/tfjs";
 
 import { Currency } from "lucide-react";
- 
 
 const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const [fileKeywords, setFileKeywords] = useState([]);
-  const [labels, setLabels] = useState([]); // Ahora labels contiene toda la información necesaria
+  // const [configuration.labels, setLabels] = useState([]); // Ahora configuration.labels contiene toda la información necesaria
   const [editIndex, setEditIndex] = useState(null);
   const [editConditionIndex, setEditConditionIndex] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
@@ -43,22 +42,22 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const [totalAmount, setTotalAmount] = useState({
     min: 0,
     max: 0,
-    selectedCurrency,
   });
 
   const addCondition = (index) => {
-    if (labels[index].newCondition) {
-      const updatedLabels = [...labels];
+    if (configuration.labels[index].newCondition) {
+      const updatedLabels = [...configuration.labels];
       updatedLabels[index].conditions.push(updatedLabels[index].newCondition);
       updatedLabels[index].newCondition = "";
-      updatedLabels[index].conditionCurrency = labels[index].conditions[0];
-      console.log(labels[index].conditions[0]);
-      setLabels(updatedLabels);
+      updatedLabels[index].conditionCurrency =
+        configuration.labels[index].conditions[0];
+      console.log(configuration.labels[index].conditions[0]);
+      handleConfigurationChange("labels", updatedLabels);
     }
   };
 
   const addFilter = (index, type) => {
-    const updatedLabels = [...labels];
+    const updatedLabels = [...configuration.labels];
     updatedLabels[index].filters.push({
       id: Date.now(),
       // conditionCurrency: type === "AND" ? "provider" : "title",
@@ -68,21 +67,21 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
       conditionValue: "",
       type,
     });
-    setLabels(updatedLabels);
+    handleConfigurationChange("labels", updatedLabels);
   };
 
   const updateFilter = (labelIndex, filterId, key, value) => {
-    const updatedLabels = [...labels];
+    const updatedLabels = [...configuration.labels];
     updatedLabels[labelIndex].filters = updatedLabels[labelIndex].filters.map(
       (filter) =>
         filter.id === filterId ? { ...filter, [key]: value } : filter
     );
-    setLabels(updatedLabels);
+    handleConfigurationChange("labels", updatedLabels);
   };
 
   const saveFilter = () => {
-    setLabels([
-      ...labels,
+    handleConfigurationChange("labels", [
+      ...configuration.labels,
       {
         name: "",
         conditions: [],
@@ -103,7 +102,10 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   };
 
   const deleteLabel = (index) => {
-    setLabels(labels.filter((_, i) => i !== index));
+    handleConfigurationChange(
+      "labels",
+      configuration.labels.filter((_, i) => i !== index)
+    );
     setEditIndex(null);
   };
 
@@ -119,17 +121,32 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
     }
   }, [configuration?.selectedFileTypes]);
 
-  console.log("totalAmount ==>", totalAmount);
+  console.log("configuration.labels ==>", configuration.labels);
+
+  // useEffect(() => {
+  //   const totalAmountAndSelectedCurrency = {
+  //     max: totalAmount.max,
+  //     min: totalAmount.min,
+  //     selectedCurrency,
+  //   };
+  //   handleConfigurationChange("totalAmount", totalAmountAndSelectedCurrency);
+  // }, [selectedCurrency, totalAmount]);
 
   useEffect(() => {
-    const totalAmountAndSelectedCurrency = {
-      max: totalAmount.max,
-      min: totalAmount.min,
-      selectedCurrency,
-    };
-    handleConfigurationChange("totalAmount", totalAmountAndSelectedCurrency);
-  }, [selectedCurrency, totalAmount]);
+    if (configuration?.totalAmount?.selectedCurrency) {
+      setSelectedCurrency(configuration?.totalAmount?.selectedCurrency);
+    }
+  }, [configuration?.totalAmount?.selectedCurrency]);
 
+  console.log("configuration ==>", configuration);
+
+  const handleTotalAmountFilter = (e, minMax) => {
+    const minMaxAmount = {
+      ...configuration.totalAmount,
+      [minMax]: e.target.value,
+    };
+    handleConfigurationChange("totalAmount", minMaxAmount);
+  };
 
   return (
     <div>
@@ -244,16 +261,16 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   }}
                   text="Incluir todos los tipos de archivos"
 
-                      configuration?.selectedFileTypes?.includes(selected)
-                        ? configuration?.selectedFileTypes?.filter(
-                            (option) => option !== selected
-                          )
-                        : [
-                            ...(configuration?.selectedFileTypes || []),
-                            selected,
-                          ]
-                    )
-                  }
+                  //     configuration?.selectedFileTypes?.includes(selected)
+                  //       ? configuration?.selectedFileTypes?.filter(
+                  //           (option) => option !== selected
+                  //         )
+                  //       : [
+                  //           ...(configuration?.selectedFileTypes || []),
+                  //           selected,
+                  //         ]
+                  //   )
+                  // }
                 />
                 {!configuration?.allowAllFileTypes && (
                   <>
@@ -324,28 +341,20 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 <div className={styles.quantityContent}>
                   <span>Min</span>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="-"
-                    onChange={(e) =>
-                      setTotalAmount((value) => ({
-                        ...value,
-                        min: e.target.value,
-                      }))
-                    }
+                    onChange={(e) => handleTotalAmountFilter(e, "min")}
+                    value={configuration?.totalAmount?.min}
                   />
                 </div>
                 <p>-</p>
                 <div className={styles.quantityContent}>
                   <span>Max</span>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="-"
-                    onChange={(e) =>
-                      setTotalAmount((value) => ({
-                        ...value,
-                        max: e.target.value,
-                      }))
-                    }
+                    onChange={(e) => handleTotalAmountFilter(e, "max")}
+                    value={configuration?.totalAmount?.max}
                   />
                 </div>
               </span>
@@ -375,7 +384,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               }`}
             >
               <div className={styles.contentInput}>
-                {labels.map((label, index) => (
+                {configuration.labels.map((label, index) => (
                   <div key={index}>
                     <div className={styles.titleContentInput}>
                       <div className={styles.labelName}>
@@ -384,9 +393,9 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                           placeholder="Nombre del Filtro"
                           value={label.name}
                           onChange={(e) => {
-                            const updatedLabels = [...labels];
+                            const updatedLabels = [...configuration.labels];
                             updatedLabels[index].name = e.target.value;
-                            setLabels(updatedLabels);
+                            handleConfigurationChange("labels", updatedLabels);
                           }}
                           disabled={editIndex !== index}
                         />
@@ -417,9 +426,12 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                 condition === "" &&
                                 editConditionIndex === null
                               ) {
-                                const updatedLabels = [...labels];
+                                const updatedLabels = [...configuration.labels];
                                 updatedLabels[index].conditions.splice(i, 1); // Eliminar la condición vacía
-                                setLabels(updatedLabels);
+                                handleConfigurationChange(
+                                  "labels",
+                                  updatedLabels
+                                );
                                 return null; // No renderizar nada para esta condición
                               }
                               return (
@@ -431,10 +443,15 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       type="text"
                                       value={condition}
                                       onChange={(e) => {
-                                        const updatedLabels = [...labels];
+                                        const updatedLabels = [
+                                          ...configuration.labels,
+                                        ];
                                         updatedLabels[index].conditions[i] =
                                           e.target.value;
-                                        setLabels(updatedLabels);
+                                        handleConfigurationChange(
+                                          "labels",
+                                          updatedLabels
+                                        );
                                       }}
                                       onBlur={() => setEditConditionIndex(null)}
                                       onKeyDown={(e) => {
@@ -458,11 +475,16 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       </span>
                                       <DeleteButton
                                         action={() => {
-                                          const updatedLabels = [...labels];
+                                          const updatedLabels = [
+                                            ...configuration.labels,
+                                          ];
                                           updatedLabels[
                                             index
                                           ].conditions.splice(i, 1);
-                                          setLabels(updatedLabels);
+                                          handleConfigurationChange(
+                                            "labels",
+                                            updatedLabels
+                                          );
                                         }}
                                       />
                                     </>
@@ -476,10 +498,13 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                             placeholder="Escribe el prompt para identificar variables"
                             value={label.newCondition}
                             onChange={(e) => {
-                              const updatedLabels = [...labels];
+                              const updatedLabels = [...configuration.labels];
                               updatedLabels[index].newCondition =
                                 e.target.value;
-                              setLabels(updatedLabels);
+                              handleConfigurationChange(
+                                "labels",
+                                updatedLabels
+                              );
                             }}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
@@ -514,7 +539,9 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                   <button
                                     className={`${styles.buttonAddFilter} ${filter.type == "AND" && styles.typeFilterBtn}`}
                                     onClick={() => {
-                                      const updatedLabels = [...labels];
+                                      const updatedLabels = [
+                                        ...configuration.labels,
+                                      ];
                                       const updatedFilters = updatedLabels[
                                         index
                                       ].filters.map((f) => {
@@ -528,7 +555,10 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       });
                                       updatedLabels[index].filters =
                                         updatedFilters;
-                                      setLabels(updatedLabels);
+                                      handleConfigurationChange(
+                                        "labels",
+                                        updatedLabels
+                                      );
                                     }}
                                   >
                                     AND
@@ -536,7 +566,9 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                   <button
                                     className={`${styles.buttonAddFilter} ${filter.type == "OR" && styles.typeFilterBtn}`}
                                     onClick={() => {
-                                      const updatedLabels = [...labels];
+                                      const updatedLabels = [
+                                        ...configuration.labels,
+                                      ];
                                       const updatedFilters = updatedLabels[
                                         index
                                       ].filters.map((f) => {
@@ -550,7 +582,10 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       });
                                       updatedLabels[index].filters =
                                         updatedFilters;
-                                      setLabels(updatedLabels);
+                                      handleConfigurationChange(
+                                        "labels",
+                                        updatedLabels
+                                      );
                                     }}
                                   >
                                     OR
@@ -657,7 +692,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                             Añadir Condición
                           </button>
                         </div>
-                        {console.log(labels)}
+                        {console.log(configuration.labels)}
                       </div>
                     )}
                   </div>
@@ -672,7 +707,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   action={() => {
                     if (editIndex != null) {
                       editLabel(null);
-                    } else if (labels.length === 0) {
+                    } else if (configuration.labels.length === 0) {
                       saveFilter();
                     } else {
                       saveFilter();
@@ -681,7 +716,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 >
                   {editIndex != null
                     ? "Guardar Filtro"
-                    : labels.length === 0
+                    : configuration.labels.length === 0
                       ? "Crear Filtro"
                       : "Crear Filtro"}
                 </Button>

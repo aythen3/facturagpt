@@ -7,8 +7,6 @@ const CustomAutomationsWrapper = ({
   children,
   showContent,
 }) => {
-  console.log("children", children);
-
   return (
     <div className={`${styles.wrapper} ${showContent ? styles.open : ""}`}>
       <div style={{ backgroundColor: color }} className={styles.leftContainer}>

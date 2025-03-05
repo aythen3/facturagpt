@@ -50,3 +50,18 @@
   cursor: pointer;
   user-select: none;
 }
+
+.button {
+  border-radius: 4px;
+  height: 100%;
+  width: 35px;
+  font-size: 26px;
+  color: #72727a;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #10a37f;
+  color: white;
+}
