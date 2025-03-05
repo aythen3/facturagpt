@@ -28,6 +28,12 @@ const {
   verifyOTPController,
   sendNewsletter,
   uploadPDF,
+
+  addNotificationController,
+  getAllNotificationsController,
+  deleteNotificationController,
+
+  getResumeAccount,
   // upload,
   deleteAllDB,
 } = require("../controllers/user");
@@ -38,10 +44,16 @@ const {
 userManagerRouter
   // .post("/automate", upload.single("file"), goAutomate)
 
+  .post("/resume", authenticateToken, getResumeAccount)
+
   .get("/getAllAccounts", authenticateToken, getAllAccountsController)
   .put("/updateAccount", authenticateToken, updateAccountController)
   .post("/deleteAccount", authenticateToken, deleteAccountController)
   
+  .post("/addNotification", authenticateToken, addNotificationController)
+  .get("/getAllNotifications", authenticateToken, getAllNotificationsController)
+  .post("/deleteNotification", authenticateToken, deleteNotificationController)
+
   .post("/updateAccountPassword", updateAccountPasswordController)
   .post("/loginToManager", loginToManagerController)
   // .post("/addNewClient", addNewClientController)
@@ -57,6 +69,7 @@ userManagerRouter
   .get("/get-email", getEmail)
   .get("/get-file/:name", getFile)
   .post("/upload-pdf", upload.single("file"), uploadPDF)
-  .get("/deleteAllDB", deleteAllDB);
+  .get("/deleteAllDB", deleteAllDB)
+
 
 module.exports = userManagerRouter;

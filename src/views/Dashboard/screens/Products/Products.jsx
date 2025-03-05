@@ -15,9 +15,9 @@ import { ParametersLabel } from "../../components/ParametersLabel/ParametersLabe
 import Tags from "../../components/Tags/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteProductFromTransaction,
-  getOneTransactionById,
-} from "../../../../actions/transactions";
+  deleteProductFromDocs,
+  getOneDocsById,
+} from "@src/actions/docs";
 import PanelTemplate from "../../components/PanelTemplate/PanelTemplate";
 import ImportContactsAndProducts from "../../components/ImportContactsAndProducts/ImportContactsAndProducts";
 import NewProduct from "../../components/NewProduct/NewProduct";
@@ -40,8 +40,8 @@ const Products = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [selectedClientIds, setSelectedClientIds] = useState([]);
 
-  const { transactionByClient, loading } = useSelector(
-    (state) => state.transactions
+  const { docByClient, loading } = useSelector(
+    (state) => state.docs
   );
   const [newProductModal, setNewProductModal] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
@@ -53,7 +53,7 @@ const Products = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tags, setTags] = useState([]);
 
-  console.log("TRANSAAAAAAAA----------", transactionByClient);
+  console.log("TRANSAAAAAAAA----------", docByClient);
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -172,14 +172,14 @@ const Products = () => {
 
   const handleDelete = async (productRef) => {
     await dispatch(
-      deleteProductFromTransaction({
-        transactionId: transactionByClient?.id,
+      deleteProductFromDocs({
+        docId: docByClient?.id,
         productRef,
       })
     );
     await dispatch(
-      getOneTransactionById({
-        transactionId: transactionByClient?.id || transactionByClient?.doc?._id,
+      getOneDocsById({
+        docId:  docByClient?.id || docByClient?.doc?._id,
       })
     );
   };
@@ -485,7 +485,7 @@ const Products = () => {
         ) : (
           <DynamicTable
             columns={tableHeaders}
-            data={transactionByClient?.doc?.totalData?.productList || tableData}
+            data={docByClient?.doc?.totalData?.productList || tableData}
             renderRow={renderRow}
             selectedIds={clientSelected}
             onSelectAll={selectAllClients}

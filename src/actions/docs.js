@@ -119,7 +119,7 @@ export const deleteProductFromDocs = createAsyncThunk(
   }
 );
 
-export const getOneDocById = createAsyncThunk(
+export const getOneDocsById = createAsyncThunk(
   "docs/getOneDocs", // Nombre de la acción
   async ({ docId }, { rejectWithValue }) => {
     console.log("IDDDDD ACTION ----------", docId);
