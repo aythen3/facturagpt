@@ -326,7 +326,7 @@ const Export = ({ handleConfigurationChange, configuration }) => {
 
         <CustomAutomationsWrapper
           Icon={<WhiteClock />}
-          showContent={configuration?.actionFrequency}
+          showContent={configuration?.actionExtractionFrequency}
         >
           <div className={styles.infoContainerWrapper}>
             <div
@@ -347,14 +347,14 @@ const Export = ({ handleConfigurationChange, configuration }) => {
             <OptionsSwitchComponent
               border={"none"}
               marginLeft={"auto"}
-              isChecked={configuration?.actionFrequency || false}
+              isChecked={configuration?.actionExtractionFrequency || false}
               setIsChecked={(value) =>
-                handleConfigurationChange("actionFrequency", value)
+                handleConfigurationChange("actionExtractionFrequency", value)
               }
             />
           </div>
           <div
-            className={`${styles.contentContainer} ${configuration?.actionFrequency ? styles.active : styles.disabled}`}
+            className={`${styles.contentContainer} ${configuration?.actionExtractionFrequency ? styles.active : styles.disabled}`}
           >
             <CustomDropdown
               options={[
@@ -368,7 +368,9 @@ const Export = ({ handleConfigurationChange, configuration }) => {
                 "12 Horas",
                 "1 Día",
               ]}
-              selectedOption={configuration?.selectedActionFrequency || []}
+              selectedOption={
+                configuration?.selectedActionExtractionFrequency || []
+              }
               height="31px"
               textStyles={{
                 fontWeight: 300,
@@ -378,7 +380,10 @@ const Export = ({ handleConfigurationChange, configuration }) => {
                 userSelect: "none",
               }}
               setSelectedOption={(selected) =>
-                handleConfigurationChange("selectedActionFrequency", selected)
+                handleConfigurationChange(
+                  "selectedActionExtractionFrequency",
+                  selected
+                )
               }
             />
           </div>

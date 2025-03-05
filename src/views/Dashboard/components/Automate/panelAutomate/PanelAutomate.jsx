@@ -82,6 +82,9 @@ const PanelAutomate = ({
       min: 0,
       max: 0,
     },
+    labels: [],
+    filesExactMatch: false,
+    phoneListNotificate: [],
   });
 
   const [outlookConfiguration, setOutlookConfiguration] = useState({
@@ -106,6 +109,11 @@ const PanelAutomate = ({
     gmailBody: "",
     whatsAppToNotificate: "",
     whatsAppMessage: "",
+    totalAmount: {
+      currency: "USD",
+      min: 0,
+      max: 0,
+    },
   });
 
   const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({
