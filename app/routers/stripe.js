@@ -4,6 +4,7 @@ const stripeRouter = Router();
 const { authenticateToken } = require('../middlewares/auth/auth')
 
 const {
+  createPaymentRecurrentController,
   createPaymentIntentController,
   createSetupIntentController,
   attachCustomPaymentMethodController,
@@ -12,6 +13,7 @@ const {
 
 // -------------------------------
 stripeRouter
+  .post("/create-payment-recurrent", authenticateToken, createPaymentRecurrentController)
   .post("/create-payment-intent", authenticateToken, createPaymentIntentController)
   .post("/create-setup-intent", authenticateToken, createSetupIntentController)
   .post("/attach-custom-payment-method", authenticateToken, attachCustomPaymentMethodController)

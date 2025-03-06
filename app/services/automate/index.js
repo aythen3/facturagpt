@@ -333,12 +333,9 @@ const processEmailsDetailedData = (emailData) => {
 
 
 const xmlFilter = async ({
-  email,
-  password,
-  query,
-  userId,
-  logs,
-  ftpData
+  user,
+  attach,
+  processedData
 }) => {
   try {
 
@@ -346,7 +343,12 @@ const xmlFilter = async ({
     let xmlFile;
     let xmlData;
     let uploadType;
-    const file_xml = `${attachment.filename.split(".")[0]}.xml`;
+
+    console.log('original', attach)
+
+    // const file_xml = `${attach.filename.split(".")[0]}.xml`;
+    const file_xml = `${attach.originalname.split(".")[0]}.xml`;
+    
     if (processedData?.documentType === "factura") {
       xmlFile = facturaXML;
       uploadType = "notificacion_fraC";
@@ -376,14 +378,45 @@ const xmlFilter = async ({
 
     xmlFile = {
       buffer: text,
-      originalname: attachment.filename,
+      // originalname: attachment.filename,
+      originalname: attach.originalname,
     };
 
     const tempFilePath = path.join(__dirname, "./temp/" + file_xml);
     await fs.promises.writeFile(tempFilePath, xmlFile.buffer);
     // console.log('Local file path:', localFilePath)
 
-    // Subir directamente desde el buffer
+    // Subir directamente en el S3
+    // const file = req.file
+    // console.log('file', file)
+    // const path = `${user._id}/`;
+    // const bucketName = "factura-gpt";
+
+    // Preparar la ruta para S3
+    const userPath = `${user._id}/`;
+    const xmlPath = `${userPath}xml/`;
+    const bucketName = "factura-gpt";
+
+    // Crear la carpeta xml/ si no existe
+    try {
+      await s3.putObject({
+        Bucket: bucketName,
+        Key: xmlPath,
+        Body: ''
+      }).promise();
+    } catch (error) {
+      console.log('Error creating xml folder:', error);
+    }
+    
+    const params = {
+      // Key: `${path}${file.originalname}`,
+      Bucket: bucketName,
+      Key: `${xmlPath}FILE-${uuidv4()}_${file_xml}`,
+      Body: xmlFile.buffer,
+      ContentType: 'application/xml',
+    };
+
+    await s3.upload(params).promise();
 
     console.log("File uploaded successfully. ");
   } catch (error) {
@@ -575,9 +608,9 @@ const saveAttachmentData = async ({
 
     console.log('data', data)
 
-    if(data?.documentType == 'factura') {
+    if (data?.documentType == 'factura') {
       console.log('EXITO ES UNA FACTURA')
-    }else {
+    } else {
       console.log('IS DIGITAL TRASH!!')
     }
 
@@ -694,8 +727,17 @@ const goAutomate = async (req, res) => {
     const period = hours >= 12 ? 'PM' : 'AM';
 
 
+    const notificationId = uuidv4()
+
+    await dbNotifications.createIndex({
+      index: {
+        fields: ['createdAt']
+      }
+    });
+
     dbNotifications.insert({
       // id: 1,
+      id: notificationId,
       title: "Document Title",
       date: `${day} ${month} ${year}`,
       time: `${hours}:${minutes} ${period}`,
@@ -710,21 +752,11 @@ const goAutomate = async (req, res) => {
       category: ["excepcional", "current_lost", "social_security", "compensations", "salary", "services", "supplies", "publicity", "banking"],
       type: 'pay',
       value: 1000,
-      currency: 'EUR'
+      currency: 'EUR',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     })
 
-
-    // dbNotifications.insert({
-    //   accountId: user._id,
-    //   user: 'info@aythen.com',
-    //   type: 'automation',
-    //   title: 'Titulo de la factura',
-    //   message: 'Automating docs',
-    //   path: 'automate/docs',
-    //   status: 'pending',
-    //   createdAt: new Date().toISOString(),
-    //   updatedAt: new Date().toISOString(),
-    // })
 
     if (!automate) {
       try {
@@ -754,16 +786,23 @@ const goAutomate = async (req, res) => {
         })
 
 
-        saveAttachmentData({
+        await saveAttachmentData({
           userId: id,
-          data:attachmentData
-      })
+          data: attachmentData
+        })
 
         console.log('file uploaded successfully', attachmentData)
-        return res.status(200).json({ 
+
+        const response = await xmlFilter({
+          user: user,
+          attach: file,
+          processedData: attachmentData,
+        })
+
+        return res.status(200).json({
           success: true,
           status: 201,
-          message: "ok, but not automations" 
+          message: "ok, but not automations"
         });
       } catch (error) {
         console.log('error', error)

@@ -345,8 +345,8 @@
 }
 
 .profileContainer {
+  align-items: center;
   display: flex;
-  flex-direction: row-reverse;
   gap: 10px;
   cursor: pointer;
   .profileText {
@@ -365,7 +365,7 @@
     width: 40px;
     height: 40px;
     min-width: 40px;
-    border-radius: 5px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -384,6 +384,9 @@
 }
 
 @media (max-width: 300px) {
+  .profileContainer {
+    flex-direction: row-reverse; 
+  }
   .navLinksOpen {
     padding: 50px 10px;
   }

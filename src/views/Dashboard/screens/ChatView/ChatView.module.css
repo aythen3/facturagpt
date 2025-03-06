@@ -102,6 +102,7 @@
         font-weight: 600;
       }
     }
+
     .facturaGPTLogo {
       display: flex;
       align-items: center;
@@ -183,22 +184,6 @@
     text-align: center;
   }
 
-  .facturaGPTMessage {
-    display: flex;
-    align-items: start;
-    gap: 10px;
-    margin-top: 40px;
-
-    p {
-      margin-top: 0;
-    }
-
-    img {
-      width: 30px;
-    }
-
-    font-size: 13px;
-  }
 
   .buttonContainer {
     display: flex;
@@ -230,11 +215,12 @@
 
 .message {
   display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-end;
+  gap: 16px;
 
   /* Estilo común para todos los mensajes */
   .avatar {
+    min-width: 40px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -246,17 +232,37 @@
     font-size: 22px;
     font-weight: 600;
   }
+
+
 }
 
 .userMessage {
   text-align: right;
   justify-content: flex-end;
+
   /* Mensajes del usuario a la derecha */
+  p {
+    font-size: 12px;
+    background: #e6fff9;
+    padding: 20px 10px;
+    line-height: 20px;
+    border-radius: 20px;
+    color: #3c3a3a;
+  }
 }
 
 .botMessage {
   text-align: left;
+
   /* Mensajes del bot a la izquierda */
+  p {
+    font-size: 12px;
+    background: #f9f9f9;
+    padding: 20px 10px;
+    line-height: 20px;
+    border-radius: 20px;
+    color: #3c3a3a;
+  }
 }
 
 .chatMenu {
@@ -480,6 +486,7 @@
   max-height: 85%;
   height: 100%;
   text-align: center;
+
   p {
     margin: 0;
     font-size: 14px;
