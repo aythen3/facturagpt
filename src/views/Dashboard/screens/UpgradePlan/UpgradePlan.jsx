@@ -410,10 +410,10 @@ const UpgradePlan = ({
               La facturación se realiza el primer día de cada mes, según los
               documentos reconocidos durante el mes anterior
             </span>
-            <span className={styles.lightText}>
+            {/* <span className={styles.lightText}>
               Si superas tu plan actual, te pediremos autorización para
               actualizarlo antes de aplicar cualquier cargo adicional.
-            </span>
+            </span> */}
             <h2 className={styles.upgradePlanTitle}>
               Forma de pago{" "}
               {/* <strong

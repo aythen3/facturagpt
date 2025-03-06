@@ -13,11 +13,11 @@
   -o-transform: translate(-50%, -50%);
   overflow-x: hidden;
   overflow-y: auto;
-  border-radius: 6px;
+  /* border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
-  -o-border-radius: 6px;
+  -o-border-radius: 6px; */
   animation: scaleUp 300ms ease-out forwards;
   -webkit-animation: scaleUp 300ms ease-out forwards;
   height: 100vh;
