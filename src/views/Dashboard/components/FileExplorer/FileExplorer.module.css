@@ -303,7 +303,7 @@
 .fileList {
   display: flex;
   flex-direction: column;
-  max-height: 85%;
+  max-height: 95%;
   overflow-y: scroll;
   flex: 2;
   scrollbar-width: none;

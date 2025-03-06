@@ -715,17 +715,66 @@ const addNotificationController = async (req, res) => {
     // -publicity
     // -banking
 
+    await dbNotifications.createIndex({
+      index: {
+        fields: ['createdAt']
+      }
+    });
+
+    const notificationId = uuidv4()
+
+    const currentMonth = new Date().getMonth()
+    const currentYear = new Date().getFullYear()
+
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = currentDate.toLocaleString('en-US', { month: 'short' });
+    const year = currentDate.getFullYear();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    const period = hours >= 12 ? 'PM' : 'AM';
+
+    const dataNotification = {
+      title: "Titulo de la factura",
+      email: "johndoe@email.com",
+      icon: "https://aythen.com/logo.png",
+      location: "Q1>Facturas",
+    }
+
     dbNotifications.insert({
-      accountId: user._id,
-      user: 'info@aythen.com',
-      type: 'automation',
-      title: 'Titulo de la factura',
-      message: 'Automating docs',
-      path: 'automate/docs',
-      status: 'pending',
+      // id: 1,
+      id: notificationId,
+      title: "Document Title",
+      date: `${day} ${month} ${year}`,
+      time: `${hours}:${minutes} ${period}`,
+      month: `${currentMonth}-${currentYear}`,
+      icon: "https://aythen.com/logo.png",
+      notifications: [
+        dataNotification,
+        dataNotification,
+        dataNotification
+      ],
+      options: ["Compartir"], // Solo 2 opciones
+      category: ["excepcional", "current_lost", "social_security", "compensations", "salary", "services", "supplies", "publicity", "banking"],
+      type: 'pay',
+      value: 1000,
+      currency: 'EUR',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
+
+
+    // dbNotifications.insert({
+    //   accountId: user._id,
+    //   user: 'info@aythen.com',
+    //   type: 'automation',
+    //   title: 'Titulo de la factura',
+    //   message: 'Automating docs',
+    //   path: 'automate/docs',
+    //   status: 'pending',
+    //   createdAt: new Date().toISOString(),
+    //   updatedAt: new Date().toISOString(),
+    // })
 
     return res.status(200).send({
       success: true,
@@ -747,10 +796,19 @@ const getAllNotificationsController = async (req, res) => {
 
     const dbNotifications = await connectDB(`db_${id}_notifications`)
 
+  
+
+    console.log('log1')
+
+
     const notificationsDb = await dbNotifications.find({
-      selector: {},
-      sort: [{ createdAt: 'desc' }],
-      limit: 1000
+      // selector: {},
+      selector: {
+        date: { "$exists": true }
+      },
+      limit: 1000,
+      sort: [{ "createdAt": 'desc' }],
+       use_index: "date-index"
     })
 
     const notificationsDocs = notificationsDb.docs.map((doc) => {
@@ -794,26 +852,125 @@ const deleteNotificationController = async (req, res) => {
 };
 
 
+const getTruncatedTime = () => {
+  const now = new Date();
+  // Sumamos una hora
+  now.setHours(now.getHours() + 1);
+  
+  const minutes = now.getMinutes();
+  
+  // Truncar a intervalos de 15 minutos
+  const truncatedMinutes = Math.floor(minutes / 15) * 15;
+  now.setMinutes(truncatedMinutes);
+  now.setSeconds(0);
+  now.setMilliseconds(0);
+  
+  // Formatear la hora en HH:MM
+  const hours = now.getHours().toString().padStart(2, '0');
+  const mins = truncatedMinutes.toString().padStart(2, '0');
+  
+  return `${hours}:${mins}`;
+};
+
 
 const getResumeAccount = async (req, res) => {
   try {
-    const { user } = req;
+    console.log('get resume account')
+    const user = req.user;
     const id = user._id.split('_').pop()
 
     const dbNotifications = await connectDB(`db_${id}_notifications`)
 
-    const notifications = await dbNotifications.find({
+    const operationDate = getTruncatedTime()
+
+    console.log('operationDate', operationDate)
+    const notificationResume = await dbNotifications.find({
       selector: {
-        // type: 'resume'
+        type: 'resume',
+        date: operationDate
       }
     })
 
-    console.log("notifications", notifications)
+    let resume = {}
 
+    console.log('notificationresume', notificationResume)
+
+    if(notificationResume.docs && notificationResume.docs.length == 0){
+      const currentDate = new Date();
+      const currentMonth = `${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
+
+      resume = {
+        type: 'resume',
+        date: operationDate,
+        month: currentMonth,
+        income: 0,
+        expenses: 0,
+        benefits: 0,
+        exceptional: 0,
+        current_lost: 0,
+        social_security: 0,
+        compensations: 0,
+        salary: 0,
+        services: 0,
+        supplies: 0,
+        publicity: 0,
+        banking: 0
+      }
+
+
+      // const notifications = await dbNotifications.find({
+      //   selector: {
+      //     // type: 'resume'
+      //   }
+      // })
+
+      const notifications = await dbNotifications.find({
+        selector: {
+          type: {
+            "$ne": "resume"
+          },
+          createdAt: { "$exists": true },
+          value: { "$exists": true }
+        },
+        sort: [{ "createdAt": "desc" }],
+        limit: 1000,
+        use_index: "date-index"
+      });
+
+
+       // Sumar todos los valores
+       const totalIncome = notifications.docs.reduce((sum, notification) => {
+        // Si el tipo es 'income' sumamos, si es 'expense' restamos
+        if (notification.type === 'income') {
+          return sum + (notification.value || 0);
+        } else if (notification.type === 'expense') {
+          return sum - (notification.value || 0);
+        }
+        return sum;
+      }, 0);
+
+      // Actualizar el resumen
+      resume.income += totalIncome;
+      resume.expenses = Math.abs(notifications.docs
+        .filter(doc => doc.type === 'expense')
+        .reduce((sum, doc) => sum + (doc.value || 0), 0));
+      resume.benefits = resume.income - resume.expenses;
+
+      console.log('resume', resume)
+      // Actualizar el documento resumen en la base de datos
+      await dbNotifications.insert(resume);
+      // console.log('notifications dbdbdbd', notifications)
+      // dbNotifications.insert(resume)
+    } else {
+      resume = notificationResume.docs[0]
+    }
+
+
+   
     return res.status(200).send({
       success: true,
       message: "Resume account fetched successfully",
-      resume: notifications,
+      resume: resume,
     });
 
   } catch (err) {

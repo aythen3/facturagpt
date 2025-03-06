@@ -3,8 +3,33 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // ==================================== STRIPE ===========================================
 
+export const createPaymentRecurrent = createAsyncThunk(
+  "stripe/createPaymentRecurrent",
+  async (_) => {
+    console.log("=== ON CREATE PAYMENT RECURRENT ===");
+    try {
+      const token = localStorage.getItem("token");
+      const res = await apiBackend.post(
+        `/stripe/create-payment-recurrent`,
+        { },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.log("Error adding new payment intent:", error);
+      throw new Error("Failed to add new payment intent");
+    }
+  }
+);
+
+// ==================================== STRIPE ===========================================
+
 export const createPaymentIntent = createAsyncThunk(
-  "emailManager/createPaymentIntent",
+  "stripe/createPaymentIntent",
   async ({ amount, currency, clientId }) => {
     console.log("=== ON CREATE PAYMENT INTENT ===", {
       amount,
@@ -14,7 +39,7 @@ export const createPaymentIntent = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
-        `/emailManager/create-payment-intent`,
+        `/stripe/create-payment-intent`,
         { amount, currency, clientId },
         {
           headers: {
@@ -31,13 +56,13 @@ export const createPaymentIntent = createAsyncThunk(
 );
 
 export const createSetupIntent = createAsyncThunk(
-  "emailManager/createSetupIntent",
+  "stripe/createSetupIntent",
   async (_, { rejectWithValue }) => {
     console.log("=== ON CREATE SETUP INTENT ===");
     try {
       const token = localStorage.getItem("token");
       const res = await apiBackend.post(
-        `/emailManager/create-setup-intent`,
+        `/stripe/create-setup-intent`,
         {},
         {
           headers: {

@@ -1,13 +1,12 @@
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 import React, { useEffect, useRef, useState } from "react";
 
 import styles from "./Dashboard.module.css";
 
 import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
-import profilePlus from "./assets/profilePlus.svg";
-import profiles from "./assets/profiles.svg";
-import dbIcon from "./assets/dbIcon.svg";
-import analyticsIcon from "./assets/analyticsIcon.svg";
-import monitorIcon from "./assets/monitorIcon.svg";
+
 import { ReactComponent as Dots } from "./assets/optionDots.svg";
 import { ReactComponent as ChatGPTIconGreen } from "./assets/chatGPTIconGreen.svg";
 import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
@@ -15,12 +14,18 @@ import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
 import { useNavigate } from "react-router-dom";
 import {
   getAllClients,
+  getAllNotifications,
   // getAllUsers,
   // updateClient,
   // getEmailsByQuery,
-} from "../../actions/user";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+  getResumeAccount,
+  addNotification,
+} from "@src/actions/user";
+
+import {
+  createPaymentRecurrent
+} from "@src/actions/stripe"
+
 
 // import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
 
@@ -43,7 +48,7 @@ const Dashboard = () => {
 
   const statistics = [
     {
-      title: "ventas",
+      title: "Ventas",
       year: "año actual",
       total: "0,00",
     },
@@ -75,7 +80,11 @@ const Dashboard = () => {
   ];
 
   const spentData = [
-    { title: "Gastios excepcionales", amount: "0,00€", percentage: "0%" },
+    { 
+      title: "Gastios excepcionales", 
+      amount: "0,00€", 
+      percentage: "0%" 
+    },
     {
       title: "Otras pérdidas en gestión corriente",
       amount: "0,00€",
@@ -118,11 +127,61 @@ const Dashboard = () => {
     },
   ];
 
-  const [swiped, setSwiped] = useState(false);
+
+const [swiped, setSwiped] = useState(false);
+
+  useEffect(() => {
+    const fn = async () => {
+      const response = await dispatch(getResumeAccount())
+
+
+      console.log('response account resume', response)
+      if(response.payload && response.payload.success) {
+        console.log('RESUME ACCOUNT', response.payload.resume)
+      }
+    }
+
+    fn()
+  }, [])
+
+
+  const handleAddNotification = async () => {
+    const response = await dispatch(addNotification({
+      notification: {
+
+      }
+    }))
+
+    console.log('!', response)
+  }
+
+
+  const handlePayStripe = async () => {
+    const response = await dispatch(createPaymentRecurrent())
+    console.log('!', response)
+  }
+
+
   return (
     <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
+
+
       {/* </Elements>  */}
       <div className={styles.homeContainer}>
+        <div>
+          <button onClick={() => handleAddNotification()}>
+            Añadir venta
+          </button>
+          <button onClick={() => handleAddNotification()}>
+            Añadir compra
+          </button>
+          <button onClick={() => handleAddNotification()}>
+            Añadir Beneficio
+          </button>
+          <button onClick={() => handlePayStripe()}>
+            Pagar
+          </button>
+        </div>
         <div className={styles.statisticsHeader}>
           <div
             style={{
@@ -222,6 +281,7 @@ const Dashboard = () => {
                   </div>
                   <div className={styles.divider}></div>
                 </div>
+
               ))}
             </div>
           </div>
