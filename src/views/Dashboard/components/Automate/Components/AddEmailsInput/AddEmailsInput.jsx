@@ -67,9 +67,9 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
             }
           }}
         />
-        <button onClick={handleButton} className={styles.button}>
+        {/* <button onClick={handleButton} className={styles.button}>
           +
-        </button>
+        </button> */}
       </div>
       {error && <div className={styles.errorMessage}>{error}</div>}
     </div>

@@ -13,7 +13,7 @@ import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComp
 import SelectLocation from "../../../SelectLocation/SelectLocation";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
+// import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 

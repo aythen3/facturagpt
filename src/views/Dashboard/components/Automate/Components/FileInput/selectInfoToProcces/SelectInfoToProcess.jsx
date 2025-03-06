@@ -382,7 +382,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               }`}
             >
               <div className={styles.contentInput}>
-                {configuration?.labels?.map((label, index) => (
+                {labels?.map((label, index) => (
                   <div key={index}>
                     <div className={styles.titleContentInput}>
                       <div className={styles.labelName}>

@@ -4,7 +4,7 @@ const sharp = require('sharp')
 const {
   getProductsGPT,
   documentGPT
-} = require('../../gpt')
+} = require('./gpt')
 
 const processDataAndAppend = async (spreadsheetId, items) => {
     for (const item of items) {
