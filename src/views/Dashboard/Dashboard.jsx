@@ -1,14 +1,13 @@
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 import React, { useEffect, useRef, useState } from "react";
 
 import styles from "./Dashboard.module.css";
 
 
 import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
-import profilePlus from "./assets/profilePlus.svg";
-import profiles from "./assets/profiles.svg";
-import dbIcon from "./assets/dbIcon.svg";
-import analyticsIcon from "./assets/analyticsIcon.svg";
-import monitorIcon from "./assets/monitorIcon.svg";
+
 import { ReactComponent as Dots } from "./assets/optionDots.svg";
 import { ReactComponent as ChatGPTIconGreen } from "./assets/chatGPTIconGreen.svg";
 import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
@@ -16,12 +15,18 @@ import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
 import { useNavigate } from "react-router-dom";
 import {
   getAllClients,
+  getAllNotifications,
   // getAllUsers,
   // updateClient,
   // getEmailsByQuery,
-} from "../../actions/user";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+  getResumeAccount,
+  addNotification,
+} from "@src/actions/user";
+
+import {
+  createPaymentRecurrent
+} from "@src/actions/stripe"
+
 
 // import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
 
@@ -44,7 +49,7 @@ const Dashboard = () => {
 
   const statistics = [
     {
-      title: "ventas",
+      title: "Ventas",
       year: "año actual",
       total: "0,00",
     },
@@ -76,7 +81,11 @@ const Dashboard = () => {
   ];
 
   const spentData = [
-    { title: "Gastios excepcionales", amount: "0,00€", percentage: "0%" },
+    { 
+      title: "Gastios excepcionales", 
+      amount: "0,00€", 
+      percentage: "0%" 
+    },
     {
       title: "Otras pérdidas en gestión corriente",
       amount: "0,00€",
@@ -120,115 +129,162 @@ const Dashboard = () => {
   ];
 
 
+
+  useEffect(() => {
+    const fn = async () => {
+      const response = await dispatch(getResumeAccount())
+
+
+      console.log('response account resume', response)
+      if(response.payload && response.payload.success) {
+        console.log('RESUME ACCOUNT', response.payload.resume)
+      }
+    }
+
+    fn()
+  }, [])
+
+
+  const handleAddNotification = async () => {
+    const response = await dispatch(addNotification({
+      notification: {
+
+      }
+    }))
+
+    console.log('!', response)
+  }
+
+
+  const handlePayStripe = async () => {
+    const response = await dispatch(createPaymentRecurrent())
+    console.log('!', response)
+  }
+
+
   return (
     <PanelTemplate>
 
 
-       {/* </Elements>  */}
-        <div className={styles.homeContainer}>
-          <div className={styles.statisticsHeader}>
-            <div
-              style={{
-                display: "flex",
-                width: "100%",
-                flexDirection: "column",
-              }}
-            >
-              <div style={{ display: "flex", width: "100%", overflowX: "scroll" }}>
-                {statistics.map((statistic) => (
-                  <div className={styles.statisticCard}>
-                    <div className={styles.title}>
-                      <p>{statistic.title}</p>
-                      <Dots className={styles.icon} />
-                    </div>
-                    <span>{statistic.year}</span>
-                    <p className={styles.statisticTotal}>{statistic.total}€</p>
+      {/* </Elements>  */}
+      <div className={styles.homeContainer}>
+        <div>
+          <button onClick={() => handleAddNotification()}>
+            Añadir venta
+          </button>
+          <button onClick={() => handleAddNotification()}>
+            Añadir compra
+          </button>
+          <button onClick={() => handleAddNotification()}>
+            Añadir Beneficio
+          </button>
+          <button onClick={() => handlePayStripe()}>
+            Pagar
+          </button>
+        </div>
+        <div className={styles.statisticsHeader}>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ display: "flex", width: "100%", overflowX: "scroll" }}>
+              {statistics.map((statistic) => (
+                <div className={styles.statisticCard}>
+                  <div className={styles.title}>
+                    <p>{statistic.title}</p>
+                    <Dots className={styles.icon} />
                   </div>
-                ))}
-              </div>
-              <div className={styles.divider}></div>
-            </div>
-            <div className={styles.talkWithFacturaGPT}>
-              <FacturaGPTIcon className={styles.icon} />
-              <p>Datos y Analíticas en el Chat</p>
-              <button onClick={() => navigate("/admin/chat")}>
-                <ChatGPTIconGreen /> Habla con FacturaGPT
-              </button>
-            </div>
-          </div>
-          <div className={styles.homeContent}>
-            <div className={styles.salesSummaryContainer}>
-              {salesSummaries.map((summary, index) => (
-                <div key={index} className={styles.salesSummary}>
-                  <div className={styles.salesSummaryHeader}>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "10px",
-                        alignItems: "center",
-                      }}
-                    >
-                      <p>{summary.title}</p>
-                      {summary.options.length > 0 && (
-                        <div className={styles.salesSummaryOptions}>
-                          {summary.options.map((option, optionIndex) => (
-                            <span key={optionIndex}>{option}</span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <span>últimos 12 meses</span>
-                  </div>
-                  <div className={styles.salesSummaryTotal}>
-                    <p>{summary.total}</p>
-                    <span>{summary.month}</span>
-                  </div>
-                  <div className={styles.monthsContainer}>
-                    <p>May</p>
-                    <p>Jun</p>
-                    <p>Jul</p>
-                    <p>Ago</p>
-                    <p>Sep</p>
-                    <p>Oct</p>
-                    <p>Nov</p>
-                    <p>Dic</p>
-                    <p>Ene</p>
-                    <p>Feb</p>
-                  </div>
+                  <span>{statistic.year}</span>
+                  <p className={styles.statisticTotal}>{statistic.total}€</p>
                 </div>
               ))}
             </div>
-            <div className={styles.expenseAccounts}>
-              <div className={styles.expenseAccountsHeader}>
-                <div className={styles.expenseAccountsOptions}>
-                  <p>Cuentas de gastos</p>
-                  <span>Cuentas de ingresos</span>
-                </div>
-                <span className={styles.month}>Mes actual</span>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                {spentData.map((item, index) => (
-                  <div className={styles.spent}>
-                    <div key={index} className={styles.row}>
-                      <p>{item.title}</p>
-                      <span>
-                        {item.amount} - {item.amount} ({item.percentage})
-                      </span>
-                    </div>
-                    <div className={styles.divider}></div>
+            <div className={styles.divider}></div>
+          </div>
+          <div className={styles.talkWithFacturaGPT}>
+            <FacturaGPTIcon className={styles.icon} />
+            <p>Datos y Analíticas en el Chat</p>
+            <button onClick={() => navigate("/admin/chat")}>
+              <ChatGPTIconGreen /> Habla con FacturaGPT
+            </button>
+          </div>
+        </div>
+        <div className={styles.homeContent}>
+          <div className={styles.salesSummaryContainer}>
+            {salesSummaries.map((summary, index) => (
+              <div key={index} className={styles.salesSummary}>
+                <div className={styles.salesSummaryHeader}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p>{summary.title}</p>
+                    {summary.options.length > 0 && (
+                      <div className={styles.salesSummaryOptions}>
+                        {summary.options.map((option, optionIndex) => (
+                          <span key={optionIndex}>{option}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                ))}
+                  <span>últimos 12 meses</span>
+                </div>
+                <div className={styles.salesSummaryTotal}>
+                  <p>{summary.total}</p>
+                  <span>{summary.month}</span>
+                </div>
+                <div className={styles.monthsContainer}>
+                  <p>May</p>
+                  <p>Jun</p>
+                  <p>Jul</p>
+                  <p>Ago</p>
+                  <p>Sep</p>
+                  <p>Oct</p>
+                  <p>Nov</p>
+                  <p>Dic</p>
+                  <p>Ene</p>
+                  <p>Feb</p>
+                </div>
               </div>
+            ))}
+          </div>
+          <div className={styles.expenseAccounts}>
+            <div className={styles.expenseAccountsHeader}>
+              <div className={styles.expenseAccountsOptions}>
+                <p>Cuentas de gastos</p>
+                <span>Cuentas de ingresos</span>
+              </div>
+              <span className={styles.month}>Mes actual</span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              {spentData.map((item, index) => (
+                <div className={styles.spent}>
+                  <div key={index} className={styles.row}>
+                    <p>{item.title}</p>
+                    <span>
+                      {item.amount} - {item.amount} ({item.percentage})
+                    </span>
+                  </div>
+                  <div className={styles.divider}></div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-       </PanelTemplate>
+      </div>
+    </PanelTemplate>
   );
 };
 

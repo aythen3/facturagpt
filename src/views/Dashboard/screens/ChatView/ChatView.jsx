@@ -33,6 +33,7 @@ import {
 import { clearCurrentChat } from "@src/slices/chatSlices";
 import useFocusShortcut from "../../../../utils/useFocusShortcut.js";
 import useSwipe from "../../../../utils/useSwipe.jsx";
+// import user from "../../../../../app/services/user.js";
 
 const actions = [
   {
@@ -266,7 +267,6 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [selectedOption]);
-  console.log(sortChat);
   return (
     <div
       className={styles.chatMenu}
@@ -321,7 +321,7 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
               else if (group >= 14 && group < 30) groupTitle = "Este mes";
               else if (group >= 30 && group < 60) groupTitle = "Mes pasado";
               else if (group >= 60) groupTitle = "Hace varios meses";
-              console.log(sortChat);
+              // console.log(sortChat);
               return (
                 <div key={group}>
                   <h3>{groupTitle}</h3>
@@ -377,8 +377,8 @@ const ChatMenu = ({ id, leftWidth, toggleMenu }) => {
               top: selectedOption.y,
               left: selectedOption.x,
             }}
-            // className={isOpenMenu[chat.id] ? styles.active : ""}
-            // className={true ? styles.active : ""}
+          // className={isOpenMenu[chat.id] ? styles.active : ""}
+          // className={true ? styles.active : ""}
           >
             {/* {JSON.stringify(selectedOption)} */}
             <li onClick={() => handleDeleteMessage(selectedOption.chat.id)}>
@@ -438,73 +438,12 @@ const ChatBody = ({
             <div className={styles.facturaGPTLogo}>
               <img src={facturaGPT} alt="Icon" />
             </div>
-            {/* <div className={styles.facturaGPTMessage}>
-              <img src={facturaGPT} alt="Icon" />
-              <div>
-                <p>
-                  ¡Hola, {user?.name || "Not found name"}! 👋 ¿En qué puedo
-                  ayudarte hoy? 🚀
-                </p>
-                <p>Estas son mis habilidades:</p>
-                <p>
-                  <strong>Generar Gráficas</strong>
-                </p>
-                <ul>
-                  <li>
-                    ¿Necesitas comparar datos o visualizar una gráfica? ¡Dime
-                    qué necesitas y lo haré! 📊
-                  </li>
-                </ul>
-                <p>
-                  <strong>Crear Facturas</strong>
-                </p>
-                <ul>
-                  <li>
-                    Pasos sencillos para generar tu factura:
-                    <ul>
-                      <li>
-                        Ubicación: Si no indicas una ruta, se guardará
-                        automáticamente en /home.
-                      </li>
-                      <li>
-                        Datos del receptor: Añade un cliente por su Nombre,
-                        Número Fiscal, Email o Teléfono, o crea uno nuevo
-                        fácilmente.
-                      </li>
-                      <li>
-                        Detalles de la factura: Incluye el número, fecha y una
-                        descripción de los productos o servicios.
-                      </li>
-                      <li>
-                        Importes e impuestos: Especifica los precios, cantidades
-                        y los impuestos aplicables.
-                      </li>
-                      <li>
-                        Personalización: Añade tu logotipo y tu firma digital.
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    Nota: Si falta algún dato, no te preocupes, te lo pediré
-                    para completarla sin errores. 😊
-                  </li>
-                </ul>
-                <p>
-                  <strong>Redactar Correos</strong>
-                </p>
-                <ul>
-                  <li>
-                    ¿Necesitas enviar un mensaje profesional o personalizado?
-                    ¡Lo redacto por ti! ✉️
-                  </li>
-                </ul>
-              </div>
-            </div> */}
+
           </>
         )}
         {messages.map((message, index) => (
           <>
-            {message.sender !== "bot" ? (
+            {message.type !== "bot" ? (
               <div className={`${styles.message} ${styles.userMessage}`}>
                 <p>{message.text}</p>
                 <div className={styles.avatar}>{"A"}</div>
@@ -512,7 +451,9 @@ const ChatBody = ({
             ) : (
               <div className={`${styles.message} ${styles.botMessage}`}>
                 <img src={facturaGPTWhite} className={styles.avatar} />
-                {message.text}
+                <p>
+                  {message.text}
+                </p>
               </div>
             )}
           </>
@@ -531,6 +472,7 @@ const ChatBody = ({
         )}
         <div className={styles.chat}>
           <textarea
+            spellCheck="false"
             type="text"
             placeholder="Habla con FacturaGPT"
             value={inputValue}
@@ -538,11 +480,16 @@ const ChatBody = ({
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault(); // Prevents newline
-                handleChat({text: inputValue});
+                handleChat({ text: inputValue });
               }
             }}
           />
-          <div className={styles.img} onClick={() => handleChat(inputValue)}>
+          <div
+            className={styles.img}
+            onClick={() => handleChat({
+              text: inputValue
+            })}
+          >
             <img src={arrowUp} alt="Icon" />
           </div>
         </div>
@@ -552,9 +499,9 @@ const ChatBody = ({
           </p>
         ) : (
           <p className={styles.errorAlert}>
-            Introduce un 
+            Introduce un
             <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">
-            token 
+              token
             </a>
             válido para usar FacturaGPT.
           </p>
@@ -618,102 +565,152 @@ const ChatView = () => {
       setIsTokenValid(response.payload.success);
     };
 
-    
+
     fn();
   }, []);
 
 
   const handleSendMessage = async (text = false) => {
     try {
-      const resp = await dispatch(
-        sendMessage({
-          text: text || inputValue,
-          chatId: id,
-        })
-      );
+      if (text) {
+        setMessages([
+          ...messages,
+          { text: text || inputValue, sender: "user" },
+          // { text: response.botMessage.text, sender: "bot" },
+        ]);
+        // setMessages([
+        //   ...messages,
+        //   { text: text || inputValue, sender: "user" },
+        //   { text: response.botMessage.text, sender: "bot" },
+        // ]);
+        setInputValue("");
+      }
 
-      const response = resp.payload;
+      // const resp = await dispatch(
+      //   sendMessage({
+      //     chatId: id,
+      //     // type: 'me',
+      //     text: text,
+      //   })
+      // );
+
+
+      // const response = resp.payload;
+      // console.log("!WOOORKKK", response);
 
       // const user = localStorage.getItem("user");
       // const userJson = JSON.parse(user);
       // const token = userJson.accessToken;
 
-      console.log("!WOOORKKK", response);
-      // const response = await fetch(`https://facturagpt.com/api/chat/${id}/messages`, {
-      //   method: 'POST',
-      //   body: JSON.stringify({
-      //     text: text || inputValue,
-      //     chatId: id
-      //   }),
-      //   headers: {
-      //     'Content-Type': 'application/octet-stream',
-      //     'Authorization': `Bearer ${token}`
-      //   }
-      // }).then(response => {
-      //   if (response.ok) {
-      //     const reader = response.body.getReader();
-      //     const decoder = new TextDecoder();
-      //     let accumulatedChunks = '';
+      console.log('ini')
+      // const id = user._id.split('_').pop()
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+      console.log('ttt', token)
 
-      //     const processStream = async () => {
-      //       while (true) {
-      //         const { done, value } = await reader.read();
-      //         if (done) break;
+      // const formData = new URLSearchParams();
+      // formData.append('text', text);
 
-      //         const chunk = decoder.decode(value, { stream: true });
-      //         accumulatedChunks += chunk;
+      const response = await fetch(`https://facturagpt.com/api/chat/${id}/messages`, {
+        method: 'POST',
+        // body: JSON.stringify({
+        //   text: text,
+        //   // chatId: id
+        // }),
+        body: text,
+        headers: {
+          'Content-Type': 'application/octet-stream',
+          'Authorization': `Bearer ${token}`
+        }
+      }).then(response => {
+        if (response.ok) {
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let accumulatedChunks = '';
+          let accumulatedText = '';
+          
+          const insertMessageBot = (newText) => {
+            accumulatedText += newText;
+            setMessages(prevMessages => {
+              const newMessages = [...prevMessages];
+              // Si el último mensaje es del bot, actualizamos su texto
+              if (newMessages.length > 0 && newMessages[newMessages.length - 1].type === 'bot') {
+                newMessages[newMessages.length - 1].text = accumulatedText;
+              } else {
+                // Si no hay mensaje del bot o el último no es del bot, agregamos uno nuevo
+                newMessages.push({
+                  text: accumulatedText,
+                  type: 'bot'
+                });
+              }
+              return newMessages;
+            });
+          };
 
-      //         let lines = accumulatedChunks.split('\n');
-      //         accumulatedChunks = lines.pop();
+          const processStream = async () => {
+            while (true) {
+              // console.log('555')
+              const { done, value } = await reader.read();
+              if (done) break;
 
-      //         for (const line of lines) {
-      //           if (line.trim()) {
-      //             try {
-      //               const data = JSON.parse(line);
-      //               console.log('data', data)
-      //               insertData(data)
-      //             } catch (error) {
-      //               console.error('Failed to parse JSON:', error);
-      //             }
-      //           }
-      //         }
-      //       }
+              const chunk = decoder.decode(value, { stream: true });
+              accumulatedChunks += chunk;
 
-      //       if (accumulatedChunks.trim()) {
-      //         try {
-      //           const data = JSON.parse(accumulatedChunks);
+              let lines = accumulatedChunks.split('\n');
+              accumulatedChunks = lines.pop();
 
-      //           console.log('data', data)
-      //           insertData(data)
-      //         } catch (error) {
-      //           console.error('Failed to parse final JSON:', error);
-      //         }
-      //       }
-      //     };
+              for (const line of lines) {
+                if (line.trim()) {
+                  try {
+                    const chunk = JSON.parse(line);
+                    const text = chunk.data.text
+                    console.log('data', chunk)
+                    console.log('data1', text)
+                    // insertData(data)
+                    insertMessageBot(text)
 
-      //     processStream().then(() => {
-      //     }).catch(console.error);
-      //   }
-      // })
+                   
+                  } catch (error) {
+                    console.error('Failed to parse JSON:', error);
+                  }
+                }
+              }
+            }
+
+            // if (accumulatedChunks.trim()) {
+            //   try {
+            //     const data = JSON.parse(accumulatedChunks);
+
+            //     console.log('data', data)
+            //     insertData(data)
+            //   } catch (error) {
+            //     console.error('Failed to parse final JSON:', error);
+            //   }
+            // }
+          };
+
+          processStream().then(() => {
+          }).catch(console.error);
+        }
+      })
 
       console.log("responsechat!!", response);
-      if (text || inputValue.trim()) {
-        setMessages([
-          ...messages,
-          { text: text || inputValue, sender: "user" },
-          { text: response.botMessage.text, sender: "bot" },
-        ]);
-        setInputValue("");
-      }
+
+      // setMessages([
+      //   ...messages,
+      //   // { text: text || inputValue, sender: "user" },
+      //   { text: response.botMessage.text, sender: "bot" },
+      // ]);
     } catch (error) {
       console.log("error handleSendMessage", error);
     }
   };
 
-  const handleSendBotMessage = () => {
-    const botMessage = "Este es un mensaje del bot.";
-    setMessages([...messages, { text: botMessage, sender: "bot" }]);
-  };
+  // const handleSendBotMessage = () => {
+  //   const botMessage = "Este es un mensaje del bot.";
+  //   setMessages([...messages, { text: botMessage, sender: "bot" }]);
+  // };
 
   const handleChat = (action) => {
     console.log("3ri48juj", action);
@@ -725,7 +722,7 @@ const ChatView = () => {
       navigate(`/admin/home`);
     } else if (action.id == 5) {
       navigate(`/contact`);
-    } else if(!action.id){
+    } else if (!action.id) {
       handleSendMessage(action.text);
     }
   };
@@ -791,24 +788,7 @@ const ChatView = () => {
       menuOpenChat={menuOpenChat}
       setMenuOpenChat={setMenuOpenChat}
     >
-      {/* <Chat /> */}
-      {/* <div style={{ display: "flex", flexDirection: "column" }}>
-        <button onClick={handleSendBotMessage}>Enviar mensaje del bot</button>
-        <button onClick={handleSendBotMessage}>Enviar grafica del bot</button>
-        <button onClick={handleSendBotMessage}>
-          Enviar code block del bot
-        </button>
-        <button onClick={handleSendBotMessage}>
-          Enviar formulario del bot
-        </button>
-        <button onClick={handleSendBotMessage}>Crear conexion del bot</button>
-        <button onClick={handleSendBotMessage}>Crear conocimiento</button>
-        <button onClick={handleSendBotMessage}>Crear calculadora</button>
-        <button onClick={handleSendBotMessage}>Insertar cliente</button>
-        <button onClick={handleSendBotMessage}>Insertar producto</button>
-        <button onClick={handleSendBotMessage}>Insertar activo</button>
-        <button onClick={handleSendBotMessage}>Nueva factura</button>
-      </div> */}
+
       <div className={styles.chatSection}>
         <ChatMenu
           id={id}

@@ -571,12 +571,15 @@ export const getResumeAccount = createAsyncThunk(
       const user = localStorage.getItem("user");
       const userJson = JSON.parse(user);
       const token = userJson.accessToken;
+      console.log('RESUME ACCOUNT', token)
 
-      const res = await apiBackend.post(`/user/resume`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await apiBackend.post(`/user/resume`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       return res.data;
     } catch (error) {

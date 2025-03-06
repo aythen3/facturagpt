@@ -8,11 +8,11 @@ const getChatListController = async (req, res) => {
 
   const id = user._id.split('_').pop();
   try {
-    const dbName = `db_chat_${id}`;
+    const dbName = `db_${id}_chat`;
     const db = await connectDB(dbName);
 
     const selector = {
-      _id: { $gt: null } 
+      _id: { $gt: null }
     };
 
     if (search) {
@@ -62,7 +62,7 @@ const getChatMessagesController = async (req, res) => {
   const id = user._id.split('_').pop();
 
   try {
-    const dbName = `db_chat_${id}`;
+    const dbName = `db_${id}_chat`;
     const db = await connectDB(dbName);
 
     const result = await db.find({
@@ -103,7 +103,7 @@ const deleteChatController = async (req, res) => {
   const id = user._id.split('_').pop();
 
   try {
-    const dbName = `db_chat_${id}`;
+    const dbName = `db_${id}_chat`;
     const db = await connectDB(dbName);
 
     const result = await db.find({
@@ -142,7 +142,7 @@ const deleteChatController = async (req, res) => {
 const validateTokenGPT = async (req, res) => {
   const user = req?.user;
 
-  if(!res?.send) {
+  if (!res?.send) {
     return true
   }
 
@@ -165,45 +165,51 @@ const validateTokenGPT = async (req, res) => {
 
 const sendMessageController = async (req, res) => {
   const user = req.user;
+  const id = user._id.split('_').pop()
+
   const { chatId } = req.params;
-  const { text } = req.body;
+  // const { text } = req.body;
+  const text = req.body.toString().replace('text=', '');
+  // console.log('text', text)
+  // return false
+  // return false
 
   const skProjRegex = /^sk-proj-[A-Za-z0-9-_]{100,}$/;
   if (skProjRegex.test(text)) {
-
     const userData = {
       id: user.id,
       tokenGPT: text
     }
+    await updateAccount(userData);
 
-
-    const response = await updateAccount(userData);
+    return res.status(200).send({
+      succes: true,
+      message: 'Token valid'
+    })
   }
 
   const tokenGPT = user.tokenGPT;
+  console.log('eee', tokenGPT)
 
-  if(!tokenGPT){
+  if (!tokenGPT) {
     return res.json({
       success: false,
       error: 'Token GPT no encontrado'
     });
   }
 
-  const result_meet1 = await meetGPT(res, text, tokenGPT);
+  // const result_meet1 = await meetGPT(res, text, tokenGPT);
+  const result_meet = await meetGPT(res, text, tokenGPT);
 
-  const result_meet = {
-    success: true,
-    value: result_meet1
-  }
+  // return false
 
-  
-  const id = user._id.split('_').pop();
-
+  console.log('eeeeeeee')
+ 
+  // return false
   try {
-    const dbName = `db_chat_${id}`;
-    const db = await connectDB(dbName);
+    const dbChat = await connectDB(`db_${id}_chat`);
 
-    const result = await db.find({
+    const result = await dbChat.find({
       selector: {
         _id: chatId
       }
@@ -225,16 +231,18 @@ const sendMessageController = async (req, res) => {
     }
 
     const newMessage = {
-      type: 'user',
+      type: 'me',
       userId: id,
       text: text,
       timestamp: new Date().toISOString()
     };
 
+
+    console.log('tedxt', newMessage)
     const botMessage = {
       type: 'bot',
       userId: '1234',
-      text: result_meet?.value,
+      text: result_meet?.text,
       timestamp: new Date().toISOString()
     }
 
@@ -242,36 +250,32 @@ const sendMessageController = async (req, res) => {
       chat.messages = [];
     }
 
-    chat.messages.unshift(newMessage);
-    chat.messages.unshift(botMessage); 
+    chat.messages.push(newMessage);
+    chat.messages.push(botMessage);
 
     if (isNewChat) {
-      await db.insert({
+      await dbChat.insert({
         ...chat,
         messages: chat.messages,
         updatedAt: new Date().toISOString()
       });
     } else {
-      await db.insert({
+      await dbChat.insert({
         ...chat,
         messages: chat.messages,
         updatedAt: new Date().toISOString()
       });
     }
 
-    return res.json({
-      success: true,
-      message: newMessage,
-      botMessage: botMessage, 
-      isNewChat: isNewChat
-    });
 
+    console.log('succesfully')
+   
   } catch (error) {
     console.error('Error en sendMessageController:', error);
-    return res.status(500).json({
-      success: false,
-      error: 'Error al enviar el mensaje'
-    });
+    // return res.status(500).json({
+    //   success: false,
+    //   error: 'Error al enviar el mensaje'
+    // });
   }
 };
 
