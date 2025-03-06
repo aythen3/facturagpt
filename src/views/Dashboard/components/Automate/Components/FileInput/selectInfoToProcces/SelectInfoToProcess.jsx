@@ -384,7 +384,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               }`}
             >
               <div className={styles.contentInput}>
-                {configuration.labels.map((label, index) => (
+                {configuration.labels?.map((label, index) => (
                   <div key={index}>
                     <div className={styles.titleContentInput}>
                       <div className={styles.labelName}>
@@ -716,7 +716,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 >
                   {editIndex != null
                     ? "Guardar Filtro"
-                    : configuration.labels.length === 0
+                    : configuration.labels?.length === 0
                       ? "Crear Filtro"
                       : "Crear Filtro"}
                 </Button>

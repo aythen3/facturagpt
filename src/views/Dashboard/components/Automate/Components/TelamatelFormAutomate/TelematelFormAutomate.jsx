@@ -13,7 +13,7 @@ import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComp
 import SelectLocation from "../../../SelectLocation/SelectLocation";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
-import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
+// import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
 
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
@@ -25,7 +25,7 @@ import { ReactComponent as GrayChevron } from "../../../../assets/grayChevron.sv
 import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import { ReactComponent as TelematelIcon } from "../../../../assets/telematel.svg";
-import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg";
+// import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg";
 import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import EditableInput from "../FileInput/Input";
 import FileInputNotification from "../FileInput/Notification";

@@ -9,6 +9,10 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
   const [error, setError] = useState("");
 
 
+  const handleButton = () => {
+
+  }
+
   return (
     <div className={styles.addEmailsInputContainer}>
       <div className={styles.addedEmailsContainer}>
@@ -55,9 +59,9 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
             }
           }}
         />
-        <button onClick={handleButton} className={styles.button}>
+        {/* <button onClick={handleButton} className={styles.button}>
           +
-        </button>
+        </button> */}
       </div>
       {error && <div className={styles.errorMessage}>{error}</div>}
     </div>
