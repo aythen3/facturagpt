@@ -1,23 +1,29 @@
 import React, { useState } from "react";
 import styles from "./AddEmailsInput.module.css";
 import miniClose from "../../../../assets/miniClose.svg";
+import DeleteButton from "../../../DeleteButton/DeleteButton";
 
 const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
   const [value, setValue] = useState("");
+  const [error, setError] = useState("");
+
   return (
     <div className={styles.addEmailsInputContainer}>
       <div className={styles.addedEmailsContainer}>
         {addedEmails?.map((email, index) => (
           <div key={index} className={styles.addedEmail}>
             {email}
-            <img
-              src={miniClose}
-              alt="close"
-              className={styles.closeIcon}
-              onClick={() =>
+            <DeleteButton
+              action={() =>
                 setAddedEmails(addedEmails.filter((e) => e !== email))
               }
             />
+            {/* <img
+              src={miniClose}
+              alt="close"
+              className={styles.closeIcon}
+            
+            /> */}
           </div>
         ))}
       </div>
@@ -40,11 +46,15 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
                   setAddedEmails([...addedEmails, value]);
                 }
                 setValue("");
+                setError("");
+              } else {
+                setError("Correo electrónico inválido");
               }
             }
           }}
         />
       </div>
+      {error && <div className={styles.errorMessage}>{error}</div>}
     </div>
   );
 };

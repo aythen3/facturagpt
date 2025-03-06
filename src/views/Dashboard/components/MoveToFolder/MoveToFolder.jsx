@@ -58,7 +58,9 @@ const MoveToFolder = ({
             title={"Enviar a Carpeta"}
             setState={handleCloseNewClient}
           >
-            <Button type="white">Cancelar</Button>
+            <Button type="white" action={handleCloseNewClient}>
+              Cancelar
+            </Button>
             <Button>Aceptar</Button>
           </HeaderCard>
           <div className={styles.contentInput}>

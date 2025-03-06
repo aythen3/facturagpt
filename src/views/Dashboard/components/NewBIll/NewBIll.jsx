@@ -3,7 +3,7 @@ import styles from "./NewBIll.module.css";
 import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import Preview from "../Preview/Preview";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Factura from "../../assets/facturaEjemplo.png";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
@@ -12,6 +12,7 @@ import { ReactComponent as GrayChevron } from "../../assets/grayChevron.svg";
 import { ReactComponent as ArrowSquare } from "../../assets/whiteArrowSquareIn.svg";
 import { ReactComponent as WhiteText } from "../../assets/whiteText.svg";
 import { ReactComponent as WhiteClock } from "../../assets/whiteClock.svg";
+import { getOneDocsById } from "@src/actions/docs";
 
 import SearchSVG from "../Automate/svgs/SearchSVG";
 
@@ -37,6 +38,8 @@ const NewBIll = ({ setShowNewBill }) => {
   const [hasNote, setHasNote] = useState(false);
   const [noteText, setNoteText] = useState("");
   const [isEditingNote, setIsEditingNote] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [showInfoMobileBill, setShowInfoMobileBill] = useState(false);
 
   console.log(`usuario: ${user}`);
 
@@ -66,8 +69,6 @@ const NewBIll = ({ setShowNewBill }) => {
     info7: false,
   });
 
-  const [showSelectLocation, setShowSelectLocation] = useState(false);
-  const [showAddConnection, setShowAddConnection] = useState(false);
   const [showSelectOutputLocation, setShowSelectOutputLocation] =
     useState(false);
   const [activateRename, setActivateRename] = useState(false);
@@ -88,6 +89,43 @@ const NewBIll = ({ setShowNewBill }) => {
   //     handleConfigurationChange("selectedEmailConnection", connection.email);
   //   }
   // };
+  const dispatch = useDispatch();
+
+  const [editingNote, setEditingNote] = useState(false);
+  const [editorContentFinal, setEditorContentFinal] = useState("");
+
+  console.log(`usuario: ${user}`);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    // console.log("id", id);
+    // if (id) {
+    //   setFileUploaded(true);
+    // }
+
+    const fn = async () => {
+      setFileUploaded(true);
+      // const db = await connectDB('db_automations')
+      // const automation = await db.get(id)
+      // console.log('automation', automation)
+
+      const response = await dispatch(
+        getOneDocsById({
+          docId: id,
+        })
+      );
+      console.log("db", response);
+    };
+
+    if (id) {
+      fn();
+    }
+  }, [id]);
+
+  const [createdNote, setCreatedNote] = useState(false);
+  const [noteColor, setNoteColor] = useState("tagGreen");
+  const [fileUploaded, setFileUploaded] = useState(false);
 
   return (
     <div>
@@ -96,7 +134,7 @@ const NewBIll = ({ setShowNewBill }) => {
         <HeaderCard title={"Nueva factura"} setState={setShowNewBill}>
           <Button type="white">Ver Email</Button>
           <Button type="gray">
-            <input type="checkbox" name="sendEmail" className={styles.hola} />
+            <input type="checkbox" name="sendEmail" className={styles.accent} />
             Enviar por correo
           </Button>
           <Button>Guardar</Button>
@@ -260,11 +298,35 @@ const NewBIll = ({ setShowNewBill }) => {
               />
             )}
           </div>
+          <InvoiceForm
+            hasNote={hasNote}
+            setHasNote={setHasNote}
+            handleAddNote={handleAddNote}
+            noteText={noteText}
+            handleNoteChange={handleNoteChange}
+            handleNoteBlur={handleNoteBlur}
+            isEditingNote={isEditingNote}
+            handleEditNote={handleEditNote}
+            showInfoMobileBill={showInfoMobileBill}
+            setShowInfoMobileBill={setShowInfoMobileBill}
+          />
           <Preview
             companyInfo={company}
             document={Factura}
             handleAddNote={handleAddNote}
-            customStyles={{ paddingBottom: "230px" }}
+            setSelectedCurrency={setSelectedCurrency}
+            selectedCurrency={selectedCurrency}
+            setShowInfoMobileBill={setShowInfoMobileBill}
+            isNewBill={true}
+            setEditingNote={setEditingNote}
+            editingNote={editingNote}
+            setCreatedNote={setCreatedNote}
+            createdNote={createdNote}
+            noteColor={noteColor}
+            editorContentFinal={editorContentFinal}
+            setEditorContentFinal={setEditorContentFinal}
+
+            // customStyles={{ paddingBottom: "230px" }}
           />
         </div>
       </div>

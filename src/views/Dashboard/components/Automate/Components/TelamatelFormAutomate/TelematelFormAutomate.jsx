@@ -13,21 +13,21 @@ import NotificationsConfirmComponent from "../../shared/NotificationsConfirmComp
 import SelectLocation from "../../../SelectLocation/SelectLocation";
 import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
+import { ReactComponent as WhiteText } from "../../../../assets/whiteText.svg";
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
 import { ReactComponent as ArrowSquare } from "../../../../assets/whiteArrowSquareIn.svg";
 import { ReactComponent as GrayChevron } from "../../../../assets/grayChevron.svg";
 import { ReactComponent as WhiteBell } from "../../../../assets/whiteBell.svg";
-import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import { ReactComponent as TelematelIcon } from "../../../../assets/telematel.svg";
-
+import { ReactComponent as WhiteCheck } from "../../../../assets/whiteCheck.svg";
+import { ReactComponent as GmailIcon } from "../../../../assets/gmail.svg";
 import EditableInput from "../FileInput/Input";
 import FileInputNotification from "../FileInput/Notification";
 import FileInputExport from "../FileInput/Export";
 import FileInputImport from "../FileInput/Import";
-
 
 import { ReactComponent as NewCategoryIcon } from "../../../../assets/NewCategoryIcon.svg";
 import NewCategory from "../../../NewCategory/NewCategory";
@@ -223,7 +223,7 @@ const TelematelFormAutomate = ({
         options={true}
         readOnly={false}
       />
-     
+
       <SelectInfoToProcess
         configuration={configuration}
         handleConfigurationChange={handleConfigurationChange}
@@ -264,8 +264,6 @@ const TelematelFormAutomate = ({
             <div
               className={`${styles.contentContainer} ${true ? styles.active : styles.disabled}`}
             >
-           
-
               <div className={styles.contentInput}>
                 <p className={styles.titleContentInput}>Formato del Archivo</p>
 

@@ -538,7 +538,7 @@ const ChatBody = ({
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault(); // Prevents newline
-                handleChat({text: inputValue});
+                handleChat({ text: inputValue });
               }
             }}
           />
@@ -552,9 +552,12 @@ const ChatBody = ({
           </p>
         ) : (
           <p className={styles.errorAlert}>
-            Introduce un 
-            <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">
-            token 
+            Introduce un
+            <a
+              href="https://platform.openai.com/settings/organization/api-keys"
+              target="_blank"
+            >
+              token
             </a>
             válido para usar FacturaGPT.
           </p>
@@ -618,10 +621,8 @@ const ChatView = () => {
       setIsTokenValid(response.payload.success);
     };
 
-    
     fn();
   }, []);
-
 
   const handleSendMessage = async (text = false) => {
     try {
@@ -725,7 +726,7 @@ const ChatView = () => {
       navigate(`/admin/home`);
     } else if (action.id == 5) {
       navigate(`/contact`);
-    } else if(!action.id){
+    } else if (!action.id) {
       handleSendMessage(action.text);
     }
   };
@@ -786,10 +787,13 @@ const ChatView = () => {
   const toggleMenu = () => {
     setMenuOpenChat(!menuOpenChat);
   };
+  const [swiped, setSwiped] = useState(false);
   return (
     <PanelTemplate
       menuOpenChat={menuOpenChat}
       setMenuOpenChat={setMenuOpenChat}
+      setSwiped={setSwiped}
+      swiped={swiped}
     >
       {/* <Chat /> */}
       {/* <div style={{ display: "flex", flexDirection: "column" }}>

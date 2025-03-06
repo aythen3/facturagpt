@@ -67,20 +67,19 @@ const ButtonActionsWithText = ({
 };
 const DocumentPreview = ({
   document,
-  companyInfo,
   handleAddNote,
   customStyles,
   setEditingNote,
-  editingNote,
   setShowInfoMobileBill,
   setMobileSelectedDocument,
-  setCreatedNote,
   createdNote,
   noteColor,
-  setEditorContentFinal,
   editorContentFinal,
   selectedCurrency,
   setSelectedCurrency,
+  setSwiped,
+  swiped,
+  isNewBill = false,
 }) => {
   const [options, setOptions] = useState(0);
   const [showMovetoFolder, setShowMovetoFolder] = useState(false);
@@ -603,9 +602,18 @@ const DocumentPreview = ({
       {isMobile && (
         <>
           <div className={styles.headerBillMobile}>
-            <button onClick={() => setMobileSelectedDocument(false)}>
-              <ArrowLeftTextBlack /> Atrás
-            </button>
+            {!isNewBill ? (
+              <button
+                onClick={() => {
+                  setMobileSelectedDocument(false);
+                  setSwiped(true);
+                }}
+              >
+                <ArrowLeftTextBlack /> Atrás
+              </button>
+            ) : (
+              <span></span>
+            )}
             <div className={styles.notesHeaderBillMobile}>
               {createdNote && (
                 <div className={`${styles.note} ${styles[noteColor]}`}>

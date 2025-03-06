@@ -95,7 +95,6 @@ const AssetLine = ({
                 <p>Floor Price</p>
                 <p>90283912,38912 EUR</p>
               </div>
-              <div className={styles.button}>Ver Parámetros (2)</div>
             </div>
           </div>
         </div>

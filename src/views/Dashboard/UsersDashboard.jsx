@@ -451,8 +451,9 @@ const UsersDashboard = () => {
   // <Elements stripe={stripePromise}>
   //   <NavbarAdmin showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
   //   </Elements>
+  const [swiped, setSwiped] = useState(false);
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         {showPaymentModal && amountToPay && (
           <Payment

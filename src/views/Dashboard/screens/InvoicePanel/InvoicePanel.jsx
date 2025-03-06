@@ -14,7 +14,6 @@ import CreateNotePopup from "../../components/CreateNotePopup/CreateNotePopup.js
 // import { dispatch } from "d3";
 import { getOneDocsById } from "@src/actions/docs";
 
-
 const company = {
   email: "coolmail@mail.com",
   phone: "341-59-15",
@@ -25,7 +24,7 @@ const company = {
 };
 
 export default function InvoicePanel() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [isModalAutomate, setIsModalAutomate] = useState(false);
   const [typeContentAutomate, setTypeContentAutomate] = useState("");
@@ -112,25 +111,25 @@ export default function InvoicePanel() {
       // const automation = await db.get(id)
       // console.log('automation', automation)
 
-      const response = await dispatch(getOneDocsById({
-        docId: id
-      }))
-      console.log('db', response)
-    }
+      const response = await dispatch(
+        getOneDocsById({
+          docId: id,
+        })
+      );
+      console.log("db", response);
+    };
 
-    if(id) {
-      fn()
+    if (id) {
+      fn();
     }
-
   }, [id]);
-
-
 
   const [mobileSelectedDocument, setMobileSelectedDocument] = useState(false);
   const [showInfoMobileBill, setShowInfoMobileBill] = useState(false);
   const [createdNote, setCreatedNote] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [isAnimating, setIsAnimating] = useState(false);
+  const [swiped, setSwiped] = useState(false);
   console.log(
     mobileSelectedDocument,
     "mobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocumentmobileSelectedDocument"
@@ -139,6 +138,8 @@ export default function InvoicePanel() {
     <PanelTemplate
       mobileSelectedDocument={mobileSelectedDocument}
       setMobileSelectedDocument={setMobileSelectedDocument}
+      setSwiped={setSwiped}
+      swiped={swiped}
     >
       {/* <NavbarAdmin setIsOpen={setIsOpen} isOpen={isOpen} /> */}
       {/* <div className={styles.container}> */}
@@ -217,6 +218,8 @@ export default function InvoicePanel() {
             setEditorContentFinal={setEditorContentFinal}
             setSelectedCurrency={setSelectedCurrency}
             selectedCurrency={selectedCurrency}
+            setSwiped={setSwiped}
+            swiped={swiped}
           />
           {hasNote && (
             <>

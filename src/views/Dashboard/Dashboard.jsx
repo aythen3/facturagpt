@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 
 import styles from "./Dashboard.module.css";
 
-
 import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
 import profilePlus from "./assets/profilePlus.svg";
 import profiles from "./assets/profiles.svg";
@@ -119,116 +118,116 @@ const Dashboard = () => {
     },
   ];
 
-
+  const [swiped, setSwiped] = useState(false);
   return (
-    <PanelTemplate>
-
-
-       {/* </Elements>  */}
-        <div className={styles.homeContainer}>
-          <div className={styles.statisticsHeader}>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
+      {/* </Elements>  */}
+      <div className={styles.homeContainer}>
+        <div className={styles.statisticsHeader}>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+            }}
+          >
             <div
-              style={{
-                display: "flex",
-                width: "100%",
-                flexDirection: "column",
-              }}
+              style={{ display: "flex", width: "100%", overflowX: "scroll" }}
             >
-              <div style={{ display: "flex", width: "100%", overflowX: "scroll" }}>
-                {statistics.map((statistic) => (
-                  <div className={styles.statisticCard}>
-                    <div className={styles.title}>
-                      <p>{statistic.title}</p>
-                      <Dots className={styles.icon} />
-                    </div>
-                    <span>{statistic.year}</span>
-                    <p className={styles.statisticTotal}>{statistic.total}€</p>
+              {statistics.map((statistic) => (
+                <div className={styles.statisticCard}>
+                  <div className={styles.title}>
+                    <p>{statistic.title}</p>
+                    <Dots className={styles.icon} />
                   </div>
-                ))}
-              </div>
-              <div className={styles.divider}></div>
-            </div>
-            <div className={styles.talkWithFacturaGPT}>
-              <FacturaGPTIcon className={styles.icon} />
-              <p>Datos y Analíticas en el Chat</p>
-              <button onClick={() => navigate("/admin/chat")}>
-                <ChatGPTIconGreen /> Habla con FacturaGPT
-              </button>
-            </div>
-          </div>
-          <div className={styles.homeContent}>
-            <div className={styles.salesSummaryContainer}>
-              {salesSummaries.map((summary, index) => (
-                <div key={index} className={styles.salesSummary}>
-                  <div className={styles.salesSummaryHeader}>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "10px",
-                        alignItems: "center",
-                      }}
-                    >
-                      <p>{summary.title}</p>
-                      {summary.options.length > 0 && (
-                        <div className={styles.salesSummaryOptions}>
-                          {summary.options.map((option, optionIndex) => (
-                            <span key={optionIndex}>{option}</span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <span>últimos 12 meses</span>
-                  </div>
-                  <div className={styles.salesSummaryTotal}>
-                    <p>{summary.total}</p>
-                    <span>{summary.month}</span>
-                  </div>
-                  <div className={styles.monthsContainer}>
-                    <p>May</p>
-                    <p>Jun</p>
-                    <p>Jul</p>
-                    <p>Ago</p>
-                    <p>Sep</p>
-                    <p>Oct</p>
-                    <p>Nov</p>
-                    <p>Dic</p>
-                    <p>Ene</p>
-                    <p>Feb</p>
-                  </div>
+                  <span>{statistic.year}</span>
+                  <p className={styles.statisticTotal}>{statistic.total}€</p>
                 </div>
               ))}
             </div>
-            <div className={styles.expenseAccounts}>
-              <div className={styles.expenseAccountsHeader}>
-                <div className={styles.expenseAccountsOptions}>
-                  <p>Cuentas de gastos</p>
-                  <span>Cuentas de ingresos</span>
-                </div>
-                <span className={styles.month}>Mes actual</span>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                {spentData.map((item, index) => (
-                  <div className={styles.spent}>
-                    <div key={index} className={styles.row}>
-                      <p>{item.title}</p>
-                      <span>
-                        {item.amount} - {item.amount} ({item.percentage})
-                      </span>
-                    </div>
-                    <div className={styles.divider}></div>
+            <div className={styles.divider}></div>
+          </div>
+          <div className={styles.talkWithFacturaGPT}>
+            <FacturaGPTIcon className={styles.icon} />
+            <p>Datos y Analíticas en el Chat</p>
+            <button onClick={() => navigate("/admin/chat")}>
+              <ChatGPTIconGreen /> Habla con FacturaGPT
+            </button>
+          </div>
+        </div>
+        <div className={styles.homeContent}>
+          <div className={styles.salesSummaryContainer}>
+            {salesSummaries.map((summary, index) => (
+              <div key={index} className={styles.salesSummary}>
+                <div className={styles.salesSummaryHeader}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p>{summary.title}</p>
+                    {summary.options.length > 0 && (
+                      <div className={styles.salesSummaryOptions}>
+                        {summary.options.map((option, optionIndex) => (
+                          <span key={optionIndex}>{option}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                ))}
+                  <span>últimos 12 meses</span>
+                </div>
+                <div className={styles.salesSummaryTotal}>
+                  <p>{summary.total}</p>
+                  <span>{summary.month}</span>
+                </div>
+                <div className={styles.monthsContainer}>
+                  <p>May</p>
+                  <p>Jun</p>
+                  <p>Jul</p>
+                  <p>Ago</p>
+                  <p>Sep</p>
+                  <p>Oct</p>
+                  <p>Nov</p>
+                  <p>Dic</p>
+                  <p>Ene</p>
+                  <p>Feb</p>
+                </div>
               </div>
+            ))}
+          </div>
+          <div className={styles.expenseAccounts}>
+            <div className={styles.expenseAccountsHeader}>
+              <div className={styles.expenseAccountsOptions}>
+                <p>Cuentas de gastos</p>
+                <span>Cuentas de ingresos</span>
+              </div>
+              <span className={styles.month}>Mes actual</span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              {spentData.map((item, index) => (
+                <div className={styles.spent}>
+                  <div key={index} className={styles.row}>
+                    <p>{item.title}</p>
+                    <span>
+                      {item.amount} - {item.amount} ({item.percentage})
+                    </span>
+                  </div>
+                  <div className={styles.divider}></div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-       </PanelTemplate>
+      </div>
+    </PanelTemplate>
   );
 };
 

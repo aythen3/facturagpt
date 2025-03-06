@@ -28,6 +28,8 @@ import HoldedFormAutomate from "../Components/HoldedFormAutomate/HoldedFormAutom
 import FTPFormAutomate from "../Components/FTPFormAutomate/FTPFormAutomate";
 import TelematelFormAutomate from "../Components/TelamatelFormAutomate/TelematelFormAutomate";
 import SelectCurrencyPopup from "../../SelectCurrencyPopup/SelectCurrencyPopup";
+import HeaderCard from "../../HeaderCard/HeaderCard";
+import Button from "../../Button/Button";
 
 const PanelAutomate = ({
   type,
@@ -82,6 +84,7 @@ const PanelAutomate = ({
       min: 0,
       max: 0,
     },
+    inputType: true,
   });
 
   const [outlookConfiguration, setOutlookConfiguration] = useState({
@@ -106,6 +109,7 @@ const PanelAutomate = ({
     gmailBody: "",
     whatsAppToNotificate: "",
     whatsAppMessage: "",
+    inputType: true,
   });
 
   const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({
@@ -122,6 +126,7 @@ const PanelAutomate = ({
     gmailSubject: "",
     gmailBody: "",
     whatsAppMessage: "",
+    inputType: true,
   });
 
   const [googleDriveConfiguration, setGoogleDriveConfiguration] = useState({
@@ -143,6 +148,7 @@ const PanelAutomate = ({
     gmailBody: "",
     whatsAppToNotificate: "",
     whatsAppMessage: "",
+    inputType: true,
   });
 
   const [esPublicoGestionaConfiguration, setEsPublicoGestionaConfiguration] =
@@ -167,6 +173,7 @@ const PanelAutomate = ({
       errorGmailBody: "",
       errorWhatsAppToNotificate: "",
       errorWhatsAppMessage: "",
+      inputType: true,
     });
 
   const [dropBoxConfiguration, setDropBoxConfiguration] = useState({
@@ -188,6 +195,7 @@ const PanelAutomate = ({
     gmailBody: "",
     whatsAppToNotificate: "",
     whatsAppMessage: "",
+    inputType: true,
   });
 
   //   ================================ OUTPUT CONFIGS =====================================
@@ -207,6 +215,7 @@ const PanelAutomate = ({
     gmailBody: "",
     whatsAppToNotificate: "",
     whatsAppMessage: "",
+    inputType: false,
   });
 
   const [XMLConfiguration, setXMLConfiguration] = useState({
@@ -231,6 +240,7 @@ const PanelAutomate = ({
     errorGmailBody: "",
     errorWhatsAppToNotificate: "",
     errorWhatsAppMessage: "",
+    inputType: false,
   });
 
   const [odooConfiguration, setOdooConfiguration] = useState({
@@ -260,6 +270,7 @@ const PanelAutomate = ({
     errorGmailBody: "",
     errorWhatsAppToNotificate: "",
     errorWhatsAppMessage: "",
+    inputType: false,
   });
 
   const [woltersConfiguration, setWoltersConfiguration] = useState({
@@ -287,6 +298,7 @@ const PanelAutomate = ({
     errorGmailBody: "",
     errorWhatsAppToNotificate: "",
     errorWhatsAppMessage: "",
+    inputType: false,
   });
 
   const [agenciaConfiguration, setAgenciaConfiguration] = useState({
@@ -309,6 +321,7 @@ const PanelAutomate = ({
     errorGmailBody: "",
     errorWhatsAppToNotificate: "",
     errorWhatsAppMessage: "",
+    inputType: false,
   });
 
   const [
@@ -323,6 +336,7 @@ const PanelAutomate = ({
     newFileNotification: true,
     tagUpdateNotification: true,
     notificateDaysBeforeDueDate: true,
+    inputType: false,
   });
 
   const [holdedConfiguration, setHoldedConfiguration] = useState({
@@ -350,6 +364,7 @@ const PanelAutomate = ({
     errorGmailBody: "",
     errorWhatsAppToNotificate: "",
     errorWhatsAppMessage: "",
+    inputType: false,
   });
 
   const [ftpConfiguration, setFtpConfiguration] = useState({
@@ -363,6 +378,7 @@ const PanelAutomate = ({
     allowAllFileTypes: true,
     changeFileName: false,
     fileName: "",
+    inputType: false,
   });
 
   const [telematelConfiguration, setTelematelConfiguration] = useState({
@@ -376,6 +392,7 @@ const PanelAutomate = ({
     allowAllFileTypes: true,
     changeFileName: false,
     fileName: "",
+    inputType: false,
   });
 
   //   =====================================================================================
@@ -470,6 +487,11 @@ const PanelAutomate = ({
         ...whatsAppConfiguration,
         type: type,
       };
+    } else if (type === "Telematel") {
+      selectedAutomationData = {
+        ...telematelConfiguration,
+        type: type,
+      };
     } else if (type === "Google Drive") {
       selectedAutomationData = {
         ...googleDriveConfiguration,
@@ -533,6 +555,7 @@ const PanelAutomate = ({
     }
     // Por el momento testeamos con gmail y outlook
 
+    console.log("CREATIING AUTOMATION", selectedAutomationData);
     if (user && selectedAutomationData?.id) {
       console.log("UPDATING AUTOMATION", selectedAutomationData?.id);
       dispatch(
@@ -559,7 +582,7 @@ const PanelAutomate = ({
     <ModalBlackBgTemplate close={close} isAnimating={isAnimating}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.headerContainer}>
+          {/* <div className={styles.headerContainer}>
             <div className={styles.headerLeft}>
               <div onClick={close} className={styles.backButton}>
                 <img src={chevronLeft} alt="chevronLeft" />
@@ -591,7 +614,23 @@ const PanelAutomate = ({
                 <img src={automation} alt="automation" /> Guardar
               </button>
             </div>
-          </div>
+          </div> */}
+          <HeaderCard title={"Añadir Automatización"} setState={close}>
+            {/* <Button type="white">Atrás</Button> */}
+            <Button
+              action={async () => {
+                await handleAddAutomation();
+                close();
+                setTimeout(() => {
+                  setIsModalAutomate(true);
+                }, 300);
+              }}
+            >
+              {" "}
+              <img src={automation} alt="automation" />
+              Guardar
+            </Button>
+          </HeaderCard>
           <div className={styles.body}>
             <div className={styles.leftContainer}>
               <CustomSearchbar

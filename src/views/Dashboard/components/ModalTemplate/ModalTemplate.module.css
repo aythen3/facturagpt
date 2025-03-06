@@ -20,6 +20,16 @@
   -o-border-radius: 6px;
   animation: scaleUp 300ms ease-out forwards;
   -webkit-animation: scaleUp 300ms ease-out forwards;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  box-sizing: border-box;
+  @media (width<768px) {
+    height: 100vh;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
   p,
   h3 {
     margin: 0;
@@ -82,6 +92,8 @@
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
+  width: 70%;
+  margin: 0 auto;
 }
 .scaleDown {
   animation: scaleDown 300ms ease-in forwards;
