@@ -20,6 +20,9 @@ import CheckboxWithText from "../../../CheckboxWithText/CheckboxWithText";
 import CustomDropdown from "../../../CustomDropdown/CustomDropdown";
 import minusIcon from "../../../../assets/minusIcon.svg";
 import AddEmailsInput from "../AddEmailsInput/AddEmailsInput";
+import FileInputExport from "../FileInput/Export";
+import FileInputImport from "../FileInput/Import";
+import FileInputNotification from "../FileInput/Notification";
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
@@ -35,8 +38,9 @@ import { ReactComponent as GmailIcon } from "../../../../assets/gmailwithoutbg.s
 import { ReactComponent as OutlookIcon } from "../../../../assets/outlook.svg";
 import { ReactComponent as WhatsAppIcon } from "../../../../assets/whatsappIcon.svg";
 import Advertency from "../Advertency/Advertency";
-import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
+// import EditableInput from "../../../AccountSettings/EditableInput/EditableInput";
 import SelectInfoToProcess from "../FileInput/selectInfoToProcces/SelectInfoToProcess";
+import EditableInput from "../FileInput/Input";
 
 const Outlook = ({
   type,
@@ -85,9 +89,9 @@ const Outlook = ({
         setSelectedEmailConnection={(value) =>
           handleConfigurationChange("selectedEmailConnection", value)
         }
-        emailConnections={(configuration?.emailConnectionData || []).map(
-          (connection) => connection.email
-        )}
+        // emailConnections={(configuration?.emailConnectionData || []).map(
+        //   (connection) => connection.email
+        // )}
         action={() => setShowAddConnection(true)}
         icon={type === "Outlook" ? <OutlookIcon /> : <GmailIcon />}
       />
@@ -101,6 +105,8 @@ const Outlook = ({
           placeholder="Automatización 1"
           options={true}
           readOnly={false}
+          configuration={configuration}
+          handleConfigurationChange={handleConfigurationChange}
         />
         <SelectInfoToProcess
           setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
@@ -110,155 +116,7 @@ const Outlook = ({
           setConfiguration={setConfiguration}
           handleConfigurationChange={handleConfigurationChange}
         />
-        <CustomAutomationsWrapper Icon={<ArrowSquare />}>
-          <div
-            className={styles.infoContainerWrapper}
-            onClick={() =>
-              setShowContent({ ...showContent, info2: !showContent.info2 })
-            }
-          >
-            <GrayChevron />
-            <div className={styles.infoContainer}>
-              <div>Selecciona la información a extraer</div>
-              <span>
-                Aplica filtros avanzados para procesar solo los datos que
-                realmente importan.
-              </span>
-            </div>
-          </div>
-          <div
-            className={`${styles.contentContainer} ${showContent.info2 ? styles.active : styles.disabled}`}
-          >
-            <div className={styles.contentInput}>
-              <p className={styles.titleContentInput}>Remitentes</p>
-
-              <AddEmailsInput
-                addedEmails={configuration?.addedRemitents || []}
-                setAddedEmails={(value) =>
-                  handleConfigurationChange("addedRemitents", value)
-                }
-                placeholder="ejemplo@email.com"
-              />
-              <CheckboxWithText
-                color="#10A37F"
-                marginTop="10px"
-                state={configuration?.includeAllRemitents || false}
-                setState={(value) =>
-                  handleConfigurationChange("includeAllRemitents", value)
-                }
-                text="Incluir todos los remitentes"
-              />
-            </div>
-
-            <div className={styles.contentInput}>
-              <p className={styles.titleContentInput}>Asunto Contiene</p>
-
-              <InputComponent
-                value={configuration?.subjectKeyWords}
-                setValue={(value) =>
-                  handleConfigurationChange("subjectKeyWords", value)
-                }
-                placeholder="Palabras clave separadas por coma"
-                typeInput="text"
-              />
-
-              <CheckboxWithText
-                marginTop="10px"
-                color="#10A37F"
-                state={configuration?.subjectExactMatch || false}
-                setState={(value) =>
-                  handleConfigurationChange("subjectExactMatch", value)
-                }
-                text="Match exacto"
-              />
-            </div>
-
-            <div className={styles.contentInput}>
-              <p className={styles.titleContentInput}>Mensaje Contiene</p>
-              <InputComponent
-                value={configuration?.bodyKeyWords}
-                setValue={(value) =>
-                  handleConfigurationChange("bodyKeyWords", value)
-                }
-                placeholder="Palabras clave separadas por coma"
-                typeInput="text"
-              />
-
-              <CheckboxWithText
-                color="#10A37F"
-                marginTop="10px"
-                state={configuration?.bodyExactMatch || false}
-                setState={(value) =>
-                  handleConfigurationChange("bodyExactMatch", value)
-                }
-                text="Match exacto"
-              />
-            </div>
-
-            <div className={styles.contentInput}>
-              <p className={styles.titleContentInput}>Tipos de Archivo</p>
-
-              <CheckboxWithText
-                marginTop="10px"
-                color="#10A37F"
-                state={configuration?.attachmentExactMatch || false}
-                setState={(value) =>
-                  handleConfigurationChange("attachmentExactMatch", value)
-                }
-                text="Incluir todos los tipos de archivos"
-              />
-              <div className={styles.cardTypesContainer}>
-                {(configuration?.selectedTypes || []).map((type) => (
-                  <div className={styles.singleTypeCard} key={type}>
-                    <span>{type}</span>
-                    <div
-                      onClick={() =>
-                        handleConfigurationChange(
-                          "selectedTypes",
-                          (configuration?.selectedTypes || []).filter(
-                            (option) => option !== type
-                          )
-                        )
-                      }
-                      className={styles.minusIcon}
-                    >
-                      <img src={minusIcon} alt="minusIcon" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <CustomDropdown
-                options={["PDF", "PNG", "JPG", "XML", "JSON", "HTML"]}
-                selectedOption={configuration?.selectedTypes || []}
-                height="31px"
-                textStyles={{
-                  fontWeight: 300,
-                  color: "#1E0045",
-                  fontSize: "13px",
-                  marginLeft: "6px",
-                  userSelect: "none",
-                }}
-                setSelectedOption={(selected) =>
-                  handleConfigurationChange(
-                    "selectedTypes",
-                    configuration?.selectedTypes?.includes(selected)
-                      ? configuration?.selectedTypes.filter(
-                          (option) => option !== selected
-                        )
-                      : [...(configuration?.selectedTypes || []), selected]
-                  )
-                }
-              />
-              <Advertency
-                text={
-                  "Si el correo no tiene archivos adjuntos no se guardará ninguna factura"
-                }
-              />
-            </div>
-          </div>
-        </CustomAutomationsWrapper>
-
-        <CustomAutomationsWrapper Icon={<WhiteClock />}>
+        {/* <CustomAutomationsWrapper Icon={<WhiteClock />}>
           <div className={styles.infoContainerWrapper}>
             <div
               className={styles.infoContainer}
@@ -313,8 +171,17 @@ const Outlook = ({
               }
             />
           </div>
-        </CustomAutomationsWrapper>
-        <CustomAutomationsWrapper Icon={<WhiteBolt />}>
+        </CustomAutomationsWrapper> */}
+        <FileInputImport
+          handleConfigurationChange={handleConfigurationChange}
+          configuration={configuration}
+          setShowSelectOutputLocation={setShowSelectOutputLocation}
+        />
+        <FileInputExport
+          configuration={configuration}
+          handleConfigurationChange={handleConfigurationChange}
+        />
+        {/* <CustomAutomationsWrapper Icon={<WhiteBolt />}>
           <div
             className={styles.infoContainerWrapper}
             onClick={() =>
@@ -352,7 +219,7 @@ const Outlook = ({
               }
             />
           </div>
-        </CustomAutomationsWrapper>
+        </CustomAutomationsWrapper> */}
         {/* <CustomAutomationsWrapper Icon={<WhiteFolder />}>
         <div style={{ display: "grid", gap: "10px" }}>
           <OptionsSwitchComponent
@@ -371,7 +238,7 @@ const Outlook = ({
           />
         </div>
       </CustomAutomationsWrapper> */}
-        <CustomAutomationsWrapper Icon={<WhiteText />}>
+        {/* <CustomAutomationsWrapper Icon={<WhiteText />}>
           <div className={styles.infoContainerWrapper}>
             <div
               className={styles.infoContainer}
@@ -404,8 +271,8 @@ const Outlook = ({
               setValue={(value) => handleConfigurationChange("fileName", value)}
             />
           </div>
-        </CustomAutomationsWrapper>
-        <CustomAutomationsWrapper Icon={<WhiteFolder />}>
+        </CustomAutomationsWrapper> */}
+        {/* <CustomAutomationsWrapper Icon={<WhiteFolder />}>
           <div
             className={styles.infoContainerWrapper}
             onClick={() =>
@@ -440,8 +307,8 @@ const Outlook = ({
               />
             </div>
           </div>
-        </CustomAutomationsWrapper>
-        <CustomAutomationsWrapper Icon={<WhiteBell />}>
+        </CustomAutomationsWrapper> */}
+        {/* <CustomAutomationsWrapper Icon={<WhiteBell />}>
           <div
             className={styles.infoContainerWrapper}
             onClick={() =>
@@ -562,7 +429,12 @@ const Outlook = ({
               </CustomAutomationsWrapper>
             </div>
           </div>
-        </CustomAutomationsWrapper>
+        </CustomAutomationsWrapper> */}
+        <FileInputNotification
+          type="Gmail"
+          handleConfigurationChange={handleConfigurationChange}
+          configuration={configuration}
+        />
       </div>
 
       {showSelectOutputLocation && (

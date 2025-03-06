@@ -40,7 +40,9 @@ const SelectCurrencyPopup = ({
 
   const handleSelectCurrency = (currency) => {
     setSelectedCode(currency.code); // Solo cambia visualmente cuál está clickeada
-    setSymbolSelected(currency.symbol);
+    if (setSymbolSelected) {
+      setSymbolSelected(currency.symbol);
+    }
   };
 
   const handleConfirmSelection = () => {
