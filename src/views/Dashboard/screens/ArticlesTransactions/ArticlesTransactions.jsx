@@ -110,9 +110,9 @@ const ArticlesTransactions = () => {
       </td>
     </tr>
   );
-
+  const [swiped, setSwiped] = useState(false);
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
       <div className={styles.container}>
         <ClientsHeader
           additionalInfo={

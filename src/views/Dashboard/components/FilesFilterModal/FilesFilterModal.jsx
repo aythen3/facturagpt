@@ -9,6 +9,8 @@ import minusIcon from "../../assets/minusIcon.svg";
 import { ReactComponent as GrayArrow } from "../../assets/arrowDownBold.svg";
 import searchGray from "../../assets/searchGray.svg";
 import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
+import HeaderCard from "../HeaderCard/HeaderCard";
+import Button from "../Button/Button";
 
 const FilesFilterModal = ({
   onClose,
@@ -17,6 +19,7 @@ const FilesFilterModal = ({
   setShowSelectCurrencyPopup,
   setSelectedCurrency,
   selectedCurrency,
+  symbolSelected,
 }) => {
   const colors = [
     "#0B06FF",
@@ -95,6 +98,15 @@ const FilesFilterModal = ({
     setIsClosing(isFilterOpen);
   }, [isFilterOpen]);
 
+  const fileTypes = ["PDF", "PNG", "JPEG", "SVG", "XLS"];
+  useEffect(() => {
+    if (allFiles) {
+      setSelectedTypes(fileTypes); // Agrega todos los tipos si allFiles es true
+    } else {
+      setSelectedTypes([]); // Reinicia los tipos si allFiles es false
+    }
+  }, [allFiles]);
+
   return (
     <div
       onClick={(e) => {
@@ -110,7 +122,7 @@ const FilesFilterModal = ({
         className={`${styles.modalContent} ${!isClosing ? styles.scaleDown : ""}`}
       >
         {/* Header */}
-        <div className={styles.headerContainer}>
+        {/* <div className={styles.headerContainer}>
           <div className={styles.headerLeft}>
             <div onClick={handleClose} className={styles.backButton}>
               <img src={chevronLeft} alt="chevronLeft" />
@@ -122,7 +134,26 @@ const FilesFilterModal = ({
               <img src={closeGray} alt="closeGray" onClick={handleClose} />
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <HeaderCard title={"Filtrar"} setState={handleClose}>
+          <Button
+            type="white"
+            action={() => {
+              handleCancel();
+              // handleClose()
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            action={() => {
+              handleApplyFiltering();
+            }}
+          >
+            Buscar
+          </Button>
+        </HeaderCard>
         {/* Content */}
         <div className={styles.contentContainer}>
           <InputWithTitle
@@ -166,44 +197,50 @@ const FilesFilterModal = ({
               setState={setAllFiles}
               text="Permitir todo los tipos de archivos"
             />
-            <div className={styles.cardTypesContainer}>
-              {selectedTypes.map((type) => (
-                <div className={styles.singleTypeCard}>
-                  <span>{type}</span>
-                  <div
-                    onClick={() =>
-                      setSelectedTypes(
-                        selectedTypes.filter((option) => option !== type)
-                      )
-                    }
-                    className={styles.minusIcon}
-                  >
-                    <img src={minusIcon} alt="minusIcon" />
-                  </div>
+
+            {!allFiles && (
+              <>
+                <div className={styles.cardTypesContainer}>
+                  {selectedTypes.map((type) => (
+                    <div className={styles.singleTypeCard}>
+                      <span>{type}</span>
+                      <div
+                        onClick={() =>
+                          setSelectedTypes(
+                            selectedTypes.filter((option) => option !== type)
+                          )
+                        }
+                        className={styles.minusIcon}
+                      >
+                        <img src={minusIcon} alt="minusIcon" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <CustomDropdown
-              options={["PDF", "PNG", "JPEG", "SVG", "XLS"]}
-              selectedOption={selectedTypes}
-              height="31px"
-              textStyles={{
-                fontWeight: 300,
-                color: "#1E0045",
-                fontSize: "13px",
-                marginLeft: "6px",
-                userSelect: "none",
-              }}
-              setSelectedOption={(selected) =>
-                setSelectedTypes((prev) => {
-                  if (prev.includes(selected)) {
-                    return prev.filter((option) => option !== selected);
-                  } else {
-                    return [...prev, selected];
+
+                <CustomDropdown
+                  options={fileTypes}
+                  selectedOption={selectedTypes}
+                  height="31px"
+                  textStyles={{
+                    fontWeight: 300,
+                    color: "#1E0045",
+                    fontSize: "13px",
+                    marginLeft: "6px",
+                    userSelect: "none",
+                  }}
+                  setSelectedOption={(selected) =>
+                    setSelectedTypes((prev) => {
+                      if (prev.includes(selected)) {
+                        return prev.filter((option) => option !== selected);
+                      } else {
+                        return [...prev, selected];
+                      }
+                    })
                   }
-                })
-              }
-            />
+                />
+              </>
+            )}
           </div>
           <div className={styles.filterSection}>
             <div className={styles.searchAmount}>
@@ -255,7 +292,7 @@ const FilesFilterModal = ({
               <div className={styles.amountInput}>
                 <div className={styles.leftAmount}>
                   <span>Min</span>
-                  <span>$</span>
+                  <span>{symbolSelected}</span>
                 </div>
                 <input
                   type="text"
@@ -268,7 +305,7 @@ const FilesFilterModal = ({
               <div className={styles.amountInput}>
                 <div className={styles.leftAmount}>
                   <span>Max</span>
-                  <span>$</span>
+                  <span>{symbolSelected}</span>
                 </div>
                 <input
                   type="text"
@@ -324,14 +361,14 @@ const FilesFilterModal = ({
           </div>
         </div>
         {/* Buttons */}
-        <div className={styles.footerContainer}>
+        {/* <div className={styles.footerContainer}>
           <div onClick={handleCancel} className={styles.newFolderButton}>
             Cancelar
           </div>
           <div onClick={handleApplyFiltering} className={styles.selectButton}>
             Buscar
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -77,6 +77,10 @@
   img {
     width: 15px;
   }
+  svg {
+    height: 20px;
+    width: 20px;
+  }
   -webkit-transition: background-color 0.2s;
   -moz-transition: background-color 0.2s;
   -ms-transition: background-color 0.2s;
@@ -107,6 +111,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  svg {
+    height: 20px;
+    width: 20px;
+  }
 }
 .acceptButton {
   color: #222222;

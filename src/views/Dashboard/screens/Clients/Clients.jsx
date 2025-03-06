@@ -12,8 +12,7 @@ import {
   getAllClients,
   getOneClient,
   updateClient,
-} from  "@src/actions/clients";
-
+} from "@src/actions/clients";
 
 import { clearClient, setClient } from "@src/slices/clientsSlices";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +28,6 @@ import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
 import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
 
-
 const Clients = () => {
   const { t } = useTranslation("clients");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -43,6 +41,8 @@ const Clients = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showImportContacts, setShowImportContacts] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -572,8 +572,6 @@ const Clients = () => {
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
 
-  const [selectedIds, setSelectedIds] = useState([]);
-
   const toggleSelection = (id) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
@@ -680,9 +678,10 @@ const Clients = () => {
   );
 
   const [selectedOption, setSelectedOption] = useState("Nombre");
+  const [swiped, setSwiped] = useState(false);
 
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
       <div className={styles.container} onClick={() => setShowSidebar(false)}>
         <ClientsHeader
           title="Gestión de Contactos"

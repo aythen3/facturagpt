@@ -192,7 +192,6 @@ const NewProduct = ({
           onClick={() => handleCloseNewClient()}
           isAnimating={isAnimating}
           newContact={newContactProp}
-          selectedContact={selectedContact}
           handleGetOneClient={handleGetOneClient}
         >
           <div

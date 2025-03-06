@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 
-const useSwipe = (setState) => {
+const useSwipe = (setState, timeThreshold = 300) => {
   useEffect(() => {
     let startX = 0;
     let endX = 0;
     let isTouch = false;
+    let startTime = 0;
 
     // 🖱️ Inicio del mouse
     const handleMouseDown = (e) => {
       isTouch = false;
       startX = e.clientX;
+      startTime = Date.now();
     };
 
     // 🖱️ Movimiento del mouse
@@ -26,6 +28,7 @@ const useSwipe = (setState) => {
     const handleTouchStart = (e) => {
       isTouch = true;
       startX = e.touches[0].clientX;
+      startTime = Date.now();
     };
 
     // 📱 Movimiento del touch
@@ -38,8 +41,11 @@ const useSwipe = (setState) => {
       if (isTouch) detectSwipe();
     };
 
-    // 🔥 Detecta el swipe
+    // 🔥 Detecta el swipe solo si ocurre dentro del tiempo permitido
     const detectSwipe = () => {
+      const elapsedTime = Date.now() - startTime;
+      if (elapsedTime > timeThreshold) return; // Ignorar si el swipe tardó demasiado
+
       if (startX < endX - 50) {
         setState(true); // 👉 Swipe a la derecha → true
       } else if (startX > endX + 50) {
@@ -64,7 +70,7 @@ const useSwipe = (setState) => {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [setState]);
+  }, [setState, timeThreshold]);
 };
 
 export default useSwipe;

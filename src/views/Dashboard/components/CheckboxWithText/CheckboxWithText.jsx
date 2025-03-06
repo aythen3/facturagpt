@@ -1,7 +1,5 @@
 import React from "react";
 import styles from "./CheckboxWithText.module.css";
-import { MdCheckBox } from "react-icons/md";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const CheckboxWithText = ({
   state,
@@ -12,7 +10,7 @@ const CheckboxWithText = ({
 }) => {
   return (
     <div style={{ marginTop }} className={styles.checkboxWithTextContainer}>
-      {state ? (
+      {/* {state ? (
         <MdCheckBox
           style={{ cursor: "pointer" }}
           onClick={() => setState(false)}
@@ -26,7 +24,12 @@ const CheckboxWithText = ({
           size={20}
           color="#b9b9b9"
         />
-      )}
+      )} */}
+      <input
+        type="checkbox"
+        onClick={() => setState((prev) => !prev)}
+        value={state}
+      />
       <span className={styles.text}>{text}</span>
     </div>
   );

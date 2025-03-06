@@ -152,7 +152,6 @@ const InfoClientBill = ({
                 className={styles.newContactInfoClient}
                 onClick={() => {
                   setShowNewContact(true);
-                  console.log("hola");
                 }}
               >
                 <PlusIconGray /> Nuevo contacto

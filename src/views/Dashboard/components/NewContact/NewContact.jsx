@@ -457,9 +457,7 @@ const NewContact = ({
                   <img src={closeIcon} />
                 </span>
               </div> */}
-            <button onClick={() => handleGetOneClient(selectedContact)}>
-              hola
-            </button>
+
             <form
               className={styles.newClientForm}
               onSubmit={handleCreateClient}

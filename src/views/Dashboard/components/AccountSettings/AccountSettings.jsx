@@ -9,8 +9,19 @@ import gpay from "../../assets/gPayment.png";
 import metamask from "../../assets/metamaskPayment.png";
 import coinbase from "../../assets/coinbasePayment.png";
 import creditCard from "../../assets/creditCardIcon.png";
-import spanish_flag from "../../assets/spain_flag.svg";
-import english_flag from "../../assets/english_flag.svg";
+import { ReactComponent as Flag_of_Venezuela } from "../../assets/Flag_of_Venezuela.svg";
+import { ReactComponent as Flag_of_Argentina } from "../../assets/Flag_of_Argentina.svg";
+import { ReactComponent as Flag_of_UnitedStates } from "../../assets/Flag_of_UnitedStates.svg";
+import { ReactComponent as Flag_of_Spain } from "../../assets/Flag_of_Spain.svg";
+import { ReactComponent as Flag_of_Bolivia } from "../../assets/Flag_of_Bolivia.svg";
+import { ReactComponent as Flag_of_Brasil } from "../../assets/Flag_of_Brasil.svg";
+import { ReactComponent as Flag_of_Chile } from "../../assets/Flag_of_Chile.svg";
+import { ReactComponent as Flag_of_Ecuador } from "../../assets/Flag_of_Ecuador.svg";
+import { ReactComponent as Flag_of_Guyana } from "../../assets/Flag_of_Guyana.svg";
+import { ReactComponent as Flag_of_Peru } from "../../assets/Flag_of_Peru.svg";
+import { ReactComponent as Flag_of_Suriname } from "../../assets/Flag_of_Suriname.svg";
+import { ReactComponent as Flag_of_Uruguay } from "../../assets/Flag_of_Uruguay.svg";
+
 import { useTranslation } from "react-i18next";
 // import { useAuth0 } from "@auth0/auth0-react";
 import SeeHistory from "../SeeHistory/SeeHistory";
@@ -182,7 +193,134 @@ const AccountSettings = () => {
       logout();
     }
   };
-
+  const getFlagComponent = (countryCode) => {
+    switch (countryCode) {
+      case "+34":
+        return <Flag_of_Spain />;
+      case "+58":
+        return <Flag_of_Venezuela />;
+      case "+54":
+        return <Flag_of_Argentina />;
+      case "+1":
+        return <Flag_of_UnitedStates />;
+      case "+591":
+        return <Flag_of_Bolivia />;
+      case "+55":
+        return <Flag_of_Brasil />;
+      case "+56":
+        return <Flag_of_Chile />;
+      case "+593":
+        return <Flag_of_Ecuador />;
+      case "+592":
+        return <Flag_of_Guyana />;
+      case "+51":
+        return <Flag_of_Peru />;
+      case "+597":
+        return <Flag_of_Suriname />;
+      case "+598":
+        return <Flag_of_Uruguay />;
+      default:
+        return null; // Si no hay coincidencia, no muestra nada
+    }
+  };
+  const countryFlags = [
+    {
+      value: "+34",
+      label: (
+        <>
+          <Flag_of_Spain /> Spain (+34)
+        </>
+      ),
+    },
+    {
+      value: "+58",
+      label: (
+        <>
+          <Flag_of_Venezuela /> Venezuela (+58)
+        </>
+      ),
+    },
+    {
+      value: "+54",
+      label: (
+        <>
+          <Flag_of_Argentina /> Argentina (+54)
+        </>
+      ),
+    },
+    {
+      value: "+1",
+      label: (
+        <>
+          <Flag_of_UnitedStates /> United States (+1)
+        </>
+      ),
+    },
+    {
+      value: "+591",
+      label: (
+        <>
+          <Flag_of_Bolivia /> Bolivia (+591)
+        </>
+      ),
+    },
+    {
+      value: "+55",
+      label: (
+        <>
+          <Flag_of_Brasil /> Brasil (+55)
+        </>
+      ),
+    },
+    {
+      value: "+56",
+      label: (
+        <>
+          <Flag_of_Chile /> Chile (+56)
+        </>
+      ),
+    },
+    {
+      value: "+593",
+      label: (
+        <>
+          <Flag_of_Ecuador /> Ecuador (+593)
+        </>
+      ),
+    },
+    {
+      value: "+592",
+      label: (
+        <>
+          <Flag_of_Guyana /> Guyana (+592)
+        </>
+      ),
+    },
+    {
+      value: "+51",
+      label: (
+        <>
+          <Flag_of_Peru /> Peru (+51)
+        </>
+      ),
+    },
+    {
+      value: "+597",
+      label: (
+        <>
+          <Flag_of_Suriname /> Suriname (+597)
+        </>
+      ),
+    },
+    {
+      value: "+598",
+      label: (
+        <>
+          <Flag_of_Uruguay /> Uruguay (+598)
+        </>
+      ),
+    },
+  ];
   const handleChange = ({ name, newValue }) => {
     console.log(`Setting ${name} to ${newValue}`);
     const updatedData = { ...userData, [name]: newValue };
@@ -363,14 +501,15 @@ const AccountSettings = () => {
                       }
                       editing={editingPhone}
                       hasObject={true}
-                      options={[
-                        { value: "+34", label: "Spain (+34)" },
-                        { value: "+1", label: "United States (+1)" },
-                        { value: "+44", label: "United Kingdom (+44)" },
-                        { value: "+52", label: "Mexico (+52)" },
-                        { value: "+91", label: "India (+91)" },
-                      ]}
-                      selectedOption={userData?.countryCode}
+                      options={countryFlags}
+                      selectedOption={
+                        userData?.countryCode ? (
+                          <>
+                            {getFlagComponent(userData.countryCode)}
+                            {userData.countryCode}
+                          </>
+                        ) : null
+                      }
                     />
                     <input
                       type="text"

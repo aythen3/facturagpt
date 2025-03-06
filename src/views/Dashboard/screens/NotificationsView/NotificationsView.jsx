@@ -7,12 +7,8 @@ import { ReactComponent as FolderIcon } from "../../assets/S3/folderMail.svg";
 import { ReactComponent as CloseMenu } from "../../assets/closeMenu.svg";
 import NotificationComponent from "../../components/NotificationComponent/NotificationComponent";
 
-
 import { useDispatch } from "react-redux";
 import { getAllNotifications } from "@src/actions/user";
-
-
-
 
 const ButtonsOptions = ({ option, index }) => {
   const shareOption = async () => {
@@ -74,10 +70,7 @@ const NotificationsView = () => {
     }));
   };
 
-
-
   const [notifications, setNotifications] = useState([]);
-
 
   useEffect(() => {
     const fn = async () => {
@@ -87,13 +80,13 @@ const NotificationsView = () => {
       if (response.payload.success) {
         setNotifications(response.payload.notifications);
       }
-    }
+    };
 
-    fn()
+    fn();
   }, []);
-
+  const [swiped, setSwiped] = useState(false);
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
       {notifications.length > 0 && (
         <div className={styles.notificationCoontainer}>
           {notifications.map((notification) => (
@@ -113,8 +106,8 @@ const NotificationsView = () => {
           <span>
             No hay notificaciones
             <br />
-            Configura tus notificaciones
-            Analiza los datos de tus facturas y presupuestos
+            Configura tus notificaciones Analiza los datos de tus facturas y
+            presupuestos
           </span>
         </div>
       )}

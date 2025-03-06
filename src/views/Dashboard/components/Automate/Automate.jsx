@@ -85,6 +85,12 @@ const Automate = ({
 
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
+  const filteredData = userAutomations.filter((item) => {
+    if (selectedType === "all") return true;
+    if (selectedType === "input") return item.inputType;
+    if (selectedType === "output") return !item.inputType;
+    return true;
+  });
 
   return (
     <>
@@ -117,9 +123,9 @@ const Automate = ({
         >
           {!userAutomations.length <= 0 && (
             <>
-              <Button type="white" action={handleCloseNewClient}>
+              {/* <Button type="white" action={handleCloseNewClient}>
                 Atrás
-              </Button>
+              </Button> */}
               <Button action={() => typeContent("Gmail")}>
                 {" "}
                 <img src={automation} alt="automation" />
@@ -142,7 +148,7 @@ const Automate = ({
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="Buscar"
+                  placeholder="Busca tus automatizaciones o crea una nueva"
                   className={styles.searchInput}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -163,27 +169,27 @@ const Automate = ({
             </div>
             <div className={styles.buttonsTypeContainer}>
               <button
-                onClick={() => setSelectedType(0)}
-                className={selectedType == 0 && styles.selectedType}
+                onClick={() => setSelectedType("all")}
+                className={selectedType == "all" && styles.selectedType}
               >
                 Todas
               </button>
               <button
-                onClick={() => setSelectedType(1)}
-                className={selectedType == 1 && styles.selectedType}
+                onClick={() => setSelectedType("input")}
+                className={selectedType == "input" && styles.selectedType}
               >
                 Entrada
               </button>
               <button
-                onClick={() => setSelectedType(2)}
-                className={selectedType == 2 && styles.selectedType}
+                onClick={() => setSelectedType("output")}
+                className={selectedType == "output" && styles.selectedType}
               >
                 Salida
               </button>
             </div>
             <div className={styles.contentContainer}>
               {userAutomations?.length > 0 &&
-                userAutomations?.map((card, i) => {
+                filteredData?.map((card, i) => {
                   console.log("automationData", card);
                   const filteredAutomation = data.find(
                     (automation) => automation?.type === card?.type

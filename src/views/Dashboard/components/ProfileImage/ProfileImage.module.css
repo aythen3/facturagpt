@@ -1,0 +1,34 @@
+.profileImage {
+  position: relative;
+  border-radius: 9999px;
+  -webkit-border-radius: 9999px;
+  -moz-border-radius: 9999px;
+  -ms-border-radius: 9999px;
+  -o-border-radius: 9999px;
+  height: 100px;
+  max-width: 100px;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+  .changeProfileImage {
+    position: absolute;
+    bottom: -1px;
+    background-color: #9e9e9e;
+    display: none;
+    width: 100%;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  &:hover .changeProfileImage {
+    display: flex;
+  }
+}

@@ -487,8 +487,9 @@ const AccountsDashboard = () => {
       percentage: "0%",
     },
   ];
+  const [swiped, setSwiped] = useState(false);
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
       <div className={styles.container}>
         {showPaymentModal && amountToPay && (
           <Payment

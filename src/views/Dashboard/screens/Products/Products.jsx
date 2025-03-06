@@ -34,7 +34,7 @@ import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/
 
 const Products = () => {
   const { t } = useTranslation("clients");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [showSidebar, setShowSidebar] = useState(false);
   const [search, setSearch] = useState("");
@@ -44,11 +44,11 @@ const Products = () => {
   const [newClient, setShowNewClient] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [selectedClientIds, setSelectedClientIds] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
 
-  const { docByClient, loading } = useSelector( (state) => state.docs );
+  const { docByClient, loading } = useSelector((state) => state.docs);
   const [newProductModal, setNewProductModal] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
-
 
   const closeNewProductModal = () => {
     setNewProductModal(false);
@@ -59,21 +59,21 @@ const Products = () => {
 
   // console.log("TRANSAAAAAAAA----------", docByClient);
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fn = async () => {
-      const response = await dispatch(getAllProducts())
+      const response = await dispatch(getAllProducts());
 
-      if(response.payload){
-        console.log('resp product', response)
+      if (response.payload) {
+        console.log("resp product", response);
 
-        setProducts(response.payload.products)
+        setProducts(response.payload.products);
       }
-    }
-  
-    fn()
-  }, [])
+    };
+
+    fn();
+  }, []);
 
   const selectClient = (rowIndex) => {
     setClientSelected((prevItem) => {
@@ -200,7 +200,7 @@ const Products = () => {
     );
     await dispatch(
       getOneDocsById({
-        docId:  docByClient?.id || docByClient?.doc?._id,
+        docId: docByClient?.id || docByClient?.doc?._id,
       })
     );
   };
@@ -248,8 +248,6 @@ const Products = () => {
     };
   }, [newClient]);
 
-  const [selectedIds, setSelectedIds] = useState([]);
-
   const toggleClientSelection = async (clientId) => {
     setSelectedClientIds((prev) =>
       prev.includes(clientId)
@@ -278,10 +276,6 @@ const Products = () => {
     // );
     // console.log('RESPONSE==', response);
   };
-
-
-
-
 
   const renderRow = (row, index, onSelect) => (
     <tr key={index}>
@@ -415,8 +409,9 @@ const Products = () => {
 
   const [newContactProp, setNewContact] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Nombre");
+  const [swiped, setSwiped] = useState(false);
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
       <div className={styles.container}>
         <ClientsHeader
           title={"Gestión de Activos (X)"}

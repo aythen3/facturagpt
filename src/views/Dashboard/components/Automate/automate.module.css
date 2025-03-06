@@ -35,7 +35,7 @@
   z-index: 9999;
 
   &.expand {
-    max-width: 740px;
+    max-width: 615px;
   }
 }
 
@@ -239,7 +239,7 @@
   display: flex;
   align-items: center;
   background: #fff;
-  height: 57px;
+  height: 48px;
   width: 100%;
   min-height: 36px;
   border: 1px solid #d9d9e3;
@@ -273,7 +273,7 @@
   padding: 8px;
   border: none;
   background: transparent;
-  font-size: 19px;
+  /* font-size: 19px; */
   outline: none;
 }
 
@@ -288,7 +288,7 @@
   gap: 25px;
   box-sizing: border-box;
 
-  >button {
+  > button {
     box-sizing: border-box;
     flex: 1;
     border: none;

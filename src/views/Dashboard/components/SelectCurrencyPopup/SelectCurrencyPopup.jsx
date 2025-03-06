@@ -8,6 +8,7 @@ const SelectCurrencyPopup = ({
   setShowSelectCurrencyPopup,
   setSelectedCurrency,
   selectedCurrency,
+  setSymbolSelected,
 }) => {
   const [selectedCode, setSelectedCode] = useState(selectedCurrency); // Solo para marcar la moneda clickeada temporalmente
 
@@ -39,6 +40,7 @@ const SelectCurrencyPopup = ({
 
   const handleSelectCurrency = (currency) => {
     setSelectedCode(currency.code); // Solo cambia visualmente cuál está clickeada
+    setSymbolSelected(currency.symbol);
   };
 
   const handleConfirmSelection = () => {

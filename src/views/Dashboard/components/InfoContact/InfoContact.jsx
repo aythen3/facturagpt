@@ -2,11 +2,23 @@ import React, { useRef, useState } from "react";
 import styles from "./InfoContact.module.css";
 import check from "../../assets/checkProgram.svg";
 import PayMethod from "../PayMethod/PayMethod";
-import { ReactComponent as ImageEmpty } from "../../assets/ImageEmpty.svg";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import DetailsBillInputs from "./DetailsBillInputs/DetailsBillInputs";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { useNavigate } from "react-router-dom";
+import ProfileImage from "../ProfileImage/ProfileImage";
+import { ReactComponent as Flag_of_Venezuela } from "../../assets/Flag_of_Venezuela.svg";
+import { ReactComponent as Flag_of_Argentina } from "../../assets/Flag_of_Argentina.svg";
+import { ReactComponent as Flag_of_UnitedStates } from "../../assets/Flag_of_UnitedStates.svg";
+import { ReactComponent as Flag_of_Spain } from "../../assets/Flag_of_Spain.svg";
+import { ReactComponent as Flag_of_Bolivia } from "../../assets/Flag_of_Bolivia.svg";
+import { ReactComponent as Flag_of_Brasil } from "../../assets/Flag_of_Brasil.svg";
+import { ReactComponent as Flag_of_Chile } from "../../assets/Flag_of_Chile.svg";
+import { ReactComponent as Flag_of_Ecuador } from "../../assets/Flag_of_Ecuador.svg";
+import { ReactComponent as Flag_of_Guyana } from "../../assets/Flag_of_Guyana.svg";
+import { ReactComponent as Flag_of_Peru } from "../../assets/Flag_of_Peru.svg";
+import { ReactComponent as Flag_of_Suriname } from "../../assets/Flag_of_Suriname.svg";
+import { ReactComponent as Flag_of_Uruguay } from "../../assets/Flag_of_Uruguay.svg";
 const InfoContact = ({ idFile }) => {
   const navigate = useNavigate();
   const inputRefs = useRef({});
@@ -94,7 +106,17 @@ const InfoContact = ({ idFile }) => {
   const addPhoneNumber = () => {
     setFieldValues((prev) => ({
       ...prev,
-      phoneNumber: [...prev.phoneNumber, { countryCode: "+1", number: "" }],
+      phoneNumber: [
+        ...prev.phoneNumber,
+        {
+          countryCode: (
+            <>
+              <Flag_of_Spain /> Spain (+34)
+            </>
+          ),
+          number: "",
+        },
+      ],
     }));
   };
 
@@ -161,7 +183,33 @@ const InfoContact = ({ idFile }) => {
     details: "Detalles de Facturación",
     paymentMethods: "Métodos de Pago",
   };
+  const countryData = [
+    { code: "+34", name: "Spain", flag: Flag_of_Spain },
+    { code: "+58", name: "Venezuela", flag: Flag_of_Venezuela },
+    { code: "+54", name: "Argentina", flag: Flag_of_Argentina },
+    { code: "+1", name: "United States", flag: Flag_of_UnitedStates },
+    { code: "+591", name: "Bolivia", flag: Flag_of_Bolivia },
+    { code: "+55", name: "Brasil", flag: Flag_of_Brasil },
+    { code: "+56", name: "Chile", flag: Flag_of_Chile },
+    { code: "+593", name: "Ecuador", flag: Flag_of_Ecuador },
+    { code: "+592", name: "Guyana", flag: Flag_of_Guyana },
+    { code: "+51", name: "Peru", flag: Flag_of_Peru },
+    { code: "+597", name: "Suriname", flag: Flag_of_Suriname },
+    { code: "+598", name: "Uruguay", flag: Flag_of_Uruguay },
+  ];
 
+  const countryFlags = countryData.map(({ code, name, flag: Flag }) => ({
+    value: (
+      <>
+        <Flag /> {name} ({code})
+      </>
+    ),
+    label: (
+      <>
+        <Flag /> {name} ({code})
+      </>
+    ),
+  }));
   return (
     <div>
       <div className={styles.saveContact}>
@@ -180,7 +228,7 @@ const InfoContact = ({ idFile }) => {
         </button>
       </div>
       <div className={styles.typeClient}>
-        <ImageEmpty />
+        <ProfileImage />
         <div className={styles.btnSectionsSelector}>
           <button
             className={`${sectionSelected === 0 ? styles.sectionSelect : ""}`}
@@ -306,13 +354,7 @@ const InfoContact = ({ idFile }) => {
                           }
                           editing={true}
                           hasObject={true}
-                          options={[
-                            { value: "+34", label: "Spain (+34)" },
-                            { value: "+1", label: "United States (+1)" },
-                            { value: "+44", label: "United Kingdom (+44)" },
-                            { value: "+52", label: "Mexico (+52)" },
-                            { value: "+91", label: "India (+91)" },
-                          ]}
+                          options={countryFlags}
                           selectedOption={phone.countryCode}
                         />
 

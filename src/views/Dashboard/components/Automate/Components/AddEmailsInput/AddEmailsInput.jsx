@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import styles from "./AddEmailsInput.module.css";
 import miniClose from "../../../../assets/miniClose.svg";
+import DeleteButton from "../../../DeleteButton/DeleteButton";
 
 const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
   const [value, setValue] = useState("");
-  console.log("addedEmails", addedEmails);
-  const handleButton = (e) => {
-    e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const testEmail = (email) => emailRegex.test(email);
-    if (value !== "" && testEmail(value)) {
-      if (addedEmails.includes(value)) {
-        setAddedEmails(addedEmails.filter((email) => email !== value));
-      } else {
-        setAddedEmails([...addedEmails, value]);
-      }
-      setValue("");
-    }
-  };
+
+  const [error, setError] = useState("");
+
 
   return (
     <div className={styles.addEmailsInputContainer}>
@@ -25,14 +15,17 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
         {addedEmails?.map((email, index) => (
           <div key={index} className={styles.addedEmail}>
             {email}
-            <img
-              src={miniClose}
-              alt="close"
-              className={styles.closeIcon}
-              onClick={() =>
+            <DeleteButton
+              action={() =>
                 setAddedEmails(addedEmails.filter((e) => e !== email))
               }
             />
+            {/* <img
+              src={miniClose}
+              alt="close"
+              className={styles.closeIcon}
+            
+            /> */}
           </div>
         ))}
       </div>
@@ -55,6 +48,9 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
                   setAddedEmails([...addedEmails, value]);
                 }
                 setValue("");
+                setError("");
+              } else {
+                setError("Correo electrónico inválido");
               }
             }
           }}
@@ -63,6 +59,7 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
           +
         </button>
       </div>
+      {error && <div className={styles.errorMessage}>{error}</div>}
     </div>
   );
 };
