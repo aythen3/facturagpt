@@ -35,21 +35,37 @@ const NotificationsConfirmComponent = ({
   setWhatsAppMessage,
   disableSwitch,
   configuration,
-  icon,
+  setPhoneListNotificate,
 }) => {
-  const [phoneNumbers, setPhoneNumbers] = useState([]); // Estado para números de teléfono
+  // const [configuration.phoneListNotificate, setPhoneListNotificate] = useState([]); // Estado para números de teléfono
   const [inputValue, setInputValue] = useState(""); // Estado para el input
 
   const handleAddPhoneNumber = () => {
-    if (inputValue.trim() && !phoneNumbers.includes(inputValue)) {
-      setPhoneNumbers((prev) => [...prev, inputValue]);
+    if (
+      inputValue.trim() &&
+      !configuration.phoneListNotificate.includes(inputValue)
+    ) {
+      setPhoneListNotificate([
+        ...configuration.phoneListNotificate,
+        inputValue,
+      ]);
       setInputValue(""); // Limpiar el input
     }
   };
   // Función para eliminar un número de teléfono
   const handleDeletePhoneNumber = (index) => {
-    setPhoneNumbers((prev) => prev.filter((_, i) => i !== index));
+    setPhoneListNotificate(
+      configuration.phoneListNotificate.filter((_, i) => i !== index)
+    );
   };
+
+  // useEffect(() => {
+  //   if (configuration.phoneListNotificate.length) {
+  //     setPhoneListNotificate(configuration.phoneListNotificate)
+  //   }
+  // }, [configuration.phoneListNotificate])
+
+  console.log("configuration ==>", configuration);
 
   return (
     <div className={styles.container}>
@@ -159,7 +175,7 @@ const NotificationsConfirmComponent = ({
             action={handleAddPhoneNumber} // Pasamos la función de añadir
           />
           <div className={styles.phoneNumbersList}>
-            {phoneNumbers.map((number, index) => (
+            {configuration.phoneListNotificate.map((number, index) => (
               <div key={index} className={styles.phoneNumberItem}>
                 <span>{number}</span>
                 <DeleteButton action={() => handleDeletePhoneNumber(index)}>

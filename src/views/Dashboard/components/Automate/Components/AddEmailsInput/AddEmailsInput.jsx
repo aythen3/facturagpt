@@ -5,7 +5,9 @@ import DeleteButton from "../../../DeleteButton/DeleteButton";
 
 const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
   const [value, setValue] = useState("");
+
   const [error, setError] = useState("");
+
 
   return (
     <div className={styles.addEmailsInputContainer}>
@@ -34,9 +36,9 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              e.preventDefault();
               const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
               const testEmail = (email) => emailRegex.test(email);
-              e.preventDefault();
               if (value !== "" && testEmail(value)) {
                 if (addedEmails.includes(value)) {
                   setAddedEmails(
@@ -53,6 +55,9 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
             }
           }}
         />
+        <button onClick={handleButton} className={styles.button}>
+          +
+        </button>
       </div>
       {error && <div className={styles.errorMessage}>{error}</div>}
     </div>

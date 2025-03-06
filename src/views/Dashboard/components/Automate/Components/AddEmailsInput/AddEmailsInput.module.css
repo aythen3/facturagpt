@@ -50,8 +50,9 @@
   cursor: pointer;
   user-select: none;
 }
+
 .errorMessage {
   color: #b40e1b;
   font-weight: bold;
   font-size: 13px;
-}
+
