@@ -26,6 +26,8 @@ const PanelTemplate = ({
   children,
   mobileSelectedDocument,
   setMobileSelectedDocument,
+  setSwiped,
+  swiped,
 }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -125,6 +127,8 @@ const PanelTemplate = ({
               setMobileSelectedDocument={setMobileSelectedDocument}
               mobileSelectedDocument={mobileSelectedDocument}
               pagePath={pagePath}
+              setSwiped={setSwiped}
+              swiped={swiped}
             />
           )}
         <>

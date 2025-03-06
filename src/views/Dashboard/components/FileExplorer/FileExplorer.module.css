@@ -42,6 +42,7 @@
 .mobileMenu {
   position: absolute;
   width: 100vw;
+  z-index: 999999;
 }
 
 .container::-webkit-scrollbar {
@@ -468,7 +469,7 @@
   left: 0%;
 }
 .offAsideBar {
-  z-index: 999;
+  z-index: 99;
   left: -100%;
 }
 .panel {

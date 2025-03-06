@@ -500,7 +500,10 @@ const ChatBody = ({
         ) : (
           <p className={styles.errorAlert}>
             Introduce un
-            <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">
+            <a
+              href="https://platform.openai.com/settings/organization/api-keys"
+              target="_blank"
+            >
               token
             </a>
             válido para usar FacturaGPT.
@@ -568,7 +571,6 @@ const ChatView = () => {
 
     fn();
   }, []);
-
 
   const handleSendMessage = async (text = false) => {
     try {
@@ -783,10 +785,13 @@ const ChatView = () => {
   const toggleMenu = () => {
     setMenuOpenChat(!menuOpenChat);
   };
+  const [swiped, setSwiped] = useState(false);
   return (
     <PanelTemplate
       menuOpenChat={menuOpenChat}
       setMenuOpenChat={setMenuOpenChat}
+      setSwiped={setSwiped}
+      swiped={swiped}
     >
 
       <div className={styles.chatSection}>

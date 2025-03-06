@@ -13,15 +13,9 @@ import arrow from "../../assets/arrow.svg";
 import winIcon from "../../assets/winIcon.svg";
 import emptyimage from "../../assets/ImageEmpty.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteDocs,
-  getAllDocsByClient,
-} from "../../../../actions/docs";
+import { deleteDocs, getAllDocsByClient } from "../../../../actions/docs";
 import { updateClient } from "../../../../actions/user";
-import {
-  clearTransaction,
-  setTransaction,
-} from "../../../../slices/docsSlices";
+
 import { useNavigate } from "react-router-dom";
 import { clearClient } from "../../../../slices/clientsSlices";
 import FileExplorer from "../../components/FileExplorer/FileExplorer";
@@ -42,18 +36,15 @@ const Docs = () => {
   const [showNewClient, setShowNewClient] = useState(false);
   const [showEditContact, setShowEditContact] = useState(false);
   const [selectedTransactionIds, setSelectedTransactionIds] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.clients);
-  const { docsByClient, loading } = useSelector(
-    (state) => state.docs
-  );
+  const { docsByClient, loading } = useSelector((state) => state.docs);
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(
-      getAllDocsByClient({ idsEmails: client?.processedemails })
-    );
+    dispatch(getAllDocsByClient({ idsEmails: client?.processedemails }));
   }, [loading]);
 
   const selectClient = (rowIndex) => {
@@ -68,14 +59,16 @@ const Docs = () => {
   const [mockTransactions, setMockTransactions] = useState([]);
 
   const selectAllClients = () => {
-    if (clientSelected.length === mockTransactions.length) {
+    console.log(clientSelected.length);
+    console.log(docsByClient);
+    if (clientSelected.length === mockDocs.length) {
       // Si todos los clientes están seleccionados, limpiar la selección
       setClientSelected([]);
       setSelectedIds(false);
     } else {
       // Si no todos los clientes están seleccionados, agregar todos los índices
       setSelectedIds(true);
-      const allClientIndexes = mockTransactions.map((_, index) => index); // Crear un arreglo con los índices
+      const allClientIndexes = mockDocs.map((_, index) => index); // Crear un arreglo con los índices
       setClientSelected(allClientIndexes);
     }
   };
@@ -220,9 +213,7 @@ const Docs = () => {
 
   console.log("TRANSACTIONS SELECTED IDS----", selectedTransactionIds);
 
-
   const [mockDocs, setMockDocs] = useState([]);
-
 
   const toggleSelection = (id) => {
     setSelectedIds((prev) =>
@@ -351,7 +342,6 @@ const Docs = () => {
           <a
             onClick={() => {
               navigate("/admin/products");
-              dispatch(setTransaction(row));
             }}
             href="#"
           >
@@ -458,9 +448,9 @@ const Docs = () => {
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
   const [selectedOption, setSelectedOption] = useState("Nombre");
-
+  const [swiped, setSwiped] = useState(false);
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
       <div className={styles.container}>
         <ClientsHeader
           ref={searchInputRef}
@@ -620,11 +610,7 @@ const Docs = () => {
         ) : (
           <DynamicTable
             columns={tableHeaders}
-            data={
-              docsByClient.length > 0
-                ? docsByClient
-                : mockDocs
-            }
+            data={mockDocs}
             renderRow={renderRow}
             selectedIds={clientSelected}
             onSelectAll={selectAllClients}

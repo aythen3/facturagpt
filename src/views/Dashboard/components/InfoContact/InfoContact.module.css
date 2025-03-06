@@ -122,6 +122,13 @@
   gap: 10px;
   .fieldSpan {
     padding: 12px;
+    align-items: center;
+    display: flex;
+    gap: 5px;
+    svg {
+      height: 20px;
+      width: 20px;
+    }
   }
 }
 

@@ -45,6 +45,8 @@ export default function FileExplorer({
   setMobileSelectedDocument,
   mobileSelectedDocument,
   pagePath,
+  setSwiped,
+  swiped,
 }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -60,6 +62,7 @@ export default function FileExplorer({
   const fileExplorerRef = useRef(null);
   const breadCrumbsRef = useRef(null);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [symbolSelected, setSymbolSelected] = useState("$");
   const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
   const handleMouseDown = (e) => {
     const element = breadCrumbsRef.current;
@@ -378,8 +381,6 @@ export default function FileExplorer({
         ? item.Key.split("/").slice(-2, -1)[0]
         : item.Key.split("/").pop();
 
-
-
       if (lowerKeyWord) {
         if (!fileName.toLowerCase().includes(lowerKeyWord)) {
           return false;
@@ -599,12 +600,8 @@ export default function FileExplorer({
       (userFilters.selectedTags && userFilters.selectedTags.length > 0) ||
       (userFilters.selectedTypes && userFilters.selectedTypes.length > 0));
 
-  const [swiped, setSwiped] = useState(false);
-  console.log(swiped, "swipeswipeswipeswipeswipeswipeswipeswipeswipeswipe");
+  // const [swiped, setSwiped] = useState(false);
   useSwipe(setSwiped);
-  // useEffect(() => {
-  //   setSwiped(false);
-  // }, []);
 
   return (
     <>
@@ -614,7 +611,6 @@ export default function FileExplorer({
           ${styles.container} 
           ${styles.asideBar} 
           ${isMobile ? styles.mobileMenu : ""} 
-          ${!mobileSelectedDocument ? styles.activeMenu : ""} 
           ${swiped ? "" : styles.offAsideBar}
           `}
         // clase para que en panel no haya swipe y en otros si ${pagePath === "panel" ? styles.panel : swiped ? "" : styles.offAsideBar}
@@ -636,8 +632,8 @@ export default function FileExplorer({
             setSearchTerm={setSearchTerm}
             iconRight={
               userFilters &&
-                Object.keys(userFilters).length > 0 &&
-                hasActiveFilters
+              Object.keys(userFilters).length > 0 &&
+              hasActiveFilters
                 ? filterIconGreen
                 : filterIcon
             }
@@ -645,8 +641,8 @@ export default function FileExplorer({
             onClickIconRight={() => setIsFilterOpen(true)}
           >
             {userFilters &&
-              Object.keys(userFilters).length > 0 &&
-              hasActiveFilters ? (
+            Object.keys(userFilters).length > 0 &&
+            hasActiveFilters ? (
               <img
                 src={l}
                 alt="filterIcon"
@@ -740,10 +736,9 @@ export default function FileExplorer({
                 const filePrefix = /^FILE-([^_]+)/;
                 const match = fileName.match(filePrefix);
                 const uuid = match ? match[1] : null;
-                
-                // Quitar el "FILE-[uuid]" del nombre
-                fileName = fileName.replace(/^FILE-[^_]+/, '');
 
+                // Quitar el "FILE-[uuid]" del nombre
+                fileName = fileName.replace(/^FILE-[^_]+/, "");
 
                 return (
                   <div
@@ -755,8 +750,8 @@ export default function FileExplorer({
 
                       if (isFolder) {
                         navigate("/admin/panel");
-                      } else if(uuid){
-                        alert('111')
+                      } else if (uuid) {
+                        alert("111");
                         console.log("item.Key", item);
                         navigate("/admin/panel/" + uuid);
                         setMobileSelectedDocument(true);
@@ -896,12 +891,14 @@ export default function FileExplorer({
           setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
           setSelectedCurrency={setSelectedCurrency}
           selectedCurrency={selectedCurrency}
+          symbolSelected={symbolSelected}
         />{" "}
         {showSelectCurrencyPopup && (
           <SelectCurrencyPopup
             setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
             setSelectedCurrency={setSelectedCurrency}
             selectedCurrency={selectedCurrency}
+            setSymbolSelected={setSymbolSelected}
           />
         )}
       </div>

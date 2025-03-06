@@ -24,7 +24,6 @@ const SelectLocation = ({
 }) => {
   const dispatch = useDispatch();
 
-
   const { user } = useSelector((state) => state.user);
   const { userFiles } = useSelector((state) => state.scaleway);
   const [isClosing, setIsClosing] = useState(false);
@@ -51,7 +50,7 @@ const SelectLocation = ({
   };
 
   const folderStructure = buildFolderStructure(
-    userFiles.filter((file) => file.Key.endsWith("/"))
+    userFiles?.filter((file) => file.Key.endsWith("/"))
   );
 
   const handleClose = () => {
@@ -176,43 +175,45 @@ const SelectLocation = ({
   const handleUploadFile = async () => {
     try {
       // Create file input element
-      const fileInput = document.createElement('input');
-      fileInput.type = 'file';
-      fileInput.accept = '.pdf,.jpg,.jpeg,.png'; 
-      
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = ".pdf,.jpg,.jpeg,.png";
+
       fileInput.onchange = async (e) => {
         const file = e.target.files[0];
-        console.log("file", file)
+        console.log("file", file);
         if (!file) return;
 
-        console.log('file!!!!!!!!!!!', file)
+        console.log("file!!!!!!!!!!!", file);
 
         // Convert to PNG if needed
         const img = new Image();
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
         const objectUrl = URL.createObjectURL(file);
 
-        console.log('objectUrl', objectUrl)
+        console.log("objectUrl", objectUrl);
 
-        const response = await dispatch(goAutomate({
-          userId: user?.id || "randomId",
-          file: file,
-          // email: user.tokenEmail,
-          // password: user.tokenPassword,
-          // query: user.emailQueries,
-          // tokenGpt: user.tokenGPT,
-        }))
+        const response = await dispatch(
+          goAutomate({
+            userId: user?.id || "randomId",
+            file: file,
+            // email: user.tokenEmail,
+            // password: user.tokenPassword,
+            // query: user.emailQueries,
+            // tokenGpt: user.tokenGPT,
+          })
+        );
 
-        console.log('response', response)
+        console.log("response", response);
 
         img.src = objectUrl;
       };
 
       fileInput.click();
     } catch (error) {
-      console.error('Error in handleUploadFile:', error);
+      console.error("Error in handleUploadFile:", error);
     }
   };
 
@@ -236,9 +237,8 @@ const SelectLocation = ({
           </Button>
           <Button
             action={() => {
-
-              if(1){
-                handleUploadFile()
+              if (1) {
+                handleUploadFile();
               }
 
               setSelectedLocationNew(selectedLocation);

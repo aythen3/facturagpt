@@ -10,7 +10,6 @@ const ModalTemplate = ({
   text,
   isAnimating,
   newContact,
-  selectedContact,
   handleGetOneClient,
   typeTextHeader = "Nuevo",
 }) => {
@@ -20,7 +19,6 @@ const ModalTemplate = ({
       <div
         className={`${styles.modalTemplate}  ${isAnimating ? styles.scaleDown : styles.scaleUp}`}
       >
-        {selectedContact}
         <div className={styles.modalTemplateHeader}>
           <div className={styles.modalTemplateInfo}>
             <div className={styles.iconContainer} onClick={() => onClick()}>
@@ -34,12 +32,7 @@ const ModalTemplate = ({
             {/* {!newContact && ( */}
             {!(newContact || text === "Activo") && (
               <>
-                <Button
-                  type={"white"}
-                  action={() => handleGetOneClient(selectedContact)}
-                >
-                  Ver Transacciones
-                </Button>
+                <Button type={"white"}>Ver Transacciones</Button>
                 <Button>Nueva Factura</Button>
               </>
             )}

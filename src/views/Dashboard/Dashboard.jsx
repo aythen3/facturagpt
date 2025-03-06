@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 
 import styles from "./Dashboard.module.css";
 
-
 import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
 
 import { ReactComponent as Dots } from "./assets/optionDots.svg";
@@ -129,6 +128,7 @@ const Dashboard = () => {
   ];
 
 
+const [swiped, setSwiped] = useState(false);
 
   useEffect(() => {
     const fn = async () => {
@@ -163,7 +163,7 @@ const Dashboard = () => {
 
 
   return (
-    <PanelTemplate>
+    <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
 
 
       {/* </Elements>  */}
@@ -190,7 +190,9 @@ const Dashboard = () => {
               flexDirection: "column",
             }}
           >
-            <div style={{ display: "flex", width: "100%", overflowX: "scroll" }}>
+            <div
+              style={{ display: "flex", width: "100%", overflowX: "scroll" }}
+            >
               {statistics.map((statistic) => (
                 <div className={styles.statisticCard}>
                   <div className={styles.title}>
@@ -279,6 +281,7 @@ const Dashboard = () => {
                   </div>
                   <div className={styles.divider}></div>
                 </div>
+
               ))}
             </div>
           </div>
