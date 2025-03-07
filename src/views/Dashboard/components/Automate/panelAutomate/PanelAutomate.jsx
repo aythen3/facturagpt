@@ -90,7 +90,6 @@ const PanelAutomate = ({
     labels: [],
     filesExactMatch: false,
     phoneListNotificate: [],
-
   });
 
   const [outlookConfiguration, setOutlookConfiguration] = useState({
@@ -123,7 +122,9 @@ const PanelAutomate = ({
       min: 0,
       max: 0,
     },
-
+    labels: [],
+    filesExactMatch: false,
+    phoneListNotificate: [],
   });
 
   const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({
@@ -421,6 +422,9 @@ const PanelAutomate = ({
         console.log("Setting gmailAndOutlookConfiguration", automationData);
         // setGmailConfiguration(automationData.automationData);
         setGmailConfiguration(automationData);
+      } else if (automationData.type === "Outlook") {
+        console.log("Setting OutlookConfiguration", automationData);
+        setOutlookConfiguration(automationData);
       } else if (automationData.type === "Google Drive") {
         console.log("Setting googleDriveConfiguration", automationData);
         setGoogleDriveConfiguration(automationData);

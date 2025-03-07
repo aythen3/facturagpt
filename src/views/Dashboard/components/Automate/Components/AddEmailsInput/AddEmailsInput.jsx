@@ -8,11 +8,19 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
 
   const [error, setError] = useState("");
 
-
-  const handleButton = () => {
-
-  }
-
+  const handleButton = (e) => {
+    e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const testEmail = (email) => emailRegex.test(email);
+    if (value !== "" && testEmail(value)) {
+      if (addedEmails.includes(value)) {
+        setAddedEmails(addedEmails.filter((email) => email !== value));
+      } else {
+        setAddedEmails([...addedEmails, value]);
+      }
+      setValue("");
+    }
+  };
   return (
     <div className={styles.addEmailsInputContainer}>
       <div className={styles.addedEmailsContainer}>
