@@ -32,7 +32,7 @@
   border-radius: 8px;
   background: #fff;
   overflow-y: auto;
-  height: 80vh;
+  height: calc(80vh - 80px);
   select {
     padding: 0;
   }

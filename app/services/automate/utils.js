@@ -171,6 +171,42 @@ const extractNIF = (inputString) => {
 
 
 
+const extractCodeBlocks = (fullCode) => {
+	// Expresión regular para detectar bloques de código con triple comillas invertidas
+	const regexTripleQuotes = /```(\w+)[\s\S]+?```/g
+	let matchesTripleQuotes = [...fullCode.matchAll(regexTripleQuotes)]
+
+	// Si encontramos bloques de código con triple comillas invertidas
+	if (matchesTripleQuotes.length > 0) {
+		const codeBlock = matchesTripleQuotes[0][0]
+		const codeType = matchesTripleQuotes[0][1].toLowerCase()
+
+		// Eliminar las triple comillas invertidas del principio y del final
+		const cleanedCodeBlock = codeBlock
+			.replace(/```(\w+)/, '')
+			.replace(/```$/, '')
+			.trim()
+
+		// Eliminar líneas que comienzan con "//"
+		const cleanedCodeWithoutComments = cleanedCodeBlock
+			.split('\n')
+			.filter((line) => !line.trim().startsWith('//'))
+			.join('\n')
+
+		return [codeType, cleanedCodeWithoutComments]
+	} else {
+		// Si no se encuentra un bloque de código con triple comillas invertidas
+		// Expresión regular para detectar bloques de código en líneas que comienzan con "//"
+		const regexComments = /^\/\/.*$/gm
+		const cleanedCodeWithoutComments = fullCode
+			.replace(regexComments, '')
+			.trim()
+
+		return ['plaintext', cleanedCodeWithoutComments]
+	}
+}
+
+
 module.exports = {
     calculateTaxesAndDiscounts,
     convertToNumber,
@@ -179,5 +215,6 @@ module.exports = {
     convertPDFToPNG,
     replaceNotFoundWithEmptyString,
     extractCIF,
-    extractNIF
+    extractNIF,
+    extractCodeBlocks
 }

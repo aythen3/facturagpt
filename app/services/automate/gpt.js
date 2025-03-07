@@ -4,9 +4,14 @@ const { default: axios } = require("axios");
 
 const {
   processImageSections,
-  processProductsSection
+  processProductsSection,
 } = require('./pdf')
 
+
+const {
+  convertPDFToPNG,
+  mergeResults
+} = require('./utils')
 
 
 const ini_document = {
@@ -488,12 +493,7 @@ const documentGPT = async ({
   };
 
 
-
-
-
-
-
-  function processItems(obj, gpt) {
+  const processItems = (obj, gpt) => {
     let forLines = {};
     function getDateComponent(dateString, opt) {
       const dateParts = dateString.split("/");
@@ -675,10 +675,6 @@ const documentGPT = async ({
   
     return searchRecursive(obj);
   }
-
-
-
-
 
   const getGPTData = async ({ attach, token }) => {
     // console.log("ATTACH RECEIVED", attach);

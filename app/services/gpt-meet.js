@@ -2,186 +2,246 @@ const axios = require("axios");
 // const { OpenAIStream, StreamingTextResponse } = require("ai");
 const tiktoken = require("tiktoken");
 
-const meetGPT = async (res, prompt, token) => {
+const { extractCodeBlocks } = require("./automate/utils");
+const { connectDB } = require("../controllers/utils");
+
+const meetGPT = async (res, prompt, token, userId) => {
   return new Promise(async (resolve, reject) => {
-    // let systemPrompt =
-    //   `Cuentame un cuento de 100 palabras`
+
+    const inputTokenPricePerThousand = 0.15 // $0.15 por 1,000,000 tokens
+    const outputTokenPricePerThousand = 0.6 // $0.60 por 1,000,000 tokens
+    const enc = tiktoken.encoding_for_model('gpt-4o-mini')
+
 
     let systemPrompt =
-    `Actua como un asesor fiscal y contesta la siguiente pregunta:
+      `Eres un agente devuelveme la siguiente respuesta en JSON de la siguiente
+    pregunta: ${prompt}
+    
 
-    ${prompt}`
-    //   const token = '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'
-    // const token = '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'
+    Type puede ser:
+    - products: Si está buscando productos
+    - clients: Si está buscando clientes
+    - docs: Si está buscando documentos
+    - other: Si no está buscando nada en especifico
 
-    const conversation = [{
-      role: 'user',
-      content: [{
-        type: 'text',
-        text: systemPrompt
-      }],
-    }];
 
-    try {
+    SQL es un objeto con la siguiente estructura:
+    que permite usar la base de datos couchdb con las funciones
+    find. Entonces necesito que me devuelvas el selector para la consulta.
+    
+    No pongas el sql.selector.type
 
-      const inputTokenPricePerThousand = 0.15 // $0.15 por 1,000,000 tokens
-      const outputTokenPricePerThousand = 0.6 // $0.60 por 1,000,000 tokens
+    {
+      "type": "products" | "clients" | "docs" | "other,
+      "response": "respuesta del prompt",
+      "sql": {}
+    }
+    `
 
-      const enc = tiktoken.encoding_for_model('gpt-4o-mini')
+
+
+    const pre_response = await axios.post("https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-4o-mini",
+        temperature: 0.7,
+        max_tokens: 2096,
+        messages: [{
+          role: 'user',
+          content: [{
+            type: 'text',
+            text: systemPrompt
+          }],
+        }],
+      }, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+
+    const value_response = extractCodeBlocks(pre_response.data.choices[0].message.content)
+    const json_response = JSON.parse(value_response[1])
+    console.log('pre_response', json_response)
+
+    if (json_response.type === 'other') {
+      const text = json_response.response
 
       const tokenInput = enc.encode(systemPrompt).length
       const tokenInputCost = (tokenInput / 1000000) * inputTokenPricePerThousand
 
+      const tokenOutput = enc.encode(text).length
+      const tokenOutputCost = (tokenOutput / 1000000) * outputTokenPricePerThousand
+      console.log('data ABCDF')
 
-      for (const [index, userMessage] of conversation.entries()) {
-        const body = {
-          model: "gpt-4o-mini",
-          temperature: 0.7,
-          max_tokens: 2096,
-          messages: [userMessage],
-          stream: true,
-        }
-
-
-        const response = await axios.post("https://api.openai.com/v1/chat/completions",
-          body,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
+      for (let i = 0; i < 2; i++) {
+        res.write(
+          JSON.stringify({
+            type: 'info',
+            // timestamp: '',
+            timestamp: 'ABC123DEF4567890XYZ'.repeat(100000),
+            data: {
+              id: '123',
+              input: {
+                token: tokenInput,
+                price: tokenInputCost,
+              },
+              output: {
+                token: tokenOutput,
+                price: tokenOutputCost,
+              },
+              text: text,
             },
-            responseType: 'stream',
-          });
-
-
-        // console.log('response', response)
-
-
-        console.log('response', response.data)
-        let value = ''
-        response.data.on('data', (chunk) => {
-          const lines = chunk
-            .toString()
-            .split('\n')
-            .filter((line) => line.trim() !== '')
-          for (const line of lines) {
-            const message = line.replace(/^data: /, '')
-            if (message === '[DONE]') {
-              break // Se ha completado la transmisión
-            }
-            try {
-              console.log('message', message)
-              const parsed = JSON.parse(message)
-              if (parsed.choices && parsed.choices.length > 0) {
-                let textChunk = parsed.choices[0].delta.content || ''
-                // console.log('tect',textChunk)
-                let tokenOutput = enc.encode(textChunk).length
-                const tokenOutputCost =
-                  (tokenOutput / 1000000) * outputTokenPricePerThousand
-
-                console.log('textChunk', textChunk)
-
-                value += textChunk
-                res.write(
-                  JSON.stringify({
-                    type: 'info',
-                    // timestamp: '',
-                    timestamp: 'ABC123DEF4567890XYZ'.repeat(1000),
-                    data: {
-                      id: '123',
-                      input: {
-                        token: tokenInput,
-                        price: tokenInputCost,
-                      },
-                      output: {
-                        token: tokenOutput,
-                        price: tokenOutputCost,
-                      },
-                      text: textChunk,
-                    },
-                  }) + '\n'
-                )
-
-                // result += textChunk;
-              }
-            } catch (error) {
-              console.log('Error parsing stream data', error)
-            }
-          }
-
-          // console.log('333')
-        })
-
-
-        response.data.on('end', () => {
-          console.log('end', value)
-          // return {
-          //   success: true,
-          //   value: value
-          // }
-
-          resolve({
-            success: true,
-            // message: "Chat completed successfully",
-            text: value // o cualquier otro dato que quieras devolver
-          });
-        })
-
-
-        // res.write(
-        //     `data: ${JSON.stringify({
-        //       type: "action",
-        //       data: {
-        //         transcription: response.transcription,
-        //         action: response.action,
-        //         response: response.response,
-        //         type: response.type,
-        //       },
-        //       // stamp: Array.from({ length: 30000 }, () => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.charAt(Math.floor(Math.random() * 62))).join('')
-        //     })}\n\n`
-        //   );
-
-
-        //   res.write(
-        //     JSON.stringify({
-        //       type: "image",
-        //       data: image,
-        //     }) + "\n"
-        //   );
-
-        // res.end();
-
-
-
-        // const result = await resp.json();
-        // const assistantResponse = result.choices[0].message.content;
-
-        // let response = await extractCodeBlocks(assistantResponse)
-        // if (typeof response[1] == 'string') {
-        //     response = JSON.parse(response[1])
-        // } else {
-        //     response = response[1]
-        // }
-
-        // if (response.error) {
-        //     return { error: 'e' }
-        // }
-
-        // return {
-        //     success: true,
-        //     value: value
-        // }
-
-        // return response.data.choices[0].message.content
+          }) + '\n'
+        )
       }
 
-    } catch (e) {
-      console.log('error', e);
-      // return { error: e }
-    }
+      resolve({
+        success: true,
+        text: text
+      })
 
+      return false
+    } else if (json_response.type !== 'other' && json_response.sql) {
+      const db = await connectDB(`db_${userId}_${json_response.type}`)
+
+
+      console.log(`db_${userId}_${json_response.type}`)
+      let selector = json_response.sql.selector
+      delete selector.type
+      
+      console.log('selector', selector)
+
+      const result = await db.find({
+        selector: {}
+        // selector: selector
+      })
+
+      console.log('result result', result)
+      systemPrompt =
+        `Actua como un asesor fiscal y contesta la siguiente pregunta:
+      ${prompt}
+      `
+
+      if(result.docs.length > 0){
+        systemPrompt += `
+        Ten en cuenta el siguiente contexto:
+        ${JSON.stringify(result.docs)}
+        `
+        // ${result.docs.map(doc => doc.response).join('\n')}
+      }
+
+      const conversation = [{
+        role: 'user',
+        content: [{
+          type: 'text',
+          text: systemPrompt
+        }],
+      }];
+
+      try {
+        const tokenInput = enc.encode(systemPrompt).length
+        const tokenInputCost = (tokenInput / 1000000) * inputTokenPricePerThousand
+
+
+        for (const [index, userMessage] of conversation.entries()) {
+          const body = {
+            model: "gpt-4o-mini",
+            temperature: 0.7,
+            max_tokens: 2096,
+            messages: [userMessage],
+            stream: true,
+          }
+
+
+          const response = await axios.post("https://api.openai.com/v1/chat/completions",
+            body,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+              responseType: 'stream',
+            });
+
+
+          // console.log('response', response.data)
+          let value = ''
+          response.data.on('data', (chunk) => {
+            const lines = chunk
+              .toString()
+              .split('\n')
+              .filter((line) => line.trim() !== '')
+            for (const line of lines) {
+              const message = line.replace(/^data: /, '')
+              if (message === '[DONE]') {
+                break
+              }
+              try {
+                const parsed = JSON.parse(message)
+                if (parsed.choices && parsed.choices.length > 0) {
+                  let textChunk = parsed.choices[0].delta.content || ''
+                  let tokenOutput = enc.encode(textChunk).length
+                  const tokenOutputCost =
+                    (tokenOutput / 1000000) * outputTokenPricePerThousand
+
+                  // console.log('textChunk', textChunk)
+
+                  value += textChunk
+                  res.write(
+                    JSON.stringify({
+                      type: 'info',
+                      // timestamp: '',
+                      timestamp: 'ABC123DEF4567890XYZ'.repeat(1000),
+                      data: {
+                        id: '123',
+                        input: {
+                          token: tokenInput,
+                          price: tokenInputCost,
+                        },
+                        output: {
+                          token: tokenOutput,
+                          price: tokenOutputCost,
+                        },
+                        text: textChunk,
+                      },
+                    }) + '\n'
+                  )
+                }
+              } catch (error) {
+                console.log('Error parsing stream data', error)
+              }
+            }
+          })
+
+
+          response.data.on('end', () => {
+            console.log('end', value)
+
+            resolve({
+              success: true,
+              text: value
+            });
+          })
+
+        }
+
+      } catch (e) {
+        console.log('error', e);
+      }
+    }
   })
+
+
+
+
+  ///////////////////////////////
+  ///////////////////////////////
+
 }
+
+
+
 
 
 const validateToken = async (token) => {
