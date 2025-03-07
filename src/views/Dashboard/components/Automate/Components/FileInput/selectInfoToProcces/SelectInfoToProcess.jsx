@@ -28,6 +28,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   const [editIndex, setEditIndex] = useState(null);
   const [editConditionIndex, setEditConditionIndex] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [symbolSelected, setSymbolSelected] = useState("$");
   const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
   const [showContent, setShowContent] = useState({
     info1: false,
@@ -344,6 +345,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                     onChange={(e) => handleTotalAmountFilter(e, "min")}
                     value={configuration?.totalAmount?.min}
                   />
+                  {symbolSelected}
                 </div>
                 <p>-</p>
                 <div className={styles.quantityContent}>
@@ -354,6 +356,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                     onChange={(e) => handleTotalAmountFilter(e, "max")}
                     value={configuration?.totalAmount?.max}
                   />
+                  {symbolSelected}
                 </div>
               </span>
             </div>
@@ -755,6 +758,8 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
           setShowSelectCurrencyPopup={setShowSelectCurrencyPopup}
           setSelectedCurrency={setSelectedCurrency}
           selectedCurrency={selectedCurrency}
+          symbolSelected={symbolSelected}
+          setSymbolSelected={setSymbolSelected}
         />
       )}
     </div>

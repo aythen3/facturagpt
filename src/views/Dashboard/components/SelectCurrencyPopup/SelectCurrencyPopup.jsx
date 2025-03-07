@@ -8,10 +8,11 @@ const SelectCurrencyPopup = ({
   setShowSelectCurrencyPopup,
   setSelectedCurrency,
   selectedCurrency,
+  symbolSelected,
   setSymbolSelected,
 }) => {
   const [selectedCode, setSelectedCode] = useState(selectedCurrency); // Solo para marcar la moneda clickeada temporalmente
-
+  const [tempSelectedSymbol, setTempSelectedSymbol] = useState(symbolSelected);
   const currencies = [
     { name: "United States Dollar", code: "USD", symbol: "US$" },
     { name: "Euro", code: "EUR", symbol: "€" },
@@ -40,15 +41,14 @@ const SelectCurrencyPopup = ({
 
   const handleSelectCurrency = (currency) => {
     setSelectedCode(currency.code); // Solo cambia visualmente cuál está clickeada
-    if (setSymbolSelected) {
-      setSymbolSelected(currency.symbol);
-    }
+    setTempSelectedSymbol(currency.symbol);
   };
 
   const handleConfirmSelection = () => {
     if (selectedCode) {
       setSelectedCurrency(selectedCode); // Solo cambia el estado global cuando se confirma
       setShowSelectCurrencyPopup(false); // Cierra el popup después de seleccionar
+      setSymbolSelected(tempSelectedSymbol);
     }
   };
 

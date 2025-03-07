@@ -9,7 +9,10 @@
   color: #4f5660;
   font-size: 12px;
 }
-
+.AdvertencyContainerError {
+  color: #dc3545;
+  border-left: 2px solid #dc3545;
+}
 .AdvertencyIconContainer {
   display: flex;
   justify-content: center;
@@ -26,5 +29,11 @@
 
   .icon {
     margin: 0 auto;
+  }
+}
+
+.AdvertencyContainerError {
+  .AdvertencyIconContainer {
+    background-color: #dc3545;
   }
 }

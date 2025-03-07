@@ -12,8 +12,8 @@ import k from "../../assets/k.svg";
 import cmd from "../../assets/cmd.svg";
 import { ReactComponent as IconLock } from "./panelAutomate/assets/icon_lock.svg";
 import searchMagnify from "../../assets/searchMagnify.svg";
-import automation from "../../assets/automation.svg";
 
+import automation from "../../assets/automation.svg";
 import IniAutomate from "./panelAutomate/IniAutomate";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";

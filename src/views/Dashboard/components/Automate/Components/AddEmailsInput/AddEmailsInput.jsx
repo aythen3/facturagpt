@@ -2,25 +2,13 @@ import React, { useState } from "react";
 import styles from "./AddEmailsInput.module.css";
 import miniClose from "../../../../assets/miniClose.svg";
 import DeleteButton from "../../../DeleteButton/DeleteButton";
-
+import Advertency from "../Advertency/Advertency";
 const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
   const [value, setValue] = useState("");
 
   const [error, setError] = useState("");
 
-  const handleButton = (e) => {
-    e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const testEmail = (email) => emailRegex.test(email);
-    if (value !== "" && testEmail(value)) {
-      if (addedEmails.includes(value)) {
-        setAddedEmails(addedEmails.filter((email) => email !== value));
-      } else {
-        setAddedEmails([...addedEmails, value]);
-      }
-      setValue("");
-    }
-  };
+
   return (
     <div className={styles.addEmailsInputContainer}>
       <div className={styles.addedEmailsContainer}>
@@ -71,7 +59,8 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
           +
         </button> */}
       </div>
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      {error && <Advertency text={error} type="error" />}
+      {/* {error && <div className={styles.errorMessage}>{error}</div>} */}
     </div>
   );
 };

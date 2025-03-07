@@ -224,48 +224,84 @@
     gap: 15px;
     font-weight: bold;
     color: black;
+    display: flex;
+    justify-content: start;
+    align-items: center;
   }
   .btnWithText {
     display: flex;
     align-items: center;
     gap: 15px;
-
+    justify-content: start !important;
     font-weight: bold;
   }
-  .bgStripe {
-    background: linear-gradient(45deg, #5f64f8 0%, #5054d9 100%);
+  .btnAutomation {
     justify-content: center;
+    height: 42px;
+    &:disabled {
+      filter: brightness(0.7) contrast(0.6);
+      -webkit-filter: brightness(0.9) contrast(0.6);
+      cursor: not-allowed;
+    }
+
     img {
       height: 20px;
     }
+  }
+  .bgStripe {
+    background: linear-gradient(45deg, #5f64f8 0%, #5054d9 100%);
+    transition: filter 0.3s ease;
   }
 
   .hubspot {
     background: #ff7a59;
-    justify-content: center;
-    img {
-      height: 20px;
-    }
+    /* &[disabled] {
+      background: #ff7a5953;
+    } */
   }
   .bgGestiona {
     background: linear-gradient(45deg, #ee7a01 43%, #ffa927 100%);
-    justify-content: center;
+    /* &[disabled] {
+      background: linear-gradient(45deg, #ee7a0153 43%, #ffa92753 100%);
+    } */
+  }
+  .bgExcel {
+    background: linear-gradient(90deg, #27a768 42.5%, #3cb077 100%);
+    /* &[disabled] {
+      background: linear-gradient(90deg, #27a76853 42.5%, #3cb07753 100%);
+    } */
+  }
+  .bgAgencia,
+  .bgXml,
+  .bgPdf,
+  .bgTelematel,
+  .bgA3 {
+    background: linear-gradient(90deg, #fff 42.5%, #f4f4f4 100%);
+    /* &[disabled] {
+      background: linear-gradient(90deg, #ffffff53 42.5%, #f4f4f453 100%);
+    } */
+  }
+  .bgOdoo {
+    background: linear-gradient(90deg, #a14689 42.5%, #a24689 100%);
+    position: relative;
     img {
-      height: 20px;
+      height: 38px;
+      position: absolute;
     }
+    /* &[disabled] {
+      background: linear-gradient(90deg, #a1468953 42.5%, #a2468953 100%);
+    } */
   }
-
-  .bgStripe[disabled] {
-    background: linear-gradient(45deg, #5f64f853 0%, #5054d953 100%);
-    cursor: not-allowed;
-  }
-  .hubspot[disabled] {
-    cursor: not-allowed;
-    background: #ff7a5953;
-  }
-  .bgGestiona[disabled] {
-    cursor: not-allowed;
-    background: linear-gradient(45deg, #ee7a0153 43%, #ffa92753 100%);
+  .bgWs {
+    background: linear-gradient(90deg, #2ad348 42.5%, #5df978 100%);
+    position: relative;
+    /* &[disabled] {
+      background: linear-gradient(90deg, #2ad34853 42.5%, #5df97853 100%);
+    } */
+    img {
+      height: 30px;
+      position: absolute;
+    }
   }
 }
 .dragOver {

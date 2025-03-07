@@ -1,0 +1,127 @@
+.btnTimerContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  .btnTimer {
+    display: flex;
+    height: 70px;
+    min-width: 70px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    border: none;
+    box-shadow:
+      0px 2px 12px 0px rgba(0, 0, 0, 0.2),
+      0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 9999px;
+    -moz-border-radius: 9999px;
+    -ms-border-radius: 9999px;
+    -o-border-radius: 9999px;
+    cursor: pointer;
+  }
+  .btnPlay {
+    background: #00b67a;
+  }
+  .btnPause {
+    background: #072146;
+  }
+  .btnStop {
+    background: #f00;
+  }
+  p {
+    width: 70px;
+  }
+}
+
+.teamsContainer {
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+}
+.team {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 20px 0;
+
+  .imgContainer {
+    position: relative;
+    height: 50px;
+    .statusIndicator {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 15px;
+      width: 15px;
+    }
+  }
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  .contentTeam {
+    width: 100%;
+  }
+  .headerTeam {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .headerTeamLeft {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .headerTeamRight {
+      color: #666;
+      text-align: right;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+  .teamDesc {
+    display: flex;
+    gap: 10px;
+    p {
+      margin: 0;
+      color: #666;
+      font-family: Roboto;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; /* 153.846% */
+      span {
+        color: var(--Light-MineShaftFontColor, #484848);
+        text-align: center;
+        font-family: Inter;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+    }
+  }
+  .statusIndicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    -webkit-border-radius: 999px;
+    -moz-border-radius: 999px;
+    -ms-border-radius: 999px;
+    -o-border-radius: 999px;
+  }
+}
+
+.btnOptionsContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: end;
+  gap: 10px;
+}

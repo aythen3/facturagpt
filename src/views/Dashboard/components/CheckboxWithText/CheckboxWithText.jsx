@@ -11,26 +11,14 @@ const CheckboxWithText = ({
 }) => {
   return (
     <div style={{ marginTop }} className={styles.checkboxWithTextContainer}>
-      {state ? (
-        <MdCheckBox
-          style={{ cursor: "pointer" }}
-          onClick={() => setState(false)}
-          size={20}
-          color={color}
-        />
-      ) : (
-        <MdCheckBoxOutlineBlank
-          style={{ cursor: "pointer" }}
-          onClick={() => setState(true)}
-          size={20}
-          color="#b9b9b9"
-        />
-      )}
-      {/* <input
+    
+     <input
         type="checkbox"
-        onClick={() => setState((prev) => !prev)}
+        onChange={(e) => setState(e.target.checked)}
         value={state}
-      /> */}
+        checked={state}
+      />
+
       <span className={styles.text}>{text}</span>
     </div>
   );

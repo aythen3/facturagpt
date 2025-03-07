@@ -1,17 +1,24 @@
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
 import React, { useEffect, useRef, useState } from "react";
-
 import styles from "./Dashboard.module.css";
-
 import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
-
 import { ReactComponent as Dots } from "./assets/optionDots.svg";
-import { ReactComponent as ChatGPTIconGreen } from "./assets/chatGPTIconGreen.svg";
-import { ReactComponent as FacturaGPTIcon } from "./assets/FacturaGPTW.svg";
-
+import { ReactComponent as ChatGPTWhiteOutline } from "./assets/ChatGPTWhiteOutline.svg";
+import { ReactComponent as GrayClock } from "./assets/GrayClock.svg";
+import { ReactComponent as ChatIcon } from "./assets/chatIconGray.svg";
 import { useNavigate } from "react-router-dom";
+import { createPaymentRecurrent } from "@src/actions/stripe";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+const stripePromise = loadStripe(
+  "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
+);
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18";
+import FileExplorer from "./components/FileExplorer/FileExplorer";
+import CustomDropdown from "./components/CustomDropdown/CustomDropdown";
+
 import {
   getAllClients,
   getAllNotifications,
@@ -21,22 +28,7 @@ import {
   getResumeAccount,
   addNotification,
 } from "@src/actions/user";
-
-import {
-  createPaymentRecurrent
-} from "@src/actions/stripe"
-
-
-// import PanelTemplate from "./components/PanelTemplate/PanelTemplate";
-
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-const stripePromise = loadStripe(
-  "pk_live_51QUTjnJrDWENnRIxIm6EQ1yy5vckKRurXT3yYO9DcnzXI3hBB38LNtvILX2UgG1pvWcWcO00OCNs1laMyATAl320000RoIx74j"
-);
-import { useTranslation } from "react-i18next";
-import i18n from "../../i18";
-import FileExplorer from "./components/FileExplorer/FileExplorer";
+import TeamSheet from "./components/DashboardComponents/TeamSheet/TeamSheet";
 
 const Dashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -49,17 +41,17 @@ const Dashboard = () => {
   const statistics = [
     {
       title: "Ventas",
-      year: "año actual",
+      // year: "año actual",
       total: "0,00",
     },
     {
       title: "Gastos",
-      year: "año actual",
+      // year: "año actual",
       total: "0,00",
     },
     {
       title: "Beneficios",
-      year: "año actual",
+      // year: "año actual",
       total: "0,00",
     },
   ];
@@ -75,143 +67,259 @@ const Dashboard = () => {
       title: "Resumen gastos",
       total: "0,00€",
       month: "abril 2024",
-      options: ["Facturas y Pedidos", "Nóminas"], // Opciones disponibles
+      options: [],
     },
   ];
-
   const spentData = [
-    { 
-      title: "Gastios excepcionales", 
-      amount: "0,00€", 
-      percentage: "0%" 
+    {
+      title: "Gastos excepcionales",
+      amount: "0,00€",
+      percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Otras pérdidas en gestión corriente",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Seguridad Social a cargo de la empresa",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Indemnizaciones",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Sueldos y salarios",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Otros servicios",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Suministros",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Publicidad, propaganda y relaciones públicas",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
     },
     {
       title: "Servicios bancarios y similares",
       amount: "0,00€",
       percentage: "0%",
+      type: "gasto",
+    },
+    {
+      title: "Ventas de productos",
+      amount: "0,00€",
+      percentage: "0%",
+      type: "ingreso",
+    },
+    {
+      title: "Ingresos por servicios",
+      amount: "0,00€",
+      percentage: "0%",
+      type: "ingreso",
+    },
+    {
+      title: "Intereses bancarios",
+      amount: "0,00€",
+      percentage: "0%",
+      type: "ingreso",
     },
   ];
+  const [selectedType, setSelectedType] = useState("gasto");
 
+  const filteredData = spentData.filter((item) => item.type === selectedType);
 
-const [swiped, setSwiped] = useState(false);
+  const [swiped, setSwiped] = useState(false);
 
   useEffect(() => {
     const fn = async () => {
-      const response = await dispatch(getResumeAccount())
+      const response = await dispatch(getResumeAccount());
 
-
-      console.log('response account resume', response)
-      if(response.payload && response.payload.success) {
-        console.log('RESUME ACCOUNT', response.payload.resume)
+      console.log("response account resume", response);
+      if (response.payload && response.payload.success) {
+        console.log("RESUME ACCOUNT", response.payload.resume);
       }
-    }
+    };
 
-    fn()
-  }, [])
-
+    fn();
+  }, []);
 
   const handleAddNotification = async () => {
-    const response = await dispatch(addNotification({
-      notification: {
+    const response = await dispatch(
+      addNotification({
+        notification: {},
+      })
+    );
 
-      }
-    }))
-
-    console.log('!', response)
-  }
-
+    console.log("!", response);
+  };
 
   const handlePayStripe = async () => {
-    const response = await dispatch(createPaymentRecurrent())
-    console.log('!', response)
-  }
+    const response = await dispatch(createPaymentRecurrent());
+    console.log("!", response);
+  };
+  const [firtsTimer, setFirtsTimer] = useState("25 Dec 2024");
+  const [secondTimer, setSecondTimer] = useState("25 Dec 2024");
 
+  const [selectedTab, setSelectedTab] = useState("Ingresos y Gastos");
+
+  const clientsData = [
+    { name: "Cliente A", totalSpent: "500,00€" },
+    { name: "Cliente B", totalSpent: "1.200,00€" },
+    { name: "Cliente C", totalSpent: "300,00€" },
+  ];
+
+  const assetsData = [
+    { asset: "Oficina", value: "50.000,00€" },
+    { asset: "Vehículo", value: "20.000,00€" },
+    { asset: "Equipos", value: "10.000,00€" },
+  ];
+
+  const teamData = [
+    { member: "Juan Pérez", role: "CEO" },
+    { member: "María Gómez", role: "Finanzas" },
+    { member: "Carlos Ruiz", role: "Desarrollador" },
+  ];
+  const renderContent = () => {
+    switch (selectedTab) {
+      case "Ingresos y Gastos":
+        return (
+          <>
+            <div className={styles.expenseAccountsOptions}>
+              <span
+                className={
+                  selectedType == "gasto" && styles.selectedTypeExpense
+                }
+                onClick={() => setSelectedType("gasto")}
+              >
+                Gastos
+              </span>
+              <span
+                className={
+                  selectedType == "ingreso" && styles.selectedTypeExpense
+                }
+                onClick={() => setSelectedType("ingreso")}
+              >
+                Ingresos
+              </span>
+            </div>
+
+            {filteredData.map((item, index) => (
+              <div key={index} className={styles.spent}>
+                <div className={styles.row}>
+                  <p>{item.title}</p>
+                  <span>
+                    {item.amount} - {item.amount} ({item.percentage})
+                  </span>
+                </div>
+                <div className={styles.divider}></div>
+              </div>
+            ))}
+          </>
+        );
+      case "Contactos":
+        return clientsData.map((client, index) => (
+          <div key={index} className={styles.clientRow}>
+            <p>{client.name}</p>
+            <span>{client.totalSpent}</span>
+          </div>
+        ));
+      case "Activos":
+        return assetsData.map((asset, index) => (
+          <div key={index} className={styles.assetRow}>
+            <p>{asset.asset}</p>
+            <span>{asset.value}</span>
+          </div>
+        ));
+      case "Equipo":
+        return <TeamSheet />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <PanelTemplate setSwiped={setSwiped} swiped={swiped}>
-
-
       {/* </Elements>  */}
       <div className={styles.homeContainer}>
         <div>
-          <button onClick={() => handleAddNotification()}>
-            Añadir venta
-          </button>
-          <button onClick={() => handleAddNotification()}>
-            Añadir compra
-          </button>
+          <button onClick={() => handleAddNotification()}>Añadir venta</button>
+          <button onClick={() => handleAddNotification()}>Añadir compra</button>
           <button onClick={() => handleAddNotification()}>
             Añadir Beneficio
           </button>
-          <button onClick={() => handlePayStripe()}>
-            Pagar
-          </button>
+          <button onClick={() => handlePayStripe()}>Pagar</button>
+        </div>
+        <div className={styles.analitycsHeader}>
+          <span className={styles.data}>
+            <ChatIcon />
+            Más Datos y Analíticas en el Chat
+          </span>
+          <div className={styles.analitycsHeaderRight}>
+            <div
+              className={styles.talkWithFacturaGPT}
+              onClick={() => navigate("/admin/chat")}
+            >
+              <ChatGPTWhiteOutline /> Habla con FacturaGPT
+            </div>
+            <div className={styles.timerContainer}>
+              <GrayClock />
+              <CustomDropdown
+                options={["25 Dec 2024", "25 Dec 2025", "25 Dec 2026"]}
+                selectedOption={firtsTimer}
+                height="31px"
+                textStyles={{
+                  minWidth: "140px",
+                }}
+                setSelectedOption={(selected) => setFirtsTimer(selected)}
+              />{" "}
+              -
+              <CustomDropdown
+                options={["25 Dec 2024", "25 Dec 2025", "25 Dec 2026"]}
+                selectedOption={secondTimer}
+                height="31px"
+                textStyles={{
+                  minWidth: "140px",
+                }}
+                setSelectedOption={(selected) => setSecondTimer(selected)}
+              />
+            </div>
+          </div>
         </div>
         <div className={styles.statisticsHeader}>
-          <div
-            style={{
-              display: "flex",
-              width: "100%",
-              flexDirection: "column",
-            }}
-          >
-            <div
-              style={{ display: "flex", width: "100%", overflowX: "scroll" }}
-            >
+          <div>
+            <div className={styles.staticsContainer}>
               {statistics.map((statistic) => (
                 <div className={styles.statisticCard}>
                   <div className={styles.title}>
                     <p>{statistic.title}</p>
-                    <Dots className={styles.icon} />
+                    {/* <Dots className={styles.icon} /> */}
                   </div>
                   <span>{statistic.year}</span>
                   <p className={styles.statisticTotal}>{statistic.total}€</p>
                 </div>
               ))}
             </div>
-            <div className={styles.divider}></div>
-          </div>
-          <div className={styles.talkWithFacturaGPT}>
-            <FacturaGPTIcon className={styles.icon} />
-            <p>Datos y Analíticas en el Chat</p>
-            <button onClick={() => navigate("/admin/chat")}>
-              <ChatGPTIconGreen /> Habla con FacturaGPT
-            </button>
+            {/* <div className={styles.divider}></div> */}
           </div>
         </div>
         <div className={styles.homeContent}>
@@ -235,11 +343,11 @@ const [swiped, setSwiped] = useState(false);
                       </div>
                     )}
                   </div>
-                  <span>últimos 12 meses</span>
+                  {/* <span>últimos 12 meses</span> */}
                 </div>
                 <div className={styles.salesSummaryTotal}>
                   <p>{summary.total}</p>
-                  <span>{summary.month}</span>
+                  {/* <span>{summary.month}</span> */}
                 </div>
                 <div className={styles.monthsContainer}>
                   <p>May</p>
@@ -258,31 +366,20 @@ const [swiped, setSwiped] = useState(false);
           </div>
           <div className={styles.expenseAccounts}>
             <div className={styles.expenseAccountsHeader}>
-              <div className={styles.expenseAccountsOptions}>
-                <p>Cuentas de gastos</p>
-                <span>Cuentas de ingresos</span>
-              </div>
-              <span className={styles.month}>Mes actual</span>
+              {["Ingresos y Gastos", "Contactos", "Activos", "Equipo"].map(
+                (tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setSelectedTab(tab)}
+                    className={selectedTab == tab && styles.selectedTabBtn}
+                  >
+                    {tab}
+                  </button>
+                )
+              )}
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
-              {spentData.map((item, index) => (
-                <div className={styles.spent}>
-                  <div key={index} className={styles.row}>
-                    <p>{item.title}</p>
-                    <span>
-                      {item.amount} - {item.amount} ({item.percentage})
-                    </span>
-                  </div>
-                  <div className={styles.divider}></div>
-                </div>
-
-              ))}
+            <div className={styles.expenseAccountsContent}>
+              {renderContent()}
             </div>
           </div>
         </div>
