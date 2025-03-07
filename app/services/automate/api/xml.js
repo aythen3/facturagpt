@@ -1,6 +1,32 @@
 
 const { catchedAsync, response } = require("../../../utils/err");
 
+const { v4: uuidv4 } = require('uuid');
+
+const fs = require("fs");
+const path = require("path");
+
+const facturaXMLPath = path.join(__dirname, "../../emailXMLS/fac_data.txt");
+const albaranXMLPath = path.join(__dirname, "../../emailXMLS/alb_data.txt");
+
+const facturaXML = fs.readFileSync(facturaXMLPath, "utf-8"); // Leer como texto
+const albaranXML = fs.readFileSync(albaranXMLPath, "utf-8"); // Leer como texto
+
+const { processItems } = require('../gpt')
+
+const convert = require("xml-js");
+
+
+const AWS = require("aws-sdk");
+
+const s3 = new AWS.S3({
+  accessKeyId: "SCW8EPCVF1YTQXK0AC7P",
+  secretAccessKey: "cd4ea464-15e8-4baf-848d-8db28cd880cf",
+  endpoint: "https://s3.fr-par.scw.cloud",
+  s3ForcePathStyle: true,
+});
+
+
 
 const xmlFilter = async ({
     user,
@@ -19,13 +45,15 @@ const xmlFilter = async ({
       // const file_xml = `${attach.filename.split(".")[0]}.xml`;
       const file_xml = `${attach.originalname.split(".")[0]}.xml`;
       
+      console.log('processedData ALBARAN', processedData)
       if (processedData?.documentType === "factura") {
         xmlFile = facturaXML;
         uploadType = "notificacion_fraC";
-      } else {
+      } else if (processedData?.documentType === "albarán") {
         xmlFile = albaranXML;
         uploadType = "notificacion_albC";
       }
+
       // console.log("xmlFile", typeof xmlFile);
       if (processedData?.documentType && xmlFile) {
         const json = convert.xml2json(xmlFile, {
@@ -52,7 +80,7 @@ const xmlFilter = async ({
         originalname: attach.originalname,
       };
   
-      const tempFilePath = path.join(__dirname, "./temp/" + file_xml);
+      const tempFilePath = path.join(__dirname, "../temp/" + file_xml);
       await fs.promises.writeFile(tempFilePath, xmlFile.buffer);
       // console.log('Local file path:', localFilePath)
   

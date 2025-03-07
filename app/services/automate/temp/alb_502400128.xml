@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<documento_ptl version="0.6">
+    <info_control>
+        <transaccion>
+            <fecha_creacion>
+                <anyo>2025</anyo>
+                <mes>1</mes>
+                <dia>9</dia>
+                <hora>000</hora>
+                <minuto>000</minuto>
+                <segundo>000</segundo>
+                <msegundo>000</msegundo>
+            </fecha_creacion>
+            <fecha_modificacion>
+                <anyo>2025</anyo>
+                <mes>1</mes>
+                <dia>9</dia>
+                <hora>000</hora>
+                <minuto>000</minuto>
+                <segundo>000</segundo>
+                <msegundo>000</msegundo>
+            </fecha_modificacion>
+            <estado/>
+        </transaccion>
+        <info_tipo version="0.6" url_xsd="">ALBARAN</info_tipo>
+    </info_control>
+    <interlocutores>
+        <origen>
+            <tipo id_grupo="ZZZ" id_usuario=""/>
+        </origen>
+        <destino>
+            <tipo id_grupo="ZZZ" id_usuario=""/>
+        </destino>
+    </interlocutores>
+    <datos_doc>
+        <envio_albaran version="0.6">
+            <id_control_fabricante/>
+            <albaran>
+                <cabecera>
+                    <solicitante/>
+                    <destinatario/>
+                    <cod_punto_venta/>
+                    <numero_albaran>502400128</numero_albaran>
+                    <fecha_albaran>
+                        <anyo>2025</anyo>
+                        <mes>1</mes>
+                        <dia>9</dia>
+                        <hora>000</hora>
+                        <minuto>000</minuto>
+                        <segundo>000</segundo>
+                    </fecha_albaran>
+                    <fecha_entrega>
+                        <anyo>2025</anyo>
+                        <mes>1</mes>
+                        <dia>9</dia>
+                        <hora>000</hora>
+                        <minuto>000</minuto>
+                        <segundo>000</segundo>
+                    </fecha_entrega>
+                    <incoterm/>
+                    <desc_incoterm/>
+                    <transportista_texto/>
+                    <exped_transportista/>
+                    <bultos/>
+                    <peso/>
+                    <unidad_peso>KGM</unidad_peso>
+                    <volumen/>
+                    <unidad_volumen/>
+                    <centro_expedidor_nombre>GRICO, S.L.</centro_expedidor_nombre>
+                    <centro_expedidor_direccion>Cl. Terrac Massini, 99</centro_expedidor_direccion>
+                    <centro_expedidor_poblacion>BARCELONA</centro_expedidor_poblacion>
+                    <centro_expedidor_cpostal>08028</centro_expedidor_cpostal>
+                    <centro_expedidor_provincia>BARCELONA</centro_expedidor_provincia>
+                    <centro_expedidor_pais></centro_expedidor_pais>
+                    <centro_expedidor_telefono></centro_expedidor_telefono>
+                    <cod_fabricante_externo/>
+                    <cod_fabricante_fabricante/>
+                    <cliente_nif>NOT FOUND</cliente_nif>
+                    <cliente_nombre></cliente_nombre>
+                    <cliente_direccion></cliente_direccion>
+                    <cliente_poblacion></cliente_poblacion>
+                    <cliente_cpostal></cliente_cpostal>
+                    <cliente_provincia></cliente_provincia>
+                    <cliente_pais>ES</cliente_pais>
+                    <destino_nombre></destino_nombre>
+                    <destino_direccion></destino_direccion>
+                    <destino_poblacion></destino_poblacion>
+                    <destino_cpostal></destino_cpostal>
+                    <destino_provincia></destino_provincia>
+                    <destino_pais>ES</destino_pais>
+                    <destino_telefono></destino_telefono>
+                    <observaciones/>
+                </cabecera>
+                <posiciones id="1">
+                    <posicion_albaran>1</posicion_albaran>
+                    <posicion_pedido>1</posicion_pedido>
+                    <referencia>001621</referencia>
+                    <descripcion>DERIVACION TE PVC H-H 40-45°</descripcion>
+                    <pedido>NOT FOUND</pedido>
+                    <pedido_cliente>ND</pedido_cliente>
+                    <cantidad_entregada>1.00</cantidad_entregada>
+                    <unidad>UN</unidad>
+                    <observaciones/>
+                </posiciones>
+            </albaran>
+        </envio_albaran>
+    </datos_doc>
+    <mensajes>
+        <severidad/>
+        <msg_ptl id="1"/>
+        <msg_funcional id=""/>
+    </mensajes>
+</documento_ptl>

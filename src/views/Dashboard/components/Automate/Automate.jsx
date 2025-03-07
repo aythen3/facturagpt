@@ -194,6 +194,7 @@ const Automate = ({
                   const filteredAutomation = data.find(
                     (automation) => automation?.type === card?.type
                   );
+
                   return (
                     <CardAutomate
                       fullContent={true}
@@ -201,6 +202,7 @@ const Automate = ({
                       typeContent={typeContent}
                       key={card.id}
                       name={filteredAutomation?.automateName}
+                      nameTitle={card.inputValue}
                       image={filteredAutomation?.image}
                       contactType={
                         card?.type === "Gmail"

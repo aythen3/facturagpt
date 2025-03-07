@@ -19,6 +19,7 @@ const CardAutomate = ({
   last,
   fromPanel,
   automationData,
+  nameTitle,
 }) => {
   const dispatch = useDispatch();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
@@ -48,17 +49,25 @@ const CardAutomate = ({
             <img className={styles.image} src={image} alt="logo" />
           </div>
           <div>
+            {nameTitle && (
+              <h3 style={{ fontSize: "14px", margin: "0px" }}>{nameTitle}</h3>
+            )}
             <p
-              style={{ marginBottom: !fromPanel && "4px" }}
+              style={{
+                marginBottom: !fromPanel && "4px",
+                marginTop: nameTitle && "4px",
+              }}
               className={styles.automate_name}
             >
               {name}
             </p>
+
             {!fromPanel && fullContent && (
               <p className={styles.contact}>
                 {contactType || "Nombre de la automatización"}
               </p>
             )}
+
           </div>
         </div>
         {fullContent && (

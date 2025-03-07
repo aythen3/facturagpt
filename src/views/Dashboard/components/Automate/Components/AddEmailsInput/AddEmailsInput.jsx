@@ -8,7 +8,6 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
 
   const [error, setError] = useState("");
 
-  const handleButton = () => {};
 
   return (
     <div className={styles.addEmailsInputContainer}>

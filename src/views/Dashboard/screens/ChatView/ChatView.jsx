@@ -578,31 +578,11 @@ const ChatView = () => {
         setMessages([
           ...messages,
           { text: text || inputValue, sender: "user" },
-          // { text: response.botMessage.text, sender: "bot" },
         ]);
-        // setMessages([
-        //   ...messages,
-        //   { text: text || inputValue, sender: "user" },
-        //   { text: response.botMessage.text, sender: "bot" },
-        // ]);
         setInputValue("");
       }
 
-      // const resp = await dispatch(
-      //   sendMessage({
-      //     chatId: id,
-      //     // type: 'me',
-      //     text: text,
-      //   })
-      // );
 
-
-      // const response = resp.payload;
-      // console.log("!WOOORKKK", response);
-
-      // const user = localStorage.getItem("user");
-      // const userJson = JSON.parse(user);
-      // const token = userJson.accessToken;
 
       console.log('ini')
       // const id = user._id.split('_').pop()
@@ -611,15 +591,9 @@ const ChatView = () => {
       const token = userJson.accessToken;
       console.log('ttt', token)
 
-      // const formData = new URLSearchParams();
-      // formData.append('text', text);
 
-      const response = await fetch(`https://facturagpt.com/api/chat/${id}/messages`, {
+      await fetch(`https://facturagpt.com/api/chat/${id}/messages`, {
         method: 'POST',
-        // body: JSON.stringify({
-        //   text: text,
-        //   // chatId: id
-        // }),
         body: text,
         headers: {
           'Content-Type': 'application/octet-stream',
@@ -636,11 +610,9 @@ const ChatView = () => {
             accumulatedText += newText;
             setMessages(prevMessages => {
               const newMessages = [...prevMessages];
-              // Si el último mensaje es del bot, actualizamos su texto
               if (newMessages.length > 0 && newMessages[newMessages.length - 1].type === 'bot') {
                 newMessages[newMessages.length - 1].text = accumulatedText;
               } else {
-                // Si no hay mensaje del bot o el último no es del bot, agregamos uno nuevo
                 newMessages.push({
                   text: accumulatedText,
                   type: 'bot'
@@ -652,7 +624,6 @@ const ChatView = () => {
 
           const processStream = async () => {
             while (true) {
-              // console.log('555')
               const { done, value } = await reader.read();
               if (done) break;
 
@@ -668,8 +639,6 @@ const ChatView = () => {
                     const chunk = JSON.parse(line);
                     const text = chunk.data.text
                     console.log('data', chunk)
-                    console.log('data1', text)
-                    // insertData(data)
                     insertMessageBot(text)
 
                    
@@ -679,17 +648,6 @@ const ChatView = () => {
                 }
               }
             }
-
-            // if (accumulatedChunks.trim()) {
-            //   try {
-            //     const data = JSON.parse(accumulatedChunks);
-
-            //     console.log('data', data)
-            //     insertData(data)
-            //   } catch (error) {
-            //     console.error('Failed to parse final JSON:', error);
-            //   }
-            // }
           };
 
           processStream().then(() => {
@@ -697,26 +655,14 @@ const ChatView = () => {
         }
       })
 
-      console.log("responsechat!!", response);
 
-      // setMessages([
-      //   ...messages,
-      //   // { text: text || inputValue, sender: "user" },
-      //   { text: response.botMessage.text, sender: "bot" },
-      // ]);
     } catch (error) {
       console.log("error handleSendMessage", error);
     }
   };
 
-  // const handleSendBotMessage = () => {
-  //   const botMessage = "Este es un mensaje del bot.";
-  //   setMessages([...messages, { text: botMessage, sender: "bot" }]);
-  // };
-
+ 
   const handleChat = (action) => {
-    console.log("3ri48juj", action);
-    // handleSendMessage(actions[id].text);
 
     if (action.id == 0) {
       navigate(`/admin/panel`);

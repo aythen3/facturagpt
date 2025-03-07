@@ -22,8 +22,9 @@ import { ifft } from "@tensorflow/tfjs";
 import { Currency } from "lucide-react";
 
 const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
+  const [count, setCount] = useState(0);
   const [fileKeywords, setFileKeywords] = useState([]);
-  // const [configuration.labels, setLabels] = useState([]); // Ahora configuration.labels contiene toda la información necesaria
+  const [labels, setLabels] = useState([]); // Ahora labels contiene toda la información necesaria
   const [editIndex, setEditIndex] = useState(null);
   const [editConditionIndex, setEditConditionIndex] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
@@ -46,19 +47,17 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
   });
 
   const addCondition = (index) => {
-    if (configuration.labels[index].newCondition) {
-      const updatedLabels = [...configuration.labels];
+    if (labels[index].newCondition) {
+      const updatedLabels = [...labels];
       updatedLabels[index].conditions.push(updatedLabels[index].newCondition);
       updatedLabels[index].newCondition = "";
-      updatedLabels[index].conditionCurrency =
-        configuration.labels[index].conditions[0];
-      console.log(configuration.labels[index].conditions[0]);
-      handleConfigurationChange("labels", updatedLabels);
+      updatedLabels[index].conditionCurrency = labels[index].conditions[0];
+      setLabels(updatedLabels);
     }
   };
 
   const addFilter = (index, type) => {
-    const updatedLabels = [...configuration.labels];
+    const updatedLabels = [...labels];
     updatedLabels[index].filters.push({
       id: Date.now(),
       // conditionCurrency: type === "AND" ? "provider" : "title",
@@ -68,21 +67,21 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
       conditionValue: "",
       type,
     });
-    handleConfigurationChange("labels", updatedLabels);
+    setLabels(updatedLabels);
   };
 
   const updateFilter = (labelIndex, filterId, key, value) => {
-    const updatedLabels = [...configuration.labels];
+    const updatedLabels = [...labels];
     updatedLabels[labelIndex].filters = updatedLabels[labelIndex].filters.map(
       (filter) =>
         filter.id === filterId ? { ...filter, [key]: value } : filter
     );
-    handleConfigurationChange("labels", updatedLabels);
+    setLabels(updatedLabels);
   };
 
   const saveFilter = () => {
-    handleConfigurationChange("labels", [
-      ...configuration.labels,
+    const updatedLabels = [
+      ...labels,
       {
         name: "",
         conditions: [],
@@ -99,14 +98,13 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
           },
         ],
       },
-    ]);
+    ];
+    setLabels(updatedLabels);
+    handleConfigurationChange("labels", updatedLabels);
   };
 
   const deleteLabel = (index) => {
-    handleConfigurationChange(
-      "labels",
-      configuration.labels.filter((_, i) => i !== index)
-    );
+    setLabels(labels.filter((_, i) => i !== index));
     setEditIndex(null);
   };
 
@@ -122,22 +120,23 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
     }
   }, [configuration?.selectedFileTypes]);
 
-  console.log("configuration.labels ==>", configuration.labels);
-
-  // useEffect(() => {
-  //   const totalAmountAndSelectedCurrency = {
-  //     max: totalAmount.max,
-  //     min: totalAmount.min,
-  //     selectedCurrency,
-  //   };
-  //   handleConfigurationChange("totalAmount", totalAmountAndSelectedCurrency);
-  // }, [selectedCurrency, totalAmount]);
-
   useEffect(() => {
     if (configuration?.totalAmount?.selectedCurrency) {
       setSelectedCurrency(configuration?.totalAmount?.selectedCurrency);
     }
   }, [configuration?.totalAmount?.selectedCurrency]);
+
+  useEffect(() => {
+    if (count < 2) {
+      setLabels(configuration.labels);
+      console.log(`El efecto se ha ejecutado ${count + 1} vez/veces.`);
+      setCount((prevCount) => prevCount + 1); // Incrementar el contador después de cada ejecución
+    }
+  }, [configuration.labels]);
+
+  // useEffect(() => {
+  //   handleConfigurationChange("labels", labels)
+  // }, [labels]);
 
   console.log("configuration ==>", configuration);
 
@@ -225,7 +224,6 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                         .split(",")
                         .map((keyword) => keyword.trim())
                         .filter((keyword) => keyword !== "");
-                      console.log(keywords);
                       setFileKeywords((prevKeywords) => [
                         ...prevKeywords,
                         ...keywords,
@@ -387,7 +385,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
               }`}
             >
               <div className={styles.contentInput}>
-                {configuration.labels?.map((label, index) => (
+                {labels?.map((label, index) => (
                   <div key={index}>
                     <div className={styles.titleContentInput}>
                       <div className={styles.labelName}>
@@ -396,9 +394,9 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                           placeholder="Nombre del Filtro"
                           value={label.name}
                           onChange={(e) => {
-                            const updatedLabels = [...configuration.labels];
+                            const updatedLabels = [...labels];
                             updatedLabels[index].name = e.target.value;
-                            handleConfigurationChange("labels", updatedLabels);
+                            setLabels(updatedLabels);
                           }}
                           disabled={editIndex !== index}
                         />
@@ -429,12 +427,9 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                 condition === "" &&
                                 editConditionIndex === null
                               ) {
-                                const updatedLabels = [...configuration.labels];
+                                const updatedLabels = [...labels];
                                 updatedLabels[index].conditions.splice(i, 1); // Eliminar la condición vacía
-                                handleConfigurationChange(
-                                  "labels",
-                                  updatedLabels
-                                );
+                                setLabels(updatedLabels);
                                 return null; // No renderizar nada para esta condición
                               }
                               return (
@@ -446,19 +441,13 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       type="text"
                                       value={condition}
                                       onChange={(e) => {
-                                        const updatedLabels = [
-                                          ...configuration.labels,
-                                        ];
+                                        const updatedLabels = [...labels];
                                         updatedLabels[index].conditions[i] =
                                           e.target.value;
-                                        handleConfigurationChange(
-                                          "labels",
-                                          updatedLabels
-                                        );
+                                        setLabels(updatedLabels);
                                       }}
                                       onBlur={() => setEditConditionIndex(null)}
                                       onKeyDown={(e) => {
-                                        console.log(e.key);
                                         if (
                                           e.key === "Enter" ||
                                           e.key === "Escape"
@@ -478,16 +467,11 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       </span>
                                       <DeleteButton
                                         action={() => {
-                                          const updatedLabels = [
-                                            ...configuration.labels,
-                                          ];
+                                          const updatedLabels = [...labels];
                                           updatedLabels[
                                             index
                                           ].conditions.splice(i, 1);
-                                          handleConfigurationChange(
-                                            "labels",
-                                            updatedLabels
-                                          );
+                                          setLabels(updatedLabels);
                                         }}
                                       />
                                     </>
@@ -501,13 +485,10 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                             placeholder="Escribe el prompt para identificar variables"
                             value={label.newCondition}
                             onChange={(e) => {
-                              const updatedLabels = [...configuration.labels];
+                              const updatedLabels = [...labels];
                               updatedLabels[index].newCondition =
                                 e.target.value;
-                              handleConfigurationChange(
-                                "labels",
-                                updatedLabels
-                              );
+                              setLabels(updatedLabels);
                             }}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
@@ -542,9 +523,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                   <button
                                     className={`${styles.buttonAddFilter} ${filter.type == "AND" && styles.typeFilterBtn}`}
                                     onClick={() => {
-                                      const updatedLabels = [
-                                        ...configuration.labels,
-                                      ];
+                                      const updatedLabels = [...labels];
                                       const updatedFilters = updatedLabels[
                                         index
                                       ].filters.map((f) => {
@@ -558,10 +537,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       });
                                       updatedLabels[index].filters =
                                         updatedFilters;
-                                      handleConfigurationChange(
-                                        "labels",
-                                        updatedLabels
-                                      );
+                                      setLabels(updatedLabels);
                                     }}
                                   >
                                     AND
@@ -569,9 +545,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                   <button
                                     className={`${styles.buttonAddFilter} ${filter.type == "OR" && styles.typeFilterBtn}`}
                                     onClick={() => {
-                                      const updatedLabels = [
-                                        ...configuration.labels,
-                                      ];
+                                      const updatedLabels = [...labels];
                                       const updatedFilters = updatedLabels[
                                         index
                                       ].filters.map((f) => {
@@ -585,10 +559,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                                       });
                                       updatedLabels[index].filters =
                                         updatedFilters;
-                                      handleConfigurationChange(
-                                        "labels",
-                                        updatedLabels
-                                      );
+                                      setLabels(updatedLabels);
                                     }}
                                   >
                                     OR
@@ -695,7 +666,6 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                             Añadir Condición
                           </button>
                         </div>
-                        {console.log(configuration.labels)}
                       </div>
                     )}
                   </div>
@@ -710,7 +680,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                   action={() => {
                     if (editIndex != null) {
                       editLabel(null);
-                    } else if (configuration.labels.length === 0) {
+                    } else if (labels?.length === 0) {
                       saveFilter();
                     } else {
                       saveFilter();
@@ -719,7 +689,7 @@ const SelectInfoToProcess = ({ configuration, handleConfigurationChange }) => {
                 >
                   {editIndex != null
                     ? "Guardar Filtro"
-                    : configuration.labels?.length === 0
+                    : labels?.length === 0
                       ? "Crear Filtro"
                       : "Crear Filtro"}
                 </Button>

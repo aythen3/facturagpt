@@ -168,11 +168,7 @@ const sendMessageController = async (req, res) => {
   const id = user._id.split('_').pop()
 
   const { chatId } = req.params;
-  // const { text } = req.body;
   const text = req.body.toString().replace('text=', '');
-  // console.log('text', text)
-  // return false
-  // return false
 
   const skProjRegex = /^sk-proj-[A-Za-z0-9-_]{100,}$/;
   if (skProjRegex.test(text)) {
@@ -189,7 +185,6 @@ const sendMessageController = async (req, res) => {
   }
 
   const tokenGPT = user.tokenGPT;
-  console.log('eee', tokenGPT)
 
   if (!tokenGPT) {
     return res.json({
@@ -198,14 +193,9 @@ const sendMessageController = async (req, res) => {
     });
   }
 
-  // const result_meet1 = await meetGPT(res, text, tokenGPT);
-  const result_meet = await meetGPT(res, text, tokenGPT);
+  const result_meet = await meetGPT(res, text, tokenGPT, id);
 
-  // return false
 
-  console.log('eeeeeeee')
- 
-  // return false
   try {
     const dbChat = await connectDB(`db_${id}_chat`);
 
