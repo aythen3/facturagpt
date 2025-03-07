@@ -18,7 +18,7 @@ const path = require("path");
 const { fromPath } = require("pdf2pic");
 const sharp = require("sharp");
 const { PDFDocument } = require("pdf-lib");
-const convert = require("xml-js");
+
 
 
 
@@ -29,9 +29,9 @@ const convert = require("xml-js");
 
 
 
-const ftpFilter = require('./api/ftp')
-const gmailFilter = require('./api/gmail')
-const xmlFilter = require('./api/xml')
+const { ftpFilter } = require('./api/ftp')
+const { gmailFilter } = require('./api/gmail')
+const { xmlFilter } = require('./api/xml')
 
 
 // const { updateClientService } = require("./emailManager");
@@ -42,11 +42,6 @@ const xmlFilter = require('./api/xml')
 
 // const Imap = require("imap");
 
-const facturaXMLPath = path.join(__dirname, "../emailXMLS/fac_data.txt");
-const albaranXMLPath = path.join(__dirname, "../emailXMLS/alb_data.txt");
-
-const facturaXML = fs.readFileSync(facturaXMLPath, "utf-8"); // Leer como texto
-const albaranXML = fs.readFileSync(albaranXMLPath, "utf-8"); // Leer como texto
 
 
 // const nano = require("nano")("http://admin:1234@127.0.0.1:5984");
@@ -104,7 +99,7 @@ const saveAttachmentData = async ({
     }
 
 
-    data.productList.map((product, index) => {
+    data.productList?.map((product, index) => {
       let productId = uuidv4()
       let productDoc = {
         id: productId,
