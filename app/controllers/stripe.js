@@ -110,18 +110,19 @@ const createPaymentRecurrentController = async (req, res) => {
 
 const createPaymentIntentController = async (req, res) => {
   try {
-    const { amount, currency, clientId } = req.body;
+    const { amount, currency } = req.body;
     console.log(
       "Creating payment intent for amount:",
       amount,
       "currency:",
       currency,
-      "clientId:",
-      clientId
+      "clientId:"
     );
 
     // Get the payment method ID and customer ID for the client
-    const paymentMethodResponse = await getPaymentMethodService({ clientId });
+    const paymentMethodResponse = await getPaymentMethodService({ 
+      clientId: null
+     });
 
     if (!paymentMethodResponse.success) {
       return res.status(404).send({
@@ -200,32 +201,36 @@ const createSetupIntentController = async (req, res) => {
 
 const attachCustomPaymentMethodController = async (req, res) => {
   try {
-    const { userId } = req.body;
+    // const { userId } = req.body;
 
-    if (!userId) {
-      return res
-        .status(400)
-        .send({ success: false, message: "Missing userId in request." });
-    }
+    // if (!userId) {
+    //   return res
+    //     .status(400)
+    //     .send({ success: false, message: "Missing userId in request." });
+    // }
+
+
+    const user = req.user
+    const id = user._id.split('_').pop()
 
     // Step 1: Fetch user from CouchDB
-    const db = await connectDB("db_emailmanager_accounts");
-    let dbUser = await db.get(userId);
+    const db = await connectDB("db_accounts");
+    let dbAccount = await db.get(user._id);
 
-    if (!dbUser) {
+    if (!dbAccount) {
       return res
         .status(404)
         .send({ success: false, message: "User not found." });
     }
-    console.log("Fetched user from CouchDB:", dbUser);
+    console.log("Fetched user from CouchDB:", dbAccount);
 
     // Step 2: Create a Stripe customer if none exists
-    let stripeCustomerId = dbUser.stripeCustomerId;
+    let stripeCustomerId = dbAccount.stripeCustomerId;
     if (!stripeCustomerId) {
       console.log("Creating new Stripe customer...");
       const customer = await stripe.customers.create({
-        email: dbUser.email,
-        metadata: { userId }, // Add unique metadata
+        email: dbAccount.email,
+        metadata: { userId: id }, // Add unique metadata
         description: `Customer for ${dbUser.email}`,
       });
       console.log("Stripe customer created:", customer);
@@ -233,13 +238,13 @@ const attachCustomPaymentMethodController = async (req, res) => {
       stripeCustomerId = customer.id;
 
       // Save the new customer ID to the database
-      dbUser.stripeCustomerId = stripeCustomerId;
+      dbAccount.stripeCustomerId = stripeCustomerId;
 
       // Retry updating until the conflict is resolved
       let updateSuccessful = false;
       while (!updateSuccessful) {
         try {
-          const response = await db.insert({ ...dbUser, _rev: dbUser._rev });
+          const response = await db.insert({ ...dbAccount, _rev: dbAccount._rev });
           console.log(
             "Updated user in CouchDB with Stripe customer ID:",
             response
@@ -248,7 +253,7 @@ const attachCustomPaymentMethodController = async (req, res) => {
         } catch (conflictError) {
           if (conflictError.statusCode === 409) {
             console.log("Conflict detected, fetching latest revision...");
-            dbUser = await db.get(userId); // Fetch the latest version
+            dbAccount = await db.get(user._id); // Fetch the latest version
           } else {
             throw conflictError;
           }
@@ -283,15 +288,22 @@ const attachCustomPaymentMethodController = async (req, res) => {
     console.log("Updated Stripe customer:", updatedCustomer);
 
     // Step 6: Save payment method ID to the database
-    dbUser.paymentMethodId = createdPaymentMethod.id;
+    dbAccount.paymentMethodId = createdPaymentMethod.id;
 
     let updateSuccessful = false;
     while (!updateSuccessful) {
       try {
-        const response = await updateAccount({
-          userId,
-          toUpdate: { paymentMethodId: createdPaymentMethod.id },
+        // const response = await updateAccount({
+        //   userId,
+        //   toUpdate: { paymentMethodId: createdPaymentMethod.id },
+        // });
+        // const doc = await db.get(account._id);
+
+        const response = await db.insert({
+          ...dbAccount,  // Incluye _id y _rev automáticamente
+          paymentMethodId: createdPaymentMethod.id,
         });
+
         console.log(
           "Updated user in CouchDB with payment method ID:",
           response
@@ -300,7 +312,7 @@ const attachCustomPaymentMethodController = async (req, res) => {
       } catch (conflictError) {
         if (conflictError.statusCode === 409) {
           console.log("Conflict detected, fetching latest revision...");
-          dbUser = await db.get(userId); // Fetch the latest version
+          dbUser = await db.get(user._id); // Fetch the latest version
         } else {
           throw conflictError;
         }
@@ -321,16 +333,20 @@ const attachCustomPaymentMethodController = async (req, res) => {
 
 const createCustomPaymentIntentController = async (req, res) => {
   try {
-    const { userId, amount, currency = "eur" } = req.body;
+    const {amount, currency = "eur" } = req.body;
 
-    if (!userId || !amount) {
+    console.log('eee create custom')
+    const user = req.user
+    const id = user._id.split('_').pop()
+
+    if (!user._id || !amount) {
       return res
         .status(400)
         .send({ success: false, message: "Missing userId or amount." });
     }
 
-    const db = await connectDB("db_emailmanager_accounts");
-    const dbUser = await db.get(userId);
+    const db = await connectDB("db_accounts");
+    const dbUser = await db.get(user._id);
 
     if (!dbUser || !dbUser.stripeCustomerId || !dbUser.paymentMethodId) {
       return res.status(404).send({

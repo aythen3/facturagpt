@@ -8,7 +8,10 @@ export const createPaymentRecurrent = createAsyncThunk(
   async (_) => {
     console.log("=== ON CREATE PAYMENT RECURRENT ===");
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/stripe/create-payment-recurrent`,
         { },
@@ -30,17 +33,15 @@ export const createPaymentRecurrent = createAsyncThunk(
 
 export const createPaymentIntent = createAsyncThunk(
   "stripe/createPaymentIntent",
-  async ({ amount, currency, clientId }) => {
-    console.log("=== ON CREATE PAYMENT INTENT ===", {
-      amount,
-      currency,
-      clientId,
-    });
+  async ({ amount, currency }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/stripe/create-payment-intent`,
-        { amount, currency, clientId },
+        { amount, currency },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,9 +59,11 @@ export const createPaymentIntent = createAsyncThunk(
 export const createSetupIntent = createAsyncThunk(
   "stripe/createSetupIntent",
   async (_, { rejectWithValue }) => {
-    console.log("=== ON CREATE SETUP INTENT ===");
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+      
       const res = await apiBackend.post(
         `/stripe/create-setup-intent`,
         {},
@@ -85,15 +88,15 @@ export const createSetupIntent = createAsyncThunk(
 
 export const attachCustomPaymentMethod = createAsyncThunk(
   "stripe/attachCustomPaymentMethod",
-  async ({ userId }) => {
-    console.log("=== ON ATTACH CUSTOM PAYMENT METHOD ===", {
-      userId,
-    });
+  async (_) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/stripe/attach-custom-payment-method`,
-        { userId },
+        _,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -110,17 +113,15 @@ export const attachCustomPaymentMethod = createAsyncThunk(
 
 export const createCustomPaymentIntent = createAsyncThunk(
   "stripe/createCustomPaymentIntent",
-  async ({ userId, amount, currency = "usd" }) => {
-    console.log("=== ON CREATE CUSTOM PAYMENT INTENT ===", {
-      userId,
-      amount,
-      currency,
-    });
+  async ({ amount, currency = "usd" }) => {
     try {
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userJson = JSON.parse(user);
+      const token = userJson.accessToken;
+
       const res = await apiBackend.post(
         `/stripe/create-custom-payment-intent`,
-        { userId, amount, currency },
+        { amount, currency },
         {
           headers: {
             Authorization: `Bearer ${token}`,

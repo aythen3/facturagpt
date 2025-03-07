@@ -17,7 +17,7 @@ const SearchIconWithIcon = memo(
       },
       ref
     ) => {
-      console.log(searchTerm);
+
       return (
         <div className={styles.searchContainer} style={{ ...stylesComponent }}>
           <div className={styles.searchInputWrapper}>

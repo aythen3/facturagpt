@@ -325,10 +325,10 @@ const Clients = () => {
     console.log("CLIENTIDDD", clientId);
 
     try {
-      const response = await dispatch(
-        getOneClient({ userId: user?.id, clientId })
-      ).unwrap();
-      console.log("Cliente obtenido:", response);
+      // const response = await dispatch(
+      //   getOneClient({ userId: user?.id, clientId })
+      // ).unwrap();
+      // console.log("Cliente obtenido:", response);
       navigate(`/admin/clients/${clientId}`);
     } catch (error) {
       console.error("Error al obtener el cliente:", error);
@@ -366,7 +366,7 @@ const Clients = () => {
     };
   }, [showNewClient]);
 
-  console.log("CLIENTSSSS", clients);
+  
 
   const [clientDataInputs, setClientDataInputs] = useState({
     name: "",
@@ -400,7 +400,6 @@ const Clients = () => {
   };
 
   const [editingIndices, setEditingIndices] = useState([]);
-  console.log("DATAAAAA--------", clientData);
   const handleAddBillingDetail = () => {
     setClientData((prevData) => ({
       ...prevData,
@@ -637,7 +636,7 @@ const Clients = () => {
               dispatch(clearDoc());
               handleGetOneClient(row?.id);
             }}
-            href="#"
+            // href="#"
           >
             Ver
           </a>
@@ -672,9 +671,6 @@ const Clients = () => {
         )}
       </td>
     </tr>
-  );
-  console.log(
-    "clientssssssssssssssssssssssssssssssssssssssss11111111" + clients
   );
 
   const [selectedOption, setSelectedOption] = useState("Nombre");

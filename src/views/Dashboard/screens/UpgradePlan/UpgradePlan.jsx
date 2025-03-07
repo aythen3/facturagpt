@@ -18,7 +18,7 @@ import HeaderCard from "../../components/HeaderCard/HeaderCard";
 import {
   attachCustomPaymentMethod,
   createCustomPaymentIntent,
-} from "../../../../actions/stripe";
+} from "@src/actions/stripe";
 import SelectCurrencyPopup from "../../components/SelectCurrencyPopup/SelectCurrencyPopup";
 import SeeHistory from "../../components/SeeHistory/SeeHistory";
 
@@ -101,7 +101,6 @@ const UpgradePlan = ({
 
       const paymentIntentResult = await dispatch(
         createCustomPaymentIntent({
-          userId: user?.id,
           amount: amountInCents,
           currency: "eur",
         })
@@ -133,6 +132,8 @@ const UpgradePlan = ({
       },
     };
     console.log("updating user with", data);
+
+    dispatch(attachCustomPaymentMethod(data))
     // dispatch(updateUser({ userId: user?.id, toUpdate: data })).then(() => {
     //   dispatch(attachCustomPaymentMethod({ userId: user?.id }));
     // });
@@ -606,7 +607,7 @@ const UpgradePlan = ({
               onChange={(e) => setCountry(e.target.value)}
               placeholder="España"
             />
-            {/* <button
+            <button
               onClick={() => {
                 console.log("Saving card data..");
                 handleSaveCardData();
@@ -615,7 +616,7 @@ const UpgradePlan = ({
               className={styles.upgradePlanButton}
             >
               <span>Guardar datos de facturación</span>
-            </button> */}
+            </button>
           </div>
         </div>
       </div>
