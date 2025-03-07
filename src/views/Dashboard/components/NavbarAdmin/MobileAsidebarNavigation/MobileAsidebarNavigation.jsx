@@ -9,6 +9,7 @@ import { ReactComponent as DotsNotification } from "../../../assets/dotsNotifica
 import { ReactComponent as ClientIcon } from "../../../assets/clientsIcon.svg";
 import { useSelector } from "react-redux";
 import GetPlusButton from "../../GetPlusButton/GetPlusButton.jsx";
+import { ReactComponent as Plusgreen } from "../../../assets/plusIconGreen2.svg";
 
 const MobileAsidebarNavigation = ({
   menuOpen,
@@ -16,6 +17,8 @@ const MobileAsidebarNavigation = ({
   menuOpenChat,
   setMenuOpenChat,
   fromPath,
+  setShowPlusModal,
+  setIsOpen,
 }) => {
   const [numNotification, setNumNotification] = useState(0);
 
@@ -144,7 +147,23 @@ const MobileAsidebarNavigation = ({
           </li>
           <li>
             {" "}
-            <GetPlusButton />
+            <div className={styles.fileExplorerGetPlusContainer}>
+              <GetPlusButton
+                action={() => {
+                  setMenuOpen(false);
+                  setShowPlusModal(true);
+                }}
+              />
+              <div
+                className={styles.moreGreen}
+                onClick={() => {
+                  setMenuOpen(false);
+                  setIsOpen(true);
+                }}
+              >
+                <Plusgreen />
+              </div>
+            </div>
           </li>
         </ul>
       </div>

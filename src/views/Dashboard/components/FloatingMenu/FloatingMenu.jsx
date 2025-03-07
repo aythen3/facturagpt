@@ -10,6 +10,7 @@ import { ReactComponent as PaperClipWhite } from "../../assets/paperClipWhite.sv
 import { ReactComponent as NewContact } from "../../assets/bookOutline.svg";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import HeaderCard from "../HeaderCard/HeaderCard";
 
 export default function FloatingMenu({
   openModalAutomate,
@@ -51,13 +52,13 @@ export default function FloatingMenu({
     closeModal();
   };
   const videoRef = useRef(null);
-  const canvasRef = useRef(null); 
-  const [isCameraActive, setIsCameraActive] = useState(false); 
+  const canvasRef = useRef(null);
+  const [isCameraActive, setIsCameraActive] = useState(false);
 
   const handleCameraAccess = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = stream; 
+      videoRef.current.srcObject = stream;
       setIsCameraActive(true);
     } catch (error) {
       console.error("❌ Acceso a la cámara denegado o error:", error);
@@ -76,7 +77,7 @@ export default function FloatingMenu({
         canvasRef.current.height
       );
       const imageData = canvasRef.current.toDataURL("image/png");
-      console.log("Imagen capturada:", imageData); 
+      console.log("Imagen capturada:", imageData);
     }
   };
 
@@ -119,7 +120,6 @@ export default function FloatingMenu({
         setIsOpen(false);
       },
     },
-
   ];
   if (isMobile) {
     menuItems.splice(2, 0, {
@@ -131,10 +131,15 @@ export default function FloatingMenu({
   return (
     <>
       <div className={styles.fabContainer}>
-
         {isOpen && (
           <div className={styles.overlay} onClick={handleClickOutside}>
             <div className={`${styles.menuContainer} ${styles.menuOpen}`}>
+              {isMobile && (
+                <HeaderCard
+                  setState={handleClickOutside}
+                  headerStyle={{ padding: "0 6px", background: "transparent" }}
+                />
+              )}
               {menuItems.map((item, index) => (
                 <button
                   key={index}

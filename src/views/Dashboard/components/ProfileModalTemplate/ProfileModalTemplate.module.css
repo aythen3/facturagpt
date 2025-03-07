@@ -1,3 +1,8 @@
+.profileModalContainer {
+  height: fit-content;
+  position: sticky;
+  top: 81px;
+}
 .profileModalTemplate {
   height: 200px;
   width: 200px;

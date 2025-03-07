@@ -131,7 +131,6 @@ const EditableInput = ({
             )}
           </div>
         )}
-
         {verify && editable && (
           <span
             className={styles.verify}

@@ -94,6 +94,7 @@
   padding: 0 20px;
   width: 70%;
   margin: 0 auto;
+  gap: 10px;
 }
 .scaleDown {
   animation: scaleDown 300ms ease-in forwards;

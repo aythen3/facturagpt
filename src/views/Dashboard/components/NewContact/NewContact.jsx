@@ -210,21 +210,6 @@ const NewContact = ({
     }
   };
 
-  const handleGetOneClient = async (clientId) => {
-    console.log("CLIENTIDDD", clientId);
-
-    try {
-      const response = await dispatch(
-        getOneClient({ userId: user?.id, clientId })
-      ).unwrap();
-      console.log("Cliente obtenido:", response);
-      navigate(`/admin/clients/${clientId}`);
-      // navigate(`/admin/panel`);
-    } catch (error) {
-      console.error("Error al obtener el cliente:", error);
-    }
-  };
-
   const handleCloseNewClient = () => {
     setIsAnimating(true);
     setTimeout(() => {
@@ -448,7 +433,6 @@ const NewContact = ({
           className={`${styles.newClientContainer} `}
           newContact={newContactProp}
           selectedContact={selectedContact}
-          handleGetOneClient={handleGetOneClient}
         >
           <div className={styles.containerNewClientForm}>
             {/* <div className={styles.containerHeader}>

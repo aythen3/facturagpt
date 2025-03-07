@@ -3,6 +3,9 @@
   bottom: 24px;
   left: 24px;
   z-index: 1000;
+  @media (width<=768px) {
+    z-index: 999999;
+  }
 }
 
 .fab {
@@ -45,12 +48,17 @@
   position: fixed;
   inset: 0;
   z-index: 50;
+
+  @media (width<=768px) {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .menuContainer {
   position: absolute;
   top: 50px;
-  /* left: 320px; */
+  /*left: 320px;
+  */
   right: 110px;
   background-color: white;
   border-radius: 8px;
@@ -62,6 +70,22 @@
   transform-origin: bottom left;
   transition: all 0.5s ease;
   pointer-events: none;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  @media (width<=768px) {
+    height: 100vh;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+  }
 }
 
 .menuOpen {

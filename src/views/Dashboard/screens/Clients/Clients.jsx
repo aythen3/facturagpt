@@ -27,6 +27,7 @@ import SkeletonScreen from "../../components/SkeletonScreen/SkeletonScreen";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
 import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
+import OptionsPopup from "../../components/OptionsPopup/OptionsPopup";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -647,28 +648,51 @@ const Clients = () => {
           <img src={optionDots} />
         </div>
         {selectedRowIndex === index && (
-          <ul className={styles.content_menu_actions}>
-            <li
-              onClick={() => {
-                handleEditClient();
-                setSelectedRowIndex(null);
-                setSelectedContact(row?.id);
-                setNewContact(false);
-              }}
-              className={styles.item_menu_actions}
-            >
-              Editar
-            </li>
-            <li
-              onClick={(e) => {
-                handleDeleteClient(e, row?.id);
-                setSelectedRowIndex(null);
-              }}
-              className={styles.item_menu_actions}
-            >
-              Eliminar
-            </li>
-          </ul>
+          // <ul className={styles.content_menu_actions}>
+          //   <li
+          //     onClick={() => {
+          //       handleEditClient();
+          //       setSelectedRowIndex(null);
+          //       setSelectedContact(row?.id);
+          //       setNewContact(false);
+          //     }}
+          //     className={styles.item_menu_actions}
+          //   >
+          //     Editar
+          //   </li>
+          //   <li
+          //     onClick={(e) => {
+          //       handleDeleteClient(e, row?.id);
+          //       setSelectedRowIndex(null);
+          //     }}
+          //     className={styles.item_menu_actions}
+          //   >
+          //     Eliminar
+          //   </li>
+          // </ul>
+          <div className={styles.optionsPopupContainer}>
+            <OptionsPopup
+              close={() => setSelectedRowIndex(null)}
+              options={[
+                {
+                  label: "Editar",
+                  onClick: () => {
+                    handleEditClient();
+                    setSelectedRowIndex(null);
+                    setSelectedContact(row?.id);
+                    setNewContact(false);
+                  },
+                },
+                {
+                  label: "Eliminar",
+                  onClick: (e) => {
+                    handleDeleteClient(e, row?.id);
+                    setSelectedRowIndex(null);
+                  },
+                },
+              ]}
+            />
+          </div>
         )}
       </td>
     </tr>
@@ -759,6 +783,7 @@ const Clients = () => {
             text="contactos"
             state={handleCloseNewClient}
             isAnimating={isAnimating}
+            quantity={clients.length}
           />
         )}
         {clients.length == 0 ? (

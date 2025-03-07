@@ -76,7 +76,7 @@ const ProfileModalTemplate = () => {
   };
 
   return (
-    <div>
+    <div className={styles.profileModalContainer}>
       <div className={styles.profileModalTemplate}>
         {/* Mostrar la imagen subida o la imagen por defecto */}
         <img src={selectedImage || emptyImage} alt="Profile" />

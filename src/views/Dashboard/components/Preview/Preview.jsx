@@ -51,6 +51,9 @@ import { ReactComponent as StripeText } from "../../assets/stripePurple.svg";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import CurrencyDropdownBtn from "../CurrencyDropdownBtn/CurrencyDropdownBtn";
 import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
+import { data } from "../Automate/utils/automatesJson.js";
+import CardAutomate from "../Automate/Components/CardAutomate/CardAutomate";
+import OptionsPopup from "../OptionsPopup/OptionsPopup.jsx";
 
 let documentoPDF;
 
@@ -76,13 +79,16 @@ const ButtonActionsWithText = ({
 const DocumentPreview = ({
   document,
   handleAddNote,
+  setHasNote,
   customStyles,
   setEditingNote,
   setShowInfoMobileBill,
   setMobileSelectedDocument,
   createdNote,
+  setCreatedNote,
   noteColor,
   editorContentFinal,
+  setEditorContentFinal,
   selectedCurrency,
   setSelectedCurrency,
   setSwiped,
@@ -354,8 +360,31 @@ const DocumentPreview = ({
       pseudoName: "whatsapp",
     },
   ];
+
   const Actions = () => {
+    // const handleShowContentAutomate = (type, automationData) => {
+    //   setIsModalAutomate(false);
+    //   setTypeContentAutomate(type);
+    //   setSelectedAutomationData(automationData);
+    // };
+
     const [searchTerm, setSearchTerm] = useState("");
+
+    const [dataFilter, setDataFilter] = useState(data || newData);
+    const handleDataFilter = (searchTerm) => {
+      const filteredData = data.filter((card) =>
+        card.automateName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setDataFilter(filteredData);
+    };
+
+    useEffect(() => {
+      if (searchTerm === "") {
+        setDataFilter(data || newData);
+      } else {
+        handleDataFilter(searchTerm);
+      }
+    }, [searchTerm]);
 
     return (
       <div className={styles.buttonActionsContainer}>
@@ -405,11 +434,12 @@ const DocumentPreview = ({
             </div>
           </>
         </SearchIconWithIcon>
-        {automatizaBtn.map(
+
+        {/* {automatizaBtn.map(
           (automatiza) =>
             !automatiza.text &&
             (searchTerm === "" ||
-              automatiza.pseudoName
+              dataFilter.type
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase())) && (
               <ButtonActionsWithText
@@ -422,7 +452,21 @@ const DocumentPreview = ({
                 {automatiza.text}
               </ButtonActionsWithText>
             )
-        )}
+        )} */}
+        {dataFilter
+          .sort((a, b) => b.available - a.available) // Ordena primero los disponibles (true) y luego los no disponibles (false)
+          .map((card) => (
+            <CardAutomate
+              fromPanel={true}
+              key={card.id}
+              type={card.type}
+              name={card.automateName}
+              image={card.image}
+              available={card.available}
+              contactType={card.contactType}
+              typeContent={handleShowContentAutomate}
+            />
+          ))}
       </div>
     );
   };
@@ -723,7 +767,7 @@ const DocumentPreview = ({
   const [typeBill, setTypeBill] = useState();
   const [typeExpense, setTypeExpense] = useState();
   const [showSelectCurrencyPopup, setShowSelectCurrencyPopup] = useState(false);
-
+  const [showNotesOptions, setShowNotesOptions] = useState(false);
   return (
     <div className={styles.container} style={customStyles}>
       {isMobile && (
@@ -761,6 +805,7 @@ const DocumentPreview = ({
                     className={styles.button}
                     onClick={() => {
                       handleAddNote();
+                      setHasNote,
                       setEditingNote(true);
                     }}
                   >
@@ -776,7 +821,63 @@ const DocumentPreview = ({
               >
                 +Añadir Nota
               </button>
-              <OptionDots className={styles.verticalOptionDots} />
+              <OptionDots
+                className={styles.verticalOptionDots}
+                onClick={() => setShowNotesOptions((prev) => !prev)}
+              />
+              {showNotesOptions && (
+                <div className={styles.optionsPopupContainer}>
+                  <OptionsPopup
+                    close={setShowNotesOptions}
+                    options={[
+                      {
+                        label: "Eliminar",
+                        onClick: () => {
+                          setEditorContentFinal("");
+                          setHasNote(false);
+                          setCreatedNote(false);
+                          setShowNotesOptions(false);
+                        },
+                      },
+                      {
+                        label: "Duplicar",
+                        onClick: () => {
+                          setShowNotesOptions(false);
+                        },
+                      },
+                      {
+                        label: "Imprimir",
+                        onClick: () => {
+                          if (!createdNote) return;
+                          setShowNotesOptions(false);
+                          const printWindow = window.open("", "_blank");
+                          printWindow.document.write(`
+                            <html>
+                              <head>
+                                <title>Nota</title>
+                                <style>
+                                  body { font-family: Arial, sans-serif; padding: 20px; background:${noteColor} }
+                                </style>
+                              </head>
+                              <body>
+                                ${editorContentFinal}
+                              </body>
+                            </html>
+                          `);
+                          printWindow.document.close();
+                          printWindow.print();
+                        },
+                      },
+                      {
+                        label: "Acciones rápidas",
+                        onClick: () => {
+                          setShowNotesOptions(false);
+                        },
+                      },
+                    ]}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <header className={styles.header}>

@@ -33,7 +33,7 @@
 @media (width<=768px) {
   .contentTemplate {
     position: absolute;
-    z-index: 99999;
+    z-index: 999;
   }
 }
 .inputContainer input[type="file"] {

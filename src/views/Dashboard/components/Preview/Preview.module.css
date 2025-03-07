@@ -429,6 +429,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
 
     .note {
       display: flex;
@@ -605,4 +606,10 @@
 
 .title::placeholder {
   color: #71717a;
+}
+.optionsPopupContainer {
+  position: absolute;
+  z-index: 9999;
+  bottom: -140px;
+  right: 2px;
 }

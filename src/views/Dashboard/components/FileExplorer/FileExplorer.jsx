@@ -685,14 +685,14 @@ export default function FileExplorer({
           </SearchIconWithIcon>
         </div>
         <div className={styles.filesContainer}>
-          {isMobile && (
+          {/* {isMobile && (
             <div className={styles.fileExplorerGetPlusContainer}>
               <div className={styles.moreGreen}>
                 <Plusgreen />
               </div>
               <GetPlusButton />
             </div>
-          )}
+          )} */}
           <div className={styles.fileList}>
             {getFilesLoading ? (
               <div className={styles.loaderContainer}>
