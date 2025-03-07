@@ -3,12 +3,18 @@ import styles from "./ImportContactsAndProducts.module.css";
 import { ReactComponent as DownloadIcon } from "../../assets/uploadIconGreen.svg";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
-const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
+const ImportContactsAndProducts = ({ state, text, isAnimating, quantity }) => {
   const fileInputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
 
+  const [uploadedFile, setUploadedFile] = useState(null);
+
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    if (uploadedFile) {
+      setUploadedFile(null); // Cancelar subida
+    } else {
+      fileInputRef.current.click(); // Subir archivo
+    }
   };
 
   const handleFileChange = (event) => {
@@ -22,7 +28,7 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
         event.target.value = ""; // Resetea el input para evitar que suba archivos inválidos
         return;
       }
-
+      setUploadedFile(file);
       console.log("Archivo seleccionado:", file.name);
       // Aquí puedes manejar la subida del archivo
     }
@@ -49,7 +55,7 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
         alert("Por favor, arrastra un archivo con extensión .xlsx");
         return;
       }
-
+      setUploadedFile(file);
       console.log("Archivo arrastrado:", file.name);
       // Aquí puedes manejar la subida del archivo
     }
@@ -58,9 +64,9 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
   const getFilePath = (text) => {
     switch (text) {
       case "productos":
-        return require("../../assets/Plantillas/TemplateProductos.xlsx");
+      // return require("../../assets/Plantillas/TemplateProductos.xlsx");
       case "contactos":
-        return require("../../assets/Plantillas/TemplateContactos.xlsx");
+      // return require("../../assets/Plantillas/TemplateContactos.xlsx");
       default:
         return null;
     }
@@ -89,7 +95,11 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
           <Button type="white" action={() => setShowDiscardChange(true)}>
             Cancel
           </Button>
-          <Button>Importar</Button>
+          {uploadedFile ? (
+            <Button>Importar</Button>
+          ) : (
+            <Button>Exportar ({quantity})</Button>
+          )}
         </HeaderCard>
 
         <div className={styles.importContent}>
@@ -107,9 +117,13 @@ const ImportContactsAndProducts = ({ state, text, isAnimating }) => {
                 className={styles.uploadButton}
                 // onClick={handleButtonClick}
               >
-                Subir archivo
+                {uploadedFile ? "Cancelar" : "Subir archivo"}
               </button>
-              <p>Selecciona o arrastra tu archivo</p>
+              <p>
+                {uploadedFile
+                  ? uploadedFile.name
+                  : "Selecciona o arrastra tu archivo"}
+              </p>
               <input
                 type="file"
                 ref={fileInputRef}

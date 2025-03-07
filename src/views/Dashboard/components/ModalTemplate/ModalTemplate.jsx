@@ -3,6 +3,7 @@ import styles from "./ModalTemplate.module.css";
 import Button from "../Button/Button";
 import { ReactComponent as ArrowDown } from "../../assets/ArrowLeftWhite.svg";
 import { ReactComponent as RedTrash } from "../../assets/redTrash.svg";
+import { useNavigate } from "react-router-dom";
 const ModalTemplate = ({
   children,
   onClick,
@@ -10,9 +11,10 @@ const ModalTemplate = ({
   text,
   isAnimating,
   newContact,
-  handleGetOneClient,
+  selectedContact,
   typeTextHeader = "Nuevo",
 }) => {
+  const navigate = useNavigate();
   return (
     <>
       <div className={styles.bg} onClick={() => onClick()}></div>
@@ -32,7 +34,12 @@ const ModalTemplate = ({
             {/* {!newContact && ( */}
             {!(newContact || text === "Activo") && (
               <>
-                <Button type={"white"}>Ver Transacciones</Button>
+                <Button
+                  type={"white"}
+                  action={() => navigate(`/admin/clients/${selectedContact}`)}
+                >
+                  Ver Transacciones
+                </Button>
                 <Button>Nueva Factura</Button>
               </>
             )}

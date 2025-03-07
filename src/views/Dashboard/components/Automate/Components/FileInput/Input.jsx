@@ -81,7 +81,7 @@ const EditableInput = ({ configuration, handleConfigurationChange }) => {
       </div>
 
       <div className={styles.editableInput}>
-        {initialValue !== "" && <span>{initialValue}</span>}
+        {/* {initialValue !== "" && <span>{initialValue}</span>} */}
         {isTextarea ? (
           <textarea
             ref={inputRef}
@@ -135,7 +135,6 @@ const EditableInput = ({ configuration, handleConfigurationChange }) => {
             )}
           </div>
         )}
-
         {verify && editable && (
           <span
             className={styles.verify}

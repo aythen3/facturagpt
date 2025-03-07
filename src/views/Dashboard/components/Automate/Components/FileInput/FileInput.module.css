@@ -23,6 +23,11 @@
     font-weight: 300;
   }
 }
+.editableInputHeader {
+  p {
+    margin: 0;
+  }
+}
 
 .contentContainer {
   &.active {

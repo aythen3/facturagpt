@@ -231,6 +231,8 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
           setMenuOpen={setMenuOpen}
           fromPath={fromPath}
           setFromPath={setFromPath}
+          setShowPlusModal={setShowPlusModal}
+          setIsOpen={setIsOpen}
         />
         {showPlusModal && (
           <UpgradePlanWrapper

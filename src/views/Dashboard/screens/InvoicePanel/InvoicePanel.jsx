@@ -220,6 +220,7 @@ export default function InvoicePanel() {
             selectedCurrency={selectedCurrency}
             setSwiped={setSwiped}
             swiped={swiped}
+            setHasNote={setHasNote}
           />
           {hasNote && (
             <>

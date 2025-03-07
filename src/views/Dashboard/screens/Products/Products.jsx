@@ -496,7 +496,7 @@ const Products = () => {
             tags={tags}
           />
         )}
-        {tableData.length == 0 ? (
+        {products.length == 0 ? (
           <SkeletonScreen
             labelText="No se han encontrado productos ni servicios"
             helperText="Todos tus activos estarán listados aquí."

@@ -5,6 +5,8 @@ import { ReactComponent as PauseIcon } from "../../../assets/PauseIcon.svg";
 import { ReactComponent as StopIcon } from "../../../assets/StopIcon.svg";
 import EmptyImage from "../../../assets/ImageEmpty.svg";
 import Button from "../../Button/Button";
+import TeamList from "../TeamList/TeamList";
+import Timer from "../Timer/Timer";
 
 const TeamSheet = () => {
   const [teams, setTeams] = useState([]);
@@ -83,102 +85,20 @@ const TeamSheet = () => {
 
   return (
     <div>
-      <div className={styles.btnTimerContainer}>
-        <button
-          disabled={!selectedTeam}
-          className={`${styles.btnTimer} ${styles.btnPlay}`}
-          onClick={handlePlay}
-        >
-          <PlayIcon />
-        </button>
-        <button
-          disabled={!selectedTeam}
-          className={`${styles.btnTimer} ${styles.btnPause}`}
-          onClick={handlePause}
-        >
-          <PauseIcon />
-        </button>
-        <button
-          disabled={!selectedTeam}
-          className={`${styles.btnTimer} ${styles.btnStop}`}
-          onClick={handleStop}
-        >
-          <StopIcon />
-        </button>
-        <p>{formatTime(elapsedTime)}</p>
-      </div>
       <div className={styles.btnOptionsContainer}>
-        <Button headerStyle={{ background: "transparent", color: "black" }}>
-          Equipo
-        </Button>
         <Button headerStyle={{ borderRadius: "99px" }} action={handleInvite}>
           Invitar
         </Button>
       </div>
-      <div className={styles.teamsContainer}>
-        {teams.map((team) => (
-          <div
-            key={team.id}
-            onClick={() => handleSelectTeam(team)}
-            className={styles.team}
-          >
-            <div className={styles.imgContainer}>
-              <img src={EmptyImage} alt="" />
-              <div
-                className={styles.statusIndicator}
-                style={{
-                  backgroundColor:
-                    team.status === "play"
-                      ? "#10A37F"
-                      : team.status === "stop"
-                        ? "#ff0000"
-                        : "#072146",
-                }}
-              ></div>
-            </div>
-            <div className={styles.contentTeam}>
-              <div className={styles.headerTeam}>
-                <div className={styles.headerTeamLeft}>
-                  <p>{team.name}</p>
-                  <div
-                    className={styles.statusIndicator}
-                    style={{
-                      backgroundColor:
-                        team.status === "play"
-                          ? "#10A37F"
-                          : team.status === "stop"
-                            ? "#ff0000"
-                            : "#072146",
-                    }}
-                  ></div>
-                  <p>
-                    {team.status === "stop"
-                      ? `Activo hace ${Math.floor(team.time / 3600)} hora(s)`
-                      : formatTime(team.time)}
-                  </p>
-                </div>
-                <div className={styles.headerTeamRight}>
-                  {team.total1}$ - {team.total2} ({team.percent}%)
-                </div>
-              </div>
-              <div className={styles.teamDesc}>
-                <p>
-                  <span># Transacciones </span>
-                  {team.transactions}
-                </p>
-                <p>
-                  <span># Reconocimientos </span>
-                  {team.recognitions}
-                </p>
-                <p>
-                  <span># Horas trabajadas </span>
-                  {team.hourWorkeds}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <TeamList teams={teams} onSelectTeam={handleSelectTeam} />
+      {selectedTeam && (
+        <Timer
+          onPlay={handlePlay}
+          onPause={handlePause}
+          onStop={handleStop}
+          time={selectedTeam.time}
+        />
+      )}
     </div>
   );
 };

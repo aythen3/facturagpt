@@ -29,6 +29,8 @@ import {
   addNotification,
 } from "@src/actions/user";
 import TeamSheet from "./components/DashboardComponents/TeamSheet/TeamSheet";
+import DatePicker from "./components/DashboardComponents/DatePicker/DatePicker";
+import TeamListSimple from "./components/DashboardComponents/TeamListSimple/TeamListSimple";
 
 const Dashboard = () => {
   const { t } = useTranslation("dashboard");
@@ -199,6 +201,58 @@ const Dashboard = () => {
     { member: "María Gómez", role: "Finanzas" },
     { member: "Carlos Ruiz", role: "Desarrollador" },
   ];
+
+  const [activos, setActivos] = useState([
+    {
+      id: 1,
+      name: "Nombre Activo",
+      time: 3600,
+      transactions: 5,
+      recognitions: 3,
+      hourWorkeds: 8,
+      pvp: "0,99",
+      status: "stop",
+    },
+    {
+      id: 2,
+      name: "Nombre Activo",
+      time: 1800,
+      transactions: 8,
+      recognitions: 2,
+      hourWorkeds: 7,
+      pvp: "0,00",
+      status: "pause",
+    },
+    // Puedes agregar más equipos aquí si lo deseas
+  ]);
+
+  const [contacts, setContacts] = useState([
+    {
+      id: 1,
+      name: "Nombre Contacto",
+      time: 3600,
+      transactions: 5,
+      recognitions: 3,
+      hourWorkeds: 8,
+      status: "stop",
+      firtsPrice: "0,00",
+      secondPrice: "0,00",
+      percent: 0,
+    },
+    {
+      id: 2,
+      name: "Nombre Contact",
+      time: 1800,
+      transactions: 8,
+      recognitions: 2,
+      hourWorkeds: 7,
+      status: "pause",
+      firtsPrice: "0,70",
+      secondPrice: "0,10",
+      percent: 20,
+    },
+    // Puedes agregar más equipos aquí si lo deseas
+  ]);
   const renderContent = () => {
     switch (selectedTab) {
       case "Ingresos y Gastos":
@@ -237,19 +291,10 @@ const Dashboard = () => {
           </>
         );
       case "Contactos":
-        return clientsData.map((client, index) => (
-          <div key={index} className={styles.clientRow}>
-            <p>{client.name}</p>
-            <span>{client.totalSpent}</span>
-          </div>
-        ));
+        return <TeamListSimple teams={contacts} type="contact" />;
+
       case "Activos":
-        return assetsData.map((asset, index) => (
-          <div key={index} className={styles.assetRow}>
-            <p>{asset.asset}</p>
-            <span>{asset.value}</span>
-          </div>
-        ));
+        return <TeamListSimple teams={activos} type="bill" />;
       case "Equipo":
         return <TeamSheet />;
       default:
@@ -283,7 +328,9 @@ const Dashboard = () => {
             </div>
             <div className={styles.timerContainer}>
               <GrayClock />
-              <CustomDropdown
+              <DatePicker />-
+              <DatePicker />
+              {/* <CustomDropdown
                 options={["25 Dec 2024", "25 Dec 2025", "25 Dec 2026"]}
                 selectedOption={firtsTimer}
                 height="31px"
@@ -301,7 +348,7 @@ const Dashboard = () => {
                   minWidth: "140px",
                 }}
                 setSelectedOption={(selected) => setSecondTimer(selected)}
-              />
+              /> */}
             </div>
           </div>
         </div>

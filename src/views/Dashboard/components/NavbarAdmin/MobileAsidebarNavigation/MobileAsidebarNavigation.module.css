@@ -67,6 +67,10 @@
         height: 20px;
       }
     }
+    li {
+      justify-content: start;
+      width: 100%;
+    }
   }
 
   .profileContainer {
@@ -101,4 +105,37 @@
 }
 .activeMobileMenu {
   left: 0;
+}
+
+.fileExplorerGetPlusContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.moreGreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #cacaca;
+  border-radius: 999px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  -ms-border-radius: 999px;
+  -o-border-radius: 999px;
+  position: relative;
+}
+.moreGreen svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra el ícono */
+  width: 20px; /* Ajusta el tamaño del ícono */
+  height: 20px; /* Ajusta el tamaño del ícono */
 }

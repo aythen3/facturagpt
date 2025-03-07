@@ -30,6 +30,7 @@ import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
 import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
+import OptionsPopup from "../../components/OptionsPopup/OptionsPopup";
 
 const Docs = () => {
   const [clientSelected, setClientSelected] = useState([]);
@@ -358,26 +359,48 @@ const Docs = () => {
           <img src={optionDots} />
         </div>
         {selectedRowIndex === index && (
-          <ul className={styles.content_menu_actions}>
-            <li
-              onClick={() => {
-                setShowNewClient(true);
-                setSelectedRowIndex(null);
-              }}
-              className={styles.item_menu_actions}
-            >
-              Editar
-            </li>
-            <li
-              onClick={(e) => {
-                handleDeleteDocs(e);
-                setSelectedRowIndex(null);
-              }}
-              className={styles.item_menu_actions}
-            >
-              Eliminar
-            </li>
-          </ul>
+          // <ul className={styles.content_menu_actions}>
+          //   <li
+          //     onClick={() => {
+          //       setShowNewClient(true);
+          //       setSelectedRowIndex(null);
+          //     }}
+          //     className={styles.item_menu_actions}
+          //   >
+          //     Editar
+          //   </li>
+          //   <li
+          //     onClick={(e) => {
+          //       handleDeleteDocs(e);
+          //       setSelectedRowIndex(null);
+          //     }}
+          //     className={styles.item_menu_actions}
+          //   >
+          //     Eliminar
+          //   </li>
+          // </ul>
+
+          <div className={styles.optionsPopupContainer}>
+            <OptionsPopup
+              close={() => setSelectedRowIndex(null)}
+              options={[
+                {
+                  label: "Editar",
+                  onClick: () => {
+                    setShowNewClient(true);
+                    setSelectedRowIndex(null);
+                  },
+                },
+                {
+                  label: "Eliminar",
+                  onClick: (e) => {
+                    handleDeleteDocs(e);
+                    setSelectedRowIndex(null);
+                  },
+                },
+              ]}
+            />
+          </div>
         )}
       </td>
     </tr>

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "./CustomDropdown.module.css";
 import { useTranslation } from "react-i18next";
 import { FaChevronDown } from "react-icons/fa";
-
+import Deletebutton from "../DeleteButton/DeleteButton";
 import spanish_flag from "../../assets/spain_flag.svg";
 import english_flag from "../../assets/english_flag.svg";
 
@@ -169,6 +169,7 @@ const CustomDropdown = ({
           ) : (
             selectedOption || placeholder
           )} */}
+
                   {hasObject ? (
                     option.label
                   ) : option == "es" ? (
@@ -183,6 +184,9 @@ const CustomDropdown = ({
                     </>
                   ) : (
                     option
+                  )}
+                  {emailsDropdown && (
+                    <Deletebutton action={() => console.log("eliminando")} />
                   )}
                 </div>
               ))}
