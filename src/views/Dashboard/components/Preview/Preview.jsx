@@ -17,6 +17,14 @@ import KIcon from "../../assets/KIcon.svg";
 import imageIcon from "../../assets/imageIcon.svg";
 import AiIcon2 from "../../assets/AIcon.svg";
 import hubSpot from "../../assets/hubspotIcon.svg";
+import ExcelWhiteIcon from "../../assets/ExcelWhiteIcon.svg";
+import agenciatributariaLogo from "../../assets/AgenciaTributariaWithoutBg.svg";
+import XmlBlackLogo from "../../assets/XmlBlackLogo.svg";
+import PdfReaderIcon from "../../assets/PdfReaderIcon.svg";
+import telematelWithoutBg from "../../assets/telematelWithoutBg.svg";
+import a3 from "../../assets/A3WithoutBg.svg";
+import odoo from "../../assets/OdooIconNew.svg";
+import whatsapp from "../../assets/WhatsappOutlineWhite.svg";
 import SendEmailModal from "../SendEmailModal/SendEmailModal";
 import { ReactComponent as EyeWhiteIcon } from "../../assets/eyeWhiteIcon.svg";
 import SeeBill from "./SeeBill/SeeBill";
@@ -159,6 +167,9 @@ const DocumentPreview = ({
   const searchInputRef = useRef(null);
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const actions = [
     {
       text: "Compartir",
@@ -216,14 +227,170 @@ const DocumentPreview = ({
         };
       },
     },
+    // {
+    //   text: "Buscar automatizaciones",
+    //   icon: printIcon,
+    //   componente: (
+    //     <SearchIconWithIcon
+    //       ref={searchInputRef}
+    //       searchTerm={searchTerm}
+    //       setSearchTerm={setSearchTerm}
+    //       classNameIconRight={styles.searchContainerL}
+    //       onClickIconRight={() => setIsFilterOpen(true)}
+    //       placeholder="Buscar automatizaciones..."
+    //       stylesComponent={{ padding: "0" }}
+    //     >
+    //       <>
+    //         <div
+    //           style={{ marginLeft: "5px" }}
+    //           className={styles.searchIconsWrappers}
+    //         >
+    //           <img src={KIcon} alt="kIcon" />
+    //         </div>
+    //       </>
+    //     </SearchIconWithIcon>
+    //   ),
+    // },
+  ];
+  const automatizaBtn = [
     {
-      text: "Buscar automatizaciones",
-      icon: printIcon,
-      componente: (
+      icon: telematelWithoutBg,
+      click: () => {
+        handleShowContentAutomate("Telematel");
+      },
+      classOption: styles.bgTelematel,
+      services: false,
+      pseudoName: "telematel",
+    },
+    {
+      icon: stripeIcon,
+      click: () => {
+        handleShowContentAutomate("Stripe");
+      },
+      classOption: styles.bgStripe,
+      services: true,
+      pseudoName: "stripe",
+    },
+    {
+      icon: hubSpot,
+      click: () => {
+        handleShowContentAutomate("Google Sheets");
+      },
+      classOption: styles.hubspot,
+      services: true,
+      pseudoName: "hubspot",
+    },
+    {
+      icon: gestionaEsPublico,
+      click: () => {
+        handleShowContentAutomate("esPúblico Gestiona");
+      },
+      classOption: styles.bgGestiona,
+      services: true,
+      pseudoName: "espublico gestiona",
+    },
+    {
+      icon: ExcelWhiteIcon,
+      click: () => {
+        handleShowContentAutomate("Google Sheets");
+      },
+      classOption: styles.bgExcel,
+      services: true,
+      pseudoName: "excel",
+    },
+    {
+      icon: agenciatributariaLogo,
+      click: () => {
+        handleShowContentAutomate("Agencia Tributaria");
+      },
+      classOption: styles.bgAgencia,
+      services: true,
+      pseudoName: "agencia tributaria",
+    },
+    {
+      icon: XmlBlackLogo,
+      click: () => {
+        handleShowContentAutomate("XML");
+      },
+      classOption: styles.bgXml,
+      services: true,
+      pseudoName: "xml",
+    },
+    {
+      icon: PdfReaderIcon,
+      click: () => {
+        handleShowContentAutomate("FALTA");
+      },
+      classOption: styles.bgPdf,
+      services: true,
+      pseudoName: "pdf reader",
+    },
+
+    {
+      icon: a3,
+      click: () => {
+        handleShowContentAutomate("Wolters");
+      },
+      classOption: styles.bgA3,
+      services: true,
+      pseudoName: "wolters",
+    },
+    {
+      icon: odoo,
+      click: () => {
+        handleShowContentAutomate("Odoo");
+      },
+      classOption: styles.bgOdoo,
+      services: true,
+      pseudoName: "odoo",
+    },
+    {
+      icon: whatsapp,
+      click: () => {
+        handleShowContentAutomate("whatsApp notifications");
+      },
+      classOption: styles.bgWs,
+      services: true,
+      pseudoName: "whatsapp",
+    },
+  ];
+  const Actions = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+
+    return (
+      <div className={styles.buttonActionsContainer}>
+        {actions.map((action) => {
+          if (action.componente) {
+            // return action.componente;
+
+            return action.componente;
+          } else if (action.text === "Descargar") {
+            return (
+              <a href={documentoPDF} download="Factura" key={action.text}>
+                <img src={action.icon} alt="icon" />
+                {action.text}
+              </a>
+            );
+          } else {
+            // if (!action.text && searchTerm.includes(action.pseudoName)) {
+            return (
+              <ButtonActionsWithText
+                key={action.text}
+                classStyle={`${action.text ? styles.btnWithText : action.classOption} ${styles.btnAutomation}`}
+                click={action.click}
+                disabledValue={action.services}
+              >
+                <img src={action.icon} alt="icon" />
+                {action.text}
+              </ButtonActionsWithText>
+            );
+          }
+          // }
+        })}
         <SearchIconWithIcon
           ref={searchInputRef}
-          // searchTerm={searchTerm}
-          // setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
           classNameIconRight={styles.searchContainerL}
           onClickIconRight={() => setIsFilterOpen(true)}
           placeholder="Buscar automatizaciones..."
@@ -238,64 +405,24 @@ const DocumentPreview = ({
             </div>
           </>
         </SearchIconWithIcon>
-      ),
-    },
-
-    {
-      icon: stripeIcon,
-      click: () => {
-        handleShowContentAutomate("Gmail");
-      },
-      classOption: styles.bgStripe,
-      services: true,
-    },
-    {
-      icon: hubSpot,
-      click: () => {
-        handleShowContentAutomate("Google Sheets");
-      },
-      classOption: styles.hubspot,
-      services: true,
-    },
-    {
-      icon: gestionaEsPublico,
-      click: () => {
-        handleShowContentAutomate("XML");
-      },
-      classOption: styles.bgGestiona,
-      services: true,
-    },
-  ];
-
-  const Actions = () => {
-    return (
-      <div className={styles.buttonActionsContainer}>
-        {actions.map((action) => {
-          if (action.componente) {
-            return action.componente;
-          } else if (action.text === "Descargar") {
-            return (
-              <a href={documentoPDF} download="Factura" key={action.text}>
-                <img src={action.icon} alt="icon" />
-                {action.text}
-              </a>
-            );
-          } else {
-            return (
+        {automatizaBtn.map(
+          (automatiza) =>
+            !automatiza.text &&
+            (searchTerm === "" ||
+              automatiza.pseudoName
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())) && (
               <ButtonActionsWithText
-                key={action.text}
-                classStyle={
-                  action.text ? styles.btnWithText : action.classOption
-                }
-                click={action.click}
-                disabledValue={action.services}
+                key={automatiza.pseudoName}
+                classStyle={`${automatiza.text ? styles.btnWithText : automatiza.classOption} ${styles.btnAutomation}`}
+                click={automatiza.click}
+                disabledValue={automatiza.services}
               >
-                <img src={action.icon} alt="icon" />
-                {action.text}
+                <img src={automatiza.icon} alt="icon" />
+                {automatiza.text}
               </ButtonActionsWithText>
-            );
-          }
-        })}
+            )
+        )}
       </div>
     );
   };

@@ -27,8 +27,9 @@ const CheckboxWithText = ({
       )} */}
       <input
         type="checkbox"
-        onClick={() => setState((prev) => !prev)}
+        onChange={(e) => setState(e.target.checked)}
         value={state}
+        checked={state}
       />
       <span className={styles.text}>{text}</span>
     </div>

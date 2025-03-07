@@ -62,18 +62,19 @@ const Export = ({ handleConfigurationChange, configuration }) => {
       >
         <div className={styles.contentInput}>
           <p className={styles.titleContentInput}>Remitentes</p>
-
-          <AddEmailsInput
-            addedEmails={configuration?.addedRemitents || []}
-            setAddedEmails={(value) =>
-              handleConfigurationChange("addedRemitents", value)
-            }
-            placeholder="ejemplo@email.com"
-          />
+          {!configuration?.includeAllRemitents && (
+            <AddEmailsInput
+              addedEmails={configuration?.addedRemitents}
+              setAddedEmails={(value) =>
+                handleConfigurationChange("addedRemitents", value)
+              }
+              placeholder="ejemplo@email.com"
+            />
+          )}
           <CheckboxWithText
             color="#10A37F"
             marginTop="10px"
-            state={configuration?.includeAllRemitents || false}
+            state={configuration?.includeAllRemitents}
             setState={(value) =>
               handleConfigurationChange("includeAllRemitents", value)
             }
@@ -83,43 +84,46 @@ const Export = ({ handleConfigurationChange, configuration }) => {
 
         <div className={styles.contentInput}>
           <p className={styles.titleContentInput}>Asunto Contiene</p>
-          <div className={styles.keywordContainer}>
-            {subjectContains.map((keyword, index) => (
-              <div className={styles.keyword} key={index}>
-                {keyword}
-                <DeleteButton
-                  action={() => {
-                    setSubjectContains((prevKeywords) =>
-                      prevKeywords.filter((_, i) => i !== index)
-                    );
-                  }}
-                />
+          {!configuration.subjectExactMatch && (
+            <>
+              <div className={styles.keywordContainer}>
+                {subjectContains.map((keyword, index) => (
+                  <div className={styles.keyword} key={index}>
+                    {keyword}
+                    <DeleteButton
+                      action={() => {
+                        setSubjectContains((prevKeywords) =>
+                          prevKeywords.filter((_, i) => i !== index)
+                        );
+                      }}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <InputComponent
-            value={configuration?.subjectKeyWords}
-            setValue={(value) =>
-              handleConfigurationChange("subjectKeyWords", value)
-            }
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                const keywords = e.target.value
-                  .split(",")
-                  .map((keyword) => keyword.trim())
-                  .filter((keyword) => keyword !== "");
-                console.log(keywords);
-                setSubjectContains((prevKeywords) => [
-                  ...prevKeywords,
-                  ...keywords,
-                ]);
-                handleConfigurationChange("subjectKeyWords", "");
-              }
-            }}
-            placeholder="Palabras clave separadas por coma"
-            typeInput="text"
-          />
-
+              <InputComponent
+                value={configuration?.subjectKeyWords}
+                setValue={(value) =>
+                  handleConfigurationChange("subjectKeyWords", value)
+                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    const keywords = e.target.value
+                      .split(",")
+                      .map((keyword) => keyword.trim())
+                      .filter((keyword) => keyword !== "");
+                    console.log(keywords);
+                    setSubjectContains((prevKeywords) => [
+                      ...prevKeywords,
+                      ...keywords,
+                    ]);
+                    handleConfigurationChange("subjectKeyWords", "");
+                  }
+                }}
+                placeholder="Palabras clave separadas por coma"
+                typeInput="text"
+              />
+            </>
+          )}
           {/* <InputComponent
                   value={configuration?.filesKeyWords}
                   setValue={(value) =>

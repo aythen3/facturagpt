@@ -239,9 +239,9 @@
   display: flex;
   align-items: center;
   background: #fff;
-  height: 48px;
+  height: 35px;
   width: 100%;
-  min-height: 36px;
+  min-height: 35px;
   border: 1px solid #d9d9e3;
   border-radius: 8px;
   padding: 0px 25px;
@@ -302,6 +302,13 @@
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
     cursor: pointer;
+    color: #b4b4b4;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
   }
 
   .selectedType {

@@ -3,6 +3,7 @@ import styles from "./cardAutomate.module.css";
 import CircleDeleteSVG from "../../svgs/CircleDeleteSVG";
 import ConfirmationPopup from "../../../ConfirmationPopup/ConfirmationPopup";
 import { deleteAutomation } from "../../../../../../actions/automate";
+import { ReactComponent as PencilEdit } from "../../../../assets/pencilEdit.svg";
 import { useDispatch } from "react-redux";
 
 const CardAutomate = ({
@@ -54,7 +55,9 @@ const CardAutomate = ({
               {name}
             </p>
             {!fromPanel && fullContent && (
-              <p className={styles.contact}>{contactType}</p>
+              <p className={styles.contact}>
+                {contactType || "Nombre de la automatización"}
+              </p>
             )}
           </div>
         </div>
@@ -64,7 +67,7 @@ const CardAutomate = ({
               onClick={() => typeContent(type, automationData)}
               className={styles.button_edit}
             >
-              Editar
+              <PencilEdit />
             </button>
             <div
               onClick={(e) => {

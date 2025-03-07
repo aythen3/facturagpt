@@ -10,7 +10,7 @@ import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
 import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
 import { ReactComponent as DotsNotification } from "../../assets/dotsNotification.svg";
 import { ReactComponent as ClientIcon } from "../../assets/clientsIcon.svg";
-import { ReactComponent as MenuMobileIcon } from "../../assets/filtersIconBarGreen.svg";
+import { ReactComponent as MenuMobileIcon } from "../../assets/menuIconBlack.svg";
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";
 import PanelAutomate from "../Automate/panelAutomate/PanelAutomate";
@@ -121,7 +121,6 @@ const NavbarAdmin = ({ fromPath, setFromPath = () => {} }) => {
   };
 
   // ========================
-
 
   const [selectedLocationNew, setSelectedLocationNew] = useState("/Inicio/");
   const [menuOpen, setMenuOpen] = useState(false);

@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import styles from "./AddEmailsInput.module.css";
 import miniClose from "../../../../assets/miniClose.svg";
 import DeleteButton from "../../../DeleteButton/DeleteButton";
-
+import Advertency from "../Advertency/Advertency";
 const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
   const [value, setValue] = useState("");
 
   const [error, setError] = useState("");
 
-
-  const handleButton = () => {
-
-  }
+  const handleButton = () => {};
 
   return (
     <div className={styles.addEmailsInputContainer}>
@@ -63,7 +60,8 @@ const AddEmailsInput = ({ addedEmails, setAddedEmails, placeholder }) => {
           +
         </button> */}
       </div>
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      {error && <Advertency text={error} type="error" />}
+      {/* {error && <div className={styles.errorMessage}>{error}</div>} */}
     </div>
   );
 };
