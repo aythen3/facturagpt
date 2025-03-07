@@ -263,7 +263,6 @@ const NewContact = ({
   });
 
   const [editingIndices, setEditingIndices] = useState([]);
-  console.log("DATAAAAA--------", clientData);
   const handleAddBillingDetail = () => {
     setClientData((prevData) => ({
       ...prevData,
@@ -415,9 +414,6 @@ const NewContact = ({
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
 
-  console.log(
-    "clientssssssssssssssssssssssssssssssssssssssss11111111" + clients
-  );
 
   console.log(selectedContact, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 

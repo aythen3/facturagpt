@@ -107,7 +107,7 @@ const AccountSettings = () => {
   };
 
   useEffect(() => {
-    console.log("user1!!!", user);
+  
     if (user) {
       const newUserData = {
         nombre: user?.nombre || "",

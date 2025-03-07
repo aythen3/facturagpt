@@ -40,7 +40,7 @@
                     <solicitante/>
                     <destinatario/>
                     <cod_punto_venta/>
-                    <numero_albaran>532004243</numero_albaran>
+                    <numero_albaran>502400243</numero_albaran>
                     <fecha_albaran>
                         <anyo>2025</anyo>
                         <mes>1</mes>
@@ -67,7 +67,7 @@
                     <volumen/>
                     <unidad_volumen/>
                     <centro_expedidor_nombre>GRICO, S.L.</centro_expedidor_nombre>
-                    <centro_expedidor_direccion>C/ Tercer Muntanya, 99</centro_expedidor_direccion>
+                    <centro_expedidor_direccion>Cl. Tercera Massini, 99</centro_expedidor_direccion>
                     <centro_expedidor_poblacion>BARCELONA</centro_expedidor_poblacion>
                     <centro_expedidor_cpostal>08028</centro_expedidor_cpostal>
                     <centro_expedidor_provincia>Barcelona</centro_expedidor_provincia>
@@ -77,18 +77,18 @@
                     <cod_fabricante_fabricante/>
                     <cliente_nif>NOT FOUND</cliente_nif>
                     <cliente_nombre>REFORMES LOPIS, S.L.</cliente_nombre>
-                    <cliente_direccion>C/ Joan Guell, 82</cliente_direccion>
+                    <cliente_direccion>C. Joan Guell, 82</cliente_direccion>
                     <cliente_poblacion>BARCELONA</cliente_poblacion>
                     <cliente_cpostal>08028</cliente_cpostal>
                     <cliente_provincia>Barcelona</cliente_provincia>
                     <cliente_pais>ES</cliente_pais>
                     <destino_nombre>REFORMES LOPIS, S.L.</destino_nombre>
-                    <destino_direccion>C/ Joan Guell, 82</destino_direccion>
+                    <destino_direccion>C. Joan Guell, 82</destino_direccion>
                     <destino_poblacion>BARCELONA</destino_poblacion>
                     <destino_cpostal>08028</destino_cpostal>
                     <destino_provincia>Barcelona</destino_provincia>
                     <destino_pais>ES</destino_pais>
-                    <destino_telefono>933396262</destino_telefono>
+                    <destino_telefono>933392962</destino_telefono>
                     <observaciones/>
                 </cabecera>
                 <posiciones id="1">

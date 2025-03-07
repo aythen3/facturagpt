@@ -67,26 +67,26 @@
                     <volumen/>
                     <unidad_volumen/>
                     <centro_expedidor_nombre>GRICO, S.L.</centro_expedidor_nombre>
-                    <centro_expedidor_direccion>Cl. Terrac Massini, 99</centro_expedidor_direccion>
+                    <centro_expedidor_direccion>Cl. Terci Massini, 99, 08028 BARCELONA (Barcelona)</centro_expedidor_direccion>
                     <centro_expedidor_poblacion>BARCELONA</centro_expedidor_poblacion>
                     <centro_expedidor_cpostal>08028</centro_expedidor_cpostal>
-                    <centro_expedidor_provincia>BARCELONA</centro_expedidor_provincia>
+                    <centro_expedidor_provincia>Barcelona</centro_expedidor_provincia>
                     <centro_expedidor_pais></centro_expedidor_pais>
                     <centro_expedidor_telefono></centro_expedidor_telefono>
                     <cod_fabricante_externo/>
                     <cod_fabricante_fabricante/>
                     <cliente_nif>NOT FOUND</cliente_nif>
-                    <cliente_nombre></cliente_nombre>
-                    <cliente_direccion></cliente_direccion>
-                    <cliente_poblacion></cliente_poblacion>
-                    <cliente_cpostal></cliente_cpostal>
-                    <cliente_provincia></cliente_provincia>
+                    <cliente_nombre>REFORMES LOPIS, S.L.</cliente_nombre>
+                    <cliente_direccion>Cl. Joan Guell, 82, 08028 BARCELONA (Barcelona)</cliente_direccion>
+                    <cliente_poblacion>BARCELONA</cliente_poblacion>
+                    <cliente_cpostal>08028</cliente_cpostal>
+                    <cliente_provincia>Barcelona</cliente_provincia>
                     <cliente_pais>ES</cliente_pais>
-                    <destino_nombre></destino_nombre>
-                    <destino_direccion></destino_direccion>
-                    <destino_poblacion></destino_poblacion>
-                    <destino_cpostal></destino_cpostal>
-                    <destino_provincia></destino_provincia>
+                    <destino_nombre>REFORMES LOPIS, S.L.</destino_nombre>
+                    <destino_direccion>Cl. Joan Guell, 82, 08028 BARCELONA (Barcelona)</destino_direccion>
+                    <destino_poblacion>BARCELONA</destino_poblacion>
+                    <destino_cpostal>08028</destino_cpostal>
+                    <destino_provincia>Barcelona</destino_provincia>
                     <destino_pais>ES</destino_pais>
                     <destino_telefono></destino_telefono>
                     <observaciones/>

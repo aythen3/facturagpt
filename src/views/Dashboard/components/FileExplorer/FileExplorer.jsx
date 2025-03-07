@@ -299,7 +299,7 @@ export default function FileExplorer({
   };
 
   useEffect(() => {
-    console.log("userFiles CHANGED", userFiles);
+    // console.log("userFiles CHANGED", userFiles);
   }, [userFiles]);
   const filteredFiles = useMemo(() => {
     if (!userFiles) return [];
