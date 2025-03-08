@@ -62,12 +62,11 @@ const CardAutomate = ({
               {name}
             </p>
 
-            {!fromPanel && fullContent && (
+            {/* {!fromPanel && fullContent && (
               <p className={styles.contact}>
                 {contactType || "Nombre de la automatización"}
               </p>
-            )}
-
+            )} */}
           </div>
         </div>
         {fullContent && (

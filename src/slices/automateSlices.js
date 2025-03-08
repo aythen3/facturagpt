@@ -4,6 +4,7 @@ import {
   deleteAutomation,
   getAllUserAutomations,
   updateAutomation,
+  getUserAutomatiosByInputSearch,
 } from "../actions/automate";
 
 const automationsSlices = createSlice({
@@ -42,6 +43,19 @@ const automationsSlices = createSlice({
         state.userAutomations = action.payload;
       })
       .addCase(getAllUserAutomations.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
+      // GET ALL USER AUTOMATIONS BY INPUT SEARCH
+      .addCase(getUserAutomatiosByInputSearch.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserAutomatiosByInputSearch.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userAutomations = action.payload;
+      })
+      .addCase(getUserAutomatiosByInputSearch.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       })

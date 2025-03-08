@@ -15,6 +15,7 @@ const {
   addAuthController,
   getAuthController,
   deleteAuthController,
+  getAllUserAutomationsByInputSeachController
 } = require("../controllers/automate");
 
 
@@ -31,6 +32,7 @@ automationsRouter
 
 .post("/addAuth", authenticateToken, addAuthController)
 .get("/getAuth/:type", authenticateToken, getAuthController)
-.delete("/deleteAuth", authenticateToken, deleteAuthController)  
+.delete("/deleteAuth", authenticateToken, deleteAuthController) 
+.post("/getAllUserAutomations", authenticateToken, getAllUserAutomationsByInputSeachController)
 
 module.exports = automationsRouter;

@@ -37,6 +37,15 @@ const Export = ({ handleConfigurationChange, configuration }) => {
     }
   }, [configuration?.selectedTypes]);
 
+  useEffect(() => {
+    const compareValues =
+      JSON.stringify(configuration.showContentImport) !==
+      JSON.stringify(showContent);
+    if (configuration.showContentExport && compareValues) {
+      setShowContent(configuration.showContentExport);
+    }
+  }, [configuration.showContentExport]);
+
   return (
     <CustomAutomationsWrapper
       Icon={<ArrowSquare />}
@@ -44,9 +53,14 @@ const Export = ({ handleConfigurationChange, configuration }) => {
     >
       <div
         className={styles.infoContainerWrapper}
-        onClick={() =>
-          setShowContent({ ...showContent, info2: !showContent.info2 })
-        }
+        onClick={() => {
+          const updateShowContent = {
+            ...showContent,
+            info2: !showContent.info2,
+          };
+          setShowContent(updateShowContent);
+          handleConfigurationChange("showContentExport", updateShowContent);
+        }}
       >
         <GrayChevron />
         <div className={styles.infoContainer}>
@@ -292,7 +306,7 @@ const Export = ({ handleConfigurationChange, configuration }) => {
 
         <CustomAutomationsWrapper
           Icon={<WhiteText />}
-          showContent={showContent.info5}
+          showContent={configuration?.renameFiles}
         >
           <div className={styles.infoContainerWrapper}>
             <div
