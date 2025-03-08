@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CustomAutomationsWrapper from "../../../CustomAutomationsWrapper/CustomAutomationsWrapper";
 
@@ -26,6 +26,15 @@ const Import = ({
     info1: false,
   });
 
+  useEffect(() => {
+    const compareValues =
+      JSON.stringify(configuration.showContentImport) !==
+      JSON.stringify(showContent);
+    if (configuration.showContentImport && compareValues) {
+      setShowContent(configuration.showContentImport);
+    }
+  }, [configuration.showContentImport]);
+
   return (
     <CustomAutomationsWrapper
       Icon={<WhiteFolder />}
@@ -33,9 +42,13 @@ const Import = ({
     >
       <div
         className={`${styles.infoContainerWrapper}`}
-        onClick={() =>
-          setShowContent({ ...showContent, info1: !showContent.info1 })
-        }
+        onClick={() => {
+          setShowContent({ ...showContent, info1: !showContent.info1 });
+          handleConfigurationChange("showContentImport", {
+            ...showContent,
+            info1: !showContent.info1,
+          });
+        }}
       >
         <GrayChevron />
         <div className={styles.infoContainer}>

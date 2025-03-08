@@ -87,9 +87,13 @@ const PanelAutomate = ({
 
     inputType: true,
 
-    labels: [],
+    labels: null,
     filesExactMatch: false,
     phoneListNotificate: [],
+    showContentSelectInfoToProcess: null,
+    showContentImport: null,
+    showContentExport: null,
+    shotContentNotification: null,
   });
 
   const [outlookConfiguration, setOutlookConfiguration] = useState({
@@ -122,9 +126,13 @@ const PanelAutomate = ({
       min: 0,
       max: 0,
     },
-    labels: [],
+    labels: null,
     filesExactMatch: false,
     phoneListNotificate: [],
+    showContentSelectInfoToProcess: null,
+    showContentImport: null,
+    showContentExport: null,
+    shotContentNotification: null,
   });
 
   const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({

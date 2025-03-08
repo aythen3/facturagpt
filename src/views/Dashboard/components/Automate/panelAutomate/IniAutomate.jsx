@@ -80,6 +80,7 @@ const PanelIniAutomate = ({ typeContent }) => {
         {automates.map((automate, index) => (
           <li
             className={automate.available ? styles.available : styles.disabled}
+            key={index}
           >
             <div className={styles.top}>
               <div className={styles.header}>

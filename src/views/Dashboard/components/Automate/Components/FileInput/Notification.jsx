@@ -26,15 +26,24 @@ const Notification = ({ handleConfigurationChange, configuration, type }) => {
     info4: false,
   });
 
+  // useEffect(() => {
+  //     const compareValues =
+  //       JSON.stringify(configuration.shotContentNotification) !==
+  //       JSON.stringify(showContent);
+  //     if (configuration.shotContentNotification && compareValues) {
+  //       setShowContent(configuration.shotContentNotification);
+  //     }
+  //   }, [configuration.shotContentNotification]);
+
   return (
     <CustomAutomationsWrapper
       Icon={<WhiteBell />}
-      showContent={showContent.info4}
+      showContent={configuration.enableNotifications}
     >
       <div
         className={styles.infoContainerWrapper}
         onClick={() =>
-          setShowContent({ ...showContent, info6: !showContent.info6 })
+          setShowContent({ ...showContent, info4: !showContent.info4 })
         }
       >
         <div className={styles.infoContainer}>
@@ -56,7 +65,10 @@ const Notification = ({ handleConfigurationChange, configuration, type }) => {
       <div
         className={`${styles.contentContainer} ${configuration?.enableNotifications ? styles.active : styles.disabled}`}
       >
-        <CustomAutomationsWrapper Icon={<WhiteCheck />}>
+        <CustomAutomationsWrapper
+          Icon={<WhiteCheck />}
+          showContent={configuration.notificateAfterExport}
+        >
           <div className={styles.infoContainerWrapper}>
             <div className={styles.infoContainer}>
               <div>Notificar tras la exportación</div>
@@ -133,7 +145,10 @@ const Notification = ({ handleConfigurationChange, configuration, type }) => {
           </div>
         </CustomAutomationsWrapper>
         <div style={{ marginTop: "20px" }}>
-          <CustomAutomationsWrapper Icon={<WhiteBell />}>
+          <CustomAutomationsWrapper
+            Icon={<WhiteBell />}
+            showContent={configuration.notificateErrors}
+          >
             <div className={styles.infoContainerWrapper}>
               <div className={styles.infoContainer}>
                 <div>

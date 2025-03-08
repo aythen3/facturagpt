@@ -10,6 +10,8 @@ const SelectCurrencyPopup = ({
   selectedCurrency,
   symbolSelected,
   setSymbolSelected,
+  handleConfigurationChange,
+  configuration,
 }) => {
   const [selectedCode, setSelectedCode] = useState(selectedCurrency); // Solo para marcar la moneda clickeada temporalmente
   const [tempSelectedSymbol, setTempSelectedSymbol] = useState(symbolSelected);
@@ -45,12 +47,19 @@ const SelectCurrencyPopup = ({
   };
 
   const handleConfirmSelection = () => {
+    const updateCurrencyInTotalAmount = {
+      ...configuration.totalAmount,
+      currency: selectedCode,
+    };
     if (selectedCode) {
       setSelectedCurrency(selectedCode); // Solo cambia el estado global cuando se confirma
       setShowSelectCurrencyPopup(false); // Cierra el popup después de seleccionar
       setSymbolSelected(tempSelectedSymbol);
+      handleConfigurationChange("totalAmount", updateCurrencyInTotalAmount);
     }
   };
+
+  console.log(selectedCurrency);
 
   return (
     <div>

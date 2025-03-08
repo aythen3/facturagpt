@@ -18,6 +18,7 @@ import IniAutomate from "./panelAutomate/IniAutomate";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
 import useFocusShortcut from "../../../../utils/useFocusShortcut";
+import { getUserAutomatiosByInputSearch } from "../../../../actions/automate";
 
 const Automate = ({
   close,
@@ -29,6 +30,7 @@ const Automate = ({
   setIsAnimating,
 }) => {
   const { userAutomations } = useSelector((state) => state.automate);
+  const { user } = useSelector((state) => state.user);
   const [selectedType, setSelectedType] = useState(0);
   const [dataFilter, setDataFilter] = useState(data || newData);
   const dispach = useDispatch();
@@ -41,12 +43,7 @@ const Automate = ({
     setDataFilter(filteredData);
   };
 
-  useEffect(() => {
-    console.log("USER AUTOMATIONS", userAutomations);
-
-    if (true) {
-    }
-  }, [userAutomations]);
+  console.log("user user", user);
 
   useEffect(() => {
     if (searchTerm === "") {
@@ -92,6 +89,17 @@ const Automate = ({
     return true;
   });
 
+  const inputFilterAutomate = (e) => {
+    const inputSearchTerm = e.target.value;
+    setSearchTerm(inputSearchTerm);
+    dispach(
+      getUserAutomatiosByInputSearch({
+        userId: user.id,
+        inputValue: inputSearchTerm,
+      })
+    );
+  };
+
   return (
     <>
       <div className={styles.container} onClick={handleCloseNewClient}></div>
@@ -134,7 +142,7 @@ const Automate = ({
             </>
           )}
         </HeaderCard>
-        {userAutomations?.length <= 0 ? (
+        {userAutomations?.length <= 0 && searchTerm.length === 0 ? (
           <div className={styles.iniContainer}>
             <IniAutomate typeContent={typeContent} />
           </div>
@@ -151,7 +159,7 @@ const Automate = ({
                   placeholder="Busca tus automatizaciones o crea una nueva"
                   className={styles.searchInput}
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => inputFilterAutomate(e)}
                 />
                 {/* <div
                 onClick={() => setShowLocationModal(true)}

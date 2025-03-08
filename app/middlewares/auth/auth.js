@@ -1,26 +1,26 @@
 const jwt = require("jsonwebtoken");
 const { ClientError } = require("../../utils/err/errors");
-const useragent = require('useragent');
-
+const useragent = require("useragent");
 
 const { connectDB } = require("../../controllers/utils");
 // const nano = require('nano')('http://admin:1234@127.0.0.1:5984');
 
-
-
 const authenticateToken = async (req, res, next) => {
   try {
+    const { userId, inputValue } = req.params;
+
+    if (userId || inputValue) {
+      console.log("entro en con userId e authenticateToken", { userId, inputValue });
+    }
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
       throw new ClientError("Authorization token missing", 401);
     }
 
-    console.log("token", token);
-
+    console.log("entro en tokern", { userId, inputValue });
 
     const decodedToken = jwt.verify(token, "your-secret-key"); // TODO: Move secret to env vars
-
 
     // console.log('decodedToken', decodedToken)
     // console.log("token", token);
@@ -32,18 +32,17 @@ const authenticateToken = async (req, res, next) => {
 
     // console.log("decodedToken", decodedToken);
 
-
     const query = {
-      "selector": {
+      selector: {
         // "_id": decodedToken.userId,
-        "_id": decodedToken.userId,
+        _id: decodedToken.userId,
         // "user": decodedToken.user,
         // "isverified": true
-      }
+      },
     };
 
-    let db_account = await connectDB(`db_accounts`)
-    const resp = await db_account.find(query)
+    let db_account = await connectDB(`db_accounts`);
+    const resp = await db_account.find(query);
 
     // console.log("resp", resp);
 
@@ -51,10 +50,7 @@ const authenticateToken = async (req, res, next) => {
       throw new ClientError("User not found", 404);
     }
 
-    const user = resp.docs[0]
-
-   
-
+    const user = resp.docs[0];
 
     // if (user.token_login !== token) {
     //   return res.status(409).send({ message: 'Session has been logged out on another device' });
@@ -63,31 +59,24 @@ const authenticateToken = async (req, res, next) => {
     // delete user.avatar;
     // delete user.banner;
 
-
     // req.user = decodedToken;
     req.user = user;
 
-
     next();
-
   } catch (error) {
     console.log("Invalid token: ", error);
     return res.status(501).send("Invalid token");
   }
 };
 
-
-
 module.exports = { authenticateToken: authenticateToken };
-
-
 
 const detectIAMMiddleware = (req, res, next, iam) => {
   const method = req.method;
   const reqPath = req.path;
 
-  console.log('method:', method);
-  console.log('route:', reqPath);
+  console.log("method:", method);
+  console.log("route:", reqPath);
 
   // if (iam === true) {
   //   // Verificar si la ruta y el método están permitidos en el archivo JSON
@@ -105,13 +94,6 @@ const detectIAMMiddleware = (req, res, next, iam) => {
   //   return res.status(409).send({ message: 'No tienes permisos para realizar esta acción.' });
   // }
 };
-
-
-
-
-
-
-
 
 // const connectDB = async (tableName) => {
 //   let db
@@ -136,8 +118,3 @@ const detectIAMMiddleware = (req, res, next, iam) => {
 //     }
 //   }
 // }
-
-
-
-
-

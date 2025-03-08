@@ -257,6 +257,41 @@ const deleteAutomationController = async (req, res) => {
   }
 };
 
+const getAllUserAutomationsByInputSeachController = async (req, res) => {
+  try {
+    const { userId, inputValue } = req.body;
+
+    console.log("entro en con userId en getAllUserAutomationsByInputSeachController", { userId, inputValue });
+
+    const dbAutomations = await connectDB("db_automations");
+
+    // Búsqueda por userId
+    let query = {
+      selector: { userId },
+    };
+
+    const automations = await dbAutomations.find(query);
+    let data = automations.docs || [];
+
+    // Si inputValue existe, filtramos los resultados
+    if (inputValue) {
+      const searchTerm = inputValue.toLowerCase();
+      data = data.filter((doc) =>
+        Object.values(doc).some(
+          (value) =>
+            typeof value === "string" &&
+            value.toLowerCase().includes(searchTerm)
+        )
+      );
+    }
+
+    console.log(`Found ${data.length} automations for userId ${userId}`);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.error("Error in getAllUserAutomationsController", err);
+    return res.status(500).send("Error retrieving automations");
+  }
+};
 
 module.exports = {
   addAuthController: catchedAsync(addAuthController),
@@ -268,5 +303,7 @@ module.exports = {
   getAllUserAutomationsController: catchedAsync( getAllUserAutomationsController ),
   updateAutomationController: catchedAsync(updateAutomationController),
   deleteAutomationController: catchedAsync(deleteAutomationController),
-
+  getAllUserAutomationsByInputSeachController: catchedAsync(
+    getAllUserAutomationsByInputSeachController
+  ),
 };

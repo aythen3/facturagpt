@@ -68,7 +68,7 @@ const Gmail = ({
       const resp = await dispatch(getAuth("gmail"));
       console.log("resp data form auth", resp);
 
-      if (resp.payload.length > 0) {
+      if (resp.payload?.length > 0) {
         setAuthData(resp.payload);
       }
     };
