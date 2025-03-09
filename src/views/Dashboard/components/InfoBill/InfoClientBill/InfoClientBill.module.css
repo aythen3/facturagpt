@@ -88,7 +88,7 @@
   }
   textarea,
   .inputContainer {
-    padding: 5px;
+    /* padding: 5px; */
     box-sizing: border-box;
     border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -97,8 +97,24 @@
     -o-border-radius: 6px;
     position: relative;
     resize: none;
+    .searchContactInput {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 0;
+      width: 100%;
+      border-radius: 8px;
+      padding: 6px;
+      border: none;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      -ms-border-radius: 8px;
+      -o-border-radius: 8px;
+      background-color: #f4f4f4;
+      outline: none;
+    }
   }
 }
+
 .contacts {
   position: absolute;
   top: calc(10px + 100%);

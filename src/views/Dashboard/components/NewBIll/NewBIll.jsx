@@ -140,7 +140,7 @@ const NewBIll = ({ setShowNewBill }) => {
           <Button>Guardar</Button>
         </HeaderCard>
         <div className={styles.newBillContent}>
-          <div className={styles.containerLeftSide}>
+          {/* <div className={styles.containerLeftSide}>
             <InvoiceForm
               hasNote={hasNote}
               handleAddNote={handleAddNote}
@@ -297,7 +297,7 @@ const NewBIll = ({ setShowNewBill }) => {
                 }}
               />
             )}
-          </div>
+          </div> */}
           <InvoiceForm
             hasNote={hasNote}
             setHasNote={setHasNote}

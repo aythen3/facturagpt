@@ -133,7 +133,7 @@ const UpgradePlan = ({
     };
     console.log("updating user with", data);
 
-    dispatch(attachCustomPaymentMethod(data))
+    dispatch(attachCustomPaymentMethod(data));
     // dispatch(updateUser({ userId: user?.id, toUpdate: data })).then(() => {
     //   dispatch(attachCustomPaymentMethod({ userId: user?.id }));
     // });
@@ -193,7 +193,7 @@ const UpgradePlan = ({
         <HeaderCard
           title={
             <div className={styles.titleWithIcon}>
-              <h2>Mejorar Plan</h2>
+              <h3>Mejorar Plan</h3>
               <img src={greenStar} alt="greenStar" />
             </div>
           }
@@ -390,7 +390,7 @@ const UpgradePlan = ({
         <HeaderCard
           title={
             <div className={styles.titleWithIcon}>
-              <h2>Mejorar Plan</h2>
+              <h3>Mejorar Plan</h3>
               <img src={greenStar} alt="greenStar" />
             </div>
           }

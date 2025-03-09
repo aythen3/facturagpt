@@ -125,6 +125,7 @@ const InfoClientBill = ({
             onBlur={handleBlur}
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
+            className={styles.searchContactInput}
           />
           {isFocused && inputValue.length > 0 && (
             <div className={styles.contacts} ref={contactsRef}>

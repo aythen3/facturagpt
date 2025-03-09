@@ -418,8 +418,23 @@
   justify-content: space-between;
   border-radius: 4px;
   height: 31px;
+  gap: 5px;
   font-size: 14px;
   font-weight: 600;
   color: #fff;
   padding: 0 6px 0 12px;
+}
+.keyWordContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.keyword {
+  display: flex;
+  gap: 9px;
+  padding: 3px 12px;
+  border-radius: 30px;
+  border: 1px solid #e0e3e6;
+  align-items: center;
+  width: fit-content;
 }

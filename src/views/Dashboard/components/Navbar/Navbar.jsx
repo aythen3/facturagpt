@@ -286,7 +286,7 @@ const Navbar = () => {
                 width: 30,
                 height: 30,
                 cursor: "pointer",
-                borderRadius: "12px",
+                borderRadius: "8px",
               }}
             />
             <img
@@ -297,7 +297,7 @@ const Navbar = () => {
                 width: 30,
                 height: 30,
                 cursor: "pointer",
-                borderRadius: "12px",
+                borderRadius: "8px",
               }}
             />
           </div>

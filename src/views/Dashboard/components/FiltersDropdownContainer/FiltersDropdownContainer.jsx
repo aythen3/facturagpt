@@ -16,29 +16,34 @@ const FiltersDropdownContainer = ({ selectedOption, setSelectedOption }) => {
   };
 
   return (
-    <div className={styles.dropdownContainer}>
-      <div
-        className={styles.filterSort}
-        onClick={handleDropdownToggle}
-        ref={dropdownRef}
-      >
-        Ordenar por: <b>{selectedOption}</b>
-        <FaChevronDown className={styles.chevronIcon} />
-      </div>
+    <>
       {isOpen && (
-        <div className={styles.dropdownOptions}>
-          {options.map((option, index) => (
-            <div
-              key={index}
-              className={styles.dropdownOption}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </div>
-          ))}
-        </div>
+        <div className={styles.bg} onClick={handleDropdownToggle}></div>
       )}
-    </div>
+      <div className={styles.dropdownContainer}>
+        <div
+          className={styles.filterSort}
+          onClick={handleDropdownToggle}
+          ref={dropdownRef}
+        >
+          Ordenar por: <b>{selectedOption}</b>
+          <FaChevronDown className={styles.chevronIcon} />
+        </div>
+        {isOpen && (
+          <div className={styles.dropdownOptions}>
+            {options.map((option, index) => (
+              <div
+                key={index}
+                className={styles.dropdownOption}
+                onClick={() => handleOptionClick(option)}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

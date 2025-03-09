@@ -399,9 +399,12 @@
 .breadcrumbButton {
   cursor: pointer;
   color: #22222268;
+  &:hover {
+    color: #222222;
+  }
 }
 .finalBreadcrumbButton {
-  color: #222222;
+  color: #22222268;
 }
 
 .breadcrumbButton:hover {
