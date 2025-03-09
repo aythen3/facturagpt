@@ -579,6 +579,7 @@ const DocumentPreview = ({
               action={() => setShowDiscountModal(true)}
               hasButton
               hasPercentage={discountQuantity}
+              oneRow={true}
             />
             <EditableRow
               label="Impuesto"
@@ -586,6 +587,7 @@ const DocumentPreview = ({
               action={() => setShowTaxModal(true)}
               hasButton
               hasPercentage={taxQuantity}
+              oneRow={true}
             />
             <EditableRow label="Total" oneRow={true} />
           </div>

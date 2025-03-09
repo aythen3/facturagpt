@@ -128,6 +128,15 @@ const Automate = ({
               : "Automatiza"
           }
           setState={handleCloseNewClient}
+          titleStyle={{
+            color: "#000",
+            textAlign: "center",
+            fontFamily: "Inter",
+            fontSize: "19px",
+            fontStyle: "normal",
+            fontWeight: "500",
+            lineHeight: "130%",
+          }}
         >
           {!userAutomations.length <= 0 && (
             <>

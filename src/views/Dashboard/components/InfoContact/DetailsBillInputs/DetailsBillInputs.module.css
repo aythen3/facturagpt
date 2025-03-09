@@ -28,3 +28,12 @@
     box-sizing: border-box;
   }
 }
+.defaultAddress {
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  align-items: center;
+  span {
+    color: #2ebc89 !important;
+  }
+}

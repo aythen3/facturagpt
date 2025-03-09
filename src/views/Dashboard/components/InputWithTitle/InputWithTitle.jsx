@@ -18,6 +18,7 @@ const InputWithTitle = ({
     color: "#676b5f",
   },
   inputHeight = "44px",
+  onKeyDownProp,
 }) => {
   const placeholderStyle = `
   input::placeholder {
@@ -46,6 +47,7 @@ const InputWithTitle = ({
           maxLength={maxLength}
           onChange={onChange}
           className={styles.inputWithTitle}
+          onKeyDown={onKeyDownProp}
         />
         {rightElement && rightElement}
       </div>

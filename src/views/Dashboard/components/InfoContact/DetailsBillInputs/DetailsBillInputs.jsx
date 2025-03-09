@@ -11,6 +11,7 @@ const DetailsBillInputs = ({
   zipCode,
   country,
   handleChange,
+  defaultInput,
   compressed = false,
 }) => {
   return (
@@ -83,6 +84,15 @@ const DetailsBillInputs = ({
                 </div>
               )}
             </div>
+          </div>
+          <div className={styles.defaultAddress}>
+            <input
+              type="checkbox"
+              value={defaultInput}
+              checked={defaultInput}
+              onChange={(e) => handleChange("default", e.target.checked)}
+            />
+            <span>Dirección Predeterminada</span>
           </div>
         </>
       )}

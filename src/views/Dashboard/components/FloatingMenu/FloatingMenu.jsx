@@ -99,7 +99,7 @@ export default function FloatingMenu({
       icon: <NewBill />,
       text: "Nueva Factura",
       action: () => {
-        navigate("/admin/panel");
+        // navigate("/admin/panel");
         setShowNewBill(true);
         setIsOpen(false);
       },

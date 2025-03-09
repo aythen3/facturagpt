@@ -42,6 +42,14 @@
       align-items: center;
       gap: 5px;
       font-size: 17px;
+      color: #000;
+      text-align: center;
+      font-family: Inter;
+      font-size: 19px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 130%; /* 24.7px */
+      margin: 5px 0;
     }
   }
 

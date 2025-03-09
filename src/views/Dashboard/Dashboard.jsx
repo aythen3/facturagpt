@@ -42,6 +42,11 @@ const Dashboard = () => {
 
   const statistics = [
     {
+      title: "Tokens",
+      // year: "año actual",
+      total: "0,00",
+    },
+    {
       title: "Ventas",
       // year: "año actual",
       total: "0,00",

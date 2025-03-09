@@ -13,6 +13,7 @@ import PayMethod from "../PayMethod/PayMethod";
 import { clearClient } from "../../../../slices/clientsSlices";
 import EditableInput from "../../screens/Clients/EditableInput/EditableInput";
 import { createClient, getOneClient } from "../../../../actions/clients";
+import DetailsBillInputs from "../InfoContact/DetailsBillInputs/DetailsBillInputs";
 
 const NewContact = ({
   setShowNewContact,
@@ -250,6 +251,8 @@ const NewContact = ({
     email: "",
     phone: "",
     web: "",
+    dni: "",
+    taxNumber: "",
     info: [],
     parameters: [],
   });
@@ -259,6 +262,8 @@ const NewContact = ({
     phone: false,
     web: false,
     info: false,
+    dni: false,
+    taxNumber: false,
     billingDetails: [],
   });
 
@@ -270,10 +275,13 @@ const NewContact = ({
         ...prevData.infoBill,
         {
           direccion: "",
-          Población: "",
-          Provincia: "",
+          poblacion: "",
+          provincia: "",
           codigoPostal: "",
           pais: "",
+          default: false,
+          dni: "",
+          taxNumber: "",
         },
       ],
     }));
@@ -281,10 +289,13 @@ const NewContact = ({
   const [selectedBillIndex, setSelectedBillIndex] = useState(null); // Índice del detalle que se está editando
   const [currentBill, setCurrentBill] = useState({
     direccion: "",
-    Población: "",
-    Provincia: "",
+    poblacion: "",
+    provincia: "",
     codigoPostal: "",
     pais: "",
+    default: false,
+    dni: "",
+    taxNumber: "",
   });
 
   const handleDeleteBillingDetail = (index) => {
@@ -306,8 +317,45 @@ const NewContact = ({
     setInputsEditing((prev) => ({ ...prev, info: true })); // Habilita la edición
   };
 
-  const handleBillingDetailChange = (field, value) => {
-    setCurrentBill((prev) => ({ ...prev, [field]: value })); // Actualiza el detalle seleccionado
+  // const handlePayMethodChange = (field, value) => {
+  //   setCurrentPayMethod((prev) => {
+  //     const updatedPayMethod = { ...prev, [field]: value };
+
+  //     // Si estamos marcando un banco como predeterminado, desmarcamos los demás
+  //     if (field === "default" && value) {
+  //       // Desmarcar todos los métodos de pago, excepto el actual
+  //       setClientData((prevData) => ({
+  //         ...prevData,
+  //         paymethod: prevData.paymethod.map((method) =>
+  //           method === updatedPayMethod
+  //             ? { ...method, default: true }
+  //             : { ...method, default: false }
+  //         ),
+  //       }));
+  //     }
+
+  //     return updatedPayMethod;
+  //   });
+  // };
+
+  const handleBillingDetailChange = (field, value, index) => {
+    setCurrentBill((prev) => {
+      const updatedBill = { ...prev, [field]: value };
+
+      // Si estamos marcando este objeto como predeterminado, desmarcamos los demás
+      if (field === "default" && value) {
+        setClientData((prevData) => ({
+          ...prevData,
+          infoBill: prevData.infoBill.map((bill, i) =>
+            i === index
+              ? { ...bill, default: true }
+              : { ...bill, default: false }
+          ),
+        }));
+      }
+
+      return updatedBill;
+    });
   };
 
   const handleSaveBillingDetail = () => {
@@ -414,7 +462,6 @@ const NewContact = ({
   // Llama a la función y pasa la referencia
   useFocusShortcut(searchInputRef, "k");
 
-
   console.log(selectedContact, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
   return (
@@ -424,7 +471,8 @@ const NewContact = ({
         <ModalTemplate
           actionSave={handleCreateClient}
           onClick={handleCloseNewClient}
-          text="contacto"
+          typeTextHeader={selectTypeClient == "contact" ? "Nuevo" : "Nueva"}
+          text={selectTypeClient == "contact" ? "Contacto" : "Empresa"}
           isAnimating={isAnimating}
           className={`${styles.newClientContainer} `}
           newContact={newContactProp}
@@ -473,8 +521,8 @@ const NewContact = ({
                       `}
                 >
                   <button
-                    className={selectTypeClient == 0 && styles.selected}
-                    onClick={() => setSelectTypeClient(0)}
+                    className={selectTypeClient == "contact" && styles.selected}
+                    onClick={() => setSelectTypeClient("contact")}
                     type="button"
                     disabled={!inputsEditing.name}
                   >
@@ -482,8 +530,8 @@ const NewContact = ({
                   </button>
 
                   <button
-                    className={selectTypeClient == 1 && styles.selected}
-                    onClick={() => setSelectTypeClient(1)}
+                    className={selectTypeClient == "company" && styles.selected}
+                    onClick={() => setSelectTypeClient("company")}
                     type="button"
                     disabled={!inputsEditing.name}
                   >
@@ -646,135 +694,117 @@ const NewContact = ({
                   </div>
                   <div className={styles.infoBill}>
                     {clientData.infoBill?.length > 0 ? (
-                      clientData.infoBill.map((bill, index) => (
-                        <div style={{ width: "100%" }}>
-                          {" "}
-                          <div
-                            key={index}
-                            className={styles.infoBillContainer}
-                            style={{ flexDirection: "row" }}
-                          >
-                            <div className={styles.info}>
-                              <p>
-                                {" "}
-                                <span> {bill.direccion || "Dirección"},</span>
-                                <span> {bill.Población || "Población"},</span>
-                                <span> {bill.Provincia || "Provincia"},</span>
-                                <span>
-                                  {bill.codigoPostal || "Código Postal"},
-                                </span>
-                                <span> {bill.pais || "País"}</span>
-                              </p>
-
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  selectedBillIndex === index
-                                    ? handleSaveBillingDetail()
-                                    : handleEditBillingDetail(index);
-                                }}
-                                className={styles.button}
-                              >
-                                {selectedBillIndex === index
-                                  ? "Guardar"
-                                  : "Editar"}
-                              </button>
-                            </div>
-                            <DeleteButton
-                              action={() => handleDeleteBillingDetail(index)}
-                            />
-                          </div>
-                          {selectedBillIndex === index && (
-                            <div className={styles.billInfoInputs}>
+                      clientData.infoBill
+                        .sort(
+                          (a, b) => (b.default === true) - (a.default === true)
+                        )
+                        .map((bill, index) => (
+                          <div style={{ width: "100%" }}>
+                            {" "}
+                            <div
+                              key={index}
+                              className={styles.infoBillContainer}
+                              style={{ flexDirection: "row" }}
+                            >
                               <div className={styles.info}>
-                                <span>Dirección</span>
-                                <input
-                                  type="text"
-                                  disabled={!inputsEditing.info}
-                                  placeholder="Dirección"
-                                  value={currentBill.direccion}
-                                  onChange={(e) =>
-                                    handleBillingDetailChange(
-                                      "direccion",
-                                      e.target.value
-                                    )
-                                  }
-                                />
+                                <p>
+                                  {" "}
+                                  <span> {bill.direccion || "Dirección"},</span>
+                                  <span> {bill.poblacion || "Población"},</span>
+                                  <span> {bill.provincia || "Provincia"},</span>
+                                  <span>
+                                    {bill.codigoPostal || "Código Postal"},
+                                  </span>
+                                  <span> {bill.pais || "País"}</span>
+                                </p>
+
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    selectedBillIndex === index
+                                      ? handleSaveBillingDetail()
+                                      : handleEditBillingDetail(index);
+                                  }}
+                                  className={styles.button}
+                                >
+                                  {selectedBillIndex === index
+                                    ? "Guardar"
+                                    : "Editar"}
+                                </button>
                               </div>
-                              <div>
-                                {" "}
-                                <div className={styles.info}>
-                                  <span>Población</span>
-                                  <input
-                                    type="text"
-                                    disabled={!inputsEditing.info}
-                                    placeholder="Población"
-                                    value={currentBill.Población}
-                                    onChange={(e) =>
-                                      handleBillingDetailChange(
-                                        "Población",
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div className={styles.info}>
-                                  <span>Provincia</span>
-                                  <input
-                                    type="text"
-                                    disabled={!inputsEditing.info}
-                                    placeholder="Provincia"
-                                    value={currentBill.Provincia}
-                                    onChange={(e) =>
-                                      handleBillingDetailChange(
-                                        "Provincia",
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                              </div>
-                              <div>
-                                <div className={styles.info}>
-                                  <span>Código Postal</span>
-                                  <input
-                                    type="text"
-                                    disabled={!inputsEditing.info}
-                                    placeholder="Código Postal"
-                                    value={currentBill.codigoPostal}
-                                    onChange={(e) =>
-                                      handleBillingDetailChange(
-                                        "codigoPostal",
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div className={styles.info}>
-                                  <span>País</span>
-                                  <input
-                                    type="text"
-                                    disabled={!inputsEditing.info}
-                                    placeholder="País"
-                                    value={currentBill.pais}
-                                    onChange={(e) =>
-                                      handleBillingDetailChange(
-                                        "pais",
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                              </div>
+                              <DeleteButton
+                                action={() => handleDeleteBillingDetail(index)}
+                              />
                             </div>
-                          )}
-                        </div>
-                      ))
+                            {selectedBillIndex === index && (
+                              <>
+                                <DetailsBillInputs
+                                  direccion={currentBill.direccion || ""}
+                                  poblacion={currentBill.poblacion || ""}
+                                  provincia={currentBill.provincia || ""}
+                                  codigoPostal={currentBill.codigoPostal || ""}
+                                  pais={currentBill.pais || ""}
+                                  defaultInput={currentBill.default}
+                                  handleChange={(key, value) =>
+                                    handleBillingDetailChange(key, value)
+                                  }
+                                  showCheckbox={true}
+                                />
+                              </>
+                            )}
+                          </div>
+                        ))
                     ) : (
                       <span>No hay detalles de facturación disponibles.</span>
                     )}
                   </div>
                 </div>
+              </label>
+
+              <label>
+                <EditableInput
+                  label={"Documento de Identidad"}
+                  nameInput={"DNI"}
+                  placeholderInput={"Número de identidad (DNI, NIE, Otros)"}
+                  isEditing={inputsEditing.dni}
+                  value={clientData.dni || clientDataInputs.dni}
+                  onChange={(e) => {
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      dni: e.target.value,
+                    });
+                    handleClientData("dni", e.target.value);
+                  }}
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      dni: !prev.taxNumber,
+                    }))
+                  }
+                />
+              </label>
+
+              <label>
+                <EditableInput
+                  label={"Número Fiscal"}
+                  nameInput={"taxNumber"}
+                  placeholderInput={"CIF, Otros"}
+                  isEditing={inputsEditing.taxNumber}
+                  value={clientData.taxNumber || clientDataInputs.taxNumber}
+                  onChange={(e) => {
+                    setClientDataInputs({
+                      ...clientDataInputs,
+                      taxNumber: e.target.value,
+                    });
+                    handleClientData("taxNumber", e.target.value);
+                  }}
+                  onClick={() =>
+                    setInputsEditing((prev) => ({
+                      ...prev,
+                      taxNumber: !prev.taxNumber,
+                    }))
+                  }
+                />
               </label>
               <label>
                 <div style={{ marginBottom: "30px" }}>
@@ -816,65 +846,69 @@ const NewContact = ({
                   </div>
 
                   {Array.isArray(clientData.paymethod) &&
-                    clientData.paymethod.map((method, index) => (
-                      <div key={index} className={styles.infoBillContainer}>
-                        <div className={styles.info}>
-                          <p>
-                            <span>{method.bank || "Banco"}, </span>
-                            <span>
-                              {method.accountNumber || "Número de Cuenta"},{" "}
-                            </span>
-                            <span> {method.swift || "SWIFT/BIC"}, </span>
-                            <span>
-                              {method.routingNumber || "Routing Number"},{" "}
-                            </span>
-                            <span> {method.currency || "Moneda"}</span>
-                          </p>
-                          <DeleteButton />
-                        </div>
-                        <div
-                          className={styles.button}
-                          onClick={() => {
-                            if (editingIndexPayMethod === index) {
-                              // Si ya estamos editando este índice, guarda los cambios
-                              setClientData((prev) => {
-                                const updatedPayMethods = [...prev.paymethod];
-                                updatedPayMethods[editingIndexPayMethod] =
-                                  currentPayMethod;
-                                return {
-                                  ...prev,
-                                  paymethod: updatedPayMethods,
-                                };
-                              });
+                    clientData.paymethod
+                      .sort(
+                        (a, b) => (b.default === true) - (a.default === true)
+                      )
+                      .map((method, index) => (
+                        <div key={index} className={styles.infoBillContainer}>
+                          <div className={styles.info}>
+                            <p>
+                              <span>{method.bank || "Banco"}, </span>
+                              <span>
+                                {method.accountNumber || "Número de Cuenta"},{" "}
+                              </span>
+                              <span> {method.swift || "SWIFT/BIC"}, </span>
+                              <span>
+                                {method.routingNumber || "Routing Number"},{" "}
+                              </span>
+                              <span> {method.currency || "Moneda"}</span>
+                            </p>
+                            <DeleteButton />
+                          </div>
+                          <div
+                            className={styles.button}
+                            onClick={() => {
+                              if (editingIndexPayMethod === index) {
+                                // Si ya estamos editando este índice, guarda los cambios
+                                setClientData((prev) => {
+                                  const updatedPayMethods = [...prev.paymethod];
+                                  updatedPayMethods[editingIndexPayMethod] =
+                                    currentPayMethod;
+                                  return {
+                                    ...prev,
+                                    paymethod: updatedPayMethods,
+                                  };
+                                });
 
-                              setEditingIndexPayMethod(null); // Reset al índice después de guardar
-                              setCurrentPayMethod({
-                                bank: "",
-                                accountNumber: "",
-                                swift: "",
-                                routingNumber: "",
-                                currency: "",
-                                default: false,
-                              });
-                            } else {
-                              // Si no estamos editando este índice, entonces pasamos a modo edición
-                              setCurrentPayMethod(method);
-                              setEditingIndexPayMethod(index);
-                            }
-                          }}
-                        >
-                          {editingIndexPayMethod == index
-                            ? "Guardar"
-                            : "Editar"}
+                                setEditingIndexPayMethod(null); // Reset al índice después de guardar
+                                setCurrentPayMethod({
+                                  bank: "",
+                                  accountNumber: "",
+                                  swift: "",
+                                  routingNumber: "",
+                                  currency: "",
+                                  default: false,
+                                });
+                              } else {
+                                // Si no estamos editando este índice, entonces pasamos a modo edición
+                                setCurrentPayMethod(method);
+                                setEditingIndexPayMethod(index);
+                              }
+                            }}
+                          >
+                            {editingIndexPayMethod == index
+                              ? "Guardar"
+                              : "Editar"}
+                          </div>
+                          {editingIndexPayMethod == index && (
+                            <PayMethod
+                              method={currentPayMethod}
+                              onChange={handlePayMethodChange}
+                            />
+                          )}
                         </div>
-                        {editingIndexPayMethod == index && (
-                          <PayMethod
-                            method={currentPayMethod}
-                            onChange={handlePayMethodChange}
-                          />
-                        )}
-                      </div>
-                    ))}
+                      ))}
                 </div>
               </label>
 

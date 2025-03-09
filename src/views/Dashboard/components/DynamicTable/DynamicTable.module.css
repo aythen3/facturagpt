@@ -197,6 +197,13 @@
     font-size: 14px;
   }
 
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white; /* Fondo blanco para que se vea bien sobre el contenido */
+    z-index: 1; /* Asegura que el primer td esté por encima de los otros td cuando se hace scroll */
+  }
   td {
     min-width: 120px;
     padding: 10px; /* Espaciado interno para las celdas */
@@ -214,30 +221,22 @@
       /* background-color: #ffebee !important; rojo suave */
       position: relative;
     }
-    
+
     /* Opcional: agregar un texto cuando está vacío */
     &:empty::after {
-      content: ' - - ';
+      content: " - - ";
       color: #1d1d1d;
       font-size: 10px;
       font-style: italic;
       position: absolute;
       left: 50%;
       transform: translate(-40px, -10px);
-      background: linear-gradient(
-        90deg,
-        #f5f5f5 0%,
-        #ffffff 50%,
-        #f5f5f5 100%
-      );
+      background: linear-gradient(90deg, #f5f5f5 0%, #ffffff 50%, #f5f5f5 100%);
       background-size: 200% 100%;
       animation: wave 2s ease-in-out infinite;
       padding: 5px 8px;
       border-radius: 10px;
     }
-
- 
-    
   }
 
   thead th {
@@ -270,7 +269,6 @@
   }
 }
 
-
 @keyframes wave {
   0% {
     background-position: 200% 0;
@@ -279,7 +277,6 @@
     background-position: -200% 0;
   }
 }
-
 
 .transacciones {
   display: flex;
