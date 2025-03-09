@@ -687,42 +687,48 @@ const PanelAutomate = ({
                 <>
                   <p style={{ fontWeight: "bold" }}>Entrada</p>
                   <div className={styles.cardsContainer}>
-                    {dataFilter
-                      .filter((card) => card.role === "input")
-                      .map((card) => (
-                        <CardAutomate
-                          fromPanel={true}
-                          key={card.id}
-                          type={card.type}
-                          name={card.automateName}
-                          image={card.image}
-                          available={card.available}
-                          contactType={card.contactType}
-                          typeContent={typeContent}
-                          isActive={activeCard === card.id}
-                          onCardClick={() => handleCardClick(card.id)}
-                        />
-                      ))}
+                    {dataFilter.filter((card) => card.role === "input")
+                      .length == 0
+                      ? "No hay automatizaciones disponibles de tipo entrada"
+                      : dataFilter
+                          .filter((card) => card.role === "input")
+                          .map((card) => (
+                            <CardAutomate
+                              fromPanel={true}
+                              key={card.id}
+                              type={card.type}
+                              name={card.automateName}
+                              image={card.image}
+                              available={card.available}
+                              contactType={card.contactType}
+                              typeContent={typeContent}
+                              isActive={activeCard === card.id}
+                              onCardClick={() => handleCardClick(card.id)}
+                            />
+                          ))}
                   </div>
 
                   <p style={{ fontWeight: "bold" }}>Salida</p>
                   <div className={styles.cardsContainer}>
-                    {dataFilter
-                      .filter((card) => card.role === "output")
-                      .map((card) => (
-                        <CardAutomate
-                          key={card.id}
-                          type={card.type}
-                          name={card.automateName}
-                          image={card.image}
-                          available={card.available}
-                          contactType={card.contactType}
-                          typeContent={typeContent}
-                          fromPanel={true}
-                          isActive={activeCard === card.id}
-                          onCardClick={() => handleCardClick(card.id)}
-                        />
-                      ))}
+                    {dataFilter.filter((card) => card.role === "output")
+                      .length == 0
+                      ? "No hay automatizaciones disponibles de tipo salida"
+                      : dataFilter
+                          .filter((card) => card.role === "output")
+                          .map((card) => (
+                            <CardAutomate
+                              key={card.id}
+                              type={card.type}
+                              name={card.automateName}
+                              image={card.image}
+                              available={card.available}
+                              contactType={card.contactType}
+                              typeContent={typeContent}
+                              fromPanel={true}
+                              isActive={activeCard === card.id}
+                              onCardClick={() => handleCardClick(card.id)}
+                            />
+                          ))}
                   </div>
                 </>
               ) : (

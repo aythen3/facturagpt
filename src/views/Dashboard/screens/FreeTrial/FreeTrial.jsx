@@ -5,6 +5,7 @@ import facturaLogo from "../../assets/FacturaLogoIconGreen.svg";
 import styles from "./FreeTrial.module.css";
 import openai from "../../assets/openaiIcon.svg";
 import mail from "../../assets/emailIcon.svg";
+import { ReactComponent as GoogleLogo } from "../../assets/googleLogo.svg";
 
 import lock from "../../assets/LockIcon.svg";
 
@@ -16,7 +17,6 @@ const FreeTrial = () => {
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
   const { t } = useTranslation("freeTrial");
   const navigate = useNavigate();
-
 
   return (
     <div className={styles.container}>
@@ -37,8 +37,8 @@ const FreeTrial = () => {
             {t("registerButton")}
           </button>
           <button onClick={() => loginWithRedirect()}>
-            <img src={openai} alt="OpenAI Logo" className={styles.openaiLogo} />
-            {t("loginAIButton")}
+            <GoogleLogo width="20" />
+            <span>{t("loginAIButton")}</span>
           </button>
         </div>
 

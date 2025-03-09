@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./DynamicTable.module.css"; // Archivo de estilos
 
 const DynamicTable = ({
@@ -10,10 +10,20 @@ const DynamicTable = ({
   onSelect,
   hideCheckbox = false,
 }) => {
-  // console.log(selectedIds.length);
-  console.log(selectedIds);
-  console.log(data.length);
-  console.log(data);
+  const [isAscending, setIsAscending] = useState(true);
+
+  // Función para alternar entre ascendente y descendente
+  const toggleSortOrder = () => {
+    setIsAscending((prev) => !prev);
+  };
+
+  // Ordenar los datos según el estado actual
+  const sortedData = [...data].sort((a, b) => {
+    return isAscending
+      ? a.id.localeCompare(b.id) // Compara las cadenas en orden ascendente
+      : b.id.localeCompare(a.id); // Compara las cadenas en orden descendente
+  });
+
   return (
     <div className={styles.clientsTable}>
       <table className={styles.table}>
@@ -28,9 +38,9 @@ const DynamicTable = ({
                 />
               </th>
             )}
+
             {columns.map((header, index) => {
               if (Array.isArray(header)) {
-                // Si header es un arreglo, unimos los subHeaders en un solo <th>
                 return (
                   <th key={index} className={styles.columnTh}>
                     {header.map((subHeader, subIndex) => (
@@ -39,19 +49,20 @@ const DynamicTable = ({
                         className={subIndex >= 1 && styles.smallColumn}
                       >
                         {subHeader}
-                      </span> // Puedes cambiar el <span> por otro elemento según tu necesidad
+                      </span>
                     ))}
                   </th>
                 );
               }
-
-              // Si header no es un arreglo, simplemente lo renderizamos de forma normal
               return <th key={index}>{header}</th>;
             })}
+            <th onClick={toggleSortOrder} style={{ cursor: "pointer" }}>
+              {isAscending ? "Ascend" : "Descend"}
+            </th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => renderRow(item, index, onSelect))}
+          {sortedData.map((item, index) => renderRow(item, index, onSelect))}
         </tbody>
       </table>
     </div>

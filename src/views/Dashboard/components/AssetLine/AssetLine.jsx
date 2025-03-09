@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AssetLine.module.css";
 import minus from "../../assets/minus.svg";
 import Tags from "../Tags/Tags";
@@ -7,6 +7,8 @@ import { ReactComponent as GrabIcon } from "../../assets/grabIcon.svg";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Button from "../Button/Button";
+import { resizeImage } from "../../../../utils/resizeImage";
+import ChangeImage from "../ChangeImage/ChangeImage";
 const AssetLine = ({
   article,
   articlesEditing,
@@ -26,6 +28,23 @@ const AssetLine = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const resizedImage = await resizeImage(file);
+      const imageUrl = URL.createObjectURL(resizedImage); // Convertimos la imagen redimensionada en una URL
+
+      setImageAsset(imageUrl);
+      console.log("Imagen redimensionada:", resizedImage);
+
+      // Puedes subirla al servidor o mostrarla en la app
+    } catch (error) {
+      console.error("Error al procesar la imagen:", error);
+    }
   };
 
   return (
@@ -55,10 +74,7 @@ const AssetLine = ({
           <button {...attributes} {...listeners}>
             <GrabIcon className={styles.icon} {...attributes} {...listeners} />
           </button>
-          <img
-            src="https://materialescomsa.com/wp-content/uploads/2019/07/22079.jpg"
-            alt=""
-          />
+          <ChangeImage />
         </div>
         <div className={styles.info}>
           <div className={styles.test}>

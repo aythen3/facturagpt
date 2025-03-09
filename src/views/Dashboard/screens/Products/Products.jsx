@@ -31,6 +31,7 @@ import DynamicTable from "../../components/DynamicTable/DynamicTable";
 import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import OptionsPopup from "../../components/OptionsPopup/OptionsPopup";
 import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
+import { FaUpload } from "react-icons/fa";
 
 const Products = () => {
   const { t } = useTranslation("clients");
@@ -47,6 +48,8 @@ const Products = () => {
   const [selectedIds, setSelectedIds] = useState([]);
 
   const { docByClient, loading } = useSelector((state) => state.docs);
+  const { user } = useSelector((state) => state.user);
+  console.log(user?.currency);
   const [newProductModal, setNewProductModal] = useState(false);
   const [selectTypeClient, setSelectTypeClient] = useState(0);
 
@@ -136,10 +139,10 @@ const Products = () => {
       supplier: ["Aythen", "Email adress, Phone number , Zip code "],
       category: ["Gasto", "Gastos Operativos"],
       quantity: "1.0",
-      generated: "00,00 EUR",
-      maxPrice: "00,00 EUR",
-      minPrice: "00,00 EUR",
-      averagePrice: "00,00 EUR",
+      generated: "00,00",
+      maxPrice: "00,00 ",
+      minPrice: "00,00 ",
+      averagePrice: "00,00 ",
     },
     {
       imageUrl: "",
@@ -148,10 +151,10 @@ const Products = () => {
       supplier: ["Aythen", "Email adress, Phone number , Zip code "],
       category: ["Gasto", "Gastos Operativos"],
       quantity: "1.0",
-      generated: "00,00 EUR",
-      maxPrice: "00,00 EUR",
-      minPrice: "00,00 EUR",
-      averagePrice: "00,00 EUR",
+      generated: "00,00 ",
+      maxPrice: "00,00 ",
+      minPrice: "00,00 ",
+      averagePrice: "00,00 ",
     },
     {
       imageUrl: "",
@@ -160,10 +163,10 @@ const Products = () => {
       supplier: ["Aythen", "Email adress, Phone number , Zip code "],
       category: ["Gasto", "Gastos Operativos"],
       quantity: "1.0",
-      generated: "00,00 EUR",
-      maxPrice: "00,00 EUR",
-      minPrice: "00,00 EUR",
-      averagePrice: "00,00 EUR",
+      generated: "00,00 ",
+      maxPrice: "00,00 ",
+      minPrice: "00,00 ",
+      averagePrice: "00,00 ",
     },
   ];
 
@@ -339,10 +342,19 @@ const Products = () => {
       <td>{row.quantity}</td>
 
       {/* Precios */}
-      <td>{row.generated}</td>
-      <td>{row.maxPrice}</td>
-      <td>{row.minPrice}</td>
-      <td>{row.averagePrice}</td>
+      <td>
+        {row.generated}
+        {""} {user?.currency || "EUR"}
+      </td>
+      <td>
+        {row.maxPrice} {""} {user?.currency || "EUR"}
+      </td>
+      <td>
+        {row.minPrice} {""} {user?.currency || "EUR"}
+      </td>
+      <td>
+        {row.averagePrice} {""} {user?.currency || "EUR"}
+      </td>
 
       {/* <td className={styles.actions}>
         <div className={styles.transacciones}>
@@ -390,6 +402,7 @@ const Products = () => {
           )}
         </div>
       </td>
+      <td></td>
     </tr>
   );
 
@@ -431,7 +444,7 @@ const Products = () => {
               },
             },
             {
-              label: <DownloadIcon />,
+              label: <FaUpload color="#e6e6e6" />,
               headerStyle: { padding: "6px 10px" },
               type: "white",
               onClick: () => setShowImportAssets(true),
@@ -497,6 +510,7 @@ const Products = () => {
           />
         )}
         {products.length == 0 ? (
+          // {docByClient?.doc?.totalData?.productList.length == 0 ? (
           <SkeletonScreen
             labelText="No se han encontrado productos ni servicios"
             helperText="Todos tus activos estarán listados aquí."

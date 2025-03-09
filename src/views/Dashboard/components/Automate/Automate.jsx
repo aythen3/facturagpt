@@ -195,43 +195,45 @@ const Automate = ({
                 Salida
               </button>
             </div>
-            <div className={styles.contentContainer}>
-              {userAutomations?.length > 0 &&
-                filteredData?.map((card, i) => {
-                  console.log("automationData", card);
-                  const filteredAutomation = data.find(
-                    (automation) => automation?.type === card?.type
-                  );
+            <div className={styles.contentContainerScroll}>
+              <div className={styles.contentContainer}>
+                {userAutomations?.length > 0 &&
+                  filteredData?.map((card, i) => {
+                    console.log("automationData", card);
+                    const filteredAutomation = data.find(
+                      (automation) => automation?.type === card?.type
+                    );
 
-                  return (
-                    <CardAutomate
-                      fullContent={true}
-                      type={filteredAutomation?.type}
-                      typeContent={typeContent}
-                      key={card.id}
-                      name={filteredAutomation?.automateName}
-                      nameTitle={card.inputValue}
-                      image={filteredAutomation?.image}
-                      contactType={
-                        card?.type === "Gmail"
-                          ? card?.selectedEmailConnection
-                          : card?.type === "WhatsApp"
-                            ? card?.selectedWhatsAppConnection
-                            : card?.email
-                      }
-                      // contactType={
-                      //   card?.automationData?.type === "Gmail"
-                      //     ? card?.automationData?.selectedEmailConnection
-                      //     : card?.automationData?.type === "WhatsApp"
-                      //       ? card?.automationData?.selectedWhatsAppConnection
-                      //       : card?.email
-                      // }
-                      automationData={card}
-                      isBorders={true}
-                      last={i === dataFilter.length - 1}
-                    />
-                  );
-                })}
+                    return (
+                      <CardAutomate
+                        fullContent={true}
+                        type={filteredAutomation?.type}
+                        typeContent={typeContent}
+                        key={card.id}
+                        name={filteredAutomation?.automateName}
+                        nameTitle={card.inputValue}
+                        image={filteredAutomation?.image}
+                        contactType={
+                          card?.type === "Gmail"
+                            ? card?.selectedEmailConnection
+                            : card?.type === "WhatsApp"
+                              ? card?.selectedWhatsAppConnection
+                              : card?.email
+                        }
+                        // contactType={
+                        //   card?.automationData?.type === "Gmail"
+                        //     ? card?.automationData?.selectedEmailConnection
+                        //     : card?.automationData?.type === "WhatsApp"
+                        //       ? card?.automationData?.selectedWhatsAppConnection
+                        //       : card?.email
+                        // }
+                        automationData={card}
+                        isBorders={true}
+                        last={i === dataFilter.length - 1}
+                      />
+                    );
+                  })}
+              </div>
             </div>
           </div>
         )}

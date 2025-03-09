@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./MobileAsidebarNavigation.module.css";
 
-import { ReactComponent as ChatIcon } from "../../../assets/chatIcon.svg";
+import { ReactComponent as ChatIcon } from "../../../assets/ChatIconMobile.svg";
 import { ReactComponent as PanelMobileIcon } from "../../../assets/panelMobileIcon.svg";
 import { ReactComponent as FileMobileIcon } from "../../../assets/fileIcon.svg";
 import { ReactComponent as BoxIcon } from "../../../assets/boxIcon.svg";
@@ -69,7 +69,7 @@ const MobileAsidebarNavigation = ({
           <li>
             <a
               href="/admin/chat"
-              className={fromPath == "chat" ? styles.active : ""}
+              className={`${fromPath == "chat" ? styles.active : ""} ${styles.bigger}`}
             >
               <ChatIcon />
               Chat
@@ -105,7 +105,7 @@ const MobileAsidebarNavigation = ({
           <li>
             <a
               href="/admin/products"
-              className={fromPath == "products" ? styles.active : ""}
+              className={`${fromPath == "products" ? styles.active : ""} ${styles.bigger}`}
             >
               <BoxIcon />
               Activos

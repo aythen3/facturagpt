@@ -33,6 +33,7 @@ import { uploadFiles } from "../../../../actions/scaleway";
 import { useNavigate } from "react-router-dom";
 import LogoSelector from "../LogoSelector/LogoSelector";
 import DetailsBillInputs from "../InfoContact/DetailsBillInputs/DetailsBillInputs";
+import { resizeImage } from "../../../../utils/resizeImage";
 
 const AccountSettings = () => {
   const dispatch = useDispatch();
@@ -68,18 +69,19 @@ const AccountSettings = () => {
     }
   };
 
-  const handleFileChange = (e, type) => {
+  const handleFileChange = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
-
+    if (file) setIsSaveButtonVisible(true);
     const currentPath =
       type === "corporativeLogos"
         ? "corporativeLogos/"
         : type === "signatureImages"
           ? "signatureImages/"
           : "profileImages/";
+    const resizedImage = await resizeImage(file);
 
-    dispatch(uploadFiles({ files: [file], currentPath }))
+    dispatch(uploadFiles({ files: [resizedImage], currentPath }))
       .unwrap()
       .then((uploadResponse) => {
         console.log(`UPLOAD RESPONSE for ${type}`, uploadResponse);
@@ -107,7 +109,6 @@ const AccountSettings = () => {
   };
 
   useEffect(() => {
-  
     if (user) {
       const newUserData = {
         nombre: user?.nombre || "",

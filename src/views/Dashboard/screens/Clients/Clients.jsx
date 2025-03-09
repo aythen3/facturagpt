@@ -28,6 +28,7 @@ import ClientsHeader from "../../components/ClientsHeader/ClientsHeader";
 import NewContact from "../../components/NewContact/NewContact";
 import FiltersDropdownContainer from "../../components/FiltersDropdownContainer/FiltersDropdownContainer";
 import OptionsPopup from "../../components/OptionsPopup/OptionsPopup";
+import { FaUpload } from "react-icons/fa";
 
 const Clients = () => {
   const { t } = useTranslation("clients");
@@ -367,8 +368,6 @@ const Clients = () => {
     };
   }, [showNewClient]);
 
-  
-
   const [clientDataInputs, setClientDataInputs] = useState({
     name: "",
     email: "",
@@ -694,6 +693,7 @@ const Clients = () => {
           </div>
         )}
       </td>
+      <td></td>
     </tr>
   );
 
@@ -721,7 +721,7 @@ const Clients = () => {
               },
             },
             {
-              label: <DownloadIcon />,
+              label: <FaUpload color="#e6e6e6" />,
               headerStyle: { padding: "6px 10px" },
               type: "white",
               onClick: () => setShowImportContacts(true),

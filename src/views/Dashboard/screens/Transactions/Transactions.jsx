@@ -39,6 +39,7 @@ const Docs = () => {
   const [selectedTransactionIds, setSelectedTransactionIds] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
 
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.clients);
   const { docsByClient, loading } = useSelector((state) => state.docs);
@@ -113,7 +114,7 @@ const Docs = () => {
     {
       id: "T001",
       desc: ["Gasto", "Gastos Operativos"],
-      total: "00,00EUR",
+      total: "00,00",
       date: "25 Dec 2025",
       expire: "25 Dec 2025",
       PayMethod: "Mastercard ****5678",
@@ -122,7 +123,7 @@ const Docs = () => {
     {
       id: "T001",
       desc: ["Gasto", "Gastos Operativos"],
-      total: "00,00EUR",
+      total: "00,00",
       date: "25 Dec 2025",
       expire: "25 Dec 2025",
       PayMethod: "Mastercard ****5678",
@@ -131,7 +132,7 @@ const Docs = () => {
     {
       id: "T001",
       desc: ["Gasto", "Gastos Operativos"],
-      total: "00,00EUR",
+      total: "00,00",
       date: "25 Dec 2025",
       expire: "25 Dec 2025",
       PayMethod: "Mastercard ****5678",
@@ -140,7 +141,7 @@ const Docs = () => {
     {
       id: "T001",
       desc: ["Gasto", "Gastos Operativos"],
-      total: "00,00EUR",
+      total: "00,00",
       date: "25 Dec 2025",
       expire: "25 Dec 2025",
       PayMethod: "Mastercard ****5678",
@@ -149,7 +150,7 @@ const Docs = () => {
     {
       id: "T001",
       desc: ["Gasto", "Gastos Operativos"],
-      total: "00,00EUR",
+      total: "00,00",
       date: "25 Dec 2025",
       expire: "25 Dec 2025",
       PayMethod: "Mastercard ****5678",
@@ -290,7 +291,9 @@ const Docs = () => {
         ></span> */}
         </div>
       </td>
-      <td>{row?.doc?.totalData?.totalAmount}</td>
+      <td>
+        {row?.doc?.totalData?.totalAmount} {""} {user?.currency || "EUR"}
+      </td>
       <td>{row?.doc?.totalData?.invoiceIssueDate}</td>
       <td>
         {row?.doc?.totalData?.expirationDateYear}-
@@ -403,6 +406,7 @@ const Docs = () => {
           </div>
         )}
       </td>
+      <td></td>
     </tr>
   );
 
@@ -411,11 +415,11 @@ const Docs = () => {
     if (docsByClient.length === 0) {
       setMockDocs([
         {
-          id: "M001",
+          id: "A001",
           doc: {
             totalData: {
               description: ["Gasto", "Gastos Operativos"],
-              totalAmount: "150,00 EUR",
+              totalAmount: "150,00 ",
               invoiceIssueDate: "2025-01-15",
               expirationDateYear: "2025",
               expirationDateMonth: "02",
@@ -428,11 +432,11 @@ const Docs = () => {
           state: ["Pendiente", "stripe"],
         },
         {
-          id: "M002",
+          id: "B002",
           doc: {
             totalData: {
               description: ["Gasto", "Gastos Operativos"],
-              totalAmount: "1.200,00 EUR",
+              totalAmount: "1.200,00 ",
               invoiceIssueDate: "2025-01-10",
               expirationDateYear: "2025",
               expirationDateMonth: "02",
@@ -445,11 +449,11 @@ const Docs = () => {
           state: ["Pagada"],
         },
         {
-          id: "M003",
+          id: "C003",
           doc: {
             totalData: {
               description: ["Gasto", "Gastos Operativos"],
-              totalAmount: "3.500,00 EUR",
+              totalAmount: "3.500,00 ",
               invoiceIssueDate: "2024-12-01",
               expirationDateYear: "2025",
               expirationDateMonth: "01",
