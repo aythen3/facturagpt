@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ConfirmationPopup.module.css";
 import closeGray from "../../assets/closeGray.svg";
-
+import HeaderCard from "../HeaderCard/HeaderCard";
 const ConfirmationPopup = ({ onClose, title, message, handleAccept }) => {
   const [isClosing, setIsClosing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,27 +39,29 @@ const ConfirmationPopup = ({ onClose, title, message, handleAccept }) => {
         className={`${styles.modalContent} ${isClosing ? styles.scaleDown : ""}`}
       >
         {/* Header */}
-        <div className={styles.headerContainer}>
+        {/* <div className={styles.headerContainer}>
           <div className={styles.headerLeft}>
             <h2>{title}</h2>
           </div>
           <div onClick={handleClose} className={styles.closeIcon}>
             <img src={closeGray} alt="closeGray" />
           </div>
-        </div>
+        </div> */}
+        <HeaderCard title={title} setState={handleClose}>
+          <div className={styles.footerContainer}>
+            <div onClick={handleClose} className={styles.newFolderButton}>
+              Cancelar
+            </div>
+            <div onClick={onAccept} className={styles.selectButton}>
+              {loading ? "Procesando..." : "Aceptar"}
+            </div>
+          </div>
+        </HeaderCard>
         {/* Content */}
         <div className={styles.contentContainer}>
           <p className={styles.messageText}>{message}</p>
         </div>
         {/* Buttons */}
-        <div className={styles.footerContainer}>
-          <div onClick={handleClose} className={styles.newFolderButton}>
-            Cancelar
-          </div>
-          <div onClick={onAccept} className={styles.selectButton}>
-            {loading ? "Procesando..." : "Aceptar"}
-          </div>
-        </div>
       </div>
     </div>
   );

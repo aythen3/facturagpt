@@ -110,7 +110,8 @@
   option {
     color: 757575; /* Color verde para texto habilitado */
   }
-  input[readonly] {
+  input[readonly],
+  textarea[readonly] {
     background-color: transparent;
   }
 }

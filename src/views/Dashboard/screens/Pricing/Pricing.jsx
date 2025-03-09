@@ -243,7 +243,12 @@ const Pricing = () => {
                       </p>
                     ))}
                   </div>
-                  <button className={plan.buttonType && styles.customButton}>
+                  <button
+                    className={plan.buttonType && styles.customButton}
+                    onClick={() =>
+                      navigate(plan.buttonType ? "/contact" : "/freetrial")
+                    }
+                  >
                     {plan.pricing}
                     {plan.buttonType ? (
                       <ArrowDiagonalWhite />
@@ -279,7 +284,12 @@ const Pricing = () => {
                       </p>
                     ))}
                   </div>
-                  <button className={plan.buttonType && styles.customButton}>
+                  <button
+                    className={plan.buttonType && styles.customButton}
+                    onClick={() =>
+                      navigate(plan.buttonType ? "/contact" : "/freetrial")
+                    }
+                  >
                     {plan.pricing}
                     {plan.buttonType ? (
                       <ArrowDiagonalWhite />

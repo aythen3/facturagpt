@@ -9,7 +9,7 @@ import { ReactComponent as AddPlusWhite } from "../../assets/addPlusWhite.svg";
 import { ReactComponent as ChatIcon } from "../../assets/chatIcon.svg";
 import { ReactComponent as BoxIcon } from "../../assets/boxIcon.svg";
 import { ReactComponent as DotsNotification } from "../../assets/dotsNotification.svg";
-import { ReactComponent as ClientIcon } from "../../assets/clientsIcon.svg";
+import { ReactComponent as ClientIcon } from "../../assets/clientsIconGray.svg";
 import { ReactComponent as MenuMobileIcon } from "../../assets/menuIconBlack.svg";
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import Automate from "../Automate/Automate";

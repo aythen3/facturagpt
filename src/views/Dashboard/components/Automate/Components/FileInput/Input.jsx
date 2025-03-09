@@ -67,7 +67,7 @@ const EditableInput = ({ configuration, handleConfigurationChange }) => {
     <div className={styles.editableInputContainer}>
       <div className={styles.editableInputHeader}>
         <p>
-          {!labelOptions && <span>{label}</span>}{" "}
+          {/* {!labelOptions && <span>{label}</span>}{" "} */}
           {/* {info && <span className={styles.info}>{info}</span>} */}
         </p>
         {!options && (

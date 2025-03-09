@@ -66,6 +66,12 @@
         width: 20px;
         height: 20px;
       }
+      .bigger {
+        svg {
+          height: 23px;
+          width: 23px;
+        }
+      }
     }
     li {
       justify-content: start;
