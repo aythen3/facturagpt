@@ -739,6 +739,7 @@ input[type="checkbox"] {
   /* color: red; */
   font-size: 14px;
 }
+
 .newClientForm {
   label {
     border-bottom: 1px solid #11a3812c;
@@ -792,6 +793,15 @@ input[type="checkbox"] {
     gap: 5px;
     span {
       color: #717171;
+    }
+    .defaultAddress {
+      display: flex;
+      width: 100%;
+      justify-content: end;
+      align-items: center;
+      span {
+        color: #2ebc89;
+      }
     }
     .infoBillContainer {
       width: 100%;

@@ -29,6 +29,17 @@ const EditableRow = ({
       <p>{label}</p>{" "}
       {oneRow && (
         <div>
+          <Button
+            type="white"
+            headerStyle={{
+              padding: "2px 4px",
+              fontSize: "13px",
+            }}
+            action={action}
+            disabledOption={!isEditing}
+          >
+            {buttonLabel}
+          </Button>
           <Button type="button" action={() => setIsEditing(!isEditing)}>
             {isEditing ? "Guardar" : "Editar"}
           </Button>

@@ -11,6 +11,7 @@ import searchGray from "../../assets/searchGray.svg";
 import SelectCurrencyPopup from "../SelectCurrencyPopup/SelectCurrencyPopup";
 import HeaderCard from "../HeaderCard/HeaderCard";
 import Button from "../Button/Button";
+import DeleteButton from "../DeleteButton/DeleteButton";
 
 const FilesFilterModal = ({
   onClose,
@@ -107,6 +108,7 @@ const FilesFilterModal = ({
     }
   }, [allFiles]);
 
+  const [keyWordsList, setKeyWordsList] = useState([]);
   return (
     <div
       onClick={(e) => {
@@ -156,6 +158,21 @@ const FilesFilterModal = ({
         </HeaderCard>
         {/* Content */}
         <div className={styles.contentContainer}>
+          <h2 className={styles.inputTitle}>Buscar por palabra clave</h2>
+          <div className={styles.keyWordContainer}>
+            {keyWordsList?.map((keyword) => (
+              <div className={styles.keyword}>
+                {keyword}{" "}
+                <DeleteButton
+                  action={() => {
+                    setKeyWordsList((prev) =>
+                      prev.filter((item) => item !== keyword)
+                    );
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           <InputWithTitle
             bgColor="#F4F4F4"
             titleColor="#18181B"
@@ -167,11 +184,28 @@ const FilesFilterModal = ({
               userSelect: "none",
             }}
             inputHeight="31px"
-            title="Buscar por palabra clave"
+            title=""
             placeholder="Título contiene, email o dirección"
             value={keyWord}
-            onChange={(e) => {
-              setKeyWord(e.target.value);
+            onChange={(e) => setKeyWord(e.target.value)}
+            onKeyDownProp={(e) => {
+              if (e.key === "Enter" && keyWord.trim().length > 0) {
+                e.preventDefault(); // Evita el comportamiento predeterminado de la tecla Enter
+
+                // Separar el texto por comas, limpiar espacios y filtrar duplicados
+                const newWords = keyWord
+                  .split(",")
+                  .map((word) => word.trim())
+                  .filter(
+                    (word) => word.length > 0 && !keyWordsList.includes(word)
+                  );
+
+                if (newWords.length > 0) {
+                  setKeyWordsList((prev) => [...prev, ...newWords]);
+                }
+
+                setKeyWord(""); // Limpiar el input después de presionar Enter
+              }
             }}
           />
           <div>
@@ -330,9 +364,20 @@ const FilesFilterModal = ({
                 onChange={(e) => setTag(e.target.value)}
                 className={styles.inputWithTitle}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && tag.length > 0) {
-                    setSelectedTags((prev) => [...prev, tag]);
-                    setTag("");
+                  if (e.key === "Enter" && tag.trim().length > 0) {
+                    e.preventDefault(); // Evita comportamiento por defecto
+
+                    // Separar el texto por comas, limpiar espacios y eliminar duplicados
+                    const newTags = tag
+                      .split(",")
+                      .map((t) => t.trim())
+                      .filter((t) => t.length > 0 && !selectedTags.includes(t)); // Evita duplicados
+
+                    if (newTags.length > 0) {
+                      setSelectedTags((prev) => [...prev, ...newTags]);
+                    }
+
+                    setTag(""); // Limpiar el input
                   }
                 }}
               />
@@ -345,7 +390,14 @@ const FilesFilterModal = ({
                   key={index}
                 >
                   <span>{tag}</span>
-                  <div
+                  <DeleteButton
+                    action={() =>
+                      setSelectedTags(
+                        selectedTags.filter((option) => option !== tag)
+                      )
+                    }
+                  />
+                  {/* <div
                     onClick={() =>
                       setSelectedTags(
                         selectedTags.filter((option) => option !== tag)
@@ -354,7 +406,7 @@ const FilesFilterModal = ({
                     className={`${styles.minusBlackIcon} ${styles.minusIcon}`}
                   >
                     <img src={minusIcon} alt="minusIcon" />
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>
